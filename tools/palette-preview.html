@@ -1,0 +1,112 @@
+<!DOCTYPE html><html><head><meta charset="utf8"><title>RMDS palette preview</title><style>
+    body{font-family:Pretendard,system-ui,sans-serif;background:#E4E7EC;margin:0;padding:28px;}
+    h2{margin:26px 0 10px} h3{margin:14px 0 6px;text-transform:uppercase;font-size:13px;letter-spacing:.06em;color:#3A466A}
+    .ramp{display:flex;gap:4px}
+    .sw{flex:1;height:64px;border-radius:10px;display:flex;flex-direction:column;justify-content:flex-end;padding:6px 8px;color:#fff;font-size:10px}
+    .sw b{font-size:11px} .sw span{opacity:.85}
+    .sw:nth-child(-n+4){color:#0F1930}
+    .sims{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+    .sim{border-radius:14px;padding:14px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+    .sim.light{background:#fff;border:1px solid rgba(20,32,58,.1)}
+    .sim.dark{background:#091328}
+    .sim button{border:0;border-radius:10px;padding:9px 16px;font-weight:800;font-size:14px}
+    .chip{padding:4px 10px;border-radius:999px;font-weight:800;font-size:12px}
+    .fr{border:4px solid;border-radius:8px;padding:2px 8px;font-size:12px;font-weight:700;color:#0F1930}
+    </style></head><body>
+    <h2 style="margin-top:0">NEUTRAL — NEW (라이트 존 생성)</h2><div class="ramp"><div class="sw" style="background:#FFFFFF"><b>000</b><span>#FFFFFF</span></div><div class="sw" style="background:#F0F5FE"><b>050</b><span>#F0F5FE</span></div><div class="sw" style="background:#E4ECFB"><b>100</b><span>#E4ECFB</span></div><div class="sw" style="background:#CBD7EE"><b>200</b><span>#CBD7EE</span></div><div class="sw" style="background:#A0B0CD"><b>300</b><span>#A0B0CD</span></div><div class="sw" style="background:#586B8C"><b>400</b><span>#586B8C</span></div><div class="sw" style="background:#3A466A"><b>500</b><span>#3A466A</span></div><div class="sw" style="background:#1F2B49"><b>600</b><span>#1F2B49</span></div><div class="sw" style="background:#121E37"><b>650</b><span>#121E37</span></div><div class="sw" style="background:#0F1930"><b>700</b><span>#0F1930</span></div><div class="sw" style="background:#091328"><b>800</b><span>#091328</span></div><div class="sw" style="background:#060E20"><b>900</b><span>#060E20</span></div><div class="sw" style="background:#03060F"><b>950</b><span>#03060F</span></div></div>
+    <h3>OLD (비교용)</h3><div class="ramp" style="opacity:.9"><div class="sw" style="background:#FFFFFF"><b>000</b><span>#FFFFFF</span></div><div class="sw" style="background:#F2F4F7"><b>050</b><span>#F2F4F7</span></div><div class="sw" style="background:#E4E7EC"><b>100</b><span>#E4E7EC</span></div><div class="sw" style="background:#C1CBDA"><b>200</b><span>#C1CBDA</span></div><div class="sw" style="background:#9DA3B1"><b>300</b><span>#9DA3B1</span></div><div class="sw" style="background:#5C6373"><b>400</b><span>#5C6373</span></div><div class="sw" style="background:#3A466A"><b>500</b><span>#3A466A</span></div><div class="sw" style="background:#1F2B49"><b>600</b><span>#1F2B49</span></div><div class="sw" style="background:#121E37"><b>650</b><span>#121E37</span></div><div class="sw" style="background:#0F1930"><b>700</b><span>#0F1930</span></div><div class="sw" style="background:#091328"><b>800</b><span>#091328</span></div><div class="sw" style="background:#060E20"><b>900</b><span>#060E20</span></div><div class="sw" style="background:#03060F"><b>950</b><span>#03060F</span></div></div>
+    <h2>뉴트럴 실사용 (라이트/다크 표면 적층)</h2>
+    <div style="background:#E4ECFB;border-radius:16px;padding:18px;display:flex;gap:14px">
+      <div style="flex:1;background:#FFFFFF;border:1px solid #CBD7EE;border-radius:14px;padding:16px">
+        <div style="color:#121E37;font-weight:800;margin-bottom:6px">카드 (n-000) 위 잉크 n-650</div>
+        <div style="color:#3A466A;font-size:14px;margin-bottom:4px">muted 텍스트 n-500</div>
+        <div style="color:#586B8C;font-size:13px;margin-bottom:10px">meta 텍스트 n-400</div>
+        <div style="background:#F0F5FE;border-radius:10px;padding:10px;color:#586B8C;font-size:13px">인셋 n-050 · 보더 n-200</div>
+      </div>
+      <div style="flex:1;background:#091328;border-radius:14px;padding:16px">
+        <div style="color:#F2F4F9;font-weight:800;margin-bottom:6px">다크 카드 (n-800)</div>
+        <div style="color:#A0B0CD;font-size:14px;margin-bottom:10px">muted 텍스트 n-300</div>
+        <div style="background:#1F2B49;border-radius:10px;padding:10px;color:#A0B0CD;font-size:13px">인터랙티브 n-600</div>
+      </div>
+    </div>
+    <h2>실사용 시뮬레이션</h2><div class="sims">
+    <div class="sim light">
+      <span class="chip" style="background:#F2F7FF;color:#03438E">tint chip</span>
+      <button style="background:#0A7AF8;color:#fff">버튼 500</button>
+      <b style="color:#0559B8">텍스트 600</b>
+      <b style="color:#03438E">잉크 700</b>
+      <span class="fr" style="border-color:#01306A">frame 800</span>
+    </div>
+    <div class="sim dark">
+      <span class="chip" style="background:rgba(255,255,255,.06);color:#93BFFE">on-dark 300</span>
+      <button style="background:#0A7AF8;color:#fff">버튼 500</button>
+      <b style="color:#6EAAFD">모드탭 400</b>
+      <b style="color:#93BFFE">강조 300</b>
+    </div>
+    <div class="sim light">
+      <span class="chip" style="background:#E5FDF8;color:#045249">tint chip</span>
+      <button style="background:#0D9484;color:#fff">버튼 500</button>
+      <b style="color:#076C61">텍스트 600</b>
+      <b style="color:#045249">잉크 700</b>
+      <span class="fr" style="border-color:#023C35">frame 800</span>
+    </div>
+    <div class="sim dark">
+      <span class="chip" style="background:rgba(255,255,255,.06);color:#19DAC4">on-dark 300</span>
+      <button style="background:#0D9484;color:#fff">버튼 500</button>
+      <b style="color:#15C2AE">모드탭 400</b>
+      <b style="color:#19DAC4">강조 300</b>
+    </div>
+    <div class="sim light">
+      <span class="chip" style="background:#F6F6FF;color:#472A9A">tint chip</span>
+      <button style="background:#805AFD;color:#fff">버튼 500</button>
+      <b style="color:#5F38C9">텍스트 600</b>
+      <b style="color:#472A9A">잉크 700</b>
+      <span class="fr" style="border-color:#341C74">frame 800</span>
+    </div>
+    <div class="sim dark">
+      <span class="chip" style="background:rgba(255,255,255,.06);color:#B9B2FE">on-dark 300</span>
+      <button style="background:#805AFD;color:#fff">버튼 500</button>
+      <b style="color:#A598FD">모드탭 400</b>
+      <b style="color:#B9B2FE">강조 300</b>
+    </div>
+    <div class="sim light">
+      <span class="chip" style="background:#FFF4EE;color:#6E3403">tint chip</span>
+      <button style="background:#C3600A;color:#fff">버튼 500</button>
+      <b style="color:#904505">텍스트 600</b>
+      <b style="color:#6E3403">잉크 700</b>
+      <span class="fr" style="border-color:#522401">frame 800</span>
+    </div>
+    <div class="sim dark">
+      <span class="chip" style="background:rgba(255,255,255,.06);color:#FEA46D">on-dark 300</span>
+      <button style="background:#C3600A;color:#fff">버튼 500</button>
+      <b style="color:#FE811B">모드탭 400</b>
+      <b style="color:#FEA46D">강조 300</b>
+    </div>
+    <div class="sim light">
+      <span class="chip" style="background:#EDFCEB;color:#095603">tint chip</span>
+      <button style="background:#189A0A;color:#fff">버튼 500</button>
+      <b style="color:#0F7105">텍스트 600</b>
+      <b style="color:#095603">잉크 700</b>
+      <span class="fr" style="border-color:#053F01">frame 800</span>
+    </div>
+    <div class="sim dark">
+      <span class="chip" style="background:rgba(255,255,255,.06);color:#68DB5E">on-dark 300</span>
+      <button style="background:#189A0A;color:#fff">버튼 500</button>
+      <b style="color:#23CB12">모드탭 400</b>
+      <b style="color:#68DB5E">강조 300</b>
+    </div>
+    <div class="sim light">
+      <span class="chip" style="background:#FFF4F3;color:#870514">tint chip</span>
+      <button style="background:#EC102B;color:#fff">버튼 500</button>
+      <b style="color:#AF081D">텍스트 600</b>
+      <b style="color:#870514">잉크 700</b>
+      <span class="fr" style="border-color:#65020C">frame 800</span>
+    </div>
+    <div class="sim dark">
+      <span class="chip" style="background:rgba(255,255,255,.06);color:#FEA098">on-dark 300</span>
+      <button style="background:#EC102B;color:#fff">버튼 500</button>
+      <b style="color:#FE7A73">모드탭 400</b>
+      <b style="color:#FEA098">강조 300</b>
+    </div></div>
+    <h2>ACCENT RAMPS (생성)</h2><div class="fam"><h3>blue</h3><div class="ramp"><div class="sw" style="background:#F2F7FF"><b>050</b><span>#F2F7FF</span></div><div class="sw" style="background:#DDEBFF"><b>100</b><span>#DDEBFF</span></div><div class="sw" style="background:#B8D5FE"><b>200</b><span>#B8D5FE</span></div><div class="sw" style="background:#93BFFE"><b>300</b><span>#93BFFE</span></div><div class="sw" style="background:#6EAAFD"><b>400</b><span>#6EAAFD</span></div><div class="sw" style="background:#0A7AF8"><b>500</b><span>#0A7AF8</span></div><div class="sw" style="background:#0559B8"><b>600</b><span>#0559B8</span></div><div class="sw" style="background:#03438E"><b>700</b><span>#03438E</span></div><div class="sw" style="background:#01306A"><b>800</b><span>#01306A</span></div><div class="sw" style="background:#011F48"><b>900</b><span>#011F48</span></div></div></div><div class="fam"><h3>cyan</h3><div class="ramp"><div class="sw" style="background:#EBFAFF"><b>050</b><span>#EBFAFF</span></div><div class="sw" style="background:#C9F1FF"><b>100</b><span>#C9F1FF</span></div><div class="sw" style="background:#86E2FE"><b>200</b><span>#86E2FE</span></div><div class="sw" style="background:#18D1FC"><b>300</b><span>#18D1FC</span></div><div class="sw" style="background:#14BAE1"><b>400</b><span>#14BAE1</span></div><div class="sw" style="background:#0D8EAB"><b>500</b><span>#0D8EAB</span></div><div class="sw" style="background:#06687E"><b>600</b><span>#06687E</span></div><div class="sw" style="background:#044F60"><b>700</b><span>#044F60</span></div><div class="sw" style="background:#023947"><b>800</b><span>#023947</span></div><div class="sw" style="background:#01252F"><b>900</b><span>#01252F</span></div></div></div><div class="fam"><h3>teal</h3><div class="ramp"><div class="sw" style="background:#E5FDF8"><b>050</b><span>#E5FDF8</span></div><div class="sw" style="background:#B4FAED"><b>100</b><span>#B4FAED</span></div><div class="sw" style="background:#68ECD8"><b>200</b><span>#68ECD8</span></div><div class="sw" style="background:#19DAC4"><b>300</b><span>#19DAC4</span></div><div class="sw" style="background:#15C2AE"><b>400</b><span>#15C2AE</span></div><div class="sw" style="background:#0D9484"><b>500</b><span>#0D9484</span></div><div class="sw" style="background:#076C61"><b>600</b><span>#076C61</span></div><div class="sw" style="background:#045249"><b>700</b><span>#045249</span></div><div class="sw" style="background:#023C35"><b>800</b><span>#023C35</span></div><div class="sw" style="background:#012722"><b>900</b><span>#012722</span></div></div></div><div class="fam"><h3>green</h3><div class="ramp"><div class="sw" style="background:#EDFCEB"><b>050</b><span>#EDFCEB</span></div><div class="sw" style="background:#CFF6CA"><b>100</b><span>#CFF6CA</span></div><div class="sw" style="background:#A5E79D"><b>200</b><span>#A5E79D</span></div><div class="sw" style="background:#68DB5E"><b>300</b><span>#68DB5E</span></div><div class="sw" style="background:#23CB12"><b>400</b><span>#23CB12</span></div><div class="sw" style="background:#189A0A"><b>500</b><span>#189A0A</span></div><div class="sw" style="background:#0F7105"><b>600</b><span>#0F7105</span></div><div class="sw" style="background:#095603"><b>700</b><span>#095603</span></div><div class="sw" style="background:#053F01"><b>800</b><span>#053F01</span></div><div class="sw" style="background:#022901"><b>900</b><span>#022901</span></div></div></div><div class="fam"><h3>amber</h3><div class="ramp"><div class="sw" style="background:#FFF6E6"><b>050</b><span>#FFF6E6</span></div><div class="sw" style="background:#FFE6BE"><b>100</b><span>#FFE6BE</span></div><div class="sw" style="background:#FCCA72"><b>200</b><span>#FCCA72</span></div><div class="sw" style="background:#F3AF14"><b>300</b><span>#F3AF14</span></div><div class="sw" style="background:#D99C11"><b>400</b><span>#D99C11</span></div><div class="sw" style="background:#A5760A"><b>500</b><span>#A5760A</span></div><div class="sw" style="background:#795605"><b>600</b><span>#795605</span></div><div class="sw" style="background:#5D4103"><b>700</b><span>#5D4103</span></div><div class="sw" style="background:#442E01"><b>800</b><span>#442E01</span></div><div class="sw" style="background:#2D1D01"><b>900</b><span>#2D1D01</span></div></div></div><div class="fam"><h3>orange</h3><div class="ramp"><div class="sw" style="background:#FFF4EE"><b>050</b><span>#FFF4EE</span></div><div class="sw" style="background:#FFE3D4"><b>100</b><span>#FFE3D4</span></div><div class="sw" style="background:#FEC4A2"><b>200</b><span>#FEC4A2</span></div><div class="sw" style="background:#FEA46D"><b>300</b><span>#FEA46D</span></div><div class="sw" style="background:#FE811B"><b>400</b><span>#FE811B</span></div><div class="sw" style="background:#C3600A"><b>500</b><span>#C3600A</span></div><div class="sw" style="background:#904505"><b>600</b><span>#904505</span></div><div class="sw" style="background:#6E3403"><b>700</b><span>#6E3403</span></div><div class="sw" style="background:#522401"><b>800</b><span>#522401</span></div><div class="sw" style="background:#371601"><b>900</b><span>#371601</span></div></div></div><div class="fam"><h3>red</h3><div class="ramp"><div class="sw" style="background:#FFF4F3"><b>050</b><span>#FFF4F3</span></div><div class="sw" style="background:#FFE2DF"><b>100</b><span>#FFE2DF</span></div><div class="sw" style="background:#FEC1BB"><b>200</b><span>#FEC1BB</span></div><div class="sw" style="background:#FEA098"><b>300</b><span>#FEA098</span></div><div class="sw" style="background:#FE7A73"><b>400</b><span>#FE7A73</span></div><div class="sw" style="background:#EC102B"><b>500</b><span>#EC102B</span></div><div class="sw" style="background:#AF081D"><b>600</b><span>#AF081D</span></div><div class="sw" style="background:#870514"><b>700</b><span>#870514</span></div><div class="sw" style="background:#65020C"><b>800</b><span>#65020C</span></div><div class="sw" style="background:#430206"><b>900</b><span>#430206</span></div></div></div><div class="fam"><h3>violet</h3><div class="ramp"><div class="sw" style="background:#F6F6FF"><b>050</b><span>#F6F6FF</span></div><div class="sw" style="background:#E8E7FF"><b>100</b><span>#E8E7FF</span></div><div class="sw" style="background:#D0CCFE"><b>200</b><span>#D0CCFE</span></div><div class="sw" style="background:#B9B2FE"><b>300</b><span>#B9B2FE</span></div><div class="sw" style="background:#A598FD"><b>400</b><span>#A598FD</span></div><div class="sw" style="background:#805AFD"><b>500</b><span>#805AFD</span></div><div class="sw" style="background:#5F38C9"><b>600</b><span>#5F38C9</span></div><div class="sw" style="background:#472A9A"><b>700</b><span>#472A9A</span></div><div class="sw" style="background:#341C74"><b>800</b><span>#341C74</span></div><div class="sw" style="background:#20144A"><b>900</b><span>#20144A</span></div></div></div>
+    </body></html>

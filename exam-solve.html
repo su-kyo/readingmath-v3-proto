@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light" data-section="exam">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>시험 대비 · 문제 풀이 — 리딩수학과학</title>
+  <script>try{if(localStorage.getItem('rm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+  <link rel="stylesheet" href="styles/tokens.css?v=15" />
+  <link rel="stylesheet" href="styles/base.css?v=3" />
+  <style>
+    /* =========================================================================
+       시험대비 문제 풀이 — 모던 툴 UI
+       하나의 워크스페이스(문제 | 정보 레일) · 플랫 + 헤어라인 · 쿨 뉴트럴 램프
+       퍼플은 브랜드 액센트로 절제 · 상태색(초록/빨강/앰버)은 액센트와 분리
+       ========================================================================= */
+    :root {
+      --canvas: var(--n-050);            /* 쿨 페이퍼 그라운드 */
+      --surface: var(--n-000);
+      --rail: var(--n-050);             /* 정보 레일 살짝 오프화이트 */
+      --ink: var(--n-900);             /* 딥 쿨 near-black */
+      --ink2: var(--n-500); --muted: var(--text-meta); --faint: var(--n-300);
+      --line: var(--n-100);            /* 헤어라인 */
+      --line-2: var(--n-050); --line-strong: var(--n-200);
+      --accent: var(--th-accent); --accent-ink: var(--th-ink-accent); --accent-tint: var(--th-tint); --accent-tint-br: var(--violet-200);
+      --good: var(--ok-ink); --good-tint: var(--ok-tint); --good-br: var(--ok-on-dark);
+      --bad: var(--no-solid); --bad-tint: var(--no-tint); --bad-br: var(--no-on-dark);
+      --warn: var(--warn-ink);
+      --hover: var(--n-050);            /* 선지·키패드 hover 표면 (테마 스왑) */
+      --r-lg: 16px; --r-md: 12px; --r-sm: 9px;
+      --sh: 0 1px 2px rgba(13,18,32,.04), 0 20px 40px -28px rgba(13,18,32,.24);
+    }
+    /* ===== 다크 모드 — 로컬 var 리매핑(뉴트럴 램프 + 퍼플 액센트 밝게) ===== */
+    :root[data-theme="dark"] {
+      --canvas: var(--n-900); --surface: var(--n-800); --rail: var(--n-800);
+      --ink: var(--n-050); --ink2: var(--n-200); --muted: var(--n-300); --faint: var(--n-400);
+      --line: var(--border-strong); --line-2: var(--border); --line-strong: var(--n-500);
+      --accent: var(--th-accent); --accent-ink: var(--th-accent-hi);
+      /* 다크 표면용 틴트 토큰 부재 — 기존 반투명 rgba 유지(라이트 위 글자 대비 보존) */
+      --accent-tint: rgba(119,119,255,.18); --accent-tint-br: rgba(119,119,255,.4);
+      --good: var(--ok-solid); --good-tint: rgba(88,204,2,.13); --good-br: rgba(88,204,2,.42);
+      --bad: var(--no-solid); --bad-tint: rgba(255,138,144,.15); --bad-br: rgba(255,138,144,.42);
+      --warn: var(--warn-solid);
+      --hover: var(--n-700);
+      --sh: 0 1px 2px rgba(0,0,0,.4), 0 20px 40px -28px rgba(0,0,0,.6);
+    }
+    :root[data-theme="dark"] .svideo { background: var(--n-700); }
+    :root[data-theme="dark"] .qarea__scroll::-webkit-scrollbar-thumb,
+    :root[data-theme="dark"] .sinfo::-webkit-scrollbar-thumb { background: var(--n-600); }
+    :root[data-theme="dark"] .qarea__scroll::-webkit-scrollbar-thumb:hover,
+    :root[data-theme="dark"] .sinfo::-webkit-scrollbar-thumb:hover { background: var(--n-500); }
+
+    /* 헤더 다크/라이트 토글 버튼 */
+    .sicon { width: 34px; height: 34px; flex: none; border-radius: var(--r-sm); border: 1px solid var(--line);
+      background: var(--surface); display: grid; place-items: center; color: var(--ink2); cursor: pointer; transition: .15s; }
+    .sicon:hover { border-color: var(--line-strong); color: var(--ink); }
+    .sicon svg { width: 18px; height: 18px; }
+    .sicon .ico-sun { display: none; }
+    :root[data-theme="dark"] .sicon .ico-moon { display: none; }
+    :root[data-theme="dark"] .sicon .ico-sun { display: block; }
+    html, body { height: 100%; }
+    body.exam-body { background: var(--canvas); color: var(--ink); overflow: hidden;
+      font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+    .solve { display: flex; flex-direction: column; height: 100dvh; overflow: hidden; }
+    ::selection { background: var(--accent-tint); }
+
+    /* ===== 헤더 (투명 바 + 헤어라인) ===== */
+    .shead { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      padding: 13px 24px; border-bottom: 1px solid var(--line); }
+    .shead__l { display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .sback { width: 34px; height: 34px; flex: none; border-radius: var(--r-sm); border: 1px solid var(--line);
+      background: var(--surface); display: grid; place-items: center; color: var(--ink2); cursor: pointer; transition: .15s; }
+    .sback:hover { border-color: var(--line-strong); color: var(--ink); }
+    .sback svg { width: 18px; height: 18px; }
+    .scrumb { display: flex; align-items: baseline; gap: 9px; min-width: 0; overflow: hidden; }
+    .scrumb .home { font-size: 15px; font-weight: 800; color: var(--ink); letter-spacing: -.01em; flex: none; }
+    .scrumb .seg { font-size: 13px; font-weight: 600; color: var(--faint); white-space: nowrap; }
+    .scrumb .cur { font-size: 13px; font-weight: 700; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .scrumb .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--line-strong); flex: none; align-self: center; }
+    .shead__r { display: flex; align-items: center; gap: 6px; flex: none; }
+    .slink { display: inline-flex; align-items: center; gap: 6px; font-size: 13.5px; font-weight: 600; color: var(--muted);
+      padding: 7px 11px; border-radius: var(--r-sm); cursor: pointer; transition: .13s; }
+    .slink:hover { background: var(--surface); color: var(--ink); }
+    .slink svg { width: 15px; height: 15px; }
+
+    /* ===== 워크스페이스: 하나의 표면을 헤어라인으로 분할 ===== */
+    .scontent { flex: 1; min-height: 0; margin: 16px 20px; display: flex; background: var(--surface);
+      border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--sh); overflow: hidden; }
+
+    /* 문제 패널 */
+    .qarea { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+    .qarea__scroll { flex: 1; min-height: 0; overflow-y: auto; padding: 30px 36px; display: flex; flex-direction: column;
+      gap: 22px; max-width: 760px; }
+    .qmeta { display: flex; align-items: center; gap: 12px; }
+    .qcount { font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--ink2);
+      letter-spacing: .04em; font-variant-numeric: tabular-nums; }
+    .qcount b { color: var(--accent); }
+    .qtag { font-size: 12px; font-weight: 700; letter-spacing: .02em; color: var(--muted);
+      padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; }
+    .qtitle { font-size: 25px; font-weight: 800; line-height: 1.38; letter-spacing: -.025em; color: var(--ink);
+      text-wrap: balance; }
+
+    /* 조건 (reference) — 카드 대신 좌측 헤어라인 구획 */
+    .refbox { border-left: 2px solid var(--line-strong); padding: 2px 0 2px 18px; display: flex; flex-direction: column; gap: 9px; }
+    .refbox__cap { font-size: 11px; font-weight: 800; letter-spacing: .09em; color: var(--faint); text-transform: uppercase; }
+    .refbox ul { display: flex; flex-direction: column; gap: 7px; }
+    .refbox li { list-style: none; font-size: 17px; color: var(--ink2); line-height: 1.5; padding-left: 16px; position: relative; }
+    .refbox li::before { content: ""; position: absolute; left: 0; top: 11px; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+
+    /* 문제 이미지 (스켈레톤) */
+    .qimg { align-self: flex-start; width: 208px; height: 236px; border-radius: var(--r-md); border: 1px solid var(--line);
+      background: var(--rail); display: grid; place-items: center; color: var(--faint); }
+    .qimg svg { width: 68px; height: 68px; opacity: .55; }
+
+    /* 옵션 */
+    .opts { display: grid; gap: 10px; }
+    .opts--grid { grid-template-columns: repeat(3, 1fr); }
+    .opts--col { grid-template-columns: 1fr; }
+    .opt { display: flex; align-items: center; gap: 13px; padding: 14px 16px; border: 1px solid var(--line);
+      border-radius: var(--r-md); background: var(--surface); cursor: pointer; transition: border-color .12s, background .12s, box-shadow .12s; text-align: left; }
+    .opt:hover { border-color: var(--line-strong); background: var(--hover); }
+    .opt__num { width: 27px; height: 27px; flex: none; border-radius: 50%; border: 1.5px solid var(--line-strong);
+      display: grid; place-items: center; font-size: 13px; font-weight: 800; color: var(--muted); background: var(--surface);
+      font-variant-numeric: tabular-nums; transition: .12s; }
+    .opt__num svg { width: 14px; height: 14px; }
+    .opt__txt { font-size: 17px; font-weight: 600; color: var(--ink); letter-spacing: -.01em; }
+    .opts.is-locked .opt { cursor: default; }
+    /* 선택 */
+    .opt.is-selected { border-color: var(--accent); background: var(--accent-tint); box-shadow: inset 0 0 0 1px var(--accent); }
+    .opt.is-selected .opt__num { background: var(--accent); border-color: var(--accent); color: var(--th-on-accent); }
+    /* 채점 */
+    .opt.is-correct { border-color: var(--good-br); background: var(--good-tint); box-shadow: inset 0 0 0 1px var(--good-br); }
+    .opt.is-correct .opt__num { background: var(--good); border-color: var(--good); color: var(--n-000); }
+    .opt.is-wrong { border-color: var(--bad-br); background: var(--bad-tint); box-shadow: inset 0 0 0 1px var(--bad-br); }
+    .opt.is-wrong .opt__num { background: var(--bad); border-color: var(--bad); color: var(--n-000); }
+    .opts.is-locked .opt:not(.is-correct):not(.is-wrong) { opacity: .5; }
+
+    /* 주관식 (단답 입력) */
+    .short { display: flex; flex-direction: column; gap: 11px; }
+    .short__label { font-size: 11px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; color: var(--faint); }
+    .short__field { display: inline-flex; align-items: center; align-self: flex-start; gap: 4px; padding: 4px;
+      border: 1.5px solid var(--line-strong); border-radius: var(--r-md); background: var(--surface); transition: border-color .12s, box-shadow .12s, background .12s; }
+    .short__field:focus-within { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+    .short__input { width: 210px; height: 50px; padding: 0 16px; border: none; background: transparent; color: var(--ink);
+      font-family: var(--font-mono); font-size: 23px; font-weight: 700; font-variant-numeric: tabular-nums; }
+    .short__input:focus { outline: none; }
+    .short__input::placeholder { color: var(--faint); font-weight: 500; font-size: 17px; letter-spacing: -.01em; }
+    .short__unit { font-size: 17px; font-weight: 700; color: var(--muted); padding: 0 6px; }
+    .short__icon { width: 34px; height: 34px; border-radius: 9px; display: none; place-items: center; color: var(--n-000); margin: 0 4px; }
+    .short__icon svg { width: 17px; height: 17px; }
+    .short__field.is-correct { border-color: var(--good); box-shadow: inset 0 0 0 1px var(--good); background: var(--good-tint); }
+    .short__field.is-correct .short__icon { display: grid; background: var(--good); }
+    .short__field.is-wrong { border-color: var(--bad); box-shadow: inset 0 0 0 1px var(--bad); background: var(--bad-tint); }
+    .short__field.is-wrong .short__icon { display: grid; background: var(--bad); }
+    .short__answer { font-size: 14px; color: var(--muted); }
+    .short__answer b { color: var(--good); font-weight: 800; font-family: var(--font-mono); }
+    /* 키패드 (주관식 입력) */
+    .keypad { display: grid; grid-template-columns: repeat(3, 74px); gap: 8px; margin-top: 4px; }
+    .kp { height: 50px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface);
+      font-family: var(--font-mono); font-size: 19px; font-weight: 700; color: var(--ink); cursor: pointer;
+      display: grid; place-items: center; transition: .1s; font-variant-numeric: tabular-nums; }
+    .kp:hover { border-color: var(--line-strong); background: var(--hover); }
+    .kp:active { background: var(--accent-tint); border-color: var(--accent-tint-br); }
+    .kp--fn { color: var(--muted); }
+    .kp--fn svg { width: 19px; height: 19px; }
+    .keypad.is-locked { opacity: .45; pointer-events: none; }
+
+    /* 해설 */
+    .explain { border: 1px solid var(--line); background: var(--rail); border-radius: var(--r-md); padding: 16px 18px;
+      display: none; flex-direction: column; gap: 8px; }
+    .explain.show { display: flex; animation: rise .28s cubic-bezier(.2,.7,.3,1); }
+    @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+    .explain__cap { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 800;
+      letter-spacing: .06em; text-transform: uppercase; color: var(--warn); }
+    .explain__cap svg { width: 15px; height: 15px; }
+    .explain__body { font-size: 16px; line-height: 1.68; color: var(--ink2); }
+
+    /* ===== 정보 레일 ===== */
+    .sinfo { flex: none; width: 356px; background: var(--rail); border-left: 1px solid var(--line);
+      overflow-y: auto; padding: 24px; display: flex; flex-direction: column; }
+    .sblock { display: flex; flex-direction: column; gap: 11px; padding: 20px 0; border-top: 1px solid var(--line); }
+    .sblock:first-child { padding-top: 2px; border-top: none; }
+    .sblock:last-child { padding-bottom: 4px; }
+    .scap { font-size: 11px; font-weight: 800; letter-spacing: .09em; color: var(--faint); text-transform: uppercase; }
+    .sbadges { display: flex; gap: 6px; }
+    .sbadge { padding: 4px 10px; border-radius: 7px; font-size: 12px; font-weight: 800; }
+    .sbadge--con { background: var(--accent); color: var(--th-on-accent); }
+    .sbadge--adv { background: var(--accent-tint); color: var(--accent-ink); border: 1px solid var(--accent-tint-br); }
+    .stype { font-size: 18px; font-weight: 800; letter-spacing: -.02em; line-height: 1.35; margin-top: 1px; }
+    .svideo { height: 172px; border-radius: var(--r-md); background: var(--n-100); border: 1px solid var(--line);
+      display: grid; place-items: center; position: relative; overflow: hidden; cursor: pointer; }
+    .svideo:hover .svideo__play { transform: scale(1.06); }
+    .svideo__play { width: 50px; height: 50px; border-radius: 50%; background: rgba(13,18,32,.62); display: grid; place-items: center; transition: transform .15s; }
+    .svideo__play svg { width: 19px; height: 19px; color: var(--n-000); margin-left: 3px; }
+    .pcard { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); padding: 15px 16px; display: flex; flex-direction: column; gap: 9px; }
+    .pcard__q { font-size: 14px; font-weight: 700; color: var(--ink2); }
+    .pcard__ex { text-align: center; font-family: var(--font-mono); font-size: 20px; font-weight: 700; letter-spacing: .01em; color: var(--ink); padding: 4px 0 2px; }
+    .hist { display: flex; flex-direction: column; }
+    .hitem { display: flex; align-items: center; gap: 11px; padding: 11px 0; border-top: 1px solid var(--line-2); }
+    .hitem:first-child { border-top: none; padding-top: 2px; }
+    .hicon { width: 24px; height: 24px; flex: none; border-radius: 50%; display: grid; place-items: center; color: var(--n-000); }
+    .hicon svg { width: 13px; height: 13px; }
+    .hicon--o { background: var(--good); } .hicon--x { background: var(--bad); }
+    .hitem__main { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .hitem__top { font-size: 13px; font-weight: 600; color: var(--ink2); }
+    .htag { font-weight: 800; } .htag--o { color: var(--good); } .htag--x { color: var(--bad); }
+    .hitem__time { font-family: var(--font-mono); font-size: 11.5px; color: var(--faint); font-variant-numeric: tabular-nums; }
+
+    /* ===== 하단 액션 (투명 바 + 헤어라인) ===== */
+    .sfoot { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 14px 24px; border-top: 1px solid var(--line); }
+    .sfoot__hint { font-size: 13px; color: var(--faint); font-weight: 500; }
+    .sfoot__btns { display: flex; gap: 10px; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; border-radius: var(--r-md);
+      font-size: 14.5px; font-weight: 700; cursor: pointer; transition: .14s; letter-spacing: -.01em; }
+    .btn svg { width: 16px; height: 16px; }
+    .btn--sec { background: var(--surface); border: 1px solid var(--line); color: var(--ink2); }
+    .btn--sec:hover { border-color: var(--line-strong); color: var(--ink); }
+    .btn--pri { background: var(--accent); color: var(--th-on-accent); border: 1px solid var(--accent); }
+    .btn--pri:hover:not(:disabled) { background: var(--accent-ink); border-color: var(--accent-ink); }
+    .btn--pri:disabled { background: var(--surface); border-color: var(--line); color: var(--faint); cursor: not-allowed; }
+
+    /* 스크롤바 */
+    .qarea__scroll, .sinfo { scrollbar-width: thin; scrollbar-color: var(--n-200) transparent; }
+    .qarea__scroll::-webkit-scrollbar, .sinfo::-webkit-scrollbar { width: 10px; }
+    .qarea__scroll::-webkit-scrollbar-thumb, .sinfo::-webkit-scrollbar-thumb {
+      background: var(--n-200); border-radius: 999px; border: 2.5px solid transparent; background-clip: padding-box; }
+    .qarea__scroll::-webkit-scrollbar-thumb:hover, .sinfo::-webkit-scrollbar-thumb:hover { background: var(--n-300); background-clip: padding-box; }
+
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    @media (prefers-reduced-motion: reduce) { .explain.show { animation: none; } .svideo:hover .svideo__play { transform: none; } }
+    @media (max-width: 980px) {
+      .scontent { flex-direction: column; overflow-y: auto; }
+      .qarea__scroll { max-width: none; } .sinfo { width: auto; border-left: none; border-top: 1px solid var(--line); }
+      .scrumb .seg, .scrumb .dot:first-of-type { display: none; }
+    }
+  </style>
+</head>
+<body class="exam-body">
+  <div class="solve">
+    <!-- 헤더 -->
+    <header class="shead">
+      <div class="shead__l">
+        <a class="sback" href="exam-home.html" title="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></a>
+        <nav class="scrumb">
+          <span class="home">시험 대비</span>
+          <span class="dot"></span>
+          <span class="seg">초등 3-1</span>
+          <span class="dot"></span>
+          <span class="seg">1단원 덧셈과 뺄셈</span>
+          <span class="dot"></span>
+          <span class="cur">올림이 없는 몇십몇 × 몇의 활용</span>
+        </nav>
+      </div>
+      <div class="shead__r">
+        <button class="sicon" id="themeToggle" title="다크/라이트 전환" aria-label="다크/라이트 전환">
+          <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+          <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.4M12 19.6V22M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M2 12h2.4M19.6 12H22M4.9 19.1l1.7-1.7M17.4 6.6l1.7-1.7"/></svg>
+        </button>
+        <span class="slink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.3 4.3L2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 4.3a2 2 0 0 0-3.4 0z"/></svg>오류 신고</span>
+        <a class="slink" href="exam-home.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>나가기</a>
+      </div>
+    </header>
+
+    <!-- 워크스페이스 -->
+    <div class="scontent">
+      <section class="qarea">
+        <div class="qarea__scroll" id="qarea"></div>
+      </section>
+
+      <aside class="sinfo">
+        <div class="sblock">
+          <span class="scap">유형 정보</span>
+          <div class="sbadges"><span class="sbadge sbadge--con">정복</span><span class="sbadge sbadge--adv">심화</span></div>
+          <span class="stype">올림이 없는 몇십몇 × 몇의 활용</span>
+        </div>
+        <div class="sblock">
+          <span class="scap">대표 유형 동영상</span>
+          <div class="svideo"><span class="svideo__play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span></div>
+        </div>
+        <div class="sblock">
+          <span class="scap">대표 유형 문제</span>
+          <div class="pcard"><span class="pcard__q">다음 식을 계산하여 값을 구하시오.</span><span class="pcard__ex">124 + 352 = □</span></div>
+        </div>
+        <div class="sblock">
+          <span class="scap">최근 풀이 이력</span>
+          <div class="hist">
+            <div class="hitem"><span class="hicon hicon--o"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span><div class="hitem__main"><span class="hitem__top">시험 대비 · <span class="htag htag--o">정답</span></span><span class="hitem__time">2026.06.03. 09:00:00</span></div></div>
+            <div class="hitem"><span class="hicon hicon--x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg></span><div class="hitem__main"><span class="hitem__top">시험 대비 · <span class="htag htag--x">오답</span></span><span class="hitem__time">2026.06.02. 14:30:00</span></div></div>
+            <div class="hitem"><span class="hicon hicon--o"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span><div class="hitem__main"><span class="hitem__top">시험 대비 · <span class="htag htag--o">정답</span></span><span class="hitem__time">2026.05.30. 16:12:40</span></div></div>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- 하단 액션 -->
+    <footer class="sfoot">
+      <span class="sfoot__hint" id="footHint">보기를 선택하고 제출하세요.</span>
+      <div class="sfoot__btns">
+        <a class="btn btn--sec" href="exam-home.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg>홈으로</a>
+        <button class="btn btn--pri" id="primaryBtn" disabled>제출하기</button>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    (function(){
+      var btn = document.getElementById('themeToggle');
+      if(!btn) return;
+      btn.addEventListener('click', function(){
+        var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+        var next = dark ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        try{ localStorage.setItem('rm-theme', next); }catch(e){}
+      });
+    })();
+  </script>
+  <script src="scripts/exam-solve.js"></script>
+</body>
+</html>

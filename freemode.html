@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="ko" data-section="space">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>자유 모드 — 리딩수학과학</title>
+  <link rel="stylesheet" href="styles/tokens.css?v=15" />
+  <link rel="stylesheet" href="styles/base.css?v=3" />
+  <link rel="stylesheet" href="styles/space-bg.css?v=1" />
+  <link rel="stylesheet" href="styles/gnb.css?v=4" />
+  <style>
+    :root{
+      --ink:var(--text); --muted:var(--text-muted); --blue:var(--info-solid); --green:var(--ok-on-dark); --green2:var(--ok-solid);
+      --panel:var(--surface-1); --card:var(--n-650); --rail:var(--surface-3);
+    }
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html,body{ height:100%; }
+    body{ font-family:var(--font-sans); background:var(--bg); color:var(--ink); overflow:hidden;
+      -webkit-font-smoothing:antialiased; letter-spacing:-.02em; }
+    .app{ position:relative; z-index:1; height:100%; display:flex; flex-direction:column; }
+    .fm{ position:relative; flex:1; min-height:0; overflow:hidden; }
+
+    /* ---- 상단 토글 ---- */
+    .fm__top{ position:absolute; top:16px; right:16px; z-index:6; display:flex; align-items:center; gap:16px; }
+    .seg{ display:flex; padding:4px; background:var(--n-000); border-radius:20px; }
+    .seg button{ padding:8px 16px; border:0; border-radius:16px; background:transparent; color:var(--text-meta);
+      font-family:inherit; font-size:15px; font-weight:800; cursor:pointer; letter-spacing:-.03em; transition:.15s; }
+    .seg button.is-on{ background:var(--blue); color:var(--n-000); }
+    .switch{ display:flex; align-items:center; gap:9px; }
+    .switch__l{ font-size:15px; font-weight:800; }
+    .switch__t{ width:56px; height:30px; border-radius:27px; background:rgba(255,255,255,.4); padding:4px;
+      cursor:pointer; transition:.2s; display:flex; }
+    .switch__t.is-on{ background:var(--green); justify-content:flex-end; }
+    .switch__k{ width:22px; height:22px; border-radius:50%; background:var(--n-000); transition:.2s; }
+
+    /* ---- 우주 전환 ---- */
+    .fm__univ{ position:absolute; right:24px; bottom:24px; z-index:6; display:inline-flex; align-items:center; gap:9px;
+      height:50px; padding:0 22px; border-radius:15px; border:1px solid var(--border-strong);
+      background:var(--surface-1); color:var(--ink); font-family:inherit; font-size:15px; font-weight:700;
+      cursor:pointer; transition:.16s; backdrop-filter:blur(4px); }
+    .fm__univ:hover{ border-color:var(--border-strong); background:var(--surface-2); }
+    .fm__univ svg{ width:18px; height:18px; }
+    .fm__label{ position:absolute; left:0; right:0; top:26px; text-align:center; z-index:5;
+      font-size:14px; font-weight:700; color:var(--muted); }
+    .fm__label b{ color:var(--n-000); }
+
+    /* ---- 캐러셀 ---- */
+    .carousel{ position:absolute; inset:0; display:flex; align-items:center; }
+    .cbtn{ position:absolute; top:50%; transform:translateY(-50%); z-index:7; width:56px; height:56px;
+      border-radius:50%; border:0; background:var(--border); color:var(--n-000); cursor:pointer;
+      display:grid; place-items:center; transition:.15s; }
+    .cbtn:hover{ background:var(--border-strong); }
+    .cbtn:disabled{ opacity:.25; cursor:default; }
+    .cbtn svg{ width:26px; height:26px; }
+    .cbtn--l{ left:26px; } .cbtn--r{ right:26px; }
+
+    .viewport{ position:absolute; inset:0; overflow:hidden; cursor:grab; touch-action:pan-y; }
+    .viewport.is-drag{ cursor:grabbing; }
+    .track{ position:absolute; top:50%; left:0; display:flex; align-items:flex-start; gap:70px;
+      transform:translateY(-50%); transition:transform .45s cubic-bezier(.3,.7,.3,1); padding-top:10px; }
+    .planet{ position:relative; flex:none; width:186px; display:flex; flex-direction:column; align-items:center; gap:14px;
+      opacity:.32; transform:scale(.86); transition:opacity .4s, transform .4s; cursor:pointer; }
+    .planet.is-center{ opacity:1; transform:scale(1.18); }
+    .planet__img{ width:186px; height:186px; object-fit:contain; pointer-events:none;
+      filter:drop-shadow(0 18px 30px rgba(0,0,0,.5)); }
+    .planet__label{ font-size:22px; font-weight:800; letter-spacing:-.04em; text-align:center; white-space:nowrap; }
+    .planet__prog{ width:200px; opacity:0; height:0; overflow:hidden; transition:opacity .3s; text-align:center; }
+    .planet.is-center .planet__prog{ opacity:1; height:auto; }
+    .planet__pct{ font-size:14px; font-weight:700; color:var(--n-000); margin-bottom:8px; }
+    .bar{ width:200px; height:14px; border-radius:36px; background:var(--border); overflow:hidden; margin:0 auto; }
+    .bar__f{ height:100%; border-radius:27px; background:var(--green2); transition:width .5s; }
+    /* 중앙 행성 '목록 보기' 힌트 (한 번 더 누르면 상세) */
+    .planet__hint{ position:absolute; top:150px; left:50%; z-index:3; display:none; align-items:center; gap:6px;
+      height:34px; padding:0 13px 0 11px; border-radius:18px; border:0; background:var(--blue); color:var(--n-000);
+      font-family:inherit; font-size:13px; font-weight:800; cursor:pointer; white-space:nowrap;
+      box-shadow:0 10px 22px -6px rgba(0,140,255,.75); animation:hintPulse 1.7s ease-in-out infinite; }
+    .planet.is-center .planet__hint{ display:inline-flex; }
+    .planet__hint svg{ width:16px; height:16px; }
+    @keyframes hintPulse{ 0%,100%{ transform:translate(-50%,0);} 50%{ transform:translate(-50%,-5px);} }
+
+    /* ---- 모두 보기 ---- */
+    .allview{ position:absolute; inset:64px 0 0; overflow-y:auto; padding:22px 40px 48px; display:none; }
+    .allview.is-on{ display:block; }
+    /* 학기 모두보기: 한 학년 = 한 열 (1·2학기 세로 스택) */
+    .allcols{ display:flex; gap:24px; justify-content:center; align-items:flex-start; flex-wrap:wrap;
+      max-width:1220px; margin:0 auto; }
+    .allcol{ display:flex; flex-direction:column; gap:34px; width:272px; }
+    /* 계통 모두보기: 계통별 블록 + 4열 그리드 */
+    .strandblk{ max-width:1220px; margin:0 auto 40px; }
+    .strandblk__hd{ display:flex; align-items:center; gap:12px; margin-bottom:16px; }
+    .strandblk__img{ width:46px; height:46px; object-fit:contain; }
+    .strandblk__t{ font-size:24px; font-weight:800; letter-spacing:-.03em; }
+    .strandgrid{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:26px 24px; }
+    @media (max-width:1080px){ .strandgrid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    /* unit-box (행성이 카드 위에 얹힘) */
+    .ucard{ display:flex; flex-direction:column; align-items:center; }
+    .ucard__img{ width:92px; height:92px; object-fit:contain; margin-bottom:-22px; position:relative; z-index:1;
+      filter:drop-shadow(0 8px 14px rgba(0,0,0,.45)); }
+    .ucard__body{ width:100%; background:var(--rail); border-radius:22px; padding:30px 15px 15px; }
+    .ucard__nm{ text-align:center; font-size:16.5px; font-weight:800; margin-bottom:12px; letter-spacing:-.03em; }
+    .ubtn{ display:flex; align-items:center; gap:8px; width:100%; padding:11px 13px; margin-bottom:7px; border:0;
+      border-radius:13px; background:var(--surface-2); color:var(--text); font-family:inherit; font-size:13.5px; font-weight:700;
+      cursor:pointer; text-align:left; transition:background .14s, transform .14s; }
+    .ubtn:last-child{ margin-bottom:0; }
+    .ubtn:hover{ background:var(--surface-hover); transform:translateY(-1px); }
+    .ubtn__no{ color:var(--th-accent-hi); font-weight:800; flex:none; font-size:12.5px; }
+    .ubtn__t{ flex:1; min-width:0; }
+    .ubtn__done{ font-size:11.5px; font-weight:800; color:var(--green); flex:none; }
+
+    /* ---- 대단원 모달 ---- */
+    .umodal{ position:fixed; inset:0; z-index:70; display:none; place-items:center; background:var(--scrim); }
+    .umodal.is-open{ display:grid; }
+    .umodal__box{ width:560px; max-width:92vw; max-height:82vh; overflow-y:auto; background:var(--surface-1);
+      border:2px solid var(--n-650); border-radius:24px; }
+    .umodal__head{ display:flex; align-items:center; justify-content:space-between; padding:16px 22px;
+      border-bottom:1px solid var(--n-650); position:sticky; top:0; background:var(--surface-1); z-index:1; }
+    .umodal__ttl{ font-size:18px; font-weight:800; letter-spacing:-.03em; }
+    .umodal__x{ width:32px; height:32px; border:0; background:transparent; color:var(--text-muted); cursor:pointer;
+      display:grid; place-items:center; border-radius:8px; }
+    .umodal__x:hover{ background:var(--border); color:var(--n-000); }
+
+    /* ---- 슬라이드인 커리큘럼 ---- */
+    .detail{ position:absolute; top:0; right:0; bottom:0; width:456px; max-width:92vw; background:var(--surface-1);
+      border-left:1px solid var(--border); transform:translateX(101%); z-index:8;
+      transition:transform .34s cubic-bezier(.3,.7,.3,1); display:flex; flex-direction:column;
+      box-shadow:var(--shadow-2); }
+    .detail.is-open{ transform:none; }
+    .fm.is-detail .carousel{ transform:translateX(-228px); transition:transform .34s cubic-bezier(.3,.7,.3,1); }
+    .fm.is-detail .fm__univ, .fm.is-detail .fm__top, .fm.is-detail .fm__label{ opacity:.2; pointer-events:none; }
+    .detail__head{ display:flex; align-items:center; justify-content:space-between; padding:17px 20px; border-bottom:1px solid var(--n-650); }
+    .detail__ttl{ font-size:20px; font-weight:800; letter-spacing:-.03em; }
+    .detail__x{ width:32px; height:32px; border:0; background:transparent; color:var(--text-muted); cursor:pointer; display:grid; place-items:center; border-radius:8px; }
+    .detail__x:hover{ background:var(--border); color:var(--n-000); }
+    .detail__list{ flex:1; overflow-y:auto; }
+    .detail__list::-webkit-scrollbar{ width:8px; } .detail__list::-webkit-scrollbar-thumb{ background:var(--surface-3); border-radius:50px; }
+
+    /* 계통 상세: 학기 구분 헤더 */
+    .semhd{ display:flex; align-items:center; gap:10px; padding:18px 20px 2px; }
+    .semhd__img{ width:32px; height:32px; object-fit:contain; flex:none; }
+    .semhd__t{ font-size:15.5px; font-weight:800; color:var(--th-accent-hi); letter-spacing:-.03em; }
+
+    /* unit / 소단원 */
+    .unit{ padding:12px 20px; border-top:2px solid var(--n-650); } .unit:first-child{ border-top:0; }
+    .semhd + .unit{ border-top:0; }
+    .unit__ttl{ display:flex; align-items:center; gap:9px; font-size:16px; font-weight:800; margin-bottom:9px; }
+    .tag{ font-size:12px; font-weight:700; padding:2px 7px; border-radius:6px; white-space:nowrap; }
+    .sub{ border-radius:14px; background:var(--surface-2); margin-bottom:8px; overflow:hidden; }
+    .sub__head{ display:flex; align-items:center; gap:8px; padding:11px 13px; cursor:pointer; }
+    .sub__no{ font-size:14px; font-weight:800; color:var(--th-accent-hi); flex:none; }
+    .sub__title{ flex:1; min-width:0; font-size:14px; font-weight:700; color:var(--text); letter-spacing:-.03em; }
+    .sub__done{ font-size:11px; font-weight:800; color:var(--green); flex:none; }
+    .sub__stars{ display:flex; gap:9px; flex:none; }
+    .sub__chev{ width:20px; height:20px; color:var(--th-accent-hi); display:grid; place-items:center; transition:transform .2s; flex:none; }
+    .sub.is-open .sub__chev{ transform:rotate(180deg); } .sub__chev svg{ width:13px; height:13px; }
+    .sub__body{ display:none; padding:2px 12px 12px; } .sub.is-open .sub__body{ display:block; }
+
+    /* 훈련 버튼 3종 (개념·유형·서술형, 각 라운드) */
+    .tbtns{ display:flex; gap:8px; }
+    .tbtn{ flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; padding:13px 6px 11px;
+      border:0; border-radius:12px; background:var(--surface-2); color:var(--text); font-family:inherit; cursor:pointer;
+      transition:background .14s, transform .14s; }
+    .tbtn:hover{ background:var(--surface-3); transform:translateY(-1px); }
+    .tbtn__nm{ font-size:13px; font-weight:800; }
+    .tbtn__r{ font-size:11px; font-weight:800; color:var(--text-muted); letter-spacing:.02em; }
+    /* 유형 도전 */
+    .chal{ display:flex; align-items:center; gap:12px; width:100%; margin-top:8px; padding:12px 14px; border:0;
+      border-radius:12px; background:var(--surface-2); color:var(--text); font-family:inherit; cursor:pointer; transition:background .14s; }
+    .chal:hover{ background:var(--surface-3); }
+    .chal__nm{ font-size:13.5px; font-weight:800; flex:none; }
+    .chal__chips{ display:flex; gap:4px; flex:1; }
+    .chip{ flex:1; height:9px; border-radius:4px; }
+    .chip--none{ background:transparent; border:1.5px dashed var(--border-strong); }
+    .chip--pending{ background:var(--surface-1); border:1.5px dashed var(--n-400); }
+    .chip--relearn{ background:var(--no-solid); }
+    .chip--supplement{ background:var(--warn-solid); }
+    .chip--understood{ background:var(--ok-solid); }
+    .chip--mastered{ background:var(--ok-ink); }
+    .chal__go{ color:var(--th-accent-hi); display:grid; place-items:center; flex:none; } .chal__go svg{ width:16px; height:16px; }
+
+    /* 별점수 배지 (등급색 별 + 라운드 번호) */
+    .star{ position:relative; display:inline-grid; place-items:center; flex:none; }
+    .star svg{ display:block; }
+    .star--sm{ width:27px; height:27px; } .star--sm svg{ width:27px; height:27px; }
+    .star--md{ width:38px; height:38px; } .star--md svg{ width:38px; height:38px; }
+    .star--x svg path{ fill:var(--n-500); }
+    .star--gs svg path{ fill:#FFC800; }   /* [에셋연동] star/grade PNG */
+    .star--ga svg path{ fill:#FFC800; }   /* [에셋연동] star/grade PNG */
+    .star--gb svg path{ fill:#FFC148; }   /* [에셋연동] star/grade PNG */
+    .star--gc svg path{ fill:#FFA94D; }   /* [에셋연동] star/grade PNG */
+    .star__g{ position:absolute; top:44%; left:50%; transform:translate(-50%,-50%); color:#7D3E00; font-weight:900; }   /* [에셋연동] 별 배지 위 등급 글자 */
+    .star--sm .star__g{ font-size:10px; } .star--md .star__g{ font-size:14px; }
+    .star__r{ position:absolute; right:-4px; bottom:-4px; width:15px; height:15px; border-radius:50%;
+      background:var(--violet-500); border:1.5px solid var(--surface-1); color:var(--n-000); font-size:9.5px; font-weight:800; display:grid; place-items:center; }
+
+    .toast{ position:fixed; left:50%; bottom:30px; transform:translateX(-50%) translateY(16px); z-index:60;
+      background:var(--surface-2); border:1px solid var(--border); color:var(--ink); padding:11px 18px;
+      border-radius:12px; font-size:13.5px; font-weight:600; opacity:0; pointer-events:none; transition:.2s; }
+    .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+  </style>
+</head>
+<body>
+  <div class="spacebg" data-stars="170"></div>
+  <div class="app">
+    <header class="gnb">
+      <div class="gnb__info"><span class="gnb__logo"></span><span class="gnb__name">김학생</span></div>
+      <nav class="gnb__modes">
+        <button class="gnb__mode m-basic" data-go="home.html">기본 모드</button>
+        <button class="gnb__mode m-free is-active">자유 모드</button>
+        <button class="gnb__mode m-exam" data-go="exam-home.html">시험 대비</button>
+        <button class="gnb__mode m-assign" data-go="assignment-home.html">과제 센터<span class="gnb__mode__dot"></span></button>
+      </nav>
+      <div class="gnb__icons">
+        <button class="gnb__ico" title="도움말"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.8.4-1 .9-1 1.7" stroke-linecap="round"/><circle cx="12" cy="16.5" r="1" fill="currentColor" stroke="none"/></svg></button>
+        <button class="gnb__ico" title="오류 신고"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17h.01"/></svg></button>
+        <button class="gnb__ico" title="공지사항"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 9v6h3l7 4V5L7 9H4zM18 8a5 5 0 0 1 0 8"/></svg><span class="gnb__dot"></span></button>
+        <button class="gnb__ico" id="menuBtn" title="메뉴"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      </div>
+    </header>
+
+    <div class="fm">
+      <div class="fm__label" id="univLabel"><b>초등 우주</b> · 학기별 보기</div>
+
+      <div class="fm__top">
+        <div class="seg" id="seg">
+          <button class="is-on" data-v="semester">학기</button>
+          <button data-v="strand">계통</button>
+        </div>
+        <label class="switch">
+          <span class="switch__l">모두보기</span>
+          <span class="switch__t" id="allSwitch"><span class="switch__k"></span></span>
+        </label>
+      </div>
+
+      <div class="carousel">
+        <button class="cbtn cbtn--l" id="prevBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <div class="viewport" id="viewport"><div class="track" id="track"></div></div>
+        <button class="cbtn cbtn--r" id="nextBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+      </div>
+
+      <div class="allview" id="allView"></div>
+
+      <div class="detail" id="detail">
+        <div class="detail__head"><span class="detail__ttl" id="detailTtl">초등 3학년 1학기</span>
+          <button class="detail__x" id="detailX"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+        <div class="detail__list" id="detailList"></div>
+      </div>
+
+      <button class="fm__univ" id="univBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg>
+        <span id="univBtnL">중고등 우주로</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="umodal" id="uModal">
+    <div class="umodal__box">
+      <div class="umodal__head"><span class="umodal__ttl">대단원</span>
+        <button class="umodal__x" id="uModalX"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+      <div class="umodal__list" id="uModalList"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="scripts/space-bg.js?v=1"></script>
+  <script>
+  (function(){
+    /* ============ 데이터 ============ */
+    var UNIV = {
+      elem: { name:'초등 우주', planets:[
+        {key:'elem-3-1',label:'초등 3학년 1학기',prog:48},{key:'elem-3-2',label:'초등 3학년 2학기',prog:12},
+        {key:'elem-4-1',label:'초등 4학년 1학기',prog:0},{key:'elem-4-2',label:'초등 4학년 2학기',prog:0},
+        {key:'elem-5-1',label:'초등 5학년 1학기',prog:0},{key:'elem-5-2',label:'초등 5학년 2학기',prog:0},
+        {key:'elem-6-1',label:'초등 6학년 1학기',prog:0},{key:'elem-6-2',label:'초등 6학년 2학기',prog:0}
+      ]},
+      mid: { name:'중고등 우주', planets:[
+        {key:'mid-1-1',label:'중등 1학년 1학기',prog:100},{key:'mid-1-2',label:'중등 1학년 2학기',prog:86},
+        {key:'mid-2-1',label:'중등 2학년 1학기',prog:54},{key:'mid-2-2',label:'중등 2학년 2학기',prog:30},
+        {key:'mid-3-1',label:'중등 3학년 1학기',prog:8},{key:'mid-3-2',label:'중등 3학년 2학기',prog:0},
+        {key:'high-1-1',label:'통합과학 1',prog:0},{key:'high-1-2',label:'통합과학 2',prog:0}
+      ]}
+    };
+    var STRANDS = {
+      elem: [ {key:'suyeon',label:'수와 연산',prog:52},{key:'dohyeong',label:'도형',prog:20},{key:'cheukjeong',label:'측정',prog:8},{key:'gyuchik',label:'규칙성',prog:0},{key:'jaryo',label:'자료와 가능성',prog:0} ],
+      mid: [ {key:'munja',label:'문자와 식',prog:44},{key:'hamsu',label:'함수',prog:12},{key:'giha',label:'기하',prog:0},{key:'hwakryul',label:'확률과 통계',prog:0},{key:'byeonhwa',label:'변화와 관계',prog:0},{key:'dohyeong-cheukjeong',label:'도형과 측정',prog:0} ]
+    };
+    // 과목 계통 태그색 — 디자인시스템에 계통 전용 토큰이 없어 가장 가까운 상태/가족 토큰(다크 위)으로 매핑
+    var F_TAGCOLOR = { '수와 연산':'var(--no-on-dark)','도형':'var(--ok-on-dark)','규칙성':'var(--info-on-dark)','측정':'var(--warn-on-dark)','자료와 가능성':'var(--violet-300)',
+      '문자와 식':'var(--info-on-dark)','함수':'var(--teal-300)','기하':'var(--ok-on-dark)','확률과 통계':'var(--violet-300)','변화와 관계':'var(--no-on-dark)','도형과 측정':'var(--ok-on-dark)',
+      '물리':'var(--ok-on-dark)','화학':'var(--info-on-dark)','지구과학':'var(--no-on-dark)','생명과학':'var(--teal-300)' };
+    var F_TNAME = { concept:'개념 훈련', type:'유형 훈련', essay:'서술형 훈련' };
+    var F_TGO   = { concept:'learn-concept.html', type:'type-quiz.html', essay:'essay-basics.html' };
+    var CHAL_GO = 'type-quiz.html';
+
+    // 소단원 = { no, title, done, t:{concept,type,essay}, challenge:[6칩] }
+    // 훈련 = { round: 지금 해야 할 라운드, grade: 최고 등급('s'|'a'|'b'|'c'|null) }
+    function G(round,grade){ return {round:round,grade:grade||null}; }
+    function sub(no,title,done,c,t,e,chal){ return {no:no,title:title,done:done,t:{concept:c,type:t,essay:e},challenge:chal}; }
+    var CH = {
+      a:['understood','supplement','none','none','none','none'],
+      b:['mastered','understood','relearn','none','none','none'],
+      c:['none','none','none','none','none','none'],
+      d:['relearn','supplement','understood','mastered','pending','none']
+    };
+    // 학기별 커리큘럼 (데모)
+    var SEM_UNITS = {
+      'elem-3-1':[
+        {no:1,name:'덧셈과 뺄셈',tag:'수와 연산',subs:[
+          sub(1,'받아올림이 없는 세 자리 수의 덧셈',true, G(3,'a'),G(2,'b'),G(1,'c'), CH.b),
+          sub(2,'받아올림이 있는 세 자리 수의 덧셈',false, G(1,'b'),G(1,null),G(1,null), CH.a)
+        ]},
+        {no:2,name:'평면도형',tag:'도형',subs:[
+          sub(1,'선분, 직선, 반직선',false, G(1,'s'),G(2,'a'),G(1,null), CH.a)
+        ]},
+        {no:3,name:'나눗셈',tag:'수와 연산',subs:[
+          sub(1,'똑같이 나누어 보기',false, G(1,null),G(1,null),G(1,null), CH.c)
+        ]}
+      ]
+    };
+    var GENERIC = [
+      {no:1,name:'큰 수',tag:'수와 연산',subs:[
+        sub(1,'다섯 자리 수',false, G(1,'b'),G(1,null),G(1,null), CH.a),
+        sub(2,'십만, 백만, 천만',false, G(1,null),G(1,null),G(1,null), CH.c)
+      ]},
+      {no:2,name:'각도',tag:'측정',subs:[
+        sub(1,'각의 크기 재기',false, G(1,null),G(1,null),G(1,null), CH.c)
+      ]}
+    ];
+    function unitsFor(key){ return SEM_UNITS[key] || GENERIC; }
+    function unitsForStrand(semKey, tag){
+      var hit = unitsFor(semKey).filter(function(u){ return u.tag===tag; });
+      return hit.length ? hit : [{no:1,name:tag+' 단원',tag:tag,subs:[ sub(1,'대표 소단원',false,G(1,null),G(1,null),G(1,null),CH.c) ]}];
+    }
+    // 계통 상세: 학기별 그룹
+    function strandGroups(strandKey, strandLabel){
+      var base = state.u==='elem'
+        ? [['elem-3-1','3학년 1학기'],['elem-3-2','3학년 2학기'],['elem-4-1','4학년 1학기']]
+        : [['mid-1-1','1학년 1학기'],['mid-1-2','1학년 2학기'],['mid-2-1','2학년 1학기']];
+      var S = [
+        [ {no:1,name:'덧셈과 뺄셈',tag:strandLabel,subs:[ sub(1,'세 자리 수의 덧셈',true,G(3,'a'),G(2,'b'),G(1,'c'),CH.b) ]},
+          {no:3,name:'나눗셈',tag:strandLabel,subs:[ sub(1,'똑같이 나누어 보기',false,G(1,null),G(1,null),G(1,null),CH.c) ]} ],
+        [ {no:1,name:'곱셈',tag:strandLabel,subs:[ sub(1,'(몇십)×(몇)',false,G(1,'b'),G(1,null),G(1,null),CH.a) ]} ],
+        [ {no:2,name:'큰 수',tag:strandLabel,subs:[ sub(1,'다섯 자리 수',false,G(1,null),G(1,null),G(1,null),CH.c) ]} ]
+      ];
+      return base.map(function(b,idx){ return { semKey:b[0], semLabel:b[1], units:S[idx%S.length] }; });
+    }
+
+    var STEP = 186 + 70;   // planet width + gap
+    var state = { u:'elem', i:0, view:'semester', all:false };
+    var track = document.getElementById('track');
+    var detailEl = document.getElementById('detail');
+    var trackX = 0, dragMoved = false;
+
+    function curList(){ return state.view==='strand' ? STRANDS[state.u] : UNIV[state.u].planets; }
+    function curDir(){ return state.view==='strand' ? 'assets/figma/strands/' : 'assets/figma/planets/'; }
+
+    /* ============ 캐러셀 ============ */
+    function render(){
+      var arr = curList(), dir = curDir();
+      track.innerHTML='';
+      arr.forEach(function(p,idx){
+        var el = document.createElement('div');
+        el.className = 'planet' + (idx===state.i?' is-center':'');
+        el.innerHTML =
+          '<img class="planet__img" src="'+dir+p.key+'.png" alt="'+p.label+'">' +
+          '<button class="planet__hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>목록 보기</button>' +
+          '<div class="planet__label">'+p.label+'</div>' +
+          '<div class="planet__prog"><div class="planet__pct">'+p.prog+'% 진행했어요!</div><div class="bar"><div class="bar__f" style="width:'+p.prog+'%"></div></div></div>';
+        el.addEventListener('click', function(){ if(dragMoved) return;
+          if(idx===state.i) openPlanet(arr[idx]); else { state.i=idx; position(); } });
+        el.querySelector('.planet__hint').addEventListener('click', function(ev){ ev.stopPropagation(); state.i=idx; position(); openPlanet(arr[idx]); });
+        track.appendChild(el);
+      });
+      position();
+      updateChrome();
+    }
+    function position(){
+      var vpW = document.querySelector('.viewport').clientWidth;
+      trackX = vpW/2 - (state.i*STEP) - 93;
+      track.style.transform = 'translate('+trackX+'px, -50%)';
+      var kids = track.children;
+      for(var k=0;k<kids.length;k++) kids[k].classList.toggle('is-center', k===state.i);
+      document.getElementById('prevBtn').disabled = state.i===0;
+      document.getElementById('nextBtn').disabled = state.i===curList().length-1;
+      if(detailEl.classList.contains('is-open')) fillDetail(curList()[state.i]);   // 상세 열려있으면 동기화
+    }
+    function updateChrome(){
+      var vname = (state.view==='semester'?'학기별':'계통별');
+      document.getElementById('univLabel').innerHTML = '<b>'+UNIV[state.u].name+'</b> · '+vname+' 보기';
+      document.getElementById('univBtnL').textContent = state.u==='elem' ? '중고등 우주로' : '초등 우주로';
+    }
+
+    /* ============ 별점수 배지 ============ */
+    function starBadge(g, round, size){
+      return '<span class="star star--'+(size||'sm')+' '+(g?'star--g'+g:'star--x')+'">'
+        + '<svg viewBox="0 0 24 24"><path d="M12 2.4l2.9 5.9 6.5.95-4.7 4.58 1.1 6.47L12 17.77 6.1 20.87l1.1-6.47-4.7-4.58 6.5-.95z"/></svg>'
+        + (g?'<span class="star__g">'+g.toUpperCase()+'</span>':'')
+        + (round?'<span class="star__r">'+round+'</span>':'')
+        + '</span>';
+    }
+
+    /* ============ unit 렌더 ============ */
+    var CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
+    var GOARW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
+    function buildUnitEl(u, openFirst){
+      var unit=document.createElement('div'); unit.className='unit';
+      var col=F_TAGCOLOR[u.tag]||'var(--text-muted)';
+      var ttl=document.createElement('div'); ttl.className='unit__ttl';
+      ttl.innerHTML='<span class="tag" style="background:color-mix(in srgb, '+col+' 24%, transparent);color:'+col+'">'+u.tag+'</span>'+u.no+'단원 · '+u.name;
+      unit.appendChild(ttl);
+      u.subs.forEach(function(s,si){
+        var sb=document.createElement('div'); sb.className='sub'+((openFirst&&si===0)?' is-open':'');
+        var head=document.createElement('div'); head.className='sub__head';
+        head.innerHTML='<span class="sub__no">('+s.no+')</span><span class="sub__title">'+s.title+'</span>'
+          +(s.done?'<span class="sub__done">완료</span>':'')
+          +'<span class="sub__stars">'+starBadge(s.t.concept.grade,s.t.concept.round,'sm')+starBadge(s.t.type.grade,s.t.type.round,'sm')+starBadge(s.t.essay.grade,s.t.essay.round,'sm')+'</span>'
+          +'<span class="sub__chev">'+CHEV+'</span>';
+        head.addEventListener('click', function(){ sb.classList.toggle('is-open'); });
+        sb.appendChild(head);
+        var body=document.createElement('div'); body.className='sub__body';
+        var row=document.createElement('div'); row.className='tbtns';
+        ['concept','type','essay'].forEach(function(tk){
+          var ti=s.t[tk];
+          var b=document.createElement('button'); b.className='tbtn';
+          b.innerHTML=starBadge(ti.grade,null,'md')+'<span class="tbtn__nm">'+F_TNAME[tk]+'</span><span class="tbtn__r">ROUND '+ti.round+'</span>';
+          b.addEventListener('click', function(){ location.href=F_TGO[tk]; });
+          row.appendChild(b);
+        });
+        body.appendChild(row);
+        var chal=document.createElement('button'); chal.className='chal';
+        chal.innerHTML='<span class="chal__nm">유형 도전</span><span class="chal__chips">'
+          + (s.challenge||[]).map(function(st){ return '<span class="chip chip--'+st+'"></span>'; }).join('')
+          + '</span><span class="chal__go">'+GOARW+'</span>';
+        chal.addEventListener('click', function(){ location.href=CHAL_GO; });
+        body.appendChild(chal);
+        sb.appendChild(body); unit.appendChild(sb);
+      });
+      return unit;
+    }
+
+    /* ============ 슬라이드인 상세 ============ */
+    function fillDetail(item){
+      document.getElementById('detailTtl').textContent = item.label;
+      var host=document.getElementById('detailList'); host.innerHTML='';
+      if(state.view==='semester'){
+        unitsFor(item.key).forEach(function(u,ui){ host.appendChild(buildUnitEl(u, ui===0)); });
+      } else {
+        strandGroups(item.key, item.label).forEach(function(grp,gi){
+          var hd=document.createElement('div'); hd.className='semhd';
+          hd.innerHTML='<img class="semhd__img" src="assets/figma/planets/'+grp.semKey+'.png" alt=""><span class="semhd__t">'+grp.semLabel+'</span>';
+          host.appendChild(hd);
+          grp.units.forEach(function(u,ui){ host.appendChild(buildUnitEl(u, gi===0&&ui===0)); });
+        });
+      }
+    }
+    function openPlanet(item){ fillDetail(item); document.querySelector('.fm').classList.add('is-detail'); detailEl.classList.add('is-open'); }
+    function closeDetail(){ document.querySelector('.fm').classList.remove('is-detail'); detailEl.classList.remove('is-open'); }
+    document.getElementById('detailX').addEventListener('click', closeDetail);
+
+    /* ============ 대단원 모달 ============ */
+    function openUnitModal(title, u){
+      var m=document.getElementById('uModal');
+      m.querySelector('.umodal__ttl').textContent=title;
+      var body=document.getElementById('uModalList'); body.innerHTML=''; body.appendChild(buildUnitEl(u, true));
+      m.classList.add('is-open');
+    }
+    (function(){ var m=document.getElementById('uModal');
+      document.getElementById('uModalX').addEventListener('click', function(){ m.classList.remove('is-open'); });
+      m.addEventListener('click', function(e){ if(e.target===m) m.classList.remove('is-open'); });
+    })();
+
+    /* ============ 모두보기 ============ */
+    function ucardEl(planetKey, label, units){
+      var c=document.createElement('div'); c.className='ucard';
+      var img=document.createElement('img'); img.className='ucard__img'; img.src='assets/figma/planets/'+planetKey+'.png'; img.alt='';
+      var body=document.createElement('div'); body.className='ucard__body';
+      body.innerHTML='<div class="ucard__nm">'+label+'</div>';
+      units.forEach(function(u){
+        var b=document.createElement('button'); b.className='ubtn';
+        b.innerHTML='<span class="ubtn__no">'+u.no+'단원</span><span class="ubtn__t">'+u.name+'</span>'
+          +(u.subs.every(function(s){return s.done;})?'<span class="ubtn__done">완료</span>':'');
+        b.addEventListener('click', function(){ openUnitModal(label+' · '+u.no+'단원 '+u.name, u); });
+        body.appendChild(b);
+      });
+      c.appendChild(img); c.appendChild(body); return c;
+    }
+    function renderAll(){
+      var host=document.getElementById('allView'); host.innerHTML='';
+      if(state.view==='semester'){
+        var cols=document.createElement('div'); cols.className='allcols';
+        var ps=UNIV[state.u].planets;
+        for(var i=0;i<ps.length;i+=2){
+          var colEl=document.createElement('div'); colEl.className='allcol';
+          [ps[i],ps[i+1]].forEach(function(p){ if(!p) return; colEl.appendChild(ucardEl(p.key,p.label,unitsFor(p.key))); });
+          cols.appendChild(colEl);
+        }
+        host.appendChild(cols);
+      } else {
+        STRANDS[state.u].forEach(function(s){
+          var blk=document.createElement('div'); blk.className='strandblk';
+          blk.innerHTML='<div class="strandblk__hd"><img class="strandblk__img" src="assets/figma/strands/'+s.key+'.png" alt=""><div class="strandblk__t">'+s.label+'</div></div>';
+          var grid=document.createElement('div'); grid.className='strandgrid';
+          UNIV[state.u].planets.forEach(function(p){ grid.appendChild(ucardEl(p.key,p.label,unitsForStrand(p.key,s.label))); });
+          blk.appendChild(grid); host.appendChild(blk);
+        });
+      }
+    }
+    function applyAll(){
+      var on=state.all;
+      document.getElementById('allView').classList.toggle('is-on', on);
+      document.querySelector('.carousel').style.display = on?'none':'';
+      document.getElementById('univLabel').style.display = on?'none':'';
+      if(on){ closeDetail(); renderAll(); }
+    }
+
+    /* ============ 네비게이션 ============ */
+    document.getElementById('prevBtn').addEventListener('click', function(){ if(state.i>0){ state.i--; position(); } });
+    document.getElementById('nextBtn').addEventListener('click', function(){ if(state.i<curList().length-1){ state.i++; position(); } });
+    document.getElementById('univBtn').addEventListener('click', function(){ state.u = state.u==='elem'?'mid':'elem'; state.i=0;
+      if(state.all){ renderAll(); updateChrome(); } else { render(); } });
+    document.getElementById('seg').addEventListener('click', function(e){
+      var b=e.target.closest('button'); if(!b) return;
+      state.view=b.dataset.v; state.i=0;
+      Array.prototype.forEach.call(this.children, function(c){ c.classList.toggle('is-on', c===b); });
+      if(state.all){ renderAll(); updateChrome(); } else { render(); }
+    });
+    var allSw=document.getElementById('allSwitch');
+    allSw.addEventListener('click', function(){ state.all=!state.all; allSw.classList.toggle('is-on', state.all); applyAll(); });
+
+    /* ============ 드래그 ============ */
+    var vp=document.getElementById('viewport'); var dg={on:false,sx:0,base:0};
+    vp.addEventListener('pointerdown', function(e){
+      if(state.all || detailEl.classList.contains('is-open')) return;
+      dg.on=true; dg.sx=e.clientX; dg.base=trackX; dragMoved=false;
+      track.style.transition='none'; vp.classList.add('is-drag');
+    });
+    window.addEventListener('pointermove', function(e){
+      if(!dg.on) return; var dx=e.clientX-dg.sx; if(Math.abs(dx)>5) dragMoved=true;
+      track.style.transform='translate('+(dg.base+dx)+'px, -50%)';
+    });
+    window.addEventListener('pointerup', function(e){
+      if(!dg.on) return; dg.on=false; track.style.transition=''; vp.classList.remove('is-drag');
+      var dx=e.clientX-dg.sx; var steps=Math.round(-dx/STEP);
+      state.i=Math.min(Math.max(state.i+steps,0), curList().length-1); position();
+      setTimeout(function(){ dragMoved=false; }, 30);
+    });
+
+    document.addEventListener('keydown', function(e){
+      if(e.key==='Escape'){ var m=document.getElementById('uModal');
+        if(m.classList.contains('is-open')) m.classList.remove('is-open'); else closeDetail(); }
+      if(detailEl.classList.contains('is-open') || state.all) return;
+      if(e.key==='ArrowLeft' && state.i>0){ state.i--; position(); }
+      if(e.key==='ArrowRight' && state.i<curList().length-1){ state.i++; position(); }
+    });
+    window.addEventListener('resize', function(){ if(!state.all) position(); });
+
+    var toastEl=document.getElementById('toast'), tt;
+    function toast(m){ toastEl.textContent=m; toastEl.classList.add('show'); clearTimeout(tt); tt=setTimeout(function(){toastEl.classList.remove('show');},1800); }
+
+    render();
+  })();
+  </script>
+  <script src="scripts/gnb-drawer.js?v=6"></script>
+</body>
+</html>

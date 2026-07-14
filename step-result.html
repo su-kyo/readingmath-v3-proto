@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ko" data-section="concept" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>개념 학습 완료 · 스텝 결과 — 리딩수학과학</title>
+  <link rel="stylesheet" href="styles/tokens.css?v=15" />
+  <link rel="stylesheet" href="styles/base.css?v=3" />
+  <link rel="stylesheet" href="styles/components.css?v=5" />
+  <link rel="stylesheet" href="styles/learn-shell.css?v=7" />
+  <style>
+    /* ===== 하나의 '디바이스'로 정돈 — 다크 네이비 베젤 + LCD 화면 + (전환되는) 사이드 패널 =====
+       과제화면처럼 두 패널을 부드러운 30px 라운드로 띄우고, 베젤은 은은하게. 단일 블루 스케일. */
+    .rframe {
+      flex: 1; min-height: 0; display: flex; gap: 14px;
+      background: var(--th-static); border-radius: 34px 34px 0 0; padding: 8px 8px 0;
+      --lmain: var(--n-900); --ltext: var(--n-050); --lmuted: var(--n-300);
+      --bar-track: var(--n-700); --lcd: rgba(255,255,255,.05);
+      --accent: var(--th-accent-hi); --title1: var(--th-accent-hi); --title2: var(--th-accent); --rate: var(--cyan-400);
+      --row-bg: rgba(255,255,255,.04); --row-br: rgba(76,218,247,.38);
+    }
+    /* 우측 '학습 진행 현황'만 라이트/다크 전환 — 사이드 안에서 토큰 재정의 */
+    .rside { --lside: var(--surface-3); --ltext: var(--text); --lmuted: var(--text-muted); --accent: var(--th-accent-hi); }
+    :root[data-theme="light"] .rside { --lside: var(--surface-1); --ltext: var(--text); --lmuted: var(--text-muted); --accent: var(--th-ink-accent); }
+
+    /* 좌측: 결과 (LCD 라인 패턴) */
+    .rmain {
+      position: relative; flex: 1; min-width: 0; overflow: auto;
+      background: var(--lmain); border-radius: 30px 30px 0 0;
+      padding: clamp(28px,3.2vw,44px) clamp(28px,3.2vw,44px) 104px;
+      display: flex; flex-direction: column; justify-content: center; gap: clamp(24px,2.6vw,34px);
+    }
+    .rmain::before { /* LCD 스캔라인 */
+      content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+      background: repeating-linear-gradient(0deg, var(--lcd) 0, var(--lcd) 1px, transparent 1px, transparent 5px);
+    }
+    .rmain > * { position: relative; z-index: 1; }
+    /* 스크롤바 = 화면톤에 녹인 얇은 pill */
+    .rmain::-webkit-scrollbar, .rside::-webkit-scrollbar { width: 10px; height: 10px; }
+    .rmain::-webkit-scrollbar-track, .rside::-webkit-scrollbar-track { background: transparent; }
+    .rmain::-webkit-scrollbar-thumb { background: rgba(143,235,255,.20); border-radius: 999px; border: 3px solid transparent; background-clip: padding-box; }
+    .rmain::-webkit-scrollbar-thumb:hover { background: rgba(143,235,255,.32); background-clip: padding-box; }
+    .rside::-webkit-scrollbar-thumb { background: rgba(234,240,255,.18); border-radius: 999px; border: 3px solid transparent; background-clip: padding-box; }
+    :root[data-theme="light"] .rside::-webkit-scrollbar-thumb { background: rgba(30,60,120,.20); border-radius: 999px; border: 3px solid transparent; background-clip: padding-box; }
+    .rmain, .rside { scrollbar-width: thin; scrollbar-color: rgba(143,235,255,.24) transparent; }
+
+    .rhead { display: flex; flex-direction: column; gap: 8px; }
+    .rtitle { font-size: clamp(30px, 3.4vw, 46px); font-weight: 800; line-height: 1.05;
+      background: linear-gradient(90deg, var(--title1), var(--title2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .runit { font-size: clamp(20px, 2vw, 28px); font-weight: 700; color: var(--ltext); }
+
+    .rsummary { display: flex; align-items: center; gap: clamp(20px,2.4vw,34px); flex-wrap: wrap; }
+    .rbadge { display: inline-flex; align-items: center; gap: 2px; }
+    .rbracket { color: var(--accent); font-size: 52px; font-weight: 300; line-height: 1; }
+    .rbadge img { width: 72px; height: 72px; }
+    .rstat__label { color: var(--lmuted); font-size: 15px; margin-bottom: 4px; }
+    .rstat__val { font-size: clamp(26px,2.8vw,36px); font-weight: 800; line-height: 1; }
+    .rstat--rate .rstat__val { color: var(--rate); }
+    .rstat--score .rstat__val { color: var(--title2); }
+    .rstat__val small { font-size: 20px; color: var(--lmuted); font-weight: 700; }
+    .rdivider { width: 1px; align-self: stretch; min-height: 44px; background: color-mix(in srgb, var(--lmuted) 40%, transparent); }
+
+    .rprogress { display: flex; flex-direction: column; gap: 0; }
+    .rbar { height: 14px; border-radius: 999px; background: var(--bar-track); overflow: hidden; }
+    .rbar__fill { height: 100%; background: var(--th-accent); border-radius: 999px; transition: width .5s ease; }
+
+    /* 활동별 결과 행 (개념 = 개념 요약하기 / 개념 다지기 2행) */
+    .rrows { display: flex; flex-direction: column; gap: 10px; }
+    .rrow { display: flex; align-items: center; gap: clamp(16px,2.2vw,28px); padding: 14px clamp(18px,2vw,26px); border-radius: 14px; border: 1.5px solid var(--row-br); background: var(--row-bg); }
+    .rrow__name { display: flex; align-items: center; gap: 10px; flex: none; min-width: 130px; font-weight: 800; font-size: clamp(15px,1.5vw,18px); color: var(--ltext); }
+    .rrow__name svg { width: 20px; height: 20px; color: var(--accent); flex: none; }
+    .rrow__sep { flex: 1; border-top: 1px dashed color-mix(in srgb, var(--lmuted) 45%, transparent); }
+    .rrow__stat { display: flex; align-items: baseline; justify-content: flex-end; gap: 7px; flex: none; width: 112px; }
+    .rrow__stat > span { font-size: 14px; font-weight: 600; color: var(--lmuted); }
+    .rrow__stat > b { font-weight: 800; font-size: 20px; color: var(--accent); }
+
+    /* 우측: 학습 진행 현황 */
+    .rside {
+      width: clamp(300px, 27vw, 400px); flex: none; overflow: auto;
+      background: var(--lside); border-radius: 30px 30px 0 0;
+      padding: clamp(20px,2vw,26px); display: flex; flex-direction: column; gap: 20px;
+    }
+    .rside__title { font-size: 18px; font-weight: 800; color: var(--ltext); }
+    .rside__list { display: flex; flex-direction: column; gap: 18px; }
+    .step-card {
+      position: relative; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 22px 24px; border-radius: 16px; border: 1.5px solid var(--accent);
+    }
+    .step-card__name { color: var(--ltext); font-size: 18px; font-weight: 700; }
+    .step-card__grade { display: inline-flex; align-items: center; gap: 2px; }
+    .step-card__grade .rbracket { font-size: 32px; }
+    .step-card__grade img { width: 38px; height: 38px; }
+    /* 선택된 스텝: 3px 시안 테두리 + 피그마 포인터(둥근 play + 패널색 halo) */
+    .step-card.is-current { border-width: 3px; }
+    .step-card__pointer { position: absolute; left: -9px; top: 50%; transform: translateY(-50%); }
+    .step-card__pointer path { fill: var(--accent); stroke: var(--lside); stroke-width: 5px; paint-order: stroke; }
+
+    @media (max-width: 940px) {
+      .rframe { flex-direction: column; }
+      .rmain, .rside { border-radius: 24px; }
+      .rside { width: auto; }
+    }
+  </style>
+</head>
+<body class="learn-body" style="--subj:var(--th-accent)">
+  <div class="screen">
+    <div class="screen__bg"></div>
+
+    <div class="screen__container">
+      <header class="lheader">
+        <nav class="breadcrumb">
+          <span class="crumb crumb--strong">과학 중등 1-1</span>
+          <svg class="sep" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <span class="crumb crumb--strong crumb--clip crumb--hide">2단원 생물의 구성과 다양성</span>
+          <svg class="sep crumb--hide" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <span class="crumb crumb--hide">(1) 생물의 구성</span>
+          <svg class="sep crumb--hide" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <span class="crumb">개념 훈련</span>
+          <svg class="sep" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <span class="crumb crumb--strong">개념 학습</span>
+        </nav>
+        <div class="lheader__actions">
+          <button class="theme-toggle" id="themeToggle" title="라이트/다크 전환"><span class="theme-toggle__knob"></span></button>
+          <button class="nav-ico" title="알림"><img src="assets/figma/icons/ico-siren.svg" alt="알림" /></button>
+          <button class="nav-ico" title="나가기"><img src="assets/figma/icons/ico-exit.svg" alt="나가기" /></button>
+        </div>
+      </header>
+
+      <div class="rframe">
+        <!-- 좌측 -->
+        <section class="rmain">
+          <div class="rhead">
+            <h1 class="rtitle">개념 학습 완료!</h1>
+            <h2 class="runit">(1) 생물의 구성</h2>
+          </div>
+          <div class="rsummary">
+            <span class="rbadge"><span class="rbracket">[</span><img id="summaryBadge" src="assets/figma/grade-b.png" alt="등급" /><span class="rbracket">]</span></span>
+            <div class="rstat rstat--rate">
+              <div class="rstat__label">정답률</div>
+              <div class="rstat__val"><span id="rate">0</span>%</div>
+            </div>
+            <div class="rdivider"></div>
+            <div class="rstat rstat--score">
+              <div class="rstat__label">정답</div>
+              <div class="rstat__val"><span id="score">0</span><small id="total">/14</small></div>
+            </div>
+          </div>
+          <div class="rbar"><div class="rbar__fill" id="barFill" style="width:0%"></div></div>
+          <div class="rrows" id="rows"></div>
+        </section>
+
+        <!-- 우측 -->
+        <aside class="rside">
+          <div class="rside__title">학습 진행 현황</div>
+          <div class="rside__list">
+            <div class="step-card is-current is-done">
+              <svg class="step-card__pointer" viewBox="0 0 27 29" width="23" height="25" fill="none" aria-hidden="true"><path d="M2.5409 8.79388C2.5409 3.94385 7.83197 0.947849 11.9908 3.44311L21.4299 9.10653C25.4691 11.53 25.4691 17.3846 21.4299 19.8081L11.9908 25.4715C7.83197 27.9668 2.5409 24.9708 2.5409 20.1207V8.79388Z" fill="var(--th-accent-hi)"/></svg>
+              <span class="step-card__name">개념 학습</span>
+              <span class="step-card__grade"><span class="rbracket">[</span><img id="sideBadge" src="assets/figma/grade-b.png" alt="등급" /><span class="rbracket">]</span></span>
+            </div>
+            <div class="step-card is-open" data-go="learn-concept-drill.html">
+              <span class="step-card__name">개념 확인하기</span>
+              <span class="step-card__start">시작하기 ›</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- 하단 콘솔 바 -->
+    <div class="bar">
+      <img class="bar__deco bar__deco--l" src="assets/figma/console-right.svg" alt="" />
+      <div class="bar__mid">
+        <div class="bar__tray">
+          <div class="bar__group">
+            <button class="toolbtn"><img src="assets/figma/icons/ico-note.svg" alt="" /><span>연습장</span></button>
+            <button class="toolbtn" data-home><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11.5 12 4l8 7.5"/><path d="M6 10v9h12v-9"/><path d="M10 19v-5h4v5"/></svg><span>홈으로</span></button>
+          </div>
+          <div class="bar__group">
+            <button class="toolbtn toolbtn--primary" id="trainResultBtn" data-go="training-result.html" style="display:none"><img src="assets/figma/icons/ico-summary.svg" alt="" /><span>훈련 결과 보기</span></button>
+          </div>
+        </div>
+      </div>
+      <img class="bar__deco bar__deco--r" src="assets/figma/console-left.svg" alt="" />
+    </div>
+  </div>
+
+  <script src="scripts/step-result.js?v=2"></script>
+  <script src="scripts/step-progress.js"></script>
+</body>
+</html>

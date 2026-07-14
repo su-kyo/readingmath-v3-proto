@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko" data-section="space">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>행성 메인 — 리딩수학과학</title>
+  <link rel="stylesheet" href="styles/tokens.css?v=15" />
+  <link rel="stylesheet" href="styles/base.css?v=3" />
+  <link rel="stylesheet" href="styles/gnb.css?v=4" />
+  <style>
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html,body{ height:100%; }
+    body{ font-family:var(--font-sans); background:var(--bg); overflow:hidden; -webkit-font-smoothing:antialiased; }
+    .home{ height:100%; display:flex; flex-direction:column; }
+
+    /* ---- 스테이지: 배경만 full-bleed cover ---- */
+    .stage{ position:relative; flex:1; min-height:0; overflow:hidden;
+      background:var(--blue-300) center 46% / cover no-repeat; display:flex; align-items:center; justify-content:center; }
+
+    /* ---- safe-area: 피그마 프레임 비율(960:670). 오브젝트/캐릭터는 이 안에 갇힌다 ---- */
+    .safe{ position:relative; height:100%; aspect-ratio:960 / 670; max-width:100%; width:auto; }
+
+    .obj{ position:absolute; transform:translate(-50%,-50%);
+      aspect-ratio:1; background-position:center; background-repeat:no-repeat; background-size:contain;
+      filter:drop-shadow(0 12px 16px rgba(20,40,90,.26)); }
+    .obj--float{ animation:rm-float 4.8s ease-in-out infinite; }
+    @keyframes rm-float{
+      0%,100%{ transform:translate(-50%,-50%) translateY(0); }
+      50%    { transform:translate(-50%,-50%) translateY(-13px); }
+    }
+    @media (prefers-reduced-motion:reduce){ .obj--float{ animation:none; } }
+
+    /* ---- 히어로(캐릭터+말풍선) — safe 안, 피그마 캐릭터 위치/크기 ---- */
+    .hero{ position:absolute; left:50%; top:62.7%; width:31.25%; transform:translate(-50%,-50%); z-index:10; }
+    .hero .char{ width:100%; display:block; filter:drop-shadow(0 16px 18px rgba(15,35,80,.4)); }
+    .hero .shadow{ position:absolute; left:50%; bottom:-4%; transform:translateX(-50%);
+      width:74%; height:8%; border-radius:50%; z-index:-1;
+      background:radial-gradient(50% 50% at 50% 50%, rgba(20,40,90,.34), transparent 70%); }
+    .bubble{ position:absolute; bottom:100%; left:50%; transform:translateX(-50%); margin-bottom:14px;
+      width:max-content; max-width:min(58vw,460px);
+      background:var(--n-000); color:var(--n-650); border-radius:19px; padding:14px 22px;
+      font-size:15.5px; font-weight:600; line-height:1.5; text-align:center;
+      box-shadow:0 12px 30px -12px rgba(10,25,60,.55); }
+    .bubble b{ color:var(--hl,var(--blue-600)); font-weight:800; }
+    .bubble::after{ content:""; position:absolute; left:50%; bottom:-10px; transform:translateX(-50%);
+      border:11px solid transparent; border-top-color:var(--n-000); border-bottom:0; }
+
+    /* ---- CTA — 화면 하단 고정(스테이지) ---- */
+    .cta{ position:absolute; left:50%; bottom:5%; transform:translateX(-50%); z-index:14;
+      display:inline-flex; align-items:center; gap:9px; height:56px; padding:0 34px; border:0;
+      border-radius:17px; background:var(--primary); color:var(--n-000); font-family:inherit; font-size:19px;
+      font-weight:800; letter-spacing:-.02em; cursor:pointer;
+      box-shadow:0 14px 28px -10px rgba(255,127,0,.7), inset 0 1px 0 rgba(255,255,255,.3);
+      transition:transform .16s, background .16s, box-shadow .16s; }
+    .cta:hover{ transform:translateX(-50%) translateY(-3px); background:var(--primary-hover);
+      box-shadow:0 18px 34px -10px rgba(255,127,0,.85), inset 0 1px 0 rgba(255,255,255,.3); }
+    .cta svg{ width:20px; height:20px; }
+
+    .toast{ position:fixed; left:50%; bottom:30px; transform:translateX(-50%) translateY(16px); z-index:40;
+      background:var(--surface-2); border:1px solid var(--border); color:var(--text); padding:11px 18px;
+      border-radius:12px; font-size:13.5px; font-weight:600; opacity:0; pointer-events:none;
+      transition:.2s; box-shadow:var(--shadow-2); font-family:var(--font-sans); }
+    .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+  </style>
+</head>
+<body>
+  <div class="home">
+    <header class="gnb">
+      <div class="gnb__info">
+        <span class="gnb__logo"></span>
+        <span class="gnb__name">김학생</span>
+      </div>
+      <nav class="gnb__modes">
+        <button class="gnb__mode m-basic is-active">기본 모드</button>
+        <button class="gnb__mode m-free" data-go="freemode.html">자유 모드</button>
+        <button class="gnb__mode m-exam" data-go="exam-home.html">시험 대비</button>
+        <button class="gnb__mode m-assign" data-go="assignment-home.html">과제 센터<span class="gnb__mode__dot"></span></button>
+      </nav>
+      <div class="gnb__icons">
+        <button class="gnb__ico" title="도움말"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.8.4-1 .9-1 1.7" stroke-linecap="round"/><circle cx="12" cy="16.5" r="1" fill="currentColor" stroke="none"/></svg></button>
+        <button class="gnb__ico" title="오류 신고"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17h.01"/></svg></button>
+        <button class="gnb__ico" title="공지사항"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 9v6h3l7 4V5L7 9H4zM18 8a5 5 0 0 1 0 8"/></svg><span class="gnb__dot"></span></button>
+        <button class="gnb__ico" id="menuBtn" title="메뉴"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      </div>
+    </header>
+
+    <div class="stage" id="stage">
+      <div class="safe" id="safe">
+        <!-- 오브젝트(scenery) 주입 -->
+        <div class="hero">
+          <div class="bubble" id="bubble">
+            <b>(1) 받아올림이 없는 세 자리 수의 덧셈</b>의 <b>개념 훈련</b>을 시작해보세요!
+          </div>
+          <img class="char" id="char" src="assets/figma/home/math-elem-3-1/character.png" alt="캐릭터" />
+          <div class="shadow"></div>
+        </div>
+      </div>
+      <button class="cta" id="ctaBtn">시작하기
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    (function(){
+      var qs = new URLSearchParams(location.search);
+      var subject = qs.get('subject') || 'math';
+      var sem = qs.get('sem') || 'elem-3-1';
+      var sc = (subject === 'science') ? 'sci' : 'math';
+      var key = sc + '-' + sem;
+      var dir = 'assets/figma/home/' + key;
+      try{ localStorage.setItem('rm-subject', subject); localStorage.setItem('rm-sem', sem); }catch(e){}
+
+      /* 화면별 설정: safe 박스 비율 + 오브젝트 좌표(피그마 프레임 그대로).
+         좌표 = safe 기준 % (cx/cy=중심, w=너비%). float=공중에 뜬 것만. */
+      var CONFIG = {
+        'math-elem-3-1': { ratio:'960 / 670',
+          msg:'<b>(1) 받아올림이 없는 세 자리 수의 덧셈</b>의 <b>개념 훈련</b>을 시작해보세요!',
+          objects:[
+            { n:1, cx:50.0,  cy:37.7, w:49.2 }, { n:2, cx:18.75, cy:47.8, w:35.4 }, { n:3, cx:83.1, cy:49.6, w:35.2 },
+            { n:4, cx:76.4,  cy:18.9, w:20.3, float:true }, { n:5, cx:17.6, cy:78.0, w:33.0 }, { n:6, cx:80.6, cy:79.8, w:32.4 }
+          ] },
+        'sci-elem-3-1': { ratio:'1280 / 670',
+          msg:'<b>(1) 물체를 밀거나 당기기, 수평 잡기</b>의 <b>유형 훈련</b>을 시작해보세요!',
+          objects:[
+            { n:1, cx:50.0, cy:41.9, w:29.1 }, { n:2, cx:26.6, cy:58.4, w:22.7 }, { n:3, cx:75.0, cy:54.3, w:23.4 },
+            { n:4, cx:69.3, cy:19.0, w:14.2, float:true }, { n:5, cx:26.1, cy:78.1, w:25.9 }, { n:6, cx:73.4, cy:79.9, w:23.3 }
+          ] },
+        'math-mid-3-1': { ratio:'960 / 670',
+          msg:'<b>(1) 제곱근과 실수</b>의 <b>개념 훈련</b>을 시작해보세요!',
+          objects:[
+            { n:1, cx:50.0, cy:38.8, w:46.0 }, { n:2, cx:18.8, cy:49.0, w:36.0 }, { n:3, cx:83.3, cy:50.3, w:33.8 },
+            { n:4, cx:18.1, cy:78.1, w:32.3 }, { n:5, cx:81.1, cy:79.0, w:31.3 }, { n:6, cx:76.4, cy:17.5, w:22.3, float:true }
+          ] },
+        'math-mid-3-2': { ratio:'960 / 670',
+          msg:'<b>(1) 삼각비</b>의 <b>개념 훈련</b>을 시작해보세요!',
+          objects:[
+            { n:1, cx:50.0, cy:41.6, w:53.1 }, { n:2, cx:20.6, cy:48.4, w:36.1 }, { n:3, cx:83.4, cy:46.8, w:33.6 },
+            { n:4, cx:17.5, cy:77.3, w:31.9 }, { n:5, cx:82.6, cy:75.5, w:30.8 }, { n:6, cx:76.4, cy:15.8, w:25.4, float:true }
+          ] },
+        'sci-mid-3-1': { ratio:'1280 / 670',
+          msg:'<b>(1) 화학 반응의 규칙</b>의 <b>유형 훈련</b>을 시작해보세요!',
+          objects:[
+            { n:1, cx:50.0, cy:37.3, w:35.9 }, { n:2, cx:26.6, cy:57.6, w:22.8 }, { n:3, cx:75.0, cy:54.5, w:22.2 },
+            { n:4, cx:69.8, cy:17.3, w:16.3, float:true }, { n:5, cx:26.1, cy:78.1, w:24.2 }, { n:6, cx:73.8, cy:81.6, w:23.0 }
+          ] },
+        'sci-mid-3-2': { ratio:'1280 / 670',
+          msg:'<b>(1) 역학적 에너지</b>의 <b>개념 훈련</b>을 시작해보세요!',
+          objects:[
+            { n:1, cx:50.0, cy:43.1, w:31.4 }, { n:2, cx:26.6, cy:53.4, w:25.0 }, { n:3, cx:75.0, cy:54.0, w:24.7 },
+            { n:4, cx:69.8, cy:17.8, w:14.2, float:true }, { n:5, cx:26.1, cy:78.1, w:25.2 }, { n:6, cx:73.2, cy:79.3, w:23.1 }
+          ] }
+      };
+      var cfg = CONFIG[key] || CONFIG['math-elem-3-1'];
+
+      var stage = document.getElementById('stage');
+      var safe = document.getElementById('safe');
+      safe.style.aspectRatio = cfg.ratio;
+      stage.style.backgroundImage = 'url("' + dir + '/bg.png")';
+      document.getElementById('char').src = dir + '/character.png';
+      var bub = document.getElementById('bubble');
+      bub.style.setProperty('--hl', subject === 'science' ? 'var(--teal-600)' : 'var(--blue-600)');
+      if(cfg.msg) bub.innerHTML = cfg.msg;
+
+      var hero = safe.querySelector('.hero');
+      cfg.objects.forEach(function(o){
+        var el = document.createElement('div');
+        el.className = 'obj' + (o.float ? ' obj--float' : '');
+        el.style.left = o.cx + '%'; el.style.top = o.cy + '%';
+        el.style.width = o.w + '%';
+        el.style.backgroundImage = 'url("' + dir + '/obj-' + o.n + '.png")';
+        el.title = o.n + '단원 완료 오브젝트';
+        safe.insertBefore(el, hero);   // 캐릭터보다 뒤(먼저 그려짐)
+      });
+
+      var toast = document.getElementById('toast'), tt;
+      function showToast(m){ toast.textContent=m; toast.classList.add('show');
+        clearTimeout(tt); tt=setTimeout(function(){ toast.classList.remove('show'); },1900); }
+
+      document.querySelectorAll('[data-go]').forEach(function(b){
+        b.addEventListener('click', function(){ location.href = b.getAttribute('data-go'); });
+      });
+      document.getElementById('ctaBtn').addEventListener('click', function(){
+        location.href = 'curriculum.html?subject=' + subject + '&sem=' + sem;
+      });
+      // 메뉴 → 공용 사이드 드로어 (gnb-drawer.js가 #menuBtn에 자동 바인딩)
+    })();
+  </script>
+  <script src="scripts/gnb-drawer.js?v=6"></script>
+</body>
+</html>

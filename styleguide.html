@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>리딩수학과학 · 디자인 시스템</title>
+  <link rel="stylesheet" href="styles/tokens.css?v=15" />
+  <link rel="stylesheet" href="styles/base.css?v=3" />
+  <link rel="stylesheet" href="styles/components.css?v=5" />
+  <style>
+    /* 이 스타일가이드 페이지 전용 레이아웃 */
+    .wrap { max-width: 1120px; margin: 0 auto; padding: var(--space-8) var(--space-6) 120px; }
+    .sg-top { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-6); margin-bottom: var(--space-8); }
+    .sg-section { margin-top: var(--space-12); }
+    .sg-section > h2 {
+      font-size: var(--fs-h2); padding-bottom: var(--space-3);
+      border-bottom: 1px solid var(--border); margin-bottom: var(--space-6);
+      display: flex; align-items: baseline; gap: var(--space-3); flex-wrap: wrap;
+    }
+    .sg-section > h2 small { font-size: var(--fs-sm); color: var(--text-dim); font-weight: 400; }
+    .sg-sub { color: var(--text-muted); font-size: var(--fs-sm); margin: calc(var(--space-6) * -1 + var(--space-2)) 0 var(--space-5); max-width: 76ch; }
+    .row { display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; }
+    .grid { display: grid; gap: var(--space-4); }
+    .card-demo { background: var(--surface-1); border-radius: var(--r-lg); padding: var(--space-5); }
+    .label { font-size: var(--fs-xs); color: var(--text-dim); margin-bottom: var(--space-2); font-weight: var(--fw-semibold); letter-spacing: .02em; }
+
+    /* 상태 태그 (실사용/라이브러리) */
+    .use { display: inline-flex; align-items: center; gap: 5px; padding: 2px 9px; border-radius: var(--r-full);
+      font-size: 11px; font-weight: var(--fw-bold); letter-spacing: .01em; }
+    .use::before { content: ""; width: 7px; height: 7px; border-radius: 50%; }
+    .use--live { background: color-mix(in srgb, var(--success) 18%, var(--surface-2)); color: var(--success); }
+    .use--live::before { background: var(--success); }
+    .use--lib { background: var(--surface-2); color: var(--text-dim); }
+    .use--lib::before { background: var(--text-dim); }
+
+    /* 색 스와치 */
+    .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px,1fr)); gap: var(--space-3); }
+    .swatch { border-radius: var(--r-md); overflow: hidden; background: var(--surface-1); }
+    .swatch__chip { height: 64px; }
+    .swatch__meta { padding: var(--space-3); }
+    .swatch__name { font-size: var(--fs-sm); font-weight: 600; }
+    .swatch__hex { font-size: var(--fs-xs); color: var(--text-dim); font-family: var(--font-mono); }
+
+    .type-spec { display: flex; align-items: baseline; gap: var(--space-4); padding: var(--space-3) 0; border-bottom: 1px solid var(--border); }
+    .type-spec small { color: var(--text-dim); font-family: var(--font-mono); font-size: var(--fs-xs); white-space: nowrap; }
+
+    .ramp { display:flex; border-radius:var(--r-md); overflow:hidden; margin-bottom:var(--space-3); }
+    .ramp > span { flex:1; height:44px; display:flex; align-items:flex-end; justify-content:center; padding-bottom:3px; font-size:9px; font-family:var(--font-mono); color:rgba(255,255,255,.65); }
+    .ramp-label { font-size:var(--fs-xs); color:var(--text-dim); margin-bottom:4px; }
+
+    /* 토큰 표(간격·반경) */
+    .tok { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px,1fr)); gap: var(--space-3); }
+    .tok__item { background: var(--surface-1); border-radius: var(--r-md); padding: var(--space-3); }
+    .tok__bar { height: 12px; background: var(--primary); border-radius: 3px; }
+    .tok__box { height: 48px; background: var(--surface-3); box-shadow: inset 0 0 0 1.5px var(--border-strong); }
+    .tok__name { font-size: var(--fs-xs); font-family: var(--font-mono); color: var(--text-muted); margin-top: 6px; }
+
+    /* 셸/패턴 레퍼런스 카드 */
+    .ref { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: var(--space-4); }
+    .ref__card { background: var(--surface-1); border-radius: var(--r-lg); padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-3); }
+    .ref__demo { border-radius: var(--r-md); overflow: hidden; }
+    .ref__name { font-weight: var(--fw-bold); font-size: var(--fs-sm); }
+    .ref__desc { font-size: var(--fs-xs); color: var(--text-muted); line-height: 1.6; }
+    .ref__cls { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); word-break: break-all; }
+    .ref__file { font-size: 11px; color: var(--accent-blue); font-weight: var(--fw-semibold); }
+
+    /* 미니 데모용 */
+    .m-header { padding: 10px 18px; border-radius: var(--r-pill); color: #fff; font-weight: var(--fw-bold); font-size: 13px; }
+    .m-toolbtn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; border-radius: var(--r-lg);
+      background: var(--primary); color: #fff; font-weight: var(--fw-bold); font-size: 13px; box-shadow: 0 4px 0 var(--primary-pressed); }
+    .m-seg { font-family: var(--font-serif); font-size: 15px; line-height: 1.9; color: var(--text); }
+    .m-seg .on { background: #E6F4FF; box-shadow: 0 0 0 3px #E6F4FF; border-radius: 4px; color: #121E37; }
+    .m-seg .off { filter: blur(3.5px); opacity: .32; }
+    .m-rblank { display: inline-flex; align-items: center; gap: 5px; padding: 2px 10px; border-radius: 8px;
+      font-family: var(--font-serif); font-weight: 700; font-size: 14px; }
+    .m-rblank--ok { background: color-mix(in srgb, var(--success) 14%, transparent); color: var(--success); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--success) 55%, transparent); }
+    .m-rblank--no { background: color-mix(in srgb, var(--danger) 14%, transparent); color: var(--danger); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--danger) 55%, transparent); text-decoration: line-through; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <!-- 상단 -->
+    <header class="sg-top">
+      <div>
+        <p class="badge badge--round">DESIGN SYSTEM</p>
+        <h1 class="text-display" style="margin-top:12px;">리딩수학과학 디자인 시스템</h1>
+        <p class="u-muted" style="margin-top:8px; max-width:64ch;">
+          프로토타입이 <strong>실제로 쓰는</strong> 토큰·컴포넌트·공용 셸을 정리한 문서입니다.
+          색·글자·간격은 <code>styles/tokens.css</code> 한 곳에서 관리하고,
+          화면이 공유하는 껍데기는 <code>learn-shell.css</code>·<code>essay.css</code>에 있어요.
+          팔레트는 라이브 서비스 정본 램프 + 최소 확장으로 정리해 <strong>총 56색</strong>,
+          모든 화면의 텍스트·배경·테두리는 이 시트 안에서만 씁니다.
+        </p>
+        <p style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+          <span class="use use--live">실사용 — 화면에 적용됨</span>
+          <span class="use use--lib">라이브러리 — 정의만, 일부 A층에서 사용</span>
+        </p>
+      </div>
+      <div class="mode-toggle" data-mode-toggle title="라이트/다크 전환">
+        <span class="mode-toggle__opt" data-set-theme="light">☀</span>
+        <span class="mode-toggle__opt" data-set-theme="dark">☾</span>
+      </div>
+    </header>
+
+    <!-- ===================== 색 ===================== -->
+    <section class="sg-section">
+      <h2>1. 색 — 원시 팔레트 <small>라이브 정본 램프 + 확장 · 2단 시스템의 1단(primitive) · 56색</small></h2>
+      <p class="sg-sub">화면은 이 계단을 직접 쓰지 않고, 아래 2번의 '역할 이름'을 통해 씁니다. 색을 바꾸려면 이 1단 값만 고치면 전체가 따라옵니다. 블루는 azure 계열, 뉴트럴은 네이비 틴트 쿨그레이로 정렬돼 있어요.</p>
+      <div class="ramp-label">뉴트럴 (네이비 틴트) · 표면·글자 공용 · 13스텝</div>
+      <div class="ramp">
+        <span style="background:var(--n-950)">950</span><span style="background:var(--n-900)">900</span>
+        <span style="background:var(--n-800)">800</span><span style="background:var(--n-700)">700</span>
+        <span style="background:var(--n-600)">600</span><span style="background:var(--n-500)">500</span>
+        <span style="background:var(--n-400);color:#000">400</span><span style="background:var(--n-300);color:#000">300</span>
+        <span style="background:var(--n-200);color:#000">200</span><span style="background:var(--n-100);color:#000">100</span>
+        <span style="background:var(--n-050);color:#000">050</span><span style="background:var(--n-000);color:#000">000</span>
+      </div>
+      <div class="ramp-label">블루/azure (개념 · info) · 틸 (유형)</div>
+      <div class="ramp">
+        <span style="background:var(--blue-700)">b700</span><span style="background:var(--blue-500)">b500</span>
+        <span style="background:var(--blue-400)">b400</span><span style="background:var(--blue-300)">b300</span><span style="background:var(--blue-200);color:#000">b200</span><span style="background:var(--blue-primary)">prim</span>
+        <span style="background:var(--teal-800)">t800</span><span style="background:var(--teal-500)">t500</span><span style="background:var(--teal-300);color:#000">t300</span><span style="background:var(--teal-100);color:#000">t100</span>
+      </div>
+      <div class="ramp-label">퍼플 (서술형 · 시험대비) · 오렌지 (CTA)</div>
+      <div class="ramp">
+        <span style="background:var(--purple-900)">p900</span><span style="background:var(--purple-500)">p500</span><span style="background:var(--purple-300);color:#000">p300</span><span style="background:var(--purple-200);color:#000">p200</span>
+        <span style="background:var(--orange-300);color:#000">o300</span><span style="background:var(--orange-400)">o400</span><span style="background:var(--orange-500)">o500</span><span style="background:var(--orange-600)">o600</span><span style="background:var(--orange-800)">o800</span>
+      </div>
+      <div class="ramp-label">그린 (정답) · 레드 (오답) · 옐로 (주의) · 시안 (우주 액센트)</div>
+      <div class="ramp">
+        <span style="background:var(--green-050);color:#000">g050</span><span style="background:var(--green-300);color:#000">g300</span><span style="background:var(--green-500)">g500</span><span style="background:var(--green-600)">g600</span>
+        <span style="background:var(--red-050);color:#000">r050</span><span style="background:var(--red-500)">r500</span>
+        <span style="background:var(--yellow-050);color:#000">y050</span><span style="background:var(--yellow-300);color:#000">y300</span><span style="background:var(--yellow-500);color:#000">y500</span>
+        <span style="background:var(--cyan-100);color:#000">c100</span><span style="background:var(--cyan-400);color:#000">c400</span><span style="background:var(--cyan-500)">c500</span>
+      </div>
+      <p class="sg-sub" style="margin-top:var(--space-4)">★ <strong>골드·브론즈(별/등급 PNG), 콘솔 트레이색</strong>은 일러스트 에셋과 톤이 박제된 <em>에셋연동</em> 예외라 시트 56색과 별개로 관리합니다.</p>
+    </section>
+
+    <section class="sg-section">
+      <h2>2. 색 — 역할 (semantic) <small>화면 CSS는 이것만 사용 · 위 계단을 가리킴</small></h2>
+
+      <p class="label">과목 정체성 — 헤더·프레임 = static 딥톤 (다크·라이트 불변)</p>
+      <div class="swatches" style="margin-bottom:var(--space-4);">
+        <div class="swatch"><div class="swatch__chip" style="background:var(--static-concept)"></div><div class="swatch__meta"><div class="swatch__name">개념 훈련</div><div class="swatch__hex">--static-concept · #0A3D8E</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:var(--static-type)"></div><div class="swatch__meta"><div class="swatch__name">유형 훈련</div><div class="swatch__hex">--static-type · #005752</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:var(--static-essay)"></div><div class="swatch__meta"><div class="swatch__name">서술형 훈련</div><div class="swatch__hex">--static-essay · #4C1D95</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:var(--static-assign)"></div><div class="swatch__meta"><div class="swatch__name">과제센터</div><div class="swatch__hex">--static-assign · #094BB8</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:var(--static-exam)"></div><div class="swatch__meta"><div class="swatch__name">시험대비</div><div class="swatch__hex">--static-exam · #4B2AA6</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:var(--static-on); box-shadow:inset 0 0 0 1px var(--border)"></div><div class="swatch__meta"><div class="swatch__name">위 글자·CTA 글자</div><div class="swatch__hex">--static-on · #FFFFFF</div></div></div>
+      </div>
+
+      <p class="label">과목 포인트 — content 내부 강조(배지·게이지·보기버튼) 1색</p>
+      <div class="swatches" style="margin-bottom:var(--space-6);">
+        <div class="swatch"><div class="swatch__chip" style="background:var(--concept-fill)"></div><div class="swatch__meta"><div class="swatch__name">개념 = 블루</div><div class="swatch__hex">--concept-fill · #008CFF</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:var(--type-accent)"></div><div class="swatch__meta"><div class="swatch__name">유형 = 틸</div><div class="swatch__hex">--type-accent · #00A99A</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:var(--essay-accent)"></div><div class="swatch__meta"><div class="swatch__name">서술형 = 퍼플</div><div class="swatch__hex">--essay-accent · #7777FF</div></div></div>
+      </div>
+
+      <p class="label">CTA · 액센트</p>
+      <div class="swatches" style="margin-bottom:var(--space-6);">
+        <div class="swatch"><div class="swatch__chip" style="background:var(--primary)"></div><div class="swatch__meta"><div class="swatch__name">Primary 오렌지</div><div class="swatch__hex">--primary · #FF7F00</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:var(--accent-cyan);color:#000"></div><div class="swatch__meta"><div class="swatch__name">액센트 시안</div><div class="swatch__hex">--accent-cyan · #3AE4FA</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:var(--accent-blue)"></div><div class="swatch__meta"><div class="swatch__name">액센트 블루</div><div class="swatch__hex">--accent-blue · #05C5EC</div></div></div>
+      </div>
+
+      <p class="label">의미색 — 정답(라임) / 오답(레드) / 주의(옐로) · 상태색은 액센트와 분리 · 3영역 공통</p>
+      <div class="swatches" style="margin-bottom:var(--space-6);">
+        <div class="swatch"><div class="swatch__chip" style="background:var(--green-500)"></div><div class="swatch__meta"><div class="swatch__name">정답 success</div><div class="swatch__hex">--success · #58CC02</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:var(--red-500)"></div><div class="swatch__meta"><div class="swatch__name">오답 danger</div><div class="swatch__hex">--danger · #FF404C</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:var(--yellow-500);color:#000"></div><div class="swatch__meta"><div class="swatch__name">주의 warning</div><div class="swatch__hex">--warning · #FFC148</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:var(--success-text)"></div><div class="swatch__meta"><div class="swatch__name">정답 텍스트(흰 배경)</div><div class="swatch__hex">--success-text · #3E7A12</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:var(--danger-text)"></div><div class="swatch__meta"><div class="swatch__name">오답 텍스트(흰 배경)</div><div class="swatch__hex">--danger-text · #C73C43</div></div></div>
+      </div>
+
+      <p class="label">표면 — 톤 차이로 구조를 만든다 (다크 기본 / 라이트 전환 시 밝은 쪽으로 재배치)</p>
+      <div class="swatches">
+        <div class="swatch"><div class="swatch__chip" style="background:var(--bg)"></div><div class="swatch__meta"><div class="swatch__name">배경 --bg</div><div class="swatch__hex">현재 테마값</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:var(--surface-1)"></div><div class="swatch__meta"><div class="swatch__name">--surface-1</div><div class="swatch__hex">카드/패널</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:var(--surface-2)"></div><div class="swatch__meta"><div class="swatch__name">--surface-2</div><div class="swatch__hex">칩/입력</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background:var(--surface-3)"></div><div class="swatch__meta"><div class="swatch__name">--surface-3</div><div class="swatch__hex">강조 표면</div></div></div>
+      </div>
+
+      <div class="card-demo" style="margin-top:var(--space-8); background:var(--surface-1); border-left:3px solid var(--primary); border-radius:var(--r-md);">
+        <p class="label" style="color:var(--primary)">구조 규칙 — content 공통 + 포인트 1색</p>
+        <ul style="margin:8px 0 0; padding-left:18px; font-size:var(--fs-sm); line-height:1.9; color:var(--text-muted);">
+          <li><strong>헤더 = 프레임 = static 딥톤</strong> — 화면 최외곽 테두리는 그 화면 헤더색과 같고, 다크·라이트 토글해도 값이 안 바뀝니다. (과목 정체성 앵커)</li>
+          <li><strong>content 내부는 3영역 공통</strong> — 표면·글자·테두리·정오답은 전부 뉴트럴+상태색(위 시트). 과목마다 다르게 주는 건 헤더·프레임·포인트뿐.</li>
+          <li><strong>포인트만 1색</strong> — 배지·게이지·보기버튼 같은 강조는 과목 포인트색 하나로 통일.</li>
+          <li><strong>hover·상태 표면은 반드시 모드 스왑</strong> — <code>#F2F4F7</code> 같은 밝은 프리미티브를 hover에 직접 쓰면 다크에서 글자가 사라집니다. 라이트=밝게 / 다크=한 단계 밝은 뉴트럴로 각각 지정. 반대로 <code>static-on</code>(흰 글자)처럼 항상 딥톤 위에 얹히는 색은 모드 무관 고정.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== 타이포 ===================== -->
+    <section class="sg-section">
+      <h2>3. 타이포그래피 <small>UI=Pretendard · 숫자=Kode Mono · 지문/수식=명조(RIDIBatang·Noto Serif KR) · 자간 -0.04em</small></h2>
+      <div class="type-spec"><span class="text-display">우주 탐험 학습</span><small>display 32 · bold</small></div>
+      <div class="type-spec"><span class="text-h1">대단원 제목</span><small>h1 24 · bold</small></div>
+      <div class="type-spec"><span class="text-h2">소단원 제목</span><small>h2 20 · semibold</small></div>
+      <div class="type-spec"><span class="text-title">훈련 이름</span><small>title 18 · semibold</small></div>
+      <div class="type-spec"><span class="text-body">본문 기본 텍스트입니다.</span><small>body 16</small></div>
+      <div class="type-spec"><span class="text-sm u-muted">보조 설명 텍스트</span><small>sm 14 · muted</small></div>
+      <div class="type-spec"><span class="text-xs u-dim">캡션 / 메타</span><small>xs 12 · dim</small></div>
+      <div class="type-spec"><span class="mono text-h2">00:42 · 12.5</span><small>mono · 타이머/숫자</small></div>
+      <div class="type-spec"><span style="font-family:var(--font-serif); font-size:18px;">지문은 명조로 읽습니다 — 끊어읽기</span><small>serif · 지문/수식</small></div>
+    </section>
+
+    <!-- ===================== 간격·반경 ===================== -->
+    <section class="sg-section">
+      <h2>4. 간격 · 반경 <small>4px 배수 스페이싱 · 반경 스케일</small></h2>
+      <p class="label">간격 (--space-*)</p>
+      <div class="tok" style="margin-bottom:var(--space-6)">
+        <div class="tok__item"><div class="tok__bar" style="width:4px"></div><div class="tok__name">space-1 · 4</div></div>
+        <div class="tok__item"><div class="tok__bar" style="width:8px"></div><div class="tok__name">space-2 · 8</div></div>
+        <div class="tok__item"><div class="tok__bar" style="width:12px"></div><div class="tok__name">space-3 · 12</div></div>
+        <div class="tok__item"><div class="tok__bar" style="width:16px"></div><div class="tok__name">space-4 · 16</div></div>
+        <div class="tok__item"><div class="tok__bar" style="width:24px"></div><div class="tok__name">space-6 · 24</div></div>
+        <div class="tok__item"><div class="tok__bar" style="width:32px"></div><div class="tok__name">space-8 · 32</div></div>
+        <div class="tok__item"><div class="tok__bar" style="width:48px"></div><div class="tok__name">space-12 · 48</div></div>
+      </div>
+      <p class="label">반경 (--r-*)</p>
+      <div class="tok">
+        <div class="tok__item"><div class="tok__box" style="border-radius:8px"></div><div class="tok__name">r-sm · 8</div></div>
+        <div class="tok__item"><div class="tok__box" style="border-radius:12px"></div><div class="tok__name">r-md · 12</div></div>
+        <div class="tok__item"><div class="tok__box" style="border-radius:16px"></div><div class="tok__name">r-lg · 16</div></div>
+        <div class="tok__item"><div class="tok__box" style="border-radius:24px"></div><div class="tok__name">r-xl · 24</div></div>
+        <div class="tok__item"><div class="tok__box" style="border-radius:32px"></div><div class="tok__name">r-pill · 32</div></div>
+        <div class="tok__item"><div class="tok__box" style="border-radius:999px"></div><div class="tok__name">r-full · 999</div></div>
+      </div>
+    </section>
+
+    <!-- ===================== 실사용 컴포넌트 ===================== -->
+    <section class="sg-section">
+      <h2>5. 수식 표기 <span class="use use--live">실사용</span> <small>온전한 분수(분자↑·선·분모↓) · '3/4' 사선 금지 · 기초연산/유형</small></h2>
+      <p class="text-body" style="line-height:2.4">
+        <span class="frac"><span class="frac__n">3</span><span class="frac__d">4</span></span> 는 전체를 4로 나눈 것 중 3.
+        약분하면 <span class="frac"><span class="frac__n">1</span><span class="frac__d">2</span></span>,
+        작은 표기는 <span class="frac frac--sm"><span class="frac__n">2</span><span class="frac__d">5</span></span> 처럼 씁니다.
+        <span class="ref__cls" style="display:block; margin-top:8px">.frac / .frac__n / .frac__d / .frac--sm — components.css</span>
+      </p>
+    </section>
+
+    <section class="sg-section">
+      <h2>6. 등급 배지 & 별 <span class="use use--live">실사용</span> <small>스텝 등급 S~C(육각 PNG) · Round 별(SVG) · 결과 화면</small></h2>
+      <p class="label">스텝 등급 (정답률 S≥95 · A≥80 · B≥70 · else C)</p>
+      <div class="row" style="margin-bottom:var(--space-6)">
+        <span class="grade grade--s"></span>
+        <span class="grade grade--a"></span>
+        <span class="grade grade--b"></span>
+        <span class="grade grade--c"></span>
+        <span class="ref__cls">.grade--s/a/b/c · assets/figma/grade-*.png</span>
+      </div>
+      <p class="label">Round 별 등급 (SVG 에셋)</p>
+      <div class="row">
+        <div class="card-demo"><div class="label">플래티넘</div><span class="star star--platinum"></span></div>
+        <div class="card-demo"><div class="label">골드</div><span class="star star--gold"></span></div>
+        <div class="card-demo"><div class="label">실버</div><span class="star star--silver"></span></div>
+        <div class="card-demo"><div class="label">동</div><span class="star star--bronze"></span></div>
+        <div class="card-demo"><div class="label">미획득</div><span class="star star--empty"></span></div>
+      </div>
+    </section>
+
+    <section class="sg-section">
+      <h2>7. 배지 · 진행바 <span class="use use--live">실사용</span> <small>index/결과 배지 · 학습 진행바</small></h2>
+      <div class="row" style="margin-bottom:var(--space-5)">
+        <span class="badge badge--round">Round 2</span>
+        <span class="badge badge--correct">완료</span>
+        <span class="badge badge--new">NEW</span>
+        <span class="badge badge--correct">정답 8</span>
+        <span class="badge badge--wrong">오답 2</span>
+        <span class="badge">문항 10</span>
+      </div>
+      <div class="progress" style="max-width:420px"><div class="progress__fill" style="width:64%"></div></div>
+      <p class="ref__cls" style="margin-top:10px">.badge(--round/correct/wrong/new) · .progress / .progress__fill — components.css</p>
+    </section>
+
+    <!-- ===================== 공용 셸 (실제 재사용 핵심) ===================== -->
+    <section class="sg-section">
+      <h2>8. 공용 셸 · 화면 패턴 <span class="use use--live">실사용</span> <small>화면이 진짜로 재사용하는 핵심 — learn-shell.css · essay.css · 페이지 패턴</small></h2>
+      <p class="sg-sub">아래는 components.css가 아니라 <code>learn-shell.css</code>·<code>essay.css</code>와 각 화면 인라인에 있는, 실제로 가장 많이 재사용되는 부품들입니다. 전체 셸은 화면 단위라 여기선 축약 미니 데모로 보여줍니다.</p>
+      <div class="ref">
+        <div class="ref__card">
+          <div class="ref__demo" style="display:flex; gap:6px">
+            <span class="m-header" style="background:var(--static-concept)">개념</span>
+            <span class="m-header" style="background:var(--static-type)">유형</span>
+            <span class="m-header" style="background:var(--static-essay)">서술형</span>
+          </div>
+          <div class="ref__name">학습 셸 헤더 · 콘솔바</div>
+          <div class="ref__desc">우주선 배경 + 라운드 헤더(과목색) + 하단 콘솔바. 모든 학습·풀이 화면의 껍데기.</div>
+          <div class="ref__cls">.screen · .screen__bg · .lheader · .content · .bar · .toolbtn</div>
+          <div class="ref__file">learn-shell.css · essay.css</div>
+        </div>
+        <div class="ref__card">
+          <div class="ref__demo" style="display:flex; align-items:center; gap:10px">
+            <span class="m-toolbtn">다음으로 ›</span>
+            <span style="width:56px; height:30px; border-radius:999px; background:var(--surface-3); position:relative; display:inline-block">
+              <span style="position:absolute; top:3px; left:3px; width:24px; height:24px; border-radius:50%; background:var(--gold-500)"></span>
+            </span>
+          </div>
+          <div class="ref__name">툴버튼(CTA) · 해/달 토글</div>
+          <div class="ref__desc">콘솔바 오렌지 주 CTA(입체 눌림) + 라이트/다크 해·달 노브 토글.</div>
+          <div class="ref__cls">.toolbtn · .toolbtn--primary · .theme-toggle</div>
+          <div class="ref__file">learn-shell.css</div>
+        </div>
+        <div class="ref__card">
+          <div class="ref__demo m-seg" style="padding:12px; background:var(--surface-1); border-radius:12px">
+            <span class="on">식초는 노란색이고</span> <span class="off">흔든 뒤 거품은 오래</span>
+          </div>
+          <div class="ref__name">끊어읽기 (seg)</div>
+          <div class="ref__desc">안 읽은 구간은 blur, 현재 구간만 선명·클릭해 한 칸씩 전진. 개념 학습·정리하기·서술형 지문.</div>
+          <div class="ref__cls">.seg · .seg--blank · .chunk (페이지 인라인)</div>
+          <div class="ref__file">learn-concept · concept-organize · essay-drill</div>
+        </div>
+        <div class="ref__card">
+          <div class="ref__demo" style="display:flex; gap:8px; flex-wrap:wrap">
+            <span class="m-rblank m-rblank--ok">166 ✓</span>
+            <span class="m-rblank m-rblank--no">17 ✕</span>
+          </div>
+          <div class="ref__name">채점 빈칸 (rblank)</div>
+          <div class="ref__desc">해설 화면 공용. 정답=초록✓ / 오답=빨강 취소선✕, 오답 클릭 시 내 답↔정답 토글.</div>
+          <div class="ref__cls">.rblank.is-correct · .rblank.is-wrong.show-ans</div>
+          <div class="ref__file">essay-drill-review · essay-report-review</div>
+        </div>
+        <div class="ref__card">
+          <div class="ref__demo" style="display:flex; flex-direction:column; gap:6px">
+            <span style="padding:8px 12px; border-radius:10px; background:var(--surface-2); box-shadow:inset 0 0 0 1.5px var(--border-strong); font-size:13px; font-weight:700">1과 자기 자신</span>
+            <span style="padding:8px 12px; border-radius:10px; background:transparent; box-shadow:inset 0 0 0 2px var(--primary); color:var(--primary); font-size:13px; font-weight:700">입력 중…</span>
+          </div>
+          <div class="ref__name">빈칸 입력 드롭다운 (qpop)</div>
+          <div class="ref__desc">빈칸 클릭 → 팝오버(주관식 키패드 / 객관식 세로 선지). 개념·서술형 공용 중간톤.</div>
+          <div class="ref__cls">.blank · .qpop · .qpop__pad · .qpop__opts</div>
+          <div class="ref__file">essay.css</div>
+        </div>
+        <div class="ref__card">
+          <div class="ref__demo" style="display:flex; flex-direction:column; gap:6px">
+            <span style="padding:10px 14px; border-radius:12px; background:var(--surface-1); box-shadow:inset 0 0 0 1.5px var(--accent-cyan); display:flex; justify-content:space-between; font-size:13px; font-weight:700"><span>개념 학습</span><span>[B]</span></span>
+            <span style="padding:10px 14px; border-radius:12px; background:var(--surface-1); border:1.5px dashed var(--accent-blue); display:flex; justify-content:space-between; font-size:13px; font-weight:700"><span>개념 확인하기</span><span style="color:var(--primary)">시작하기 ›</span></span>
+          </div>
+          <div class="ref__name">학습 진행 현황 (step-card)</div>
+          <div class="ref__desc">결과 화면 우측 스텝 카드. 완료=등급[·]/버튼화, 미학습=시작 모달 호출.</div>
+          <div class="ref__cls">.step-card.is-done · .step-card.is-open · .smodal</div>
+          <div class="ref__file">learn-shell.css · scripts/step-progress.js</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 라이브러리 (미적용) ===================== -->
+    <section class="sg-section">
+      <h2>9. 라이브러리 — 미적용 스캐폴딩 <span class="use use--lib">미적용</span> <small>components.css에 정의만 · 현재 어떤 화면에도 연결 안 됨</small></h2>
+      <p class="sg-sub">Phase 0에서 정의한 컴포넌트들입니다. 홈·커리큘럼·자유모드(A층) 화면은 이미 만들어졌지만 <strong>각자 인라인 마크업</strong>으로 구현돼서, 아래 클래스들은 아직 실제 화면에 쓰이지 않습니다. 앞으로 이 화면들을 정리할 때 공용 컴포넌트로 흡수할 후보예요.</p>
+
+      <p class="label">스텝 CTA · 학습하기 → 학습중 → 완료</p>
+      <div class="row" style="margin-bottom:var(--space-6)">
+        <button class="cta-step cta-step--todo">학습하기</button>
+        <button class="cta-step cta-step--doing">학습중</button>
+        <button class="cta-step cta-step--done">학습 완료</button>
+      </div>
+
+      <p class="label">과목 헤더 pill</p>
+      <div class="grid" style="gap:var(--space-3); margin-bottom:var(--space-6)">
+        <div class="subject-header subject-header--concept">
+          <span class="subject-header__title">개념훈련 · 소수와 합성수</span>
+          <span class="subject-header__meta">Round 1 · 개념 학습</span>
+        </div>
+        <div class="subject-header subject-header--essay">
+          <span class="subject-header__title">서술형훈련 · 탐구활동</span>
+          <span class="subject-header__meta">Round 1 · 문장 완성하기</span>
+        </div>
+      </div>
+
+      <p class="label">유형칩 6상태 (시험대비 · 최신 풀이 이력으로 판정)</p>
+      <div class="row" style="margin-bottom:var(--space-6)">
+        <div class="type-chip type-chip--none"><span class="type-chip__id">유형 01</span><span class="type-chip__label">미진행</span></div>
+        <div class="type-chip type-chip--pending"><span class="type-chip__id">유형 02</span><span class="type-chip__label">미판정</span></div>
+        <div class="type-chip type-chip--relearn"><span class="type-chip__id">유형 03</span><span class="type-chip__label">재학습</span></div>
+        <div class="type-chip type-chip--supplement"><span class="type-chip__id">유형 04</span><span class="type-chip__label">보충</span></div>
+        <div class="type-chip type-chip--understand"><span class="type-chip__id">유형 05</span><span class="type-chip__label">이해</span></div>
+        <div class="type-chip type-chip--master"><span class="type-chip__id">유형 06</span><span class="type-chip__label">정복 ♛</span></div>
+      </div>
+
+      <p class="label">난이도 블록 · 아코디언(커리큘럼)</p>
+      <div class="row" style="margin-bottom:var(--space-5)">
+        <span class="block block--basic">기본</span>
+        <span class="block block--skill">실력</span>
+        <span class="block block--deep">심화</span>
+      </div>
+      <div class="accordion is-open" data-accordion style="max-width:640px">
+        <button class="accordion__header" data-accordion-header>
+          <span>
+            <strong>(1) 소수와 합성수</strong>
+            <span class="star-row" style="margin-left:8px">
+              <span class="star star--gold star--sm"></span>
+              <span class="star star--silver star--sm"></span>
+              <span class="star star--empty star--sm"></span>
+            </span>
+          </span>
+          <span class="accordion__chevron">▾</span>
+        </button>
+        <div class="accordion__body">
+          <div class="row">
+            <button class="cta-step cta-step--done">개념훈련</button>
+            <button class="cta-step cta-step--doing">유형훈련</button>
+            <button class="cta-step cta-step--todo">서술형훈련</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="scripts/theme.js"></script>
+  <script src="scripts/components.js"></script>
+</body>
+</html>

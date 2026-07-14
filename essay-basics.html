@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light" data-section="essay">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>서술형 훈련 · 기초 기르기 — 리딩수학과학</title>
+  <link rel="stylesheet" href="styles/tokens.css?v=15" />
+  <link rel="stylesheet" href="styles/base.css?v=3" />
+  <link rel="stylesheet" href="styles/components.css?v=5" />
+  <link rel="stylesheet" href="styles/learn-shell.css?v=7" />
+  <link rel="stylesheet" href="styles/essay.css?v=11" />
+  <style>
+    /* ============ 서술형 훈련 = 퍼플 테마 (공통은 essay.css) ============ */
+    /* 페이지 고유 토큰만 여기서 선언 (--bl-* / .blank / .qpop / 하단바 = essay.css) */
+    .content {
+      padding: clamp(12px, 1.8vw, 16px) clamp(12px, 1.8vw, 16px) 96px;
+      gap: 16px; align-items: stretch;
+      --guide: rgba(249,249,249,.92); --box-bg: var(--n-900); --box-br: rgba(255,255,255,.10);
+      --qa-bg: var(--surface-3); --qa-fg: rgba(249,249,249,.92); --qa-soft: rgba(255,255,255,.06); --qa-sub: var(--n-100);
+      --bl-next: rgba(124,120,240,.85);
+    }
+    :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
+    :root[data-theme="light"] .content {
+      /* 제일 뒤(베이스) = 흰색에 가까운 톤. 층위: 베이스(near-white) → 문제카드(흰색) → 수식박스(연라벤더 인셋) */
+      background: var(--n-050); border-color: var(--th-static);
+      --guide: var(--n-650); --box-bg: var(--n-050); --box-br: rgba(108,99,201,.12);
+      --qa-bg: var(--n-000); --qa-fg: var(--n-650); --qa-soft: rgba(108,99,201,.055); --qa-sub: var(--text-meta);
+      --bl-next: rgba(114,111,233,.7);
+    }
+
+    /* ============ 좌: 문제 영역 (더 좁게) ============ */
+    .qa {
+      flex: 0 1 clamp(300px, 33%, 372px); min-width: 0; display: flex; flex-direction: column; gap: 12px;
+      background: var(--qa-bg); color: var(--qa-fg);
+      border-radius: 24px; padding: clamp(16px, 2vw, 24px); overflow: hidden;
+    }
+    :root[data-theme="light"] .qa { border: 1px solid var(--n-050); box-shadow: 0 10px 24px -18px rgba(60,40,130,.32); }
+    .qa__top { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex: none; }
+    .qtabs { display: flex; align-items: center; gap: 4px; }
+    /* 문제 진행 인디케이터: 미완료(흐림) → 완료(중간 채움+✓) → 현재(진한 채움+링) */
+    .qtab { min-width: 34px; height: 34px; padding: 0 10px; border-radius: 9px; display: inline-flex;
+      align-items: center; justify-content: center; gap: 3px; cursor: default;
+      font-weight: 700; font-size: 16px; text-align: center; transition: background .15s, box-shadow .15s; }
+    .qtab { background: rgba(255,255,255,.12); color: rgba(255,255,255,.5); }              /* 미완료 (다크 카드) */
+    .qtab.is-done { background: rgba(114,111,233,.55); color: var(--n-000); }                      /* 완료 */
+    .qtab.is-active { background: var(--th-accent); color: var(--n-000); box-shadow: 0 0 0 3px rgba(114,111,233,.30); }  /* 현재 */
+    :root[data-theme="light"] .qtab { background: rgba(114,111,233,.10); color: var(--text-muted); }
+    :root[data-theme="light"] .qtab.is-done { background: rgba(114,111,233,.20); color: var(--th-ink-accent); }
+    :root[data-theme="light"] .qtab.is-active { background: var(--th-accent); color: var(--n-000); }
+    .qtimer { display: inline-flex; align-items: center; gap: 4px; background: rgba(0,0,0,.3);
+      border-radius: 8px; padding: 5px 9px; flex: none; }
+    :root[data-theme="light"] .qtimer { background: var(--th-accent); }
+    .qtimer img { width: 16px; height: 16px; }
+    .qtimer span { font-family: var(--font-mono); font-weight: 700; font-size: 15px; color: var(--n-000); }
+
+    /* 문제 스크롤 본문 */
+    .qa__body { flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-right: 4px; }
+    .qtext { color: var(--qa-fg); font-size: clamp(15px, 1.35vw, 18px); line-height: 1.7; }
+    .qref { background: var(--qa-soft); border-radius: 16px; padding: 8px; display: flex; flex-direction: column; gap: 8px; }
+    .qref__img { width: 100%; aspect-ratio: 20 / 9; border-radius: 8px;
+      background: linear-gradient(110deg, var(--n-500) 25%, var(--n-500) 40%, var(--n-500) 55%); background-size: 220% 100%;
+      animation: shimmer 1.8s ease-in-out infinite; display: flex; align-items: center; justify-content: center; }
+    :root[data-theme="light"] .qref__img { background: linear-gradient(110deg, var(--n-100) 25%, var(--n-050) 40%, var(--n-100) 55%); background-size: 220% 100%; }
+    .qref__img span { color: rgba(255,255,255,.55); font-weight: 700; font-size: 13px; }
+    :root[data-theme="light"] .qref__img span { color: rgba(80,66,150,.55); }
+    @keyframes shimmer { from { background-position: 180% 0; } to { background-position: -40% 0; } }
+    .qref__words { color: var(--qa-sub); font-size: clamp(14px, 1.25vw, 17px); line-height: 1.75; white-space: pre-line; }
+
+    /* 스크롤바 (좌/우 공통) */
+    .qa__body::-webkit-scrollbar, .expl::-webkit-scrollbar { width: 9px; }
+    .qa__body::-webkit-scrollbar-thumb, .expl::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,.22); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
+    :root[data-theme="light"] .expl::-webkit-scrollbar-thumb { background: rgba(70,50,140,.28); background-clip: padding-box; }
+
+    /* ============ 우: 풀이 가이드 ============ */
+    .expl {
+      flex: 1 1 0; min-width: 0; overflow-y: auto;
+      padding: clamp(14px, 1.8vw, 26px) clamp(18px, 2.2vw, 32px);
+      display: flex; flex-direction: column; align-items: center;
+      font-family: var(--font-serif); color: var(--guide);
+    }
+    /* 본문 컨테이너: 일정 폭 이상으로 늘어나지 않음 */
+    .expl__doc {
+      width: 100%; max-width: 760px;
+      display: flex; flex-direction: column; gap: clamp(26px, 3vw, 40px);
+    }
+    .para { display: flex; flex-direction: column; gap: 10px; }
+    .line { font-size: clamp(15px, 1.4vw, 18px); line-height: 2.0; letter-spacing: -0.02em; }
+    .para__head { font-weight: 700; }
+    .box { background: var(--box-bg); border: 1px solid var(--box-br); border-radius: 16px;
+      padding: clamp(16px, 2vw, 28px); display: flex; flex-direction: column; gap: 14px; }
+    .box__row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 2px 6px;
+      font-family: var(--font-sans); font-size: clamp(16px, 1.55vw, 19px); font-weight: 500; }
+
+    /* 빈칸: 항상 클릭 가능(재편집) + 예시(given) 변형 — 코어는 essay.css */
+    .blank { cursor: pointer; }
+    .blank:hover { background: var(--bl-bgh); box-shadow: inset 0 0 0 1px var(--bl-lineh); }
+    .blank--given { background: var(--bl-fill); box-shadow: none; cursor: default; }
+    .blank--given .blank__ans { opacity: 1; }
+    .blank--given .blank__badge { display: none; }
+
+    @media (max-width: 860px) {
+      .content { flex-direction: column; overflow-y: auto; }
+      .qa { flex: none; max-height: 46%; } .expl { flex: none; overflow: visible; }
+    }
+  </style>
+</head>
+<body class="learn-body">
+  <div class="screen">
+    <div class="screen__bg"></div>
+
+    <div class="screen__container">
+      <header class="lheader">
+        <nav class="breadcrumb">
+          <span class="crumb crumb--strong">과학 중등 1-1</span>
+          <svg class="sep" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <span class="crumb crumb--strong crumb--clip crumb--hide">2단원 생물의 구성과 다양성</span>
+          <svg class="sep crumb--hide" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <span class="crumb crumb--hide">(1) 생물의 구성</span>
+          <svg class="sep crumb--hide" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <span class="crumb">서술형 훈련</span>
+          <svg class="sep" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <span class="crumb crumb--strong">기초 기르기</span>
+        </nav>
+        <div class="lheader__actions">
+          <div class="lheader__timer" id="hdrTimer"><img src="assets/figma/icons/ico-stopwatch.svg" alt="경과 시간" /><span id="timer">00:00</span></div>
+          <button class="theme-toggle" id="themeToggle" title="라이트/다크 전환"><span class="theme-toggle__knob"></span></button>
+          <button class="nav-ico" title="알림"><img src="assets/figma/icons/ico-siren.svg" alt="알림" /></button>
+          <button class="nav-ico" title="나가기"><img src="assets/figma/icons/ico-exit.svg" alt="나가기" /></button>
+        </div>
+      </header>
+
+      <main class="content">
+        <!-- 좌: 문제 · 진행 인디케이터(1 완료 · 2 현재 · 3 미완료) -->
+        <section class="qa">
+          <div class="qa__top">
+            <div class="qtabs">
+              <span class="qtab is-done">1</span>
+              <span class="qtab is-active">2</span>
+              <span class="qtab">3</span>
+            </div>
+          </div>
+          <div class="qa__body">
+            <p class="qtext">고등어를 세는 단위는 ‘손’입니다. 옛날에는 상하기 쉬운 고등어를 손질한 큰 것에 작은 것을 끼워 2마리씩 겹쳐서 소금에 절여 놓았습니다. 한 손에 2마리씩 잡히니 사람의 손에 잡힌다는 뜻의 ‘손’을 사용하게 되었습니다. 즉, 고등어 한 손은 고등어 2마리를 뜻합니다. 고등어 6손을 한 봉지에 3마리씩 담으려고 합니다. 모두 몇 봉지에 나누어 담을 수 있는지 곱셈식과 나눗셈식으로 나타내어 보세요.</p>
+            <div class="qref">
+              <div class="qref__img"><span>참고 이미지</span></div>
+              <div class="qref__words">- 낮은
+- 똑같은
+- 같습니다.
+- 다릅니다.
+- 느리게
+- 빠르게
+- 효과적으로
+- 무겁게</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 우: 풀이 가이드 -->
+        <section class="expl" id="expl"></section>
+      </main>
+    </div>
+
+    <!-- 하단 콘솔 바 (서술형 버전) -->
+    <div class="bar">
+      <img class="bar__deco bar__deco--l" src="assets/figma/console-essay-right.svg" alt="" />
+      <div class="bar__mid">
+        <div class="bar__tray">
+          <div class="bar__group">
+            <button class="toolbtn"><img src="assets/figma/icons/ico-note-edit.svg" alt="" /><span>연습장</span></button>
+          </div>
+          <div class="bar__group">
+            <button class="toolbtn toolbtn--primary" id="resultBtn" disabled title="모든 빈칸을 채우면 활성화돼요"><img src="assets/figma/icons/ico-summary.svg" alt="" /><span>결과보기</span></button>
+          </div>
+        </div>
+      </div>
+      <img class="bar__deco bar__deco--r" src="assets/figma/console-essay-left.svg" alt="" />
+    </div>
+  </div>
+
+  <!-- 빈칸 입력 드롭다운 (빈칸 근처에 뜸) -->
+  <div class="qpop" id="qpop" role="dialog" aria-label="빈칸 입력">
+    <div class="qpop__inner" id="qpopInner">
+      <span class="qpop__caret"></span>
+      <div class="qpop__body" id="qpopBody"></div>
+    </div>
+  </div>
+
+  <script src="scripts/essay-basics.js?v=4"></script>
+</body>
+</html>

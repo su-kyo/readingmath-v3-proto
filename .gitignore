@@ -1,0 +1,14 @@
+# OS
+.DS_Store
+
+# 예전 참고자료 백업 (앱 구동과 무관, 대용량)
+backup/
+
+# 임시 작업 폴더
+scratchpad/
+
+# 로컬 전용 도구 설정 (머신별 권한)
+.claude/settings.local.json
+
+# 시크릿
+.env

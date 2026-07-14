@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light" data-section="essay">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>서술형 훈련 · 탐구활동 보고서 해설 — 리딩수학과학</title>
+  <link rel="stylesheet" href="styles/tokens.css?v=15" />
+  <link rel="stylesheet" href="styles/base.css?v=3" />
+  <link rel="stylesheet" href="styles/components.css?v=5" />
+  <link rel="stylesheet" href="styles/learn-shell.css?v=7" />
+  <link rel="stylesheet" href="styles/essay.css?v=11" />
+  <style>
+    /* ============ 서술형(과학) 보고서 해설 = 퍼플 테마 ============ */
+    .content {
+      flex-direction: column; padding: clamp(12px, 1.6vw, 16px) clamp(12px, 1.6vw, 16px) 0;
+      --guide: rgba(249,249,249,.92);
+      --rt-line: var(--n-500); --rt-head: var(--surface-1); --rt-cell: var(--surface-1); --rt-fg: rgba(249,249,249,.9); --rt-sub: var(--text-muted);
+      --ok-bg: rgba(16,188,132,.16); --ok-br: rgba(16,188,132,.55); --ok-fg: var(--ok-solid); --ok-ink: var(--ok-tint);
+      --no-bg: rgba(229,88,95,.16); --no-br: rgba(229,88,95,.6); --no-fg: var(--no-solid); --no-ink: var(--no-tint);
+    }
+    :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
+    :root[data-theme="light"] .content {
+      background: var(--n-050); border-color: var(--th-static);
+      --guide: var(--n-650);
+      --rt-line: var(--n-100); --rt-head: var(--n-050); --rt-cell: var(--n-000); --rt-fg: var(--n-650); --rt-sub: var(--text-meta);
+      --ok-bg: rgba(16,140,100,.12); --ok-br: rgba(16,140,100,.5); --ok-fg: var(--ok-ink); --ok-ink: var(--ok-ink);
+      --no-bg: rgba(210,50,58,.1); --no-br: rgba(210,50,58,.5); --no-fg: var(--no-ink); --no-ink: var(--no-ink);
+    }
+
+    .report-wrap { flex: 1; min-width: 0; overflow-y: auto; padding: clamp(8px, 1.4vw, 16px) clamp(12px, 2.4vw, 30px) 96px; }
+    .report-wrap::-webkit-scrollbar { width: 10px; }
+    .report-wrap::-webkit-scrollbar-thumb { background: rgba(255,255,255,.2); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
+    :root[data-theme="light"] .report-wrap::-webkit-scrollbar-thumb { background: rgba(108,99,201,.28); background-clip: padding-box; }
+
+    /* 안내문 */
+    .review-hint { display: flex; align-items: center; gap: 9px; max-width: 1000px; margin: 0 auto 14px;
+      padding: 11px 16px; border-radius: 13px; background: var(--no-bg); box-shadow: inset 0 0 0 1px var(--no-br);
+      font-family: var(--font-sans); font-size: 13.5px; font-weight: 700; color: var(--no-fg); }
+    .review-hint svg { width: 17px; height: 17px; flex: none; }
+
+    /* ============ 보고서 표 (essay-report와 동일) ============ */
+    .report { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: clamp(92px, 12vw, 150px) 1fr;
+      gap: 1px; background: var(--rt-line); border: 1px solid var(--rt-line); border-radius: 14px; overflow: hidden;
+      font-family: var(--font-sans); color: var(--rt-fg); }
+    .rt-label { background: var(--rt-head); padding: 16px 12px; display: flex; align-items: center; justify-content: center;
+      text-align: center; font-weight: 700; font-size: clamp(13px, 1.15vw, 15px); word-break: keep-all; }
+    .rt-cell { background: var(--rt-cell); padding: 15px 18px; display: flex; flex-direction: column; gap: 10px; justify-content: center;
+      font-size: clamp(13.5px, 1.15vw, 15px); line-height: 1.75; min-width: 0; }
+    .rt-text { white-space: pre-line; word-break: keep-all; }
+    .rt-img { border-radius: 10px; overflow: hidden; max-width: 380px; align-self: flex-start; }
+    .rt-img img { display: block; width: 100%; height: auto; }
+    .rt-span { line-height: 2.6; word-break: keep-all; }
+
+    /* ============ 채점 빈칸 (정오답 · 오답 토글) ============ */
+    .rblank { position: relative; display: inline-flex; align-items: center; gap: 6px; vertical-align: middle;
+      padding: 2px 11px; margin: 0 2px; border-radius: 9px; font-family: var(--font-serif); font-weight: 700; }
+    .rblank__val { line-height: 1.3; }
+    .rblank.is-correct { background: var(--ok-bg); color: var(--ok-ink); box-shadow: inset 0 0 0 1.5px var(--ok-br); }
+    :root[data-theme="dark"] .rblank.is-correct { color: var(--ok-fg); }
+    .rblank.is-correct::after { content: '✓'; color: var(--ok-fg); font-weight: 900; font-size: 13px; }
+    .rblank.is-wrong { background: var(--no-bg); color: var(--no-ink); box-shadow: inset 0 0 0 1.5px var(--no-br); cursor: pointer; transition: box-shadow .15s; }
+    :root[data-theme="dark"] .rblank.is-wrong { color: var(--no-fg); }
+    .rblank.is-wrong:hover { box-shadow: inset 0 0 0 2px var(--no-br), 0 0 0 3px var(--no-bg); }
+    .rblank.is-wrong .rblank__val { text-decoration: line-through; text-decoration-color: var(--no-fg); text-decoration-thickness: 1.5px; }
+    .rblank.is-wrong::after { content: '✕'; color: var(--no-fg); font-weight: 900; font-size: 12px; }
+    .rblank__note { display: none; align-items: center; gap: 4px; padding-left: 7px; margin-left: 4px;
+      border-left: 1.5px solid var(--ok-br); color: var(--ok-fg); font-weight: 700; }
+    .rblank__note b { font-weight: 800; }
+    .rblank.show-ans { background: color-mix(in srgb, var(--ok-bg) 60%, var(--no-bg)); }
+    .rblank.show-ans .rblank__note { display: inline-flex; }
+
+    /* ============ 추천 보고서 모달 (essay-report 미리보기 재사용) ============ */
+    /* ⚠ 의도적 뉴트럴: 실제 인쇄물을 흉내내는 흰 종이 프리뷰라 중성 톤 유지. 테마 불변 위해 고정 뉴트럴 프리미티브(--n-*)로 토큰화. */
+    .pmodal { position: fixed; inset: 0; z-index: 300; display: none; align-items: center; justify-content: center; padding: 24px; }
+    .pmodal.is-open { display: flex; }
+    .pmodal__backdrop { position: absolute; inset: 0; background: rgba(8,5,22,.55); backdrop-filter: blur(2px); }
+    .pmodal__card { position: relative; width: 100%; max-width: 780px; max-height: 88vh; display: flex; flex-direction: column;
+      background: var(--n-050); border-radius: 20px; overflow: hidden; box-shadow: 0 30px 70px -20px rgba(0,0,0,.6); }
+    .pmodal__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 18px;
+      background: var(--n-000); border-bottom: 1px solid var(--n-100); flex: none; }
+    .pmodal__title { font-family: var(--font-sans); font-size: 17px; font-weight: 800; color: var(--n-650); display: inline-flex; align-items: center; gap: 8px; }
+    .pmodal__title::before { content: '★'; color: var(--primary); }
+    .pmodal__tools { display: flex; align-items: center; gap: 8px; }
+    .pmodal__btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 10px; border: 1px solid var(--n-100);
+      background: var(--n-050); color: var(--n-500); font-family: var(--font-sans); font-weight: 700; font-size: 14px; cursor: pointer; transition: background .12s; }
+    .pmodal__btn:hover { background: var(--n-100); }
+    .pmodal__btn svg { width: 16px; height: 16px; }
+    .pmodal__x { width: 34px; height: 34px; border-radius: 9px; border: 0; background: transparent; color: var(--n-400); font-size: 17px; cursor: pointer; }
+    .pmodal__x:hover { background: var(--n-050); }
+    .pmodal__scroll { overflow-y: auto; padding: 24px; }
+    .pmodal__paper { max-width: 680px; margin: 0 auto; background: var(--n-000); padding: 32px 34px; border-radius: 6px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.09); font-family: var(--font-sans); color: var(--n-650); }
+    .rp-title { font-size: 20px; font-weight: 800; text-align: center; margin-bottom: 6px; color: var(--n-650); }
+    .rp-sub { text-align: center; font-size: 12.5px; color: var(--n-400); margin-bottom: 20px; }
+    .rp-table { display: grid; grid-template-columns: 116px 1fr; gap: 1px; background: var(--n-100); border: 1px solid var(--n-100); border-radius: 8px; overflow: hidden; }
+    .rp-label { background: var(--n-050); padding: 12px 10px; display: flex; align-items: center; justify-content: center; text-align: center;
+      font-weight: 700; font-size: 13px; color: var(--n-650); word-break: keep-all; }
+    .rp-cell { background: var(--n-000); padding: 12px 15px; display: flex; flex-direction: column; gap: 8px; justify-content: center;
+      font-size: 13px; line-height: 1.7; color: var(--n-650); }
+    .pmodal__paper .rt-text { white-space: pre-line; word-break: keep-all; }
+    .pmodal__paper .rt-span { line-height: 1.85; word-break: keep-all; }
+    .rp-img { max-width: 300px; border-radius: 6px; overflow: hidden; align-self: flex-start; }
+    .rp-img img { display: block; width: 100%; height: auto; }
+    .fillin { font-family: var(--font-serif); font-weight: 700; color: var(--ok-ink); border-bottom: 1.5px solid var(--ok-solid); padding: 0 3px; }
+
+    .ptoast { position: fixed; left: 50%; bottom: 118px; transform: translateX(-50%) translateY(10px); z-index: 400;
+      background: rgba(20,14,44,.94); color: var(--n-000); padding: 10px 18px; border-radius: 999px; font-family: var(--font-sans);
+      font-size: 14px; font-weight: 600; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
+    .ptoast.is-on { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    .toolbtn--primary { background: var(--th-accent); }
+    @media (max-width: 620px) { .report { grid-template-columns: 80px 1fr; } }
+  </style>
+</head>
+<body class="learn-body">
+  <div class="screen">
+    <div class="screen__bg"></div>
+
+    <div class="screen__container">
+      <header class="lheader">
+        <nav class="breadcrumb">
+          <span class="crumb crumb--strong">과학 중등 1-1</span>
+          <svg class="sep" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <span class="crumb crumb--strong crumb--clip crumb--hide">2단원 생물의 구성과 다양성</span>
+          <svg class="sep crumb--hide" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <span class="crumb">서술형 훈련</span>
+          <svg class="sep" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <span class="crumb crumb--strong">탐구활동 보고서 · 해설</span>
+        </nav>
+        <div class="lheader__actions">
+          <div class="lheader__timer lheader__timer--pause" id="hdrTimer" title="해설 화면 — 타이머 정지"><img src="assets/figma/icons/ico-stopwatch.svg" alt="경과 시간" /><span id="timer">06:38</span></div>
+          <button class="theme-toggle" id="themeToggle" title="라이트/다크 전환"><span class="theme-toggle__knob"></span></button>
+          <button class="nav-ico" title="알림"><img src="assets/figma/icons/ico-siren.svg" alt="알림" /></button>
+          <button class="nav-ico" title="나가기"><img src="assets/figma/icons/ico-exit.svg" alt="나가기" /></button>
+        </div>
+      </header>
+
+      <main class="content">
+        <section class="report-wrap">
+          <div class="review-hint" id="reviewHint">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+            <span>오답을 눌러 정답을 확인해보세요!</span>
+          </div>
+          <div class="report" id="report"></div>
+        </section>
+      </main>
+    </div>
+
+    <!-- 하단 콘솔 바 -->
+    <div class="bar">
+      <img class="bar__deco bar__deco--l" src="assets/figma/console-essay-right.svg" alt="" />
+      <div class="bar__mid">
+        <div class="bar__tray">
+          <div class="bar__group">
+            <button class="toolbtn"><img src="assets/figma/icons/ico-note-edit.svg" alt="" /><span>연습장</span></button>
+          </div>
+          <div class="bar__group">
+            <button class="toolbtn toolbtn--primary" id="recommendBtn"><img src="assets/figma/icons/ico-note.svg" alt="" /><span>추천 보고서</span></button>
+            <button class="toolbtn toolbtn--primary" id="resultBtn"><img src="assets/figma/icons/ico-summary.svg" alt="" /><span>결과로 돌아가기</span></button>
+          </div>
+        </div>
+      </div>
+      <img class="bar__deco bar__deco--r" src="assets/figma/console-essay-left.svg" alt="" />
+    </div>
+  </div>
+
+  <!-- 추천 보고서 모달 -->
+  <div class="pmodal" id="pmodal" aria-hidden="true">
+    <div class="pmodal__backdrop" data-pclose></div>
+    <div class="pmodal__card" role="dialog" aria-modal="true" aria-label="추천 보고서">
+      <div class="pmodal__head">
+        <h2 class="pmodal__title">추천 보고서</h2>
+        <div class="pmodal__tools">
+          <button class="pmodal__btn" id="printBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>인쇄</button>
+          <button class="pmodal__btn" id="dlBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>저장</button>
+          <button class="pmodal__x" data-pclose aria-label="닫기">✕</button>
+        </div>
+      </div>
+      <div class="pmodal__scroll"><div class="pmodal__paper" id="pmodalPaper"></div></div>
+    </div>
+  </div>
+
+  <div class="ptoast" id="ptoast"></div>
+
+  <script src="scripts/essay-report-review.js?v=1"></script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko" data-section="type" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>유형 훈련 · 해설 보기 — 리딩수학과학</title>
+  <link rel="stylesheet" href="styles/tokens.css?v=15" />
+  <link rel="stylesheet" href="styles/base.css?v=3" />
+  <link rel="stylesheet" href="styles/components.css?v=5" />
+  <link rel="stylesheet" href="styles/learn-shell.css?v=7" />
+  <link rel="stylesheet" href="styles/type.css?v=4" />
+  <style>
+    /* ===== 유형 = 틸 테마 ===== */
+    .lheader { background: var(--th-static); }
+    .screen__bg { background: url("assets/figma/bg-spaceship-teal.png") center/cover no-repeat; }
+    :root[data-theme="dark"] .content { background: var(--n-650); border-color: var(--th-static); }  /* 공통 뉴트럴 다크 · 틸 프레임 유지 */
+    :root[data-theme="light"] .content { background: var(--n-050); border-color: var(--th-static); --fade: var(--n-050); }  /* 공통 뉴트럴 라이트 · 틸 프레임 유지 */
+    .content { position: relative; flex-direction: column; padding: 0 0 96px; overflow: hidden; --fade: var(--n-050); --subj: var(--primary); }  /* 액센트 = 오렌지 */
+    :root[data-theme="dark"] .content { --fade: var(--n-650); }
+
+    .ops-wrap { flex: 1; min-height: 0; position: relative; margin-top: 40px; }
+    .ops-wrap::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 48px; pointer-events: none; z-index: 1; background: linear-gradient(to top, var(--fade), transparent); opacity: 0; transition: opacity .2s ease; }
+    .ops-wrap::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 44px; pointer-events: none; z-index: 1; background: linear-gradient(to bottom, var(--fade), transparent); opacity: 0; transition: opacity .2s ease; }
+    .ops-wrap.has-more::after { opacity: 1; } .ops-wrap.has-more-top::before { opacity: 1; }
+    .ops {
+      position: absolute; inset: 0; overflow-y: auto; display: flex; flex-direction: column; align-items: center;
+      padding: 6px clamp(56px, 8vw, 96px) 26px;
+      --qtext: var(--n-050); --muted: var(--text-muted); --ex-bg: var(--n-800); --opt-bg: var(--n-800); --opt-br: rgba(255,255,255,.1);
+      --input-bg: var(--n-800); --input-br: var(--n-500);
+    }
+    :root[data-theme="light"] .ops { --qtext: var(--n-650); --muted: var(--text-muted); --ex-bg: var(--n-100); --opt-bg: var(--n-000); --opt-br: var(--n-100); --input-bg: var(--n-000); --input-br: var(--n-200); }
+    .ops::-webkit-scrollbar { width: 10px; }
+    .ops::-webkit-scrollbar-thumb { background: rgba(255,255,255,.24); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
+
+    /* ===== 프로그레스 캡 (정오답 o/x + 오답 점프) ===== */
+    .progress-cap { position: absolute; top: 0; left: 50%; transform: translateX(-50%); z-index: 4; display: inline-flex; align-items: center; gap: 8px; background: var(--th-static); border-radius: 0 0 16px 16px; padding: 0 14px 7px; max-width: calc(100% - 48px); flex-wrap: nowrap; }
+    .cap-timer { display: inline-flex; align-items: center; gap: 6px; background: var(--n-900); border-radius: 999px; padding: 5px 12px 5px 10px; margin-right: 2px; opacity: .7; }
+    .cap-timer img { width: 17px; height: 17px; } .cap-timer span { font-family: var(--font-mono); font-weight: 700; color: var(--n-000); font-size: 15px; }
+    .pcirc { width: 22px; height: 22px; border-radius: 50%; flex: none; position: relative; background: rgba(255,255,255,.2); cursor: pointer; font-size: 11px; font-weight: 800; color: var(--n-000); display: flex; align-items: center; justify-content: center; }
+    .pcirc.is-current { box-shadow: 0 0 0 2px var(--n-000); }
+    .pcirc.is-correct { background: var(--ok-solid); }
+    .pcirc.is-correct::after { content: ""; position: absolute; inset: 0; background: center / 15px no-repeat url("assets/figma/icons/ico-progress-correct.svg"); }
+    .pcirc.is-wrong { background: var(--no-solid); }
+    .pcirc.is-wrong::after { content: ""; position: absolute; inset: 0; background: center / 15px no-repeat url("assets/figma/icons/ico-progress-wrong.svg"); }
+
+    /* ===== 문제 (읽기 전용) + 좌우 화살표 ===== */
+    /* 라이트/다크 모두 대비 확보 — 패널색 위 떠 있는 버튼(변수 비의존, 테두리+그림자) */
+    .nav-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 3; width: 48px; height: 48px; border-radius: 50%; background: var(--n-000); color: var(--n-650); box-shadow: 0 4px 14px rgba(10,50,44,.20), inset 0 0 0 1.5px var(--n-200); display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 800; cursor: pointer; transition: filter .12s ease, background .12s ease; }
+    :root[data-theme="dark"] .nav-arrow { background: var(--n-600); color: var(--th-accent-hi); box-shadow: 0 4px 14px rgba(0,0,0,.45), inset 0 0 0 1.5px var(--n-500); }
+    .nav-arrow:hover:not(:disabled) { filter: brightness(.96); } :root[data-theme="dark"] .nav-arrow:hover:not(:disabled) { filter: brightness(1.18); }
+    .nav-arrow:disabled { opacity: .34; cursor: not-allowed; }
+    .nav-arrow--prev { left: 10px; } .nav-arrow--next { right: 10px; }
+
+    .q { width: min(1040px, 100%); margin: auto 0; display: flex; flex-direction: column; align-items: center; }
+    .q__text { align-self: stretch; font-size: clamp(16px, 1.5vw, 20px); font-weight: 700; color: var(--qtext); line-height: 1.6; margin-bottom: 20px; }
+    .ex { align-self: stretch; background: var(--ex-bg); border-radius: 18px; padding: 20px 24px; margin-bottom: 22px; }
+    .ex__list { display: flex; flex-direction: column; gap: 10px; font-size: clamp(15px,1.4vw,18px); color: var(--qtext); line-height: 1.5; }
+    .ex__skel { min-height: 120px; display: flex; align-items: center; justify-content: center; color: var(--muted); font-weight: 700; }
+    .ex__shape { display: flex; justify-content: center; }
+
+    .opts-row { align-self: stretch; display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+    .opts-row .opt { flex: 1 1 0; min-width: 120px; }
+    .opts-grid { align-self: stretch; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+    .opt { display: flex; align-items: center; gap: 12px; padding: 15px 20px; min-height: 60px; border-radius: 14px; background: var(--opt-bg); box-shadow: inset 0 0 0 1.5px var(--opt-br); color: var(--qtext); font-size: clamp(15px,1.35vw,17px); font-weight: 600; text-align: left; pointer-events: none; }
+    .opt__num { flex: none; width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,.14); color: var(--qtext); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 15px; position: relative; }
+    :root[data-theme="light"] .opt__num { background: var(--n-100); color: var(--th-ink-accent); }
+    .opt--num { justify-content: center; } .opt--num .opt__num { width: 34px; height: 34px; }
+    .opt__img { width: 100%; height: 96px; border-radius: 10px; background: var(--n-200); }
+    .opt--img { flex-direction: column; align-items: stretch; position: relative; }
+    .opt--img .opt__num { position: absolute; top: 12px; left: 12px; z-index: 1; box-shadow: 0 1px 4px rgba(0,0,0,.3); }
+    /* 이미지 배지는 항상 밝은 이미지 위 → 테마 무관 진한 배지+흰 숫자 (정답/오답 색은 뒤 규칙이 우선) */
+    .opt.opt--img .opt__num { background: var(--th-static); color: var(--n-000); }
+    .opt.is-correct { background: color-mix(in srgb, var(--ok-solid) 22%, var(--opt-bg)); box-shadow: inset 0 0 0 2px var(--ok-solid); }
+    .opt.is-correct .opt__num { background: var(--ok-solid); color: var(--n-000); }
+    :root[data-theme="dark"] .opt.is-correct .opt__num { color: var(--n-900); }  /* 다크=밝은민트 위 어두운 글씨 */
+    .opt.is-wrong { background: color-mix(in srgb, var(--no-solid) 20%, var(--opt-bg)); box-shadow: inset 0 0 0 2px var(--no-solid); }
+    .opt.is-wrong .opt__num { background: var(--no-solid); color: var(--n-000); font-size: 0; }  /* 숫자 숨기고 ✕만 */
+    .opt.is-wrong .opt__num::after { content: "✕"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 15px; }
+
+    .answer-row { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; }
+    .sfield { display: flex; align-items: center; gap: 8px; } .sfield__tag { font-weight: 800; color: var(--qtext); }
+    .sinput { height: 54px; min-width: 200px; padding: 0 16px; text-align: center; background: var(--input-bg); border: 1.5px solid var(--input-br); border-radius: 14px; color: var(--qtext); font-size: 18px; font-weight: 700; font-family: var(--font-sans); }
+    .sinput.is-correct { border-color: var(--ok-solid); color: var(--ok-solid); }
+    .sinput.is-wrong { border-color: var(--no-solid); color: var(--no-solid); }
+    .fraction { display: inline-flex; flex-direction: column; align-items: center; gap: 8px; } .fraction .sinput { min-width: 96px; width: 96px; height: 50px; padding: 0 10px; } .fraction__bar { width: 104px; height: 3px; background: var(--qtext); border-radius: 2px; }
+    .ans-correct { display: none; margin-top: 18px; padding: 10px 22px; border-radius: 12px; background: color-mix(in srgb, var(--ok-solid) 12%, transparent); color: var(--muted); font-weight: 700; font-size: 16px; align-items: center; gap: 8px; }
+    .ans-correct.show { display: inline-flex; } .ans-correct b { color: var(--ok-solid); font-size: 19px; }
+
+    /* ===== 오답 해설 박스 (모든 문제) ===== */
+    .explain { align-self: stretch; margin-top: 26px; border-radius: 16px; background: color-mix(in srgb, var(--subj) 10%, var(--ex-bg)); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--subj) 40%, transparent); padding: 18px 22px; }
+    .explain__head { display: flex; align-items: center; gap: 7px; font-weight: 800; color: var(--subj); font-size: 15px; margin-bottom: 8px; }
+    :root[data-theme="light"] .explain__head { color: var(--primary-pressed); }
+    .explain__body { color: var(--qtext); font-size: clamp(14px,1.3vw,16px); line-height: 1.6; }
+
+    /* ===== 하단 (이전/다음) ===== */
+    .ops__foot { flex: none; display: flex; justify-content: center; align-items: center; gap: 14px; padding: 10px 0 4px; }
+    .btn-move { padding: 14px 40px; border-radius: 16px; background: var(--subj); color: var(--n-000); font-weight: 800; font-size: 18px; box-shadow: 0 4px 0 var(--primary-pressed); }
+    .btn-move:hover:not(:disabled) { filter: brightness(1.08); } .btn-move:disabled { background: var(--n-500); color: var(--text-muted); box-shadow: none; cursor: not-allowed; }
+
+    /* 하단바 = 유형 footer */
+    .bar__mid { background: var(--amber-050); } .bar__tray { background: #ECE3D8; }  /* §3.5 console-type 트레이 에셋색 */
+    .toolbtn:disabled { opacity: .5; filter: grayscale(.5); cursor: not-allowed; }
+
+    /* 좁은 폭에서도 화살표 유지(사라지지 않음) — 크기만 축소 */
+    @media (max-width: 900px) { .opts-row .opt { min-width: 44%; } .nav-arrow { width: 40px; height: 40px; font-size: 19px; } .nav-arrow--prev { left: 4px; } .nav-arrow--next { right: 4px; } .ops { padding-left: clamp(48px, 7vw, 96px); padding-right: clamp(48px, 7vw, 96px); } }
+  </style>
+</head>
+<body class="learn-body">
+  <div class="screen">
+    <div class="screen__bg"></div>
+
+    <div class="screen__container">
+      <header class="lheader">
+        <nav class="breadcrumb">
+          <span class="crumb crumb--strong">과학 중등 1-1</span>
+          <svg class="sep" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <span class="crumb crumb--strong crumb--clip crumb--hide">2단원 생물의 구성과 다양성</span>
+          <svg class="sep crumb--hide" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <span class="crumb crumb--hide">(1) 생물의 구성</span>
+          <svg class="sep crumb--hide" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <span class="crumb">유형 훈련</span>
+          <svg class="sep" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <span class="crumb crumb--strong">해설 보기</span>
+        </nav>
+        <div class="lheader__actions">
+          <div class="lheader__timer is-paused" id="hdrTimer" title="제출 시점 (정지)"><img src="assets/figma/icons/ico-stopwatch.svg" alt="경과 시간(정지)" /><span id="timer">00:00</span></div>
+          <button class="theme-toggle" id="themeToggle" title="라이트/다크 전환"><span class="theme-toggle__knob"></span></button>
+          <button class="nav-ico" title="알림"><img src="assets/figma/icons/ico-siren.svg" alt="알림" /></button>
+          <button class="nav-ico" title="나가기"><img src="assets/figma/icons/ico-exit.svg" alt="나가기" /></button>
+        </div>
+      </header>
+
+      <main class="content">
+        <div class="progress-cap" id="progress"></div>
+        <button class="nav-arrow nav-arrow--prev" id="prevArrow" aria-label="이전 문제">‹</button>
+        <button class="nav-arrow nav-arrow--next" id="nextArrow" aria-label="다음 문제">›</button>
+        <div class="ops-wrap">
+          <div class="ops" id="opsScroll"><div class="q" id="q"></div></div>
+        </div>
+        <div class="ops__foot">
+          <button class="btn-move" id="nextBtn">다음 문제</button>
+        </div>
+      </main>
+    </div>
+
+    <!-- 하단 콘솔 바 (유형) -->
+    <div class="bar">
+      <img class="bar__deco bar__deco--l" src="assets/figma/console-type-right.svg" alt="" />
+      <div class="bar__mid">
+        <div class="bar__tray">
+          <div class="bar__group"><button class="toolbtn"><img src="assets/figma/icons/ico-note.svg" alt="" /><span>연습장</span></button></div>
+          <div class="bar__group"><button class="toolbtn toolbtn--primary"><img src="assets/figma/icons/ico-summary.svg" alt="" /><span>결과보기</span></button></div>
+        </div>
+      </div>
+      <img class="bar__deco bar__deco--r" src="assets/figma/console-type-left.svg" alt="" />
+    </div>
+  </div>
+
+  <script src="scripts/type-review.js?v=4"></script>
+</body>
+</html>

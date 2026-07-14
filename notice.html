@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko" data-section="util">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>공지사항 — 리딩수학과학</title>
+  <link rel="stylesheet" href="styles/tokens.css?v=15" />
+  <link rel="stylesheet" href="styles/base.css?v=3" />
+  <link rel="stylesheet" href="styles/gnb.css?v=4" />
+  <link rel="stylesheet" href="styles/util.css?v=5" />
+  <style>
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html,body{ height:100%; }
+  </style>
+</head>
+<body class="u-body">
+  <div class="u-app">
+    <header class="gnb">
+      <div class="gnb__info"><span class="gnb__logo"></span><span class="gnb__name">김학생</span></div>
+      <div class="gnb__icons">
+        <button class="gnb__ico" title="도움말"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.8.4-1 .9-1 1.7" stroke-linecap="round"/><circle cx="12" cy="16.5" r="1" fill="currentColor" stroke="none"/></svg></button>
+        <button class="gnb__ico" title="오류 신고"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17h.01"/></svg></button>
+        <button class="gnb__ico" id="noticeBtn" title="공지사항"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 9v6h3l7 4V5L7 9H4zM18 8a5 5 0 0 1 0 8"/></svg><span class="gnb__dot"></span></button>
+        <button class="gnb__ico" id="menuBtn" title="메뉴"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      </div>
+    </header>
+
+    <main class="u-main">
+      <div class="u-wrap">
+        <div class="u-head">
+          <div class="u-head__l">
+            <span class="u-head__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 9v6h3l7 4V5L7 9H4zM18 8a5 5 0 0 1 0 8"/></svg></span>
+            <div>
+              <div class="u-head__t">공지사항</div>
+              <div class="u-head__sub">리딩수학과학의 새 소식과 서비스 안내를 확인하세요.</div>
+            </div>
+          </div>
+          <div class="u-head__act">
+            <div class="u-seg" id="filter">
+              <button class="is-on" data-f="all">전체</button>
+              <button data-f="공지">공지</button>
+              <button data-f="이벤트">이벤트</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="u-card">
+          <div class="u-tablewrap">
+            <table class="u-table">
+              <thead><tr>
+                <th class="col-no is-center">번호</th>
+                <th>제목</th>
+                <th class="col-date is-right">등록일</th>
+              </tr></thead>
+              <tbody id="rows"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="u-pager" id="pager"></div>
+      </div>
+    </main>
+  </div>
+
+  <div class="u-toast" id="toast"></div>
+
+  <script>
+  (function(){
+    var DATA = [
+      { id:8, cat:'공지', title:'시험 대비(유형 도전) 기능 오픈 안내', date:'2026-04-15', isNew:true },
+      { id:7, cat:'이벤트', title:'[공지] 2026 학습 후기 이벤트 결과 발표 🎉 축하드립니다!', date:'2026-05-18', isNew:true },
+      { id:6, cat:'공지', title:'자유 모드 · 계통별 학습 업데이트 안내', date:'2026-03-30' },
+      { id:5, cat:'공지', title:'6월 정기 점검 안내 (6/12 새벽 2시~4시)', date:'2026-06-05' },
+      { id:4, cat:'이벤트', title:'갓생기록상 · 뇌근육 벌크업상 응모 안내', date:'2026-05-02' },
+      { id:3, cat:'공지', title:'월간보고서 리포트 개편 안내', date:'2026-04-01' },
+      { id:2, cat:'공지', title:'개인정보 처리방침 개정 안내', date:'2026-02-20' },
+      { id:1, cat:'이벤트', title:'신규 가입 웰컴 이벤트', date:'2026-02-01' }
+    ];
+    var CATCLASS = { '공지':'u-tag--blue', '이벤트':'u-tag--amber' };
+    var filter='all', page=1, PER=6;
+
+    function list(){ return filter==='all'?DATA:DATA.filter(function(d){return d.cat===filter;}); }
+    function render(){
+      var arr=list(); var start=(page-1)*PER; var slice=arr.slice(start,start+PER);
+      var tb=document.getElementById('rows'); tb.innerHTML='';
+      if(!slice.length){ tb.innerHTML='<tr><td colspan="3"><div class="u-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 9v6h3l7 4V5L7 9H4z" stroke-linejoin="round"/></svg><div class="u-empty__t">등록된 게시글이 없어요.</div></div></td></tr>'; renderPager(0); return; }
+      slice.forEach(function(d){
+        var tr=document.createElement('tr');
+        tr.innerHTML='<td class="col-no is-center">'+d.id+'</td>'
+          +'<td><span class="u-tag '+(CATCLASS[d.cat]||'')+'" style="margin-right:11px">'+d.cat+'</span>'
+          +'<span class="u-ttl">'+d.title+'</span>'+(d.isNew?'<span class="u-new">N</span>':'')+'</td>'
+          +'<td class="col-date is-right">'+d.date+'</td>';
+        tr.addEventListener('click', function(){ location.href='notice-detail.html?id='+d.id; });
+        tb.appendChild(tr);
+      });
+      renderPager(arr.length);
+    }
+    function renderPager(total){
+      var pages=Math.max(1,Math.ceil(total/PER)); var p=document.getElementById('pager'); p.innerHTML='';
+      var prev=btn('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>', function(){ if(page>1){page--;render();} }); prev.disabled=page===1; p.appendChild(prev);
+      for(var i=1;i<=pages;i++){ (function(i){ var b=btn(String(i), function(){ page=i; render(); }); if(i===page) b.className+=' is-on'; p.appendChild(b); })(i); }
+      var next=btn('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>', function(){ if(page<pages){page++;render();} }); next.disabled=page===pages; p.appendChild(next);
+    }
+    function btn(html,fn){ var b=document.createElement('button'); b.innerHTML=html; b.addEventListener('click',fn); return b; }
+
+    document.getElementById('filter').addEventListener('click', function(e){
+      var b=e.target.closest('button'); if(!b) return; filter=b.dataset.f; page=1;
+      Array.prototype.forEach.call(this.children, function(c){ c.classList.toggle('is-on', c===b); }); render();
+    });
+    render();
+  })();
+  </script>
+  <script src="scripts/gnb-drawer.js?v=6"></script>
+</body>
+</html>

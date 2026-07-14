@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light" data-section="essay">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>서술형 훈련 · 기본 다지기 해설 — 리딩수학과학</title>
+  <link rel="stylesheet" href="styles/tokens.css?v=15" />
+  <link rel="stylesheet" href="styles/base.css?v=3" />
+  <link rel="stylesheet" href="styles/components.css?v=5" />
+  <link rel="stylesheet" href="styles/learn-shell.css?v=7" />
+  <link rel="stylesheet" href="styles/essay.css?v=11" />
+  <style>
+    /* ============ 서술형 = 퍼플 (essay-drill 셸 재사용) ============ */
+    .content {
+      flex-direction: column; padding: clamp(12px, 1.6vw, 16px) clamp(12px, 1.6vw, 16px) 0;
+      --guide: rgba(249,249,249,.94); --card: var(--surface-1); --card-br: rgba(255,255,255,.08); --card-sh: none;
+      --step-bg: rgba(255,255,255,.07); --step-fg: var(--text-muted);
+      /* 채점 색 (다크) */
+      --ok-bg: rgba(16,188,132,.16); --ok-br: rgba(16,188,132,.55); --ok-fg: var(--ok-solid); --ok-ink: var(--ok-tint);
+      --no-bg: rgba(229,88,95,.16); --no-br: rgba(229,88,95,.6); --no-fg: var(--no-solid); --no-ink: var(--no-tint);
+    }
+    :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
+    :root[data-theme="light"] .content {
+      background: var(--n-050); border-color: var(--th-static);
+      --guide: var(--n-650); --card: var(--n-000); --card-br: var(--n-050); --card-sh: 0 12px 30px -22px rgba(60,40,130,.5);
+      --step-bg: var(--n-100); --step-fg: var(--text-meta);
+      --ok-bg: rgba(16,140,100,.12); --ok-br: rgba(16,140,100,.45); --ok-fg: var(--ok-ink); --ok-ink: var(--ok-ink);
+      --no-bg: rgba(210,50,58,.1); --no-br: rgba(210,50,58,.45); --no-fg: var(--no-ink); --no-ink: var(--no-ink);
+    }
+
+    /* ============ 상단 진행/네비 ============ */
+    .steps { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 2px 4px 12px; }
+    .steps__q { font-family: var(--font-sans); font-weight: 800; font-size: 15px; color: var(--guide); }
+    .steps__done { display: inline-flex; align-items: center; gap: 8px; }
+    .donepill { display: inline-flex; align-items: center; gap: 5px; padding: 6px 14px; border-radius: 999px;
+      font-family: var(--font-sans); font-size: 13px; font-weight: 700; color: var(--ok-fg);
+      background: var(--ok-bg); box-shadow: inset 0 0 0 1px var(--ok-br); }
+    .donepill::before { content: '✓'; font-weight: 900; }
+    .nav { display: inline-flex; align-items: center; gap: 8px; }
+    .nav__btn { width: 34px; height: 34px; border-radius: 10px; border: 0; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center; color: var(--guide);
+      background: var(--step-bg); transition: background .15s, opacity .15s; }
+    .nav__btn:hover:not(:disabled) { background: var(--th-accent); color: var(--n-000); }
+    .nav__btn:disabled { opacity: .3; cursor: default; }
+    .nav__btn svg { width: 18px; height: 18px; }
+
+    .stage-scroll { flex: 1; min-height: 0; overflow-y: auto; padding: clamp(6px, 1.2vw, 12px) clamp(10px, 2vw, 22px) 96px; }
+    .stage-scroll::-webkit-scrollbar { width: 10px; }
+    .stage-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,.2); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
+    :root[data-theme="light"] .stage-scroll::-webkit-scrollbar-thumb { background: rgba(108,99,201,.28); background-clip: padding-box; }
+
+    /* ============ 카드 ============ */
+    .card { max-width: 760px; margin: 0 auto; background: var(--card); border: 1px solid var(--card-br); border-radius: 20px; box-shadow: var(--card-sh); }
+    .card + .card { margin-top: 14px; }
+    .sec-label { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 999px;
+      font-family: var(--font-sans); font-size: 12.5px; font-weight: 800; letter-spacing: .01em; }
+    .sec-label--problem { background: var(--th-accent); color: var(--n-000); }
+    .sec-label--sol { background: rgba(124,58,237,.15); color: var(--th-accent-hi); }
+    :root[data-theme="light"] .sec-label--sol { background: rgba(124,58,237,.1); color: var(--th-accent-strong); }
+
+    /* 문제 카드 (읽기전용, 접기) */
+    .problem__head { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      padding: 14px 22px; background: transparent; border: 0; text-align: left; border-radius: 20px; cursor: pointer; }
+    .problem__head:hover { background: rgba(124,58,237,.05); }
+    .problem__hint { margin-left: 9px; font-family: var(--font-sans); font-size: 12px; font-weight: 600; color: var(--step-fg); }
+    .problem:not(.is-collapsed) .problem__hint::after { content: '접기'; }
+    .problem.is-collapsed .problem__hint::after { content: '문제 다시 보기'; }
+    .problem__chev { width: 18px; height: 18px; color: var(--step-fg); transition: transform .25s; flex: none; }
+    .problem.is-collapsed .problem__chev { transform: rotate(-90deg); }
+    .problem__body { padding: 0 24px 18px; overflow: hidden; max-height: 1200px; transition: max-height .32s ease, opacity .25s ease, padding .32s ease; }
+    .problem.is-collapsed .problem__body { max-height: 0; opacity: 0; padding-top: 0; padding-bottom: 0; }
+
+    /* 풀이 카드 */
+    .worksheet { padding: clamp(18px, 2.3vw, 26px) clamp(20px, 2.6vw, 34px) clamp(20px, 2.4vw, 28px); }
+    .ws-sec + .ws-sec { margin-top: 22px; padding-top: 22px; border-top: 1px dashed var(--card-br); }
+    :root[data-theme="light"] .ws-sec + .ws-sec { border-top-color: var(--n-100); }
+    .ws-sec__label { margin-bottom: 14px; }
+
+    /* 안내문 (오답 있을 때) */
+    .review-hint { display: flex; align-items: center; gap: 9px; max-width: 760px; margin: 0 auto 14px;
+      padding: 11px 16px; border-radius: 13px; background: var(--no-bg); box-shadow: inset 0 0 0 1px var(--no-br);
+      font-family: var(--font-sans); font-size: 13.5px; font-weight: 700; color: var(--no-fg); }
+    .review-hint svg { width: 17px; height: 17px; flex: none; }
+
+    /* 지문 라인 */
+    .rline { display: block; font-family: var(--font-serif); color: var(--guide);
+      font-size: clamp(16px, 1.45vw, 18.5px); line-height: 2.3; letter-spacing: -0.01em; }
+    .rline + .rline { margin-top: 8px; }
+    .rline--q { line-height: 2.0; }
+    .rline--muted { color: var(--step-fg); }
+
+    /* ============ 채점 빈칸/슬롯 ============ */
+    .rblank, .rslot { position: relative; display: inline-flex; align-items: center; gap: 6px; vertical-align: middle;
+      font-family: var(--font-serif); font-weight: 700; }
+    .rblank { padding: 2px 11px; margin: 0 2px; border-radius: 9px; min-height: 32px; font-size: 17px; }
+    .rslot { padding: 4px 14px; margin: 3px 2px; border-radius: 10px; min-width: 120px; justify-content: center; font-size: 16px; }
+    .rblank__val, .rslot__val { line-height: 1.2; }
+
+    /* 정답 */
+    .rblank.is-correct, .rslot.is-correct { background: var(--ok-bg); color: var(--ok-ink); box-shadow: inset 0 0 0 1.5px var(--ok-br); }
+    :root[data-theme="dark"] .rblank.is-correct, :root[data-theme="dark"] .rslot.is-correct { color: var(--ok-fg); }
+    .rblank.is-correct::after { content: '✓'; color: var(--ok-fg); font-weight: 900; font-size: 13px; }
+    .rslot__ck { color: var(--ok-fg); font-weight: 900; }
+
+    /* 오답 (클릭 토글) */
+    .rblank.is-wrong, .rslot.is-wrong { background: var(--no-bg); color: var(--no-ink); box-shadow: inset 0 0 0 1.5px var(--no-br); cursor: pointer; transition: box-shadow .15s, background .15s; }
+    :root[data-theme="dark"] .rblank.is-wrong, :root[data-theme="dark"] .rslot.is-wrong { color: var(--no-fg); }
+    .rblank.is-wrong:hover, .rslot.is-wrong:hover { box-shadow: inset 0 0 0 2px var(--no-br), 0 0 0 3px var(--no-bg); }
+    .rblank.is-wrong .rblank__val, .rslot.is-wrong .rslot__val { text-decoration: line-through; text-decoration-color: var(--no-fg); text-decoration-thickness: 1.5px; }
+    .rblank.is-wrong::after, .rslot.is-wrong::after { content: '✕'; color: var(--no-fg); font-weight: 900; font-size: 12px; }
+    /* 오답 note = 토글 전 숨김, 토글 시 정답 노출 */
+    .rblank__note, .rslot__note { display: none; align-items: center; gap: 4px; padding-left: 6px; margin-left: 4px;
+      border-left: 1.5px solid var(--ok-br); color: var(--ok-fg); font-size: .92em; font-weight: 700; }
+    .rblank__note b, .rslot__note b { font-weight: 800; }
+    .rblank.show-ans, .rslot.show-ans { background: color-mix(in srgb, var(--ok-bg) 60%, var(--no-bg)); }
+    .rblank.show-ans .rblank__note, .rslot.show-ans .rslot__note { display: inline-flex; }
+
+    /* 하단 결과 버튼 */
+    .toolbtn--primary { background: var(--th-accent); }
+  </style>
+</head>
+<body class="learn-body">
+  <div class="screen">
+    <div class="screen__bg"></div>
+
+    <div class="screen__container">
+      <header class="lheader">
+        <nav class="breadcrumb">
+          <span class="crumb crumb--strong">수학 초등 3-1</span>
+          <svg class="sep" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <span class="crumb crumb--strong crumb--clip crumb--hide">3단원 나눗셈과 혼합 계산</span>
+          <svg class="sep crumb--hide" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <span class="crumb">서술형 훈련</span>
+          <svg class="sep" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <span class="crumb crumb--strong">기본 다지기 · 해설</span>
+        </nav>
+        <div class="lheader__actions">
+          <div class="lheader__timer lheader__timer--pause" id="hdrTimer" title="해설 화면 — 타이머 정지"><img src="assets/figma/icons/ico-stopwatch.svg" alt="경과 시간" /><span id="timer">04:12</span></div>
+          <button class="theme-toggle" id="themeToggle" title="라이트/다크 전환"><span class="theme-toggle__knob"></span></button>
+          <button class="nav-ico" title="알림"><img src="assets/figma/icons/ico-siren.svg" alt="알림" /></button>
+          <button class="nav-ico" title="나가기"><img src="assets/figma/icons/ico-exit.svg" alt="나가기" /></button>
+        </div>
+      </header>
+
+      <main class="content">
+        <div class="steps">
+          <span class="steps__q" id="stepsQ">문제 1 / 3</span>
+          <span class="steps__done">
+            <span class="donepill">빈칸 맞추기</span>
+            <span class="donepill">순서 맞추기</span>
+          </span>
+          <span class="nav">
+            <button class="nav__btn" id="prevBtn" title="이전 문제"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+            <button class="nav__btn" id="nextBtn" title="다음 문제"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+          </span>
+        </div>
+
+        <div class="stage-scroll">
+          <!-- 안내문 -->
+          <div class="review-hint" id="reviewHint">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+            <span>오답을 눌러 정답을 확인해보세요!</span>
+          </div>
+
+          <!-- 문제 카드 (읽기전용, 기본 접힘) -->
+          <section class="card problem is-collapsed" id="problem">
+            <button class="problem__head" id="problemHead" type="button">
+              <span><span class="sec-label sec-label--problem">문제</span><span class="problem__hint"></span></span>
+              <svg class="problem__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="problem__body" id="readBody"></div>
+          </section>
+
+          <!-- 풀이(채점) 카드 -->
+          <section class="card worksheet">
+            <div class="ws-sec">
+              <span class="sec-label sec-label--sol ws-sec__label">① 빈칸 맞추기</span>
+              <div id="fillDoc"></div>
+            </div>
+            <div class="ws-sec">
+              <span class="sec-label sec-label--sol ws-sec__label">② 순서 맞추기</span>
+              <div id="arrangeDoc"></div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <div class="bar">
+      <img class="bar__deco bar__deco--l" src="assets/figma/console-essay-right.svg" alt="" />
+      <div class="bar__mid">
+        <div class="bar__tray">
+          <div class="bar__group">
+            <button class="toolbtn"><img src="assets/figma/icons/ico-note-edit.svg" alt="" /><span>연습장</span></button>
+          </div>
+          <div class="bar__group">
+            <button class="toolbtn toolbtn--primary" id="resultBtn"><img src="assets/figma/icons/ico-summary.svg" alt="" /><span>결과로 돌아가기</span></button>
+          </div>
+        </div>
+      </div>
+      <img class="bar__deco bar__deco--r" src="assets/figma/console-essay-left.svg" alt="" />
+    </div>
+  </div>
+
+  <script src="scripts/essay-drill-review.js?v=1"></script>
+</body>
+</html>

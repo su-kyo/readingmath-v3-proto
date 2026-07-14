@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light" data-section="exam">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>시험 대비 · 메인 — 리딩수학과학</title>
+  <script>try{if(localStorage.getItem('rm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+  <link rel="stylesheet" href="styles/gnb.css?v=4" />
+  <script src="scripts/gnb-drawer.js?v=6"></script>
+  <link rel="stylesheet" href="styles/tokens.css?v=15" />
+  <link rel="stylesheet" href="styles/base.css?v=3" />
+  <style>
+    /* =========================================================================
+       시험대비 메인 홈 — 모던 툴 UI (exam-solve와 동일 디자인 언어)
+       플랫 + 헤어라인 · 쿨 뉴트럴 램프 · 퍼플 절제 · 상태색 분리
+       ========================================================================= */
+    :root {
+      --canvas: var(--n-050); --surface: var(--n-000); --rail: var(--n-050);
+      --ink: var(--n-900); --ink2: var(--n-500); --muted: var(--text-meta); --faint: var(--n-300);
+      --line: var(--n-100); --line-2: var(--n-050); --line-strong: var(--n-200);
+      --accent: var(--th-accent); --accent-ink: var(--th-ink-accent); --accent-tint: var(--th-tint); --accent-tint-br: var(--violet-200);
+      --good: var(--ok-ink); --good-tint: var(--ok-tint); --bad: var(--no-solid); --bad-tint: var(--no-tint);
+      --amber: var(--warn-solid); --amber-tint: var(--warn-tint); --blue: var(--info-solid); --blue-tint: var(--info-tint);
+      --r-lg: 16px; --r-md: 12px; --r-sm: 9px;
+      --sh: 0 1px 2px rgba(13,18,32,.04), 0 20px 40px -28px rgba(13,18,32,.20);
+    }
+    /* ===== 다크 모드 — 로컬 var 리매핑(뉴트럴 램프 + 퍼플 액센트 밝게) ===== */
+    :root[data-theme="dark"] {
+      --canvas: var(--n-900); --surface: var(--n-800); --rail: var(--n-700);
+      --ink: var(--n-050); --ink2: var(--n-200); --muted: var(--n-300); --faint: var(--n-400);
+      --line: var(--border-strong); --line-2: var(--border); --line-strong: var(--n-500);
+      --accent: var(--th-accent); --accent-ink: var(--th-accent-hi);
+      /* 다크 표면용 틴트 토큰 부재 — 기존 반투명 rgba 유지(라이트 위 글자 대비 보존) */
+      --accent-tint: rgba(119,119,255,.18); --accent-tint-br: rgba(119,119,255,.4);
+      --good: var(--ok-solid); --good-tint: rgba(79,214,160,.15);
+      --bad: var(--no-on-dark); --bad-tint: rgba(255,138,144,.15);
+      --amber: var(--warn-solid); --amber-tint: rgba(245,158,11,.16);
+      --blue: var(--info-on-dark); --blue-tint: rgba(135,174,236,.16);
+      --sh: 0 1px 2px rgba(0,0,0,.4), 0 20px 40px -28px rgba(0,0,0,.6);
+    }
+    /* 다크 — 시맨틱 직접 참조(라이트 고정색) 오버라이드 */
+    :root[data-theme="dark"] .svideo { background: var(--n-700); }
+    :root[data-theme="dark"] .panel::-webkit-scrollbar-thumb,
+    :root[data-theme="dark"] .sidebar__list::-webkit-scrollbar-thumb { background: var(--n-600); }
+    :root[data-theme="dark"] .panel::-webkit-scrollbar-thumb:hover,
+    :root[data-theme="dark"] .sidebar__list::-webkit-scrollbar-thumb:hover { background: var(--n-500); }
+    :root[data-theme="dark"] .tile--u { color: var(--faint); }
+    :root[data-theme="dark"] .tile--j { color: var(--muted); }
+    :root[data-theme="dark"] .tile.is-source { box-shadow: 0 0 0 3px var(--surface), 0 0 0 6px var(--accent), 0 14px 26px -10px rgba(119,119,255,.5); }
+    :root[data-theme="dark"] .dbadge--b { color: var(--warn-solid); }
+    :root[data-theme="dark"] .detail__backdrop { background: rgba(0,0,0,.55); }
+    :root[data-theme="dark"] .detail { box-shadow: -24px 0 60px -34px rgba(0,0,0,.7); }
+    :root[data-theme="dark"] .detail__start { color: var(--n-900);
+      box-shadow: 0 1px 0 rgba(255,255,255,.22) inset, 0 12px 22px -10px rgba(79,214,160,.5); }
+    :root[data-theme="dark"] .detail__start:hover { background: var(--ok-solid); filter: brightness(1.08);
+      box-shadow: 0 1px 0 rgba(255,255,255,.22) inset, 0 16px 26px -10px rgba(79,214,160,.55); }
+    /* 다크 — GNB 라이트 스킨을 다크 스킨으로 되돌림 */
+    :root[data-theme="dark"] .gnb--light { background: var(--canvas); border-bottom-color: var(--line); }
+    :root[data-theme="dark"] .gnb--light .gnb__logo:hover { background: rgba(255,255,255,.06); }
+    :root[data-theme="dark"] .gnb--light .gnb__name { color: var(--ink); }
+    :root[data-theme="dark"] .gnb--light .gnb__mode { color: var(--faint); }
+    :root[data-theme="dark"] .gnb--light .gnb__mode:hover { color: var(--ink); }
+    :root[data-theme="dark"] .gnb--light .gnb__mode.is-active { color: var(--n-000); }
+    :root[data-theme="dark"] .gnb--light .gnb__mode__dot { box-shadow: 0 0 0 2px var(--canvas); }
+    :root[data-theme="dark"] .gnb--light .gnb__ico { color: var(--muted); }
+    :root[data-theme="dark"] .gnb--light .gnb__ico:hover { color: var(--n-000); background: rgba(255,255,255,.06); }
+    /* 다크/라이트 토글 버튼 (GNB 아이콘 스타일 재사용) */
+    .gnb__ico .ico-sun { display: none; }
+    :root[data-theme="dark"] .gnb__ico .ico-moon { display: none; }
+    :root[data-theme="dark"] .gnb__ico .ico-sun { display: block; }
+    html, body { height: 100%; }
+    body.exam-body { background: var(--canvas); color: var(--ink); overflow: hidden;
+      font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+    .exam { display: flex; flex-direction: column; height: 100dvh; overflow: hidden; }
+    ::selection { background: var(--accent-tint); }
+
+    /* ===== 헤더 ===== */
+    .xhead { flex: none; display: flex; align-items: stretch; gap: 16px; height: 56px; padding: 0 22px; border-bottom: 1px solid var(--line); }
+    .xhead__info { display: flex; align-items: center; gap: 9px; flex: 1; min-width: 0; }
+    .xlogo { width: 31px; height: 31px; border-radius: 9px; background: var(--accent); display: grid; place-items: center; color: var(--th-on-accent); }
+    .xlogo svg { width: 18px; height: 18px; }
+    .xname { font-weight: 800; font-size: 17px; letter-spacing: -.02em; }
+    .xtabs { display: flex; align-items: flex-end; gap: 2px; }
+    .xtab { padding: 0 15px; display: flex; align-items: center; font-size: 14.5px; font-weight: 700; color: var(--muted);
+      cursor: pointer; position: relative; transition: color .15s; white-space: nowrap; }
+    .xtab:hover { color: var(--ink); }
+    .xtab.is-active { color: var(--accent); }
+    .xtab.is-active::after { content: ""; position: absolute; left: 7px; right: 7px; bottom: 0; height: 2.5px; border-radius: 3px 3px 0 0; background: var(--accent); }
+    .xhead__icons { display: flex; align-items: center; justify-content: flex-end; gap: 7px; flex: 1; }
+    .xico { position: relative; width: 36px; height: 36px; border-radius: 9px; border: 1px solid var(--line);
+      background: var(--surface); display: grid; place-items: center; color: var(--ink2); cursor: pointer; transition: .15s; }
+    .xico:hover { border-color: var(--line-strong); color: var(--ink); }
+    .xico svg { width: 18px; height: 18px; }
+    .xico__new { position: absolute; top: 7px; right: 8px; width: 7px; height: 7px; border-radius: 50%; background: var(--no-solid); border: 1.5px solid var(--canvas); }
+
+    /* ===== 본문 ===== */
+    .xbody { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 14px; padding: 16px 22px; }
+
+    /* ── 필터 ── */
+    .filter { flex: none; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--sh); overflow: hidden; }
+    .filter__head { display: flex; align-items: center; gap: 14px; padding: 13px 18px; cursor: pointer; }
+    .filter__head h2 { font-weight: 800; font-size: 16px; letter-spacing: -.02em; }
+    .filter__head .spacer { flex: 1; }
+    .filter__acts { display: flex; gap: 8px; }
+    .fbtn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 13px; border-radius: var(--r-sm);
+      border: 1px solid var(--line); background: var(--surface); font-size: 13.5px; font-weight: 600; color: var(--ink2); cursor: pointer; transition: .14s; }
+    .fbtn:hover { border-color: var(--line-strong); color: var(--ink); }
+    .fbtn svg { width: 15px; height: 15px; }
+    .filter__toggle { width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; color: var(--faint); transition: .2s; }
+    .filter__toggle:hover { background: var(--line-2); }
+    .filter.is-collapsed .filter__toggle { transform: rotate(-90deg); }
+    .filter.is-collapsed .filter__body { display: none; }
+    .filter__body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 18px; border-top: 1px solid var(--line-2); }
+    .fgroup { display: flex; flex-direction: column; gap: 9px; }
+    .flabel { font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); }
+    .frow { display: flex; align-items: flex-start; gap: 26px; flex-wrap: wrap; }
+    .fdrop { display: inline-flex; align-items: center; justify-content: space-between; gap: 10px; min-width: 138px;
+      padding: 9px 13px; background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--r-sm);
+      font-size: 14.5px; font-weight: 600; color: var(--ink); cursor: pointer; transition: .14s; }
+    .fdrop:hover { border-color: var(--accent); }
+    .fdrop svg { width: 15px; height: 15px; color: var(--faint); }
+    .chips { display: flex; flex-wrap: wrap; gap: 7px; }
+    .chip { display: inline-flex; align-items: center; gap: 7px; padding: 8px 14px; border-radius: var(--r-sm);
+      border: 1px solid var(--line); background: var(--surface); font-size: 13.5px; font-weight: 600; color: var(--ink2);
+      cursor: pointer; white-space: nowrap; transition: .13s; }
+    .chip:hover { border-color: var(--line-strong); }
+    .chip.is-active { background: var(--accent); border-color: var(--accent); color: var(--th-on-accent); }
+    .chip .cico { display: inline-flex; align-items: center; justify-content: center; width: 15px; height: 15px; flex: none; }
+    .chip .cico svg { width: 100%; height: 100%; display: block; }
+    .chip[data-f="r"] .cico { color: var(--bad); }
+    .chip[data-f="b"] .cico { color: var(--amber); }
+    .chip[data-f="e"] .cico, .chip[data-f="m"] .cico { color: var(--good); }
+    .chip.is-active .cico { color: var(--th-on-accent); }
+    .cdot { width: 14px; height: 14px; border-radius: 5px; flex: none; }
+    .cdot--dash { border: 1.6px dashed var(--faint); }
+    .cdot--solid { border: 1.6px solid var(--faint); }
+    .chip.is-active .cdot { border-color: rgba(255,255,255,.8); }
+
+    /* ── 메인 분할 ── */
+    .split { flex: 1; min-height: 0; display: flex; gap: 16px; }
+    .sidebar { flex: none; width: 224px; display: flex; flex-direction: column; }
+    .sidebar__label { font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); padding: 2px 6px 10px; }
+    .sidebar__list { display: flex; flex-direction: column; gap: 2px; overflow-y: auto; padding-right: 4px; }
+    .unit { display: flex; flex-direction: column; gap: 2px; padding: 11px 14px; border-radius: var(--r-md); cursor: pointer; transition: .14s; }
+    .unit:hover { background: var(--surface); }
+    .unit.is-active { background: var(--accent-tint); }
+    .unit__no { font-size: 11.5px; font-weight: 700; color: var(--faint); }
+    .unit__title { font-size: 15px; font-weight: 700; color: var(--muted); letter-spacing: -.01em; }
+    .unit.is-active .unit__no { color: var(--accent); }
+    .unit.is-active .unit__title { color: var(--accent-ink); }
+
+    .panel { position: relative; flex: 1; min-width: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; padding: 2px 6px 40px 2px; }
+    .unit-sec { display: flex; flex-direction: column; gap: 12px; }
+    .unit-sec__head { display: flex; align-items: center; gap: 10px; padding: 2px; }
+    .unit-badge { padding: 4px 10px; border-radius: 7px; background: var(--accent); color: var(--th-on-accent); font-size: 12px; font-weight: 800; }
+    .unit-sec__head h3 { font-size: 19px; font-weight: 800; letter-spacing: -.02em; }
+
+    .subunit { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--sh);
+      padding: 18px 20px; display: flex; flex-direction: column; gap: 16px; }
+    .subunit__head { display: flex; align-items: center; gap: 11px; cursor: pointer; }
+    .subunit__chev { width: 24px; height: 24px; border-radius: 7px; background: var(--accent-tint); color: var(--accent); display: grid; place-items: center; flex: none; transition: .2s; }
+    .subunit__chev svg { width: 13px; height: 13px; }
+    .subunit:hover .subunit__chev { background: var(--accent); color: var(--th-on-accent); }
+    .subunit.is-collapsed .subunit__chev { transform: rotate(-90deg); }
+    .subunit.is-collapsed .bands { display: none; }
+    .subunit__title { font-size: 15.5px; font-weight: 700; color: var(--ink); letter-spacing: -.01em; }
+    .bands { display: flex; gap: 12px; }
+    .band { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 11px; padding: 13px; background: var(--rail); border: 1px solid var(--line-2); border-radius: var(--r-md); }
+    .band__badge { align-self: flex-start; padding: 4px 11px; border-radius: 999px; font-size: 12px; font-weight: 800; }
+    .band--basic .band__badge { background: var(--line-2); color: var(--muted); }
+    .band--skill .band__badge { background: var(--blue-tint); color: var(--blue); }
+    .band--adv .band__badge { background: var(--accent-tint); color: var(--accent-ink); }
+    .grid { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    /* 유형 타일 */
+    .tile { position: relative; width: 52px; height: 52px; border-radius: 13px; display: grid; place-items: center;
+      cursor: pointer; transition: transform .12s, box-shadow .12s, opacity .2s, filter .2s; flex: none; color: var(--n-000); }
+    .tile:hover { transform: translateY(-2px); }
+    .tile > svg { width: 24px; height: 24px; display: block; }
+    .tile--u { background: var(--surface); border: 2px dashed var(--line-strong); color: var(--n-300); }
+    .tile--j { background: var(--surface); border: 2px solid var(--line-strong); color: var(--n-300); }
+    /* 성취도 타일 = 테마 무관 솔리드 상태색(라이트·다크 양쪽 쨍하게) */
+    .tile--r { background: var(--no-solid); box-shadow: 0 5px 11px -5px rgba(229,72,77,.5); }
+    .tile--b { background: var(--warn-solid); box-shadow: 0 5px 11px -5px rgba(245,158,11,.5); }
+    .tile--e { background: var(--ok-solid); box-shadow: 0 5px 11px -5px rgba(18,161,80,.45); }
+    .tile--m { background: var(--ok-solid); box-shadow: 0 5px 11px -5px rgba(18,161,80,.45); }
+    .tile--m > svg { color: var(--amber-200); }
+    .tile--u:hover, .tile--j:hover { border-color: var(--accent); color: var(--accent); }
+    .tile__star { position: absolute; top: -6px; right: -5px; width: 20px; height: 20px; }
+    .tile__star svg { width: 100%; height: 100%; display: block; }
+    .panel.is-filtering .tile:not(.is-match) { opacity: .16; filter: grayscale(.5); transform: none; box-shadow: none; }
+    .panel.is-filtering .tile.is-match { transform: translateY(-2px) scale(1.04); z-index: 1; }
+    /* 패널을 연 소스 타일 — dim 위로 떠서 포커스 유지 */
+    .tile.is-source { position: relative; z-index: 55; transform: translateY(-2px) scale(1.06);
+      box-shadow: 0 0 0 3px var(--surface), 0 0 0 6px var(--accent), 0 14px 26px -10px rgba(106,52,236,.55); }
+    .tile.is-source:hover { transform: translateY(-2px) scale(1.06); }
+
+    /* ── 유형 상세 슬라이드 패널 ── */
+    .detail__backdrop { position: fixed; inset: 0; z-index: 50; background: rgba(15,18,30,.34); opacity: 0; visibility: hidden; transition: .28s; }
+    .detail__backdrop.is-open { opacity: 1; visibility: visible; }
+    .detail { position: fixed; top: 0; right: 0; height: 100dvh; width: 400px; max-width: 92vw; z-index: 60;
+      background: var(--surface); border-left: 1px solid var(--line); box-shadow: -24px 0 60px -34px rgba(13,18,32,.34);
+      display: flex; flex-direction: column; transform: translateX(101%); transition: transform .28s cubic-bezier(.3,.8,.3,1); }
+    .detail.is-open { transform: none; }
+    .detail__head { flex: none; display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; border-bottom: 1px solid var(--line); }
+    .detail__title { font-size: 15px; font-weight: 800; letter-spacing: -.01em; }
+    .detail__close { width: 32px; height: 32px; border-radius: 8px; display: grid; place-items: center; color: var(--muted); cursor: pointer; transition: .13s; }
+    .detail__close:hover { background: var(--line-2); color: var(--ink); }
+    .detail__close svg { width: 18px; height: 18px; }
+    .detail__body { flex: 1; min-height: 0; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 18px; }
+    .detail__badges { display: flex; flex-wrap: wrap; gap: 6px; }
+    .dbadge { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 8px; font-size: 12.5px; font-weight: 800; }
+    .dbadge svg { width: 13px; height: 13px; }
+    .dbadge--r { background: var(--bad-tint); color: var(--bad); }
+    .dbadge--b { background: var(--amber-tint); color: var(--warn-ink); }
+    .dbadge--e, .dbadge--m { background: var(--good-tint); color: var(--good); }
+    .dbadge--u, .dbadge--j { background: var(--line-2); color: var(--muted); }
+    .dbadge--tier { background: var(--blue-tint); color: var(--blue); }
+    .detail__type { font-size: 19px; font-weight: 800; letter-spacing: -.02em; line-height: 1.36; }
+    .detail__foot { flex: none; padding: 15px 20px calc(16px + env(safe-area-inset-bottom)); border-top: 1px solid var(--line);
+      background: var(--surface); display: flex; flex-direction: column; gap: 11px; }
+    .detail__start { width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 9px; height: 58px; border-radius: 15px;
+      background: var(--good); color: var(--n-000); font-size: 17px; font-weight: 800; letter-spacing: -.01em; cursor: pointer; transition: transform .12s, background .14s, box-shadow .14s;
+      box-shadow: 0 1px 0 rgba(255,255,255,.28) inset, 0 12px 22px -10px rgba(18,161,80,.7); }
+    .detail__start:hover { background: var(--ok-ink); box-shadow: 0 1px 0 rgba(255,255,255,.28) inset, 0 16px 26px -10px rgba(18,161,80,.75); transform: translateY(-1px); }
+    .detail__start:active { transform: translateY(1px); box-shadow: 0 6px 14px -8px rgba(18,161,80,.7); }
+    .detail__start svg { width: 21px; height: 21px; }
+    .detail__sub { text-align: center; font-size: 13px; color: var(--muted); }
+    .detail__sub b { color: var(--ink2); font-weight: 800; }
+    .dblock { display: flex; flex-direction: column; gap: 10px; }
+    .dblock .scap { font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); }
+    .svideo { height: 158px; border-radius: var(--r-md); background: var(--n-100); border: 1px solid var(--line); display: grid; place-items: center; position: relative; overflow: hidden; cursor: pointer; }
+    .svideo:hover .svideo__play { transform: scale(1.06); }
+    .svideo__play { width: 48px; height: 48px; border-radius: 50%; background: rgba(13,18,32,.62); display: grid; place-items: center; transition: transform .15s; }
+    .svideo__play svg { width: 18px; height: 18px; color: var(--n-000); margin-left: 3px; }
+    .pcard { background: var(--rail); border: 1px solid var(--line); border-radius: var(--r-md); padding: 15px 16px; display: flex; flex-direction: column; gap: 9px; }
+    .pcard__q { font-size: 14px; font-weight: 700; color: var(--ink2); }
+    .pcard__ex { text-align: center; font-family: var(--font-mono); font-size: 19px; font-weight: 700; color: var(--ink); padding: 2px 0; }
+    .hist { display: flex; flex-direction: column; }
+    .hitem { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-top: 1px solid var(--line-2); }
+    .hitem:first-child { border-top: none; padding-top: 2px; }
+    .hicon { width: 22px; height: 22px; flex: none; border-radius: 50%; display: grid; place-items: center; color: var(--n-000); }
+    .hicon svg { width: 12px; height: 12px; }
+    .hicon--o { background: var(--ok-solid); } .hicon--x { background: var(--no-solid); }
+    .hitem__main { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+    .hitem__top { font-size: 12.5px; font-weight: 600; color: var(--ink2); }
+    .htag { font-weight: 800; } .htag--o { color: var(--good); } .htag--x { color: var(--bad); }
+    .hitem__time { font-family: var(--font-mono); font-size: 11px; color: var(--faint); }
+
+    /* 스크롤바 */
+    .panel, .sidebar__list, .detail__body { scrollbar-width: thin; scrollbar-color: var(--n-200) transparent; }
+    .panel::-webkit-scrollbar, .sidebar__list::-webkit-scrollbar { width: 10px; }
+    .panel::-webkit-scrollbar-thumb, .sidebar__list::-webkit-scrollbar-thumb {
+      background: var(--n-200); border-radius: 999px; border: 2.5px solid transparent; background-clip: padding-box; }
+    .panel::-webkit-scrollbar-thumb:hover, .sidebar__list::-webkit-scrollbar-thumb:hover { background: var(--n-300); background-clip: padding-box; }
+
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    @media (max-width: 1120px) { .bands { flex-direction: column; } }
+    @media (max-width: 900px) { .xtabs { display: none; } .sidebar { width: 186px; } }
+    @media (max-width: 640px) {
+      .split { flex-direction: column; }
+      .sidebar { width: auto; } .sidebar__list { flex-direction: row; overflow-x: auto; }
+      .xname { display: none; }
+    }
+  </style>
+</head>
+<body class="exam-body">
+  <div class="exam">
+    <!-- 헤더 -->
+    <header class="gnb gnb--light">
+      <div class="gnb__info"><span class="gnb__logo"></span><span class="gnb__name">김학생</span></div>
+      <nav class="gnb__modes">
+        <button class="gnb__mode m-basic" data-go="home.html">기본 모드</button>
+        <button class="gnb__mode m-free" data-go="freemode.html">자유 모드</button>
+        <button class="gnb__mode m-exam is-active">시험 대비</button>
+        <button class="gnb__mode m-assign" data-go="assignment-home.html">과제 센터<span class="gnb__mode__dot"></span></button>
+      </nav>
+      <div class="gnb__icons">
+        <button class="gnb__ico" id="themeToggle" title="다크/라이트 전환" aria-label="다크/라이트 전환">
+          <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+          <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.4M12 19.6V22M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M2 12h2.4M19.6 12H22M4.9 19.1l1.7-1.7M17.4 6.6l1.7-1.7"/></svg>
+        </button>
+        <button class="gnb__ico" title="도움말"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.8.4-1 .9-1 1.7" stroke-linecap="round"/><circle cx="12" cy="16.5" r="1" fill="currentColor" stroke="none"/></svg></button>
+        <button class="gnb__ico" title="긴급"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 20h12M8 20v-5a4 4 0 0 1 8 0v5M12 4v2M5 8l1.5 1.5M19 8l-1.5 1.5"/></svg></button>
+        <button class="gnb__ico" title="공지"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 9v6h3l7 4V5L7 9H4zM18 8a5 5 0 0 1 0 8"/></svg><span class="gnb__dot"></span></button>
+        <button class="gnb__ico" id="menuBtn" title="메뉴"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      </div>
+    </header>
+
+    <!-- 본문 -->
+    <div class="xbody">
+      <section class="filter" id="filter">
+        <div class="filter__head" id="filterHead">
+          <h2>시험 대비</h2>
+          <span class="spacer"></span>
+          <div class="filter__acts" onclick="event.stopPropagation()">
+            <button class="fbtn" id="resetBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8m0-5v5h5"/></svg>초기화</button>
+            <button class="fbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><circle cx="12" cy="7.8" r=".2" stroke-width="2.4"/></svg>안내</button>
+          </div>
+          <span class="filter__toggle" id="filterToggle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+        </div>
+        <div class="filter__body">
+          <div class="frow">
+            <div class="fgroup">
+              <span class="flabel">학년 · 학기</span>
+              <button class="fdrop">초등 3-1 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+            </div>
+            <div class="fgroup" style="flex:1;min-width:0">
+              <span class="flabel">교재 선택</span>
+              <div class="chips" data-single>
+                <span class="chip is-active">전체</span>
+                <span class="chip">아이스크림</span>
+                <span class="chip">천재</span>
+                <span class="chip">비상</span>
+                <span class="chip">미래엔</span>
+                <span class="chip">동아</span>
+                <span class="chip">지학사</span>
+              </div>
+            </div>
+          </div>
+          <div class="fgroup">
+            <span class="flabel">성취도 필터</span>
+            <div class="chips" data-single data-achieve id="achieveChips"></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="split">
+        <aside class="sidebar">
+          <span class="sidebar__label">단원</span>
+          <div class="sidebar__list" id="sidebar"></div>
+        </aside>
+        <main class="panel" id="panel"></main>
+      </div>
+    </div>
+
+    <!-- 유형 상세 슬라이드 패널 -->
+    <div class="detail__backdrop" id="detailBackdrop"></div>
+    <aside class="detail" id="detail" aria-hidden="true">
+      <div class="detail__head">
+        <span class="detail__title">유형 상세</span>
+        <button class="detail__close" id="detailClose" title="닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      </div>
+      <div class="detail__body">
+        <div class="detail__badges" id="dBadges"></div>
+        <h3 class="detail__type" id="dType">유형</h3>
+        <div class="dblock">
+          <span class="scap">대표 유형 동영상</span>
+          <div class="svideo"><span class="svideo__play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span></div>
+        </div>
+        <div class="dblock">
+          <span class="scap">대표 유형 문제</span>
+          <div class="pcard"><span class="pcard__q">다음 식을 계산하여 값을 구하시오.</span><span class="pcard__ex">124 + 352 = □</span></div>
+        </div>
+        <div class="dblock">
+          <span class="scap">최근 풀이 이력</span>
+          <div class="hist">
+            <div class="hitem"><span class="hicon hicon--x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg></span><div class="hitem__main"><span class="hitem__top">시험 대비 · <span class="htag htag--x">오답</span></span><span class="hitem__time">2026.06.03. 09:00:00</span></div></div>
+            <div class="hitem"><span class="hicon hicon--x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg></span><div class="hitem__main"><span class="hitem__top">시험 대비 · <span class="htag htag--x">오답</span></span><span class="hitem__time">2026.06.02. 09:00:00</span></div></div>
+            <div class="hitem"><span class="hicon hicon--o"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span><div class="hitem__main"><span class="hitem__top">시험 대비 · <span class="htag htag--o">정답</span></span><span class="hitem__time">2026.05.30. 16:12:40</span></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="detail__foot">
+        <p class="detail__sub">이번 도전은 <b>2문항</b>으로 진행돼요.</p>
+        <button class="detail__start" id="startBtn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L4.5 13.5H11l-1 8.5L19.5 10H13z"/></svg><span id="startLabel">번개 도전</span></button>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    (function(){
+      var btn = document.getElementById('themeToggle');
+      if(!btn) return;
+      btn.addEventListener('click', function(){
+        var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+        var next = dark ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        try{ localStorage.setItem('rm-theme', next); }catch(e){}
+      });
+    })();
+  </script>
+  <script src="scripts/exam-home.js"></script>
+</body>
+</html>

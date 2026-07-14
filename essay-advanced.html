@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light" data-section="essay">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>서술형 훈련 · 실력 키우기 — 리딩수학과학</title>
+  <link rel="stylesheet" href="styles/tokens.css?v=15" />
+  <link rel="stylesheet" href="styles/base.css?v=3" />
+  <link rel="stylesheet" href="styles/components.css?v=5" />
+  <link rel="stylesheet" href="styles/learn-shell.css?v=7" />
+  <link rel="stylesheet" href="styles/essay.css?v=11" />
+  <style>
+    /* ============ 서술형 훈련 = 퍼플 테마 (공통은 essay.css). 실력 키우기 = 기초 기르기와 동일 폼 ============ */
+    .content {
+      padding: clamp(12px, 1.8vw, 16px) clamp(12px, 1.8vw, 16px) 96px;
+      gap: 16px; align-items: stretch;
+      --guide: rgba(249,249,249,.92); --box-bg: var(--n-900); --box-br: rgba(255,255,255,.10);
+      --qa-bg: var(--surface-3); --qa-fg: rgba(249,249,249,.92); --qa-soft: rgba(255,255,255,.06); --qa-sub: var(--n-100);
+      --bl-next: rgba(124,120,240,.85);
+    }
+    :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
+    :root[data-theme="light"] .content {
+      background: var(--n-050); border-color: var(--th-static);
+      --guide: var(--n-650); --box-bg: var(--n-050); --box-br: rgba(108,99,201,.12);
+      --qa-bg: var(--n-000); --qa-fg: var(--n-650); --qa-soft: rgba(108,99,201,.055); --qa-sub: var(--text-meta);
+      --bl-next: rgba(114,111,233,.7);
+    }
+
+    .qa {
+      flex: 0 1 clamp(300px, 33%, 372px); min-width: 0; display: flex; flex-direction: column; gap: 12px;
+      background: var(--qa-bg); color: var(--qa-fg);
+      border-radius: 24px; padding: clamp(16px, 2vw, 24px); overflow: hidden;
+    }
+    :root[data-theme="light"] .qa { border: 1px solid var(--n-050); box-shadow: 0 10px 24px -18px rgba(60,40,130,.32); }
+    .qa__body { flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-right: 4px; }
+    .qtext { color: var(--qa-fg); font-size: clamp(15px, 1.35vw, 18px); line-height: 1.7; }
+    .qref { background: var(--qa-soft); border-radius: 16px; padding: 8px; display: flex; flex-direction: column; gap: 8px; }
+    .qref__img { width: 100%; aspect-ratio: 20 / 9; border-radius: 8px;
+      background: linear-gradient(110deg, var(--n-500) 25%, var(--n-500) 40%, var(--n-500) 55%); background-size: 220% 100%;
+      animation: shimmer 1.8s ease-in-out infinite; display: flex; align-items: center; justify-content: center; }
+    :root[data-theme="light"] .qref__img { background: linear-gradient(110deg, var(--n-100) 25%, var(--n-050) 40%, var(--n-100) 55%); background-size: 220% 100%; }
+    .qref__img span { color: rgba(255,255,255,.55); font-weight: 700; font-size: 13px; }
+    :root[data-theme="light"] .qref__img span { color: rgba(80,66,150,.55); }
+    @keyframes shimmer { from { background-position: 180% 0; } to { background-position: -40% 0; } }
+    .qref__words { color: var(--qa-sub); font-size: clamp(14px, 1.25vw, 17px); line-height: 1.75; white-space: pre-line; }
+
+    .qa__body::-webkit-scrollbar, .expl::-webkit-scrollbar { width: 9px; }
+    .qa__body::-webkit-scrollbar-thumb, .expl::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,.22); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
+    :root[data-theme="light"] .expl::-webkit-scrollbar-thumb { background: rgba(70,50,140,.28); background-clip: padding-box; }
+
+    .expl {
+      flex: 1 1 0; min-width: 0; overflow-y: auto;
+      padding: clamp(14px, 1.8vw, 26px) clamp(18px, 2.2vw, 32px);
+      display: flex; flex-direction: column; align-items: center;
+      font-family: var(--font-serif); color: var(--guide);
+    }
+    .expl__doc { width: 100%; max-width: 760px; display: flex; flex-direction: column; gap: clamp(26px, 3vw, 40px); }
+    .para { display: flex; flex-direction: column; gap: 10px; }
+    .line { font-size: clamp(15px, 1.4vw, 18px); line-height: 2.0; letter-spacing: -0.02em; }
+    .para__head { font-weight: 700; }
+    .box { background: var(--box-bg); border: 1px solid var(--box-br); border-radius: 16px;
+      padding: clamp(16px, 2vw, 28px); display: flex; flex-direction: column; gap: 14px; }
+    .box__row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 2px 6px;
+      font-family: var(--font-sans); font-size: clamp(16px, 1.55vw, 19px); font-weight: 500; }
+
+    .blank { cursor: pointer; }
+    .blank:hover { background: var(--bl-bgh); box-shadow: inset 0 0 0 1px var(--bl-lineh); }
+    .blank--given { background: var(--bl-fill); box-shadow: none; cursor: default; }
+    .blank--given .blank__ans { opacity: 1; }
+    .blank--given .blank__badge { display: none; }
+
+    @media (max-width: 860px) {
+      .content { flex-direction: column; overflow-y: auto; }
+      .qa { flex: none; max-height: 46%; } .expl { flex: none; overflow: visible; }
+    }
+  </style>
+</head>
+<body class="learn-body">
+  <div class="screen">
+    <div class="screen__bg"></div>
+
+    <div class="screen__container">
+      <header class="lheader">
+        <nav class="breadcrumb">
+          <span class="crumb crumb--strong">수학 초등 3-1</span>
+          <svg class="sep" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <span class="crumb crumb--strong crumb--clip crumb--hide">2단원 나눗셈</span>
+          <svg class="sep crumb--hide" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <span class="crumb crumb--hide">(2) 문제 해결</span>
+          <svg class="sep crumb--hide" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <span class="crumb">서술형 훈련</span>
+          <svg class="sep" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <span class="crumb crumb--strong">실력 키우기</span>
+        </nav>
+        <div class="lheader__actions">
+          <div class="lheader__timer" id="hdrTimer"><img src="assets/figma/icons/ico-stopwatch.svg" alt="경과 시간" /><span id="timer">00:00</span></div>
+          <button class="theme-toggle" id="themeToggle" title="라이트/다크 전환"><span class="theme-toggle__knob"></span></button>
+          <button class="nav-ico" title="알림"><img src="assets/figma/icons/ico-siren.svg" alt="알림" /></button>
+          <button class="nav-ico" title="나가기"><img src="assets/figma/icons/ico-exit.svg" alt="나가기" /></button>
+        </div>
+      </header>
+
+      <main class="content">
+        <!-- 좌: 문제 (문제 1개 → 탭 숨김) -->
+        <section class="qa">
+          <div class="qa__body">
+            <p class="qtext">어느 과수원에서 사과를 수확했습니다. 첫째 날 딴 사과는 156개이고, 둘째 날은 첫째 날보다 48개 더 많이 땄습니다. 이 사과를 한 상자에 9개씩 담으려고 합니다. 상자는 모두 몇 개 필요하고, 남는 사과는 몇 개인지 덧셈과 나눗셈으로 구해 보세요.</p>
+            <div class="qref">
+              <div class="qref__img"><span>참고 이미지</span></div>
+              <div class="qref__words">- 첫째 날: 156개
+- 둘째 날: 첫째 날 + 48개
+- 한 상자에 9개씩
+- 몫 = 상자의 수
+- 나머지 = 남는 사과</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 우: 풀이 가이드 -->
+        <section class="expl" id="expl"></section>
+      </main>
+    </div>
+
+    <!-- 하단 콘솔 바 (서술형 버전) -->
+    <div class="bar">
+      <img class="bar__deco bar__deco--l" src="assets/figma/console-essay-right.svg" alt="" />
+      <div class="bar__mid">
+        <div class="bar__tray">
+          <div class="bar__group">
+            <button class="toolbtn"><img src="assets/figma/icons/ico-note-edit.svg" alt="" /><span>연습장</span></button>
+          </div>
+          <div class="bar__group">
+            <button class="toolbtn toolbtn--primary" id="resultBtn" disabled title="모든 빈칸을 채우면 활성화돼요"><img src="assets/figma/icons/ico-summary.svg" alt="" /><span>결과보기</span></button>
+          </div>
+        </div>
+      </div>
+      <img class="bar__deco bar__deco--r" src="assets/figma/console-essay-left.svg" alt="" />
+    </div>
+  </div>
+
+  <!-- 빈칸 입력 드롭다운 -->
+  <div class="qpop" id="qpop" role="dialog" aria-label="빈칸 입력">
+    <div class="qpop__inner" id="qpopInner">
+      <span class="qpop__caret"></span>
+      <div class="qpop__body" id="qpopBody"></div>
+    </div>
+  </div>
+
+  <script src="scripts/essay-advanced.js"></script>
+</body>
+</html>

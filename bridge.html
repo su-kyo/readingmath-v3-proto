@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ko" data-section="space">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>시작하기 — 리딩수학과학</title>
+  <link rel="stylesheet" href="styles/tokens.css?v=15" />
+  <link rel="stylesheet" href="styles/base.css?v=3" />
+  <link rel="stylesheet" href="styles/space-bg.css?v=1" />
+  <style>
+    :root{
+      --ink:var(--text); --sub:var(--text-muted); --faint:var(--text-meta);
+      --panel:var(--surface-2); --panel-br:var(--border);
+      --math:var(--th-accent-hi); --math-glow:rgba(76,134,255,.55);
+      --sci:var(--teal-300);  --sci-glow:rgba(53,221,166,.5);
+      --cta:var(--primary);
+    }
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html,body{ height:100%; }
+    body{
+      font-family:var(--font-sans); color:var(--ink);
+      background:var(--surface-sunken); overflow:hidden;
+      -webkit-font-smoothing:antialiased; letter-spacing:-.02em;
+    }
+
+    /* ---- top bar ---- */
+    .top{
+      position:fixed; inset:0 0 auto 0; z-index:3;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:22px 30px;
+    }
+    .brand{ display:flex; align-items:center; gap:9px; font-weight:800; font-size:17px; letter-spacing:-.04em; }
+    .brand__dot{ width:22px; height:22px; border-radius:7px; background:var(--th-accent-hi); }
+    .logout{
+      display:inline-flex; align-items:center; gap:7px;
+      height:38px; padding:0 15px; border:1px solid var(--border-strong);
+      border-radius:11px; background:var(--border); color:var(--sub);
+      font:inherit; font-size:13.5px; font-weight:600; cursor:pointer; transition:.16s;
+    }
+    .logout:hover{ color:var(--ink); border-color:var(--border-strong); background:var(--border); }
+    .logout svg{ width:15px; height:15px; }
+
+    /* ---- center ---- */
+    .wrap{
+      position:relative; z-index:2; min-height:100%;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      padding:88px 24px 40px; gap:34px;
+    }
+    .head{ text-align:center; }
+    .head h1{ font-size:30px; font-weight:800; letter-spacing:-.045em; text-wrap:balance; }
+    .head p{ margin-top:9px; color:var(--sub); font-size:15px; }
+    .head p b{ color:var(--ink); font-weight:700; }
+
+    .cards{ display:flex; gap:26px; flex-wrap:wrap; justify-content:center; }
+
+    .card{
+      position:relative; width:352px; text-align:left; cursor:pointer;
+      border:1px solid var(--panel-br); border-radius:20px;
+      background:var(--surface-2);
+      padding:26px 26px 22px; overflow:hidden;
+      transition:transform .2s cubic-bezier(.3,.7,.3,1), border-color .2s, box-shadow .2s;
+    }
+    .card:hover{ transform:translateY(-5px); border-color:var(--edge); box-shadow:var(--shadow-2); }
+    .card--math{ --accent:var(--math); --halo:var(--math-glow); --edge:var(--th-accent-hi); }
+    .card--sci{  --accent:var(--sci);  --halo:var(--sci-glow);  --edge:var(--teal-300); }
+
+    .card__top{ display:flex; align-items:center; gap:14px; margin-bottom:18px; }
+    .emblem{
+      position:relative; width:56px; height:56px; flex:none; border-radius:15px;
+      display:grid; place-items:center; font-size:24px; font-weight:800;
+      color:var(--accent); background:color-mix(in srgb,var(--accent) 15%,transparent);
+      border:1px solid var(--edge);
+    }
+    .card__names{ display:flex; flex-direction:column; gap:3px; }
+    .card__subject{ font-size:23px; font-weight:800; letter-spacing:-.04em; }
+    .card__en{ font-size:12px; font-weight:600; letter-spacing:.06em; color:var(--faint); text-transform:uppercase; }
+
+    .card__hr{ height:1px; background:linear-gradient(90deg,var(--panel-br),transparent); margin:0 0 15px; }
+
+    .resume__label{ display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700;
+      letter-spacing:.02em; color:var(--accent); margin-bottom:9px; }
+    .resume__label::before{ content:""; width:6px; height:6px; border-radius:50%; background:var(--accent); }
+    .resume__unit{ font-size:13px; color:var(--sub); font-weight:600; }
+    .resume__sub{ font-size:16px; font-weight:700; letter-spacing:-.03em; margin:3px 0 13px; line-height:1.35; }
+    .chips{ display:flex; gap:7px; flex-wrap:wrap; }
+    .chip{ font-size:12px; font-weight:700; padding:5px 10px; border-radius:8px;
+      background:var(--border); color:var(--ink); }
+    .chip--train{ color:var(--accent); background:color-mix(in srgb,var(--accent) 16%,transparent); }
+
+    .card__go{
+      display:flex; align-items:center; justify-content:space-between;
+      margin-top:20px; padding-top:15px; border-top:1px solid var(--panel-br);
+    }
+    .card__gotext{ font-size:14px; font-weight:700; color:var(--ink); }
+    .card__arrow{ width:34px; height:34px; border-radius:10px; display:grid; place-items:center;
+      background:var(--accent); color:var(--n-950); transition:transform .2s; }
+    .card:hover .card__arrow{ transform:translateX(4px); }
+    .card__arrow svg{ width:17px; height:17px; }
+
+    /* ---- auto enter ---- */
+    .autoenter{ display:inline-flex; align-items:center; gap:10px; cursor:pointer; user-select:none;
+      color:var(--sub); font-size:14px; font-weight:600; }
+    .autoenter input{ position:absolute; opacity:0; pointer-events:none; }
+    .box{ width:22px; height:22px; border-radius:7px; border:1.6px solid var(--border-strong);
+      background:var(--border); display:grid; place-items:center; transition:.16s; }
+    .box svg{ width:13px; height:13px; opacity:0; transform:scale(.6); transition:.16s; color:var(--n-950); }
+    .autoenter input:checked + .box{ background:var(--cta); border-color:var(--cta); }
+    .autoenter input:checked + .box svg{ opacity:1; transform:scale(1); }
+    .autoenter:hover .box{ border-color:var(--border-strong); }
+
+    /* ---- toast ---- */
+    .toast{ position:fixed; left:50%; bottom:34px; transform:translateX(-50%) translateY(20px);
+      z-index:20; background:var(--surface-2); border:1px solid var(--panel-br); color:var(--ink);
+      padding:11px 18px; border-radius:12px; font-size:13.5px; font-weight:600;
+      opacity:0; pointer-events:none; transition:.22s; box-shadow:var(--shadow-2); }
+    .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+    @media (max-width:760px){
+      .wrap{ padding-top:76px; gap:26px; }
+      .head h1{ font-size:25px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="spacebg" data-stars="200"></div>
+
+  <div class="top">
+    <div class="brand"><span class="brand__dot"></span>리딩수학과학</div>
+    <button class="logout" id="logoutBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/><path d="M10 17l-5-5 5-5"/><path d="M5 12h12"/></svg>
+      로그아웃
+    </button>
+  </div>
+
+  <main class="wrap">
+    <div class="head">
+      <h1>무엇으로 시작할까요?</h1>
+      <p><b>김학생</b>님, 오늘 이어서 학습할 과목을 선택하세요.</p>
+    </div>
+
+    <div class="cards">
+      <!-- 수학 -->
+      <button class="card card--math" data-go="home.html?subject=math&sem=elem-3-1">
+        <div class="card__top">
+          <span class="emblem">수</span>
+          <span class="card__names">
+            <span class="card__subject">수학</span>
+            <span class="card__en">Mathematics</span>
+          </span>
+        </div>
+        <div class="card__hr"></div>
+        <span class="resume__label">이어서 학습</span>
+        <div class="resume__unit">1단원 · 덧셈과 뺄셈</div>
+        <div class="resume__sub">(1) 받아올림이 없는 세 자리 수의 덧셈</div>
+        <div class="chips">
+          <span class="chip chip--train">개념 훈련</span>
+          <span class="chip">Round 1</span>
+        </div>
+        <div class="card__go">
+          <span class="card__gotext">수학 행성으로 입장</span>
+          <span class="card__arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+      </button>
+
+      <!-- 과학 -->
+      <button class="card card--sci" data-go="home.html?subject=science&sem=elem-3-1">
+        <div class="card__top">
+          <span class="emblem">과</span>
+          <span class="card__names">
+            <span class="card__subject">과학</span>
+            <span class="card__en">Science</span>
+          </span>
+        </div>
+        <div class="card__hr"></div>
+        <span class="resume__label">이어서 학습</span>
+        <div class="resume__unit">1단원 · 힘과 우리 생활</div>
+        <div class="resume__sub">(1) 물체를 밀거나 당기기, 수평 잡기</div>
+        <div class="chips">
+          <span class="chip chip--train">유형 훈련</span>
+          <span class="chip">Round 3</span>
+        </div>
+        <div class="card__go">
+          <span class="card__gotext">과학 행성으로 입장</span>
+          <span class="card__arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+      </button>
+    </div>
+
+    <label class="autoenter">
+      <input type="checkbox" id="autoEnter" />
+      <span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>
+      다음부터 이 과목으로 자동 진입
+    </label>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="scripts/space-bg.js?v=1"></script>
+  <script>
+    (function(){
+      var toast = document.getElementById('toast'), tt;
+      function showToast(msg){
+        toast.textContent = msg; toast.classList.add('show');
+        clearTimeout(tt); tt = setTimeout(function(){ toast.classList.remove('show'); }, 1900);
+      }
+      // 자동 진입 상태 복원/저장
+      var auto = document.getElementById('autoEnter');
+      auto.checked = localStorage.getItem('rm-auto-enter') === '1';
+      auto.addEventListener('change', function(){
+        localStorage.setItem('rm-auto-enter', auto.checked ? '1' : '0');
+      });
+      // 카드 진입
+      document.querySelectorAll('.card').forEach(function(card){
+        card.addEventListener('click', function(){
+          if(auto.checked){
+            var subj = card.classList.contains('card--math') ? 'math' : 'science';
+            localStorage.setItem('rm-auto-subject', subj);
+          }
+          location.href = card.getAttribute('data-go');
+        });
+      });
+      // 로그아웃(데모)
+      document.getElementById('logoutBtn').addEventListener('click', function(){
+        showToast('로그아웃되었습니다. (데모)');
+      });
+    })();
+  </script>
+</body>
+</html>

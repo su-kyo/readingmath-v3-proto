@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light" data-section="assign">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>과제 센터 · 홈 — 리딩수학과학</title>
+  <link rel="stylesheet" href="styles/gnb.css?v=4" />
+  <script src="scripts/gnb-drawer.js?v=6"></script>
+  <link rel="stylesheet" href="styles/tokens.css?v=15" />
+  <style>
+    /* =========================================================================
+       과제 센터 · 홈 (assignment-home) — 리파인
+       · 다크 우주 셸 + 사방 여백 위에 떠 있는 라운드 패널(내부 스크롤)
+       · 상태색은 의미로만: 진행중=블루 / 미시작=앰버 / 완료=그린
+       · 데이터(점수·%·카운트)는 mono+tabular, 색은 아이콘 칩에만 → 차분
+       ========================================================================= */
+    :root {
+      /* 상태색 */
+      --s-blue: var(--th-accent);  --s-blue-t: var(--th-tint);
+      --s-amber: var(--warn-solid); --s-amber-t: var(--warn-tint); --s-amber-ink: var(--warn-ink);
+      --s-green: var(--ok-ink); --s-green-t: var(--ok-tint);
+      --s-indigo: var(--violet-500); --s-indigo-t: var(--violet-050);
+      /* 뉴트럴 (블루 바이어스) — 보조 텍스트는 대비 개선값 */
+      --ink: var(--n-650); --sub: var(--text-meta); --muted: var(--text-meta); --faint: var(--text-meta);
+      --line: var(--n-100); --line-2: var(--n-100); --rail: var(--n-050);
+      /* 셸 */
+      --nav-dark: var(--n-900); --nav-tab: var(--violet-500); --nav-off: var(--text-meta);
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body { font-family: var(--font-sans); background: var(--nav-dark); color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
+    .app { display: flex; flex-direction: column; height: 100dvh; }
+
+    /* ===== 헤더 (다크) ===== */
+    .nav { flex: none; height: 50px; display: flex; align-items: center; gap: 16px; padding: 0 16px; background: var(--nav-dark); border-bottom: 1px solid rgba(255,255,255,.1); }
+    .nav__info { display: flex; align-items: center; gap: 6px; flex: 1; min-width: 0; }
+    .nav__logo { width: 30px; height: 30px; flex: none; }
+    .nav__logo svg { width: 100%; height: 100%; display: block; }
+    .nav__name { color: var(--n-000); font-size: 18px; font-weight: 800; letter-spacing: -.03em; }
+    .nav__modes { display: flex; align-items: flex-end; gap: 4px; align-self: stretch; }
+    .mbtn { padding: 0 16px; display: flex; align-items: center; font-size: 15px; font-weight: 700; letter-spacing: -.02em; color: var(--nav-off); cursor: pointer; border-radius: 12px 12px 0 0; transition: color .15s, background .15s; white-space: nowrap; }
+    .mbtn:hover { color: var(--n-200); }
+    .mbtn.is-active { color: var(--n-000); background: var(--nav-tab); }
+    .nav__icons { display: flex; align-items: center; justify-content: flex-end; gap: 8px; flex: 1; }
+    .nbtn { position: relative; width: 40px; height: 40px; border: 0; background: transparent; border-radius: 12px; display: grid; place-items: center; color: var(--nav-off); cursor: pointer; transition: .15s; }
+    .nbtn:hover { background: rgba(255,255,255,.06); color: var(--n-200); }
+    .nbtn svg { width: 20px; height: 20px; }
+    .nbtn__dot { position: absolute; top: 8px; right: 9px; width: 6px; height: 6px; border-radius: 50%; background: var(--no-solid); }
+
+    /* ===== 스테이지 (사방 여백 + 우주 배경) ===== */
+    .stage { flex: 1; min-height: 0; display: flex; justify-content: center; align-items: stretch; padding: 26px 30px;
+      background: linear-gradient(rgba(9,12,40,.32), rgba(9,12,40,.32)), url("assets/figma/bg-space-hw.png") center/cover no-repeat; }
+    .screen { position: relative; width: 100%; max-width: 1120px; height: 100%; overflow-y: auto; overflow-x: hidden;
+      background: var(--surface-1); border: 1px solid rgba(255,255,255,.5); border-radius: 26px;
+      box-shadow: 0 2px 6px rgba(6,12,30,.10), 0 30px 60px -28px rgba(6,12,30,.5);
+      scrollbar-gutter: stable; }
+    .inner { padding: 36px 40px 40px; display: flex; flex-direction: column; gap: 30px; }
+
+    /* ── 페이지 헤더 ── */
+    .phead { display: flex; flex-direction: column; gap: 6px; }
+    .phead__row { display: flex; align-items: center; gap: 12px; }
+    .phead__title { font-size: 30px; font-weight: 800; letter-spacing: -.04em; color: var(--ink); }
+    .phead__chip { padding: 3px 11px; border-radius: 8px; background: var(--s-blue-t); color: var(--s-blue); font-size: 15px; font-weight: 800; }
+    .phead__sub { font-size: 14px; color: var(--muted); font-weight: 500; }
+
+    /* ── 요약: 히어로(평균점수 링) + KPI 3 ── */
+    .summary { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 14px; }
+    /* 요약 카드 = 흰 카드 + 부드러운 그림자(모던·심플, 장식 없음) */
+    .hero, .kpi { background: var(--surface-1); border: 1px solid var(--line); border-radius: 16px;
+      box-shadow: 0 1px 2px rgba(20,32,58,.04), 0 6px 22px -16px rgba(20,32,58,.20); }
+    .hero { display: flex; align-items: center; gap: 22px; padding: 20px 24px; }
+    .ring { position: relative; width: 82px; height: 82px; flex: none; }
+    .ring > svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+    .ring__c { position: absolute; inset: 0; display: grid; place-items: center; }
+    .ring__c b { font-family: var(--font-mono); font-size: 22px; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
+    .hero__body { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+    .hero__k { font-size: 13px; font-weight: 700; color: var(--muted); }
+    .hero__v { font-family: var(--font-mono); font-size: 30px; font-weight: 700; letter-spacing: -.02em; color: var(--ink); font-variant-numeric: tabular-nums; }
+    .hero__v small { font-family: var(--font-sans); font-size: 15px; font-weight: 700; color: var(--faint); margin-left: 3px; }
+    .hero__sub { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--s-green); }
+    .hero__sub svg { width: 14px; height: 14px; }
+
+    .kpi { display: flex; flex-direction: column; gap: 14px; padding: 16px 18px; }
+    .kpi__ic { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; }
+    .kpi__ic svg { width: 22px; height: 22px; }
+    .kpi__b { display: flex; flex-direction: column; gap: 3px; }
+    .kpi__k { font-size: 13px; font-weight: 600; color: var(--muted); }
+    .kpi__v { font-family: var(--font-mono); font-size: 26px; font-weight: 700; letter-spacing: -.02em; color: var(--ink); font-variant-numeric: tabular-nums; }
+    .kpi__v small { font-family: var(--font-sans); font-size: 13px; font-weight: 700; color: var(--faint); margin-left: 2px; }
+    .t-indigo { background: var(--s-indigo-t); color: var(--s-indigo); }
+    .t-blue { background: var(--s-blue-t); color: var(--s-blue); }
+    .t-green { background: var(--s-green-t); color: var(--s-green); }
+
+    /* ── 섹션 ── */
+    .sec { display: flex; flex-direction: column; gap: 14px; }
+    .sec__head { display: flex; align-items: center; gap: 9px; }
+    .sec__dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+    .sec__title { font-size: 18px; font-weight: 800; letter-spacing: -.03em; color: var(--ink); }
+    .sec__count { font-family: var(--font-mono); font-size: 12.5px; font-weight: 700; padding: 1px 9px; border-radius: 999px; font-variant-numeric: tabular-nums; }
+    .sec--blue .sec__dot { background: var(--s-blue); } .sec--blue .sec__count { background: var(--s-blue-t); color: var(--s-blue); }
+    .sec--amber .sec__dot { background: var(--s-amber); } .sec--amber .sec__count { background: var(--s-amber-t); color: var(--s-amber-ink); }
+    .sec--green .sec__dot { background: var(--s-green); } .sec--green .sec__count { background: var(--s-green-t); color: var(--s-green); }
+    .list { display: flex; flex-direction: column; gap: 12px; }
+
+    /* ── 카드 공통 (모던·심플: 부드러운 그림자로 depth, 장식 없음) ── */
+    .card { display: flex; align-items: center; gap: 26px; background: var(--surface-1); border: 1px solid var(--line); border-radius: 16px; padding: 20px 24px;
+      box-shadow: 0 1px 2px rgba(20,32,58,.04), 0 6px 22px -16px rgba(20,32,58,.20); transition: box-shadow .16s, transform .16s; }
+    .card:hover { box-shadow: 0 2px 6px rgba(20,32,58,.06), 0 18px 34px -20px rgba(20,32,58,.30); transform: translateY(-2px); }
+    .card__main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+    .card__title { font-size: 17px; font-weight: 700; color: var(--ink); letter-spacing: -.01em; line-height: 1.3; }
+    .metarow { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+    .unit { padding: 3px 9px; border-radius: 7px; background: var(--line-2); color: var(--sub); font-size: 12px; font-weight: 700; }
+    .meta { display: inline-flex; align-items: center; gap: 5px; font-size: 12.5px; color: var(--faint); font-weight: 500; font-variant-numeric: tabular-nums; }
+    .meta svg { width: 13px; height: 13px; }
+    .meta b { color: var(--sub); font-weight: 700; }
+    .sep { width: 3px; height: 3px; border-radius: 50%; background: var(--n-200); flex: none; }
+
+    /* 진행중 진행률 */
+    .prog { flex: none; width: 216px; display: flex; flex-direction: column; gap: 8px; }
+    .prog__top { display: flex; align-items: baseline; justify-content: space-between; }
+    .prog__k { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: var(--muted); }
+    .prog__k svg { width: 13px; height: 13px; color: var(--s-blue); }
+    .prog__v { font-family: var(--font-mono); font-size: 17px; font-weight: 700; color: var(--s-blue); font-variant-numeric: tabular-nums; }
+    .prog__v small { color: var(--faint); font-size: 12px; margin-left: 2px; }
+    .track { height: 8px; border-radius: 5px; background: var(--n-100); overflow: hidden; }
+    .track > i { display: block; height: 100%; border-radius: 5px; background: var(--s-blue); }
+
+    /* 미시작 문항수 */
+    .qcount { flex: none; display: inline-flex; align-items: center; gap: 7px; padding: 8px 14px; border-radius: 10px; background: var(--rail); border: 1px solid var(--line); }
+    .qcount svg { width: 15px; height: 15px; color: var(--s-amber-ink); }
+    .qcount span { font-size: 12px; color: var(--muted); font-weight: 600; }
+    .qcount b { font-family: var(--font-mono); font-size: 14px; color: var(--ink); font-weight: 700; }
+
+    /* 완료 점수 블록 */
+    .scoreblk { flex: none; display: flex; align-items: center; gap: 18px; }
+    .scoreblk__col { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
+    .badge-done { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 999px; background: var(--s-green-t); color: var(--s-green); font-size: 11px; font-weight: 800; }
+    .badge-done svg { width: 11px; height: 11px; }
+    .scoreblk__num { font-family: var(--font-mono); font-size: 26px; font-weight: 700; color: var(--ink); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+    .scoreblk__num small { font-family: var(--font-sans); font-size: 13px; color: var(--faint); font-weight: 700; margin-left: 1px; }
+
+    /* 버튼 */
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; border: 0; cursor: pointer; font-family: inherit; font-weight: 700; white-space: nowrap; transition: background .14s, transform .1s, box-shadow .14s, border-color .14s; }
+    .btn:active { transform: translateY(1px); }
+    .btn svg { width: 17px; height: 17px; }
+    .btn--go { flex: none; padding: 12px 20px; border-radius: 11px; background: var(--s-blue); color: var(--n-000); font-size: 15px; box-shadow: var(--shadow-2); }
+    .btn--go:hover { background: var(--th-accent-strong); }
+    .btn--do { flex: none; padding: 11px 18px; border-radius: 10px; background: var(--s-amber); color: var(--n-000); font-size: 14px; box-shadow: var(--shadow-2); }
+    .btn--do:hover { background: var(--warn-ink); }
+    .btn--result { flex: none; padding: 10px 16px; border-radius: 10px; background: var(--surface-1); border: 1px solid var(--line); color: var(--sub); font-size: 13px; }
+    .btn--result:hover { border-color: var(--s-green); color: var(--s-green); }
+    .more { align-self: center; padding: 10px 18px; border-radius: 999px; background: var(--rail); border: 1px solid var(--line); color: var(--sub); font-size: 13px; font-weight: 700; cursor: pointer; transition: .14s; }
+    .more:hover { border-color: var(--n-200); color: var(--ink); }
+
+    /* 스크롤바 (패널 내부) */
+    .screen::-webkit-scrollbar { width: 12px; }
+    .screen::-webkit-scrollbar-thumb { background: var(--n-200); border-radius: 999px; border: 3.5px solid var(--surface-1); background-clip: padding-box; }
+    .screen::-webkit-scrollbar-thumb:hover { background: var(--n-300); background-clip: padding-box; }
+    .screen { scrollbar-width: thin; scrollbar-color: var(--n-200) var(--surface-1); }
+    :focus-visible { outline: 2px solid var(--s-blue); outline-offset: 2px; }
+
+    @media (max-width: 940px) {
+      .summary { grid-template-columns: 1fr 1fr; }
+      .card { flex-wrap: wrap; }
+      .prog { width: 100%; }
+      .nav__modes { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- ===== 헤더 ===== -->
+    <header class="gnb">
+      <div class="gnb__info"><span class="gnb__logo"></span><span class="gnb__name">김학생</span></div>
+      <nav class="gnb__modes">
+        <button class="gnb__mode m-basic" data-go="home.html">기본 모드</button>
+        <button class="gnb__mode m-free" data-go="freemode.html">자유 모드</button>
+        <button class="gnb__mode m-exam" data-go="exam-home.html">시험 대비</button>
+        <button class="gnb__mode m-assign is-active">과제 센터<span class="gnb__mode__dot"></span></button>
+      </nav>
+      <div class="gnb__icons">
+        <button class="gnb__ico" title="도움말"></button>
+        <button class="gnb__ico" title="긴급"></button>
+        <button class="gnb__ico" title="공지"><span class="gnb__dot"></span></button>
+        <button class="gnb__ico" id="menuBtn" title="메뉴"></button>
+      </div>
+    </header>
+
+    <!-- ===== 스테이지 ===== -->
+    <div class="stage">
+      <main class="screen">
+        <div class="inner">
+          <div class="phead">
+            <div class="phead__row">
+              <span class="phead__title">과제 센터</span>
+              <span class="phead__chip">수학</span>
+            </div>
+            <span class="phead__sub">선생님이 내주신 수학 과제를 확인하고 풀이해 보세요.</span>
+          </div>
+
+          <section class="summary" id="summary"></section>
+
+          <section class="sec sec--blue">
+            <div class="sec__head"><span class="sec__dot"></span><span class="sec__title">진행중 과제</span><span class="sec__count" id="cntActive"></span></div>
+            <div class="list" id="activeList"></div>
+          </section>
+
+          <section class="sec sec--amber">
+            <div class="sec__head"><span class="sec__dot"></span><span class="sec__title">미시작 과제</span><span class="sec__count" id="cntPending"></span></div>
+            <div class="list" id="pendingList"></div>
+          </section>
+
+          <section class="sec sec--green">
+            <div class="sec__head"><span class="sec__dot"></span><span class="sec__title">완료 과제</span><span class="sec__count" id="cntDone"></span></div>
+            <div class="list" id="doneList"></div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="scripts/assignment-home.js?v=2"></script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+/* =====================================================================
+   essay.css — 서술형 훈련(퍼플 테마) 공용 시트
+   essay-basics / essay-drill / essay-report 3개 페이지가 공유.
+   ⚠️ 링크 순서: tokens → base → components → learn-shell → essay → (페이지 인라인)
+   페이지 고유 레이아웃/토큰(--card, --qa-*, --rt-*, .slot, .pmodal 등)은
+   각 HTML 인라인 <style>에 그대로 둔다. 인라인이 소스 순서상 뒤라 필요 시 덮어쓴다.
+   ===================================================================== */
+
+/* ============ 퍼플 셸 (헤더 · 배경) ============ */
+/* 헤더 = 라이트·다크 공통 정적 프레임 색 var(--th-static) (서술형 static = violet-800, 테마 오버라이드 없음). */
+.lheader { background: var(--th-static); }
+.screen__bg { background: url("../assets/figma/bg-spaceship-essay.png") center/cover no-repeat; }
+
+/* 헤더 타이머 칩 (drill · report 공용) */
+.htimer { display: inline-flex; align-items: center; gap: 5px; padding: 6px 10px; border-radius: 10px; background: rgba(0,0,0,.28); flex: none; }
+.htimer img { width: 15px; height: 15px; }
+.htimer span { font-family: var(--font-mono); font-weight: 700; font-size: 14px; color: var(--n-000); }
+
+/* ============ 빈칸 상태 토큰 (테마별) ============
+   .content 에 실린다. 페이지 고유 토큰(--guide 등)은 인라인에서 별도로 선언.  */
+.content {
+  --bl-bg: rgba(255,255,255,.07); --bl-line: rgba(200,205,225,.42);
+  --bl-bgh: rgba(255,255,255,.13); --bl-lineh: rgba(200,205,225,.72);
+  --bl-selbg: rgba(255,127,0,.24); --bl-selline: var(--primary-hover); --bl-selbadge: var(--orange-300);
+  --bl-badge: rgba(255,255,255,.18); --bl-fill: rgba(193,203,224,.22); --bl-ans: var(--n-000);
+}
+:root[data-theme="light"] .content {
+  --bl-bg: rgba(96,80,168,.07); --bl-line: rgba(108,99,201,.30);
+  --bl-bgh: rgba(96,80,168,.13); --bl-lineh: rgba(108,99,201,.5);
+  --bl-selbg: rgba(255,127,0,.15); --bl-selline: var(--orange-600); --bl-selbadge: var(--orange-600);
+  --bl-badge: rgba(72,58,142,.2); --bl-fill: rgba(108,99,201,.12); --bl-ans: var(--n-650);
+}
+
+/* ============ 빈칸 pill ============ */
+.blank { position: relative; display: inline-flex; align-items: center; justify-content: center;
+  padding: 0 10px; margin: 0 2px; border-radius: 8px; vertical-align: middle;
+  min-width: 32px; height: 32px;
+  background: var(--bl-bg); box-shadow: inset 0 0 0 1px var(--bl-line);
+  transition: background .16s ease, box-shadow .16s ease; }
+/* 정답 = 세리프 (line-height 1 로 고정 → 값이 들어가도 빈칸 높이가 안 커짐) */
+.blank__ans { font-family: var(--font-serif); font-weight: 700; font-size: 17px; line-height: 1;
+  color: var(--bl-ans); white-space: nowrap; opacity: 0; }
+/* 번호 플레이스홀더 = mono, 아주 연하게 (같은 번호=같은 답 힌트) */
+.blank__badge { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-weight: 600; font-size: 12px; line-height: 1; color: var(--bl-badge); }
+/* 채워짐 */
+.blank.is-filled { background: var(--bl-fill); box-shadow: none; }
+.blank.is-filled .blank__ans { opacity: 1; }
+.blank.is-filled .blank__badge { display: none; }
+/* 선택됨(드롭다운 열림) = 주황 (is-filled 뒤에 선언 → 재편집 시 우선) */
+.blank.is-sel { background: var(--bl-selbg); box-shadow: inset 0 0 0 1.5px var(--bl-selline); }
+.blank.is-sel .blank__badge { color: var(--bl-selbadge); }
+
+/* ============ 빈칸 입력 드롭다운 (팝오버) ============ */
+.qpop { position: fixed; z-index: 200; width: max-content; max-width: 320px; display: none; }
+.qpop.is-open { display: block; }
+/* 공용 중간톤(라이트·다크 공용) — 라이트 패널 위에선 진해서, 다크 패널 위에선 밝아서 대비.
+   개념/서술형 어디서든 재사용 가능하도록 모드 분기 없이 한 팔레트로 통일. */
+.qpop__inner { position: relative; background: var(--n-500); border: 1px solid var(--n-500); border-radius: 14px;
+  padding: 9px; box-shadow: 0 18px 42px -14px rgba(20,10,50,.55); font-family: var(--font-sans); animation: qpop .13s ease; }
+@keyframes qpop { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .qpop__inner { animation: none; } }
+/* 캐럿 */
+.qpop__caret { position: absolute; width: 12px; height: 12px; background: var(--n-500); border: 1px solid var(--n-500); transform: rotate(45deg); }
+.qpop:not(.qpop--up) .qpop__caret { border-right: 0; border-bottom: 0; }   /* 위쪽 화살표(아래로 열림) */
+.qpop.qpop--up .qpop__caret { border-left: 0; border-top: 0; }             /* 아래쪽 화살표(위로 열림) */
+/* 객관식 옵션 = 세로 1열로 쌓기 (긴 수식도 수용) */
+.qpop__opts { display: flex; flex-direction: column; gap: 6px; min-width: 168px; }
+.pop-opt { width: 100%; text-align: center; padding: 10px 14px; border-radius: 10px; border: 1.5px solid var(--n-500);
+  background: rgba(255,255,255,.06); color: var(--n-050); font-family: var(--font-serif); font-size: 17px; font-weight: 700;
+  line-height: 1.35; white-space: normal; word-break: keep-all; cursor: pointer; transition: border-color .12s, background .12s, opacity .2s; }
+.pop-opt:hover { border-color: var(--primary-hover); background: rgba(255,127,0,.16); }
+.pop-opt.is-wrong { border-color: var(--no-solid); background: rgba(229,88,95,.2); animation: qShake .3s; }
+.pop-opt.is-dead { opacity: .34; filter: grayscale(.5); pointer-events: none; text-decoration: line-through; }
+@keyframes qShake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-4px)} 75%{transform:translateX(4px)} }
+@media (prefers-reduced-motion: reduce) { .pop-opt.is-wrong { animation: none; } }
+
+/* 주관식 = 숫자 키패드 (개념 훈련 계산기의 서술형 버전) */
+.qpop__pad { width: 208px; }
+.qpop__display { height: 42px; border-radius: 10px; background: var(--n-650); color: var(--n-050);
+  display: flex; align-items: center; justify-content: flex-end; padding: 0 13px; margin-bottom: 8px;
+  font-family: var(--font-mono); font-size: 20px; font-weight: 700; }
+.qpop__display.is-wrong { box-shadow: inset 0 0 0 1.5px var(--no-solid); color: var(--no-on-dark); animation: qShake .3s; }
+@media (prefers-reduced-motion: reduce) { .qpop__display.is-wrong { animation: none; } }
+.qpop__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.qpop__key { height: 42px; border-radius: 10px; border: 0; background: var(--n-500); color: var(--n-050);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-weight: 700; font-size: 16px; cursor: pointer; transition: background .12s; }
+.qpop__key:hover { background: var(--n-500); }
+.qpop__key svg { width: 19px; height: 19px; }
+.qpop__key--ok { grid-column: span 2; background: var(--primary); color: var(--n-000); font-family: var(--font-sans); font-weight: 800; }
+.qpop__key--ok:hover { background: var(--primary-hover); }
+
+/* ── 라이트 전용: 톤 완화(밝은 라벤더 팝오버 + 진한 잉크). 다크는 위 공용 팔레트 유지 ── */
+:root[data-theme="light"] .qpop__inner { background: var(--n-050); border-color: var(--n-100); box-shadow: 0 16px 38px -16px rgba(60,40,120,.30), 0 2px 8px rgba(60,40,120,.08); }
+:root[data-theme="light"] .qpop__caret { background: var(--n-050); border-color: var(--n-100); }
+:root[data-theme="light"] .pop-opt { border-color: var(--n-100); background: var(--n-050); color: var(--n-650); }
+:root[data-theme="light"] .pop-opt:hover { border-color: var(--orange-600); background: rgba(255,127,0,.10); }
+:root[data-theme="light"] .pop-opt.is-wrong { border-color: var(--no-ink); background: rgba(199,60,67,.10); }
+:root[data-theme="light"] .qpop__display { background: var(--n-050); color: var(--n-650); }
+:root[data-theme="light"] .qpop__display.is-wrong { color: var(--no-ink); }
+:root[data-theme="light"] .qpop__key { background: var(--n-050); color: var(--n-650); }
+:root[data-theme="light"] .qpop__key:hover { background: var(--n-100); }
+
+/* ============ 하단바 = 서술형 버전 (퍼플 트레이 + 오렌지 CTA) ============ */
+/* 바이올렛 램프에 맞춘 값. 양옆 콘솔 데코 SVG(console-essay-*.svg)의 면색도 동일하게 맞춤. */
+.bar__mid { background: var(--n-100); }
+.bar__tray { background: #C6BFEA; }   /* [에셋연동 §3.5] console-essay SVG 트레이 면색과 세트 */
+.toolbtn--primary { background: var(--primary); box-shadow: 0 4px 0 var(--primary-pressed); }
+.toolbtn--primary:hover { background: var(--primary-hover); }
+.toolbtn--primary:disabled { opacity: .4; box-shadow: none; cursor: not-allowed; filter: grayscale(.2); }
+.toolbtn--primary:disabled:hover { background: var(--primary); filter: grayscale(.2); }
+
+/* 연습장 등 비-primary 툴버튼 = 바이올렛 — 양 테마 공통.
+   램프: 헤더 --th-static → 툴버튼 --th-accent-strong → 트레이 #C6BFEA(에셋) → mid --n-100 → 패널 --n-050.
+   셸은 한 톤으로 묶이고, 오렌지 CTA·활성 빈칸만 도드라짐. */
+.toolbtn:not(.toolbtn--primary) { background: var(--th-accent-strong); box-shadow: 0 4px 0 var(--n-500); }
+.toolbtn:not(.toolbtn--primary):active { box-shadow: 0 2px 0 var(--n-500); }

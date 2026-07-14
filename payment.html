@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ko" data-section="util">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>이용권 결제 — 리딩수학과학</title>
+  <link rel="stylesheet" href="styles/tokens.css?v=15" />
+  <link rel="stylesheet" href="styles/base.css?v=3" />
+  <link rel="stylesheet" href="styles/gnb.css?v=4" />
+  <link rel="stylesheet" href="styles/util.css?v=5" />
+  <style>
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html,body{ height:100%; }
+    .pay-benefits{ display:flex; flex-direction:column; gap:0; }
+    .pay-benefits li{ list-style:none; display:flex; align-items:flex-start; gap:11px; padding:14px 0; border-bottom:1px solid var(--line-2); font-size:14.5px; font-weight:600; color:var(--n-500); }
+    .pay-benefits li:last-child{ border-bottom:0; }
+    .pay-benefits li b{ font-weight:800; color:var(--ink); }
+    .pay-benefits svg{ width:20px; height:20px; flex:none; color:var(--ok); margin-top:1px; }
+    .sec-t{ font-size:16px; font-weight:800; letter-spacing:-.03em; margin:26px 0 12px; }
+    /* 플랜 옵션 */
+    .plan{ display:flex; align-items:center; gap:14px; width:100%; text-align:left; padding:17px 18px; margin-bottom:10px;
+      border:1.5px solid var(--line); border-radius:14px; background:var(--surface); cursor:pointer; transition:.14s; }
+    .plan:hover{ border-color:var(--n-200); }
+    .plan.is-sel{ border-color:var(--brand); background:var(--brand-tint); }
+    .plan__radio{ width:22px; height:22px; border-radius:50%; border:2px solid var(--n-200); flex:none; display:grid; place-items:center; transition:.14s; }
+    .plan.is-sel .plan__radio{ border-color:var(--brand); }
+    .plan.is-sel .plan__radio::after{ content:""; width:11px; height:11px; border-radius:50%; background:var(--brand); }
+    .plan__main{ flex:1; min-width:0; }
+    .plan__top{ display:flex; align-items:center; gap:8px; margin-bottom:3px; }
+    .plan__nm{ font-size:15.5px; font-weight:800; }
+    .plan__days{ font-size:12.5px; font-weight:700; color:var(--ink-3); }
+    .plan__off{ font-size:12px; font-weight:800; color:var(--brand); background:var(--brand-tint); padding:2px 8px; border-radius:6px; }
+    .plan__price{ text-align:right; flex:none; }
+    .plan__list{ font-size:12.5px; color:var(--ink-3); text-decoration:line-through; font-variant-numeric:tabular-nums; }
+    .plan__now{ font-size:18px; font-weight:800; color:var(--ink); font-variant-numeric:tabular-nums; }
+    .plan__mo{ font-size:12px; font-weight:700; color:var(--ink-2); margin-top:1px; }
+    /* 결제수단 */
+    .method{ display:flex; align-items:center; gap:12px; width:100%; padding:15px 18px; margin-bottom:10px;
+      border:1.5px solid var(--line); border-radius:14px; background:var(--surface); cursor:pointer; transition:.14s; font-size:15px; font-weight:700; }
+    .method:hover{ border-color:var(--n-200); }
+    .method.is-sel{ border-color:var(--brand); background:var(--brand-tint); }
+    .method__radio{ width:20px; height:20px; border-radius:50%; border:2px solid var(--n-200); flex:none; display:grid; place-items:center; margin-left:auto; }
+    .method.is-sel .method__radio{ border-color:var(--brand); }
+    .method.is-sel .method__radio::after{ content:""; width:10px; height:10px; border-radius:50%; background:var(--brand); }
+    .method svg{ width:20px; height:20px; color:var(--ink-2); }
+    /* 요약 */
+    .sum__row{ display:flex; align-items:center; justify-content:space-between; padding:12px 0; border-bottom:1px solid var(--line-2); }
+    .sum__k{ font-size:13px; font-weight:700; color:var(--ink-3); }
+    .sum__v{ font-size:14.5px; font-weight:800; }
+    .sum__v.placeholder{ color:var(--ink-3); font-weight:600; }
+    .coupon{ display:flex; gap:8px; margin-top:4px; }
+    .coupon .u-field{ height:42px; }
+    .total{ display:flex; align-items:baseline; justify-content:space-between; margin:16px 0 4px; }
+    .total__k{ font-size:15px; font-weight:800; }
+    .total__v{ font-size:26px; font-weight:800; color:var(--brand); font-variant-numeric:tabular-nums; }
+    .agree{ display:flex; align-items:center; gap:9px; margin:14px 0 12px; cursor:pointer; user-select:none; font-size:13.5px; font-weight:600; color:var(--ink-2); }
+    .agree input{ position:absolute; opacity:0; }
+    .agree__box{ width:20px; height:20px; border-radius:6px; border:1.6px solid var(--n-200); display:grid; place-items:center; transition:.14s; flex:none; }
+    .agree__box svg{ width:12px; height:12px; color:var(--n-000); opacity:0; }
+    .agree input:checked + .agree__box{ background:var(--brand); border-color:var(--brand); }
+    .agree input:checked + .agree__box svg{ opacity:1; }
+    .refund{ font-size:11.5px; color:var(--ink-3); line-height:1.6; margin-top:10px; }
+  </style>
+</head>
+<body class="u-body">
+  <div class="u-app">
+    <header class="gnb">
+      <div class="gnb__info"><span class="gnb__logo"></span><span class="gnb__name">김학생</span></div>
+      <div class="gnb__icons">
+        <button class="gnb__ico" title="도움말"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.8.4-1 .9-1 1.7" stroke-linecap="round"/><circle cx="12" cy="16.5" r="1" fill="currentColor" stroke="none"/></svg></button>
+        <button class="gnb__ico" title="오류 신고"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17h.01"/></svg></button>
+        <button class="gnb__ico" id="noticeBtn" title="공지사항"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 9v6h3l7 4V5L7 9H4zM18 8a5 5 0 0 1 0 8"/></svg><span class="gnb__dot"></span></button>
+        <button class="gnb__ico" id="menuBtn" title="메뉴"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      </div>
+    </header>
+
+    <main class="u-main">
+      <div class="u-wrap">
+        <div class="u-head">
+          <div class="u-head__l">
+            <span class="u-head__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2.5"/><path d="M3 10h18"/></svg></span>
+            <div>
+              <div class="u-head__t">이용권 결제</div>
+              <div class="u-head__sub">과목과 이용 기간을 선택하고 결제를 진행하세요.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="u-cols">
+          <!-- LEFT -->
+          <div>
+            <div class="u-card">
+              <div class="u-card__pad">
+                <div class="u-seg" id="subjSeg" style="display:flex;width:100%">
+                  <button class="is-on" data-s="math" style="flex:1">리딩수학</button>
+                  <button data-s="science" style="flex:1">리딩과학</button>
+                  <button data-s="both" style="flex:1">리딩수학+과학 통합</button>
+                </div>
+                <ul class="pay-benefits" id="benefits"></ul>
+              </div>
+            </div>
+
+            <div class="sec-t">이용 기간 선택</div>
+            <div id="plans"></div>
+
+            <div class="sec-t">결제 방법 선택</div>
+            <div id="methods">
+              <div class="method is-sel" data-m="card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/></svg>신용카드 결제<span class="method__radio"></span></div>
+              <div class="method" data-m="vbank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h16M4 10l8-6 8 6M6 10v8M10 10v8M14 10v8M18 10v8M3 21h18"/></svg>가상계좌 입금<span class="method__radio"></span></div>
+            </div>
+          </div>
+
+          <!-- RIGHT -->
+          <aside class="u-side">
+            <div class="u-card">
+              <div class="u-card__hd"><span class="u-card__ttl">주문 요약</span></div>
+              <div class="u-card__pad" style="padding-top:6px">
+                <div class="sum__row"><span class="sum__k">선택한 이용권</span><span class="sum__v" id="sumSubj">리딩수학</span></div>
+                <div class="sum__row"><span class="sum__k">이용 기간</span><span class="sum__v placeholder" id="sumTerm">기간을 선택해 주세요</span></div>
+                <div class="sum__row"><span class="sum__k">결제 방법</span><span class="sum__v" id="sumMethod">신용카드 결제</span></div>
+                <div class="sum__row" style="border-bottom:0"><span class="sum__k">할인 혜택</span><span class="sum__v" id="sumOff" style="color:var(--brand)">-0원</span></div>
+                <div class="coupon">
+                  <input class="u-field" id="coupon" placeholder="쿠폰 번호를 입력해 주세요">
+                  <button class="u-btn u-btn--sm" id="couponBtn" style="height:42px">적용</button>
+                </div>
+                <div class="total"><span class="total__k">총 결제금액</span><span class="total__v" id="total">0원</span></div>
+                <label class="agree"><input type="checkbox" id="agree"><span class="agree__box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>결제 및 환불 규정에 동의합니다</label>
+                <button class="u-btn u-btn--cta u-btn--lg" id="payBtn" style="width:100%">결제하기</button>
+                <div class="refund">· 결제 후 3~5일 이내 학습 매니저가 배정됩니다.<br>· 환불은 이용 이력에 따라 규정이 적용되며, 자세한 내용은 고객센터를 통해 안내드립니다.</div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="u-toast" id="toast"></div>
+
+  <script>
+  (function(){
+    var SUBJ={ math:'리딩수학', science:'리딩과학', both:'리딩수학+과학 통합' };
+    var BENEFITS={
+      math:['초3부터 ~ 중1까지 개념·유형·서술형 균형 잡힌 <b>리딩수학 학습</b> 진행','복습과 정리를 위한 매주 <b>주간 학습 기록과 오답노트</b> 제공','매월 학습 현황을 파악할 수 있도록 매월 <b>월간보고서</b> 제공','사고력 기반의 수학 역량 점검을 위한 <b>수리 문해력 종합진단평가</b> 제공','월 1회 학습 매니저 상담을 통한 <b>성취도 및 진도 관리</b>'],
+      science:['초3부터 ~ 중1까지 개념·탐구·서술형 <b>리딩과학 학습</b> 진행','실생활 현상 기반의 <b>과학 문해력</b> 훈련 제공','매주 <b>주간 학습 기록과 오답노트</b> 제공','매월 <b>월간보고서</b> 및 종합진단평가 제공','월 1회 학습 매니저 상담을 통한 <b>성취도 및 진도 관리</b>'],
+      both:['<b>리딩수학 + 리딩과학</b>을 하나의 이용권으로 통합 학습','수학·과학 <b>주간 학습 기록·오답노트</b> 통합 제공','매월 <b>통합 월간보고서</b> 및 종합진단평가 제공','두 과목 <b>교차 성취 분석</b> 리포트 제공','월 1회 학습 매니저 상담을 통한 <b>성취도 및 진도 관리</b>']
+    };
+    // 과목별 플랜
+    function mk(k,nm,days,list,price){ return {k:k,nm:nm,days:days,list:list,price:price,off:Math.round((1-price/list)*100),mo:Math.round(price/(k))}; }
+    var PLANS={
+      math:[ mk(1,'1개월','30일',70000,70000), mk(3,'3개월','90일',210000,195000), mk(6,'6개월','180일',420000,360000), mk(12,'12개월','365일',840000,600000) ],
+      science:[ mk(1,'1개월','30일',66000,66000), mk(3,'3개월','90일',198000,184000), mk(6,'6개월','180일',396000,336000), mk(12,'12개월','365일',792000,564000) ],
+      both:[ mk(1,'1개월','30일',119000,119000), mk(3,'3개월','90일',357000,330000), mk(6,'6개월','180일',714000,606000), mk(12,'12개월','365일',1428000,996000) ]
+    };
+    var state={ subj:'math', plan:null, method:'card', coupon:0 };
+    function won(n){ return n.toLocaleString('ko-KR')+'원'; }
+
+    function renderBenefits(){
+      var ul=document.getElementById('benefits'); ul.innerHTML='';
+      BENEFITS[state.subj].forEach(function(t){
+        var li=document.createElement('li');
+        li.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg><span>'+t+'</span>';
+        ul.appendChild(li);
+      });
+    }
+    function renderPlans(){
+      var host=document.getElementById('plans'); host.innerHTML='';
+      PLANS[state.subj].forEach(function(p,i){
+        var b=document.createElement('button'); b.className='plan'+(state.plan===i?' is-sel':'');
+        b.innerHTML='<span class="plan__radio"></span><div class="plan__main"><div class="plan__top"><span class="plan__nm">'+p.nm+'</span><span class="plan__days">('+p.days+')</span>'+(p.off>0?'<span class="plan__off">↓ '+p.off+'%</span>':'')+'</div></div>'
+          +'<div class="plan__price">'+(p.off>0?'<div class="plan__list">'+won(p.list)+'</div>':'')+'<div class="plan__now">'+won(p.price)+'</div><div class="plan__mo">월 '+won(p.mo)+'</div></div>';
+        b.addEventListener('click', function(){ state.plan=i; renderPlans(); updateSummary(); });
+        host.appendChild(b);
+      });
+    }
+    function updateSummary(){
+      document.getElementById('sumSubj').textContent=SUBJ[state.subj];
+      var t=document.getElementById('sumTerm');
+      var off=document.getElementById('sumOff'), total=document.getElementById('total');
+      if(state.plan===null){ t.textContent='기간을 선택해 주세요'; t.className='sum__v placeholder'; off.textContent='-'+won(state.coupon); total.textContent='0원'; return; }
+      var p=PLANS[state.subj][state.plan];
+      t.textContent=p.nm+' ('+p.days+')'; t.className='sum__v';
+      var discount=(p.list-p.price)+state.coupon;
+      off.textContent='-'+won(discount);
+      total.textContent=won(Math.max(0,p.price-state.coupon));
+    }
+
+    document.getElementById('subjSeg').addEventListener('click', function(e){
+      var b=e.target.closest('button'); if(!b) return; state.subj=b.dataset.s; state.plan=null;
+      Array.prototype.forEach.call(this.children, function(c){ c.classList.toggle('is-on', c===b); });
+      renderBenefits(); renderPlans(); updateSummary();
+    });
+    document.getElementById('methods').addEventListener('click', function(e){
+      var m=e.target.closest('.method'); if(!m) return; state.method=m.dataset.m;
+      Array.prototype.forEach.call(this.children, function(c){ c.classList.toggle('is-sel', c===m); });
+      document.getElementById('sumMethod').textContent = state.method==='card'?'신용카드 결제':'가상계좌 입금';
+    });
+
+    var toastEl=document.getElementById('toast'), tt;
+    function toast(m){ toastEl.textContent=m; toastEl.classList.add('show'); clearTimeout(tt); tt=setTimeout(function(){toastEl.classList.remove('show');},2000); }
+    document.getElementById('couponBtn').addEventListener('click', function(){
+      var v=document.getElementById('coupon').value.trim();
+      if(!v){ toast('쿠폰 번호를 입력해 주세요.'); return; }
+      state.coupon=10000; updateSummary(); toast('쿠폰이 적용되었어요. (데모 · 10,000원 할인)');
+    });
+    document.getElementById('payBtn').addEventListener('click', function(){
+      if(state.plan===null){ toast('이용 기간을 선택해 주세요.'); return; }
+      if(!document.getElementById('agree').checked){ toast('결제 및 환불 규정에 동의해 주세요.'); return; }
+      toast('결제는 데모 화면입니다. 실제 결제는 진행되지 않아요.');
+    });
+
+    renderBenefits(); renderPlans(); updateSummary();
+  })();
+  </script>
+  <script src="scripts/gnb-drawer.js?v=6"></script>
+</body>
+</html>

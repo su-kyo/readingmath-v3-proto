@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light" data-section="essay">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>서술형 훈련 · 탐구활동 보고서 만들기 — 리딩수학과학</title>
+  <link rel="stylesheet" href="styles/tokens.css?v=15" />
+  <link rel="stylesheet" href="styles/base.css?v=3" />
+  <link rel="stylesheet" href="styles/components.css?v=5" />
+  <link rel="stylesheet" href="styles/learn-shell.css?v=7" />
+  <link rel="stylesheet" href="styles/essay.css?v=11" />
+  <style>
+    /* ============ 서술형 훈련(과학) = 퍼플 테마 (공통은 essay.css) ============ */
+    /* 페이지 고유 토큰만 (--bl-* / .blank / .qpop / 하단바 = essay.css) */
+    .content {
+      flex-direction: column; padding: clamp(12px, 1.6vw, 16px) clamp(12px, 1.6vw, 16px) 0;
+      --guide: rgba(249,249,249,.92);
+      --rt-line: var(--n-500); --rt-head: var(--surface-1); --rt-cell: var(--surface-1); --rt-fg: rgba(249,249,249,.9); --rt-sub: var(--text-muted);
+    }
+    :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
+    :root[data-theme="light"] .content {
+      /* 제일 뒤(베이스) = 흰색에 가까운 톤 */
+      background: var(--n-050); border-color: var(--th-static);
+      --guide: var(--n-650);
+      --rt-line: var(--n-100); --rt-head: var(--n-050); --rt-cell: var(--n-000); --rt-fg: var(--n-650); --rt-sub: var(--text-meta);
+    }
+
+    .report-wrap { flex: 1; min-width: 0; overflow-y: auto; padding: clamp(8px, 1.4vw, 16px) clamp(12px, 2.4vw, 30px) 96px; }
+    .report-wrap::-webkit-scrollbar { width: 10px; }
+    .report-wrap::-webkit-scrollbar-thumb { background: rgba(255,255,255,.2); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
+    :root[data-theme="light"] .report-wrap::-webkit-scrollbar-thumb { background: rgba(108,99,201,.28); background-clip: padding-box; }
+
+    /* ============ 보고서 표 (2열 n행) ============ */
+    .report { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: clamp(92px, 12vw, 150px) 1fr;
+      gap: 1px; background: var(--rt-line); border: 1px solid var(--rt-line); border-radius: 14px; overflow: hidden;
+      font-family: var(--font-sans); color: var(--rt-fg); }
+    .rt-label { background: var(--rt-head); padding: 16px 12px; display: flex; align-items: center; justify-content: center;
+      text-align: center; font-weight: 700; font-size: clamp(13px, 1.15vw, 15px); word-break: keep-all; }
+    .rt-cell { background: var(--rt-cell); padding: 15px 18px; display: flex; flex-direction: column; gap: 10px; justify-content: center;
+      font-size: clamp(13.5px, 1.15vw, 15px); line-height: 1.75; min-width: 0; }
+    .rt-text { white-space: pre-line; word-break: keep-all; }
+    .rt-img { border-radius: 10px; overflow: hidden; max-width: 380px; align-self: flex-start; }
+    .rt-img img { display: block; width: 100%; height: auto; }
+    .rt-span { line-height: 2.5; word-break: keep-all; }   /* 빈칸(32px) 들어가는 줄 → 여유 있는 행간 */
+
+    /* 빈칸: 항상 클릭 가능(재편집) — 코어는 essay.css */
+    .blank { cursor: pointer; }
+    .blank:hover { background: var(--bl-bgh); box-shadow: inset 0 0 0 1px var(--bl-lineh); }
+
+    /* ============ 보고서 미리보기 모달 ============ */
+    /* ⚠ 의도적 뉴트럴: 실제 인쇄물(리포트 출력)을 흉내내는 흰 종이 프리뷰라
+       바이올렛 테마 대신 중성 톤을 유지한다. 테마 전환에 흔들리지 않도록
+       시맨틱 대신 고정 뉴트럴 프리미티브(--n-*)로 토큰화. */
+    .pmodal { position: fixed; inset: 0; z-index: 300; display: none; align-items: center; justify-content: center; padding: 24px; }
+    .pmodal.is-open { display: flex; }
+    .pmodal__backdrop { position: absolute; inset: 0; background: rgba(8,5,22,.55); backdrop-filter: blur(2px); }
+    .pmodal__card { position: relative; width: 100%; max-width: 780px; max-height: 88vh; display: flex; flex-direction: column;
+      background: var(--n-050); border-radius: 20px; overflow: hidden; box-shadow: 0 30px 70px -20px rgba(0,0,0,.6); }
+    .pmodal__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 18px;
+      background: var(--n-000); border-bottom: 1px solid var(--n-100); flex: none; }
+    .pmodal__title { font-family: var(--font-sans); font-size: 17px; font-weight: 800; color: var(--n-650); }
+    .pmodal__tools { display: flex; align-items: center; gap: 8px; }
+    .pmodal__btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 10px; border: 1px solid var(--n-100);
+      background: var(--n-050); color: var(--n-500); font-family: var(--font-sans); font-weight: 700; font-size: 14px; cursor: pointer; transition: background .12s; }
+    .pmodal__btn:hover { background: var(--n-100); }
+    .pmodal__btn svg { width: 16px; height: 16px; }
+    .pmodal__x { width: 34px; height: 34px; border-radius: 9px; border: 0; background: transparent; color: var(--n-400); font-size: 17px; cursor: pointer; }
+    .pmodal__x:hover { background: var(--n-050); }
+    .pmodal__scroll { overflow-y: auto; padding: 24px; }
+    .pmodal__paper { max-width: 680px; margin: 0 auto; background: var(--n-000); padding: 32px 34px; border-radius: 6px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.09); font-family: var(--font-sans); color: var(--n-650); }
+    .rp-title { font-size: 20px; font-weight: 800; text-align: center; margin-bottom: 6px; color: var(--n-650); }
+    .rp-sub { text-align: center; font-size: 12.5px; color: var(--n-400); margin-bottom: 20px; }
+    .rp-table { display: grid; grid-template-columns: 116px 1fr; gap: 1px; background: var(--n-100); border: 1px solid var(--n-100); border-radius: 8px; overflow: hidden; }
+    .rp-label { background: var(--n-050); padding: 12px 10px; display: flex; align-items: center; justify-content: center; text-align: center;
+      font-weight: 700; font-size: 13px; color: var(--n-650); word-break: keep-all; }
+    .rp-cell { background: var(--n-000); padding: 12px 15px; display: flex; flex-direction: column; gap: 8px; justify-content: center;
+      font-size: 13px; line-height: 1.7; color: var(--n-650); }
+    .pmodal__paper .rt-text { white-space: pre-line; word-break: keep-all; }
+    .pmodal__paper .rt-span { line-height: 1.85; word-break: keep-all; }
+    .rp-img { max-width: 300px; border-radius: 6px; overflow: hidden; align-self: flex-start; }
+    .rp-img img { display: block; width: 100%; height: auto; }
+    .fillin { font-family: var(--font-serif); font-weight: 700; color: var(--th-ink-accent); border-bottom: 1.5px solid var(--th-accent-hi); padding: 0 3px; }
+
+    .ptoast { position: fixed; left: 50%; bottom: 118px; transform: translateX(-50%) translateY(10px); z-index: 400;
+      background: rgba(20,14,44,.94); color: var(--n-000); padding: 10px 18px; border-radius: 999px; font-family: var(--font-sans);
+      font-size: 14px; font-weight: 600; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
+    .ptoast.is-on { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    @media (max-width: 620px) {
+      .report { grid-template-columns: 80px 1fr; }
+    }
+  </style>
+</head>
+<body class="learn-body">
+  <div class="screen">
+    <div class="screen__bg"></div>
+
+    <div class="screen__container">
+      <header class="lheader">
+        <nav class="breadcrumb">
+          <span class="crumb crumb--strong">과학 중등 1-1</span>
+          <svg class="sep" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <span class="crumb crumb--strong crumb--clip crumb--hide">2단원 생물의 구성과 다양성</span>
+          <svg class="sep crumb--hide" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <span class="crumb crumb--hide">(1) 생물의 구성</span>
+          <svg class="sep crumb--hide" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <span class="crumb">서술형 훈련</span>
+          <svg class="sep" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <span class="crumb crumb--strong">탐구활동 보고서 만들기</span>
+        </nav>
+        <div class="lheader__actions">
+          <div class="lheader__timer" id="hdrTimer"><img src="assets/figma/icons/ico-stopwatch.svg" alt="경과 시간" /><span id="timer">00:00</span></div>
+          <button class="theme-toggle" id="themeToggle" title="라이트/다크 전환"><span class="theme-toggle__knob"></span></button>
+          <button class="nav-ico" title="알림"><img src="assets/figma/icons/ico-siren.svg" alt="알림" /></button>
+          <button class="nav-ico" title="나가기"><img src="assets/figma/icons/ico-exit.svg" alt="나가기" /></button>
+        </div>
+      </header>
+
+      <main class="content">
+        <section class="report-wrap">
+          <div class="report" id="report"></div>
+        </section>
+      </main>
+    </div>
+
+    <!-- 하단 콘솔 바 -->
+    <div class="bar">
+      <img class="bar__deco bar__deco--l" src="assets/figma/console-essay-right.svg" alt="" />
+      <div class="bar__mid">
+        <div class="bar__tray">
+          <div class="bar__group">
+            <button class="toolbtn"><img src="assets/figma/icons/ico-note-edit.svg" alt="" /><span>연습장</span></button>
+          </div>
+          <div class="bar__group">
+            <button class="toolbtn toolbtn--primary" id="previewBtn" disabled title="빈칸을 모두 채우면 활성화돼요"><img src="assets/figma/icons/ico-note.svg" alt="" /><span>보고서 미리보기</span></button>
+            <button class="toolbtn toolbtn--primary" id="resultBtn" disabled title="빈칸을 모두 채우면 활성화돼요"><img src="assets/figma/icons/ico-summary.svg" alt="" /><span>결과보기</span></button>
+          </div>
+        </div>
+      </div>
+      <img class="bar__deco bar__deco--r" src="assets/figma/console-essay-left.svg" alt="" />
+    </div>
+  </div>
+
+  <!-- 빈칸 입력 드롭다운 -->
+  <div class="qpop" id="qpop" role="dialog" aria-label="빈칸 입력">
+    <div class="qpop__inner">
+      <span class="qpop__caret"></span>
+      <div class="qpop__body" id="qpopBody"></div>
+    </div>
+  </div>
+
+  <!-- 보고서 미리보기 모달 -->
+  <div class="pmodal" id="pmodal" aria-hidden="true">
+    <div class="pmodal__backdrop" data-pclose></div>
+    <div class="pmodal__card" role="dialog" aria-modal="true" aria-label="보고서 미리보기">
+      <div class="pmodal__head">
+        <h2 class="pmodal__title">보고서 미리보기</h2>
+        <div class="pmodal__tools">
+          <button class="pmodal__btn" id="printBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>인쇄</button>
+          <button class="pmodal__btn" id="dlBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>저장</button>
+          <button class="pmodal__x" data-pclose aria-label="닫기">✕</button>
+        </div>
+      </div>
+      <div class="pmodal__scroll"><div class="pmodal__paper" id="pmodalPaper"></div></div>
+    </div>
+  </div>
+
+  <div class="ptoast" id="ptoast"></div>
+
+  <script src="scripts/essay-report.js?v=3"></script>
+</body>
+</html>

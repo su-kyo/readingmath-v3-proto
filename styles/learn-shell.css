@@ -1,0 +1,119 @@
+/* =========================================================================
+   학습화면 공통 껍데기 (learn shell)
+   배경(우주선) · 헤더 · 콘텐츠 패널 · 하단 콘솔바 · 라이트/다크 토글 · 반응형
+   → 개념학습 / 개념다지기 등 모든 학습화면이 공유. 콘텐츠만 화면별로 다름.
+   ========================================================================= */
+
+html, body { height: 100%; }
+body.learn-body { background: #AFC6E8; overflow: hidden; }
+
+.screen { position: relative; width: 100%; height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
+.screen__bg { position: absolute; inset: 0; background: url("../assets/figma/bg-spaceship-light.png") center/cover no-repeat; }
+.screen__container { position: relative; z-index: 1; flex: 1; min-height: 0; display: flex; flex-direction: column; padding: clamp(16px, 2.5vw, 32px) clamp(20px, 6vw, 80px) 0; gap: 16px; }
+
+/* ===== 헤더 ===== */
+.lheader { display: flex; align-items: center; justify-content: space-between; gap: 16px; background: var(--th-static); border-radius: var(--r-pill); padding: 8px 12px 8px 32px; color: var(--th-on-accent); flex: none; }
+.breadcrumb { display: flex; align-items: center; gap: 8px; font-size: clamp(13px, 1.1vw, 15px); min-width: 0; overflow: hidden; }
+.breadcrumb .sep { opacity: .45; flex: none; color: #fff; }
+.breadcrumb .crumb { opacity: .72; font-weight: 500; white-space: nowrap; }
+.breadcrumb .crumb--strong { opacity: 1; font-weight: 700; }
+.breadcrumb .crumb--clip { overflow: hidden; text-overflow: ellipsis; }
+.lheader__actions { display: flex; align-items: center; gap: 8px; flex: none; }
+
+/* 헤더 타이머 (유형·서술형 공통) — 스텝 결과에선 .is-paused 로 정지 표시 */
+.lheader__timer { display: inline-flex; align-items: center; gap: 6px; background: rgba(0,0,0,.26); border-radius: 999px; padding: 6px 14px; margin-right: 4px; flex: none; color: #fff; }
+.lheader__timer img { width: 18px; height: 18px; }
+.lheader__timer span { font-family: var(--font-mono); font-weight: 700; font-size: 16px; letter-spacing: .02em; }
+.lheader__timer.is-paused { opacity: .62; }
+.lheader__timer.is-paused::before { content: ""; width: 12px; height: 12px; flex: none; background: currentColor;
+  -webkit-mask: linear-gradient(#000 0 0) 0/4px 12px no-repeat, linear-gradient(#000 0 0) 8px 0/4px 12px no-repeat;
+  mask: linear-gradient(#000 0 0) 0/4px 12px no-repeat, linear-gradient(#000 0 0) 8px 0/4px 12px no-repeat; }
+@media (max-width: 520px) { .lheader__timer { padding: 6px 10px; } .lheader__timer span { font-size: 14px; } }
+
+/* 라이트/다크 토글 — 해/달 illust 자체가 노브 */
+.theme-toggle { width: 64px; height: 34px; border-radius: 999px; background: rgba(0,0,0,.3); position: relative; flex: none; }
+.theme-toggle__knob { position: absolute; top: 2px; left: 2px; width: 30px; height: 30px; background: center / contain no-repeat url("../assets/figma/icons/ico-sun.svg"); transition: left .2s ease; }
+:root[data-theme="dark"] .theme-toggle__knob { left: 32px; background-image: url("../assets/figma/icons/ico-moon.svg"); }
+.nav-ico { width: 32px; height: 32px; border-radius: 12px; background: rgba(255,255,255,.14); display: inline-flex; align-items: center; justify-content: center; }
+.nav-ico img { width: 20px; height: 20px; }
+.nav-ico:hover { background: rgba(255,255,255,.26); }
+
+/* ===== 콘텐츠 패널 (다크 시 이 패널 안만 어두워짐) ===== */
+/* 학습 콘텐츠 패널 = 라이트에서 쿨톤 near-white(스터디 페이퍼). 옵션/보기는 이 위에 카드로 분리. 다크는 아래 오버라이드. */
+.content { flex: 1; min-height: 0; background: var(--th-panel); border: 8px solid var(--th-static); border-bottom: none; border-radius: 40px 40px 0 0; padding: clamp(20px, 3vw, 40px) 0 0; display: flex; overflow: hidden; }
+:root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
+
+/* ===== 하단 콘솔 바 (다크에서도 라이트와 동일) ===== */
+.bar { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; display: flex; align-items: flex-end; height: 99px; }
+.bar__deco { width: 262px; height: 99px; flex: none; }
+.bar__deco--l { margin-right: -1px; } .bar__deco--r { margin-left: -1px; }
+.bar__mid { flex: 1; height: 75px; background: #DAE6F9; padding-top: 11px; align-self: flex-end; }
+.bar__tray { height: 64px; background: #87AEEC; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 clamp(16px, 3vw, 32px); }
+.bar__group { display: flex; gap: 12px; align-items: center; }
+.toolbtn { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; padding: 8px 16px; border-radius: var(--r-lg); background: var(--n-500); color: var(--n-000); font-weight: 700; font-size: clamp(13px, 1.1vw, 16px); box-shadow: 0 4px 0 var(--n-650); }
+.toolbtn:hover { filter: brightness(1.12); }
+.toolbtn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--n-650); }
+.toolbtn img { width: 20px; height: 20px; }
+.toolbtn--primary { background: var(--primary); box-shadow: 0 4px 0 var(--primary-pressed); }
+.toolbtn--primary:hover { background: var(--primary-hover); }
+
+/* ===================================================================
+   스텝 결과 · 학습 진행 현황 버튼화 + 학습 시작 모달 (Phase B 공용)
+   step-result / type-result / essay-step-result 공유.
+   --subj = 과목색(각 페이지 body에 세팅). 카드 계약:
+   .is-done(완료·이동) / .is-current(현재) / .is-open(미학습·시작하기).
+   =================================================================== */
+.step-card { transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease; }
+.step-card.is-done, .step-card.is-open { cursor: pointer; }
+.step-card.is-done:hover, .step-card.is-open:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -12px rgba(0,0,0,.42); }
+.step-card.is-done:active, .step-card.is-open:active { transform: translateY(0); box-shadow: none; }
+/* 완료 카드 = 옅은 과목색 채움(기록 느낌) */
+.step-card.is-done { background: color-mix(in srgb, var(--accent, var(--th-accent)) 8%, transparent); }
+/* 미학습 카드 = 점선 테두리(완료/현재와 구분) */
+.step-card.is-open { border-style: dashed; border-color: color-mix(in srgb, var(--accent, var(--th-accent)) 55%, transparent); }
+/* 시작하기 = pill 버튼 */
+.step-card__start { display: inline-flex; align-items: center; gap: 4px; padding: 9px 16px; border-radius: 999px;
+  background: var(--subj, var(--th-accent)); color: var(--n-000) !important; font-weight: 800; font-size: 15px; white-space: nowrap;
+  box-shadow: 0 4px 0 rgba(0,0,0,.2); transition: filter .12s; }
+.step-card.is-open:hover .step-card__start { filter: brightness(1.12); }
+
+/* ===== 학습 시작 확인 모달 ===== */
+.smodal { position: fixed; inset: 0; z-index: 300; display: none; align-items: center; justify-content: center; padding: 24px; }
+.smodal.is-open { display: flex; }
+.smodal__dim { position: absolute; inset: 0; background: var(--scrim); animation: smFade .16s ease; }
+.smodal__card { position: relative; width: min(420px, 100%); background: var(--surface-1); border-radius: 26px;
+  padding: 34px 30px 26px; text-align: center; box-shadow: var(--shadow-2); animation: smPop .18s ease; }
+@keyframes smFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes smPop { from { opacity: 0; transform: translateY(10px) scale(.97); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .smodal__dim, .smodal__card { animation: none; } }
+.smodal__x { position: absolute; top: 16px; right: 16px; width: 34px; height: 34px; border-radius: 11px;
+  display: inline-flex; align-items: center; justify-content: center; color: var(--text-muted); background: transparent; }
+.smodal__x:hover { background: var(--surface-2); color: var(--text-muted); }
+.smodal__x svg { width: 20px; height: 20px; }
+.smodal__icon { width: 64px; height: 64px; margin: 2px auto 16px; border-radius: 20px; display: flex; align-items: center; justify-content: center;
+  background: color-mix(in srgb, var(--subj, var(--th-accent)) 15%, var(--surface-1)); color: var(--subj, var(--th-accent)); }
+.smodal__icon svg { width: 32px; height: 32px; }
+.smodal__title { font-family: var(--font-sans); font-size: 23px; font-weight: 800; color: var(--text); }
+.smodal__desc { margin-top: 10px; font-size: 15px; line-height: 1.6; color: var(--text-muted); }
+.smodal__desc b { color: var(--subj, var(--th-ink-accent)); font-weight: 800; }
+.smodal__btns { display: flex; gap: 10px; margin-top: 24px; }
+.smodal__btn { flex: 1; height: 52px; border-radius: 15px; font-family: var(--font-sans); font-weight: 800; font-size: 16px; cursor: pointer; transition: filter .12s, background .12s, transform .08s; }
+.smodal__btn--ghost { background: var(--surface-2); color: var(--text); }
+.smodal__btn--ghost:hover { background: var(--surface-3); }
+.smodal__btn--go { background: var(--primary); color: #fff; box-shadow: 0 4px 0 var(--primary-pressed); }
+.smodal__btn--go:hover { background: var(--primary-hover); }
+.smodal__btn--go:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--primary-pressed); }
+
+/* ===== 공용 토스트 (step-progress가 주입) ===== */
+.smtoast { position: fixed; left: 50%; bottom: 118px; transform: translateX(-50%) translateY(10px); z-index: 400;
+  padding: 11px 20px; border-radius: 999px; font-family: var(--font-sans); font-size: 14px; font-weight: 600;
+  background: rgba(18,22,40,.94); color: #fff; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
+.smtoast.is-on { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ===== 반응형 (공통) ===== */
+@media (max-width: 900px) {
+  .bar__deco { display: none; }
+  .bar__mid { border-radius: 20px 20px 0 0; }
+}
+@media (max-width: 680px) { .breadcrumb .crumb--hide { display: none; } }
+@media (max-width: 520px) { .toolbtn span { display: none; } .toolbtn { padding: 8px 12px; } }

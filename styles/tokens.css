@@ -1,0 +1,357 @@
+/* =========================================================================
+   리딩수학과학 · 디자인 토큰 — RMDS v1.2
+   정본: DESIGN-SYSTEM.md (§2·§3·§4·§5). 이 파일은 그 문서의 코드 구현이다.
+   -------------------------------------------------------------------------
+   1단 PRIMITIVE  색 원본(램프). 실제 hex는 여기에만. 생성기 = tools/palette-gen.py
+   2단 SEMANTIC   전역 역할(표면·글자·테두리·상태·CTA). 라이트/다크는 이 층에서만 뒤집힘.
+   3단 THEME SLOT 섹션 테마 계약(--th-*). data-section으로 값만 교체.
+
+   화면(페이지 CSS)은 색을 정의하지 않는다 — 토큰만 참조한다.
+   기본 테마 = 다크. [data-theme="light"]로 라이트 전환.
+   맨 아래 "호환 알리아스 층"은 마이그레이션 임시 브릿지 (Phase 3에서 삭제).
+   ========================================================================= */
+
+:root {
+  /* =======================================================================
+     1단 · PRIMITIVE — 생성 팔레트 (palette-gen.py 출력, 2026-07-13)
+     ======================================================================= */
+
+  /* 뉴트럴 N — 브랜드 네이비 언더톤 (라이트 존 생성 / 다크 존 유지) */
+  --n-000: #FFFFFF;
+  --n-050: #F0F5FE;   /* 라이트 인셋·서술형 패널 */
+  --n-100: #E4ECFB;   /* 라이트 거터·개념/유형 패널 */
+  --n-200: #CBD7EE;   /* 라이트 테두리·비활성 */
+  --n-300: #A0B0CD;   /* 다크면 muted 글자 */
+  --n-400: #586B8C;   /* meta 글자 */
+  --n-500: #3A466A;   /* 다크 인터랙티브·콘솔 네이비 */
+  --n-600: #1F2B49;   /* 다크 카드 */
+  --n-650: #121E37;   /* 라이트 잉크 */
+  --n-700: #0F1930;   /* 다크 표면-2 */
+  --n-800: #091328;   /* 다크 표면-1 */
+  --n-900: #060E20;   /* 다크 배경·GNB */
+  --n-950: #03060F;   /* 최심부 */
+
+  /* 블루 (개념·과제·유틸·info) — hue 257° */
+  --blue-050: #F2F7FF; --blue-100: #DDEBFF; --blue-200: #B8D5FE; --blue-300: #93BFFE;
+  --blue-400: #6EAAFD; --blue-500: #0A7AF8; --blue-600: #0559B8; --blue-700: #03438E;
+  --blue-800: #01306A; --blue-900: #011F48;
+
+  /* 시안 (우주 액센트·별·등급S) — hue 220° */
+  --cyan-050: #EBFAFF; --cyan-100: #C9F1FF; --cyan-200: #86E2FE; --cyan-300: #18D1FC;
+  --cyan-400: #14BAE1; --cyan-500: #0D8EAB; --cyan-600: #06687E; --cyan-700: #044F60;
+  --cyan-800: #023947; --cyan-900: #01252F;
+
+  /* 틸 (유형) — hue 182° */
+  --teal-050: #E5FDF8; --teal-100: #B4FAED; --teal-200: #68ECD8; --teal-300: #19DAC4;
+  --teal-400: #15C2AE; --teal-500: #0D9484; --teal-600: #076C61; --teal-700: #045249;
+  --teal-800: #023C35; --teal-900: #012722;
+
+  /* 그린 (자유모드·정답) — hue 142° */
+  --green-050: #EDFCEB; --green-100: #CFF6CA; --green-200: #A5E79D; --green-300: #68DB5E;
+  --green-400: #23CB12; --green-500: #189A0A; --green-600: #0F7105; --green-700: #095603;
+  --green-800: #053F01; --green-900: #022901;
+
+  /* 앰버 (주의·현재마커·골드텍스트) — hue 80° */
+  --amber-050: #FFF6E6; --amber-100: #FFE6BE; --amber-200: #FCCA72; --amber-300: #F3AF14;
+  --amber-400: #D99C11; --amber-500: #A5760A; --amber-600: #795605; --amber-700: #5D4103;
+  --amber-800: #442E01; --amber-900: #2D1D01;
+
+  /* 오렌지 (CTA·과제모드) — hue 52° */
+  --orange-050: #FFF4EE; --orange-100: #FFE3D4; --orange-200: #FEC4A2; --orange-300: #FEA46D;
+  --orange-400: #FE811B; --orange-500: #C3600A; --orange-600: #904505; --orange-700: #6E3403;
+  --orange-800: #522401; --orange-900: #371601;
+
+  /* 레드 (오답) — hue 25° */
+  --red-050: #FFF4F3; --red-100: #FFE2DF; --red-200: #FEC1BB; --red-300: #FEA098;
+  --red-400: #FE7A73; --red-500: #EC102B; --red-600: #AF081D; --red-700: #870514;
+  --red-800: #65020C; --red-900: #430206;
+
+  /* 바이올렛 (서술형·시험) — hue 288° */
+  --violet-050: #F6F6FF; --violet-100: #E8E7FF; --violet-200: #D0CCFE; --violet-300: #B9B2FE;
+  --violet-400: #A598FD; --violet-500: #805AFD; --violet-600: #5F38C9; --violet-700: #472A9A;
+  --violet-800: #341C74; --violet-900: #20144A;
+
+  /* 골드/브론즈 (별·등급, 에셋 세트) */
+  --gold-500: #FFC800;   /* [에셋연동] star/grade PNG */
+  --bronze-500: #E08A4B;
+
+  /* =======================================================================
+     2단 · SEMANTIC — 전역 역할 [다크 기본]
+     ======================================================================= */
+
+  /* 표면 사다리 (다크: 900→800→700→600→500) */
+  --bg:             var(--n-900);
+  --surface-1:      var(--n-800);
+  --surface-2:      var(--n-700);
+  --surface-3:      var(--n-600);
+  --surface-hover:  var(--n-500);
+  --surface-sunken: var(--n-950);
+
+  /* 글자 */
+  --text:       var(--n-050);
+  --text-muted: var(--n-300);
+  --text-meta:  var(--n-400);
+  --text-on-accent: var(--n-000);
+
+  /* 테두리 · 오버레이 · 그림자 */
+  --border:        rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --scrim:  rgba(6, 10, 22, 0.72);
+  --shadow-1: 0 2px 8px rgba(0, 0, 0, 0.28);
+  --shadow-2: 0 8px 24px rgba(0, 0, 0, 0.36);
+  --shadow-card: 0 12px 30px -22px rgba(60, 40, 130, 0.5);
+
+  /* 상태색 매트릭스 (전 섹션 공용 · 4역할 × 4변형) */
+  --ok-solid: var(--green-500); --ok-on-dark: var(--green-300); --ok-ink: var(--green-600); --ok-tint: var(--green-050);
+  --no-solid: var(--red-500);   --no-on-dark: var(--red-300);   --no-ink: var(--red-600);   --no-tint: var(--red-050);
+  --warn-solid: var(--amber-300); --warn-on-dark: var(--amber-300); --warn-ink: var(--amber-600); --warn-tint: var(--amber-050);
+  --info-solid: var(--blue-500);  --info-on-dark: var(--blue-300);  --info-ink: var(--blue-600);  --info-tint: var(--blue-050);
+
+  /* 현재 위치 마커 (섹션 액센트와 역할 분리 — "지금 여기") */
+  --current: var(--amber-300);
+
+  /* 등급 (다크 LCD·육각 — 전부 300스텝) */
+  --grade-s: var(--cyan-300);
+  --grade-a: var(--green-300);
+  --grade-b: var(--blue-300);
+  --grade-c: var(--n-300);
+
+  /* 주요 CTA (오렌지 — 전 섹션 공통, 정체성 400스텝) */
+  --primary:         var(--orange-400);
+  --primary-hover:   var(--orange-300);
+  --primary-pressed: var(--orange-500);
+  --primary-deep:    var(--orange-700);
+
+  /* A층/GNB 모드색 (각 가족 400스텝 — 다크 GNB 위 ≥6:1) */
+  --mode-basic:  var(--blue-400);
+  --mode-free:   var(--green-400);
+  --mode-exam:   var(--violet-400);
+  --mode-assign: var(--orange-400);
+
+  /* 우주 배경 액센트 (space-bg 아트 — 원칙1 예외) */
+  --accent-cyan: var(--cyan-300);
+  --accent-blue: var(--cyan-400);
+
+  /* =======================================================================
+     3단 · THEME SLOT 기본값 (data-section 미지정 시 fallback = concept/blue)
+     실제 값은 아래 [data-section="..."] 블록에서 교체됨.
+     ======================================================================= */
+  --th-static:        var(--blue-700);
+  --th-accent:        var(--blue-500);
+  --th-accent-strong: var(--blue-700);
+  --th-accent-hi:     var(--blue-300);
+  --th-ink-accent:    var(--blue-600);
+  --th-on-accent:     #FFFFFF;
+  --th-tint:          color-mix(in srgb, var(--th-accent) 8%, transparent);
+  --th-tint-strong:   color-mix(in srgb, var(--th-accent) 15%, transparent);
+  --th-chip:          var(--blue-050);
+  --th-panel:         var(--n-100);
+  --th-focus:         var(--th-accent);
+
+  /* =======================================================================
+     타이포 · 간격 · 반경 · 모션 (색과 무관)
+     ======================================================================= */
+  --font-sans: "Pretendard", "Pretendard Variable", -apple-system,
+               BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo",
+               "Malgun Gothic", sans-serif;
+  --font-serif: "Noto Serif KR", "RIDIBatang", "Nanum Myeongjo", serif;
+  --font-mono: "Kode Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* UI 고정 스케일 */
+  --fs-display: 32px;
+  --fs-h1:      24px;
+  --fs-h2:      20px;
+  --fs-title:   18px;
+  --fs-body:    16px;
+  --fs-sm:      14px;
+  --fs-xs:      12px;
+
+  /* 읽기 유동 스케일 (세리프 콘텐츠 — 페이지별 clamp 통일) */
+  --fs-read-lg: clamp(17px, 1.5vw, 20px);
+  --fs-read:    clamp(15px, 1.4vw, 18.5px);
+  --fs-read-sm: clamp(14px, 1.25vw, 16px);
+
+  --lh-tight: 1.2;
+  --lh-body:  1.5;
+  --tracking: -0.04em;
+
+  --fw-regular:  400;
+  --fw-medium:   500;
+  --fw-semibold: 600;
+  --fw-bold:     700;
+  --fw-heavy:    800;
+
+  --space-1: 4px;   --space-2: 8px;   --space-3: 12px;  --space-4: 16px;
+  --space-5: 20px;  --space-6: 24px;  --space-8: 32px;  --space-10: 40px;
+  --space-12: 48px; --space-16: 64px;
+
+  --r-sm: 8px;  --r-md: 12px;  --r-lg: 16px;
+  --r-card: 20px; --r-xl: 24px; --r-panel: 30px; --r-frame: 34px;
+  --r-pill: 32px; --r-full: 999px;
+
+  --btn-drop: 0 4px 0;
+
+  --t-fast:  140ms ease;
+  --t-panel: 300ms cubic-bezier(0.3, 0.8, 0.3, 1);
+
+  --screen-w: 1280px;
+  --screen-h: 720px;
+}
+
+/* =========================================================================
+   라이트 테마 — 전역 시맨틱만 뉴트럴 밝은 쪽으로 재배치 (§3.2)
+   상태색·CTA·모드색·에셋색·--th-static은 뒤집히지 않음.
+   ========================================================================= */
+:root[data-theme="light"] {
+  --bg:             var(--n-100);
+  --surface-1:      var(--n-000);
+  --surface-2:      var(--n-050);
+  --surface-3:      var(--n-100);
+  --surface-hover:  var(--n-050);
+  --surface-sunken: var(--n-200);
+
+  --text:       var(--n-650);
+  --text-muted: var(--n-500);
+  --text-meta:  var(--n-400);
+
+  --border:        rgba(20, 32, 58, 0.10);
+  --border-strong: rgba(20, 32, 58, 0.20);
+  --scrim: rgba(20, 28, 48, 0.44);
+
+  --shadow-1: 0 2px 8px rgba(24, 40, 80, 0.10);
+  --shadow-2: 0 10px 28px rgba(24, 40, 80, 0.14);
+
+  --th-focus: var(--th-accent);
+}
+/* 다크에서 포커스 링은 밝힌 액센트 */
+:root:not([data-theme="light"]) { --th-focus: var(--th-accent-hi); }
+
+/* =========================================================================
+   3단 · 섹션 테마 블록 (§3.4) — 슬롯 = 가족 + 스텝, 값만 교체
+   accent=500 · strong=700 · hi=300 · ink=600 · static=섹션별
+   틴트는 accent에서 color-mix 자동 파생 (fallback 정의로 상속).
+   ========================================================================= */
+
+/* 개념 (blue) — static 700 */
+:root[data-section="concept"] {
+  --th-static: var(--blue-700);
+  --th-accent: var(--blue-500);
+  --th-accent-strong: var(--blue-700);
+  --th-accent-hi: var(--blue-300);
+  --th-ink-accent: var(--blue-600);
+  --th-chip: var(--blue-050);
+  --th-panel: var(--n-100);
+}
+
+/* 유형 (teal) — static 700 */
+:root[data-section="type"] {
+  --th-static: var(--teal-700);
+  --th-accent: var(--teal-500);
+  --th-accent-strong: var(--teal-700);
+  --th-accent-hi: var(--teal-300);
+  --th-ink-accent: var(--teal-600);
+  --th-chip: var(--teal-050);
+  --th-panel: var(--n-100);
+}
+
+/* 서술형 (violet) — static 800 (가장 깊은 프레임) */
+:root[data-section="essay"] {
+  --th-static: var(--violet-800);
+  --th-accent: var(--violet-500);
+  --th-accent-strong: var(--violet-700);
+  --th-accent-hi: var(--violet-300);
+  --th-ink-accent: var(--violet-600);
+  --th-chip: var(--violet-050);
+  --th-panel: var(--n-050);
+}
+
+/* 시험대비 (violet) — static 700 */
+:root[data-section="exam"] {
+  --th-static: var(--violet-700);
+  --th-accent: var(--violet-500);
+  --th-accent-strong: var(--violet-700);
+  --th-accent-hi: var(--violet-300);
+  --th-ink-accent: var(--violet-600);
+  --th-chip: var(--violet-050);
+  --th-panel: var(--n-050);
+}
+
+/* 과제센터 (blue) — static 600 */
+:root[data-section="assign"] {
+  --th-static: var(--blue-600);
+  --th-accent: var(--blue-500);
+  --th-accent-strong: var(--blue-700);
+  --th-accent-hi: var(--blue-300);
+  --th-ink-accent: var(--blue-600);
+  --th-chip: var(--blue-050);
+  --th-panel: var(--n-100);
+}
+
+/* 유틸 (blue) — static n-900 */
+:root[data-section="util"] {
+  --th-static: var(--n-900);
+  --th-accent: var(--blue-500);
+  --th-accent-strong: var(--blue-700);
+  --th-accent-hi: var(--blue-300);
+  --th-ink-accent: var(--blue-600);
+  --th-chip: var(--blue-050);
+  --th-panel: var(--n-100);
+}
+
+/* A층 우주 (항상 다크·토글 없음) — 액센트 = 기본모드 blue-400 */
+:root[data-section="space"] {
+  --th-static: var(--n-900);
+  --th-accent: var(--blue-400);
+  --th-accent-strong: var(--blue-600);
+  --th-accent-hi: var(--blue-300);
+  --th-ink-accent: var(--blue-300);
+  --th-chip: var(--n-800);
+  --th-panel: var(--surface-1);
+}
+
+/* =========================================================================
+   호환 알리아스 층 (마이그레이션 잔여 · Phase 3 슬리밍 완료 — 아직 참조되는 것만 유지)
+   -------------------------------------------------------------------------
+   Phase 2 이후 미참조 구 토큰 127개 삭제. 아래는 여전히 소비되는 브릿지 정의.
+   ========================================================================= */
+:root {
+  --subject-concept: var(--blue-700);
+  --subject-type: var(--teal-700);
+  --subject-essay: var(--violet-800);
+  --subject-concept-soft: var(--blue-400);
+  --subject-essay-soft: var(--violet-300);
+  --static-concept: var(--blue-700);
+  --static-type: var(--teal-700);
+  --static-essay: var(--violet-800);
+  --static-assign: var(--blue-600);
+  --static-exam: var(--violet-700);
+  --static-on: #FFFFFF;
+  --brand: var(--blue-500);
+  --blue-primary: var(--blue-400);
+  --purple-900: var(--violet-900);
+  --purple-500: var(--violet-500);
+  --purple-300: var(--violet-300);
+  --purple-200: var(--violet-300);
+  --yellow-500: var(--amber-300);
+  --yellow-300: var(--amber-200);
+  --yellow-050: var(--amber-050);
+  --green-050: var(--green-050);
+  --red-050: var(--red-050);
+  --teal-100: var(--teal-100);
+  --cyan-100: var(--cyan-100);
+  --success: var(--ok-solid);
+  --danger: var(--no-solid);
+  --warning: var(--warn-solid);
+  --info: var(--info-solid);
+  --success-text: var(--ok-ink);
+  --danger-text: var(--no-ink);
+  --star-gold: var(--gold-500);
+  --surface-card: var(--n-000);
+  --text-dim: var(--n-400);
+  --kp-num: var(--teal-300);
+  --transition: var(--t-fast);
+  --type-accent: var(--teal-500);
+  --concept-fill: var(--blue-500);
+  --essay-accent: var(--violet-500);
+  --assign-body: #AFC6E8;  /* [에셋연동] console-task SVG */
+}

@@ -1,0 +1,20 @@
+/* =====================================================================
+   type.css — 유형 훈련(틸 테마) 공용 셸 크롬
+   type-quiz / type-review / type-result / type-training-result 공유.
+   ⚠️ 링크 순서: tokens → base → components → learn-shell → type → (페이지 인라인)
+   페이지 인라인(.bar__mid 등, 특이도 0,1,0)보다 강하게 덮으려고
+   .learn-body 접두(0,2,0)를 씀. 각 페이지의 크림 하단바를 틸로 통일.
+
+   ── 단일 틸 램프 (어두움 → 밝음) ─────────────────────────────────────
+     헤더 #005752 · 프레임 #0A6B60 · 연습장 #0A6B60 · 트레이 #BCDDD2
+     · mid #D6E9E2 · 패널 #F2F4F7
+   → 셸은 한 틸 톤으로 묶이고, 오렌지 CTA·정답 초록·콘솔 버튼만 도드라짐.
+   → 콘솔 데코 SVG(console-type-*.svg)의 크림 면색도 동일 틸로 교체함.
+   ===================================================================== */
+
+/* 하단바 = 크림 콘솔 유지. bar__mid=var(--amber-050) · bar__tray=#ECE3D8(§3.5 console-type 에셋). */
+
+/* 연습장 등 비-primary 툴버튼 = 틸 (네이비 대체). primary(결과보기)는 오렌지 유지. */
+.learn-body .toolbtn:not(.toolbtn--primary) { background: var(--th-accent); box-shadow: 0 4px 0 var(--th-accent-strong); }
+.learn-body .toolbtn:not(.toolbtn--primary):hover { filter: brightness(1.1); }
+.learn-body .toolbtn:not(.toolbtn--primary):active { box-shadow: 0 2px 0 var(--th-accent-strong); }
