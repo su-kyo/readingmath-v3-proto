@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>행성 메인 — 리딩수학과학</title>
   <link rel="stylesheet" href="styles/tokens.css?v=18" />
-  <link rel="stylesheet" href="styles/base.css?v=4" />
+  <link rel="stylesheet" href="styles/base.css?v=5" />
   <link rel="stylesheet" href="styles/gnb.css?v=5" />
   <style>
     *{ box-sizing:border-box; margin:0; padding:0; }
@@ -28,7 +28,7 @@
       0%,100%{ transform:translate(-50%,-50%) translateY(0); }
       50%    { transform:translate(-50%,-50%) translateY(-13px); }
     }
-    @media (prefers-reduced-motion:reduce){ .obj--float{ animation:none; } }
+    /* 장식용 앰비언트 모션 — 데모 일관성 위해 reduced-motion에서도 유지 (OS 애니메이션 효과 끔 상태에서도 보이게) */
 
     /* ---- 히어로(캐릭터+말풍선) — safe 안, 피그마 캐릭터 위치/크기 ---- */
     .hero{ position:absolute; left:50%; top:62.7%; width:31.25%; transform:translate(-50%,-50%); z-index:10; }
