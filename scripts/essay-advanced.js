@@ -56,6 +56,14 @@
   var expl = document.getElementById('expl');
   expl.innerHTML = '<div class="expl__doc">' + PARAS.join('') + '</div>';
 
+  // ── 문제 카드 열고 접기 (세로 레이아웃 · 기초 기르기 v2와 동일) ──
+  var problem = document.getElementById('problem');
+  var problemHead = document.getElementById('problemHead');
+  if (problemHead) problemHead.addEventListener('click', function () {
+    if (!problem.classList.contains('is-collapsible')) return;
+    problem.classList.toggle('is-collapsed');
+  });
+
   var order = [];
   var byId = {};
   var filled = {};
@@ -186,7 +194,9 @@
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && pop.classList.contains('is-open')) closePop();
   });
-  expl.addEventListener('scroll', function () { if (pop.classList.contains('is-open')) closePop(); }, true);
+  // 세로 레이아웃: 스크롤 컨테이너가 .stage-scroll (기존 #expl 자체 스크롤 → 단일 스크롤)
+  var scroller = document.querySelector('.stage-scroll');
+  if (scroller) scroller.addEventListener('scroll', function () { if (pop.classList.contains('is-open')) closePop(); }, true);
   window.addEventListener('resize', function () { if (pop.classList.contains('is-open')) closePop(); });
 
   refreshNext();

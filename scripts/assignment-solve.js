@@ -181,7 +181,8 @@
           pad = '<div class="qrow__pad" data-pad="' + i + '">' +
             '<div class="short__field"><span class="short__val">' + val + '</span>' +
             (q.unit ? '<span class="short__unit">' + q.unit + '</span>' : '') + '</div>' +
-            '<div class="keypad">' + keypadHTML() + '</div></div>';
+            '<div class="keypad">' + keypadHTML() + '</div>' +
+            '<button class="qrow__pad-ok" data-pad-ok="' + i + '">입력 완료</button></div>';
         }
       } else {
         body = '<div class="qrow__opts">' + q.opts.map(function (o, oi) {
@@ -206,7 +207,24 @@
 
   sheetList.addEventListener('click', function (e) {
     var bub = e.target.closest('.bub');
-    if (bub) { answers[+bub.dataset.q] = +bub.dataset.o; renderSheet(true); refreshGrid(); if (+bub.dataset.q === cur) render(); return; }
+    if (bub) {
+      var qi = +bub.dataset.q;
+      answers[qi] = +bub.dataset.o;
+      // 클릭한 행의 버블만 제자리 갱신 → renderSheet 미호출 → 열려있는 다른 주관식 키패드 리젠 안 됨
+      var rowEl = bub.closest('.qrow');
+      Array.prototype.forEach.call(rowEl.querySelectorAll('.bub'), function (b) {
+        var on = +b.dataset.o === answers[qi];
+        b.classList.toggle('is-on', on);
+        b.innerHTML = on ? checkIcon : (+b.dataset.o + 1);
+      });
+      rowEl.classList.add('is-done');
+      refreshGrid();
+      if (qi === cur) render();
+      return;
+    }
+    // 주관식 '입력 완료' = 답 확정(이미 저장됨) + 아코디언 접기
+    var padOk = e.target.closest('.qrow__pad-ok');
+    if (padOk) { openShort = -1; renderSheet(true); refreshGrid(); return; }
     // 주관식 인라인 키패드 입력
     var pad = e.target.closest('.qrow__pad');
     if (pad) {

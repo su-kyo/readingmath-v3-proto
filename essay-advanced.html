@@ -4,58 +4,85 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>서술형 훈련 · 실력 키우기 — 리딩수학과학</title>
-  <link rel="stylesheet" href="styles/tokens.css?v=17" />
+  <link rel="stylesheet" href="styles/tokens.css?v=18" />
   <link rel="stylesheet" href="styles/base.css?v=4" />
   <link rel="stylesheet" href="styles/components.css?v=5" />
   <link rel="stylesheet" href="styles/learn-shell.css?v=7" />
   <link rel="stylesheet" href="styles/essay.css?v=12" />
   <style>
-    /* ============ 서술형 훈련 = 퍼플 테마 (공통은 essay.css). 실력 키우기 = 기초 기르기와 동일 폼 ============ */
+    /* ============ 서술형 훈련 = 퍼플 테마 (공통은 essay.css) ============ */
+    /* 실력 키우기 = 기초 기르기(v2)와 동일 디자인 : 세로 단일 스크롤 (문제 위 · 풀이 아래) */
     .content {
-      padding: clamp(12px, 1.8vw, 16px) clamp(12px, 1.8vw, 16px) 96px;
-      gap: 16px; align-items: stretch;
-      --guide: rgba(249,249,249,.92); --box-bg: var(--n-900); --box-br: rgba(255,255,255,.10);
-      --qa-bg: var(--surface-3); --qa-fg: rgba(249,249,249,.92); --qa-soft: rgba(255,255,255,.06); --qa-sub: var(--n-100);
+      flex-direction: column; padding: 0 clamp(12px, 1.6vw, 16px) 0;
+      --guide: rgba(249,249,249,.94); --card: var(--surface-1); --card-br: rgba(255,255,255,.08); --card-sh: none;
+      --step-fg: var(--text-muted);
+      --box-bg: var(--n-900); --box-br: rgba(255,255,255,.10);
+      --qa-soft: rgba(255,255,255,.06); --qa-sub: var(--n-100);
       --bl-next: rgba(124,120,240,.85);
+      /* 문제 카드 = 프레임 테두리색(th-static)과 면 공유 · 라이트/다크 동일 */
+      --pc-bg: var(--th-static); --pc-text: rgba(249,249,249,.92); --pc-chev: rgba(255,255,255,.62);
+      --qtab-bg: rgba(255,255,255,.10); --qtab-fg: rgba(255,255,255,.5);
+      --qtab-done-bg: color-mix(in srgb, var(--th-accent) 52%, transparent); --qtab-done-fg: #fff;
     }
     :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
     :root[data-theme="light"] .content {
       background: var(--n-000); border-color: var(--th-static);
-      --guide: var(--n-650); --box-bg: var(--n-050); --box-br: rgba(108,99,201,.12);
-      --qa-bg: var(--n-000); --qa-fg: var(--n-650); --qa-soft: rgba(108,99,201,.055); --qa-sub: var(--text-meta);
+      --guide: var(--n-650); --card: var(--n-000); --card-br: var(--n-100); --card-sh: none;
+      --step-fg: var(--text-meta);
+      --box-bg: var(--n-050); --box-br: rgba(108,99,201,.12);
+      --qa-soft: rgba(108,99,201,.055); --qa-sub: var(--text-meta);
       --bl-next: rgba(114,111,233,.7);
     }
 
-    .qa {
-      flex: 0 1 clamp(300px, 33%, 372px); min-width: 0; display: flex; flex-direction: column; gap: 12px;
-      background: var(--qa-bg); color: var(--qa-fg);
-      border-radius: 24px; padding: clamp(16px, 2vw, 24px); overflow: hidden;
-    }
-    :root[data-theme="light"] .qa { border: 1px solid var(--n-050); box-shadow: 0 10px 24px -18px rgba(60,40,130,.32); }
-    .qa__body { flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-right: 4px; }
-    .qtext { color: var(--qa-fg); font-size: clamp(15px, 1.35vw, 18px); line-height: 1.7; }
-    .qref { background: var(--qa-soft); border-radius: 16px; padding: 8px; display: flex; flex-direction: column; gap: 8px; }
-    .qref__img { width: 100%; aspect-ratio: 20 / 9; border-radius: 8px;
-      background: linear-gradient(110deg, var(--n-500) 25%, var(--n-500) 40%, var(--n-500) 55%); background-size: 220% 100%;
+    /* ============ 단일 스크롤 영역 ============ */
+    .stage-scroll { flex: 1; min-height: 0; overflow-y: auto; padding: 0 clamp(10px, 2vw, 22px) 96px; }
+    .stage-scroll::-webkit-scrollbar { width: 10px; }
+    .stage-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,.2); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
+    :root[data-theme="light"] .stage-scroll::-webkit-scrollbar-thumb { background: rgba(108,99,201,.28); background-clip: padding-box; }
+
+    /* ============ 카드 공용 ============ */
+    .card { max-width: 760px; margin: 0 auto; background: var(--card); border: 1px solid var(--card-br); border-radius: 20px; box-shadow: var(--card-sh); }
+    .card + .card { margin-top: 14px; }
+    .sec-label { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 999px;
+      font-family: var(--font-sans); font-size: 12.5px; font-weight: 800; letter-spacing: .01em; }
+    .sec-label--problem { background: var(--th-accent); color: var(--n-000); }
+    .sec-label--sol { background: rgba(124,58,237,.15); color: var(--th-accent-hi); }
+    :root[data-theme="light"] .sec-label--sol { background: rgba(124,58,237,.1); color: var(--th-accent-strong); }
+
+    /* ============ 문제 카드 (헤더 + 접이식 · 프레임에 붙음) ============ */
+    .problem { position: sticky; top: 0; z-index: 20; overflow: hidden;
+      background: var(--pc-bg); border: 0; border-radius: 0 0 18px 18px; margin: 0 auto; box-shadow: 0 10px 24px rgba(8,5,22,.28); }
+    .problem__head { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      padding: 10px 16px; background: transparent; border: 0; text-align: left; }
+    .problem.is-collapsible .problem__head { cursor: pointer; }
+    .problem__label { color: #fff; }
+    .problem__chev { width: 22px; height: 22px; color: var(--pc-chev); transition: transform .25s; flex: none; transform: rotate(180deg); }
+    .problem.is-collapsed .problem__chev { transform: rotate(0); }
+    /* 본문 = 문제문(좌) + 참고자료(우) 한 행 · 스티키라 상한+내부 스크롤 */
+    .problem__body { padding: 6px 18px 18px; overflow-y: auto; max-height: 34vh; color: var(--pc-text);
+      display: flex; gap: 20px; align-items: flex-start; transition: max-height .32s ease, opacity .25s ease, padding .32s ease; }
+    .problem__qtext { flex: 1 1 auto; min-width: 0; }
+    .problem.is-collapsed .problem__body { max-height: 0; opacity: 0; overflow: hidden; padding-top: 0; padding-bottom: 0; }
+    .problem__body::-webkit-scrollbar { width: 8px; }
+    .problem__body::-webkit-scrollbar-thumb { background: rgba(255,255,255,.2); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
+    :root[data-theme="light"] .problem__body::-webkit-scrollbar-thumb { background: rgba(108,99,201,.28); background-clip: padding-box; }
+
+    /* 문제 본문 (텍스트 좌 + 참고자료 우) */
+    .qtext { flex: 1 1 auto; min-width: 0; color: var(--pc-text); font-size: clamp(15px, 1.35vw, 17.5px); line-height: 1.75; }
+    .qref { flex: none; width: clamp(190px, 33%, 290px); margin-top: 0; background: rgba(255,255,255,.06); border-radius: 16px; padding: 10px; display: flex; flex-direction: column; gap: 8px; }
+    .qref__img { width: 100%; aspect-ratio: 4 / 3; border-radius: 10px;
+      background: linear-gradient(110deg, rgba(255,255,255,.12) 25%, rgba(255,255,255,.2) 40%, rgba(255,255,255,.12) 55%); background-size: 220% 100%;
       animation: shimmer 1.8s ease-in-out infinite; display: flex; align-items: center; justify-content: center; }
-    :root[data-theme="light"] .qref__img { background: linear-gradient(110deg, var(--n-100) 25%, var(--n-050) 40%, var(--n-100) 55%); background-size: 220% 100%; }
-    .qref__img span { color: rgba(255,255,255,.55); font-weight: 700; font-size: 13px; }
-    :root[data-theme="light"] .qref__img span { color: rgba(80,66,150,.55); }
+    .qref__img span { color: rgba(255,255,255,.6); font-weight: 700; font-size: 13px; }
     @keyframes shimmer { from { background-position: 180% 0; } to { background-position: -40% 0; } }
-    .qref__words { color: var(--qa-sub); font-size: clamp(14px, 1.25vw, 17px); line-height: 1.75; white-space: pre-line; }
+    .qref__words { color: rgba(255,255,255,.78); font-size: clamp(13px, 1.15vw, 15px); line-height: 1.7; white-space: pre-line; }
+    @media (prefers-reduced-motion: reduce) { .qref__img { animation: none; } }
 
-    .qa__body::-webkit-scrollbar, .expl::-webkit-scrollbar { width: 9px; }
-    .qa__body::-webkit-scrollbar-thumb, .expl::-webkit-scrollbar-thumb {
-      background: rgba(255,255,255,.22); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
-    :root[data-theme="light"] .expl::-webkit-scrollbar-thumb { background: rgba(70,50,140,.28); background-clip: padding-box; }
-
-    .expl {
-      flex: 1 1 0; min-width: 0; overflow-y: auto;
-      padding: clamp(14px, 1.8vw, 26px) clamp(18px, 2.2vw, 32px);
-      display: flex; flex-direction: column; align-items: center;
-      font-family: var(--font-serif); color: var(--guide);
-    }
-    .expl__doc { width: 100%; max-width: 760px; display: flex; flex-direction: column; gap: clamp(26px, 3vw, 40px); }
+    /* ============ 풀이 카드 (워크시트) ============ */
+    .worksheet { padding: clamp(16px, 2.2vw, 26px) clamp(14px, 2.4vw, 30px) clamp(20px, 2.4vw, 28px); }
+    .worksheet__label { display: inline-flex; margin-bottom: 8px; }
+    .expl { display: flex; flex-direction: column; align-items: center; font-family: var(--font-serif); color: var(--guide); }
+    .expl__doc { width: 100%; max-width: 760px; display: flex; flex-direction: column; gap: clamp(24px, 2.8vw, 38px); padding-top: 6px; }
     .para { display: flex; flex-direction: column; gap: 10px; }
     .line { font-size: clamp(15px, 1.4vw, 18px); line-height: 2.0; letter-spacing: -0.02em; }
     .para__head { font-weight: 700; }
@@ -64,16 +91,12 @@
     .box__row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 2px 6px;
       font-family: var(--font-sans); font-size: clamp(16px, 1.55vw, 19px); font-weight: 500; }
 
+    /* 빈칸: 항상 클릭 가능(재편집) + 예시(given) 변형 — 코어는 essay.css */
     .blank { cursor: pointer; }
     .blank:hover { background: var(--bl-bgh); box-shadow: inset 0 0 0 1px var(--bl-lineh); }
     .blank--given { background: var(--bl-fill); box-shadow: none; cursor: default; }
     .blank--given .blank__ans { opacity: 1; }
     .blank--given .blank__badge { display: none; }
-
-    @media (max-width: 860px) {
-      .content { flex-direction: column; overflow-y: auto; }
-      .qa { flex: none; max-height: 46%; } .expl { flex: none; overflow: visible; }
-    }
   </style>
 </head>
 <body class="learn-body">
@@ -102,23 +125,32 @@
       </header>
 
       <main class="content">
-        <!-- 좌: 문제 (문제 1개 → 탭 숨김) -->
-        <section class="qa">
-          <div class="qa__body">
-            <p class="qtext">어느 과수원에서 사과를 수확했습니다. 첫째 날 딴 사과는 156개이고, 둘째 날은 첫째 날보다 48개 더 많이 땄습니다. 이 사과를 한 상자에 9개씩 담으려고 합니다. 상자는 모두 몇 개 필요하고, 남는 사과는 몇 개인지 덧셈과 나눗셈으로 구해 보세요.</p>
-            <div class="qref">
-              <div class="qref__img"><span>참고 이미지</span></div>
-              <div class="qref__words">- 첫째 날: 156개
+        <div class="stage-scroll">
+          <!-- 문제 카드 (상주 · 열고 접기 · 스크롤 시 상단 스티키) -->
+          <section class="card problem is-collapsible" id="problem">
+            <div class="problem__head" id="problemHead" role="button" tabindex="0" aria-label="문제 펼치기/접기">
+              <span class="sec-label sec-label--problem problem__label">문제</span>
+              <svg class="problem__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            </div>
+            <div class="problem__body" id="readBody">
+              <p class="qtext">어느 과수원에서 사과를 수확했습니다. 첫째 날 딴 사과는 156개이고, 둘째 날은 첫째 날보다 48개 더 많이 땄습니다. 이 사과를 한 상자에 9개씩 담으려고 합니다. 상자는 모두 몇 개 필요하고, 남는 사과는 몇 개인지 덧셈과 나눗셈으로 구해 보세요.</p>
+              <div class="qref">
+                <div class="qref__img"><span>참고 이미지</span></div>
+                <div class="qref__words">- 첫째 날: 156개
 - 둘째 날: 첫째 날 + 48개
 - 한 상자에 9개씩
 - 몫 = 상자의 수
 - 나머지 = 남는 사과</div>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        <!-- 우: 풀이 가이드 -->
-        <section class="expl" id="expl"></section>
+          <!-- 풀이 카드 (단계별 가이드 · essay-advanced.js가 #expl 채움) -->
+          <section class="card worksheet" id="worksheet">
+            <span class="sec-label sec-label--sol worksheet__label">풀이</span>
+            <section class="expl" id="expl"></section>
+          </section>
+        </div>
       </main>
     </div>
 
@@ -147,6 +179,6 @@
     </div>
   </div>
 
-  <script src="scripts/essay-advanced.js"></script>
+  <script src="scripts/essay-advanced.js?v=2"></script>
 </body>
 </html>

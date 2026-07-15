@@ -122,11 +122,12 @@
   --primary-pressed: var(--orange-500);
   --primary-deep:    var(--orange-700);
 
-  /* A층/GNB 모드색 (각 가족 400스텝 — 다크 GNB 위 ≥6:1) */
-  --mode-basic:  var(--blue-400);
-  --mode-free:   var(--green-400);
-  --mode-exam:   var(--violet-400);
-  --mode-assign: var(--orange-400);
+  /* A층/GNB 모드색 = 포인트 컬러(Figma 정합: 기본 블루·자유 그린·시험 퍼플·과제 오렌지).
+     기존 400스텝은 흰 글자 대비가 약해서 500/브랜드값으로 상향. */
+  --mode-basic:  var(--blue-500);   /* #0A7AF8 ≈ Figma #008CFF */
+  --mode-free:   #58CC02;           /* Figma 자유모드 그린 */
+  --mode-exam:   var(--violet-500); /* #805AFD 퍼플 */
+  --mode-assign: var(--orange-400); /* #FE811B 오렌지 */
 
   /* 우주 배경 액센트 (space-bg 아트 — 원칙1 예외) */
   --accent-cyan: var(--cyan-300);

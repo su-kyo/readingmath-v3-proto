@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>과제 풀이 — 리딩수학과학</title>
   <script>try{if(localStorage.getItem('rm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
-  <link rel="stylesheet" href="styles/tokens.css?v=17" />
+  <link rel="stylesheet" href="styles/tokens.css?v=18" />
   <style>
     /* =========================================================================
        과제 센터 · 풀이 화면 (assignment-solve) — 우주 셸
@@ -46,7 +46,7 @@
     :root[data-theme="dark"] .toggle__k { left: 32px; background-image: url("assets/figma/icons/ico-moon.svg"); }
     .hd__ico { width: 34px; height: 34px; border: 0; border-radius: 11px; background: rgba(255,255,255,.14); color: var(--n-000); display: grid; place-items: center; cursor: pointer; transition: .14s; }
     .hd__ico:hover { background: rgba(255,255,255,.26); }
-    .hd__ico svg { width: 19px; height: 19px; }
+    .hd__ico svg, .hd__ico img { width: 19px; height: 19px; }
 
     /* ===== 콘텐츠 (2단) ===== */
     /* 프레임 테두리 = 헤더색(정적) · 다크·라이트 불변 */
@@ -99,7 +99,8 @@
     .seg { flex: none; display: flex; gap: 3px; padding: 3px; background: var(--n-200); border-radius: 999px; }
     :root[data-theme="dark"] .seg { background: var(--n-500); }
     .seg__btn { flex: 1; padding: 9px 8px; border: 0; background: transparent; border-radius: 999px; font-family: inherit; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: .14s; }
-    :root[data-theme="dark"] .seg__btn { color: var(--text-muted); }
+    /* is-active는 accent 배경 위 흰 글자로 고정(라이트·다크 공통). 다크 규칙이 active까지 덮지 않게 :not */
+    :root[data-theme="dark"] .seg__btn:not(.is-active) { color: var(--text-muted); }
     .seg__btn.is-active { background: var(--th-accent); color: var(--n-000); }
     .omr__prog { display: flex; flex-direction: column; gap: 8px; }
     .omr__ptop { display: flex; align-items: center; justify-content: space-between; }
@@ -152,6 +153,10 @@
     .qrow__pad { display: flex; flex-direction: column; align-items: center; gap: 12px; margin: -2px 4px 4px; padding: 16px; border: 1px solid var(--line); border-radius: 16px; background: var(--panel); animation: padDrop .2s ease; }
     @keyframes padDrop { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
     @media (prefers-reduced-motion: reduce) { .qrow__pad { animation: none; } }
+    /* 키패드 아래 입력완료 = 답 확정 + 아코디언 접기 */
+    .qrow__pad-ok { width: 100%; padding: 11px; border: 0; border-radius: 12px; background: var(--th-accent); color: var(--n-000); font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer; transition: filter .1s; }
+    .qrow__pad-ok:hover { filter: brightness(1.06); }
+    .qrow__pad-ok:active { transform: translateY(1px); }
     .sheet__list::-webkit-scrollbar { width: 10px; }
     .sheet__list::-webkit-scrollbar-thumb { background: var(--n-200); border-radius: 999px; border: 3px solid var(--panel); background-clip: padding-box; }
 
@@ -159,8 +164,10 @@
     .bar { position: absolute; left: 0; right: 0; bottom: 0; z-index: 40; display: flex; align-items: flex-end; height: 99px; pointer-events: none; }
     .bar__deco { width: 262px; height: 99px; flex: none; }
     .bar__deco--l { margin-right: -1px; } .bar__deco--r { margin-left: -1px; }
-    .bar__mid { flex: 1; height: 75px; background: var(--n-100); padding-top: 11px; align-self: flex-end; pointer-events: auto; }
-    .bar__tray { height: 64px; background: var(--n-100); display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 clamp(16px,3vw,30px); }
+    /* 하단 콘솔 = 일러스트(좌우 console-task SVG와 이어지는 고정색, 토큰/테마 무관).
+       #eef0f6 = 콘솔 상단 립, #e0e6ef = 콘솔 본체 밴드 (SVG 실측 seam 색) */
+    .bar__mid { flex: 1; height: 75px; background: #eef0f6; padding-top: 11px; align-self: flex-end; pointer-events: auto; }
+    .bar__tray { height: 64px; background: #e0e6ef; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 clamp(16px,3vw,30px); }
     .bar__group { display: flex; gap: 12px; align-items: center; }
     .tbtn { display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; padding: 9px 18px; border: 0; border-radius: 16px; background: var(--n-500); color: var(--n-000); font-family: inherit; font-weight: 700; font-size: 15px; cursor: pointer; box-shadow: 0 4px 0 var(--n-650); transition: filter .12s, transform .06s, box-shadow .06s; }
     .tbtn:hover { filter: brightness(1.1); }
@@ -203,8 +210,8 @@
         </nav>
         <div class="hd__acts">
           <button class="toggle" id="themeToggle" title="라이트/다크 전환"><span class="toggle__k"></span></button>
-          <button class="hd__ico" title="알림"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 20h12M8 20v-5a4 4 0 0 1 8 0v5M12 4v2M5 8l1.5 1.5M19 8l-1.5 1.5"/></svg></button>
-          <button class="hd__ico" title="나가기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg></button>
+          <button class="hd__ico" title="알림"><img src="assets/figma/icons/ico-siren.svg" alt="알림" /></button>
+          <button class="hd__ico" title="나가기"><img src="assets/figma/icons/ico-exit.svg" alt="나가기" /></button>
         </div>
       </header>
 
@@ -257,6 +264,6 @@
     <div class="toast" id="toast"></div>
   </div>
 
-  <script src="scripts/assignment-solve.js"></script>
+  <script src="scripts/assignment-solve.js?v=2"></script>
 </body>
 </html>

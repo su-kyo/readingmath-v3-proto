@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>개념 학습 · 개념 훈련 — 리딩수학과학</title>
-  <link rel="stylesheet" href="styles/tokens.css?v=17" />
+  <link rel="stylesheet" href="styles/tokens.css?v=18" />
   <link rel="stylesheet" href="styles/base.css?v=4" />
   <link rel="stylesheet" href="styles/components.css?v=5" />
   <style>
@@ -37,11 +37,12 @@
 
     /* ===== 콘텐츠 패널 ===== */
     .content { flex: 1; min-height: 0; background: var(--th-panel); border: 8px solid var(--th-static); border-bottom: none; border-radius: 40px 40px 0 0; padding: clamp(20px, 3vw, 40px) 0 0; display: flex; overflow: hidden; }
-    .content__inner { flex: 1; display: flex; gap: clamp(24px, 4vw, 48px); padding: 0 clamp(24px, 5vw, 64px); min-height: 0; }
+    .content__inner { flex: 1; display: flex; justify-content: center; gap: clamp(24px, 4vw, 48px); padding: 0 clamp(24px, 5vw, 64px); min-height: 0; }
 
     /* ===== 지문 (끊어읽기) ===== */
     .article {
-      flex: 1; color: var(--n-600); min-width: 0; overflow: auto; padding-bottom: 140px;
+      /* 큰 화면에서 한 줄이 너무 길어지지 않게 읽기 폭 제한 (가독성) */
+      flex: 1; max-width: 760px; color: var(--n-600); min-width: 0; overflow: auto; padding-bottom: 140px;
       font-family: "Noto Serif KR", serif;
       font-size: clamp(16px, 1.5vw, 20px); line-height: 1.82; letter-spacing: -0.03em;
       word-break: keep-all;
@@ -52,14 +53,30 @@
     .seg.is-current { cursor: pointer; background: var(--th-tint-strong); box-shadow: 0 0 0 3px var(--th-tint-strong); color: var(--th-ink-accent); font-weight: 600; }
     .seg.is-current:hover { background: var(--th-tint-strong); box-shadow: 0 0 0 3px var(--th-tint-strong); }
     /* 이미지 보유 용어 */
-    .seg--img.is-current, .seg--img.is-read { cursor: pointer; }
+    .seg--img.is-read { cursor: pointer; }
+    /* 현재 구간이 이미지 용어면 = 노란 마커(30% 톤)로 표시, 글자색은 일반 지문과 동일 */
+    .seg--img.is-current, .seg--img.is-current:hover {
+      cursor: pointer;
+      background: color-mix(in srgb, var(--warn-solid) 30%, transparent);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--warn-solid) 30%, transparent);
+      color: var(--n-600);
+    }
     .seg--img.is-read:not(.is-active) { text-decoration: underline dotted var(--text-muted); text-underline-offset: 5px; text-decoration-thickness: 2px; }
     .seg--img.is-active { color: var(--th-ink-accent); font-weight: 600; text-decoration: underline solid var(--th-ink-accent); text-underline-offset: 5px; text-decoration-thickness: 2px; background: transparent; box-shadow: none; }
     /* 빈칸 */
     .seg--blank { display: inline-flex; align-items: center; justify-content: center; min-width: 62px; padding: 2px 12px; margin: 0 3px; border-radius: 9px; background: var(--th-tint-strong); color: var(--n-600); font-weight: 700; box-shadow: inset 0 0 0 1.5px var(--th-accent); vertical-align: baseline; font-family: var(--font-sans); }
-    .seg--blank.is-current { cursor: pointer; background: var(--th-tint); box-shadow: inset 0 0 0 2px var(--th-accent); }
-    .seg--blank.is-open { box-shadow: inset 0 0 0 2px var(--th-accent); }
-    .seg--blank.is-filled { background: var(--th-accent); color: var(--n-000); box-shadow: none; }
+    /* 답 대기 · 선택 중: 테두리 대신 fill로 채워 hover에도 확실히 보이게 (읽기 유도) */
+    .seg--blank.is-current, .seg--blank.is-open,
+    .seg--blank.is-current:hover, .seg--blank.is-open:hover {
+      cursor: pointer; background: var(--th-accent); color: var(--n-000); box-shadow: none;
+    }
+    /* 입력 완료: CTA처럼 튀지 않게 배경보다 살짝 밝은 은은한 톤 차이만 (읽기 흐름 유지) */
+    .seg--blank.is-filled, .seg--blank.is-filled.is-read {
+      background: var(--th-tint); color: var(--th-ink-accent); box-shadow: none;
+    }
+    /* 오답 흔들림 */
+    .seg--blank.is-wrong { animation: blankShake .4s; }
+    @keyframes blankShake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-4px)} 40%,80%{transform:translateX(4px)} }
 
     /* ===== 정답 선택 팝오버 (신규 패턴) ===== */
     .answer-pop {
@@ -78,6 +95,10 @@
     .answer-opt:hover { background: var(--th-tint); }
     .answer-opt.is-selected { background: var(--th-accent); color: var(--n-000); }
     .answer-opt.is-selected .answer-opt__dot { box-shadow: inset 0 0 0 5px var(--n-000); }
+    /* 오답: 빨간 톤 + 흔들림, 팝오버는 열린 채로 재시도 유도 */
+    .answer-opt.is-wrong { background: color-mix(in srgb, var(--no-ink) 14%, transparent); color: var(--no-ink); animation: blankShake .4s; }
+    .answer-opt.is-wrong .answer-opt__dot { box-shadow: inset 0 0 0 2px var(--no-ink); }
+    @media (prefers-reduced-motion: reduce) { .answer-opt.is-wrong, .seg--blank.is-wrong { animation: none; } }
 
     /* ===== 이미지 뷰어 (스켈레톤) ===== */
     .viewer { width: clamp(240px, 26vw, 340px); flex: none; display: flex; flex-direction: column; gap: 14px; align-items: center; justify-content: center; }
@@ -96,15 +117,20 @@
     /* ===== 라이트박스 ===== */
     .lightbox { position: fixed; inset: 0; z-index: 60; background: rgba(8,14,30,.74); display: none; align-items: center; justify-content: center; padding: 40px; }
     .lightbox.is-open { display: flex; }
-    .lightbox__img { width: min(760px, 82vw); aspect-ratio: 4 / 3; background: var(--th-tint); border-radius: 22px; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 700; color: var(--text-muted); box-shadow: 0 40px 90px rgba(0,0,0,.5); }
+    /* 실제 이미지가 들어간다고 가정한 더미 (테마 무관 = 사진처럼 고정) */
+    .lightbox__img { position: relative; overflow: hidden; width: min(760px, 82vw); aspect-ratio: 4 / 3; border-radius: 22px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; letter-spacing: .02em; color: rgba(255,255,255,.92); box-shadow: 0 40px 90px rgba(0,0,0,.5);
+      background: linear-gradient(135deg, #4a80e6 0%, #2456c4 46%, #16307a 100%); }
+    .lightbox__img::after { content: ""; position: absolute; inset: 0; background: radial-gradient(120% 90% at 22% 18%, rgba(255,255,255,.28), transparent 55%); pointer-events: none; }
     .lightbox__close { position: absolute; top: 22px; right: 28px; width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,.16); color: var(--n-000); font-size: 22px; display: flex; align-items: center; justify-content: center; }
 
     /* ===== 하단 콘솔 바 ===== */
     .bar { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; display: flex; align-items: flex-end; height: 99px; }
     .bar__deco { width: 262px; height: 99px; flex: none; }
     .bar__deco--l { margin-right: -1px; } .bar__deco--r { margin-left: -1px; }
-    .bar__mid { flex: 1; height: 75px; background: var(--th-tint); padding-top: 11px; align-self: flex-end; }
-    .bar__tray { height: 64px; background: var(--th-accent-hi); display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 clamp(16px, 3vw, 32px); }
+    /* 하단 콘솔 = 일러스트(우주선). 좌우 console SVG와 이어지는 고정색, 토큰/테마 영향 없음.
+       #dae6f9 = 콘솔 상단 립, #87aeec = 콘솔 본체 밴드 (SVG 실측 seam 색) */
+    .bar__mid { flex: 1; height: 75px; background: #dae6f9; padding-top: 11px; align-self: flex-end; }
+    .bar__tray { height: 64px; background: #87aeec; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 clamp(16px, 3vw, 32px); }
     .bar__group { display: flex; gap: 12px; align-items: center; }
     .toolbtn { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; padding: 8px 16px; border-radius: 16px; background: var(--n-500); color: var(--n-000); font-weight: 700; font-size: clamp(13px, 1.1vw, 16px); box-shadow: 0 4px 0 var(--n-650); }
     .toolbtn:hover { filter: brightness(1.12); }
@@ -132,28 +158,41 @@
     :root[data-theme="dark"] .article { color: var(--text); }
     :root[data-theme="dark"] .article .hl-underline { color: var(--th-accent-hi); }
     :root[data-theme="dark"] .article .hl-mark { background: #124F3C; color: #8FF0C9; }
+    /* 다크: 파란 글자는 다크 바탕과 대비 약함 → 글자는 밝게(plain) 두고 highlight로만 강조 */
     :root[data-theme="dark"] .seg.is-current,
-    :root[data-theme="dark"] .seg.is-current:hover { background: var(--th-tint-strong); box-shadow: 0 0 0 3px var(--th-tint-strong); }
+    :root[data-theme="dark"] .seg.is-current:hover { background: var(--th-tint-strong); box-shadow: 0 0 0 3px var(--th-tint-strong); color: var(--text); }
+    /* 이미지 용어 현재 구간 = 노란 마커(30%), 글자색은 일반 지문과 동일(밝게) */
+    :root[data-theme="dark"] .seg--img.is-current,
+    :root[data-theme="dark"] .seg--img.is-current:hover { background: color-mix(in srgb, var(--warn-solid) 30%, transparent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--warn-solid) 30%, transparent); color: var(--text); }
     :root[data-theme="dark"] .seg--img.is-active { color: var(--th-accent-hi); text-decoration-color: var(--th-accent-hi); }
     :root[data-theme="dark"] .seg--img.is-read:not(.is-active) { text-decoration-color: var(--text-muted); }
     :root[data-theme="dark"] .seg--blank { background: var(--th-tint-strong); color: var(--text); box-shadow: inset 0 0 0 1.5px var(--th-accent); }
-    :root[data-theme="dark"] .seg--blank.is-current { background: transparent; color: var(--primary-hover); box-shadow: inset 0 0 0 2px var(--primary); }
-    :root[data-theme="dark"] .seg--blank.is-filled { background: var(--th-accent); color: var(--n-000); box-shadow: none; }
+    /* 답 대기·선택 중 = fill (테두리 clobber 방지) */
+    :root[data-theme="dark"] .seg--blank.is-current, :root[data-theme="dark"] .seg--blank.is-open,
+    :root[data-theme="dark"] .seg--blank.is-current:hover, :root[data-theme="dark"] .seg--blank.is-open:hover {
+      background: var(--th-accent); color: var(--n-000); box-shadow: none;
+    }
+    /* 입력 완료 = 은은한 톤 (다크 패널보다 살짝 밝게) */
+    :root[data-theme="dark"] .seg--blank.is-filled, :root[data-theme="dark"] .seg--blank.is-filled.is-read {
+      background: rgba(255,255,255,.08); color: var(--text); box-shadow: none;
+    }
     :root[data-theme="dark"] .viewer__frame { background: var(--surface-1); box-shadow: inset 0 0 0 2px rgba(255,255,255,.08); }
     :root[data-theme="dark"] .viewer__ph { background: var(--surface-2); color: var(--text-muted); }
     :root[data-theme="dark"] .viewer__label,
     :root[data-theme="dark"] .viewer__pager { color: var(--text-muted); }
     :root[data-theme="dark"] .viewer__pager button { background: var(--surface-2); color: var(--th-accent-hi); }
     :root[data-theme="dark"] .viewer__zoom { background: var(--surface-1); color: var(--text-muted); box-shadow: none; }
-    :root[data-theme="dark"] .answer-pop { background: var(--surface-1); box-shadow: 0 18px 44px rgba(0,0,0,.5); }
-    :root[data-theme="dark"] .answer-pop::before { background: var(--surface-1); }
+    /* 다크: 팝오버가 패널(surface-1)과 같은 색이라 안 떠 보임 → 더 밝은 surface-3 + 테두리로 floating 강조 */
+    :root[data-theme="dark"] .answer-pop { background: var(--surface-3); border: 1px solid rgba(255,255,255,.12); box-shadow: 0 20px 48px rgba(0,0,0,.62); }
+    :root[data-theme="dark"] .answer-pop::before { background: var(--surface-3); }
     :root[data-theme="dark"] .answer-pop__hint { color: var(--text-muted); }
     :root[data-theme="dark"] .answer-opt { color: var(--text); }
     :root[data-theme="dark"] .answer-opt:hover { background: var(--surface-hover); }
     :root[data-theme="dark"] .answer-opt.is-selected { background: var(--th-accent); }
     :root[data-theme="dark"] .answer-opt__dot { box-shadow: inset 0 0 0 2px var(--th-accent); }
     :root[data-theme="dark"] .answer-opt.is-selected .answer-opt__dot { box-shadow: inset 0 0 0 5px var(--n-000); }
-    :root[data-theme="dark"] .lightbox__img { background: var(--surface-1); color: var(--text-muted); }
+    :root[data-theme="dark"] .answer-opt.is-wrong { background: color-mix(in srgb, var(--no-on-dark) 16%, transparent); color: var(--no-on-dark); }
+    :root[data-theme="dark"] .answer-opt.is-wrong .answer-opt__dot { box-shadow: inset 0 0 0 2px var(--no-on-dark); }
 
     /* ===== 개념 영상 레이어 (진입 시 dim 오버레이 · '개념 영상 보기'로 재호출) ===== */
     .videobox { position: fixed; inset: 0; z-index: 70; display: none; align-items: center; justify-content: center; padding: clamp(20px, 4vw, 48px); background: rgba(6,12,28,.82); }
@@ -177,14 +216,15 @@
       position: fixed; inset: 0; z-index: 50; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 40px;
       /* 라이트 기본 토큰 */
       --sm-scrim: rgba(18,28,52,.5); --sm-card: var(--n-000); --sm-border: var(--th-tint); --sm-title: var(--n-600);
-      --sm-box: var(--th-tint); --sm-text: var(--n-600); --sm-current: var(--th-tint);
+      --sm-box: var(--th-tint); --sm-box-br: transparent; --sm-text: var(--n-600); --sm-current: var(--th-tint);
       --sm-blank-br: var(--th-accent-hi); --sm-blank-muted: var(--text-muted);
-      --sm-opt: var(--th-tint); --sm-opt-text: var(--n-500); --sm-opt-sh: var(--th-tint);
+      /* 선지 = 박스(연블루)와 구분되는 흰 버튼 + 진한 글자 + 파란 입체 그림자 (기존엔 박스와 같은 8% 틴트라 흐릿) */
+      --sm-opt: var(--n-000); --sm-opt-text: var(--n-600); --sm-opt-sh: var(--th-accent-hi);
       background: var(--sm-scrim);
     }
     :root[data-theme="dark"] .summary {
       --sm-scrim: rgba(6,10,22,.8); --sm-card: var(--surface-1); --sm-border: rgba(255,255,255,.08); --sm-title: var(--n-000);
-      --sm-box: var(--n-700); --sm-text: var(--text); --sm-current: var(--th-tint);
+      --sm-box: var(--surface-3); --sm-box-br: rgba(255,255,255,.08); --sm-text: var(--text); --sm-current: var(--th-tint);
       --sm-blank-br: var(--th-accent); --sm-blank-muted: var(--text-muted);
       --sm-opt: var(--surface-3); --sm-opt-text: var(--n-000); --sm-opt-sh: var(--n-600);
     }
@@ -194,12 +234,14 @@
     .summary__title { font-size: clamp(18px, 1.8vw, 22px); font-weight: 800; color: var(--sm-title); }
     .summary__close { width: 40px; height: 40px; border-radius: 50%; background: var(--no-solid); color: var(--n-000); font-size: 17px; display: flex; align-items: center; justify-content: center; }
     .summary__close:hover { filter: brightness(1.08); }
-    .summary__box { background: var(--sm-box); border-radius: 20px; padding: 24px 28px; max-height: 42vh; overflow: auto; display: flex; flex-direction: column; gap: 10px; }
+    .summary__box { background: var(--sm-box); border: 1px solid var(--sm-box-br); border-radius: 20px; padding: 24px 28px; max-height: 42vh; overflow: auto; display: flex; flex-direction: column; gap: 10px; }
     /* 모달 내 끊어읽기 */
     .sline { font-size: clamp(16px, 1.5vw, 20px); line-height: 1.95; color: var(--sm-text); letter-spacing: -0.02em; }
     .sseg { border-radius: 5px; padding: 1px 0; transition: filter .2s ease, opacity .2s ease, background .15s ease; }
     .sseg.is-unread { filter: blur(4.5px); opacity: .3; user-select: none; }
     .sseg.is-current:not(.sblank) { cursor: pointer; background: var(--sm-current); box-shadow: 0 0 0 3px var(--sm-current); }
+    /* 모달도 동일: 이미지 용어 현재 구간 = 노란 마커(30%), 글자색은 일반 지문과 동일 */
+    .sseg--img.is-current, .sseg--img.is-current:hover { cursor: pointer; background: color-mix(in srgb, var(--warn-solid) 30%, transparent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--warn-solid) 30%, transparent); color: var(--sm-text); border-radius: 5px; }
     .sblank { display: inline-flex; align-items: center; justify-content: center; min-width: 84px; height: 32px; padding: 0 12px; margin: 0 3px; border-radius: 8px; font-weight: 700; vertical-align: middle; background: transparent; color: var(--sm-blank-muted); box-shadow: inset 0 0 0 1.5px var(--sm-blank-br); }
     .sblank.is-active { color: var(--ok-solid); box-shadow: inset 0 0 0 2px var(--ok-solid); }
     .sblank.is-active::before { content: "?"; }
@@ -248,32 +290,42 @@
       <main class="content">
         <div class="content__inner">
           <article class="article" id="article">
-            <span class="seg">우리가 주변에서 보는</span>
+            <span class="seg">우리가 주변에서 흔히 보는</span>
             <span class="seg">여러 가지 액체, 즉 용액은</span>
             <span class="seg">색깔이나 냄새,</span>
-            <span class="seg">투명한 정도가 다 다르다.</span>
+            <span class="seg">투명한 정도가 저마다 다르다.</span>
+            <span class="seg">이런 겉보기 성질을 자세히 관찰하면</span>
+            <span class="seg">눈으로도 서로 다른 용액을</span>
+            <span class="seg">어느 정도 구별할 수 있다.</span>
             <span class="seg">먼저 식초는</span>
-            <span class="seg">연한 노란색이고 투명하다.</span>
-            <span class="seg">냄새가 나지만,</span>
-            <span class="seg">흔든 뒤 생기는 거품은</span>
+            <span class="seg">연한 노란색을 띠고 투명하며</span>
+            <span class="seg">코를 찌르는 냄새가 난다.</span>
+            <span class="seg">하지만 흔든 뒤 생기는 거품은</span>
             <span class="seg">3초 이상 유지되지 않는다.</span>
             <span class="seg">레몬즙도 연한 노란색이지만</span>
-            <span class="seg">약간 불투명하고,</span>
-            <span class="seg">냄새가 나며</span>
-            <span class="seg">거품은 오래 유지되지 않는다.</span>
+            <span class="seg">식초와 달리 약간 불투명하고,</span>
+            <span class="seg">시큼한 냄새가 나며</span>
+            <span class="seg">거품은 금방 사라진다.</span>
             <span class="seg seg--img" data-img="1">유리 세정제는</span>
             <span class="seg">연한 푸른색으로 투명하고</span>
-            <span class="seg">냄새가 나며,</span>
-            <span class="seg">흔들면 거품이 3초 이상 유지된다.</span>
+            <span class="seg">특유의 냄새가 나며,</span>
+            <span class="seg">흔들면 거품이 3초 이상 오래 유지된다.</span>
             <span class="seg seg--img" data-img="2">탄산수는</span>
-            <span class="seg">무색이고 투명하며</span>
-            <span class="seg">냄새는 없고 거품도 오래 가지 않는다.</span>
-            <span class="seg seg--img" data-img="3">빨랫비누 물은</span>
-            <span class="seg">하얀색이면서 불투명하고</span>
-            <span class="seg">냄새가 나며 거품은</span>
-            <span class="seg">오래 유지되지</span>
+            <span class="seg">색이 없고 맑게 투명하며</span>
+            <span class="seg">냄새는 거의 없지만</span>
+            <span class="seg">병을 열면 작은 기포가 계속 올라온다.</span>
+            <span class="seg seg--img" data-img="3">빨랫비누를 푼 물은</span>
+            <span class="seg">뿌옇게 흐린 하얀색이고</span>
+            <span class="seg">미끈거리는 느낌과 함께 냄새가 나며,</span>
+            <span class="seg">흔들면 거품이 풍성하게 인다.</span>
+            <span class="seg">이처럼 여러 용액은</span>
+            <span class="seg">색깔과 투명도, 냄새,</span>
+            <span class="seg">그리고 거품이 유지되는 정도까지</span>
+            <span class="seg">서로 다른 특징을 지닌다.</span>
+            <span class="seg">따라서 우리는 이런 겉보기</span>
             <span class="seg seg--blank" id="blank"><span class="seg--blank__text">?</span></span>
-            <span class="seg">않는다.</span>
+            <span class="seg">의 차이를 이용해</span>
+            <span class="seg">여러 용액을 구별할 수 있다.</span>
           </article>
 
           <aside class="viewer" data-state="empty">
@@ -296,10 +348,10 @@
     <!-- 정답 선택 팝오버 (빈칸 아래 앵커) -->
     <div class="answer-pop" role="listbox" aria-label="정답 선택">
       <div class="answer-pop__hint">알맞은 말을 고르세요</div>
-      <div class="answer-opt" role="option" data-value="3초 이상"><span class="answer-opt__dot"></span>3초 이상</div>
-      <div class="answer-opt" role="option" data-value="오래"><span class="answer-opt__dot"></span>오래</div>
-      <div class="answer-opt" role="option" data-value="잠깐"><span class="answer-opt__dot"></span>잠깐</div>
-      <div class="answer-opt" role="option" data-value="전혀"><span class="answer-opt__dot"></span>전혀</div>
+      <div class="answer-opt" role="option" data-value="성질" data-correct><span class="answer-opt__dot"></span>성질</div>
+      <div class="answer-opt" role="option" data-value="무게"><span class="answer-opt__dot"></span>무게</div>
+      <div class="answer-opt" role="option" data-value="온도"><span class="answer-opt__dot"></span>온도</div>
+      <div class="answer-opt" role="option" data-value="개수"><span class="answer-opt__dot"></span>개수</div>
     </div>
 
     <!-- 라이트박스 -->
@@ -377,7 +429,7 @@
     </div>
   </div>
 
-  <script src="scripts/learn-concept.js?v=2"></script>
+  <script src="scripts/learn-concept.js?v=3"></script>
   <script>
     /* 개념 영상 레이어 — 진입 시 자동 표시(dim), '개념 영상 보기'로 재호출.
        닫을 때 iframe 제거 → 재생/소리 정지. */

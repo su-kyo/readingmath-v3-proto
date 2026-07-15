@@ -111,12 +111,25 @@
     });
   });
 
-  /* 선지 선택 → 빈칸 채우고 전진 */
+  /* 선지 선택 → 정답이면 채우고 전진 / 오답이면 빨간 표시 + 흔들림, 팝오버 유지(재시도) */
+  var wrongT;
   pop.querySelectorAll('.answer-opt').forEach(function (o) {
     o.addEventListener('click', function () {
-      pop.querySelectorAll('.answer-opt').forEach(function (x) { x.classList.remove('is-selected'); });
+      var isCorrect = o.hasAttribute('data-correct');
+      if (!isCorrect) {                                    // 오답
+        o.classList.remove('is-wrong');                    // 재트리거를 위해 리셋
+        void o.offsetWidth;                                // reflow → 애니메이션 재시작
+        o.classList.add('is-wrong');
+        blank.classList.remove('is-wrong'); void blank.offsetWidth; blank.classList.add('is-wrong');
+        clearTimeout(wrongT);
+        wrongT = setTimeout(function () { o.classList.remove('is-wrong'); blank.classList.remove('is-wrong'); }, 500);
+        return;                                            // 전진하지 않음
+      }
+      // 정답
+      pop.querySelectorAll('.answer-opt').forEach(function (x) { x.classList.remove('is-selected', 'is-wrong'); });
       o.classList.add('is-selected');
       blank.querySelector('.seg--blank__text').textContent = o.dataset.value;
+      blank.classList.remove('is-wrong');
       blank.classList.add('is-filled');
       closePop();
       var bi = segs.indexOf(blank);

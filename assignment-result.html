@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>과제 결과 — 리딩수학과학</title>
   <script>try{if(localStorage.getItem('rm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
-  <link rel="stylesheet" href="styles/tokens.css?v=17" />
+  <link rel="stylesheet" href="styles/tokens.css?v=18" />
   <style>
     /* =========================================================================
        과제 센터 · 결과 화면 (assignment-result) — 우주 셸 (풀이 화면과 동일)
@@ -44,7 +44,7 @@
     :root[data-theme="dark"] .toggle__k { left: 32px; background-image: url("assets/figma/icons/ico-moon.svg"); }
     .hd__ico { width: 34px; height: 34px; border: 0; border-radius: 11px; background: rgba(255,255,255,.14); color: var(--n-000); display: grid; place-items: center; cursor: pointer; transition: .14s; }
     .hd__ico:hover { background: rgba(255,255,255,.26); }
-    .hd__ico svg { width: 19px; height: 19px; }
+    .hd__ico svg, .hd__ico img { width: 19px; height: 19px; }
 
     /* 콘텐츠 (단일 패널) */
     /* 프레임 테두리 = 헤더색(정적) · 다크·라이트 불변 */
@@ -78,7 +78,7 @@
     /* 채점표 */
     .rtable { display: flex; flex-direction: column; }
     .trow { display: grid; grid-template-columns: 56px minmax(180px, 300px) 84px 1fr 108px; align-items: center; gap: 12px; padding: 14px 10px; border-bottom: 1px solid var(--line-2); }
-    .trow[data-q] { cursor: pointer; border-radius: 10px; transition: background .12s; }
+    .trow[data-q] { cursor: pointer; transition: background .12s; }
     .trow[data-q]:hover { background: var(--th-tint); }
     :root[data-theme="dark"] .trow[data-q]:hover { background: var(--th-tint-strong); }
     .trow--head { border-bottom: 1px solid var(--line); }
@@ -91,6 +91,10 @@
     .lv--기본 { background: var(--info-tint); color: var(--info-ink); }
     .lv--실력 { background: var(--th-tint); color: var(--th-ink-accent); }
     .lv--심화 { background: var(--warn-tint); color: var(--warn-ink); }
+    /* 다크: tint 토큰이 라이트값 그대로라 전환 안 되고 실력(8% accent)은 거의 안 보임 → 다크 전용 반투명 배경 + 밝은 글자 */
+    :root[data-theme="dark"] .lv--기본 { background: color-mix(in srgb, var(--info-solid) 22%, transparent); color: var(--info-on-dark); }
+    :root[data-theme="dark"] .lv--실력 { background: color-mix(in srgb, var(--th-accent) 24%, transparent); color: var(--th-accent-hi); }
+    :root[data-theme="dark"] .lv--심화 { background: color-mix(in srgb, var(--warn-solid) 26%, transparent); color: var(--warn-on-dark); }
     .grade { justify-self: center; display: inline-flex; align-items: center; gap: 7px; font-size: 15px; font-weight: 600; }
     .grade__ic { width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; color: var(--n-000); flex: none; }
     .grade__ic svg { width: 11px; height: 11px; }
@@ -141,8 +145,8 @@
         </nav>
         <div class="hd__acts">
           <button class="toggle" id="themeToggle" title="라이트/다크 전환"><span class="toggle__k"></span></button>
-          <button class="hd__ico" title="알림"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 20h12M8 20v-5a4 4 0 0 1 8 0v5M12 4v2M5 8l1.5 1.5M19 8l-1.5 1.5"/></svg></button>
-          <button class="hd__ico" title="나가기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg></button>
+          <button class="hd__ico" title="알림"><img src="assets/figma/icons/ico-siren.svg" alt="알림" /></button>
+          <button class="hd__ico" title="나가기"><img src="assets/figma/icons/ico-exit.svg" alt="나가기" /></button>
         </div>
       </header>
 

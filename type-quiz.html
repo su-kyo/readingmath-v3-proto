@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>유형 훈련 · 1차 유형 문제 — 리딩수학과학</title>
-  <link rel="stylesheet" href="styles/tokens.css?v=17" />
+  <link rel="stylesheet" href="styles/tokens.css?v=18" />
   <link rel="stylesheet" href="styles/base.css?v=4" />
   <link rel="stylesheet" href="styles/components.css?v=5" />
   <link rel="stylesheet" href="styles/learn-shell.css?v=7" />
@@ -37,7 +37,8 @@
     :root[data-theme="light"] .ops::-webkit-scrollbar-thumb { background: rgba(20,60,52,.22); background-clip: padding-box; }
 
     /* ===== 상단 프로그레스 캡 (타이머 + 풀었다/미풀이) ===== */
-    .progress-cap { position: absolute; top: 0; left: 50%; transform: translateX(-50%); z-index: 4; display: inline-flex; align-items: center; gap: 8px; background: var(--n-650); border-radius: 0 0 16px 16px; padding: 0 16px 7px; max-width: calc(100% - 48px); flex-wrap: nowrap; }
+    /* cap = 콘텐츠 테두리(--th-static, teal)에 매달린 탭 → 같은 teal로 (라이트·다크 공통) */
+    .progress-cap { position: absolute; top: 0; left: 50%; transform: translateX(-50%); z-index: 4; display: inline-flex; align-items: center; gap: 8px; background: var(--th-static); border-radius: 0 0 16px 16px; padding: 0 16px 7px; max-width: calc(100% - 48px); flex-wrap: nowrap; }
     .cap-timer { display: inline-flex; align-items: center; gap: 6px; background: var(--n-900); border-radius: 999px; padding: 4px 12px 4px 10px; margin-right: 4px; }
     .cap-timer img { width: 17px; height: 17px; }
     .cap-timer span { font-family: var(--font-mono); font-weight: 700; color: var(--n-000); font-size: 15px; }
@@ -91,7 +92,8 @@
     .ops__foot { flex: none; display: flex; justify-content: center; padding: 10px 0 4px; }
     .btn-next { padding: 14px 44px; border-radius: 16px; background: var(--subj); color: var(--n-000); font-weight: 800; font-size: 18px; box-shadow: 0 4px 0 var(--th-accent-strong); }
     .btn-next:hover:not(:disabled) { filter: brightness(1.08); } .btn-next:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 2px 0 var(--th-accent-strong); }
-    .btn-next:disabled { background: var(--n-500); color: var(--text-muted); box-shadow: none; cursor: not-allowed; }
+    /* disabled: 라이트에서 text-muted가 n-500(배경)과 같은 색이라 안 보였음 → 테마 불변 n-200으로 */
+    .btn-next:disabled { background: var(--n-500); color: var(--n-200); box-shadow: none; cursor: not-allowed; }
     .btn-next[hidden] { display: none; }
 
     /* 하단바 = 유형 버전 (크림/베이지 트레이 + 틸 콘솔 데코) */
