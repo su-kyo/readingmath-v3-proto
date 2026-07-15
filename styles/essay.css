@@ -108,7 +108,7 @@
 
 /* ============ 하단바 = 서술형 버전 (퍼플 트레이 + 오렌지 CTA) ============ */
 /* 바이올렛 램프에 맞춘 값. 양옆 콘솔 데코 SVG(console-essay-*.svg)의 면색도 동일하게 맞춤. */
-.bar__mid { background: var(--n-100); }
+.bar__mid { background: #E2DEF5; }   /* [에셋연동 §3.5] console-essay SVG 상단 밴드 면색과 세트 (seamless) */
 .bar__tray { background: #C6BFEA; }   /* [에셋연동 §3.5] console-essay SVG 트레이 면색과 세트 */
 .toolbtn--primary { background: var(--primary); box-shadow: 0 4px 0 var(--primary-pressed); }
 .toolbtn--primary:hover { background: var(--primary-hover); }
