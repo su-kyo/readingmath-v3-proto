@@ -75,6 +75,7 @@
       font-family:inherit; font-size:13px; font-weight:800; cursor:pointer; white-space:nowrap;
       box-shadow:0 10px 22px -6px rgba(0,140,255,.75); animation:hintPulse 1.7s ease-in-out infinite; }
     .planet.is-center .planet__hint{ display:inline-flex; }
+    .fm.is-detail .planet.is-center .planet__hint{ display:none; }  /* 상세 열리면 목록보기 숨김 */
     .planet__hint svg{ width:16px; height:16px; }
     @keyframes hintPulse{ 0%,100%{ transform:translate(-50%,0);} 50%{ transform:translate(-50%,-5px);} }
 
@@ -132,6 +133,9 @@
     .detail__x{ width:32px; height:32px; border:0; background:transparent; color:var(--text-muted); cursor:pointer; display:grid; place-items:center; border-radius:8px; }
     .detail__x:hover{ background:var(--border); color:var(--n-000); }
     .detail__list{ flex:1; overflow-y:auto; }
+    /* 행성 전환 시 목록 내용 교체 페이드(opacity) — 바뀐 걸 인지시키기 위함 */
+    .detail__list.is-swap{ animation:dlSwap .5s ease both; }
+    @keyframes dlSwap{ from{ opacity:0; } to{ opacity:1; } }
     .detail__list::-webkit-scrollbar{ width:8px; } .detail__list::-webkit-scrollbar-thumb{ background:var(--surface-3); border-radius:50px; }
 
     /* 계통 상세: 학기 구분 헤더 */
@@ -186,6 +190,31 @@
     .star--x img{ filter:grayscale(1) brightness(1.4) opacity(.4); }
     .star__r{ position:absolute; right:-4px; bottom:-4px; width:15px; height:15px; border-radius:50%;
       background:var(--violet-500); border:1.5px solid var(--surface-1); color:var(--n-000); font-size:9.5px; font-weight:800; display:grid; place-items:center; }
+
+    /* 접힘 요약: 통통·둥근 아이콘 별 (색=등급: A금 B은 C동 S프리즘) */
+    .sub__mini{ display:flex; gap:2px; flex:none; align-items:center; margin-right:2px; }
+    .sub__mini svg{ display:block; }
+    .sub__done2{ display:inline-flex; align-items:center; gap:3px; padding:2px 8px; border-radius:13px;
+      background:color-mix(in srgb, var(--ok-on-dark) 22%, transparent); color:var(--ok-on-dark); font-size:11px; font-weight:800; flex:none; }
+    /* 펼침: C 하이브리드 (등급 별 + 3라운드 미니바) */
+    .hyb{ display:flex; gap:8px; }
+    .hyc{ flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; padding:11px 4px; border-radius:12px;
+      background:var(--surface-2); cursor:pointer; transition:background .14s; }
+    .hyc:hover{ background:var(--surface-3); }
+    .hyc__lab{ font-size:11.5px; font-weight:800; color:var(--th-accent-hi); }
+    .hyc__star{ width:34px; height:34px; display:grid; place-items:center; }
+    .hyc__star img{ width:34px; height:34px; object-fit:contain; display:block; }
+    .hyc__star img.x{ filter:grayscale(1) brightness(1.4) opacity(.4); }
+    .rbar{ display:flex; gap:3px; }
+    .rbar i{ width:11px; height:6px; border-radius:2px; background:var(--border); }
+    .rbar i.done{ background:var(--ok-on-dark); }
+    .rbar i.cur{ background:var(--th-accent); }
+    .examchip{ display:flex; align-items:center; gap:6px; width:100%; margin-top:8px; padding:11px 13px; border:0; border-radius:12px;
+      cursor:pointer; background:color-mix(in srgb, var(--violet-500) 20%, transparent); color:color-mix(in srgb, var(--violet-500) 48%, white);
+      font-family:inherit; font-size:12.5px; font-weight:800; text-align:left; }
+    .examchip .cr{ color:var(--warn-solid); }
+    .examchip__go{ margin-left:auto; }
+    .examchip:hover{ background:color-mix(in srgb, var(--violet-500) 30%, transparent); }
 
     .toast{ position:fixed; left:50%; bottom:30px; transform:translateX(-50%) translateY(16px); z-index:60;
       background:var(--surface-2); border:1px solid var(--border); color:var(--ink); padding:11px 18px;
@@ -301,24 +330,86 @@
     var SEM_UNITS = {
       'elem-3-1':[
         {no:1,name:'덧셈과 뺄셈',tag:'수와 연산',subs:[
-          sub(1,'받아올림이 없는 세 자리 수의 덧셈',true, G(3,'a'),G(2,'b'),G(1,'c'), CH.b),
-          sub(2,'받아올림이 있는 세 자리 수의 덧셈',false, G(1,'b'),G(1,null),G(1,null), CH.a)
+          sub(1,'받아올림이 없는 세 자리 수의 덧셈',true,  G(3,'a'),G(3,'a'),G(3,'b'), CH.d),
+          sub(2,'받아올림이 있는 세 자리 수의 덧셈',false, G(3,'b'),G(2,'b'),G(1,'c'), CH.b),
+          sub(3,'받아내림이 없는 세 자리 수의 뺄셈',false, G(2,'a'),G(1,'c'),G(1,null), CH.a),
+          sub(4,'받아내림이 있는 세 자리 수의 뺄셈',false, G(1,'b'),G(1,null),G(1,null), CH.a)
         ]},
         {no:2,name:'평면도형',tag:'도형',subs:[
-          sub(1,'선분, 직선, 반직선',false, G(1,'s'),G(2,'a'),G(1,null), CH.a)
+          sub(1,'선분, 직선, 반직선',false, G(1,'s'),G(2,'a'),G(1,null), CH.a),
+          sub(2,'각과 직각',false,          G(1,'b'),G(1,null),G(1,null), CH.a),
+          sub(3,'직각삼각형',false,          G(1,null),G(1,null),G(1,null), CH.c),
+          sub(4,'직사각형과 정사각형',false, G(1,null),G(1,null),G(1,null), CH.c)
         ]},
         {no:3,name:'나눗셈',tag:'수와 연산',subs:[
-          sub(1,'똑같이 나누어 보기',false, G(1,null),G(1,null),G(1,null), CH.c)
+          sub(1,'똑같이 나누어 보기',false,       G(2,'b'),G(1,'c'),G(1,null), CH.b),
+          sub(2,'곱셈과 나눗셈의 관계',false,      G(1,null),G(1,null),G(1,null), CH.c),
+          sub(3,'나눗셈의 몫 구하기',false,        G(1,null),G(1,null),G(1,null), CH.c)
+        ]},
+        {no:4,name:'곱셈',tag:'수와 연산',subs:[
+          sub(1,'(몇십)×(몇)',false,             G(1,'b'),G(1,null),G(1,null), CH.a),
+          sub(2,'(몇십몇)×(몇)',false,           G(1,null),G(1,null),G(1,null), CH.c),
+          sub(3,'올림이 있는 (몇십몇)×(몇)',false, G(1,null),G(1,null),G(1,null), CH.c)
+        ]},
+        {no:5,name:'길이와 시간',tag:'측정',subs:[
+          sub(1,'1mm를 알아볼까요',false,     G(1,null),G(1,null),G(1,null), CH.c),
+          sub(2,'1km를 알아볼까요',false,     G(1,null),G(1,null),G(1,null), CH.c),
+          sub(3,'시간의 합과 차',false,       G(1,null),G(1,null),G(1,null), CH.c)
+        ]},
+        {no:6,name:'분수와 소수',tag:'수와 연산',subs:[
+          sub(1,'분수를 알아볼까요',false,            G(1,null),G(1,null),G(1,null), CH.c),
+          sub(2,'분모가 같은 분수의 크기 비교',false, G(1,null),G(1,null),G(1,null), CH.c),
+          sub(3,'소수를 알아볼까요',false,            G(1,null),G(1,null),G(1,null), CH.c)
+        ]}
+      ],
+      'elem-3-2':[
+        {no:1,name:'곱셈',tag:'수와 연산',subs:[
+          sub(1,'(세 자리 수)×(한 자리 수)',false, G(1,'c'),G(1,null),G(1,null), CH.a),
+          sub(2,'(몇십)×(몇십)',false,            G(1,null),G(1,null),G(1,null), CH.c),
+          sub(3,'(몇십몇)×(몇십몇)',false,        G(1,null),G(1,null),G(1,null), CH.c)
+        ]},
+        {no:2,name:'나눗셈',tag:'수와 연산',subs:[
+          sub(1,'(몇십)÷(몇)',false,            G(1,null),G(1,null),G(1,null), CH.c),
+          sub(2,'나머지가 있는 나눗셈',false,     G(1,null),G(1,null),G(1,null), CH.c)
+        ]},
+        {no:3,name:'원',tag:'도형',subs:[
+          sub(1,'원의 중심, 반지름, 지름',false, G(1,null),G(1,null),G(1,null), CH.c),
+          sub(2,'원 그리기',false,               G(1,null),G(1,null),G(1,null), CH.c)
+        ]},
+        {no:4,name:'분수',tag:'수와 연산',subs:[
+          sub(1,'분수로 나타내기',false,     G(1,null),G(1,null),G(1,null), CH.c),
+          sub(2,'진분수, 가분수, 대분수',false, G(1,null),G(1,null),G(1,null), CH.c),
+          sub(3,'분수의 크기 비교',false,     G(1,null),G(1,null),G(1,null), CH.c)
+        ]},
+        {no:5,name:'들이와 무게',tag:'측정',subs:[
+          sub(1,'들이의 단위 (L, mL)',false, G(1,null),G(1,null),G(1,null), CH.c),
+          sub(2,'무게의 단위 (kg, g)',false, G(1,null),G(1,null),G(1,null), CH.c)
+        ]},
+        {no:6,name:'자료의 정리',tag:'자료와 가능성',subs:[
+          sub(1,'표에서 알 수 있는 내용',false, G(1,null),G(1,null),G(1,null), CH.c),
+          sub(2,'그림그래프',false,             G(1,null),G(1,null),G(1,null), CH.c)
         ]}
       ]
     };
     var GENERIC = [
       {no:1,name:'큰 수',tag:'수와 연산',subs:[
-        sub(1,'다섯 자리 수',false, G(1,'b'),G(1,null),G(1,null), CH.a),
-        sub(2,'십만, 백만, 천만',false, G(1,null),G(1,null),G(1,null), CH.c)
+        sub(1,'다섯 자리 수',false,       G(1,'b'),G(1,null),G(1,null), CH.a),
+        sub(2,'십만, 백만, 천만',false,   G(1,null),G(1,null),G(1,null), CH.c),
+        sub(3,'억과 조',false,            G(1,null),G(1,null),G(1,null), CH.c),
+        sub(4,'뛰어 세기와 수의 크기 비교',false, G(1,null),G(1,null),G(1,null), CH.c)
       ]},
       {no:2,name:'각도',tag:'측정',subs:[
-        sub(1,'각의 크기 재기',false, G(1,null),G(1,null),G(1,null), CH.c)
+        sub(1,'각의 크기 재기',false,     G(1,null),G(1,null),G(1,null), CH.c),
+        sub(2,'예각과 둔각',false,        G(1,null),G(1,null),G(1,null), CH.c),
+        sub(3,'각도의 합과 차',false,     G(1,null),G(1,null),G(1,null), CH.c)
+      ]},
+      {no:3,name:'곱셈과 나눗셈',tag:'수와 연산',subs:[
+        sub(1,'(세 자리 수)×(몇십)',false, G(1,null),G(1,null),G(1,null), CH.c),
+        sub(2,'(몇백몇십)÷(몇십)',false,   G(1,null),G(1,null),G(1,null), CH.c)
+      ]},
+      {no:4,name:'평면도형의 이동',tag:'도형',subs:[
+        sub(1,'점의 이동',false,     G(1,null),G(1,null),G(1,null), CH.c),
+        sub(2,'평면도형 밀기·뒤집기·돌리기',false, G(1,null),G(1,null),G(1,null), CH.c)
       ]}
     ];
     function unitsFor(key){ return SEM_UNITS[key] || GENERIC; }
@@ -342,6 +433,7 @@
 
     var STEP = 186 + 70;   // planet width + gap
     var state = { u:'elem', i:0, view:'semester', all:false };
+    var lastSem = 'elem-3-1';   // 허브로 넘길 현재 학기 키
     var track = document.getElementById('track');
     var detailEl = document.getElementById('detail');
     var trackX = 0, dragMoved = false;
@@ -397,6 +489,29 @@
     /* ============ unit 렌더 ============ */
     var CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
     var GOARW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
+    // ---- 등급 별 (색=등급): A금 B은 C동 · S프리즘(무지개)
+    var GCOL = { s:'#12BEC6', a:'#FFB000', b:'#7D9AC2', c:'#C77326' };
+    (function(){ if(document.getElementById('rmStarDefs')) return;
+      var d=document.createElement('div'); d.style.cssText='position:absolute;width:0;height:0;overflow:hidden';
+      d.innerHTML='<svg id="rmStarDefs" aria-hidden="true"><defs><linearGradient id="rmPrism" x1="0" y1="0" x2="1" y2="1">'
+        + '<stop offset="0" stop-color="#31E0C4"/><stop offset=".38" stop-color="#5FB6FF"/>'
+        + '<stop offset=".72" stop-color="#B78CF7"/><stop offset="1" stop-color="#FF93C8"/></linearGradient></defs></svg>';
+      document.body.appendChild(d);
+    })();
+    function miniStar(g){
+      var c = g ? (g==='s' ? 'url(#rmPrism)' : GCOL[g]) : '';
+      return '<svg viewBox="2 2 20 20" width="19" height="19" '
+        + (g ? 'fill="'+c+'" stroke="'+c+'" stroke-width="2.8"' : 'fill="none" stroke="var(--n-500)" stroke-width="2.4"')
+        + ' stroke-linejoin="round" stroke-linecap="round" role="img" aria-label="'+(g?g.toUpperCase()+'등급':'미획득')
+        + '"><path d="M12 4.2 14.7 8.7 19.8 9.6 16.3 13.4 16.9 18.6 12 16.4 7.1 18.6 7.7 13.4 4.2 9.6 9.3 8.7Z"/></svg>';
+    }
+    function gradeStarImg(g){ var a=g?'star-'+g:'star-b'; return '<span class="hyc__star"><img class="'+(g?'':'x')+'" src="assets/figma/'+a+'.svg" alt="'+(g?g.toUpperCase()+'등급':'미획득')+'"></span>'; }
+    // {round(지금 할 라운드), grade(최고)} → 3라운드 세그
+    function fmBar(rg){ rg=rg||{round:1,grade:null}; var segs=[]; for(var i=1;i<=3;i++){ segs.push(i<rg.round?'done':(i===rg.round?(rg.grade?'done':'cur'):'todo')); } return { best:rg.grade, segs:segs }; }
+    function crownOfFM(ch){ ch=ch||[]; return { crown: ch.filter(function(x){ return x==='mastered'; }).length, total: ch.length }; }
+    // 흐름 B: 훈련 선택 → curriculum 허브(해당 탭 켜진 채)
+    function goHub(tk){ location.href='curriculum.html?sem='+encodeURIComponent(lastSem)+'&tab='+tk; }
+
     function buildUnitEl(u, openFirst){
       var unit=document.createElement('div'); unit.className='unit';
       var col=F_TAGCOLOR[u.tag]||'var(--text-muted)';
@@ -404,30 +519,29 @@
       ttl.innerHTML='<span class="tag" style="background:color-mix(in srgb, '+col+' 22%, transparent);color:color-mix(in srgb, '+col+' 72%, white);box-shadow:inset 0 0 0 1px color-mix(in srgb, '+col+' 42%, transparent)">'+u.tag+'</span>'+u.no+'단원 · '+u.name;
       unit.appendChild(ttl);
       u.subs.forEach(function(s,si){
-        var sb=document.createElement('div'); sb.className='sub'+((openFirst&&si===0)?' is-open':'');
+        var sb=document.createElement('div'); sb.className='sub';  // 기본: 모두 닫힘
+        var cb=fmBar(s.t.concept), tb=fmBar(s.t.type), eb=fmBar(s.t.essay);
+        // 접힘 요약 = 작은 아이콘 별(색=등급) + (완료 시) 배지
         var head=document.createElement('div'); head.className='sub__head';
         head.innerHTML='<span class="sub__no">('+s.no+')</span><span class="sub__title">'+s.title+'</span>'
-          +(s.done?'<span class="sub__done">완료</span>':'')
-          +'<span class="sub__stars">'+starBadge(s.t.concept.grade,s.t.concept.round,'sm')+starBadge(s.t.type.grade,s.t.type.round,'sm')+starBadge(s.t.essay.grade,s.t.essay.round,'sm')+'</span>'
+          +(s.done?'<span class="sub__done2">✓ 완료</span>':'')
+          +'<span class="sub__mini">'+miniStar(cb.best)+miniStar(tb.best)+miniStar(eb.best)+'</span>'
           +'<span class="sub__chev">'+CHEV+'</span>';
         head.addEventListener('click', function(){ sb.classList.toggle('is-open'); });
         sb.appendChild(head);
+        // 펼침 = C 하이브리드(등급 별 + 라운드 미니바) → 타일 클릭 시 curriculum 허브로
         var body=document.createElement('div'); body.className='sub__body';
-        var row=document.createElement('div'); row.className='tbtns';
-        ['concept','type','essay'].forEach(function(tk){
-          var ti=s.t[tk];
-          var b=document.createElement('button'); b.className='tbtn';
-          b.innerHTML=starBadge(ti.grade,null,'md')+'<span class="tbtn__nm">'+F_TNAME[tk]+'</span><span class="tbtn__r">ROUND '+ti.round+'</span>';
-          b.addEventListener('click', function(){ location.href=F_TGO[tk]; });
-          row.appendChild(b);
+        var hyb=document.createElement('div'); hyb.className='hyb';
+        [['concept','개념',cb],['type','유형',tb],['essay','서술형',eb]].forEach(function(p){
+          var tk=p[0], nm=p[1], bar=p[2];
+          var seg=bar.segs.map(function(st){ return '<i class="'+(st==='todo'?'':st)+'"></i>'; }).join('');
+          var c=document.createElement('div'); c.className='hyc';
+          c.innerHTML='<span class="hyc__lab">'+nm+'</span>'+gradeStarImg(bar.best)+'<span class="rbar">'+seg+'</span>';
+          c.addEventListener('click', function(){ goHub(tk); });
+          hyb.appendChild(c);
         });
-        body.appendChild(row);
-        var chal=document.createElement('button'); chal.className='chal';
-        chal.innerHTML='<span class="chal__nm">유형 도전</span><span class="chal__chips">'
-          + (s.challenge||[]).map(function(st){ return '<span class="chip chip--'+st+'"></span>'; }).join('')
-          + '</span><span class="chal__go">'+GOARW+'</span>';
-        chal.addEventListener('click', function(){ location.href=CHAL_GO; });
-        body.appendChild(chal);
+        body.appendChild(hyb);
+        // (시험대비 크로스링크 제거 — freemode 드로어 = 커리큘럼 좌측 목록. 시험대비는 시험대비 모드에서 진입해서 봄)
         sb.appendChild(body); unit.appendChild(sb);
       });
       return unit;
@@ -435,6 +549,7 @@
 
     /* ============ 슬라이드인 상세 ============ */
     function fillDetail(item){
+      if(state.view==='semester') lastSem = item.key;
       document.getElementById('detailTtl').textContent = item.label;
       var host=document.getElementById('detailList'); host.innerHTML='';
       if(state.view==='semester'){
@@ -447,6 +562,8 @@
           grp.units.forEach(function(u,ui){ host.appendChild(buildUnitEl(u, gi===0&&ui===0)); });
         });
       }
+      // 목록 교체 페이드 재생(애니메이션 재시작을 위해 클래스 토글 + reflow)
+      host.classList.remove('is-swap'); void host.offsetWidth; host.classList.add('is-swap');
     }
     function openPlanet(item){ fillDetail(item); document.querySelector('.fm').classList.add('is-detail'); detailEl.classList.add('is-open'); }
     function closeDetail(){ document.querySelector('.fm').classList.remove('is-detail'); detailEl.classList.remove('is-open'); }

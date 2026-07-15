@@ -46,8 +46,9 @@
     .sub__no{ font-size:15px; font-weight:800; color:var(--item); }
     .sub__title{ flex:1; font-size:14.5px; font-weight:700; color:var(--item); letter-spacing:-.03em; }
     .sub__done{ font-size:12px; font-weight:800; color:var(--green); }
-    .sub__chev{ width:22px; height:22px; flex:none; display:grid; place-items:center; color:var(--item);
-      transition:transform .2s; }
+    .sub__chev{ width:34px; height:34px; flex:none; display:grid; place-items:center; color:var(--item);
+      border:0; background:transparent; cursor:pointer; border-radius:9px; padding:0; transition:transform .2s, background .14s; }
+    .sub__chev:hover{ background:var(--surface-3); }
     .sub.is-open .sub__chev{ transform:rotate(180deg); }
     .sub__chev svg{ width:14px; height:14px; }
 
@@ -109,12 +110,43 @@
     .chips{ display:flex; gap:4px; }
     .chip{ font-size:11px; font-weight:800; padding:2px 8px; border-radius:6px; }
 
+    /* 접힘 요약: 작고 심플한 아이콘 별 (색=등급) */
+    .sub__mini{ display:flex; gap:2px; flex:none; align-items:center; margin-right:2px; }
+    .sub__mini svg{ display:block; }
+    .sub__done2{ display:inline-flex; align-items:center; gap:3px; padding:2px 8px; border-radius:13px;
+      background:color-mix(in srgb, var(--green) 20%, transparent); color:var(--green); font-size:11px; font-weight:800; flex:none; }
+    /* 펼침: C 하이브리드 (등급 별 + 3라운드 미니바) */
+    .hyb{ display:flex; gap:8px; }
+    .hyc{ flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; padding:11px 4px; border-radius:12px;
+      background:var(--card2); cursor:pointer; transition:background .14s; }
+    .hyc:hover{ background:var(--surface-3); }
+    .hyc__lab{ font-size:11.5px; font-weight:800; color:var(--item); }
+    .hyc__star{ width:34px; height:34px; display:grid; place-items:center; }
+    .hyc__star img{ width:34px; height:34px; object-fit:contain; display:block; }
+    .hyc__star img.x{ filter:grayscale(1) brightness(1.4) opacity(.4); }
+    .rbar{ display:flex; gap:3px; }
+    .rbar i{ width:11px; height:6px; border-radius:2px; background:var(--border); }
+    .rbar i.done{ background:var(--green); }
+    .rbar i.cur{ background:var(--mint); }
+    /* 시험대비 칩 (소단원명 옆) */
+    .train__titlewrap{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin:8px 0 16px; }
+    .examchip{ display:inline-flex; align-items:center; gap:5px; padding:5px 12px; border-radius:18px; border:0; cursor:pointer;
+      background:color-mix(in srgb, var(--purple) 22%, transparent); color:color-mix(in srgb, var(--purple) 45%, white);
+      font-family:inherit; font-size:12.5px; font-weight:800; letter-spacing:-.02em; transition:background .14s; }
+    .examchip .cr{ color:var(--warn-solid); }
+    .examchip:hover{ background:color-mix(in srgb, var(--purple) 32%, transparent); }
+    /* 열린/잠긴 라운드 대비 */
+    .rcard--lock{ opacity:.5; border-style:dashed; background:transparent; }
+    .rcard--cur{ border-color:var(--th-accent); box-shadow:0 0 0 1px var(--th-accent); }
+    .step__grade{ width:34px; height:34px; flex:none; border-radius:10px; display:grid; place-items:center;
+      font-family:'Kode Mono',monospace; font-size:16px; font-weight:800; }
+
     /* ---- RIGHT: 훈련 패널 ---- */
     .train{ flex:1; min-width:0; display:flex; flex-direction:column; position:relative; }
     .train__head{ flex:none; padding:26px 36px 0; }
     .train__unit{ display:flex; align-items:center; gap:8px; font-size:16px; font-weight:700; color:var(--body); }
     .train__unit::before{ content:""; width:5px; height:17px; border-radius:3px; background:var(--mint); }
-    .train__title{ font-size:28px; font-weight:800; letter-spacing:-.04em; margin:8px 0 16px; }
+    .train__title{ font-size:28px; font-weight:800; letter-spacing:-.04em; margin:0; }
     .train__tabs{ display:flex; align-items:center; gap:6px; border-bottom:1px solid var(--line); }
     .ttab{ padding:9px 14px; font-size:16px; font-weight:800; color:var(--muted); cursor:pointer;
       border:0; background:transparent; font-family:inherit; border-bottom:2.5px solid transparent; margin-bottom:-1px;
@@ -213,7 +245,7 @@
       <main class="train">
         <div class="train__head">
           <div class="train__unit" id="trUnit">1단원 · 덧셈과 뺄셈</div>
-          <div class="train__title" id="trTitle">(1) 받아올림이 없는 세 자리 수의 덧셈</div>
+          <div class="train__titlewrap"><span class="train__title" id="trTitle">(1) 받아올림이 없는 세 자리 수의 덧셈</span><button class="examchip" id="trExam"></button></div>
           <div class="train__tabs" id="trTabs">
             <button class="ttab is-active" data-t="concept">개념 훈련</button>
             <button class="ttab" data-t="type">유형 훈련</button>
@@ -269,12 +301,13 @@
     var TNAME = { concept:'개념 훈련', type:'유형 훈련', essay:'서술형 훈련' };
 
     // 데모 데이터 (수학 초3-1)
-    var L=function(){return[{r:1,lock:true},{r:2,lock:true},{r:3,lock:true}];};
+    // 각 훈련의 1라운드는 항상 열림(open). 2·3라운드만 이전 완료 후 잠김.
+    var L=function(){return[{r:1,open:true},{r:2,lock:true},{r:3,lock:true}];};
     var UNITS = [
       { no:1, name:'덧셈과 뺄셈', tag:'수와 연산', subs:[
         { no:1, title:'받아올림이 없는 세 자리 수의 덧셈',
-          concept:[{r:1,g:'b'},{r:2,cur:true},{r:3,lock:true}],
-          type:[{r:1,g:'a',time:'12분'},{r:2,lock:true},{r:3,lock:true}],
+          concept:[{r:1,g:'b',sg:['b','a']},{r:2,cur:true},{r:3,lock:true}],
+          type:[{r:1,g:'a',sg:['a','a'],time:'12분'},{r:2,lock:true},{r:3,lock:true}],
           essay:[{r:1,open:true},{r:2,lock:true},{r:3,lock:true}],
           chal:['이해','미진행','미진행'] },
         { no:2, title:'받아올림이 있는 세 자리 수의 덧셈',
@@ -283,8 +316,8 @@
       { no:2, name:'평면도형', tag:'도형', subs:[
         { no:1, title:'선분, 직선, 반직선',
           concept:[{r:1,g:'s'},{r:2,g:'a'},{r:3,g:'b'}],
-          type:[{r:1,g:'a',time:'9분'},{r:2,g:'b',time:'22분',over:true},{r:3,cur:true}],
-          essay:[{r:1,g:'c'},{r:2,open:true},{r:3,lock:true}], chal:['정복','이해','보충'], done:true }
+          type:[{r:1,g:'a',sg:['a','a'],time:'9분'},{r:2,g:'b',sg:['b','c'],time:'22분',over:true},{r:3,g:'a',sg:['a','b']}],
+          essay:[{r:1,g:'c'},{r:2,g:'b'},{r:3,g:'c'}], chal:['정복','이해','보충'], done:true }
       ]},
       { no:3, name:'나눗셈', tag:'수와 연산', subs:[
         { no:1, title:'똑같이 나누어 보기', concept:[{r:1,open:true},{r:2,lock:true},{r:3,lock:true}], type:L(), essay:L(), chal:['미진행','미진행','미진행'] }
@@ -295,6 +328,14 @@
     ];
 
     var sel = { u:0, s:0, t:'concept' };
+    var openSet = { '0-0': true };   // 아코디언 열림(복수 가능) — 우측 보기(sel/border)와 독립
+    // 자유모드 등에서 넘어온 파라미터: 탭/단원/소단원 선택 (흐름 B)
+    (function(){
+      var t=qs.get('tab'); if(t && {concept:1,type:1,essay:1}[t]) sel.t=t;
+      var uu=parseInt(qs.get('unit'),10), ss=parseInt(qs.get('sub'),10);
+      if(!isNaN(uu) && UNITS[uu]){ sel.u=uu; sel.s=(!isNaN(ss)&&UNITS[uu].subs[ss])?ss:0; }
+      if(qs.get('tab')||qs.get('unit')){ openSet={}; openSet[sel.u+'-'+sel.s]=true; }
+    })();
 
     // ---- 별점수 배지 & 요약 (개념/유형/서술형: 가장 해야 할 라운드 하나)
     function starBadge(g, round, size){
@@ -341,6 +382,50 @@
       return wrap;
     }
 
+    // ---- 등급 색 (별 색만으로 등급 구분: A금 B은 C동 · S=프리즘(무지개))
+    var GCOL = { s:'#12BEC6', a:'#FFB000', b:'#7D9AC2', c:'#C77326' };
+    var GRANK = { s:4, a:3, b:2, c:1 };
+    // 프리즘(S등급) 별 = 무지개빛 그라데이션 (금·은·동과 확실히 구분)
+    (function(){ if(document.getElementById('rmStarDefs')) return;
+      var d=document.createElement('div'); d.style.cssText='position:absolute;width:0;height:0;overflow:hidden';
+      d.innerHTML='<svg id="rmStarDefs" aria-hidden="true"><defs>'
+        + '<linearGradient id="rmPrism" x1="0" y1="0" x2="1" y2="1">'
+        + '<stop offset="0" stop-color="#31E0C4"/><stop offset=".38" stop-color="#5FB6FF"/>'
+        + '<stop offset=".72" stop-color="#B78CF7"/><stop offset="1" stop-color="#FF93C8"/>'
+        + '</linearGradient></defs></svg>';
+      document.body.appendChild(d);
+    })();
+    // 접힘 요약용: 통통·둥근 아이콘 별 (색=등급, 미획득=외곽선). 라운드 스트로크로 귀엽게.
+    function miniStar(g){
+      var c = g ? (g==='s' ? 'url(#rmPrism)' : GCOL[g]) : '';
+      return '<svg viewBox="2 2 20 20" width="19" height="19" '
+        + (g ? 'fill="'+c+'" stroke="'+c+'" stroke-width="2.8"' : 'fill="none" stroke="var(--n-500)" stroke-width="2.4"')
+        + ' stroke-linejoin="round" stroke-linecap="round" role="img" aria-label="'+(g?g.toUpperCase()+'등급':'미획득')
+        + '"><path d="M12 4.2 14.7 8.7 19.8 9.6 16.3 13.4 16.9 18.6 12 16.4 7.1 18.6 7.7 13.4 4.2 9.6 9.3 8.7Z"/></svg>';
+    }
+    // 훈련 요약: 최고등급 + 3라운드 세그(done/cur/todo) + 정복여부
+    function trainBar(arr){
+      arr = arr || [];
+      var best=null, bestRank=0;
+      var segs = arr.map(function(o){
+        if(o.g){ if((GRANK[o.g]||0)>bestRank){ bestRank=GRANK[o.g]; best=o.g; } return 'done'; }
+        if(o.cur || o.open) return 'cur';
+        return 'todo';
+      });
+      while(segs.length<3) segs.push('todo');
+      return { best:best, segs:segs.slice(0,3), maxed: arr.length>0 && arr.every(function(o){ return !!o.g; }) };
+    }
+    // 펼침용: 현재 등급 별 에셋(그대로). 미획득=은별 탈색
+    function gradeStarImg(g){
+      var asset = g ? 'star-'+g : 'star-b';
+      return '<span class="hyc__star"><img class="'+(g?'':'x')+'" src="assets/figma/'+asset+'.svg" alt="'+(g?g.toUpperCase()+'등급':'미획득')+'"></span>';
+    }
+    // 시험대비 왕관 수 (데모: chal의 '정복' 수 / 전체)
+    function crownOf(s){
+      var chal = s.chal || [];
+      return { crown: chal.filter(function(x){ return x==='정복'; }).length, total: chal.length };
+    }
+
     // ---- 좌측 리스트 렌더
     function renderList(){
       var host=document.getElementById('currList'); host.innerHTML='';
@@ -351,38 +436,35 @@
         ttl.innerHTML='<span class="tag" style="background:color-mix(in srgb, '+col+' 22%, transparent);color:color-mix(in srgb, '+col+' 72%, white);box-shadow:inset 0 0 0 1px color-mix(in srgb, '+col+' 42%, transparent)">'+u.tag+'</span>'+u.no+'단원 · '+u.name;
         unit.appendChild(ttl);
         u.subs.forEach(function(s,si){
-          var sub=document.createElement('div'); sub.className='sub';
-          if(ui===sel.u&&si===sel.s){ sub.className+=' is-open is-sel'; }
-          var cs=trainSummary(s.concept), ts=trainSummary(s.type), es=trainSummary(s.essay);
+          var cb=trainBar(s.concept), tb=trainBar(s.type), eb=trainBar(s.essay);
+          var maxed = cb.maxed && tb.maxed && eb.maxed;   // 3훈련 × 3라운드 전부 완료
+          var sub=document.createElement('div');
+          sub.className='sub'+(openSet[ui+'-'+si]?' is-open':'')+((ui===sel.u&&si===sel.s)?' is-sel':'');
+
+          // 접힘 요약 = 작은 아이콘 별(색=등급) + (정복 시) 완료 배지
+          // 동작 분리: 이름 클릭 → 우측 전환(선택/border) · chevron 클릭 → 아코디언 토글(독립)
           var head=document.createElement('div'); head.className='sub__head';
           head.innerHTML='<span class="sub__no">('+s.no+')</span><span class="sub__title">'+s.title+'</span>'
-            + (s.done?'<span class="sub__done">완료</span>':'')
-            + '<span class="sub__stars">'+starBadge(cs.grade,cs.round,'sm')+starBadge(ts.grade,ts.round,'sm')+starBadge(es.grade,es.round,'sm')+'</span>'
-            + '<span class="sub__chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>';
-          head.addEventListener('click', function(){ selectSub(ui,si); });
+            + (maxed?'<span class="sub__done2">✓ 완료</span>':'')
+            + '<span class="sub__mini">'+miniStar(cb.best)+miniStar(tb.best)+miniStar(eb.best)+'</span>'
+            + '<button class="sub__chev" aria-label="상세 펼치기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>';
+          head.addEventListener('click', function(e){ if(e.target.closest('.sub__chev')) return; selectSub(ui,si); });
+          head.querySelector('.sub__chev').addEventListener('click', function(e){ e.stopPropagation(); toggleOpen(ui,si); });
           sub.appendChild(head);
+
+          // 펼침 = C 하이브리드 (현재 등급 별 + 3라운드 미니바)
           var body=document.createElement('div'); body.className='sub__body';
-          // 개념·유형·서술형 = 가장 해야 할 라운드 하나만 (별점수 + ROUND)
-          var row=document.createElement('div'); row.className='tbtns';
-          [['concept',cs],['type',ts],['essay',es]].forEach(function(pair){
-            var tk=pair[0], sum=pair[1];
-            var b=document.createElement('button'); b.className='tbtn'+((sel.t===tk&&ui===sel.u&&si===sel.s)?' is-sel':'');
-            b.innerHTML=starBadge(sum.grade,null,'md')+'<span class="tbtn__nm">'+TNAME[tk]+'</span><span class="tbtn__r">ROUND '+sum.round+'</span>';
-            b.addEventListener('click', function(){ selectSub(ui,si); selectTab(tk); });
-            row.appendChild(b);
+          var hyb=document.createElement('div'); hyb.className='hyb';
+          [['concept','개념',cb],['type','유형',tb],['essay','서술형',eb]].forEach(function(p){
+            var tk=p[0], nm=p[1], bar=p[2];
+            var seg=bar.segs.map(function(st){ return '<i class="'+(st==='todo'?'':st)+'"></i>'; }).join('');
+            var c=document.createElement('div'); c.className='hyc';
+            c.innerHTML='<span class="hyc__lab">'+nm+'</span>'+gradeStarImg(bar.best)+'<span class="rbar">'+seg+'</span>';
+            c.addEventListener('click', function(e){ e.stopPropagation(); selectSub(ui,si); selectTab(tk); });
+            hyb.appendChild(c);
           });
-          body.appendChild(row);
-          // 유형 도전
-          var chal=document.createElement('div'); chal.className='chal';
-          var chips='<div class="chips">';
-          (s.chal||[]).forEach(function(st){ var c=CHIP[st]||CHIP['미진행'];
-            chips+='<span class="chip" style="background:'+(c.bg==='transparent'?'transparent':c.bg)+';color:'+c.fg+';'+(c.dash?'border:1px dashed '+c.fg:'')+'">'+st+'</span>'; });
-          chips+='</div>';
-          chal.innerHTML='<span class="chal__l">유형 도전</span>'+chips;
-          chal.addEventListener('click', function(){ toast('유형 도전 — 준비 중입니다.'); });
-          body.appendChild(chal);
+          body.appendChild(hyb);
           sub.appendChild(body);
-          host.appendChild(sub!==host?sub:sub);
           unit.appendChild(sub);
         });
         host.appendChild(unit);
@@ -394,33 +476,44 @@
       var s=UNITS[sel.u].subs[sel.s], u=UNITS[sel.u];
       document.getElementById('trUnit').textContent=u.no+'단원 · '+u.name;
       document.getElementById('trTitle').textContent='('+s.no+') '+s.title;
+      var cr=crownOf(s), ex=document.getElementById('trExam');
+      if(ex){ ex.innerHTML='<span class="cr">👑</span> 시험대비 도전'+(cr.total?' '+cr.crown+'/'+cr.total:'')+' →'; }
       document.querySelectorAll('.ttab').forEach(function(b){ b.classList.toggle('is-active', b.dataset.t===sel.t); });
       var body=document.getElementById('trBody'); body.innerHTML='';
       var rounds=s[sel.t]||[];
       rounds.forEach(function(o){
-        var card=document.createElement('div'); card.className='rcard';
+        var card=document.createElement('div'); card.className='rcard'+(o.lock?' rcard--lock':(o.cur?' rcard--cur':''));
         var top=document.createElement('div'); top.className='rcard__top';
         top.innerHTML='<span class="rcard__bar" style="background:'+(o.lock?'var(--n-500)':'var(--mint)')+'"></span><span class="rcard__name">Round '+o.r+'</span>';
-        if(o.g){ var gi=document.createElement('div'); gi.className='rcard__grade'; gi.innerHTML='<img src="assets/figma/grade-'+o.g+'.png" width="40" height="40">'; top.appendChild(gi); }
+        // 라운드 = 별 점수
+        if(o.g){ var gi=document.createElement('div'); gi.className='rcard__grade'; gi.innerHTML='<img src="assets/figma/star-'+o.g+'.svg" width="38" height="38" alt="'+o.g.toUpperCase()+'등급">'; top.appendChild(gi); }
         else if(o.lock){ var lm=document.createElement('span'); lm.className='rcard__lockmsg'; lm.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> 이전 라운드 완료 후 열려요'; top.appendChild(lm); }
         else if(o.cur){ var cm=document.createElement('span'); cm.className='rcard__lockmsg'; cm.style.color='var(--mint)'; cm.textContent='진행중'; top.appendChild(cm); }
         card.appendChild(top);
-        var steps=document.createElement('div'); steps.className='steps';
-        STEPS[sel.t].forEach(function(st,i){
-          var step=document.createElement('div'); step.className='step'+(o.lock?' is-lock':'');
-          var stat = o.lock?['is-todo','시작 전']:(o.g?['is-done','완료']:(o.cur?(i===0?['is-cur','진행중']:['is-todo','시작 전']):['is-todo','시작 전']));
-          step.innerHTML='<div class="step__i"><div class="step__k">'+st[0]+'</div><div class="step__n">'+st[1]+'</div><div class="step__s '+stat[0]+'">'+stat[1]+'</div></div>'
-            +'<div class="step__go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>';
-          if(!o.lock){ step.addEventListener('click', function(){ location.href=st[2]; }); }
-          steps.appendChild(step);
-        });
-        card.appendChild(steps);
+        // 잠긴 라운드 = 스텝 접기 (표시 안 함)
+        if(!o.lock){
+          var steps=document.createElement('div'); steps.className='steps'; steps.style.marginTop='16px';
+          STEPS[sel.t].forEach(function(st,i){
+            var sg = (o.sg && o.sg[i]) ? o.sg[i] : (o.g||null);
+            var step=document.createElement('div'); step.className='step';
+            var stat = o.g?['is-done','완료']:(o.cur?(i===0?['is-cur','진행중']:['is-todo','시작 전']):['is-todo','시작 전']);
+            // 스텝 = 알파벳 점수(완료 시) / 아니면 이동 화살표
+            var rightEl = (o.g && sg)
+              ? '<div class="step__grade" style="color:'+GCOL[sg]+';background:color-mix(in srgb, '+GCOL[sg]+' 20%, transparent)">'+sg.toUpperCase()+'</div>'
+              : '<div class="step__go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>';
+            step.innerHTML='<div class="step__i"><div class="step__k">'+st[0]+'</div><div class="step__n">'+st[1]+'</div><div class="step__s '+stat[0]+'">'+stat[1]+'</div></div>'+rightEl;
+            step.addEventListener('click', function(){ location.href=st[2]; });
+            steps.appendChild(step);
+          });
+          card.appendChild(steps);
+        }
         body.appendChild(card);
       });
     }
 
     function selectSub(ui,si){ sel.u=ui; sel.s=si; renderList(); renderPanel(); }
     function selectTab(tk){ sel.t=tk; renderList(); renderPanel(); }
+    function toggleOpen(ui,si){ var k=ui+'-'+si; if(openSet[k]) delete openSet[k]; else openSet[k]=true; renderList(); }
 
     document.getElementById('trTabs').addEventListener('click', function(e){
       var b=e.target.closest('.ttab'); if(b) selectTab(b.dataset.t);
@@ -440,6 +533,8 @@
     // 네비
     document.querySelectorAll('[data-go]').forEach(function(b){ b.addEventListener('click', function(){ location.href=b.getAttribute('data-go'); }); });
     document.getElementById('homeBtn').addEventListener('click', function(){ location.href='home.html?subject='+subject+'&sem='+sem; });
+    // 유형 도전 → 시험 대비
+    document.getElementById('trExam').addEventListener('click', function(){ location.href='exam-home.html'; });
     // 메뉴 → 공용 사이드 드로어 (gnb-drawer.js)
 
     renderList(); renderPanel();
