@@ -240,7 +240,7 @@
   --th-accent-hi: var(--blue-300);
   --th-ink-accent: var(--blue-600);
   --th-chip: var(--blue-050);
-  --th-panel: var(--n-100);
+  --th-panel: var(--n-000);   /* 콘텐츠 패널 = 라이트에서 흰색 (다크는 .content 규칙이 surface-1로 덮음) */
 }
 
 /* 유형 (teal) — static 700 */
@@ -251,7 +251,7 @@
   --th-accent-hi: var(--teal-300);
   --th-ink-accent: var(--teal-600);
   --th-chip: var(--teal-050);
-  --th-panel: var(--n-100);
+  --th-panel: var(--n-000);   /* 콘텐츠 패널 = 라이트에서 흰색 */
 }
 
 /* 서술형 (violet) — static 800 (가장 깊은 프레임) */
@@ -262,7 +262,7 @@
   --th-accent-hi: var(--violet-300);
   --th-ink-accent: var(--violet-600);
   --th-chip: var(--violet-050);
-  --th-panel: var(--n-050);
+  --th-panel: var(--n-000);   /* 콘텐츠 패널 = 라이트에서 흰색 */
 }
 
 /* 시험대비 (violet) — static 700 */
@@ -320,6 +320,17 @@
   --subject-essay: var(--violet-800);
   --subject-concept-soft: var(--blue-400);
   --subject-essay-soft: var(--violet-300);
+
+  /* 학습 계통(academic lineage) 색 — 과목 태그 뱃지용. 채도 있는 400스텝으로 통일해
+     페이지가 한 톤(네이비)으로 죽지 않도록 계통마다 뚜렷한 포인트를 준다. */
+  --subj-num:   var(--blue-400);    /* 수와 연산 · 문자와 식 · 변화와 관계 */
+  --subj-geo:   var(--amber-400);   /* 도형 · 측정 · 기하 · 도형과 측정 */
+  --subj-data:  var(--red-400);     /* 자료와 가능성 · 확률과 통계 · 지구과학 */
+  --subj-rel:   var(--violet-400);  /* 규칙성 · 함수 · 통합과학 */
+  --subj-phys:  var(--teal-400);    /* 물리 */
+  --subj-chem:  var(--cyan-400);    /* 화학 */
+  --subj-bio:   var(--green-400);   /* 생명과학 */
+  --subj-explore: var(--orange-400);/* 탐구 */
   --static-concept: var(--blue-700);
   --static-type: var(--teal-700);
   --static-essay: var(--violet-800);

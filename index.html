@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>리딩수학과학 · 리디자인</title>
-  <link rel="stylesheet" href="styles/tokens.css?v=15" />
-  <link rel="stylesheet" href="styles/base.css?v=3" />
+  <link rel="stylesheet" href="styles/tokens.css?v=17" />
+  <link rel="stylesheet" href="styles/base.css?v=4" />
   <link rel="stylesheet" href="styles/components.css?v=5" />
   <style>
     .hero { max-width: 760px; margin: 0 auto; padding: 96px var(--space-6) 120px; }
@@ -29,6 +29,10 @@
     .nav-item:hover { background: var(--surface-2); }
     .nav-item small { color: var(--text-dim); }
     .soon { opacity: .5; pointer-events: none; }
+
+    /* 큰 구분: 학습 블록 → 메인/기타 블록 */
+    .nav-divider { margin-top: var(--space-8); padding-top: var(--space-4); border-top: 2px dashed var(--surface-3);
+      color: var(--text-dim); font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
   </style>
 </head>
 <body>
@@ -36,105 +40,43 @@
     <p class="badge badge--round">RE·DESIGN PROTOTYPE</p>
     <h1 class="text-display" style="margin-top:16px">리딩수학과학 리디자인</h1>
     <p class="u-muted" style="margin-top:12px">
-      HTML · CSS · JS로 만드는 클릭 가능한 프로토타입. <strong>학습 플로우 순서</strong>로 정리했어요 —
-      개념 → 유형 → 서술형 훈련, 그다음 과제·시험. (개념/서술형 콘텐츠는 수학·과학이 같은 화면을 공유합니다.)
+      HTML · CSS · JS로 만드는 클릭 가능한 프로토타입. <strong>학습 화면을 상단</strong>에,
+      홈·메뉴·유틸리티를 하단에 정리했어요 — 개념 → 유형 → 서술형 → 과제 → 시험, 그다음 메인 홈·네비게이션.
+      (개념/서술형 콘텐츠는 수학·과학이 같은 화면을 공유합니다.)
     </p>
 
-    <!-- A층 · 홈/네비게이션 -->
-    <section class="nav-group">
-      <div class="nav-group__head">
-        <span class="nav-group__dot" style="background:var(--blue-400)"></span>
-        <span class="nav-group__title">A층 · 홈 / 네비게이션</span>
-        <span class="nav-group__meta">브릿지 → 행성 홈 → 커리큘럼 · 자유모드 · 별 우주 배경 (신규)</span>
-      </div>
-      <nav class="nav-list">
-        <a class="nav-item" href="bridge.html">
-          <span><strong><span class="nav-step">진입</span>브릿지 · 과목 선택</strong><br /><small>수학/과학 이어서학습 카드 · 다음부터 자동 진입 · 로그아웃 · 별 우주 배경</small></span>
-          <span class="badge badge--correct">NEW</span>
-        </a>
-        <a class="nav-item" href="home.html?subject=math&amp;sem=elem-3-1">
-          <span><strong><span class="nav-step">홈</span>기본모드 행성 홈</strong><br /><small>2:1 실사 배경 + 오브젝트 6종·캐릭터·말풍선·CTA · 6화면(수·과 × 초3-1·중3-1·중3-2) · 반응형 safe-area · 사이드 드로어(메뉴)</small></span>
-          <span class="badge badge--correct">NEW</span>
-        </a>
-        <a class="nav-item" href="curriculum.html?subject=math&amp;sem=elem-3-1">
-          <span><strong><span class="nav-step">커리큘럼</span>학기 상세 커리큘럼</strong><br /><small>대단원(계열 태그)→소단원 아코디언→개념/유형/서술형 라운드·별·lock · 훈련안내 모달 · 우측 훈련 토글</small></span>
-          <span class="badge badge--correct">NEW</span>
-        </a>
-        <a class="nav-item" href="freemode.html">
-          <span><strong><span class="nav-step">자유</span>자유모드 · 행성 캐러셀</strong><br /><small>초등↔중고등 우주 전환 · 학기/계통·모두보기 토글 · 학기 썸네일 16종 · 모두보기 그리드</small></span>
-          <span class="badge badge--correct">NEW</span>
-        </a>
-      </nav>
-    </section>
-
-    <!-- 유틸리티 · 기타 기능 -->
-    <section class="nav-group">
-      <div class="nav-group__head">
-        <span class="nav-group__dot" style="background:var(--blue-500)"></span>
-        <span class="nav-group__title">유틸리티 · 기타 기능</span>
-        <span class="nav-group__meta">라이트 문서형 · 브랜드 톤 · 히어로 제거 · 공용 셸(util.css) (신규)</span>
-      </div>
-      <nav class="nav-list">
-        <a class="nav-item" href="notice.html">
-          <span><strong><span class="nav-step">공지</span>공지사항 · 목록/상세</strong><br /><small>컴팩트 헤더 + 필터 세그 · 문서 테이블 · 페이지네이션 · 상세(카테고리/본문/첨부/이전·다음)</small></span>
-          <span class="badge badge--correct">NEW</span>
-        </a>
-        <a class="nav-item" href="report.html">
-          <span><strong><span class="nav-step">보고서</span>월간보고서 · 목록</strong><br /><small>리포트 런처(새 창 연동 예정) · 문서 테이블 · 호버 시 열기 힌트</small></span>
-          <span class="badge badge--correct">NEW</span>
-        </a>
-        <a class="nav-item" href="payment.html">
-          <span><strong><span class="nav-step">결제</span>이용권 결제</strong><br /><small>과목 탭 · 혜택 · 기간 플랜(할인) · 결제수단 · 우측 sticky 주문요약 · 쿠폰 (결제는 데모)</small></span>
-          <span class="badge badge--correct">NEW</span>
-        </a>
-      </nav>
-    </section>
-
-    <!-- 기반 -->
-    <section class="nav-group">
-      <div class="nav-group__head">
-        <span class="nav-group__dot" style="background:var(--n-300)"></span>
-        <span class="nav-group__title">기반</span>
-        <span class="nav-group__meta">디자인 시스템</span>
-      </div>
-      <nav class="nav-list">
-        <a class="nav-item" href="styleguide.html">
-          <span><strong>디자인 시스템</strong><br /><small>토큰 · 컴포넌트 (Phase 0)</small></span>
-          <span class="badge badge--correct">완료</span>
-        </a>
-      </nav>
-    </section>
+    <!-- ============================ 학습 화면 ============================ -->
 
     <!-- 개념 훈련 -->
     <section class="nav-group">
       <div class="nav-group__head">
         <span class="nav-group__dot" style="background:var(--blue-700)"></span>
         <span class="nav-group__title">개념 훈련</span>
-        <span class="nav-group__meta">학습 → 결과 · 블루</span>
+        <span class="nav-group__meta">끊어읽기 · 요약 → 다지기 → 결과 · 블루</span>
       </div>
       <nav class="nav-list">
-        <a class="nav-item" href="concept-organize.html">
-          <span><strong><span class="nav-step">학습</span>개념 정리하기</strong><br /><small>끊어읽기 재사용 · 지문 2개 사이클(stepper) · 요약 파트 클릭→요약본 팝 · 개념 다지기로</small></span>
-          <span class="badge badge--new">NEW</span>
-        </a>
         <a class="nav-item" href="learn-concept.html">
-          <span><strong><span class="nav-step">학습</span>개념 학습 <em>(과학)</em></strong><br /><small>끊어읽기 · 진입 시 <b>YouTube 개념 영상 레이어</b>(dim) · 하단바 '개념 영상 보기'로 재호출 · 라이트/다크</small></span>
+          <span><strong><span class="nav-step">끊어읽기</span>개념 학습 <em>(과학)</em></strong><br /><small>끊어읽기 · 진입 시 <b>YouTube 개념 영상 레이어</b>(dim) · 하단바 '개념 영상 보기'로 재호출 · 라이트/다크</small></span>
           <span class="badge badge--correct">완료</span>
         </a>
+        <a class="nav-item" href="concept-organize.html">
+          <span><strong><span class="nav-step">요약 모달</span>개념 요약하기</strong><br /><small>끊어읽기 재사용 · 지문 2개 사이클(stepper) · 요약 파트 클릭→요약 노트에 정리 · 개념 다지기로</small></span>
+          <span class="badge badge--new">NEW</span>
+        </a>
         <a class="nav-item" href="learn-concept-drill.html">
-          <span><strong><span class="nav-step">학습</span>개념 다지기</strong><br /><small>빈칸·객관식·주관식 혼합 5문제 · 계산기 키패드 · 즉시 채점</small></span>
+          <span><strong><span class="nav-step">다지기</span>개념 다지기</strong><br /><small>빈칸·객관식·주관식 혼합 5문제 · 계산기 키패드 · 즉시 채점</small></span>
           <span class="badge badge--correct">완료</span>
         </a>
         <a class="nav-item" href="learn-basic-ops.html">
-          <span><strong><span class="nav-step">학습</span>기초 연산</strong><br /><small>14문제 · 객관식/주관식/분수 · 즉시 채점 + 프로그레스</small></span>
+          <span><strong><span class="nav-step">기초 연산</span>기초 연산</strong><br /><small>14문제 · 객관식/주관식/분수 · 즉시 채점 + 프로그레스</small></span>
           <span class="badge badge--correct">완료</span>
         </a>
         <a class="nav-item" href="step-result.html">
-          <span><strong><span class="nav-step">결과</span>스텝 결과</strong><br /><small>활동별 2행(개념 요약하기·개념 다지기)+전체 · 학습 진행 현황(버튼화·시작 모달)</small></span>
+          <span><strong><span class="nav-step">스텝 결과</span>스텝 결과</strong><br /><small>활동별 2행(개념 요약하기·개념 다지기)+전체 · 학습 진행 현황(버튼화·시작 모달)</small></span>
           <span class="badge badge--correct">완료</span>
         </a>
         <a class="nav-item" href="training-result.html">
-          <span><strong><span class="nav-step">결과</span>학습 결과</strong><br /><small>블루 · 총점 별카드 + 3단계 표(등급/정답/정답률/보기) + 코멘트</small></span>
+          <span><strong><span class="nav-step">학습 결과</span>학습 결과</strong><br /><small>블루 · 총점 별카드 + 3단계 표(등급/정답/정답률/보기) + 코멘트</small></span>
           <span class="badge badge--new">NEW</span>
         </a>
       </nav>
@@ -145,23 +87,23 @@
       <div class="nav-group__head">
         <span class="nav-group__dot" style="background:var(--teal-700)"></span>
         <span class="nav-group__title">유형 훈련</span>
-        <span class="nav-group__meta">풀이 → 결과 → 해설 · 틸</span>
+        <span class="nav-group__meta">풀이 → 해설 → 결과 · 틸</span>
       </div>
       <nav class="nav-list">
         <a class="nav-item" href="type-quiz.html">
-          <span><strong><span class="nav-step">풀이</span>1차 유형 문제</strong><br /><small>틸 테마 · 타이머 · 10문제 · 전부 풀고 제출</small></span>
-          <span class="badge badge--correct">완료</span>
-        </a>
-        <a class="nav-item" href="type-result.html">
-          <span><strong><span class="nav-step">결과</span>유형 스텝 결과</strong><br /><small>틸/그린 · 등급·정답률·해설 보기 · 4스텝 진행현황</small></span>
+          <span><strong><span class="nav-step">풀이</span>유형 훈련 (공통 템플릿)</strong><br /><small>틸 테마 · 타이머 · 10문제 · 전부 풀고 제출 · 1차/2차 공용</small></span>
           <span class="badge badge--correct">완료</span>
         </a>
         <a class="nav-item" href="type-review.html">
           <span><strong><span class="nav-step">해설</span>유형 해설 보기</strong><br /><small>내 답+정오답 · 오답 해설 · 화살표/오답점프 · 타이머 pause</small></span>
           <span class="badge badge--correct">완료</span>
         </a>
+        <a class="nav-item" href="type-result.html">
+          <span><strong><span class="nav-step">스텝 결과</span>유형 스텝 결과</strong><br /><small>틸/그린 · 등급·정답률·해설 보기 · 4스텝 진행현황</small></span>
+          <span class="badge badge--correct">완료</span>
+        </a>
         <a class="nav-item" href="type-training-result.html">
-          <span><strong><span class="nav-step">결과</span>학습 결과</strong><br /><small>틸/그린 · 총점 별카드 + 4단계 표(등급/정답/정답률/보기) + 코멘트</small></span>
+          <span><strong><span class="nav-step">학습 결과</span>학습 결과</strong><br /><small>틸/그린 · 총점 별카드 + 4단계 표(등급/정답/정답률/보기) + 코멘트</small></span>
           <span class="badge badge--new">NEW</span>
         </a>
       </nav>
@@ -172,28 +114,28 @@
       <div class="nav-group__head">
         <span class="nav-group__dot" style="background:var(--violet-800)"></span>
         <span class="nav-group__title">서술형 훈련</span>
-        <span class="nav-group__meta">Step1 → 2 → 3 → 결과 · 퍼플</span>
+        <span class="nav-group__meta">세로 레이아웃 = 기본 · Step1 → 2 → 3 → 결과 · 퍼플</span>
       </div>
       <nav class="nav-list">
-        <a class="nav-item" href="essay-basics.html">
-          <span><strong><span class="nav-step">Step1</span>기초 기르기</strong><br /><small>좌 문제 / 우 단계별 풀이 · 빈칸 드롭다운(객관식 세로/주관식 키패드) 입력</small></span>
-          <span class="badge badge--correct">완료</span>
-        </a>
         <a class="nav-item" href="essay-basics-v2.html">
-          <span><strong><span class="nav-step">Step1 · v2</span>기초 기르기 (세로 레이아웃)</strong><br /><small>2분할 → 세로 단일 스크롤 · 문제 카드 열고 접기 + 스크롤 시 상단 스티키 · 동작 동일</small></span>
-          <span class="badge badge--new">v2</span>
+          <span><strong><span class="nav-step">Step1 · 기본</span>기초 기르기 (세로 레이아웃)</strong><br /><small>세로 단일 스크롤 · 문제 카드 열고 접기 + 스크롤 시 상단 스티키 · <b>기본 레이아웃</b></small></span>
+          <span class="badge badge--correct">기본</span>
         </a>
-        <a class="nav-item" href="essay-drill.html">
-          <span><strong><span class="nav-step">Step2</span>기본 다지기</strong><br /><small>끊어읽기(마지막 탭→풀이 시작) → 빈칸 맞추기 → 순서 맞추기 · 진입 버튼 콘텐츠 하단</small></span>
-          <span class="badge badge--correct">완료</span>
+        <a class="nav-item" href="essay-basics.html">
+          <span><strong><span class="nav-step">Step1 · 가로</span>기초 기르기 (가로 레이아웃)</strong><br /><small>좌 문제 / 우 단계별 풀이 · 빈칸 드롭다운(객관식 세로/주관식 키패드) · 이전 레이아웃</small></span>
+          <span class="badge">가로</span>
         </a>
         <a class="nav-item" href="essay-drill-v2.html">
-          <span><strong><span class="nav-step">Step2 · v2</span>기본 다지기 (세로 레이아웃)</strong><br /><small>세로 단일 스크롤 + 문제 카드 상단 스티키 · 순서 맞추기 블록 트레이를 채울 문장 바로 아래로 이동 · 동작 동일</small></span>
-          <span class="badge badge--new">v2</span>
+          <span><strong><span class="nav-step">Step2 · 기본</span>기본 다지기 (세로 레이아웃)</strong><br /><small>세로 단일 스크롤 + 문제 카드 상단 스티키 · 끊어읽기 모달 → 빈칸 맞추기 → 순서 맞추기 · <b>기본 레이아웃</b></small></span>
+          <span class="badge badge--correct">기본</span>
         </a>
         <a class="nav-item" href="essay-drill-review.html">
-          <span><strong><span class="nav-step">Step2 해설</span>기본 다지기 채점</strong><br /><small>빈칸/순서 정오답 표시 · 오답 클릭→내 답↔정답 토글 · 문제 네비(◁ 1/3 ▷)</small></span>
-          <span class="badge badge--new">NEW</span>
+          <span><strong><span class="nav-step">Step2 해설</span>기본 다지기 채점</strong><br /><small>빈칸/순서 정오답(코너 뱃지) · 오답 클릭→내 답↔정답 토글 · 문제 네비(◁ 1/3 ▷)</small></span>
+          <span class="badge badge--new">해설</span>
+        </a>
+        <a class="nav-item" href="essay-drill.html">
+          <span><strong><span class="nav-step">Step2 · 가로</span>기본 다지기 (가로 레이아웃)</strong><br /><small>2분할 · 끊어읽기 → 빈칸 맞추기 → 순서 맞추기 · 이전 레이아웃</small></span>
+          <span class="badge">가로</span>
         </a>
         <a class="nav-item" href="essay-advanced.html">
           <span><strong><span class="nav-step">Step3</span>실력 키우기</strong><br /><small>Step1 폼 동일 · 심화 문제(사과 나눗셈: 몫·나머지) · 빈칸 드롭다운 → 스텝 결과</small></span>
@@ -204,15 +146,15 @@
           <span class="badge badge--correct">완료</span>
         </a>
         <a class="nav-item" href="essay-report-review.html">
-          <span><strong><span class="nav-step">Step3 해설 · 과학</span>탐구활동 보고서 채점</strong><br /><small>보고서 빈칸 정오답 표시 · 오답 클릭→내 답↔정답 토글 · <b>추천 보고서</b>(모범 답안) 모달</small></span>
-          <span class="badge badge--new">NEW</span>
+          <span><strong><span class="nav-step">Step3 해설 · 과학</span>탐구활동 보고서 채점</strong><br /><small>보고서 빈칸 정오답 · 오답 클릭→내 답↔정답 토글 · <b>추천 보고서</b>(모범 답안) 모달</small></span>
+          <span class="badge badge--new">해설</span>
         </a>
         <a class="nav-item" href="essay-step-result.html">
-          <span><strong><span class="nav-step">결과</span>스텝 결과</strong><br /><small>퍼플 2패널 · [등급]/정답률/진행바 · 문항별 정답 n/m·정답률 · 학습 진행 현황 3스텝</small></span>
+          <span><strong><span class="nav-step">스텝 결과</span>스텝 결과</strong><br /><small>퍼플 2패널 · [등급]/정답률/진행바 · 문항별 정답 n/m·정답률 · 학습 진행 현황 3스텝</small></span>
           <span class="badge badge--correct">완료</span>
         </a>
         <a class="nav-item" href="essay-training-result.html">
-          <span><strong><span class="nav-step">결과</span>학습 결과</strong><br /><small>퍼플 단일 패널 · 총점 별카드 + 단계별 표(등급/정답/정답률/보기) + 코멘트 · 오답노트/홈으로</small></span>
+          <span><strong><span class="nav-step">학습 결과</span>학습 결과</strong><br /><small>퍼플 단일 패널 · 총점 별카드 + 단계별 표(등급/정답/정답률/보기) + 코멘트 · 오답노트/홈으로</small></span>
           <span class="badge badge--new">NEW</span>
         </a>
       </nav>
@@ -250,7 +192,7 @@
       <div class="nav-group__head">
         <span class="nav-group__dot" style="background:var(--violet-700)"></span>
         <span class="nav-group__title">시험 대비</span>
-        <span class="nav-group__meta">홈 → 풀이 · 공통</span>
+        <span class="nav-group__meta">홈 → 문제 풀이 · 공통</span>
       </div>
       <nav class="nav-list">
         <a class="nav-item" href="exam-home.html">
@@ -258,7 +200,75 @@
           <span class="badge badge--correct">완료</span>
         </a>
         <a class="nav-item" href="exam-solve.html">
-          <span><strong><span class="nav-step">풀이</span>시험 문제 풀이</strong><br /><small>에디토리얼 · 선택→제출→채점→해설 · 조건박스/이미지/단열 3유형</small></span>
+          <span><strong><span class="nav-step">문제 풀이</span>시험 문제 풀이</strong><br /><small>에디토리얼 · 선택→제출→채점→해설 · 조건박스/이미지/단열 3유형</small></span>
+          <span class="badge badge--correct">완료</span>
+        </a>
+      </nav>
+    </section>
+
+    <!-- ============================ 메인 · 기타 ============================ -->
+    <p class="nav-divider">메인 · 홈 / 메뉴 / 유틸리티</p>
+
+    <!-- 메인 · 홈 / 네비게이션 -->
+    <section class="nav-group">
+      <div class="nav-group__head">
+        <span class="nav-group__dot" style="background:var(--blue-400)"></span>
+        <span class="nav-group__title">메인 · 홈 / 네비게이션</span>
+        <span class="nav-group__meta">행성 홈 → 커리큘럼 · 브릿지 · 자유모드 · 별 우주 배경</span>
+      </div>
+      <nav class="nav-list">
+        <a class="nav-item" href="home.html?subject=math&amp;sem=elem-3-1">
+          <span><strong><span class="nav-step">홈</span>기본모드 행성 홈</strong><br /><small>2:1 실사 배경 + 오브젝트 6종·캐릭터·말풍선·CTA · 6화면(수·과 × 초3-1·중3-1·중3-2) · 반응형 safe-area · 사이드 드로어(메뉴)</small></span>
+          <span class="badge badge--correct">NEW</span>
+        </a>
+        <a class="nav-item" href="curriculum.html?subject=math&amp;sem=elem-3-1">
+          <span><strong><span class="nav-step">커리큘럼</span>학기 상세 커리큘럼</strong><br /><small>대단원(계열 태그)→소단원 아코디언→개념/유형/서술형 라운드·별·lock · 훈련안내 모달 · 우측 훈련 토글</small></span>
+          <span class="badge badge--correct">NEW</span>
+        </a>
+        <a class="nav-item" href="bridge.html">
+          <span><strong><span class="nav-step">진입</span>브릿지 · 과목 선택</strong><br /><small>수학/과학 이어서학습 카드 · 다음부터 자동 진입 · 로그아웃 · 별 우주 배경</small></span>
+          <span class="badge badge--correct">NEW</span>
+        </a>
+        <a class="nav-item" href="freemode.html">
+          <span><strong><span class="nav-step">자유</span>자유모드 · 행성 캐러셀</strong><br /><small>초등↔중고등 우주 전환 · 학기/계통·모두보기 토글 · 학기 썸네일 16종 · 모두보기 그리드</small></span>
+          <span class="badge badge--correct">NEW</span>
+        </a>
+      </nav>
+    </section>
+
+    <!-- 유틸리티 · 기타 기능 -->
+    <section class="nav-group">
+      <div class="nav-group__head">
+        <span class="nav-group__dot" style="background:var(--blue-500)"></span>
+        <span class="nav-group__title">유틸리티 · 기타 기능</span>
+        <span class="nav-group__meta">라이트 문서형 · 브랜드 톤 · 공용 셸(util.css)</span>
+      </div>
+      <nav class="nav-list">
+        <a class="nav-item" href="notice.html">
+          <span><strong><span class="nav-step">공지</span>공지사항 · 목록/상세</strong><br /><small>컴팩트 헤더 + 필터 세그 · 문서 테이블 · 페이지네이션 · 상세(카테고리/본문/첨부/이전·다음)</small></span>
+          <span class="badge badge--correct">NEW</span>
+        </a>
+        <a class="nav-item" href="report.html">
+          <span><strong><span class="nav-step">보고서</span>월간보고서 · 목록</strong><br /><small>리포트 런처(새 창 연동 예정) · 문서 테이블 · 호버 시 열기 힌트</small></span>
+          <span class="badge badge--correct">NEW</span>
+        </a>
+        <a class="nav-item" href="payment.html">
+          <span><strong><span class="nav-step">결제</span>이용권 결제</strong><br /><small>과목 탭 · 혜택 · 기간 플랜(할인) · 결제수단 · 우측 sticky 주문요약 · 쿠폰 (결제는 데모)</small></span>
+          <span class="badge badge--correct">NEW</span>
+        </a>
+      </nav>
+    </section>
+
+    <!-- 기반 -->
+    <section class="nav-group">
+      <div class="nav-group__head">
+        <span class="nav-group__dot" style="background:var(--n-300)"></span>
+        <span class="nav-group__title">기반</span>
+        <span class="nav-group__meta">디자인 시스템</span>
+      </div>
+      <nav class="nav-list">
+        <a class="nav-item" href="styleguide.html">
+          <span><strong>디자인 시스템</strong><br /><small>토큰 · 컴포넌트 (Phase 0)</small></span>
           <span class="badge badge--correct">완료</span>
         </a>
       </nav>
@@ -273,7 +283,7 @@
       </div>
       <nav class="nav-list">
         <span class="nav-item soon">
-          <span><strong>메인 홈 / 커리큘럼 / 진단평가</strong><br /><small>A층(홈·네비) 및 후속 Phase</small></span>
+          <span><strong>진단평가 / 후속 Phase</strong><br /><small>이후 예정 화면</small></span>
           <span class="badge">예정</span>
         </span>
       </nav>

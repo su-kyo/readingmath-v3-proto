@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>서술형 훈련 · 탐구활동 보고서 해설 — 리딩수학과학</title>
-  <link rel="stylesheet" href="styles/tokens.css?v=15" />
-  <link rel="stylesheet" href="styles/base.css?v=3" />
+  <link rel="stylesheet" href="styles/tokens.css?v=17" />
+  <link rel="stylesheet" href="styles/base.css?v=4" />
   <link rel="stylesheet" href="styles/components.css?v=5" />
   <link rel="stylesheet" href="styles/learn-shell.css?v=7" />
-  <link rel="stylesheet" href="styles/essay.css?v=11" />
+  <link rel="stylesheet" href="styles/essay.css?v=12" />
   <style>
     /* ============ 서술형(과학) 보고서 해설 = 퍼플 테마 ============ */
     .content {
@@ -20,11 +20,11 @@
     }
     :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
     :root[data-theme="light"] .content {
-      background: var(--n-050); border-color: var(--th-static);
+      background: var(--n-000); border-color: var(--th-static);
       --guide: var(--n-650);
       --rt-line: var(--n-100); --rt-head: var(--n-050); --rt-cell: var(--n-000); --rt-fg: var(--n-650); --rt-sub: var(--text-meta);
-      --ok-bg: rgba(16,140,100,.12); --ok-br: rgba(16,140,100,.5); --ok-fg: var(--ok-ink); --ok-ink: var(--ok-ink);
-      --no-bg: rgba(210,50,58,.1); --no-br: rgba(210,50,58,.5); --no-fg: var(--no-ink); --no-ink: var(--no-ink);
+      --ok-bg: rgba(16,140,100,.12); --ok-br: rgba(16,140,100,.5); --ok-fg: var(--ok-solid); --ok-ink: var(--ok-ink);
+      --no-bg: rgba(210,50,58,.1); --no-br: rgba(210,50,58,.5); --no-fg: var(--no-solid); --no-ink: var(--no-ink);
     }
 
     .report-wrap { flex: 1; min-width: 0; overflow-y: auto; padding: clamp(8px, 1.4vw, 16px) clamp(12px, 2.4vw, 30px) 96px; }
@@ -52,22 +52,28 @@
     .rt-span { line-height: 2.6; word-break: keep-all; }
 
     /* ============ 채점 빈칸 (정오답 · 오답 토글) ============ */
+    /* 바깥 본문과 동일하게 프리텐다드(고딕)로 통일 */
     .rblank { position: relative; display: inline-flex; align-items: center; gap: 6px; vertical-align: middle;
-      padding: 2px 11px; margin: 0 2px; border-radius: 9px; font-family: var(--font-serif); font-weight: 700; }
+      padding: 2px 11px; margin: 0 2px; border-radius: 9px; font-family: var(--font-sans); font-weight: 700; }
     .rblank__val { line-height: 1.3; }
-    .rblank.is-correct { background: var(--ok-bg); color: var(--ok-ink); box-shadow: inset 0 0 0 1.5px var(--ok-br); }
-    :root[data-theme="dark"] .rblank.is-correct { color: var(--ok-fg); }
-    .rblank.is-correct::after { content: '✓'; color: var(--ok-fg); font-weight: 900; font-size: 13px; }
-    .rblank.is-wrong { background: var(--no-bg); color: var(--no-ink); box-shadow: inset 0 0 0 1.5px var(--no-br); cursor: pointer; transition: box-shadow .15s; }
-    :root[data-theme="dark"] .rblank.is-wrong { color: var(--no-fg); }
+    .rblank.is-correct { background: var(--ok-bg); color: var(--ok-fg); box-shadow: inset 0 0 0 1.5px var(--ok-br); }
+    /* 오답 = 내 답(빨강·취소선). 클릭하면 같은 칸이 정답(초록)으로 토글 — 병렬 표시 아님 */
+    .rblank.is-wrong { background: var(--no-bg); color: var(--no-fg); box-shadow: inset 0 0 0 1.5px var(--no-br);
+      cursor: pointer; transition: box-shadow .15s, background .15s, color .15s; }
     .rblank.is-wrong:hover { box-shadow: inset 0 0 0 2px var(--no-br), 0 0 0 3px var(--no-bg); }
     .rblank.is-wrong .rblank__val { text-decoration: line-through; text-decoration-color: var(--no-fg); text-decoration-thickness: 1.5px; }
-    .rblank.is-wrong::after { content: '✕'; color: var(--no-fg); font-weight: 900; font-size: 12px; }
-    .rblank__note { display: none; align-items: center; gap: 4px; padding-left: 7px; margin-left: 4px;
-      border-left: 1.5px solid var(--ok-br); color: var(--ok-fg); font-weight: 700; }
-    .rblank__note b { font-weight: 800; }
-    .rblank.show-ans { background: color-mix(in srgb, var(--ok-bg) 60%, var(--no-bg)); }
-    .rblank.show-ans .rblank__note { display: inline-flex; }
+    .rblank.is-wrong.show-ans { background: var(--ok-bg); color: var(--ok-fg); box-shadow: inset 0 0 0 1.5px var(--ok-br); }
+    .rblank.is-wrong.show-ans:hover { box-shadow: inset 0 0 0 2px var(--ok-br), 0 0 0 3px var(--ok-bg); }
+    .rblank.is-wrong.show-ans .rblank__val { text-decoration: none; }
+    /* 정답 확인 = 우측 상단 원형 뱃지 (정답 초록 ✓ / 오답 빨강 ✕) — 색맹도 모양으로 구분.
+       오답을 눌러 정답으로 치환한 칸은 정답 스타일이되 뱃지 없음(원래 맞힌 칸과 구분) */
+    .rblank.is-correct::after, .rblank.is-wrong::after {
+      position: absolute; top: -7px; right: -7px; width: 17px; height: 17px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 10px; color: #fff;
+      box-shadow: 0 1px 3px rgba(0,0,0,.3); }
+    .rblank.is-correct::after { content: '✓'; background: var(--ok-solid); }
+    .rblank.is-wrong::after { content: '✕'; background: var(--no-solid); }
+    .rblank.is-wrong.show-ans::after { content: none; }
 
     /* ============ 추천 보고서 모달 (essay-report 미리보기 재사용) ============ */
     /* ⚠ 의도적 뉴트럴: 실제 인쇄물을 흉내내는 흰 종이 프리뷰라 중성 톤 유지. 테마 불변 위해 고정 뉴트럴 프리미티브(--n-*)로 토큰화. */
@@ -108,7 +114,7 @@
       font-size: 14px; font-weight: 600; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
     .ptoast.is-on { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-    .toolbtn--primary { background: var(--th-accent); }
+    .toolbtn--primary { background: var(--th-accent); box-shadow: 0 4px 0 color-mix(in srgb, var(--th-accent) 62%, #000); }
     @media (max-width: 620px) { .report { grid-template-columns: 80px 1fr; } }
   </style>
 </head>

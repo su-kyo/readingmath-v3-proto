@@ -5,45 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>시험 대비 · 문제 풀이 — 리딩수학과학</title>
   <script>try{if(localStorage.getItem('rm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
-  <link rel="stylesheet" href="styles/tokens.css?v=17" />
-  <link rel="stylesheet" href="styles/base.css?v=4" />
+  <link rel="stylesheet" href="./colors.css" />
+  <link rel="stylesheet" href="./base.css" />
   <style>
     /* =========================================================================
        시험대비 문제 풀이 — 모던 툴 UI
        하나의 워크스페이스(문제 | 정보 레일) · 플랫 + 헤어라인 · 쿨 뉴트럴 램프
        퍼플은 브랜드 액센트로 절제 · 상태색(초록/빨강/앰버)은 액센트와 분리
        ========================================================================= */
+    /* ===== 로컬 시맨틱 var → 라이브 Figma 시스템 토큰 직접 매핑 =====
+       colors.css의 semantic 토큰이 라이트/다크를 자동 전환하므로 다크용 리매핑 블록 불필요 */
     :root {
-      --canvas: var(--n-050);            /* 쿨 페이퍼 그라운드 */
-      --surface: var(--n-000);
-      --rail: var(--n-050);             /* 정보 레일 살짝 오프화이트 */
-      --ink: var(--n-900);             /* 딥 쿨 near-black */
-      --ink2: var(--n-500); --muted: var(--text-meta); --faint: var(--n-300);
-      --line: var(--n-100);            /* 헤어라인 */
-      --line-2: var(--n-050); --line-strong: var(--n-200);
-      --accent: var(--th-accent); --accent-ink: var(--th-ink-accent); --accent-tint: var(--th-tint); --accent-tint-br: var(--violet-200);
-      --good: var(--ok-ink); --good-tint: var(--ok-tint); --good-br: var(--ok-on-dark);
-      --bad: var(--no-solid); --bad-tint: var(--no-tint); --bad-br: var(--no-on-dark);
-      --warn: var(--warn-ink);
-      --hover: var(--n-050);            /* 선지·키패드 hover 표면 (테마 스왑) */
+      --canvas: var(--bg-primary);        /* 베이스 그라운드 */
+      --surface: var(--bg-secondary);     /* 워크스페이스/카드 */
+      --rail: var(--bg-tertiary);         /* 정보 레일 */
+      --ink: var(--text-primary);
+      --ink2: var(--text-secondary); --muted: var(--text-secondary); --faint: var(--text-tertiary);
+      --line: var(--border-tertiary);     /* 헤어라인 */
+      --line-2: var(--border-tertiary); --line-strong: var(--border-secondary);
+      --accent: var(--bg-brand); --accent-ink: var(--text-brand); --accent-tint: var(--bg-brand-subtle); --accent-tint-br: var(--navy-300);
+      --good: var(--text-success); --good-tint: var(--bg-success-subtle); --good-br: var(--border-success);
+      --bad: var(--bg-danger); --bad-tint: var(--bg-danger-subtle); --bad-br: var(--border-danger);
+      --warn: var(--text-warning);
+      --hover: var(--bg-subtle-hover);    /* 선지·키패드 hover 표면 */
       --r-lg: 16px; --r-md: 12px; --r-sm: 9px;
       --sh: 0 1px 2px rgba(13,18,32,.04), 0 20px 40px -28px rgba(13,18,32,.24);
     }
-    /* ===== 다크 모드 — 로컬 var 리매핑(뉴트럴 램프 + 퍼플 액센트 밝게) ===== */
     :root[data-theme="dark"] {
-      --canvas: var(--n-900); --surface: var(--n-800); --rail: var(--n-800);
-      --ink: var(--n-050); --ink2: var(--n-200); --muted: var(--n-300); --faint: var(--n-400);
-      --line: var(--border-strong); --line-2: var(--border); --line-strong: var(--n-500);
-      --accent: var(--th-accent); --accent-ink: var(--th-accent-hi);
-      /* 다크 표면용 틴트 토큰 부재 — 기존 반투명 rgba 유지(라이트 위 글자 대비 보존) */
-      --accent-tint: rgba(119,119,255,.18); --accent-tint-br: rgba(119,119,255,.4);
-      --good: var(--ok-solid); --good-tint: rgba(88,204,2,.13); --good-br: rgba(88,204,2,.42);
-      --bad: var(--no-solid); --bad-tint: rgba(255,138,144,.15); --bad-br: rgba(255,138,144,.42);
-      --warn: var(--warn-solid);
-      --hover: var(--n-700);
+      --accent-tint: var(--bg-brand-subtle); --accent-tint-br: var(--navy-300);
       --sh: 0 1px 2px rgba(0,0,0,.4), 0 20px 40px -28px rgba(0,0,0,.6);
     }
-    :root[data-theme="dark"] .svideo { background: var(--n-700); }
+    :root[data-theme="dark"] .svideo { background: var(--bg-tertiary); }
     :root[data-theme="dark"] .qarea__scroll::-webkit-scrollbar-thumb,
     :root[data-theme="dark"] .sinfo::-webkit-scrollbar-thumb { background: var(--n-600); }
     :root[data-theme="dark"] .qarea__scroll::-webkit-scrollbar-thumb:hover,
@@ -83,8 +75,9 @@
     .slink svg { width: 15px; height: 15px; }
 
     /* ===== 워크스페이스: 하나의 표면을 헤어라인으로 분할 ===== */
-    .scontent { flex: 1; min-height: 0; margin: 16px 20px; display: flex; background: var(--surface);
-      border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--sh); overflow: hidden; }
+    /* 안쪽 워크스페이스(문제·이미지 영역) = 흰색. 흰색 이미지가 들어와도 배경과 이질감 없게. */
+    .scontent { flex: 1; min-height: 0; margin: 16px 20px; display: flex; background: var(--bg-primary);
+      border: 1px solid var(--border-secondary); border-radius: var(--r-lg); box-shadow: var(--sh); overflow: hidden; }
 
     /* 문제 패널 */
     .qarea { flex: 1; min-width: 0; display: flex; flex-direction: column; }
@@ -125,8 +118,8 @@
     .opt__txt { font-size: 17px; font-weight: 600; color: var(--ink); letter-spacing: -.01em; }
     .opts.is-locked .opt { cursor: default; }
     /* 선택 */
-    .opt.is-selected { border-color: var(--accent); background: color-mix(in srgb, var(--th-accent) 15%, transparent); box-shadow: inset 0 0 0 1px var(--accent); }
-    .opt.is-selected .opt__num { background: var(--accent); border-color: var(--accent); color: var(--th-on-accent); }
+    .opt.is-selected { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 15%, transparent); box-shadow: inset 0 0 0 1px var(--accent); }
+    .opt.is-selected .opt__num { background: var(--accent); border-color: var(--accent); color: var(--text-static-white); }
     /* 채점 */
     .opt.is-correct { border-color: var(--good-br); background: var(--good-tint); box-shadow: inset 0 0 0 1px var(--good-br); }
     .opt.is-correct .opt__num { background: var(--good); border-color: var(--good); color: var(--n-000); }
@@ -175,7 +168,7 @@
     .explain__body { font-size: 16px; line-height: 1.68; color: var(--ink2); }
 
     /* ===== 정보 레일 ===== */
-    .sinfo { flex: none; width: 356px; background: var(--rail); border-left: 1px solid var(--line);
+    .sinfo { flex: none; width: 356px; background: var(--bg-primary); border-left: 1px solid var(--border-secondary);
       overflow-y: auto; padding: 24px; display: flex; flex-direction: column; }
     .sblock { display: flex; flex-direction: column; gap: 11px; padding: 20px 0; border-top: 1px solid var(--line); }
     .sblock:first-child { padding-top: 2px; border-top: none; }
@@ -183,8 +176,8 @@
     .scap { font-size: 11px; font-weight: 800; letter-spacing: .09em; color: var(--faint); text-transform: uppercase; }
     .sbadges { display: flex; gap: 6px; }
     .sbadge { padding: 4px 10px; border-radius: 7px; font-size: 12px; font-weight: 800; }
-    .sbadge--con { background: var(--accent); color: var(--th-on-accent); }
-    .sbadge--adv { background: color-mix(in srgb, var(--th-accent) 18%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--th-accent) 42%, transparent); color: var(--accent-ink); }
+    .sbadge--con { background: var(--accent); color: var(--text-static-white); }
+    .sbadge--adv { background: color-mix(in srgb, var(--accent) 18%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 42%, transparent); color: var(--accent-ink); }
     .stype { font-size: 18px; font-weight: 800; letter-spacing: -.02em; line-height: 1.35; margin-top: 1px; }
     .svideo { height: 172px; border-radius: var(--r-md); background: var(--n-100); border: 1px solid var(--line);
       display: grid; place-items: center; position: relative; overflow: hidden; cursor: pointer; }
@@ -215,7 +208,7 @@
     .btn svg { width: 16px; height: 16px; }
     .btn--sec { background: var(--surface); border: 1px solid var(--line); color: var(--ink2); }
     .btn--sec:hover { border-color: var(--line-strong); color: var(--ink); }
-    .btn--pri { background: var(--accent); color: var(--th-on-accent); border: 1px solid var(--accent); }
+    .btn--pri { background: var(--accent); color: var(--text-static-white); border: 1px solid var(--accent); }
     .btn--pri:hover:not(:disabled) { background: var(--accent-ink); border-color: var(--accent-ink); }
     .btn--pri:disabled { background: var(--surface); border-color: var(--line); color: var(--faint); cursor: not-allowed; }
 
@@ -314,6 +307,6 @@
       });
     })();
   </script>
-  <script src="scripts/exam-solve.js"></script>
+  <script src="../scripts/exam-solve.js"></script>
 </body>
 </html>

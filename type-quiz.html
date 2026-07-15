@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>유형 훈련 · 1차 유형 문제 — 리딩수학과학</title>
-  <link rel="stylesheet" href="styles/tokens.css?v=15" />
-  <link rel="stylesheet" href="styles/base.css?v=3" />
+  <link rel="stylesheet" href="styles/tokens.css?v=17" />
+  <link rel="stylesheet" href="styles/base.css?v=4" />
   <link rel="stylesheet" href="styles/components.css?v=5" />
   <link rel="stylesheet" href="styles/learn-shell.css?v=7" />
   <link rel="stylesheet" href="styles/type.css?v=4" />
@@ -15,7 +15,7 @@
     .screen__bg { background: url("assets/figma/bg-spaceship-teal.png") center/cover no-repeat; }
     :root[data-theme="dark"] .content { background: var(--n-650); border-color: var(--th-static); }
     /* 라이트 = 쿨톤 베이스(스터디 페이퍼). 옵션/보기는 이 위에 카드로 은은히 분리 */
-    :root[data-theme="light"] .content { background: var(--n-050); border-color: var(--th-static); --fade: var(--n-050); }
+    :root[data-theme="light"] .content { background: var(--n-000); border-color: var(--th-static); --fade: var(--n-000); }
     .content { position: relative; flex-direction: column; padding: 0 0 96px; overflow: hidden; --fade: var(--n-050); --subj: var(--th-accent); }
     :root[data-theme="dark"] .content { --fade: var(--n-650); }
 
@@ -63,7 +63,7 @@
     .opt { display: flex; align-items: center; gap: 12px; padding: 15px 20px; min-height: 60px; border-radius: 14px; background: var(--opt-bg); box-shadow: inset 0 0 0 1.5px var(--opt-br); color: var(--qtext); font-size: clamp(15px,1.35vw,17px); font-weight: 600; text-align: left; cursor: pointer; transition: background .12s, box-shadow .12s; }
     .opt:hover { background: var(--opt-hover); }
     .opt__num { flex: none; width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,.14); color: var(--qtext); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 15px; position: relative; }
-    :root[data-theme="light"] .opt__num { background: var(--n-100); color: var(--th-ink-accent); }
+    :root[data-theme="light"] .opt__num { background: var(--th-tint-strong); color: var(--th-ink-accent); }
     .opt--num { justify-content: center; } .opt--num .opt__num { width: 34px; height: 34px; }
     .opt__img { width: 100%; height: 96px; border-radius: 10px; background: var(--n-200); }
     .opt--img { flex-direction: column; align-items: stretch; gap: 10px; padding: 12px; }

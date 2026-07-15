@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>자유 모드 — 리딩수학과학</title>
-  <link rel="stylesheet" href="styles/tokens.css?v=15" />
-  <link rel="stylesheet" href="styles/base.css?v=3" />
+  <link rel="stylesheet" href="styles/tokens.css?v=17" />
+  <link rel="stylesheet" href="styles/base.css?v=4" />
   <link rel="stylesheet" href="styles/space-bg.css?v=1" />
   <link rel="stylesheet" href="styles/gnb.css?v=4" />
   <style>
@@ -30,7 +30,7 @@
     .switch__l{ font-size:15px; font-weight:800; }
     .switch__t{ width:56px; height:30px; border-radius:27px; background:rgba(255,255,255,.4); padding:4px;
       cursor:pointer; transition:.2s; display:flex; }
-    .switch__t.is-on{ background:var(--green); justify-content:flex-end; }
+    .switch__t.is-on{ background:var(--green2); justify-content:flex-end; }
     .switch__k{ width:22px; height:22px; border-radius:50%; background:var(--n-000); transition:.2s; }
 
     /* ---- 우주 전환 ---- */
@@ -179,16 +179,11 @@
 
     /* 별점수 배지 (등급색 별 + 라운드 번호) */
     .star{ position:relative; display:inline-grid; place-items:center; flex:none; }
-    .star svg{ display:block; }
-    .star--sm{ width:27px; height:27px; } .star--sm svg{ width:27px; height:27px; }
-    .star--md{ width:38px; height:38px; } .star--md svg{ width:38px; height:38px; }
-    .star--x svg path{ fill:var(--n-500); }
-    .star--gs svg path{ fill:#FFC800; }   /* [에셋연동] star/grade PNG */
-    .star--ga svg path{ fill:#FFC800; }   /* [에셋연동] star/grade PNG */
-    .star--gb svg path{ fill:#FFC148; }   /* [에셋연동] star/grade PNG */
-    .star--gc svg path{ fill:#FFA94D; }   /* [에셋연동] star/grade PNG */
-    .star__g{ position:absolute; top:44%; left:50%; transform:translate(-50%,-50%); color:#7D3E00; font-weight:900; }   /* [에셋연동] 별 배지 위 등급 글자 */
-    .star--sm .star__g{ font-size:10px; } .star--md .star__g{ font-size:14px; }
+    .star img{ display:block; width:100%; height:100%; }
+    .star--sm{ width:27px; height:27px; }
+    .star--md{ width:38px; height:38px; }
+    /* 미획득(빈) 별 = 별 이미지 탈색 */
+    .star--x img{ filter:grayscale(1) brightness(1.4) opacity(.4); }
     .star__r{ position:absolute; right:-4px; bottom:-4px; width:15px; height:15px; border-radius:50%;
       background:var(--violet-500); border:1.5px solid var(--surface-1); color:var(--n-000); font-size:9.5px; font-weight:800; display:grid; place-items:center; }
 
@@ -284,12 +279,12 @@
       elem: [ {key:'suyeon',label:'수와 연산',prog:52},{key:'dohyeong',label:'도형',prog:20},{key:'cheukjeong',label:'측정',prog:8},{key:'gyuchik',label:'규칙성',prog:0},{key:'jaryo',label:'자료와 가능성',prog:0} ],
       mid: [ {key:'munja',label:'문자와 식',prog:44},{key:'hamsu',label:'함수',prog:12},{key:'giha',label:'기하',prog:0},{key:'hwakryul',label:'확률과 통계',prog:0},{key:'byeonhwa',label:'변화와 관계',prog:0},{key:'dohyeong-cheukjeong',label:'도형과 측정',prog:0} ]
     };
-    // 과목 계통 태그색 — 디자인시스템에 계통 전용 토큰이 없어 가장 가까운 상태/가족 토큰(다크 위)으로 매핑
-    var F_TAGCOLOR = { '수와 연산':'var(--no-on-dark)','도형':'var(--ok-on-dark)','규칙성':'var(--info-on-dark)','측정':'var(--warn-on-dark)','자료와 가능성':'var(--violet-300)',
-      '문자와 식':'var(--info-on-dark)','함수':'var(--teal-300)','기하':'var(--ok-on-dark)','확률과 통계':'var(--violet-300)','변화와 관계':'var(--no-on-dark)','도형과 측정':'var(--ok-on-dark)',
-      '물리':'var(--ok-on-dark)','화학':'var(--info-on-dark)','지구과학':'var(--no-on-dark)','생명과학':'var(--teal-300)' };
+    // 과목 계통 태그색 — 계통 전용 토큰(--subj-*, 채도 있는 400스텝) 사용 (curriculum과 동일)
+    var F_TAGCOLOR = { '수와 연산':'var(--subj-num)','도형':'var(--subj-geo)','규칙성':'var(--subj-rel)','측정':'var(--subj-geo)','자료와 가능성':'var(--subj-data)',
+      '문자와 식':'var(--subj-num)','함수':'var(--subj-rel)','기하':'var(--subj-geo)','확률과 통계':'var(--subj-data)','변화와 관계':'var(--subj-num)','도형과 측정':'var(--subj-geo)',
+      '물리':'var(--subj-phys)','화학':'var(--subj-chem)','지구과학':'var(--subj-data)','생명과학':'var(--subj-bio)' };
     var F_TNAME = { concept:'개념 훈련', type:'유형 훈련', essay:'서술형 훈련' };
-    var F_TGO   = { concept:'learn-concept.html', type:'type-quiz.html', essay:'essay-basics.html' };
+    var F_TGO   = { concept:'learn-concept.html', type:'type-quiz.html', essay:'essay-basics-v2.html' };
     var CHAL_GO = 'type-quiz.html';
 
     // 소단원 = { no, title, done, t:{concept,type,essay}, challenge:[6칩] }
@@ -392,9 +387,9 @@
 
     /* ============ 별점수 배지 ============ */
     function starBadge(g, round, size){
+      var asset = g ? 'star-'+g : 'star-b';   // 빈 별 = 은색 별을 탈색해 표시
       return '<span class="star star--'+(size||'sm')+' '+(g?'star--g'+g:'star--x')+'">'
-        + '<svg viewBox="0 0 24 24"><path d="M12 2.4l2.9 5.9 6.5.95-4.7 4.58 1.1 6.47L12 17.77 6.1 20.87l1.1-6.47-4.7-4.58 6.5-.95z"/></svg>'
-        + (g?'<span class="star__g">'+g.toUpperCase()+'</span>':'')
+        + '<img src="assets/figma/'+asset+'.svg" alt="'+(g?g.toUpperCase()+'등급':'미획득')+'" />'
         + (round?'<span class="star__r">'+round+'</span>':'')
         + '</span>';
     }
@@ -406,7 +401,7 @@
       var unit=document.createElement('div'); unit.className='unit';
       var col=F_TAGCOLOR[u.tag]||'var(--text-muted)';
       var ttl=document.createElement('div'); ttl.className='unit__ttl';
-      ttl.innerHTML='<span class="tag" style="background:color-mix(in srgb, '+col+' 24%, transparent);color:'+col+'">'+u.tag+'</span>'+u.no+'단원 · '+u.name;
+      ttl.innerHTML='<span class="tag" style="background:color-mix(in srgb, '+col+' 22%, transparent);color:color-mix(in srgb, '+col+' 72%, white);box-shadow:inset 0 0 0 1px color-mix(in srgb, '+col+' 42%, transparent)">'+u.tag+'</span>'+u.no+'단원 · '+u.name;
       unit.appendChild(ttl);
       u.subs.forEach(function(s,si){
         var sb=document.createElement('div'); sb.className='sub'+((openFirst&&si===0)?' is-open':'');

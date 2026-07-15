@@ -4,44 +4,46 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>서술형 훈련 · 기초 기르기 (레이아웃 v2) — 리딩수학과학</title>
-  <link rel="stylesheet" href="styles/tokens.css?v=15" />
-  <link rel="stylesheet" href="styles/base.css?v=3" />
+  <link rel="stylesheet" href="styles/tokens.css?v=17" />
+  <link rel="stylesheet" href="styles/base.css?v=4" />
   <link rel="stylesheet" href="styles/components.css?v=5" />
   <link rel="stylesheet" href="styles/learn-shell.css?v=7" />
-  <link rel="stylesheet" href="styles/essay.css?v=11" />
+  <link rel="stylesheet" href="styles/essay.css?v=12" />
   <style>
     /* ============ 서술형 훈련 = 퍼플 테마 (공통은 essay.css) ============ */
     /* 레이아웃 v2 : 좌우 2분할 → 세로 단일 스크롤 (문제 위 · 풀이 아래) */
     /* 동작(빈칸/팝오버/채점/결과)은 essay-basics.js 와 동일 — essay-basics-v2.js */
     .content {
-      flex-direction: column; padding: clamp(12px, 1.6vw, 16px) clamp(12px, 1.6vw, 16px) 0;
+      flex-direction: column; padding: 0 clamp(12px, 1.6vw, 16px) 0;
       --guide: rgba(249,249,249,.94); --card: var(--surface-1); --card-br: rgba(255,255,255,.08); --card-sh: none;
       --step-fg: var(--text-muted);
       --box-bg: var(--n-900); --box-br: rgba(255,255,255,.10);
       --qa-soft: rgba(255,255,255,.06); --qa-sub: var(--n-100);
       --bl-next: rgba(124,120,240,.85);
+      /* 문제 카드 = 프레임 테두리색(th-static)과 면 공유 · 라이트/다크 동일 */
+      --pc-bg: var(--th-static); --pc-text: rgba(249,249,249,.92); --pc-chev: rgba(255,255,255,.62);
+      --qtab-bg: rgba(255,255,255,.10); --qtab-fg: rgba(255,255,255,.5);
+      --qtab-done-bg: color-mix(in srgb, var(--th-accent) 52%, transparent); --qtab-done-fg: #fff;
     }
     :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
     :root[data-theme="light"] .content {
-      background: var(--n-050); border-color: var(--th-static);
-      --guide: var(--n-650); --card: var(--n-000); --card-br: var(--n-050); --card-sh: 0 12px 30px -22px rgba(60,40,130,.5);
+      background: var(--n-000); border-color: var(--th-static);
+      --guide: var(--n-650); --card: var(--n-000); --card-br: var(--n-100); --card-sh: none;
       --step-fg: var(--text-meta);
       --box-bg: var(--n-050); --box-br: rgba(108,99,201,.12);
       --qa-soft: rgba(108,99,201,.055); --qa-sub: var(--text-meta);
       --bl-next: rgba(114,111,233,.7);
     }
 
-    /* ============ 진행 인디케이터 (문제 1·2·3) ============ */
-    .steps { flex: none; display: flex; align-items: center; justify-content: center; gap: 4px; padding: 2px 0 10px; }
-    .qtab { min-width: 34px; height: 34px; padding: 0 10px; border-radius: 9px; display: inline-flex;
-      align-items: center; justify-content: center; gap: 3px; cursor: default;
-      font-weight: 700; font-size: 16px; text-align: center; transition: background .15s, box-shadow .15s; }
-    .qtab { background: rgba(255,255,255,.12); color: rgba(255,255,255,.5); }
-    .qtab.is-done { background: rgba(114,111,233,.55); color: var(--n-000); }
-    .qtab.is-active { background: var(--th-accent); color: var(--n-000); box-shadow: 0 0 0 3px rgba(114,111,233,.30); }
-    :root[data-theme="light"] .qtab { background: rgba(114,111,233,.10); color: var(--text-muted); }
-    :root[data-theme="light"] .qtab.is-done { background: rgba(114,111,233,.20); color: var(--th-ink-accent); }
-    :root[data-theme="light"] .qtab.is-active { background: var(--th-accent); color: var(--n-000); }
+    /* ============ 진행 인디케이터 (문제 번호탭) = 문제 카드 헤더에 통합 ============ */
+    .qsteps { display: inline-flex; align-items: center; gap: 8px; }
+    .qtab { min-width: 28px; height: 28px; padding: 0 7px; border-radius: 8px; display: inline-flex;
+      align-items: center; justify-content: center; cursor: default;
+      font-family: var(--font-sans); font-weight: 800; font-size: 13px; text-align: center;
+      background: var(--qtab-bg); color: var(--qtab-fg); transition: background .16s, color .16s, box-shadow .16s; }
+    .qtab.is-done { background: var(--qtab-done-bg); color: var(--qtab-done-fg); }
+    /* 현재 문제 = 흰 링으로 대비 강화 */
+    .qtab.is-active { background: var(--th-accent); color: #fff; box-shadow: 0 0 0 2px #fff, 0 2px 8px rgba(0,0,0,.32); }
 
     /* ============ 단일 스크롤 영역 ============ */
     /* padding-top = 0 : 스티키 카드가 스크롤포트 상단에 밀착돼 위로 내용이 비치지 않게 */
@@ -59,36 +61,32 @@
     .sec-label--sol { background: rgba(124,58,237,.15); color: var(--th-accent-hi); }
     :root[data-theme="light"] .sec-label--sol { background: rgba(124,58,237,.1); color: var(--th-accent-strong); }
 
-    /* ============ 문제 카드 (열고 접기 · 스크롤 시 상단 스티키) ============ */
-    .problem { position: sticky; top: 0; z-index: 20; box-shadow: 0 12px 24px -16px rgba(10,6,30,.55); }
+    /* ============ 문제 카드 (번호탭 헤더 + 접이식 · 프레임에 붙음 · ref 655-27959/29414) ============ */
+    .problem { position: sticky; top: 0; z-index: 20; overflow: hidden;
+      background: var(--pc-bg); border: 0; border-radius: 0 0 18px 18px; margin: 0 auto; box-shadow: 0 10px 24px rgba(8,5,22,.28); }
     .problem__head { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 10px;
-      padding: 14px 22px; background: transparent; border: 0; text-align: left; border-radius: 20px; }
+      padding: 10px 16px; background: transparent; border: 0; text-align: left; }
     .problem.is-collapsible .problem__head { cursor: pointer; }
-    .problem.is-collapsible .problem__head:hover { background: rgba(124,58,237,.05); }
-    .problem__hint { margin-left: 9px; font-family: var(--font-sans); font-size: 12px; font-weight: 600; color: var(--step-fg); }
-    .problem.is-collapsible:not(.is-collapsed) .problem__hint::after { content: '접기'; }
-    .problem.is-collapsed .problem__hint::after { content: '문제 다시 보기'; }
-    .problem__chev { width: 18px; height: 18px; color: var(--step-fg); display: none; transition: transform .25s; flex: none; }
-    .problem.is-collapsible .problem__chev { display: block; }
-    .problem.is-collapsed .problem__chev { transform: rotate(-90deg); }
-    /* 펼침 = 최대 높이 상한 + 내부 스크롤 (스티키로 고정돼도 아래 풀이가 항상 보이도록) */
-    .problem__body { padding: 0 22px 18px; overflow-y: auto; max-height: 46vh; transition: max-height .32s ease, opacity .25s ease, padding .32s ease; }
+    .problem__chev { width: 22px; height: 22px; color: var(--pc-chev); transition: transform .25s; flex: none; transform: rotate(180deg); }
+    .problem.is-collapsed .problem__chev { transform: rotate(0); }
+    /* 본문 = 문제문(좌) + 참고자료(우) 한 행 · 스티키라 상한+내부 스크롤 */
+    .problem__body { padding: 6px 18px 18px; overflow-y: auto; max-height: 34vh; color: var(--pc-text);
+      display: flex; gap: 20px; align-items: flex-start; transition: max-height .32s ease, opacity .25s ease, padding .32s ease; }
+    .problem__qtext { flex: 1 1 auto; min-width: 0; }
     .problem.is-collapsed .problem__body { max-height: 0; opacity: 0; overflow: hidden; padding-top: 0; padding-bottom: 0; }
     .problem__body::-webkit-scrollbar { width: 8px; }
     .problem__body::-webkit-scrollbar-thumb { background: rgba(255,255,255,.2); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
     :root[data-theme="light"] .problem__body::-webkit-scrollbar-thumb { background: rgba(108,99,201,.28); background-clip: padding-box; }
 
-    /* 문제 본문 (텍스트 + 참고자료) */
-    .qtext { color: var(--guide); font-size: clamp(15px, 1.35vw, 18px); line-height: 1.7; }
-    .qref { margin-top: 12px; background: var(--qa-soft); border-radius: 16px; padding: 10px; display: flex; flex-direction: column; gap: 8px; }
-    .qref__img { width: 100%; aspect-ratio: 24 / 9; border-radius: 10px;
-      background: linear-gradient(110deg, var(--n-500) 25%, var(--n-500) 40%, var(--n-500) 55%); background-size: 220% 100%;
+    /* 문제 본문 (텍스트 좌 + 참고자료 우) */
+    .qtext { flex: 1 1 auto; min-width: 0; color: var(--pc-text); font-size: clamp(15px, 1.35vw, 17.5px); line-height: 1.75; }
+    .qref { flex: none; width: clamp(190px, 33%, 290px); margin-top: 0; background: rgba(255,255,255,.06); border-radius: 16px; padding: 10px; display: flex; flex-direction: column; gap: 8px; }
+    .qref__img { width: 100%; aspect-ratio: 4 / 3; border-radius: 10px;
+      background: linear-gradient(110deg, rgba(255,255,255,.12) 25%, rgba(255,255,255,.2) 40%, rgba(255,255,255,.12) 55%); background-size: 220% 100%;
       animation: shimmer 1.8s ease-in-out infinite; display: flex; align-items: center; justify-content: center; }
-    :root[data-theme="light"] .qref__img { background: linear-gradient(110deg, var(--n-100) 25%, var(--n-050) 40%, var(--n-100) 55%); background-size: 220% 100%; }
-    .qref__img span { color: rgba(255,255,255,.55); font-weight: 700; font-size: 13px; }
-    :root[data-theme="light"] .qref__img span { color: rgba(80,66,150,.55); }
+    .qref__img span { color: rgba(255,255,255,.6); font-weight: 700; font-size: 13px; }
     @keyframes shimmer { from { background-position: 180% 0; } to { background-position: -40% 0; } }
-    .qref__words { color: var(--qa-sub); font-size: clamp(14px, 1.25vw, 16px); line-height: 1.75; white-space: pre-line; }
+    .qref__words { color: rgba(255,255,255,.78); font-size: clamp(13px, 1.15vw, 15px); line-height: 1.7; white-space: pre-line; }
     @media (prefers-reduced-motion: reduce) { .qref__img { animation: none; } }
 
     /* ============ 풀이 카드 (워크시트) ============ */
@@ -138,19 +136,17 @@
       </header>
 
       <main class="content">
-        <div class="steps">
-          <span class="qtab is-done">1</span>
-          <span class="qtab is-active">2</span>
-          <span class="qtab">3</span>
-        </div>
-
         <div class="stage-scroll">
-          <!-- 문제 카드 (상주 · 열고 접기 · 스크롤 시 상단 스티키) -->
+          <!-- 문제 카드 (상주 · 열고 접기 · 스크롤 시 상단 스티키 · 진행표시 통합) -->
           <section class="card problem is-collapsible" id="problem">
-            <button class="problem__head" id="problemHead" type="button">
-              <span><span class="sec-label sec-label--problem">문제</span><span class="problem__hint"></span></span>
+            <div class="problem__head" id="problemHead" role="button" tabindex="0" aria-label="문제 펼치기/접기">
+              <span class="qsteps">
+                <span class="qtab is-done">1</span>
+                <span class="qtab is-active">2</span>
+                <span class="qtab">3</span>
+              </span>
               <svg class="problem__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-            </button>
+            </div>
             <div class="problem__body" id="readBody">
               <p class="qtext">고등어를 세는 단위는 ‘손’입니다. 옛날에는 상하기 쉬운 고등어를 손질한 큰 것에 작은 것을 끼워 2마리씩 겹쳐서 소금에 절여 놓았습니다. 한 손에 2마리씩 잡히니 사람의 손에 잡힌다는 뜻의 ‘손’을 사용하게 되었습니다. 즉, 고등어 한 손은 고등어 2마리를 뜻합니다. 고등어 6손을 한 봉지에 3마리씩 담으려고 합니다. 모두 몇 봉지에 나누어 담을 수 있는지 곱셈식과 나눗셈식으로 나타내어 보세요.</p>
               <div class="qref">

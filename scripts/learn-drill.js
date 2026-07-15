@@ -46,11 +46,20 @@
   var results = new Array(TOTAL);
   var idx = 0, selected = null, graded = false;
 
-  var progressEl = document.getElementById('progress');
+  var qtabs = document.getElementById('qtabs');
+  var problem = document.getElementById('problem');
+  var problemHead = document.getElementById('problemHead');
+  var problemBody = document.getElementById('problemBody');
   var qEl = document.getElementById('q');
   var gradeBtn = document.getElementById('gradeBtn');
   var nextStepBtn = document.getElementById('nextStepBtn');
   var opsScroll = document.getElementById('opsScroll');
+
+  // 문제 카드 열고 접기
+  if (problemHead) problemHead.addEventListener('click', function () {
+    if (!problem.classList.contains('is-collapsible')) return;
+    problem.classList.toggle('is-collapsed');
+  });
 
   function updateFade() {
     var wrap = opsScroll.parentElement;
@@ -108,17 +117,19 @@
   });
   window.addEventListener('resize', function () { if (activeInput) positionPad(activeInput); });
 
-  /* ---- 상단 프로그레스 ---- */
-  function renderProgress() {
-    progressEl.innerHTML = '';
+  /* ---- 문제 번호탭 (헤더) — 현재/정답/오답 상태. 정오답은 아이콘(색맹 접근성) ---- */
+  var ICO_OK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>';
+  var ICO_NO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+  function renderTabs() {
+    qtabs.innerHTML = '';
     for (var i = 0; i < TOTAL; i++) {
-      var c = el('span', 'pcirc');
-      if (results[i] === 'correct') c.classList.add('is-correct');
-      else if (results[i] === 'wrong') c.classList.add('is-wrong');
-      else if (i === idx) c.classList.add('is-current');
-      progressEl.appendChild(c);
+      var cls = 'qtab', label = String(i + 1);
+      if (results[i] === 'correct') { cls += ' is-correct'; label = ICO_OK; }
+      else if (results[i] === 'wrong') { cls += ' is-wrong'; label = ICO_NO; }
+      else if (i === idx) cls += ' is-active';
+      else if (i < idx) cls += ' is-done';
+      qtabs.appendChild(el('span', cls, label));
     }
-    progressEl.appendChild(el('span', 'pcap__count', (idx + 1) + '/' + TOTAL));
   }
 
   /* ---- 보기 ---- */
@@ -135,12 +146,16 @@
     selected = null; graded = false;
     closePad();
     qEl.innerHTML = '';
+    problemBody.innerHTML = '';
+    problem.classList.remove('is-collapsed');   // 새 문제 = 문제 카드 열림
     opsScroll.scrollTop = 0;
     var p = PROBLEMS[idx];
 
-    qEl.appendChild(el('div', 'q__text', p.q));
-    var exb = renderEx(p.ex); if (exb) qEl.appendChild(exb);
+    // 문제 카드 본문 = 지시문 + 보기
+    problemBody.appendChild(el('div', 'q__text', p.q));
+    var exb = renderEx(p.ex); if (exb) problemBody.appendChild(exb);
 
+    // 풀이 영역 = 입력(빈칸/객관식/주관식)
     if (p.type === 'mc-num' || p.type === 'mc-text' || p.type === 'mc-image') qEl.appendChild(renderMC(p));
     else if (p.type === 'blank') qEl.appendChild(renderBlank(p));
     else if (p.type === 'short-1') qEl.appendChild(renderShort(p, 1));
@@ -153,7 +168,7 @@
     gradeBtn.classList.remove('btn-grade--next');
     gradeBtn.textContent = '채점하기';
 
-    renderProgress();
+    renderTabs();
     requestAnimationFrame(updateFade);
   }
 
@@ -220,6 +235,16 @@
   /* ---- 채점 / 다음 ---- */
   gradeBtn.addEventListener('click', function () { if (!graded) grade(); else next(); });
 
+  /* 채점 후 오답 빈칸 토글: 같은 칸에서 내 답 ↔ 정답 (병렬 표시 아님) */
+  qEl.addEventListener('click', function (e) {
+    if (!graded) return;
+    var w = e.target.closest('.dblank.is-wrong');
+    if (!w) return;
+    var showAns = w.classList.toggle('show-ans');
+    w.textContent = showAns ? w.dataset.ans : w.dataset.my;
+    w.title = showAns ? '눌러서 내 답 보기' : '눌러서 정답 보기';
+  });
+
   function grade() {
     var p = PROBLEMS[idx], ok = false;
     if (p.type === 'mc-num' || p.type === 'mc-text' || p.type === 'mc-image') {
@@ -232,9 +257,15 @@
     } else if (p.type === 'blank') {
       ok = true;
       qEl.querySelectorAll('.dblank').forEach(function (b, i) {
-        var good = norm(getV(b)) === norm(p.answers[i]);
+        var my = getV(b);
+        var good = norm(my) === norm(p.answers[i]);
         b.classList.add(good ? 'is-correct' : 'is-wrong');
-        if (!good) { ok = false; var c = el('span', 'dblank-correct', p.answers[i]); if (b.parentNode) b.parentNode.insertBefore(c, b.nextSibling); }
+        if (!good) {
+          ok = false;
+          // 정답은 칸 바깥에 병렬 표시하지 않는다. 같은 칸을 눌러 내 답 ↔ 정답 토글.
+          b.dataset.my = my; b.dataset.ans = p.answers[i];
+          b.title = '눌러서 정답 보기';
+        }
       });
     } else if (p.type === 'short-1') {
       var v = qEl.querySelector('.sinput'); ok = norm(v.value) === norm(p.answer); mark(v, ok);
@@ -261,7 +292,7 @@
 
     graded = true;
     results[idx] = ok ? 'correct' : 'wrong';
-    renderProgress();
+    renderTabs();
 
     if (idx < TOTAL - 1) { gradeBtn.classList.add('btn-grade--next'); gradeBtn.textContent = '다음 문제 →'; }
     else { gradeBtn.hidden = true; nextStepBtn.disabled = false; }

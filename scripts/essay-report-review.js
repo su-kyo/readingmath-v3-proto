@@ -22,9 +22,8 @@
     if (ok) {
       return '<span class="rblank is-correct"><span class="rblank__val">' + a.my + '</span></span>';
     }
-    return '<span class="rblank is-wrong" data-blank="' + id + '">' +
-      '<span class="rblank__val">' + a.my + '</span>' +
-      '<span class="rblank__note">정답 <b>' + a.ans + '</b></span></span>';
+    return '<span class="rblank is-wrong" data-blank="' + id + '" data-my="' + a.my + '" data-ans="' + a.ans + '">' +
+      '<span class="rblank__val">' + a.my + '</span></span>';
   }
 
   /* ── 보고서 데이터 (essay-report와 동일 콘텐츠) ──────────────────── */
@@ -65,10 +64,11 @@
   var hint = document.getElementById('reviewHint');
   if (hint) hint.style.display = report.querySelector('.rblank.is-wrong') ? '' : 'none';
 
-  // 오답 토글 (내 답 ↔ 정답)
+  // 오답 토글 — 같은 칸 안에서 내 답(빨강) ↔ 정답(초록) 교체 (병렬 표시 아님)
   report.addEventListener('click', function (e) {
     var w = e.target.closest('.rblank.is-wrong'); if (!w) return;
-    w.classList.toggle('show-ans');
+    var showAns = w.classList.toggle('show-ans');
+    w.querySelector('.rblank__val').textContent = showAns ? w.dataset.ans : w.dataset.my;
   });
 
   /* ── 추천 보고서 모달 (정답으로 채워진 모범 보고서) ─────────────── */

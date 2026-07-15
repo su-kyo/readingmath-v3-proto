@@ -128,8 +128,7 @@
       return '<span class="rblank is-correct"><span class="rblank__val">' + b.my + '</span></span>';
     }
     return '<span class="rblank is-wrong" data-my="' + b.my + '" data-ans="' + b.ans + '">' +
-      '<span class="rblank__val">' + b.my + '</span>' +
-      '<span class="rblank__note">정답 <b>' + b.ans + '</b></span></span>';
+      '<span class="rblank__val">' + b.my + '</span></span>';
   }
   function chunkHTML(text) {
     var t = text;
@@ -141,11 +140,11 @@
   function slotHTML(correct, my) {
     var ok = norm(my) === norm(correct);
     if (ok) {
-      return '<span class="rslot is-correct">' + my + '<span class="rslot__ck">✓</span></span>';
+      // 정답 표시는 CSS 코너 원형 뱃지(::after)가 담당 — 인라인 체크 없음
+      return '<span class="rslot is-correct"><span class="rslot__val">' + my + '</span></span>';
     }
     return '<span class="rslot is-wrong" data-my="' + encodeURIComponent(my) + '" data-ans="' + encodeURIComponent(correct) + '">' +
-      '<span class="rslot__val">' + my + '</span>' +
-      '<span class="rslot__note">정답 <b>' + correct + '</b></span></span>';
+      '<span class="rslot__val">' + my + '</span></span>';
   }
 
   function render() {
@@ -183,7 +182,13 @@
     root.addEventListener('click', function (e) {
       var w = e.target.closest('.rblank.is-wrong, .rslot.is-wrong');
       if (!w) return;
-      w.classList.toggle('show-ans');
+      // 같은 칸에서 내 답 ↔ 정답 교체 (병렬 표시 아님). rslot 값은 URI 인코딩됨
+      var showAns = w.classList.toggle('show-ans');
+      var isSlot = w.classList.contains('rslot');
+      var valEl = w.querySelector(isSlot ? '.rslot__val' : '.rblank__val');
+      var my = isSlot ? decodeURIComponent(w.dataset.my) : w.dataset.my;
+      var ans = isSlot ? decodeURIComponent(w.dataset.ans) : w.dataset.ans;
+      if (valEl) valEl.textContent = showAns ? ans : my;
     });
   }
   wireToggle(fillDoc);

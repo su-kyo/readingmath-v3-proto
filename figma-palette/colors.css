@@ -1,0 +1,207 @@
+/* =========================================================================
+   colors.css — 라이브/피그마 컬러 시스템 (시험대비 · 과제센터 전용, "기존안 유지" 폴더)
+   -------------------------------------------------------------------------
+   · 이 폴더는 원본을 건드리지 않는 독립 스냅샷. HTML을 크롬으로 바로 열면 렌더됨.
+   · 색은 아래 Figma 시스템 토큰(01-global → semantic)을 "직접" 사용한다. (--th-* 추상화 X)
+   · 없는 색은 [ADDED] 그룹으로 추가 (주황 CTA / warning / 상태 딥·틴트 / focus / scrim / gap gray).
+   · 비색상 토큰(폰트·간격·라운드·타이밍)은 tokens.css에서 그대로 얼려(freeze) 복사.
+   · 맨 아래 [BRIDGE]는 복사해온 base.css / gnb.css 가 참조하는 옛 토큰명을 새 시스템으로 연결(플럼빙 전용).
+   ========================================================================= */
+
+:root {
+  /* ===================== 01-GLOBAL (원시색) ===================== */
+  --gray-000: #ffffff;  --gray-050: #f2f3f5;  --gray-100: #e4e6ea;
+  --gray-300: #9da3b1;  --gray-500: #5c6373;  --gray-700: #23262c;
+  /* [ADDED] 중간 그레이 보간 (시스템 6단으로 부족한 곳) */
+  --gray-200: #cdd1d9;  --gray-400: #7b8291;  --gray-600: #3f4550;
+
+  --coolgray-700: #060e20;  --coolgray-600: #091328;  --coolgray-500: #0f1930;
+  --coolgray-400: #121e37;  --coolgray-300: #1f2b49;
+
+  --navy-500: #284ac1;  --navy-300: #6f86d5;  --navy-050: #eaedf9;
+  --navy-700: #1c3690;  /* [ADDED] 브랜드 눌림/딥 */
+
+  --blue-500: #008cff;  --blue-300: #54b2ff;  --blue-050: #e6f4ff;
+  --green-500: #58cc02; --green-300: #8fdd55; --green-050: #eefae6;
+  --green-700: #3a8a01; /* [ADDED] success 텍스트/딥 */
+  --red-500: #ff404c;   --red-300: #ff7f87;   --red-050: #ffeced;
+  --red-700: #cc2a34;   /* [ADDED] danger 텍스트/딥 */
+  --yellow-500: #ffc148; --yellow-300: #ffd584; --yellow-050: #fff9ed;
+  --yellow-700: #a5750f; /* [ADDED] warning 텍스트/딥 */
+  --purple-500: #7777ff; --purple-300: #a4a4ff; --purple-050: #f1f1ff;
+  --mint-500: #69f6b8;
+  --skyblue-500: #7ea4f2;
+
+  /* [ADDED] 주황 CTA (시스템에 없던 색 — 과제센터 '제출/시작' 등 액션) */
+  --orange-500: #fe811b;  --orange-300: #fea46d;  --orange-050: #fff4ee;
+  --orange-700: #c3600a;  /* 눌림 */
+
+  /* ===================== ALPHA ===================== */
+  --alpha-navy-030: rgba(40,74,193,.3);
+  --alpha-red-030: rgba(255,64,76,.3);
+  --alpha-green-030: rgba(88,204,2,.3);
+  --alpha-yellow-030: rgba(255,193,72,.3);
+  --alpha-purple-030: rgba(119,119,255,.3);
+  --alpha-blue-030: rgba(0,140,255,.3);
+  --alpha-skyblue-030: rgba(115,155,237,.3);
+  --alpha-mint-030: rgba(105,246,184,.3);
+  --alpha-black-030: rgba(35,38,44,.3);
+  --alpha-black-010: rgba(35,38,44,.1);
+  --alpha-white-030: rgba(255,255,255,.3);
+  --alpha-white-010: rgba(255,255,255,.1);
+  --alpha-white-005: rgba(255,255,255,.05);
+  --alpha-orange-030: rgba(254,129,27,.3); /* [ADDED] */
+
+  /* ===================== SEMANTIC · examprep (LIGHT 기본) ===================== */
+  --bg-primary: var(--gray-000);
+  --bg-secondary: var(--gray-050);
+  --bg-tertiary: var(--gray-050);
+  --bg-subtle: var(--gray-050);
+  --bg-subtle-hover: var(--gray-100);
+  --bg-invert: var(--gray-500);
+  --bg-brand: var(--navy-500);
+  --bg-brand-alpha: var(--alpha-navy-030);
+  --bg-success: var(--green-500);
+  --bg-success-alpha: var(--alpha-green-030);
+  --bg-danger: var(--red-500);
+  --bg-danger-alpha: var(--alpha-red-030);
+  /* [ADDED] warning · CTA · subtle 배경 */
+  --bg-warning: var(--yellow-500);
+  --bg-warning-alpha: var(--alpha-yellow-030);
+  --bg-cta: var(--orange-500);
+  --bg-cta-hover: var(--orange-300);
+  --bg-cta-pressed: var(--orange-700);
+  --bg-brand-subtle: var(--navy-050);
+  --bg-success-subtle: var(--green-050);
+  --bg-danger-subtle: var(--red-050);
+  --bg-warning-subtle: var(--yellow-050);
+
+  --text-primary: var(--gray-700);
+  --text-secondary: var(--gray-500);
+  --text-tertiary: var(--gray-300);
+  --text-static-white: var(--gray-000);
+  --text-brand: var(--navy-500);
+  --text-invert: var(--gray-000);
+  /* [ADDED] 상태 텍스트 · CTA 위 텍스트 */
+  --text-success: var(--green-700);
+  --text-danger: var(--red-700);
+  --text-warning: var(--yellow-700);
+  --text-on-cta: var(--gray-000);
+
+  --border-primary: var(--gray-700);
+  --border-secondary: var(--gray-300);
+  --border-tertiary: var(--alpha-black-010);
+  /* [ADDED] focus · 상태 테두리 */
+  --border-focus: var(--navy-500);
+  --border-success: var(--green-300);
+  --border-danger: var(--red-300);
+  --border-warning: var(--yellow-300);
+
+  /* [ADDED] 모달 스크림 (alpha/black--030=30%론 딤이 옅어 별도) */
+  --scrim: rgba(6,14,32,.55);
+
+  /* ===================== 비색상 토큰 (tokens.css 스냅샷 · freeze) ===================== */
+  --font-sans: "Pretendard", "Pretendard Variable", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-serif: "Noto Serif KR", "RIDIBatang", "Nanum Myeongjo", serif;
+  --font-mono: "Kode Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --fs-display: 32px; --fs-h1: 24px; --fs-h2: 20px; --fs-title: 18px;
+  --fs-body: 16px; --fs-sm: 14px; --fs-xs: 12px;
+  --fs-read-lg: clamp(17px, 1.5vw, 20px); --fs-read: clamp(15px, 1.4vw, 18.5px); --fs-read-sm: clamp(14px, 1.25vw, 16px);
+  --lh-tight: 1.2; --lh-body: 1.5; --tracking: -0.04em;
+  --fw-regular: 400; --fw-medium: 500; --fw-semibold: 600; --fw-bold: 700; --fw-heavy: 800;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px;
+  --space-12: 48px; --space-16: 64px;
+  --r-sm: 8px; --r-md: 12px; --r-lg: 16px; --r-card: 20px; --r-xl: 24px;
+  --r-panel: 30px; --r-frame: 34px; --r-pill: 32px; --r-full: 999px;
+  --t-fast: 140ms ease; --t-panel: 300ms cubic-bezier(0.3, 0.8, 0.3, 1);
+
+  /* ===================== [BRIDGE] 복사한 base.css / gnb.css / 페이지 레거시 토큰 연결 (LIGHT) =====================
+     색의 source of truth는 위 Figma 시스템. 아래는 아직 옛 토큰명을 참조하는 지점을 시스템 값으로 렌더시키는 호환층. */
+  --bg: var(--bg-secondary);
+  --text: var(--text-primary); --text-dim: var(--text-tertiary); --text-muted: var(--text-secondary); --text-meta: var(--text-tertiary);
+  --surface-1: var(--bg-primary); --surface-2: var(--bg-secondary); --surface-3: var(--bg-tertiary);
+  --border: var(--border-tertiary); --border-strong: var(--border-secondary);
+  --th-focus: var(--border-focus);
+  /* 브랜드 */
+  --th-accent: var(--bg-brand); --th-accent-hi: var(--navy-300); --th-accent-strong: var(--navy-700);
+  --th-ink-accent: var(--text-brand); --th-on-accent: var(--text-static-white); --th-static: var(--bg-brand);
+  --th-tint: var(--bg-brand-subtle); --th-tint-strong: var(--bg-brand-subtle); --violet-200: var(--navy-300);
+  /* CTA(주황) */
+  --primary: var(--bg-cta); --primary-hover: var(--bg-cta-hover); --primary-pressed: var(--bg-cta-pressed);
+  /* 상태 */
+  --ok-solid: var(--bg-success); --ok-ink: var(--text-success); --ok-tint: var(--bg-success-subtle); --ok-on-dark: var(--green-300);
+  --no-solid: var(--bg-danger); --no-ink: var(--text-danger); --no-tint: var(--bg-danger-subtle); --no-on-dark: var(--red-300);
+  --warn-solid: var(--bg-warning); --warn-ink: var(--text-warning); --warn-tint: var(--bg-warning-subtle);
+  --info-solid: var(--blue-500); --info-ink: var(--blue-500); --info-tint: var(--blue-050); --current: var(--bg-warning);
+  /* 중성 램프 = 테마 불변 고정 (페이지가 라이트=밝은끝 / 다크=어두운끝 을 직접 선택해 씀).
+     밝은끝 000~500 = gray, 어두운끝 600~900 = coolgray. 다크에서 재정의하지 않는다(불변). */
+  --n-000: var(--gray-000); --n-050: var(--gray-050); --n-100: var(--gray-100);
+  --n-200: var(--gray-200); --n-300: var(--gray-300); --n-400: var(--gray-400);
+  --n-500: var(--gray-500); --n-600: var(--coolgray-300); --n-650: var(--gray-700);
+  --n-700: var(--coolgray-500); --n-800: var(--coolgray-600); --n-900: var(--coolgray-700);
+  /* gnb 모드 탭 */
+  --mode-basic: var(--blue-500); --mode-exam: var(--navy-500);
+  --mode-assign: var(--blue-500); --mode-free: var(--purple-500);
+}
+
+/* ===================== SEMANTIC · examprep (DARK) ===================== */
+:root[data-theme="dark"] {
+  --bg-primary: var(--coolgray-700);
+  --bg-secondary: var(--coolgray-600);
+  --bg-tertiary: var(--coolgray-500);
+  --bg-subtle: var(--alpha-white-005);
+  --bg-subtle-hover: var(--alpha-white-010);
+  --bg-invert: var(--gray-000);
+  --bg-brand: var(--navy-500);
+  --bg-brand-alpha: var(--alpha-navy-030);
+  --bg-success: var(--green-500);
+  --bg-success-alpha: var(--alpha-green-030);
+  --bg-danger: var(--red-500);
+  --bg-danger-alpha: var(--alpha-red-030);
+  --bg-warning: var(--yellow-500);
+  --bg-warning-alpha: var(--alpha-yellow-030);
+  --bg-cta: var(--orange-500);
+  --bg-cta-hover: var(--orange-300);
+  --bg-cta-pressed: var(--orange-700);
+  --bg-brand-subtle: rgba(40,74,193,.22);
+  --bg-success-subtle: rgba(88,204,2,.14);
+  --bg-danger-subtle: rgba(255,64,76,.14);
+  --bg-warning-subtle: rgba(255,193,72,.14);
+
+  --text-primary: var(--gray-000);
+  --text-secondary: var(--gray-300);
+  --text-tertiary: var(--gray-500);
+  --text-static-white: var(--gray-000);
+  --text-brand: var(--navy-300); /* 다크 배경 가독성 위해 navy-300 (표는 navy/navy) */
+  --text-invert: var(--coolgray-700);
+  --text-success: var(--green-300);
+  --text-danger: var(--red-300);
+  --text-warning: var(--yellow-300);
+  --text-on-cta: var(--gray-000);
+
+  --border-primary: var(--gray-000);
+  --border-secondary: var(--coolgray-300);
+  --border-tertiary: var(--alpha-white-010);
+  --border-focus: var(--navy-300);
+  --border-success: var(--green-300);
+  --border-danger: var(--red-300);
+  --border-warning: var(--yellow-300);
+
+  --scrim: rgba(0,0,0,.6);
+
+  /* [BRIDGE] 다크 — 중성 램프는 어두운 표면 순서(coolgray)로 재매핑 */
+  --bg: var(--bg-primary);
+  --text: var(--text-primary); --text-dim: var(--text-tertiary); --text-muted: var(--text-secondary); --text-meta: var(--text-tertiary);
+  --surface-1: var(--bg-primary); --surface-2: var(--bg-secondary); --surface-3: var(--bg-tertiary);
+  --border: var(--border-tertiary); --border-strong: var(--border-secondary);
+  --th-accent: var(--bg-brand); --th-accent-hi: var(--navy-300); --th-accent-strong: var(--navy-700);
+  --th-ink-accent: var(--text-brand); --th-static: var(--bg-brand);
+  --th-tint: var(--bg-brand-subtle); --th-tint-strong: var(--bg-brand-subtle);
+  --ok-ink: var(--text-success); --ok-tint: var(--bg-success-subtle);
+  --no-ink: var(--text-danger); --no-tint: var(--bg-danger-subtle);
+  --warn-ink: var(--text-warning); --warn-tint: var(--bg-warning-subtle);
+  --info-tint: rgba(0,140,255,.16);
+  /* --n-* 는 테마 불변 고정 램프 (위 :root 정의). 다크에서 재정의하지 않는다 —
+     페이지가 다크 본문 글자로 var(--n-050) 같은 '밝은끝'을 쓰기 때문(스왑하면 글자가 사라짐). */
+}

@@ -124,16 +124,32 @@
   var asol = document.getElementById('asol');
   var tray = document.getElementById('tray');
   var poolEl = document.getElementById('pool');
-  var stepsQ = document.getElementById('stepsQ');
+  var qtabs = document.getElementById('qtabs');
   var pillFill = document.getElementById('pillFill');
   var pillArrange = document.getElementById('pillArrange');
   var primaryBtn = document.getElementById('primaryBtn');
   var primaryLabel = document.getElementById('primaryLabel');
   var stageAction = document.getElementById('stageAction');
+  var rmodal = document.getElementById('rmodal');
+  var rmTitle = document.getElementById('rmTitle');
+  var rmRead = document.getElementById('rmRead');
+  var rmHint = document.getElementById('rmHint');
+  var rmGo = document.getElementById('rmGo');
 
   // 콘텐츠 하단 진입 버튼 = 단계 완료 시에만 노출 (콘솔바 아님)
   function showAction(label) { primaryLabel.textContent = label; stageAction.classList.add('is-ready'); }
   function hideAction() { stageAction.classList.remove('is-ready'); }
+
+  // 문제 번호탭 렌더 (헤더) — 현재 문제 강조, 지난 문제는 done
+  function renderTabs() {
+    if (!qtabs) return;
+    var html = '';
+    for (var i = 0; i < N; i++) {
+      var cls = 'qtab' + (i === pi ? ' is-active' : (i < pi ? ' is-done' : ''));
+      html += '<span class="' + cls + '">' + (i + 1) + '</span>';
+    }
+    qtabs.innerHTML = html;
+  }
 
   var pi = -1, phase = 'read', P = null;
   var blankMap = {}, chunkEls = [], curChunk = 0;
@@ -157,36 +173,46 @@
     return '<span class="chunk">' + t + '<span class="chunk__go">계속 ›</span></span>';
   }
 
-  /* ===================== ① 문제 끊어읽기 (상단 카드) ===================== */
+  /* ===================== ① 문제 끊어읽기 (모달) ===================== */
+  /* 처음 문제 읽기 = 모달에서 문장별 진행. 상단 카드에는 전체 문제문을 담아 두고
+     '문제 다시 보기'로 펼쳐 참고. 모달의 '문제 풀기 →' = 풀이 시작. */
   var readCur = 0;
   function openRead() {
-    phase = 'read'; readCur = 0;
-    problem.classList.remove('is-collapsible', 'is-collapsed');
-    readBody.innerHTML = P.statement.map(chunkHTML).join('') +
+    phase = 'read';
+    // 상단 카드 = 다시보기용 전체 문제문(접힘 상태로 상주)
+    problem.classList.add('is-collapsible', 'is-collapsed');
+    readBody.innerHTML = '<div class="problem__qtext">' + P.statement.map(function (s) { return '<p class="qfull">' + s + '</p>'; }).join('') + '</div>' +
       (P.image ? '<div class="problem__img"><img src="' + P.image + '" alt="문제 이미지" /></div>' : '');
     worksheet.hidden = true; tray.hidden = true; fillView.hidden = false; arrangeView.hidden = true;
-    renderRead();
+    openReadModal();
   }
-  function renderRead() {
-    var els = readBody.querySelectorAll('.chunk');
+  function openReadModal() {
+    readCur = 0;
+    rmTitle.textContent = '문제 ' + (pi + 1);
+    rmRead.innerHTML = P.statement.map(function (s) { return '<span class="rm-chunk">' + s + ' </span>'; }).join('') +
+      (P.image ? '<div class="rmodal__img"><img src="' + P.image + '" alt="문제 이미지" /></div>' : '');
+    renderReadModal();
+    rmodal.classList.add('is-open'); rmodal.setAttribute('aria-hidden', 'false');
+  }
+  function renderReadModal() {
+    var els = rmRead.querySelectorAll('.rm-chunk');
     var last = els.length - 1;
     els.forEach(function (el, i) {
-      el.classList.toggle('is-hidden', i > readCur);
-      // 마지막 문장까지 탭으로 진행 (별도 '문제 풀기' 버튼 없이 여기서 풀이 시작)
-      el.classList.toggle('is-tappable', i === readCur);
-      var go = el.querySelector('.chunk__go');
-      if (go) go.textContent = (i === last ? '풀이 시작 ›' : '계속 ›');
+      el.classList.toggle('is-cur', i === readCur);
+      el.classList.toggle('is-ahead', i > readCur);
     });
+    rmHint.textContent = readCur < last ? '문장을 눌러 이어 읽어요' : '문제를 다 읽었어요';
   }
-  readBody.addEventListener('click', function (e) {
-    var el = e.target.closest('.chunk.is-tappable'); if (!el) return;
-    var els = readBody.querySelectorAll('.chunk');
-    if (readCur >= els.length - 1) {
-      // 마지막 문장 탭 = 풀이 시작
-      els.forEach(function (c) { c.classList.remove('is-hidden', 'is-tappable'); });
-      problem.classList.add('is-collapsible', 'is-collapsed');
-      startFill();
-    } else { readCur++; renderRead(); }
+  rmRead.addEventListener('click', function () {
+    var els = rmRead.querySelectorAll('.rm-chunk');
+    if (readCur < els.length - 1) { readCur++; renderReadModal(); }
+  });
+  function closeReadModal() { rmodal.classList.remove('is-open'); rmodal.setAttribute('aria-hidden', 'true'); }
+  rmGo.addEventListener('click', function () {
+    // 남은 문장까지 모두 드러낸 뒤 풀이 시작
+    rmRead.querySelectorAll('.rm-chunk').forEach(function (el) { el.classList.remove('is-cur', 'is-ahead'); });
+    closeReadModal();
+    startFill();
   });
   problemHead.addEventListener('click', function () {
     if (!problem.classList.contains('is-collapsible')) return;
@@ -237,7 +263,12 @@
   var pop = document.getElementById('qpop');
   var popBody = document.getElementById('qpopBody');
   var caret = pop.querySelector('.qpop__caret');
-  var activeId = null, selEl = null, buffer = '';
+  var activeId = null, selEl = null, buffer = '', wrongT = null;
+  // 오답 표시를 잠깐 보여준 뒤 기본 상태로 복귀 (입력란·객관식 공용)
+  function clearWrongLater(el, delay) {
+    clearTimeout(wrongT);
+    wrongT = setTimeout(function () { if (el) el.classList.remove('is-wrong'); }, delay || 1300);
+  }
   function place(anchor) {
     var r = anchor.getBoundingClientRect();
     var pw = pop.offsetWidth, ph = pop.offsetHeight;
@@ -283,6 +314,7 @@
       if (val === ans) { var el = selEl; closePop(); fillBlank(el, val); return; }
       selEl._dead[val] = true;
       opt.classList.remove('is-wrong'); void opt.offsetWidth; opt.classList.add('is-wrong', 'is-dead');
+      clearWrongLater(opt, 1100);   // 흔들림 후 붉은 강조는 거두고 비활성(dim) 상태만 유지
       showToast('오답이에요. 다시 골라 볼까요?', true); return;
     }
     var key = e.target.closest('.qpop__key'); if (key) handleKey(key.dataset.k);
@@ -294,13 +326,14 @@
     else if (k === '-') buffer = buffer.charAt(0) === '-' ? buffer.slice(1) : '-' + buffer;
     else if (k === '.') { if (buffer.replace('-', '').indexOf('.') < 0) buffer += (buffer === '' || buffer === '-' ? '0.' : '.'); }
     else buffer += k;
-    var d = document.getElementById('popDisp'); if (d) d.textContent = buffer || '0';
+    var d = document.getElementById('popDisp');
+    if (d) { d.classList.remove('is-wrong'); clearTimeout(wrongT); d.textContent = buffer || '0'; }  // 다시 입력하면 즉시 기본 상태로
   }
   function checkShort() {
     if (buffer === '') return;
     if (norm(buffer) === norm(blankMap[activeId].ans)) { var el = selEl; closePop(); fillBlank(el, buffer); return; }
     var d = document.getElementById('popDisp');
-    if (d) { d.classList.remove('is-wrong'); void d.offsetWidth; d.classList.add('is-wrong'); }
+    if (d) { d.classList.remove('is-wrong'); void d.offsetWidth; d.classList.add('is-wrong'); clearWrongLater(d, 1300); }
     showToast('오답이에요. 다시 계산해 볼까요?', true);
   }
   document.addEventListener('click', function (e) {
@@ -411,7 +444,7 @@
 
   /* ── 진행 표시 / primary ── */
   function setSteps() {
-    stepsQ.textContent = '문제 ' + (pi + 1) + ' / ' + N;
+    renderTabs();
     if (phase === 'arrange') { pillFill.className = 'stepbar__i is-done'; pillArrange.className = 'stepbar__i is-on'; }
     else { pillFill.className = 'stepbar__i is-on'; pillArrange.className = 'stepbar__i'; }
   }
@@ -422,7 +455,7 @@
   function startProblem(idx) {
     pi = idx; P = PROBLEMS[idx];
     pillFill.className = 'stepbar__i is-on'; pillArrange.className = 'stepbar__i';
-    stepsQ.textContent = '문제 ' + (pi + 1) + ' / ' + N;
+    renderTabs();
     hideAction();
     openRead();
   }

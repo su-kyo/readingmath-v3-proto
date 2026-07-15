@@ -224,4 +224,54 @@
       t.classList.add('is-active');
     });
   });
+
+  // ── 과제 연계 유형 강조 (과제 결과 화면에서 ?linked 로 진입) ──
+  (function () {
+    var params;
+    try { params = new URLSearchParams(window.location.search); } catch (e) { return; }
+    if (!params.has('linked')) return;
+
+    // 데모: 방금 푼 과제(중등 · 일차부등식)와 연계된 대표 유형 위치
+    // (실서비스에선 과제 메타데이터로 단원/유형을 매핑)
+    var LINK = { u: 1, sub: 0, tier: 'skill', idx: 3 };
+    var sec = document.getElementById('unit-' + LINK.u);
+    var subEl = sec && sec.querySelectorAll('.subunit')[LINK.sub];
+    var bandEl = subEl && subEl.querySelector('.band--' + LINK.tier);
+    var tileEl = bandEl && bandEl.querySelectorAll('.tile')[LINK.idx];
+    if (!tileEl) return;
+
+    // 지속 표시: 코너 링크 배지 (브리딩이 끝나도 어떤 유형이었는지 남김)
+    var linkIco = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 15l6-6M10.5 6.5l1-1a4 4 0 0 1 5.7 5.7l-1 1M13.5 17.5l-1 1a4 4 0 0 1-5.7-5.7l1-1"/></svg>';
+    tileEl.classList.add('is-linked');
+    var flag = document.createElement('span');
+    flag.className = 'tile__linkflag';
+    flag.innerHTML = linkIco;
+    tileEl.appendChild(flag);
+
+    // 진입 콜아웃 말풍선
+    var callout = document.createElement('span');
+    callout.className = 'tile__callout';
+    callout.textContent = '방금 푼 과제와 연관된 유형';
+    tileEl.appendChild(callout);
+
+    // 사이드바 활성 + 해당 단원으로 스크롤(사이드바 클릭과 동일한 검증된 경로) 후 브리딩 시작
+    // (연계 타일은 해당 단원 첫 소단원 실력밴드에 있어 단원 상단으로 스크롤하면 바로 보임)
+    // 레이아웃이 실제로 잡힌 뒤 측정해야 offsetTop이 정확 (초기엔 0폭 상태로 값이 튐)
+    setActive(LINK.u);
+    clickLock = Date.now();
+    function runScroll(tries) {
+      if ((panel.clientHeight < 100 || secs[LINK.u].offsetTop < 1) && tries < 40) {
+        setTimeout(function () { runScroll(tries + 1); }, 50);
+        return;
+      }
+      clickLock = Date.now();
+      smoothScrollTo(Math.max(0, secs[LINK.u].offsetTop - 4));
+      tileEl.classList.add('is-breathing');
+      // 아래 종료 타이머는 브리딩 시작 기준
+      setTimeout(function () { tileEl.classList.remove('is-breathing'); }, 2300);   // 브리딩 ~2초 후 종료
+      setTimeout(function () { callout.classList.add('is-hiding'); }, 3200);        // 콜아웃 페이드아웃
+      setTimeout(function () { if (callout.parentNode) callout.parentNode.removeChild(callout); }, 3520);
+    }
+    runScroll(0);
+  })();
 })();

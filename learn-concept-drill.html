@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>기초 연산 · 개념 훈련 — 리딩수학과학</title>
-  <link rel="stylesheet" href="styles/tokens.css?v=15" />
-  <link rel="stylesheet" href="styles/base.css?v=3" />
+  <link rel="stylesheet" href="styles/tokens.css?v=17" />
+  <link rel="stylesheet" href="styles/base.css?v=4" />
   <link rel="stylesheet" href="styles/components.css?v=5" />
   <link rel="stylesheet" href="styles/learn-shell.css?v=7" />
   <style>
@@ -13,7 +13,7 @@
     .content { position: relative; flex-direction: column; padding: 0 0 96px; overflow: hidden; --fade: var(--th-panel); }
     :root[data-theme="dark"] .content { --fade: var(--surface-1); }
     /* 스크롤 영역을 cap 아래에서 시작 (스크롤해도 cap 뒤로 안 숨음) */
-    .ops-wrap { flex: 1; min-height: 0; position: relative; margin-top: 40px; }
+    .ops-wrap { flex: 1; min-height: 0; position: relative; margin-top: 14px; }
     .ops-wrap::after { /* 아래에 콘텐츠 더 있음 */
       content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 48px; pointer-events: none; z-index: 1;
       background: linear-gradient(to top, var(--fade), transparent); opacity: 0; transition: opacity .2s ease;
@@ -41,24 +41,34 @@
     .ops::-webkit-scrollbar-thumb { background: rgba(255,255,255,.24); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
     :root[data-theme="light"] .ops::-webkit-scrollbar-thumb { background: rgba(20,32,58,.22); background-clip: padding-box; }
 
-    /* ===== 상단 프로그레스 (박스 최상단 중앙에 탭처럼 붙음. 색=테두리색, 테마 무관) ===== */
-    .progress-cap {
-      position: absolute; top: 0; left: 50%; transform: translateX(-50%); z-index: 4;
-      display: inline-flex; align-items: center; gap: 6px;
-      background: var(--th-static); border-radius: 0 0 16px 16px; padding: 0 16px 7px;
-      max-width: calc(100% - 48px); flex-wrap: nowrap; justify-content: center;
-    }
-    .pcirc { width: 20px; height: 20px; border-radius: 50%; flex: none; position: relative; background: rgba(255,255,255,.3); }
-    .pcirc.is-current { background: rgba(255,255,255,.3); box-shadow: inset 0 0 0 2px var(--n-000); }
-    .pcirc.is-correct { background: var(--th-accent); }
-    .pcirc.is-correct::after { content: ""; position: absolute; inset: 0; background: center / 15px no-repeat url("assets/figma/icons/ico-progress-correct.svg"); }
-    .pcirc.is-wrong { background: var(--no-solid); }
-    .pcirc.is-wrong::after { content: ""; position: absolute; inset: 0; background: center / 15px no-repeat url("assets/figma/icons/ico-progress-wrong.svg"); }
-    .pcap__count { margin-left: 4px; font-weight: 700; color: var(--n-000); font-size: 16px; font-family: var(--font-mono); }
+    /* ===== 문제 카드 (번호탭 헤더 + 접이식 · 프레임 테두리색과 면 공유 · 상단 부착) ===== */
+    .problem { flex: none; width: min(1040px, calc(100% - 2 * clamp(24px, 5vw, 56px))); margin: 0 auto;
+      overflow: hidden; background: var(--th-static); border-radius: 0 0 18px 18px; box-shadow: 0 10px 24px rgba(8,5,22,.28); }
+    .problem__head { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 16px; background: transparent; border: 0; }
+    .problem.is-collapsible .problem__head { cursor: pointer; }
+    .qtabs { display: inline-flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+    .qtab { min-width: 28px; height: 28px; padding: 0 7px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center;
+      font-family: var(--font-sans); font-weight: 800; font-size: 13px; background: rgba(255,255,255,.10); color: rgba(255,255,255,.5); transition: background .16s, color .16s, box-shadow .16s; }
+    .qtab svg { width: 15px; height: 15px; }
+    .qtab.is-done { background: color-mix(in srgb, var(--th-accent) 48%, transparent); color: #fff; }
+    /* 현재 문제 = 흰 링으로 대비 강화 (색맹 대비: border 형태로 구분) */
+    .qtab.is-active { background: var(--th-accent); color: #fff; box-shadow: 0 0 0 2px #fff, 0 2px 8px rgba(0,0,0,.32); }
+    /* 정/오답 = 색 + 아이콘(색맹 접근성) */
+    .qtab.is-correct { background: var(--ok-solid); color: #fff; }
+    .qtab.is-wrong { background: var(--no-solid); color: #fff; }
+    .problem__chev { width: 22px; height: 22px; color: rgba(255,255,255,.62); transition: transform .25s; flex: none; transform: rotate(180deg); }
+    .problem.is-collapsed .problem__chev { transform: rotate(0); }
+    /* 본문 = 문제문(좌) + 참고자료(우) 한 행 · 밝은 톤(어두운 패널) */
+    .problem__body { padding: 6px 18px 18px; overflow: hidden; max-height: 1200px; color: rgba(249,249,249,.92);
+      display: flex; gap: 20px; align-items: flex-start; transition: max-height .32s ease, opacity .25s ease, padding .32s ease; }
+    .problem.is-collapsed .problem__body { max-height: 0; opacity: 0; padding-top: 0; padding-bottom: 0; }
+    .problem__body .q__text { flex: 1 1 auto; min-width: 0; margin-bottom: 0; color: rgba(249,249,249,.94); }
+    .problem__body .ex { flex: none; width: clamp(200px, 36%, 340px); margin: 0; background: rgba(255,255,255,.07); }
+    .problem__body .ex__list { color: rgba(249,249,249,.85); }
+    .problem__body .ex__skel { color: rgba(255,255,255,.6); }
 
-    /* ===== 문제 ===== */
-    /* 기본 중앙, 공간 부족하면 위부터 (margin auto → 넘치면 0으로 접힘) */
-    .q { width: min(1040px, 100%); margin: auto 0; display: flex; flex-direction: column; align-items: center; }
+    /* ===== 문제 (풀이 영역) ===== */
+    .q { width: min(1040px, 100%); margin: 0; display: flex; flex-direction: column; align-items: center; }
     .q__text { align-self: stretch; font-size: clamp(16px, 1.5vw, 20px); font-weight: 700; color: var(--qtext); line-height: 1.6; margin-bottom: 20px; }
     .ex { align-self: stretch; background: var(--ex-bg); border-radius: 18px; padding: 20px 24px; margin-bottom: 22px; }
     .ex__list { display: flex; flex-direction: column; gap: 10px; font-size: clamp(15px,1.4vw,18px); color: var(--qtext); line-height: 1.5; }
@@ -77,7 +87,7 @@
     }
     .opt:hover { background: var(--opt-hover); }
     .opt__num { flex: none; width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,.14); color: var(--qtext); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 15px; position: relative; }
-    :root[data-theme="light"] .opt__num { background: var(--th-chip); color: var(--n-500); }
+    :root[data-theme="light"] .opt__num { background: var(--th-tint-strong); color: var(--th-ink-accent); }
     .opt--num { justify-content: center; } .opt--num .opt__num { width: 34px; height: 34px; }
     .opt__img { width: 100%; height: 96px; border-radius: 10px; background: var(--n-200); }
     .opt--img { flex-direction: column; align-items: stretch; }
@@ -86,11 +96,11 @@
     .opt.is-selected .opt__num { background: var(--n-000); color: transparent; }
     .opt.is-selected .opt__num::after { content: "✓"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--th-accent); font-weight: 900; }
     /* 채점: 정답표시 칸은 숫자, 내가 고른 칸만 아이콘 (겹침 방지) */
-    .opt.is-correct { background: color-mix(in srgb, var(--ok-solid) 24%, var(--opt-bg)); box-shadow: inset 0 0 0 2px var(--ok-solid); color: var(--qtext); }
+    .opt.is-correct { background: color-mix(in srgb, var(--ok-solid) 36%, var(--opt-bg)); box-shadow: inset 0 0 0 2px var(--ok-solid); color: var(--qtext); }
     .opt.is-correct .opt__num { background: var(--ok-solid); }
     .opt.is-correct:not(.is-selected) .opt__num { color: var(--n-000); }
     .opt.is-correct.is-selected .opt__num::after { color: var(--n-000); }
-    .opt.is-wrong { background: color-mix(in srgb, var(--no-solid) 22%, var(--opt-bg)); box-shadow: inset 0 0 0 2px var(--no-solid); color: var(--qtext); }
+    .opt.is-wrong { background: color-mix(in srgb, var(--no-solid) 36%, var(--opt-bg)); box-shadow: inset 0 0 0 2px var(--no-solid); color: var(--qtext); }
     .opt.is-wrong .opt__num { background: var(--no-solid); }
     .opt.is-wrong:not(.is-selected) .opt__num { color: var(--n-000); }
     .opt.is-wrong.is-selected .opt__num::after { content: "✕"; color: var(--n-000); }
@@ -116,7 +126,7 @@
     .fraction__bar { width: 104px; height: 3px; background: var(--qtext); border-radius: 2px; }
 
     /* 주관식 오답 시 정답 표시 (별도 공간) */
-    .ans-correct { display: none; margin-top: 22px; padding: 10px 22px; border-radius: 12px; background: color-mix(in srgb, var(--ok-solid) 12%, transparent); color: var(--muted); font-weight: 700; font-size: 16px; align-items: center; gap: 8px; }
+    .ans-correct { display: none; margin-top: 22px; padding: 10px 22px; border-radius: 12px; background: color-mix(in srgb, var(--ok-solid) 22%, transparent); color: var(--ok-ink); font-weight: 700; font-size: 16px; align-items: center; gap: 8px; }
     .ans-correct.show { display: inline-flex; }
     .ans-correct b { color: var(--ok-solid); font-size: 19px; }
 
@@ -158,7 +168,7 @@
     .qstep { font-size: clamp(15px, 1.4vw, 18px); line-height: 2.3; margin-bottom: 10px; }
     .qstep__no { color: var(--muted); font-weight: 700; margin-right: 6px; }
     .dblank {
-      display: inline-flex; align-items: center; justify-content: center; vertical-align: middle;
+      position: relative; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle;
       min-width: 46px; height: 32px; padding: 0 10px; margin: 0 3px; box-sizing: border-box;
       border-radius: 8px; font-weight: 700; font-family: var(--font-sans); font-size: 16px; cursor: pointer;
       background: var(--input-bg); border: 1.7px dashed var(--input-br); color: var(--qtext); transition: background .12s, border-color .12s;
@@ -166,9 +176,24 @@
     .dblank:hover { background: var(--opt-hover); }
     .dblank.is-filled { border-style: solid; }
     .dblank.is-active-input { border-color: var(--primary); border-style: solid; box-shadow: 0 0 0 3px rgba(255,127,0,.16); }
-    .dblank.is-correct { border-style: solid; border-color: var(--ok-solid); color: var(--ok-solid); }
-    .dblank.is-wrong { border-style: solid; border-color: var(--no-solid); color: var(--no-solid); }
-    .dblank-correct { margin-left: 5px; color: var(--ok-solid); font-weight: 800; font-size: 14.5px; vertical-align: middle; }
+    /* 채점 후: 정답 칸은 잠금 */
+    .dblank.is-correct { border-style: solid; border-color: var(--ok-solid); color: var(--ok-solid); cursor: default; }
+    .dblank.is-correct:hover { background: var(--input-bg); }
+    /* 오답 = 내 답(빨강·취소선). 클릭하면 같은 칸이 정답(초록)으로 토글 — 정답을 옆에 병렬 표시하지 않음 */
+    .dblank.is-wrong { border-style: solid; border-color: var(--no-solid); color: var(--no-solid);
+      text-decoration: line-through; text-decoration-color: var(--no-solid); text-decoration-thickness: 1.5px; }
+    .dblank.is-wrong:hover { background: color-mix(in srgb, var(--no-solid) 10%, transparent); }
+    .dblank.is-wrong.show-ans { border-color: var(--ok-solid); color: var(--ok-solid); text-decoration: none; }
+    .dblank.is-wrong.show-ans:hover { background: color-mix(in srgb, var(--ok-solid) 10%, transparent); }
+    /* 정답 확인 = 우측 상단 원형 뱃지 (정답 초록 ✓ / 오답 빨강 ✕) — 색맹도 모양으로 구분.
+       오답을 눌러 정답으로 치환한 칸은 정답 스타일이되 뱃지 없음(원래 맞힌 칸과 구분) */
+    .dblank.is-correct::after, .dblank.is-wrong::after {
+      position: absolute; top: -8px; right: -8px; width: 17px; height: 17px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 10px; color: #fff;
+      text-decoration: none; box-shadow: 0 1px 3px rgba(0,0,0,.3); }
+    .dblank.is-correct::after { content: '✓'; background: var(--ok-solid); }
+    .dblank.is-wrong::after { content: '✕'; background: var(--no-solid); }
+    .dblank.is-wrong.show-ans::after { content: none; }
     /* 세로셈 */
     .vsub { display: inline-grid; grid-template-columns: 26px repeat(3, 42px); gap: 7px 9px; align-items: center; justify-items: center;
       font-family: var(--font-mono); font-size: 30px; color: var(--qtext); margin: 4px auto 2px; }
@@ -206,7 +231,14 @@
       </header>
 
       <main class="content">
-        <div class="progress-cap" id="progress"></div>
+        <!-- 문제 카드 (프레임 상단에 붙음 · 번호탭 헤더 + 접이식) -->
+        <section class="problem is-collapsible" id="problem">
+          <div class="problem__head" id="problemHead" role="button" tabindex="0" aria-label="문제 펼치기/접기">
+            <span class="qtabs" id="qtabs"></span>
+            <svg class="problem__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="problem__body" id="problemBody"></div>
+        </section>
         <div class="ops-wrap">
           <div class="ops" id="opsScroll">
             <div class="q" id="q"></div>
@@ -258,6 +290,6 @@
     </div>
   </div>
 
-  <script src="scripts/learn-drill.js?v=2"></script>
+  <script src="scripts/learn-drill.js?v=5"></script>
 </body>
 </html>

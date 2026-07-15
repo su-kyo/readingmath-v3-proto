@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>서술형 훈련 · 기본 다지기 해설 — 리딩수학과학</title>
-  <link rel="stylesheet" href="styles/tokens.css?v=15" />
-  <link rel="stylesheet" href="styles/base.css?v=3" />
+  <link rel="stylesheet" href="styles/tokens.css?v=17" />
+  <link rel="stylesheet" href="styles/base.css?v=4" />
   <link rel="stylesheet" href="styles/components.css?v=5" />
   <link rel="stylesheet" href="styles/learn-shell.css?v=7" />
-  <link rel="stylesheet" href="styles/essay.css?v=11" />
+  <link rel="stylesheet" href="styles/essay.css?v=12" />
   <style>
     /* ============ 서술형 = 퍼플 (essay-drill 셸 재사용) ============ */
     .content {
@@ -21,11 +21,11 @@
     }
     :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
     :root[data-theme="light"] .content {
-      background: var(--n-050); border-color: var(--th-static);
+      background: var(--n-000); border-color: var(--th-static);
       --guide: var(--n-650); --card: var(--n-000); --card-br: var(--n-050); --card-sh: 0 12px 30px -22px rgba(60,40,130,.5);
       --step-bg: var(--n-100); --step-fg: var(--text-meta);
-      --ok-bg: rgba(16,140,100,.12); --ok-br: rgba(16,140,100,.45); --ok-fg: var(--ok-ink); --ok-ink: var(--ok-ink);
-      --no-bg: rgba(210,50,58,.1); --no-br: rgba(210,50,58,.45); --no-fg: var(--no-ink); --no-ink: var(--no-ink);
+      --ok-bg: rgba(16,140,100,.12); --ok-br: rgba(16,140,100,.45); --ok-fg: var(--ok-solid); --ok-ink: var(--ok-ink);
+      --no-bg: rgba(210,50,58,.1); --no-br: rgba(210,50,58,.45); --no-fg: var(--no-solid); --no-ink: var(--no-ink);
     }
 
     /* ============ 상단 진행/네비 ============ */
@@ -97,26 +97,30 @@
     .rblank__val, .rslot__val { line-height: 1.2; }
 
     /* 정답 */
-    .rblank.is-correct, .rslot.is-correct { background: var(--ok-bg); color: var(--ok-ink); box-shadow: inset 0 0 0 1.5px var(--ok-br); }
-    :root[data-theme="dark"] .rblank.is-correct, :root[data-theme="dark"] .rslot.is-correct { color: var(--ok-fg); }
-    .rblank.is-correct::after { content: '✓'; color: var(--ok-fg); font-weight: 900; font-size: 13px; }
-    .rslot__ck { color: var(--ok-fg); font-weight: 900; }
+    .rblank.is-correct, .rslot.is-correct { background: var(--ok-bg); color: var(--ok-fg); box-shadow: inset 0 0 0 1.5px var(--ok-br); }
 
-    /* 오답 (클릭 토글) */
-    .rblank.is-wrong, .rslot.is-wrong { background: var(--no-bg); color: var(--no-ink); box-shadow: inset 0 0 0 1.5px var(--no-br); cursor: pointer; transition: box-shadow .15s, background .15s; }
-    :root[data-theme="dark"] .rblank.is-wrong, :root[data-theme="dark"] .rslot.is-wrong { color: var(--no-fg); }
+    /* 오답 = 내 답(빨강·취소선). 클릭하면 같은 칸이 정답(초록)으로 토글 — 병렬 표시 아님 */
+    .rblank.is-wrong, .rslot.is-wrong { background: var(--no-bg); color: var(--no-fg); box-shadow: inset 0 0 0 1.5px var(--no-br); cursor: pointer; transition: box-shadow .15s, background .15s, color .15s; }
     .rblank.is-wrong:hover, .rslot.is-wrong:hover { box-shadow: inset 0 0 0 2px var(--no-br), 0 0 0 3px var(--no-bg); }
     .rblank.is-wrong .rblank__val, .rslot.is-wrong .rslot__val { text-decoration: line-through; text-decoration-color: var(--no-fg); text-decoration-thickness: 1.5px; }
-    .rblank.is-wrong::after, .rslot.is-wrong::after { content: '✕'; color: var(--no-fg); font-weight: 900; font-size: 12px; }
-    /* 오답 note = 토글 전 숨김, 토글 시 정답 노출 */
-    .rblank__note, .rslot__note { display: none; align-items: center; gap: 4px; padding-left: 6px; margin-left: 4px;
-      border-left: 1.5px solid var(--ok-br); color: var(--ok-fg); font-size: .92em; font-weight: 700; }
-    .rblank__note b, .rslot__note b { font-weight: 800; }
-    .rblank.show-ans, .rslot.show-ans { background: color-mix(in srgb, var(--ok-bg) 60%, var(--no-bg)); }
-    .rblank.show-ans .rblank__note, .rslot.show-ans .rslot__note { display: inline-flex; }
+    /* 토글 상태 = 정답 노출(초록) : 같은 공간 */
+    .rblank.is-wrong.show-ans, .rslot.is-wrong.show-ans { background: var(--ok-bg); color: var(--ok-fg); box-shadow: inset 0 0 0 1.5px var(--ok-br); }
+    .rblank.is-wrong.show-ans:hover, .rslot.is-wrong.show-ans:hover { box-shadow: inset 0 0 0 2px var(--ok-br), 0 0 0 3px var(--ok-bg); }
+    .rblank.is-wrong.show-ans .rblank__val, .rslot.is-wrong.show-ans .rslot__val { text-decoration: none; }
 
-    /* 하단 결과 버튼 */
-    .toolbtn--primary { background: var(--th-accent); }
+    /* 정답 확인 = 우측 상단 원형 뱃지 (정답 초록 ✓ / 오답 빨강 ✕) — 색맹도 모양으로 구분.
+       오답을 눌러 정답으로 치환한 칸은 정답 스타일이되 뱃지 없음(원래 맞힌 칸과 구분) */
+    .rblank.is-correct::after, .rslot.is-correct::after,
+    .rblank.is-wrong::after, .rslot.is-wrong::after {
+      position: absolute; top: -7px; right: -7px; width: 17px; height: 17px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-family: var(--font-sans); font-weight: 900; font-size: 10px; color: #fff;
+      box-shadow: 0 1px 3px rgba(0,0,0,.3); }
+    .rblank.is-correct::after, .rslot.is-correct::after { content: '✓'; background: var(--ok-solid); }
+    .rblank.is-wrong::after, .rslot.is-wrong::after { content: '✕'; background: var(--no-solid); }
+    .rblank.is-wrong.show-ans::after, .rslot.is-wrong.show-ans::after { content: none; }
+
+    /* 하단 결과 버튼 (윗면·아랫면 모두 바이올렛으로 일치) */
+    .toolbtn--primary { background: var(--th-accent); box-shadow: 0 4px 0 color-mix(in srgb, var(--th-accent) 62%, #000); }
   </style>
 </head>
 <body class="learn-body">
@@ -202,6 +206,6 @@
     </div>
   </div>
 
-  <script src="scripts/essay-drill-review.js?v=1"></script>
+  <script src="scripts/essay-drill-review.js?v=2"></script>
 </body>
 </html>

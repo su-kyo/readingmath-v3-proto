@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>학기 커리큘럼 — 리딩수학과학</title>
-  <link rel="stylesheet" href="styles/tokens.css?v=15" />
-  <link rel="stylesheet" href="styles/base.css?v=3" />
+  <link rel="stylesheet" href="styles/tokens.css?v=17" />
+  <link rel="stylesheet" href="styles/base.css?v=4" />
   <link rel="stylesheet" href="styles/space-bg.css?v=1" />
   <link rel="stylesheet" href="styles/gnb.css?v=4" />
   <style>
@@ -82,16 +82,11 @@
     /* 소단원 별점수 (개념·유형·서술형) */
     .sub__stars{ display:flex; gap:9px; flex:none; }
     .star{ position:relative; display:inline-grid; place-items:center; flex:none; }
-    .star svg{ display:block; }
-    .star--sm{ width:27px; height:27px; } .star--sm svg{ width:27px; height:27px; }
-    .star--md{ width:38px; height:38px; } .star--md svg{ width:38px; height:38px; }
-    .star--x svg path{ fill:var(--n-500); }
-    .star--gs svg path{ fill:#FFC800; }   /* [에셋연동] star/grade PNG */
-    .star--ga svg path{ fill:#FFC800; }   /* [에셋연동] star/grade PNG */
-    .star--gb svg path{ fill:#FFC148; }   /* [에셋연동] star/grade PNG */
-    .star--gc svg path{ fill:#FFA94D; }   /* [에셋연동] star/grade PNG */
-    .star__g{ position:absolute; top:44%; left:50%; transform:translate(-50%,-50%); color:#7D3E00; font-weight:900; }   /* [에셋연동] 별 배지 위 등급 글자 */
-    .star--sm .star__g{ font-size:10px; } .star--md .star__g{ font-size:14px; }
+    .star img{ display:block; width:100%; height:100%; }
+    .star--sm{ width:27px; height:27px; }
+    .star--md{ width:38px; height:38px; }
+    /* 미획득(빈) 별 = 별 이미지 탈색 */
+    .star--x img{ filter:grayscale(1) brightness(1.4) opacity(.4); }
     .star__r{ position:absolute; right:-4px; bottom:-4px; width:15px; height:15px; border-radius:50%;
       background:var(--purple); border:1.5px solid var(--panel); color:var(--n-000); font-size:9.5px; font-weight:800; display:grid; place-items:center; }
 
@@ -254,12 +249,12 @@
     document.getElementById('semSub').textContent = (subject==='science'?'과학':'수학') + ' · 기본 모드';
     try{ localStorage.setItem('rm-subject', subject); localStorage.setItem('rm-sem', sem); }catch(e){}
 
-    // 과목 계통 태그색 — 디자인시스템에 계통 전용 토큰이 없어 가장 가까운 상태/가족 토큰(다크 위)으로 매핑
+    // 과목 계통 태그색 — 계통 전용 토큰(--subj-*) 사용 (채도 있는 400스텝)
     var TAGCOLOR = {
-      '수와 연산':'var(--info-on-dark)','문자와 식':'var(--info-on-dark)','변화와 관계':'var(--info-on-dark)',
-      '도형':'var(--warn-on-dark)','측정':'var(--warn-on-dark)','기하':'var(--warn-on-dark)','도형과 측정':'var(--warn-on-dark)',
-      '자료와 가능성':'var(--no-on-dark)','확률과 통계':'var(--no-on-dark)','규칙성':'var(--violet-300)','함수':'var(--violet-300)',
-      '물리':'var(--ok-on-dark)','화학':'var(--info-on-dark)','지구과학':'var(--no-on-dark)','생명과학':'var(--teal-300)','탐구':'var(--warn-on-dark)','통합과학':'var(--violet-300)'
+      '수와 연산':'var(--subj-num)','문자와 식':'var(--subj-num)','변화와 관계':'var(--subj-num)',
+      '도형':'var(--subj-geo)','측정':'var(--subj-geo)','기하':'var(--subj-geo)','도형과 측정':'var(--subj-geo)',
+      '자료와 가능성':'var(--subj-data)','확률과 통계':'var(--subj-data)','규칙성':'var(--subj-rel)','함수':'var(--subj-rel)',
+      '물리':'var(--subj-phys)','화학':'var(--subj-chem)','지구과학':'var(--subj-data)','생명과학':'var(--subj-bio)','탐구':'var(--subj-explore)','통합과학':'var(--subj-rel)'
     };
     var CHIP = {
       '미진행':{bg:'transparent',fg:'var(--text-muted)',dash:true}, '미판정':{bg:'var(--surface-2)',fg:'var(--text-muted)',dash:true},
@@ -269,7 +264,7 @@
     var STEPS = {
       concept:[['STEP 1','개념 학습','learn-concept.html'],['STEP 2','개념 확인하기','learn-concept-drill.html']],
       type:[['STEP 1','1차 유형·유사','type-quiz.html'],['STEP 2','2차 유형·유사','type-quiz.html']],
-      essay:[['STEP 1','기초 기르기','essay-basics.html'],['STEP 2','기본 다지기','essay-drill.html'],['STEP 3','실력 키우기','essay-advanced.html']]
+      essay:[['STEP 1','기초 기르기','essay-basics-v2.html'],['STEP 2','기본 다지기','essay-drill-v2.html'],['STEP 3','실력 키우기','essay-advanced.html']]
     };
     var TNAME = { concept:'개념 훈련', type:'유형 훈련', essay:'서술형 훈련' };
 
@@ -303,9 +298,9 @@
 
     // ---- 별점수 배지 & 요약 (개념/유형/서술형: 가장 해야 할 라운드 하나)
     function starBadge(g, round, size){
+      var asset = g ? 'star-'+g : 'star-b';   // 빈 별 = 은색 별을 탈색해 표시
       return '<span class="star star--'+(size||'sm')+' '+(g?'star--g'+g:'star--x')+'">'
-        + '<svg viewBox="0 0 24 24"><path d="M12 2.4l2.9 5.9 6.5.95-4.7 4.58 1.1 6.47L12 17.77 6.1 20.87l1.1-6.47-4.7-4.58 6.5-.95z"/></svg>'
-        + (g?'<span class="star__g">'+g.toUpperCase()+'</span>':'')
+        + '<img src="assets/figma/'+asset+'.svg" alt="'+(g?g.toUpperCase()+'등급':'미획득')+'" />'
         + (round?'<span class="star__r">'+round+'</span>':'')
         + '</span>';
     }
@@ -353,7 +348,7 @@
         var unit=document.createElement('div'); unit.className='unit';
         var col=TAGCOLOR[u.tag]||'var(--text-muted)';
         var ttl=document.createElement('div'); ttl.className='unit__ttl';
-        ttl.innerHTML='<span class="tag" style="background:color-mix(in srgb, '+col+' 24%, transparent);color:'+col+'">'+u.tag+'</span>'+u.no+'단원 · '+u.name;
+        ttl.innerHTML='<span class="tag" style="background:color-mix(in srgb, '+col+' 22%, transparent);color:color-mix(in srgb, '+col+' 72%, white);box-shadow:inset 0 0 0 1px color-mix(in srgb, '+col+' 42%, transparent)">'+u.tag+'</span>'+u.no+'단원 · '+u.name;
         unit.appendChild(ttl);
         u.subs.forEach(function(s,si){
           var sub=document.createElement('div'); sub.className='sub';

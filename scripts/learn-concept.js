@@ -68,10 +68,20 @@
   function positionPop() {
     var r = blank.getBoundingClientRect();
     var w = pop.offsetWidth || 210;
+    var h = pop.offsetHeight || 220;
+    var M = 8;                              // 화면 가장자리 여백
+    // 가로: 화면 밖으로 안 나가게 클램프 (pop 중심 기준)
     var left = r.left + r.width / 2;
-    left = Math.max(w / 2 + 8, Math.min(left, window.innerWidth - w / 2 - 8));
+    left = Math.max(w / 2 + M, Math.min(left, window.innerWidth - w / 2 - M));
+    // 세로: 아래 공간이 부족하면 빈칸 위로 뒤집어 띄운다
+    var spaceBelow = window.innerHeight - r.bottom;
+    var placeAbove = spaceBelow < h + 12 + M && r.top > spaceBelow;
+    var top = placeAbove ? (r.top - 12 - h) : (r.bottom + 12);
+    top = Math.max(M, Math.min(top, window.innerHeight - h - M));
+    pop.classList.toggle('is-above', placeAbove);
     pop.style.left = left + 'px';
-    pop.style.top = (r.bottom + 12) + 'px';
+    pop.style.top = top + 'px';
+    // 캐럿(말풍선 꼬리) = 빈칸 중심을 가리키게, pop 좌측 기준 상대 x
     pop.style.setProperty('--caret-x', (r.left + r.width / 2 - (left - w / 2)) + 'px');
   }
   function openPop() { pop.classList.add('is-open'); blank.classList.add('is-open'); positionPop(); }

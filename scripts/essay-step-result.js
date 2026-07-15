@@ -27,7 +27,7 @@
   // go = 카드 클릭/시작하기 시 이동할 화면
   var STEPS = [
     { name: '기초 기르기', state: 'current', grade: 'B', go: '' },
-    { name: '기본 다지기', state: 'done',    grade: 'A', go: 'essay-drill.html' },
+    { name: '기본 다지기', state: 'done',    grade: 'A', go: 'essay-drill-v2.html' },
     { name: '실력 키우기', state: 'locked',  grade: null, go: 'essay-advanced.html' }
   ];
 

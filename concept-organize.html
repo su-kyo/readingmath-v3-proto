@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>개념 정리하기 · 개념 훈련 — 리딩수학과학</title>
-  <link rel="stylesheet" href="styles/tokens.css?v=15" />
-  <link rel="stylesheet" href="styles/base.css?v=3" />
+  <link rel="stylesheet" href="styles/tokens.css?v=17" />
+  <link rel="stylesheet" href="styles/base.css?v=4" />
   <link rel="stylesheet" href="styles/components.css?v=5" />
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&display=swap");
@@ -40,10 +40,10 @@
     .pstep { display: flex; align-items: center; justify-content: center; gap: 10px; flex: none; font-family: var(--font-sans);
       padding: 0 clamp(24px,5vw,64px) clamp(12px,1.5vw,18px); }
     .pstep__item { display: inline-flex; align-items: center; gap: 7px; color: var(--text-muted); font-weight: 600; font-size: clamp(12px,1.1vw,14px); transition: color .2s; }
-    .pstep__item .n { width: 20px; height: 20px; border-radius: 50%; box-shadow: inset 0 0 0 1.5px var(--th-tint); color: var(--text-muted); display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; transition: background .2s, color .2s, box-shadow .2s; }
+    .pstep__item .n { width: 20px; height: 20px; border-radius: 50%; box-shadow: inset 0 0 0 1.5px var(--th-accent-hi); color: var(--text-muted); display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; transition: background .2s, color .2s, box-shadow .2s; }
     .pstep__item.is-done { color: var(--th-ink-accent); } .pstep__item.is-done .n { background: var(--th-accent); box-shadow: none; color: var(--n-000); }
     .pstep__item.is-current { color: var(--th-ink-accent); } .pstep__item.is-current .n { background: var(--th-accent); box-shadow: none; color: var(--n-000); }
-    .pstep__bar { width: clamp(26px,5vw,56px); height: 2px; border-radius: 2px; background: var(--th-tint); transition: background .2s; }
+    .pstep__bar { width: clamp(26px,5vw,56px); height: 2px; border-radius: 2px; background: color-mix(in srgb, var(--th-accent) 35%, transparent); transition: background .2s; }
     .pstep__bar.is-done { background: var(--th-accent); }
     :root[data-theme="dark"] .pstep__item { color: var(--text-muted); }
     :root[data-theme="dark"] .pstep__item .n { box-shadow: inset 0 0 0 1.5px var(--n-500); color: var(--text-muted); }
@@ -86,6 +86,8 @@
     .note { width: clamp(288px, 33vw, 408px); flex: none; align-self: stretch; overflow: auto;
       background: var(--surface-1); border-radius: 22px; box-shadow: inset 0 0 0 1.5px var(--th-tint), 0 8px 24px -16px rgba(16,32,72,.4);
       padding: clamp(18px,2vw,24px); display: flex; flex-direction: column; gap: 14px; }
+    /* 읽기 배경이 흰색이라 노트는 살짝 틴트 카드로 분리 (흰 위 흰색 방지) */
+    :root[data-theme="light"] .note { background: var(--n-050); box-shadow: inset 0 0 0 1.5px var(--n-100), 0 10px 26px -18px rgba(16,32,72,.5); }
     .note__title { display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-sans); font-weight: 800; font-size: clamp(15px,1.5vw,17px); color: var(--n-600); flex: none; }
     .note__title .ico { width: 26px; height: 26px; border-radius: 9px; background: var(--th-accent); color: var(--n-000); display: inline-flex; align-items: center; justify-content: center; flex: none; }
     .note__title .ico svg { width: 15px; height: 15px; }
@@ -101,7 +103,7 @@
     @media (prefers-reduced-motion: reduce) { .note__body.is-on { animation: none; } }
     .nline { font-family: "Noto Serif KR", serif; font-size: clamp(15px, 1.4vw, 18px); line-height: 1.95; color: var(--n-600); letter-spacing: -0.02em; }
     .nfill { display: inline-flex; align-items: center; justify-content: center; min-width: 62px; height: 30px; padding: 0 12px; margin: 0 2px; border-radius: 8px; background: var(--th-accent); color: var(--n-000); font-weight: 700; font-family: var(--font-sans); font-size: .9em; vertical-align: middle; }
-    :root[data-theme="dark"] .note { background: var(--surface-1); box-shadow: inset 0 0 0 1.5px var(--th-accent), 0 8px 24px -16px rgba(0,0,0,.6); }
+    :root[data-theme="dark"] .note { background: var(--surface-1); box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.08), 0 8px 24px -16px rgba(0,0,0,.6); }
     :root[data-theme="dark"] .note__title { color: var(--text); }
     :root[data-theme="dark"] .note__divider { background: var(--border-strong); }
     :root[data-theme="dark"] .note__hint { color: var(--text-muted); } :root[data-theme="dark"] .note__hint .big { background: var(--surface-2); color: var(--text-muted); }

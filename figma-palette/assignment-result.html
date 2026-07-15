@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>과제 결과 — 리딩수학과학</title>
   <script>try{if(localStorage.getItem('rm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
-  <link rel="stylesheet" href="styles/tokens.css?v=17" />
+  <link rel="stylesheet" href="./colors.css" />
   <style>
     /* =========================================================================
        과제 센터 · 결과 화면 (assignment-result) — 우주 셸 (풀이 화면과 동일)
@@ -28,7 +28,7 @@
     body { font-family: var(--font-sans); background: var(--assign-body); overflow: hidden; -webkit-font-smoothing: antialiased; }
 
     .screen { position: relative; width: 100%; height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
-    .screen__bg { position: absolute; inset: 0; z-index: 0; background: url("assets/figma/bg-spaceship-task.png") center/cover no-repeat; }
+    .screen__bg { position: absolute; inset: 0; z-index: 0; background: url("../assets/figma/bg-spaceship-task.png") center/cover no-repeat; }
     :root[data-theme="dark"] .screen__bg::after { content: ""; position: absolute; inset: 0; background: rgba(4,10,30,.45); }
     .wrap { position: relative; z-index: 1; flex: 1; min-height: 0; display: flex; flex-direction: column; padding: clamp(16px,2.4vw,30px) clamp(20px,5vw,72px) 0; gap: 14px; }
 
@@ -40,8 +40,8 @@
     .bc__sep { opacity: .5; flex: none; }
     .hd__acts { display: flex; align-items: center; gap: 8px; flex: none; }
     .toggle { width: 62px; height: 32px; border-radius: 999px; background: rgba(0,0,0,.28); border: 0; position: relative; cursor: pointer; padding: 0; }
-    .toggle__k { position: absolute; top: 2px; left: 2px; width: 28px; height: 28px; border-radius: 50%; background: center/contain no-repeat url("assets/figma/icons/ico-sun.svg"); transition: left .2s ease; }
-    :root[data-theme="dark"] .toggle__k { left: 32px; background-image: url("assets/figma/icons/ico-moon.svg"); }
+    .toggle__k { position: absolute; top: 2px; left: 2px; width: 28px; height: 28px; border-radius: 50%; background: center/contain no-repeat url("../assets/figma/icons/ico-sun.svg"); transition: left .2s ease; }
+    :root[data-theme="dark"] .toggle__k { left: 32px; background-image: url("../assets/figma/icons/ico-moon.svg"); }
     .hd__ico { width: 34px; height: 34px; border: 0; border-radius: 11px; background: rgba(255,255,255,.14); color: var(--n-000); display: grid; place-items: center; cursor: pointer; transition: .14s; }
     .hd__ico:hover { background: rgba(255,255,255,.26); }
     .hd__ico svg { width: 19px; height: 19px; }
@@ -171,7 +171,7 @@
     </div>
 
     <div class="bar">
-      <img class="bar__deco bar__deco--l" src="assets/figma/console-task-right.svg" alt="" />
+      <img class="bar__deco bar__deco--l" src="../assets/figma/console-task-right.svg" alt="" />
       <div class="bar__mid">
         <div class="bar__tray">
           <button class="tbtn" id="homeBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5M5 9.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5"/></svg>과제 센터</button>
@@ -179,12 +179,12 @@
           <button class="tbtn tbtn--primary" id="explainBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5zM4 20.5V5.5"/></svg>해설보기</button>
         </div>
       </div>
-      <img class="bar__deco bar__deco--r" src="assets/figma/console-task-left.svg" alt="" />
+      <img class="bar__deco bar__deco--r" src="../assets/figma/console-task-left.svg" alt="" />
     </div>
 
     <div class="toast" id="toast"></div>
   </div>
 
-  <script src="scripts/assignment-result.js"></script>
+  <script src="../scripts/assignment-result.js"></script>
 </body>
 </html>
