@@ -152,44 +152,9 @@
     .sub__head{ display:flex; align-items:center; gap:8px; padding:11px 13px; cursor:pointer; }
     .sub__no{ font-size:14px; font-weight:800; color:var(--th-accent-hi); flex:none; }
     .sub__title{ flex:1; min-width:0; font-size:14px; font-weight:700; color:var(--text); letter-spacing:-.03em; }
-    .sub__done{ font-size:11px; font-weight:800; color:var(--green); flex:none; }
-    .sub__stars{ display:flex; gap:9px; flex:none; }
     .sub__chev{ width:20px; height:20px; color:var(--th-accent-hi); display:grid; place-items:center; transition:transform .2s; flex:none; }
     .sub.is-open .sub__chev{ transform:rotate(180deg); } .sub__chev svg{ width:13px; height:13px; }
     .sub__body{ display:none; padding:2px 12px 12px; } .sub.is-open .sub__body{ display:block; }
-
-    /* 훈련 버튼 3종 (개념·유형·서술형, 각 라운드) */
-    .tbtns{ display:flex; gap:8px; }
-    .tbtn{ flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; padding:13px 6px 11px;
-      border:0; border-radius:12px; background:var(--surface-2); color:var(--text); font-family:inherit; cursor:pointer;
-      transition:background .14s, transform .14s; }
-    .tbtn:hover{ background:var(--surface-3); transform:translateY(-1px); }
-    .tbtn__nm{ font-size:13px; font-weight:800; }
-    .tbtn__r{ font-size:11px; font-weight:800; color:var(--text-muted); letter-spacing:.02em; }
-    /* 유형 도전 */
-    .chal{ display:flex; align-items:center; gap:12px; width:100%; margin-top:8px; padding:12px 14px; border:0;
-      border-radius:12px; background:var(--surface-2); color:var(--text); font-family:inherit; cursor:pointer; transition:background .14s; }
-    .chal:hover{ background:var(--surface-3); }
-    .chal__nm{ font-size:13.5px; font-weight:800; flex:none; }
-    .chal__chips{ display:flex; gap:4px; flex:1; }
-    .chip{ flex:1; height:9px; border-radius:4px; }
-    .chip--none{ background:transparent; border:1.5px dashed var(--border-strong); }
-    .chip--pending{ background:var(--surface-1); border:1.5px dashed var(--n-400); }
-    .chip--relearn{ background:var(--no-solid); }
-    .chip--supplement{ background:var(--warn-solid); }
-    .chip--understood{ background:var(--ok-solid); }
-    .chip--mastered{ background:var(--ok-ink); }
-    .chal__go{ color:var(--th-accent-hi); display:grid; place-items:center; flex:none; } .chal__go svg{ width:16px; height:16px; }
-
-    /* 별점수 배지 (등급색 별 + 라운드 번호) */
-    .star{ position:relative; display:inline-grid; place-items:center; flex:none; }
-    .star img{ display:block; width:100%; height:100%; }
-    .star--sm{ width:27px; height:27px; }
-    .star--md{ width:38px; height:38px; }
-    /* 미획득(빈) 별 = 별 이미지 탈색 */
-    .star--x img{ filter:grayscale(1) brightness(1.4) opacity(.4); }
-    .star__r{ position:absolute; right:-4px; bottom:-4px; width:15px; height:15px; border-radius:50%;
-      background:var(--violet-500); border:1.5px solid var(--surface-1); color:var(--n-000); font-size:9.5px; font-weight:800; display:grid; place-items:center; }
 
     /* 접힘 요약: 통통·둥근 아이콘 별 (색=등급: A금 B은 C동 S프리즘) */
     .sub__mini{ display:flex; gap:2px; flex:none; align-items:center; margin-right:2px; }
@@ -209,12 +174,6 @@
     .rbar i{ width:11px; height:6px; border-radius:2px; background:var(--border); }
     .rbar i.done{ background:var(--ok-on-dark); }
     .rbar i.cur{ background:var(--th-accent); }
-    .examchip{ display:flex; align-items:center; gap:6px; width:100%; margin-top:8px; padding:11px 13px; border:0; border-radius:12px;
-      cursor:pointer; background:color-mix(in srgb, var(--violet-500) 20%, transparent); color:color-mix(in srgb, var(--violet-500) 48%, white);
-      font-family:inherit; font-size:12.5px; font-weight:800; text-align:left; }
-    .examchip .cr{ color:var(--warn-solid); }
-    .examchip__go{ margin-left:auto; }
-    .examchip:hover{ background:color-mix(in srgb, var(--violet-500) 30%, transparent); }
 
     .toast{ position:fixed; left:50%; bottom:30px; transform:translateX(-50%) translateY(16px); z-index:60;
       background:var(--surface-2); border:1px solid var(--border); color:var(--ink); padding:11px 18px;
@@ -477,15 +436,6 @@
       document.getElementById('univBtnL').textContent = state.u==='elem' ? '중고등 우주로' : '초등 우주로';
     }
 
-    /* ============ 별점수 배지 ============ */
-    function starBadge(g, round, size){
-      var asset = g ? 'star-'+g : 'star-b';   // 빈 별 = 은색 별을 탈색해 표시
-      return '<span class="star star--'+(size||'sm')+' '+(g?'star--g'+g:'star--x')+'">'
-        + '<img src="assets/figma/'+asset+'.svg" alt="'+(g?g.toUpperCase()+'등급':'미획득')+'" />'
-        + (round?'<span class="star__r">'+round+'</span>':'')
-        + '</span>';
-    }
-
     /* ============ unit 렌더 ============ */
     var CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
     var GOARW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
@@ -508,11 +458,10 @@
     function gradeStarImg(g){ var a=g?'star-'+g:'star-b'; return '<span class="hyc__star"><img class="'+(g?'':'x')+'" src="assets/figma/'+a+'.svg" alt="'+(g?g.toUpperCase()+'등급':'미획득')+'"></span>'; }
     // {round(지금 할 라운드), grade(최고)} → 3라운드 세그
     function fmBar(rg){ rg=rg||{round:1,grade:null}; var segs=[]; for(var i=1;i<=3;i++){ segs.push(i<rg.round?'done':(i===rg.round?(rg.grade?'done':'cur'):'todo')); } return { best:rg.grade, segs:segs }; }
-    function crownOfFM(ch){ ch=ch||[]; return { crown: ch.filter(function(x){ return x==='mastered'; }).length, total: ch.length }; }
     // 흐름 B: 훈련 선택 → curriculum 허브(해당 탭 켜진 채)
     function goHub(tk){ location.href='curriculum.html?sem='+encodeURIComponent(lastSem)+'&tab='+tk; }
 
-    function buildUnitEl(u, openFirst){
+    function buildUnitEl(u){
       var unit=document.createElement('div'); unit.className='unit';
       var col=F_TAGCOLOR[u.tag]||'var(--text-muted)';
       var ttl=document.createElement('div'); ttl.className='unit__ttl';
@@ -553,13 +502,13 @@
       document.getElementById('detailTtl').textContent = item.label;
       var host=document.getElementById('detailList'); host.innerHTML='';
       if(state.view==='semester'){
-        unitsFor(item.key).forEach(function(u,ui){ host.appendChild(buildUnitEl(u, ui===0)); });
+        unitsFor(item.key).forEach(function(u,ui){ host.appendChild(buildUnitEl(u)); });
       } else {
         strandGroups(item.key, item.label).forEach(function(grp,gi){
           var hd=document.createElement('div'); hd.className='semhd';
           hd.innerHTML='<img class="semhd__img" src="assets/figma/planets/'+grp.semKey+'.png" alt=""><span class="semhd__t">'+grp.semLabel+'</span>';
           host.appendChild(hd);
-          grp.units.forEach(function(u,ui){ host.appendChild(buildUnitEl(u, gi===0&&ui===0)); });
+          grp.units.forEach(function(u,ui){ host.appendChild(buildUnitEl(u)); });
         });
       }
       // 목록 교체 페이드 재생(애니메이션 재시작을 위해 클래스 토글 + reflow)
@@ -573,7 +522,7 @@
     function openUnitModal(title, u){
       var m=document.getElementById('uModal');
       m.querySelector('.umodal__ttl').textContent=title;
-      var body=document.getElementById('uModalList'); body.innerHTML=''; body.appendChild(buildUnitEl(u, true));
+      var body=document.getElementById('uModalList'); body.innerHTML=''; body.appendChild(buildUnitEl(u));
       m.classList.add('is-open');
     }
     (function(){ var m=document.getElementById('uModal');

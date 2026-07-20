@@ -45,7 +45,6 @@
     .sub__head{ display:flex; align-items:center; gap:8px; padding:12px 14px; cursor:pointer; }
     .sub__no{ font-size:15px; font-weight:800; color:var(--item); }
     .sub__title{ flex:1; font-size:14.5px; font-weight:700; color:var(--item); letter-spacing:-.03em; }
-    .sub__done{ font-size:12px; font-weight:800; color:var(--green); }
     .sub__chev{ width:34px; height:34px; flex:none; display:grid; place-items:center; color:var(--item);
       border:0; background:transparent; cursor:pointer; border-radius:9px; padding:0; transition:transform .2s, background .14s; }
     .sub__chev:hover{ background:var(--surface-3); }
@@ -54,61 +53,6 @@
 
     .sub__body{ display:none; padding:2px 14px 14px; }
     .sub.is-open .sub__body{ display:block; }
-
-    .trow{ display:flex; align-items:center; gap:10px; padding:9px 0; border-top:1px solid var(--border); cursor:pointer; }
-    .trow:first-child{ border-top:0; }
-    .trow__label{ width:74px; flex:none; font-size:13px; font-weight:700; color:var(--body); }
-    .trow__label small{ display:block; font-size:11px; color:var(--muted); font-weight:600; margin-top:1px; }
-    .trow.is-sel .trow__label{ color:var(--mint); }
-    .rounds{ display:flex; gap:12px; }
-
-    /* round grade badge */
-    .rg{ position:relative; width:40px; text-align:center; }
-    .rg__hex{ width:40px; height:40px; margin:0 auto; display:grid; place-items:center; }
-    .rg__hex img{ width:40px; height:40px; object-fit:contain; display:block; }
-    .rg__empty{ width:34px; height:34px;
-      clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);
-      background:var(--border); display:grid; place-items:center; }
-    .rg__empty svg{ width:14px; height:14px; color:var(--muted); }
-    .rg__num{ position:absolute; right:0px; bottom:8px; width:17px; height:17px; border-radius:50%;
-      background:var(--purple); border:1.5px solid var(--panel); color:var(--n-000); font-size:10.5px; font-weight:800;
-      display:grid; place-items:center; font-family:'Kode Mono',monospace; }
-    .rg__t{ display:block; margin-top:3px; font-size:10px; font-weight:700; color:var(--muted);
-      font-variant-numeric:tabular-nums; white-space:nowrap; }
-    .rg__t.is-over{ color:var(--red); }
-    .rg.is-cur .rg__empty{ background:var(--th-tint-strong); }
-    .rg.is-cur .rg__t{ color:var(--mint); }
-    .rg.is-lock{ opacity:.32; }
-
-    /* 소단원 별점수 (개념·유형·서술형) */
-    .sub__stars{ display:flex; gap:9px; flex:none; }
-    .star{ position:relative; display:inline-grid; place-items:center; flex:none; }
-    .star img{ display:block; width:100%; height:100%; }
-    .star--sm{ width:27px; height:27px; }
-    .star--md{ width:38px; height:38px; }
-    /* 미획득(빈) 별 = 별 이미지 탈색 */
-    .star--x img{ filter:grayscale(1) brightness(1.4) opacity(.4); }
-    .star__r{ position:absolute; right:-4px; bottom:-4px; width:15px; height:15px; border-radius:50%;
-      background:var(--purple); border:1.5px solid var(--panel); color:var(--n-000); font-size:9.5px; font-weight:800; display:grid; place-items:center; }
-
-    /* 훈련 버튼 3종 (개념·유형·서술형, 각 라운드) */
-    .tbtns{ display:flex; gap:8px; margin-bottom:8px; }
-    .tbtn{ flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; padding:13px 6px 11px;
-      border:1.5px solid transparent; border-radius:12px; background:var(--card2); color:var(--body);
-      font-family:inherit; cursor:pointer; transition:background .14s, transform .14s; }
-    .tbtn:hover{ background:var(--surface-3); transform:translateY(-1px); }
-    .tbtn.is-sel{ border-color:var(--th-accent); background:var(--surface-3); }
-    .tbtn.is-sel .tbtn__nm{ color:var(--mint); }
-    .tbtn__nm{ font-size:13px; font-weight:800; }
-    .tbtn__r{ font-size:11px; font-weight:800; color:var(--muted); letter-spacing:.02em; }
-
-    /* 유형 도전 */
-    .chal{ display:flex; align-items:center; justify-content:space-between; gap:8px;
-      margin-top:2px; padding:11px 12px; border-radius:12px; background:var(--card2); cursor:pointer; transition:background .14s; }
-    .chal:hover{ background:var(--surface-3); }
-    .chal__l{ font-size:13px; font-weight:800; color:var(--body); }
-    .chips{ display:flex; gap:4px; }
-    .chip{ font-size:11px; font-weight:800; padding:2px 8px; border-radius:6px; }
 
     /* 접힘 요약: 작고 심플한 아이콘 별 (색=등급) */
     .sub__mini{ display:flex; gap:2px; flex:none; align-items:center; margin-right:2px; }
@@ -336,51 +280,6 @@
       if(!isNaN(uu) && UNITS[uu]){ sel.u=uu; sel.s=(!isNaN(ss)&&UNITS[uu].subs[ss])?ss:0; }
       if(qs.get('tab')||qs.get('unit')){ openSet={}; openSet[sel.u+'-'+sel.s]=true; }
     })();
-
-    // ---- 별점수 배지 & 요약 (개념/유형/서술형: 가장 해야 할 라운드 하나)
-    function starBadge(g, round, size){
-      var asset = g ? 'star-'+g : 'star-b';   // 빈 별 = 은색 별을 탈색해 표시
-      return '<span class="star star--'+(size||'sm')+' '+(g?'star--g'+g:'star--x')+'">'
-        + '<img src="assets/figma/'+asset+'.svg" alt="'+(g?g.toUpperCase()+'등급':'미획득')+'" />'
-        + (round?'<span class="star__r">'+round+'</span>':'')
-        + '</span>';
-    }
-    var GRANK={s:4,a:3,b:2,c:1};
-    function trainSummary(arr){
-      arr=arr||[]; var best=null,bestRank=0,cur=null,open=null,allGraded=arr.length>0,lockedAll=arr.length>0;
-      arr.forEach(function(o){
-        if(o.g){ if((GRANK[o.g]||0)>bestRank){ bestRank=GRANK[o.g]; best=o.g; } } else { allGraded=false; }
-        if(o.cur&&cur===null) cur=o.r;
-        if(o.open&&open===null) open=o.r;
-        if(!o.lock) lockedAll=false;
-      });
-      var round = cur!==null?cur:(open!==null?open:(allGraded&&arr.length?arr[arr.length-1].r:(arr.length?arr[0].r:1)));
-      return { grade:best, round:round, locked:lockedAll };
-    }
-
-    // ---- 라운드 뱃지 (우측 패널 전용)
-    function roundEl(tr, o){
-      var wrap = document.createElement('div'); wrap.className='rg';
-      if(o.lock) wrap.className+=' is-lock'; if(o.cur) wrap.className+=' is-cur';
-      var hex = document.createElement('div'); hex.className='rg__hex';
-      if(o.g){ hex.innerHTML = '<img src="assets/figma/grade-'+o.g+'.png" alt="'+o.g.toUpperCase()+'">'; }
-      else {
-        var e=document.createElement('div'); e.className='rg__empty';
-        e.innerHTML = o.lock
-          ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>'
-          : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 4l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L4.2 9.7l5.4-.8z"/></svg>';
-        hex.appendChild(e);
-      }
-      var num=document.createElement('span'); num.className='rg__num'; num.textContent=o.r; hex.appendChild(num);
-      wrap.appendChild(hex);
-      var t=document.createElement('span'); t.className='rg__t';
-      if(o.cur){ t.textContent='진행중'; }
-      else if(o.time){ t.textContent=o.time; if(o.over){ t.className+=' is-over'; t.textContent=o.time+' 초과'; } }
-      else if(o.g){ t.textContent='완료'; }
-      else { t.textContent=''; }
-      wrap.appendChild(t);
-      return wrap;
-    }
 
     // ---- 등급 색 (별 색만으로 등급 구분: A금 B은 C동 · S=프리즘(무지개))
     var GCOL = { s:'#12BEC6', a:'#FFB000', b:'#7D9AC2', c:'#C77326' };
