@@ -450,7 +450,7 @@
   }
   primaryBtn.addEventListener('click', function () {
     if (phase === 'fill') startArrange();
-    else if (phase === 'arrange') { if (pi < N - 1) startProblem(pi + 1); else window.location.href = 'essay-step-result.html'; }
+    else if (phase === 'arrange') { if (pi < N - 1) startProblem(pi + 1); else window.location.href = 'essay/step-result.html'; }
   });
   function startProblem(idx) {
     pi = idx; P = PROBLEMS[idx];

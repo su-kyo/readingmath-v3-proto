@@ -26,7 +26,7 @@
   });
 
   // 해설 보기 → 해설 화면 (이후 작업)
-  document.getElementById('reviewBtn').addEventListener('click', function () { window.location.href = 'type-review.html'; });
+  document.getElementById('reviewBtn').addEventListener('click', function () { window.location.href = 'type/review.html'; });
 
   var themeBtn = document.getElementById('themeToggle');
   if (themeBtn) themeBtn.addEventListener('click', function () { var c = document.documentElement.getAttribute('data-theme'); document.documentElement.setAttribute('data-theme', c === 'dark' ? 'light' : 'dark'); });

@@ -60,7 +60,7 @@
   // 채점표 행 클릭 → 해당 문항 해설로 이동
   document.getElementById('rtable').addEventListener('click', function (e) {
     var row = e.target.closest('.trow[data-q]'); if (!row) return;
-    window.location.href = 'assignment-explain.html?q=' + row.dataset.q;
+    window.location.href = 'assignment/explain.html?q=' + row.dataset.q;
   });
 
   // ── 하단 버튼 ──
@@ -69,13 +69,13 @@
     toast.textContent = msg; toast.classList.add('is-on');
     clearTimeout(toastT); toastT = setTimeout(function () { toast.classList.remove('is-on'); }, 2200);
   }
-  document.getElementById('homeBtn').addEventListener('click', function () { window.location.href = 'assignment-home.html'; });
+  document.getElementById('homeBtn').addEventListener('click', function () { window.location.href = 'assignment/home.html'; });
   document.getElementById('applyBtn').addEventListener('click', function () {
     // 시험 대비 홈으로 이동하며, 방금 과제와 연계된 유형 칩을 강조하도록 신호 전달
     showToast('시험 대비에 반영되었습니다.');
-    setTimeout(function () { window.location.href = 'exam-home.html?linked=1'; }, 650);
+    setTimeout(function () { window.location.href = 'exam/home.html?linked=1'; }, 650);
   });
-  document.getElementById('explainBtn').addEventListener('click', function () { window.location.href = 'assignment-explain.html'; });
+  document.getElementById('explainBtn').addEventListener('click', function () { window.location.href = 'assignment/explain.html'; });
 
   // ── 라이트/다크 토글 (localStorage 'rm-theme'로 화면 간 유지) ──
   function applyTheme(t) {

@@ -27,8 +27,8 @@
   // go = 카드 클릭/시작하기 시 이동할 화면
   var STEPS = [
     { name: '기초 기르기', state: 'current', grade: 'B', go: '' },
-    { name: '기본 다지기', state: 'done',    grade: 'A', go: 'essay-drill-v2.html' },
-    { name: '실력 키우기', state: 'locked',  grade: null, go: 'essay-advanced.html' }
+    { name: '기본 다지기', state: 'done',    grade: 'A', go: 'essay/drill-v2.html' },
+    { name: '실력 키우기', state: 'locked',  grade: null, go: 'essay/advanced.html' }
   ];
 
   function gradeOf(r) { return r >= 95 ? 's' : r >= 80 ? 'a' : r >= 70 ? 'b' : 'c'; }
@@ -95,6 +95,6 @@
   var toast = document.getElementById('toast'), tt;
   function showToast(msg) { toast.textContent = msg; toast.classList.add('is-on'); clearTimeout(tt); tt = setTimeout(function () { toast.classList.remove('is-on'); }, 1900); }
   var reviewBtn = document.getElementById('reviewBtn');
-  if (reviewBtn) reviewBtn.addEventListener('click', function () { window.location.href = 'essay-drill-review.html'; });
+  if (reviewBtn) reviewBtn.addEventListener('click', function () { window.location.href = 'essay/drill-review.html'; });
   // 스텝 카드 클릭 · 시작 모달 · 훈련 결과 버튼은 step-progress.js 가 담당.
 })();

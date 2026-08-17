@@ -112,7 +112,7 @@
   var dlBtn = document.getElementById('dlBtn'); if (dlBtn) dlBtn.addEventListener('click', function () { showToast('저장(다운로드) 기능은 준비 중이에요.'); });
 
   // 결과로 돌아가기
-  document.getElementById('resultBtn').addEventListener('click', function () { window.location.href = 'essay-step-result.html'; });
+  document.getElementById('resultBtn').addEventListener('click', function () { window.location.href = 'essay/step-result.html'; });
 
   // 타이머 pause(정지값), 테마 토글
   var themeBtn = document.getElementById('themeToggle');

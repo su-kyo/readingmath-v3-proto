@@ -76,7 +76,7 @@
         '<span class="prog__k">' + IC.play + '풀이 진행률</span>' +
         '<span class="prog__v">' + a.pct + '%<small>' + a.done + '/' + a.total + '</small></span></div>' +
         '<div class="track"><i style="width:' + a.pct + '%"></i></div></div>' +
-      '<button class="btn btn--go" data-go="assignment-solve.html">계속 풀기' + IC.arrow + '</button>' +
+      '<button class="btn btn--go" data-go="assignment/solve.html">계속 풀기' + IC.arrow + '</button>' +
     '</article>';
   }).join('');
 
@@ -88,7 +88,7 @@
         '<div class="metarow"><span class="unit">' + p.unit + '</span>' + sep() + metaDate('출제', p.open) + '</div>' +
       '</div>' +
       '<span class="qcount">' + IC.lock + '<span>문항수</span><b>' + p.count + '문항</b></span>' +
-      '<button class="btn btn--do" data-go="assignment-solve.html">과제 풀기' + IC.arrow + '</button>' +
+      '<button class="btn btn--do" data-go="assignment/solve.html">과제 풀기' + IC.arrow + '</button>' +
     '</article>';
   }).join('');
 
@@ -104,7 +104,7 @@
       '<div class="scoreblk"><div class="scoreblk__col">' +
         '<span class="badge-done">' + IC.check + '제출완료</span>' +
         '<span class="scoreblk__num">' + d.score + '<small>점</small></span></div>' +
-        '<button class="btn btn--result" data-go="assignment-result.html">결과 보기</button></div>' +
+        '<button class="btn btn--result" data-go="assignment/result.html">결과 보기</button></div>' +
     '</article>';
   }).join('');
   if (DONE_TOTAL > DONE.length) {
@@ -116,7 +116,7 @@
   document.querySelector('.app').addEventListener('click', function (e) {
     var b = e.target.closest('[data-go]'); if (!b) return;
     var go = b.dataset.go;
-    if (go === 'assignment-solve.html' || go === 'assignment-result.html') { window.location.href = go; return; }
+    if (go === 'assignment/solve.html' || go === 'assignment/result.html') { window.location.href = go; return; }
     b.blur();
   });
   document.querySelectorAll('.mbtn').forEach(function (t) {

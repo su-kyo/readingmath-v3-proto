@@ -179,7 +179,7 @@
     if (primaryBtn.disabled) return;
     if (!submitted) { if (selected != null) grade(); return; }
     if (idx < QUESTIONS.length - 1) { idx++; render(); }
-    else { window.location.href = 'exam-home.html'; }   // 마지막: 유형 상세(데모→홈)
+    else { window.location.href = 'exam/home.html'; }   // 마지막: 유형 상세(데모→홈)
   });
 
   render();

@@ -151,7 +151,7 @@
     submitBtn.disabled = !allAnswered();
   }
   nextBtn.addEventListener('click', function () { if (isAnswered(idx) && idx < TOTAL - 1) { idx++; renderQ(); } });
-  submitBtn.addEventListener('click', function () { if (submitBtn.disabled) return; window.location.href = 'type-result.html'; });
+  submitBtn.addEventListener('click', function () { if (submitBtn.disabled) return; window.location.href = 'type/result.html'; });
 
   /* ---- 스크롤 페이드 ---- */
   function updateFade() {

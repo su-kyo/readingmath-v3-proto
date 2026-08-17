@@ -178,7 +178,7 @@
   document.getElementById('detailClose').addEventListener('click', closeDetail);
   backdrop.addEventListener('click', closeDetail);
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeDetail(); });
-  document.getElementById('startBtn').addEventListener('click', function () { window.location.href = 'exam-solve.html'; });
+  document.getElementById('startBtn').addEventListener('click', function () { window.location.href = 'exam/solve.html'; });
 
   // ── 성취도 필터 ──
   function applyAchieve(code) {

@@ -12,35 +12,37 @@
 
 > 오른쪽 위 ☀ / ☾ 버튼으로 라이트/다크 전환이 됩니다.
 
-**홈 화면(`home.html`)만은 주소로 과목·학기를 바꿉니다.**
-`home.html?subject=science&sem=mid-3-1` 처럼 붙이면 됩니다.
+**홈 화면만은 주소로 과목·학기를 바꿉니다.**
+`nav/home.html?subject=science&sem=mid-3-1` 처럼 붙이면 됩니다.
 `subject`는 `math` / `science`, `sem`은 `elem-3-1` / `mid-3-1` / `mid-3-2` 여섯 조합이 있습니다.
 
 ## 폴더 구조
 
-화면 HTML은 **전부 최상위에 평평하게** 있습니다. 이름 앞머리가 계열입니다.
+화면은 **계열별 폴더**로 나뉘어 있습니다. `index.html`이 묶어 보여주는 그룹과 같은 단위입니다.
 
 ```
 RM/
 ├─ index.html            진입 · 화면 목록
 ├─ styleguide.html       디자인 시스템 전시장
 │
-├─ home.html             기본 모드 홈 (행성 메인)
-├─ freemode.html         자유 모드 (학기별 · 계통별)
-├─ curriculum.html       커리큘럼 레이어
-├─ bridge.html           스텝 사이 브릿지
-│
-├─ learn-*.html          개념 학습 (concept · concept-drill · basic-ops)
-├─ concept-organize.html 개념 정리하기
-├─ type-*.html           유형 훈련 (quiz · result · review · training-result)
-├─ essay-*.html          서술형 훈련 (basics · advanced · drill · report · 결과)
-├─ assignment-*.html     과제 센터 (home · solve · explain · result)
-├─ exam-*.html           시험 대비 (home · solve)
-├─ step-result.html      스텝 결과
-├─ training-result.html  훈련 결과
-├─ report.html           학습 리포트
-├─ notice*.html          공지
-├─ payment.html          결제
+├─ nav/                  메인 · 홈 / 네비게이션
+│  ├─ home.html            기본 모드 홈 (행성 메인)
+│  ├─ freemode.html        자유 모드 (학기별 · 계통별)
+│  ├─ curriculum.html      커리큘럼 레이어
+│  └─ bridge.html          과목 선택 브릿지
+├─ concept/              개념 훈련
+│  ├─ learn.html           끊어읽기
+│  ├─ organize.html        개념 정리하기
+│  ├─ drill.html           다지기
+│  └─ basic-ops.html       기초 연산
+├─ type/                 유형 훈련 (quiz · review · result · training-result)
+├─ essay/                서술형 훈련 (basics · drill · advanced · report · 결과)
+├─ assignment/           과제 센터 (home · solve · explain · result)
+├─ exam/                 시험 대비 (home · solve)
+├─ util/                 공지 · 월간보고서 · 결제
+├─ shared/               여러 계열이 함께 쓰는 결과 화면
+│  ├─ step-result.html     스텝 결과
+│  └─ training-result.html 학습 결과
 │
 ├─ styles/               tokens.css(색·글자 변수) · base · components · 화면별 CSS
 ├─ scripts/              화면별 동작 JS + theme.js(라이트/다크) + space-bg.js(우주 배경)
@@ -57,6 +59,26 @@ RM/
 ├─ PLAN.md               7월 작업 계획 (현재와 다름, 문서 맨 위 참고)
 └─ README.md             이 문서
 ```
+
+**파일 이름에서 계열 앞머리를 뺐습니다.** 폴더가 이미 계열을 말해주기 때문입니다.
+`essay-drill.html` → `essay/drill.html`, `type-quiz.html` → `type/quiz.html` 식입니다.
+
+`shared/`에 있는 두 장은 **개념·유형·서술형이 모두 부르는 화면**이라 어느 계열에도
+넣지 않았습니다. 계열 폴더 안에 두면 이름과 실제가 어긋납니다.
+
+### 화면을 새로 만들 때 — 첫 줄에 이것 하나
+
+하위 폴더에 있는 화면은 `<head>` 바로 아래에 이 한 줄이 있어야 합니다.
+
+```html
+<base href="../">
+```
+
+이게 있으면 `styles/`·`scripts/`·`assets/`를 **최상위 기준**으로 부를 수 있습니다.
+즉 폴더가 달라도 경로를 그대로 쓰면 됩니다(`href="styles/tokens.css"`).
+화면끼리 오가는 링크도 같은 기준이라 `href="type/quiz.html"`처럼 씁니다.
+
+최상위에 있는 `index.html`과 `styleguide.html`에는 **넣지 않습니다.**
 
 ## 색을 바꾸고 싶다면
 
@@ -110,10 +132,10 @@ brew install webp
 
 두 쌍이 남아 있습니다. **둘 다 살아 있고, 어느 쪽을 쓸지는 미정입니다.**
 
-- `essay-basics.html` / `essay-basics-v2.html`
-- `essay-drill.html` / `essay-drill-v2.html`
+- `essay/basics.html` / `essay/basics-v2.html`
+- `essay/drill.html` / `essay/drill-v2.html`
 
-지금은 자유 모드가 `essay-basics-v2.html`을 부릅니다. 정리를 빠뜨린 게 아니라
+지금은 자유 모드가 `essay/basics-v2.html`을 부릅니다. 정리를 빠뜨린 게 아니라
 **결정을 미뤄둔 상태**입니다.
 
 ### 화면이 아직 안 부르는 이미지 6장

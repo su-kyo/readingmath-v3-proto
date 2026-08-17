@@ -212,7 +212,7 @@
 
   resultBtn.addEventListener('click', function () {
     if (resultBtn.disabled) return;
-    window.location.href = 'essay-step-result.html';
+    window.location.href = 'essay/step-result.html';
   });
 
   var themeBtn = document.getElementById('themeToggle');

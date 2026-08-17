@@ -254,7 +254,7 @@
   // 결과보기 → 서술형 스텝 결과
   resultBtn.addEventListener('click', function () {
     if (resultBtn.disabled) return;
-    window.location.href = 'essay-step-result.html';
+    window.location.href = 'essay/step-result.html';
   });
 
   // 라이트/다크 토글 (헤더 해/달 노브)

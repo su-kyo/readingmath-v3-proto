@@ -281,7 +281,7 @@
   }
 
   /* 하단 '결과보기' → 스텝 결과 화면 (마지막 문제 채점 시 활성) */
-  nextStepBtn.addEventListener('click', function () { if (nextStepBtn.disabled) return; window.location.href = 'step-result.html'; });
+  nextStepBtn.addEventListener('click', function () { if (nextStepBtn.disabled) return; window.location.href = 'shared/step-result.html'; });
 
   /* 라이트/다크 토글 */
   var themeBtn = document.getElementById('themeToggle');

@@ -77,10 +77,10 @@
   var MENU = [
     ['마이페이지','M4 20a8 8 0 0 1 16 0M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8'],
     ['학습 기록','M4 5h16M4 12h16M4 19h10'],
-    ['월간 보고서','M7 3v4M17 3v4M4 9h16M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1','report.html'],
+    ['월간 보고서','M7 3v4M17 3v4M4 9h16M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1','util/report.html'],
     ['오답 노트','M6 3h9l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1M14 3v6h6'],
     ['진단 평가','M9 11l2 2 4-4M5 4h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1'],
-    ['이용권 결제','M3 7h18v10H3zM3 11h18','payment.html'],
+    ['이용권 결제','M3 7h18v10H3zM3 11h18','util/payment.html'],
     ['이용 가이드','M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.8.4-1 .9-1 1.7M12 16.5h.01']  /* 노션 외부 페이지 예정 */
   ];
 
@@ -133,7 +133,7 @@
       var t=e.target.closest('[data-toast],[data-close],[data-out],[data-chg-sem],[data-chg-subj],[data-go]'); if(!t) return;
       if(t.hasAttribute('data-close')) return close();
       if(t.hasAttribute('data-out')) return toast('로그아웃되었습니다. (데모)');
-      if(t.hasAttribute('data-chg-subj')){ location.href='bridge.html'; return; }
+      if(t.hasAttribute('data-chg-subj')){ location.href='nav/bridge.html'; return; }
       if(t.hasAttribute('data-chg-sem')){ openModal(); return; }
       if(t.hasAttribute('data-go')){ location.href=t.getAttribute('data-go'); return; }
       if(t.hasAttribute('data-toast')) return toast(t.getAttribute('data-toast'));
@@ -144,7 +144,7 @@
         modal.querySelectorAll('.rmd-tab').forEach(function(b){ b.classList.toggle('is-on', b===tab); }); renderGrid(); return; }
       if(e.target.closest('[data-mclose]')) return closeModal();
       if(e.target.closest('[data-mgo]')){ if(!modalSel){ toast('학기를 선택해주세요.'); return; }
-        localStorage.setItem('rm-sem', modalSel); location.href='home.html?subject='+subject()+'&sem='+modalSel; }
+        localStorage.setItem('rm-sem', modalSel); location.href='nav/home.html?subject='+subject()+'&sem='+modalSel; }
     });
     document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ closeModal(); close(); } });
   }
@@ -194,12 +194,12 @@
     // 로고 클릭 → 기본모드 홈(현재 과목/학기)
     var lg=document.querySelector('.gnb__logo');
     if(lg && !lg.__go){ lg.__go=1; lg.setAttribute('title','기본모드 홈');
-      lg.addEventListener('click', function(){ location.href='home.html?subject='+subject()+'&sem='+semKey(); }); }
+      lg.addEventListener('click', function(){ location.href='nav/home.html?subject='+subject()+'&sem='+semKey(); }); }
     var mb=document.getElementById('menuBtn') || document.querySelector('[data-drawer-open]');
     if(mb) mb.addEventListener('click', function(e){ e.preventDefault(); open(); });
     // 공지사항 아이콘 → 공지 목록
     var nb=document.getElementById('noticeBtn');
-    if(nb && !nb.__go){ nb.__go=1; nb.addEventListener('click', function(){ location.href='notice.html'; }); }
+    if(nb && !nb.__go){ nb.__go=1; nb.addEventListener('click', function(){ location.href='util/notice.html'; }); }
     // 공용 모드 탭 네비게이션
     var gos=document.querySelectorAll('[data-go]');
     for(var i=0;i<gos.length;i++){ (function(b){ if(b.__go) return; b.__go=1;

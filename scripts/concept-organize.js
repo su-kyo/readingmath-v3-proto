@@ -107,7 +107,7 @@
 
   /* ---------- 콘솔: 개념 다지기로 ---------- */
   doneBtn.addEventListener('click', function () {
-    if (!doneBtn.disabled) window.location.href = 'learn-concept-drill.html';
+    if (!doneBtn.disabled) window.location.href = 'concept/drill.html';
   });
 
   /* ---------- 라이트/다크 토글 ---------- */

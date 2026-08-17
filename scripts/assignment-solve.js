@@ -272,7 +272,7 @@
   submitBtn.addEventListener('click', function () {
     if (submitBtn.disabled) return;
     showToast('제출되었습니다.');
-    setTimeout(function () { window.location.href = 'assignment-result.html'; }, 600);
+    setTimeout(function () { window.location.href = 'assignment/result.html'; }, 600);
   });
 
   // ── 라이트/다크 토글 (localStorage 'rm-theme'로 화면 간 유지) ──

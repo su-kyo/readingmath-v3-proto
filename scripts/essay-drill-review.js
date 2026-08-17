@@ -201,7 +201,7 @@
   nextBtn.addEventListener('click', function () { if (pi < N - 1) { pi++; P = PROBLEMS[pi]; render(); } });
 
   var resultBtn = document.getElementById('resultBtn');
-  if (resultBtn) resultBtn.addEventListener('click', function () { window.location.href = 'essay-step-result.html'; });
+  if (resultBtn) resultBtn.addEventListener('click', function () { window.location.href = 'essay/step-result.html'; });
 
   // 타이머 = pause 상태(해설 화면). 정지된 값 그대로 표시.
   // 테마 토글
