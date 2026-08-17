@@ -91,7 +91,7 @@
           <div class="bubble" id="bubble">
             <b>(1) 받아올림이 없는 세 자리 수의 덧셈</b>의 <b>개념 훈련</b>을 시작해보세요!
           </div>
-          <img class="char" id="char" src="assets/figma/home/math-elem-3-1/character.png" alt="캐릭터" />
+          <img class="char" id="char" src="assets/figma/home/math-elem-3-1/character.webp" alt="캐릭터" />
           <div class="shadow"></div>
         </div>
       </div>
@@ -158,8 +158,8 @@
       var stage = document.getElementById('stage');
       var safe = document.getElementById('safe');
       safe.style.aspectRatio = cfg.ratio;
-      stage.style.backgroundImage = 'url("' + dir + '/bg.png")';
-      document.getElementById('char').src = dir + '/character.png';
+      stage.style.backgroundImage = 'url("' + dir + '/bg.webp")';
+      document.getElementById('char').src = dir + '/character.webp';
       var bub = document.getElementById('bubble');
       bub.style.setProperty('--hl', subject === 'science' ? 'var(--teal-600)' : 'var(--blue-600)');
       if(cfg.msg) bub.innerHTML = cfg.msg;
@@ -170,7 +170,7 @@
         el.className = 'obj' + (o.float ? ' obj--float' : '');
         el.style.left = o.cx + '%'; el.style.top = o.cy + '%';
         el.style.width = o.w + '%';
-        el.style.backgroundImage = 'url("' + dir + '/obj-' + o.n + '.png")';
+        el.style.backgroundImage = 'url("' + dir + '/obj-' + o.n + '.webp")';
         el.title = o.n + '단원 완료 오브젝트';
         safe.insertBefore(el, hero);   // 캐릭터보다 뒤(먼저 그려짐)
       });

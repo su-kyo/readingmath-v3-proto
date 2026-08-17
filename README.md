@@ -1,41 +1,151 @@
 # 리딩수학과학 · 리디자인 프로토타입
 
-수학·과학 태블릿 학습 서비스의 리디자인을 **HTML · CSS · JavaScript**로 만드는 프로토타입입니다.
+수학·과학 태블릿 학습 서비스의 리디자인을 **HTML · CSS · JavaScript**로 만든 프로토타입입니다.
 (React 등 프레임워크 없음 — 그냥 파일을 열면 동작합니다.)
 
 ## 열어보는 법 (개발 몰라도 됨)
 
-가장 쉬운 방법: **파일을 더블클릭**해서 브라우저로 열면 됩니다.
+가장 쉬운 방법: **`index.html`을 더블클릭**해서 브라우저로 열면 됩니다.
 
-- `index.html` — 시작 페이지 (화면 목록)
+- `index.html` — 시작 페이지 (화면 전체 목록)
 - `styleguide.html` — 디자인 시스템(색·글자·컴포넌트) 전시장
 
 > 오른쪽 위 ☀ / ☾ 버튼으로 라이트/다크 전환이 됩니다.
 
+**홈 화면(`home.html`)만은 주소로 과목·학기를 바꿉니다.**
+`home.html?subject=science&sem=mid-3-1` 처럼 붙이면 됩니다.
+`subject`는 `math` / `science`, `sem`은 `elem-3-1` / `mid-3-1` / `mid-3-2` 여섯 조합이 있습니다.
+
 ## 폴더 구조
 
+화면 HTML은 **전부 최상위에 평평하게** 있습니다. 이름 앞머리가 계열입니다.
+
 ```
-RM_test/
-├─ index.html          진입 · 화면 목록
-├─ styleguide.html     디자인 시스템 전시장 (Phase 0 산출물)
-├─ styles/
-│  ├─ tokens.css       ★ 색·글자·간격 변수 (톤 바꾸려면 여기만 수정)
-│  ├─ base.css         기본 스타일 · 폰트
-│  └─ components.css   컴포넌트(버튼·칩·헤더·아코디언 등)
-├─ scripts/
-│  ├─ theme.js         라이트/다크 전환
-│  └─ components.js     아코디언 등 상호작용
-├─ PLAN.md             전체 작업 계획
-└─ README.md           이 문서
+RM/
+├─ index.html            진입 · 화면 목록
+├─ styleguide.html       디자인 시스템 전시장
+│
+├─ home.html             기본 모드 홈 (행성 메인)
+├─ freemode.html         자유 모드 (학기별 · 계통별)
+├─ curriculum.html       커리큘럼 레이어
+├─ bridge.html           스텝 사이 브릿지
+│
+├─ learn-*.html          개념 학습 (concept · concept-drill · basic-ops)
+├─ concept-organize.html 개념 정리하기
+├─ type-*.html           유형 훈련 (quiz · result · review · training-result)
+├─ essay-*.html          서술형 훈련 (basics · advanced · drill · report · 결과)
+├─ assignment-*.html     과제 센터 (home · solve · explain · result)
+├─ exam-*.html           시험 대비 (home · solve)
+├─ step-result.html      스텝 결과
+├─ training-result.html  훈련 결과
+├─ report.html           학습 리포트
+├─ notice*.html          공지
+├─ payment.html          결제
+│
+├─ styles/               tokens.css(색·글자 변수) · base · components · 화면별 CSS
+├─ scripts/              화면별 동작 JS + theme.js(라이트/다크) + space-bg.js(우주 배경)
+├─ assets/
+│  ├─ figma/             배경·홈·행성·계통 이미지(webp) + 아이콘(svg)
+│  └─ fonts/             Kode Mono (직접 넣어둠, 인터넷 없이도 뜸)
+│
+├─ figma-palette/        기존 팔레트 유지 스냅샷 (내부 비교용, 배포 제외)
+├─ tools/                팔레트 생성 스크립트 (로컬 전용, 배포 제외)
+├─ video/                소개 영상 제작 폴더 (깃·배포 모두 제외, 아래 참고)
+│
+├─ DESIGN-SYSTEM.md      디자인 원칙과 토큰 구조
+├─ design-tokens.json    토큰 스냅샷 (2026-07-14 시점, 아래 참고)
+├─ PLAN.md               7월 작업 계획 (현재와 다름, 문서 맨 위 참고)
+└─ README.md             이 문서
 ```
 
 ## 색을 바꾸고 싶다면
 
 `styles/tokens.css` 맨 위의 값만 고치면 모든 화면에 반영됩니다.
-예: 주 버튼 색을 바꾸려면 `--primary` 값을 수정.
+개별 화면 CSS에는 색을 직접 쓰지 않는 것이 원칙입니다(자세한 이유는 `DESIGN-SYSTEM.md`).
 
 ## 기준
 
 - 기준 화면 크기: **1280 × 720 (태블릿 가로, 16:9)**
 - 기본 테마: **다크(우주)**
 - 스타일 원칙: 외곽선 없는 flat, 그라데이션·과밀 금지, 표면 톤·여백·타이포로 구조 만들기
+
+---
+
+## 알아둘 것 — 이 프로토타입의 현재 상태
+
+### 이미지는 전부 webp입니다 (원본은 프로젝트 밖에)
+
+화면이 쓰는 사진·일러스트는 **webp**, 아이콘·로고는 **svg**입니다.
+PNG는 프로젝트 안에 두지 않습니다 — `.gitignore`가 막습니다.
+
+**원본 PNG 96장은 여기 있습니다:**
+
+```
+~/Documents/Portfolio/_source/RM/generated/
+```
+
+전부 생성한 이미지라 **다시 뽑아도 같은 그림이 안 나옵니다.** 지우면 안 됩니다.
+(Figma에서 받은 것은 아이콘 svg뿐이고, 그건 `assets/figma/icons/`에 그대로 있습니다.)
+
+**webp를 다시 만들려면** 원본을 같은 자리 같은 이름으로 바꿔 넣으면 됩니다:
+
+```bash
+cwebp -q 92 원본.png -o 결과.webp
+```
+
+**96장을 한 번에 다시 만들려면** 아래를 그대로 복사해 실행합니다.
+`_source`의 원본을 읽어 `assets/` 안에 webp로 넣습니다 (폴더 구조는 자동으로 맞춰집니다).
+
+```bash
+cd ~/Documents/Portfolio/_source/RM/generated && find . -name "*.png" | while read f; do mkdir -p "$HOME/Documents/Portfolio/projects/RM/assets/$(dirname "$f")"; cwebp -q 92 -quiet "$f" -o "$HOME/Documents/Portfolio/projects/RM/assets/${f%.png}.webp"; done && echo "완료"
+```
+
+`cwebp`가 없다고 나오면 먼저 설치합니다:
+
+```bash
+brew install webp
+```
+
+### 어느 쪽을 쓸지 아직 안 정한 화면이 있습니다
+
+두 쌍이 남아 있습니다. **둘 다 살아 있고, 어느 쪽을 쓸지는 미정입니다.**
+
+- `essay-basics.html` / `essay-basics-v2.html`
+- `essay-drill.html` / `essay-drill-v2.html`
+
+지금은 자유 모드가 `essay-basics-v2.html`을 부릅니다. 정리를 빠뜨린 게 아니라
+**결정을 미뤄둔 상태**입니다.
+
+### 화면이 아직 안 부르는 이미지 6장
+
+`assets/figma/strands/`의 과학 계통 아이콘 6장(물리·화학·지구·생명·탐구·통합)은
+아직 어느 화면도 부르지 않습니다. **자유 모드에 과학 계통이 붙으면 쓸 것**이라
+webp로 바꿔 그대로 남겨뒀습니다.
+
+### 문서 세 개가 서로 조금 다릅니다 — 기준은 이렇습니다
+
+| 무엇 | 지위 |
+| --- | --- |
+| `styles/tokens.css` | **실제 색값의 현행 기준.** 화면이 이 값을 씁니다 |
+| `DESIGN-SYSTEM.md` | **원칙과 구조의 기준.** 3단 토큰·금지 규칙·슬롯 계약은 유효합니다 |
+| `design-tokens.json` | 2026-07-14 시점 스냅샷. **색값이 낡았습니다** |
+
+`DESIGN-SYSTEM.md`는 스스로를 "단일 정본"이라 적어 두었지만, 실제로는 그 뒤에
+`tokens.css`가 더 갱신됐습니다. **색값이 서로 다르면 `tokens.css`가 맞습니다.**
+맞추는 작업은 아직 하지 않았습니다.
+
+### video 폴더는 깃에 없습니다
+
+소개 영상 제작 폴더입니다. 깃과 배포 양쪽에서 빠져 있어서
+**이 폴더의 mp4와 소재는 이 컴퓨터에만 있습니다.** 필요하면 따로 백업하세요.
+
+내려받은 꾸러미(`node_modules`)는 지웠습니다. 다시 쓰려면 `video/` 안에서:
+
+```bash
+npm install
+```
+
+### 배포
+
+Vercel에 올라가 있습니다. `figma-palette` · `tools` · `video`는 배포에서 빠집니다
+(`.vercelignore`).

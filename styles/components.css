@@ -250,10 +250,10 @@
   background-size: contain;
   font-size: 0; color: transparent;
 }
-.grade--s { background-image: url("../assets/figma/grade-s.png"); }
-.grade--a { background-image: url("../assets/figma/grade-a.png"); }
-.grade--b { background-image: url("../assets/figma/grade-b.png"); }
-.grade--c { background-image: url("../assets/figma/grade-c.png"); }
+.grade--s { background-image: url("../assets/figma/grade-s.webp"); }
+.grade--a { background-image: url("../assets/figma/grade-a.webp"); }
+.grade--b { background-image: url("../assets/figma/grade-b.webp"); }
+.grade--c { background-image: url("../assets/figma/grade-c.webp"); }
 .grade--lg { width: 88px; height: 88px; }
 .grade--sm { width: 40px; height: 40px; }
 

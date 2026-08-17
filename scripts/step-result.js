@@ -14,7 +14,7 @@
   var rate = Math.round((correct / total) * 100);
 
   function gradeOf(r) { return r >= 95 ? 's' : r >= 80 ? 'a' : r >= 70 ? 'b' : 'c'; }
-  var badgeSrc = 'assets/figma/grade-' + gradeOf(rate) + '.png';
+  var badgeSrc = 'assets/figma/grade-' + gradeOf(rate) + '.webp';
 
   document.getElementById('rate').textContent = rate;
   document.getElementById('score').textContent = correct;

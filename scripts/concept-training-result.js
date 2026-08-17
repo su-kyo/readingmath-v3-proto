@@ -28,7 +28,7 @@
     '오답노트를 확인한 뒤 개념 확인하기를 한 번 더 복습해 보세요.';
 
   function gradeOf(r) { return r >= 95 ? 's' : r >= 80 ? 'a' : r >= 70 ? 'b' : 'c'; }
-  function stepBadge(g) { return 'assets/figma/grade-step-' + g.toLowerCase() + '.png'; }
+  function stepBadge(g) { return 'assets/figma/grade-step-' + g.toLowerCase() + '.webp'; }
 
   /* ---------- 총점 별 + 점수 ---------- */
   document.getElementById('totalStar').src = 'assets/figma/star-' + gradeOf(SCORE) + '.svg';

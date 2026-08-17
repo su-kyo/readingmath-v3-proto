@@ -29,7 +29,7 @@
     '오답노트를 확인한 뒤 3단계 실력 키우기를 다시 학습해 보세요.';
 
   function gradeOf(r) { return r >= 95 ? 's' : r >= 80 ? 'a' : r >= 70 ? 'b' : 'c'; }
-  function stepBadge(g) { return 'assets/figma/grade-step-' + g.toLowerCase() + '.png'; }
+  function stepBadge(g) { return 'assets/figma/grade-step-' + g.toLowerCase() + '.webp'; }
 
   /* ---------- 총점 별 + 점수 ---------- */
   document.getElementById('totalStar').src = 'assets/figma/star-' + gradeOf(SCORE) + '.svg';

@@ -9,7 +9,7 @@
 /* ============ 퍼플 셸 (헤더 · 배경) ============ */
 /* 헤더 = 라이트·다크 공통 정적 프레임 색 var(--th-static) (서술형 static = violet-800, 테마 오버라이드 없음). */
 .lheader { background: var(--th-static); }
-.screen__bg { background: url("../assets/figma/bg-spaceship-essay.png") center/cover no-repeat; }
+.screen__bg { background: url("../assets/figma/bg-spaceship-essay.webp") center/cover no-repeat; }
 
 /* 헤더 타이머 칩 (drill · report 공용) */
 .htimer { display: inline-flex; align-items: center; gap: 5px; padding: 6px 10px; border-radius: 10px; background: rgba(0,0,0,.28); flex: none; }

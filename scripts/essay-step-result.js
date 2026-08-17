@@ -32,7 +32,7 @@
   ];
 
   function gradeOf(r) { return r >= 95 ? 's' : r >= 80 ? 'a' : r >= 70 ? 'b' : 'c'; }
-  function badgeSrc(g) { return 'assets/figma/grade-' + g + '.png'; }
+  function badgeSrc(g) { return 'assets/figma/grade-' + g + '.webp'; }
 
   /* ---------- 집계 ---------- */
   var correct = 0, total = 0;
