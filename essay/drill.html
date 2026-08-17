@@ -5,11 +5,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>서술형 훈련 · 기본 다지기 — 리딩수학과학</title>
-  <link rel="stylesheet" href="styles/tokens.css?v=18" />
-  <link rel="stylesheet" href="styles/base.css?v=5" />
-  <link rel="stylesheet" href="styles/components.css?v=5" />
-  <link rel="stylesheet" href="styles/learn-shell.css?v=7" />
-  <link rel="stylesheet" href="styles/essay.css?v=13" />
+  <link rel="stylesheet" href="styles/tokens.css?v=22" />
+  <link rel="stylesheet" href="styles/base.css?v=7" />
+  <link rel="stylesheet" href="styles/components.css?v=8" />
+  <link rel="stylesheet" href="styles/learn-shell.css?v=8" />
+  <link rel="stylesheet" href="styles/essay.css?v=8" />
   <style>
     /* ============ 서술형 훈련 = 퍼플 테마 (공통은 essay.css) ============ */
     /* 페이지 고유 토큰만 (--bl-* 코어 / .blank / .qpop / 하단바 / .htimer = essay.css) */
@@ -38,7 +38,7 @@
     .stepbar__i { display: inline-flex; align-items: center; gap: 5px;
       font-family: var(--font-sans); font-size: 13.5px; font-weight: 700; color: var(--step-fg); transition: color .2s; }
     .stepbar__sep { width: 15px; height: 15px; color: var(--step-fg); opacity: .5; }
-    .stepbar__i.is-on { color: var(--th-accent); }
+    .stepbar__i.is-on { color: var(--th-ink-accent); }
     :root[data-theme="dark"] .stepbar__i.is-on { color: var(--th-accent-hi); }
     .stepbar__i.is-done { color: var(--lock-ck); }
     .stepbar__i.is-done::before { content: '✓'; font-weight: 900; }
@@ -53,7 +53,7 @@
     .card + .card { margin-top: 14px; }
     .sec-label { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 999px;
       font-family: var(--font-sans); font-size: 12.5px; font-weight: 800; letter-spacing: .01em; }
-    .sec-label--problem { background: var(--th-accent); color: var(--n-000); }
+    .sec-label--problem { background: var(--th-solid); color: var(--n-000); }
     .sec-label--sol { background: rgba(124,58,237,.15); color: var(--th-accent-hi); }
     :root[data-theme="light"] .sec-label--sol { background: rgba(124,58,237,.1); color: var(--th-accent-strong); }
 

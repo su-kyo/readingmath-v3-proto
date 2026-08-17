@@ -5,11 +5,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>2차 유형 문제 완료 · 스텝 결과 — 리딩수학과학</title>
-  <link rel="stylesheet" href="styles/tokens.css?v=18" />
-  <link rel="stylesheet" href="styles/base.css?v=5" />
-  <link rel="stylesheet" href="styles/components.css?v=5" />
-  <link rel="stylesheet" href="styles/learn-shell.css?v=7" />
-  <link rel="stylesheet" href="styles/type.css?v=4" />
+  <link rel="stylesheet" href="styles/tokens.css?v=22" />
+  <link rel="stylesheet" href="styles/base.css?v=7" />
+  <link rel="stylesheet" href="styles/components.css?v=8" />
+  <link rel="stylesheet" href="styles/learn-shell.css?v=8" />
+  <link rel="stylesheet" href="styles/type.css?v=8" />
   <style>
     /* ===== 유형 = 틸/그린 테마 ===== */
     .lheader { background: var(--th-static); }
@@ -26,7 +26,7 @@
       --accent: var(--th-accent-hi); --title1: var(--th-accent-hi); --title2: var(--th-accent); --rate: var(--th-accent-hi);
     }
     /* 우측 '학습 진행 현황'만 라이트/다크 전환 — 사이드 안에서 토큰 재정의 */
-    .rside { --lside: var(--n-600); --ltext: var(--n-050); --lmuted: var(--text-muted); --accent: var(--th-accent-hi); }
+    .rside { --lside: var(--n-600); --ltext: var(--n-050); --lmuted: var(--n-300); --accent: var(--th-accent-hi); }
     :root[data-theme="light"] .rside { --lside: var(--n-050); --ltext: var(--n-650); --lmuted: var(--text-muted); --accent: var(--th-ink-accent); }
 
     /* 좌측 */
@@ -48,11 +48,11 @@
     .rbadge { display: inline-flex; align-items: center; gap: 2px; }
     .rbracket { color: var(--accent); font-size: 52px; font-weight: 300; line-height: 1; }
     .rbadge img { width: 72px; height: 72px; }
-    .rstat__label { color: var(--lmuted); font-size: 15px; margin-bottom: 4px; }
+    .rstat__label { color: var(--n-300); font-size: 15px; margin-bottom: 4px; }
     .rstat__val { font-size: clamp(26px,2.8vw,36px); font-weight: 800; line-height: 1; }
     .rstat--rate .rstat__val { color: var(--rate); }
     .rstat--score .rstat__val { color: var(--title2); }
-    .rstat__val small { font-size: 20px; color: var(--lmuted); font-weight: 700; }
+    .rstat__val small { font-size: 20px; color: var(--n-300); font-weight: 700; }
     .rdivider { width: 1px; align-self: stretch; min-height: 44px; background: color-mix(in srgb, var(--lmuted) 40%, transparent); }
     .rbar { flex: none; height: 14px; border-radius: 999px; background: var(--bar-track); overflow: hidden; }
     .rbar__fill { height: 100%; background: var(--accent); border-radius: 999px; transition: width .5s ease; }
@@ -82,7 +82,7 @@
     .step-card__pointer path { fill: var(--accent); stroke: var(--lside); stroke-width: 5px; paint-order: stroke; }
 
     /* 하단바 = 유형 footer (크림 트레이) */
-    .bar__mid { background: var(--amber-050); } .bar__tray { background: #ECE3D8; }  /* §3.5 console-type 트레이 에셋색 */
+    .bar__mid { background: var(--amber-050); } .bar__tray { background: var(--asset-console-type-tray); }  /* §3.5 console-type 트레이 에셋색 */
 
     @media (max-width: 940px) { .rframe { flex-direction: column; } .rmain, .rside { border-radius: 24px; } .rside { width: auto; } .rgrid { grid-template-columns: repeat(5, 1fr); } }
   </style>

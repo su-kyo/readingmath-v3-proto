@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>시험 대비 · 문제 풀이 — 리딩수학과학</title>
   <script>try{if(localStorage.getItem('rm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
-  <link rel="stylesheet" href="styles/tokens.css?v=18" />
-  <link rel="stylesheet" href="styles/base.css?v=5" />
+  <link rel="stylesheet" href="styles/tokens.css?v=22" />
+  <link rel="stylesheet" href="styles/base.css?v=7" />
   <style>
     /* =========================================================================
        시험대비 문제 풀이 — 모던 툴 UI
@@ -19,7 +19,7 @@
       --surface: var(--n-000);
       --rail: var(--n-050);             /* 정보 레일 살짝 오프화이트 */
       --ink: var(--n-900);             /* 딥 쿨 near-black */
-      --ink2: var(--n-500); --muted: var(--text-meta); --faint: var(--n-300);
+      --ink2: var(--n-500); --muted: var(--text-meta); --faint: var(--n-400);
       --line: var(--n-100);            /* 헤어라인 */
       --line-2: var(--n-050); --line-strong: var(--n-200);
       --accent: var(--th-accent); --accent-ink: var(--th-ink-accent); --accent-tint: var(--th-tint); --accent-tint-br: var(--violet-200);
@@ -33,7 +33,7 @@
     /* ===== 다크 모드 — 로컬 var 리매핑(뉴트럴 램프 + 퍼플 액센트 밝게) ===== */
     :root[data-theme="dark"] {
       --canvas: var(--n-900); --surface: var(--n-800); --rail: var(--n-800);
-      --ink: var(--n-050); --ink2: var(--n-200); --muted: var(--n-300); --faint: var(--n-400);
+      --ink: var(--n-050); --ink2: var(--n-200); --muted: var(--n-300); --faint: var(--n-350);
       --line: var(--border-strong); --line-2: var(--border); --line-strong: var(--n-500);
       --accent: var(--th-accent); --accent-ink: var(--th-accent-hi);
       /* 다크 표면용 틴트 토큰 부재 — 기존 반투명 rgba 유지(라이트 위 글자 대비 보존) */
@@ -184,7 +184,7 @@
     .scap { font-size: 11px; font-weight: 800; letter-spacing: .09em; color: var(--faint); text-transform: uppercase; }
     .sbadges { display: flex; gap: 6px; }
     .sbadge { padding: 4px 10px; border-radius: 7px; font-size: 12px; font-weight: 800; }
-    .sbadge--con { background: var(--accent); color: var(--th-on-accent); }
+    .sbadge--con { background: var(--th-solid); color: var(--th-on-accent); }
     .sbadge--adv { background: color-mix(in srgb, var(--th-accent) 18%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--th-accent) 42%, transparent); color: var(--accent-ink); }
     .stype { font-size: 18px; font-weight: 800; letter-spacing: -.02em; line-height: 1.35; margin-top: 1px; }
     .svideo { height: 172px; border-radius: var(--r-md); background: var(--n-100); border: 1px solid var(--line);
@@ -203,7 +203,7 @@
     .hicon--o { background: var(--good); } .hicon--x { background: var(--bad); }
     .hitem__main { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
     .hitem__top { font-size: 13px; font-weight: 600; color: var(--ink2); }
-    .htag { font-weight: 800; } .htag--o { color: var(--good); } .htag--x { color: var(--bad); }
+    .htag { font-weight: 800; } .htag--o { color: var(--ok-on-dark); } .htag--x { color: var(--no-on-dark); }
     .hitem__time { font-family: var(--font-mono); font-size: 11.5px; color: var(--faint); font-variant-numeric: tabular-nums; }
 
     /* ===== 하단 액션 (투명 바 + 헤어라인) ===== */

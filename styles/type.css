@@ -15,6 +15,6 @@
 /* 하단바 = 크림 콘솔 유지. bar__mid=var(--amber-050) · bar__tray=#ECE3D8(§3.5 console-type 에셋). */
 
 /* 연습장 등 비-primary 툴버튼 = 틸 (네이비 대체). primary(결과보기)는 오렌지 유지. */
-.learn-body .toolbtn:not(.toolbtn--primary) { background: var(--th-accent); box-shadow: 0 4px 0 var(--th-accent-strong); }
+.learn-body .toolbtn:not(.toolbtn--primary) { background: var(--th-solid); box-shadow: 0 4px 0 var(--th-accent-strong); }
 .learn-body .toolbtn:not(.toolbtn--primary):hover { filter: brightness(1.1); }
 .learn-body .toolbtn:not(.toolbtn--primary):active { box-shadow: 0 2px 0 var(--th-accent-strong); }

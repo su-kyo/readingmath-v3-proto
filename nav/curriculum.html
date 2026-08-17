@@ -5,16 +5,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>학기 커리큘럼 — 리딩수학과학</title>
-  <link rel="stylesheet" href="styles/tokens.css?v=18" />
-  <link rel="stylesheet" href="styles/base.css?v=5" />
-  <link rel="stylesheet" href="styles/space-bg.css?v=2" />
-  <link rel="stylesheet" href="styles/gnb.css?v=5" />
+  <link rel="stylesheet" href="styles/tokens.css?v=22" />
+  <link rel="stylesheet" href="styles/base.css?v=7" />
+  <link rel="stylesheet" href="styles/space-bg.css?v=4" />
+  <link rel="stylesheet" href="styles/gnb.css?v=8" />
   <style>
     :root{
       --panel:var(--surface-1); --card:var(--n-650); --card2:var(--surface-2); --rail:var(--surface-3);
       --line:var(--surface-3); --line2:var(--n-650);
       --ink:var(--text); --body:var(--text); --muted:var(--text-muted); --item:var(--th-accent-hi);
-      --mint:var(--th-accent); --green:var(--ok-on-dark); --blue:var(--info-on-dark); --purple:var(--violet-500); --red:var(--no-on-dark);
+      --mint:var(--th-accent); --green:var(--ok-on-dark); --blue:var(--info-ink); --purple:var(--violet-500); --red:var(--no-on-dark);
       --cta:var(--primary);
     }
     *{ box-sizing:border-box; margin:0; padding:0; }
@@ -283,15 +283,15 @@
     })();
 
     // ---- 등급 색 (별 색만으로 등급 구분: A금 B은 C동 · S=프리즘(무지개))
-    var GCOL = { s:'#12BEC6', a:'#FFB000', b:'#7D9AC2', c:'#C77326' };
+    var GCOL = { s:'var(--art-grade-s)', a:'var(--art-grade-a)', b:'var(--art-grade-b)', c:'var(--art-grade-c)' };
     var GRANK = { s:4, a:3, b:2, c:1 };
     // 프리즘(S등급) 별 = 무지개빛 그라데이션 (금·은·동과 확실히 구분)
     (function(){ if(document.getElementById('rmStarDefs')) return;
       var d=document.createElement('div'); d.style.cssText='position:absolute;width:0;height:0;overflow:hidden';
       d.innerHTML='<svg id="rmStarDefs" aria-hidden="true"><defs>'
         + '<linearGradient id="rmPrism" x1="0" y1="0" x2="1" y2="1">'
-        + '<stop offset="0" stop-color="#31E0C4"/><stop offset=".38" stop-color="#5FB6FF"/>'
-        + '<stop offset=".72" stop-color="#B78CF7"/><stop offset="1" stop-color="#FF93C8"/>'
+        + '<stop offset="0" stop-color="var(--art-planet-1)"/><stop offset=".38" stop-color="var(--art-planet-2)"/>'
+        + '<stop offset=".72" stop-color="var(--art-planet-3)"/><stop offset="1" stop-color="var(--art-planet-4)"/>'
         + '</linearGradient></defs></svg>';
       document.body.appendChild(d);
     })();

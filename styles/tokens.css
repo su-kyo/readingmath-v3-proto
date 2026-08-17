@@ -22,7 +22,8 @@
   --n-100: #E4ECFB;   /* 라이트 거터·개념/유형 패널 */
   --n-200: #CBD7EE;   /* 라이트 테두리·비활성 */
   --n-300: #A0B0CD;   /* 다크면 muted 글자 */
-  --n-400: #586B8C;   /* meta 글자 */
+  --n-350: #7285A6;   /* 다크면 meta 글자 (n-400은 다크에서 3.4로 미달 — 대비 확보용) */
+  --n-400: #586B8C;   /* 라이트면 meta 글자 */
   --n-500: #3A466A;   /* 다크 인터랙티브·콘솔 네이비 */
   --n-600: #1F2B49;   /* 다크 카드 */
   --n-650: #121E37;   /* 라이트 잉크 */
@@ -58,7 +59,8 @@
 
   /* 오렌지 (CTA·과제모드) — hue 52° */
   --orange-050: #FFF4EE; --orange-100: #FFE3D4; --orange-200: #FEC4A2; --orange-300: #FEA46D;
-  --orange-400: #FE811B; --orange-500: #C3600A; --orange-600: #904505; --orange-700: #6E3403;
+  --orange-400: #FE811B; --orange-450: #B75301; /* CTA 표면 — 흰 글자 4.94 확보 */
+  --orange-500: #C3600A; --orange-600: #904505; --orange-700: #6E3403;
   --orange-800: #522401; --orange-900: #371601;
 
   /* 레드 (오답) — hue 25° */
@@ -76,6 +78,44 @@
   --bronze-500: #E08A4B;
 
   /* =======================================================================
+     에셋 연동색 (§3.5 예외) — SVG·이미지의 실제 면색과 화면이 이어 붙는 지점.
+     램프에서 고를 수 없다. 에셋을 다시 그리지 않는 한 이 값이 정답이다.
+     화면에 hex를 직접 쓰지 말고 반드시 이 토큰을 참조한다.
+     ======================================================================= */
+  /* 학습 하단 콘솔 — 섹션별 SVG(console-*.svg)의 밴드·트레이 면색 */
+  --asset-console-concept-body: #AFC6E8;
+  --asset-console-concept-rim:  #DAE6F9;
+  --asset-console-concept-tray: #87AEEC;
+  --asset-console-type-tray:    #ECE3D8;
+  --asset-console-essay-rim:    #E2DEF5;
+  --asset-console-essay-tray:   #C6BFEA;
+  --asset-console-task-rim:     #EEF0F6;
+  --asset-console-task-tray:    #E0E6EF;
+
+  /* 우주 배경 아트 (원칙1 예외 — space-bg 캔버스) */
+  --art-space-top:    #050B26;
+  --art-space-mid:    #070F31;
+  --art-space-bottom: #04091F;
+  --art-star:         #DFE9FF;
+  --art-star-bright:  #E6EEFF;
+
+  /* 등급 칩 (커리큘럼·자유모드의 별 아이콘과 세트) */
+  --art-grade-s: #12BEC6;
+  --art-grade-a: #FFB000;
+  --art-grade-b: #7D9AC2;
+  --art-grade-c: #C77326;
+
+  /* 행성 링 그라데이션 (자유모드·커리큘럼) */
+  --art-planet-1: #31E0C4;
+  --art-planet-2: #5FB6FF;
+  --art-planet-3: #B78CF7;
+  --art-planet-4: #FF93C8;
+
+  /* 개념 학습 형광펜 (다크) */
+  --art-mark-bg: #124F3C;
+  --art-mark-fg: #8FF0C9;
+
+  /* =======================================================================
      2단 · SEMANTIC — 전역 역할 [다크 기본]
      ======================================================================= */
 
@@ -87,10 +127,10 @@
   --surface-hover:  var(--n-500);
   --surface-sunken: var(--n-950);
 
-  /* 글자 */
+  /* 글자 — 다크 기본. 대비 4.5 이상 (§대비 규칙: docs/color-contrast-audit.md) */
   --text:       var(--n-050);
-  --text-muted: var(--n-300);
-  --text-meta:  var(--n-400);
+  --text-muted: var(--n-300);   /* 다크 표면에서 8.4 */
+  --text-meta:  var(--n-350);   /* 다크 표면에서 4.9 — muted보다 한 단계 약하되 기준은 넘김 */
   --text-on-accent: var(--n-000);
 
   /* 테두리 · 오버레이 · 그림자 */
@@ -116,18 +156,25 @@
   --grade-b: var(--blue-300);
   --grade-c: var(--n-300);
 
-  /* 주요 CTA (오렌지 — 전 섹션 공통, 정체성 400스텝) */
-  --primary:         var(--orange-400);
-  --primary-hover:   var(--orange-300);
-  --primary-pressed: var(--orange-500);
+  /* 주요 CTA (오렌지 — 전 섹션 공통)
+     표면은 450스텝. 400은 흰 글자 대비가 2.5로 크게 미달이라 CTA 배경으로 쓰지 않는다.
+     400은 아이콘·테두리·장식 등 글자가 올라가지 않는 곳에만. */
+  --primary:         var(--orange-450);  /* 흰 글자 4.94 */
+  --primary-hover:   var(--orange-500);  /* 살짝 밝게 */
+  --primary-pressed: var(--orange-600);  /* 눌림 */
   --primary-deep:    var(--orange-700);
+  --primary-edge:    var(--orange-700);  /* 버튼 아래 두께감 */
 
   /* A층/GNB 모드색 = 포인트 컬러(Figma 정합: 기본 블루·자유 그린·시험 퍼플·과제 오렌지).
-     기존 400스텝은 흰 글자 대비가 약해서 500/브랜드값으로 상향. */
-  --mode-basic:  var(--blue-500);   /* #0A7AF8 ≈ Figma #008CFF */
-  --mode-free:   #58CC02;           /* Figma 자유모드 그린 */
-  --mode-exam:   var(--violet-500); /* #805AFD 퍼플 */
-  --mode-assign: var(--orange-400); /* #FE811B 오렌지 */
+     탭 위에 흰 글자가 올라가므로 600스텝. 500/브랜드값은 4.4 이하로 미달이었다.
+     브랜드 원색(Figma #008CFF·#58CC02 등)은 글자가 얹히지 않는 장식에만 쓴다. */
+  --mode-basic:  var(--blue-600);   /* 흰 글자 6.71 */
+  --mode-free:   var(--green-600);  /* 흰 글자 6.20 (Figma #58CC02는 2.09로 미달) */
+  --mode-exam:   var(--violet-600); /* 흰 글자 7.25 */
+  --mode-assign: var(--orange-600); /* 흰 글자 6.91 */
+
+  /* 브랜드 원색 — 글자가 올라가지 않는 장식·아이콘 전용 */
+  --brand-free-vivid: #58CC02;
 
   /* 우주 배경 액센트 (space-bg 아트 — 원칙1 예외) */
   --accent-cyan: var(--cyan-300);
@@ -143,6 +190,9 @@
   --th-accent-hi:     var(--blue-300);
   --th-ink-accent:    var(--blue-600);
   --th-on-accent:     #FFFFFF;
+  /* 흰 글자가 올라가는 칠면(활성 탭·솔리드 버튼·배지)은 반드시 이 슬롯을 쓴다.
+     --th-accent(500)는 4.1~4.4로 미달이므로 글자 받침으로 쓰지 않는다. */
+  --th-solid:         var(--blue-600);
   --th-tint:          color-mix(in srgb, var(--th-accent) 8%, transparent);
   --th-tint-strong:   color-mix(in srgb, var(--th-accent) 15%, transparent);
   --th-chip:          var(--blue-050);
@@ -212,8 +262,8 @@
   --surface-sunken: var(--n-200);
 
   --text:       var(--n-650);
-  --text-muted: var(--n-500);
-  --text-meta:  var(--n-400);
+  --text-muted: var(--n-500);   /* 흰 배경에서 9.3 */
+  --text-meta:  var(--n-400);   /* 흰 배경에서 5.4 — 라이트에선 400이 제자리 */
 
   --border:        rgba(20, 32, 58, 0.10);
   --border-strong: rgba(20, 32, 58, 0.20);
@@ -240,6 +290,7 @@
   --th-accent-strong: var(--blue-700);
   --th-accent-hi: var(--blue-300);
   --th-ink-accent: var(--blue-600);
+  --th-solid: var(--blue-600);   /* 흰 글자 받침 */
   --th-chip: var(--blue-050);
   --th-panel: var(--n-000);   /* 콘텐츠 패널 = 라이트에서 흰색 (다크는 .content 규칙이 surface-1로 덮음) */
 }
@@ -251,6 +302,7 @@
   --th-accent-strong: var(--teal-700);
   --th-accent-hi: var(--teal-300);
   --th-ink-accent: var(--teal-600);
+  --th-solid: var(--teal-600);   /* 흰 글자 받침 */
   --th-chip: var(--teal-050);
   --th-panel: var(--n-000);   /* 콘텐츠 패널 = 라이트에서 흰색 */
 }
@@ -262,6 +314,7 @@
   --th-accent-strong: var(--violet-700);
   --th-accent-hi: var(--violet-300);
   --th-ink-accent: var(--violet-600);
+  --th-solid: var(--violet-600);   /* 흰 글자 받침 */
   --th-chip: var(--violet-050);
   --th-panel: var(--n-000);   /* 콘텐츠 패널 = 라이트에서 흰색 */
 }
@@ -273,6 +326,7 @@
   --th-accent-strong: var(--violet-700);
   --th-accent-hi: var(--violet-300);
   --th-ink-accent: var(--violet-600);
+  --th-solid: var(--violet-600);   /* 흰 글자 받침 */
   --th-chip: var(--violet-050);
   --th-panel: var(--n-050);
 }
@@ -284,6 +338,7 @@
   --th-accent-strong: var(--blue-700);
   --th-accent-hi: var(--blue-300);
   --th-ink-accent: var(--blue-600);
+  --th-solid: var(--blue-600);   /* 흰 글자 받침 */
   --th-chip: var(--blue-050);
   --th-panel: var(--n-100);
 }
@@ -295,6 +350,7 @@
   --th-accent-strong: var(--blue-700);
   --th-accent-hi: var(--blue-300);
   --th-ink-accent: var(--blue-600);
+  --th-solid: var(--blue-600);   /* 흰 글자 받침 */
   --th-chip: var(--blue-050);
   --th-panel: var(--n-100);
 }
@@ -306,6 +362,7 @@
   --th-accent-strong: var(--blue-600);
   --th-accent-hi: var(--blue-300);
   --th-ink-accent: var(--blue-300);
+  --th-solid: var(--cyan-600);   /* 흰 글자 받침 */
   --th-chip: var(--n-800);
   --th-panel: var(--surface-1);
 }
@@ -351,15 +408,17 @@
   --red-050: var(--red-050);
   --teal-100: var(--teal-100);
   --cyan-100: var(--cyan-100);
-  --success: var(--ok-solid);
-  --danger: var(--no-solid);
-  --warning: var(--warn-solid);
-  --info: var(--info-solid);
+  /* 이 별칭들은 대개 다크 표면 위 '글자'로 쓰인다 — solid(500)는 4.1~4.3으로 미달이라
+     밝힌 단계(on-dark)를 가리킨다. 칠면이 필요하면 --*-ink 또는 --th-solid를 쓴다. */
+  --success: var(--ok-on-dark);
+  --danger: var(--no-on-dark);
+  --warning: var(--warn-on-dark);
+  --info: var(--info-on-dark);
   --success-text: var(--ok-ink);
   --danger-text: var(--no-ink);
   --star-gold: var(--gold-500);
   --surface-card: var(--n-000);
-  --text-dim: var(--n-400);
+  --text-dim: var(--n-350);   /* 다크 4.9 — n-400은 3.4로 미달 */
   --kp-num: var(--teal-300);
   --transition: var(--t-fast);
   --type-accent: var(--teal-500);

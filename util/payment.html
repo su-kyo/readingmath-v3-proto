@@ -5,10 +5,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>이용권 결제 — 리딩수학과학</title>
-  <link rel="stylesheet" href="styles/tokens.css?v=18" />
-  <link rel="stylesheet" href="styles/base.css?v=5" />
-  <link rel="stylesheet" href="styles/gnb.css?v=5" />
-  <link rel="stylesheet" href="styles/util.css?v=5" />
+  <link rel="stylesheet" href="styles/tokens.css?v=22" />
+  <link rel="stylesheet" href="styles/base.css?v=7" />
+  <link rel="stylesheet" href="styles/gnb.css?v=8" />
+  <link rel="stylesheet" href="styles/util.css?v=8" />
   <style>
     *{ box-sizing:border-box; margin:0; padding:0; }
     html,body{ height:100%; }
@@ -30,7 +30,7 @@
     .plan__top{ display:flex; align-items:center; gap:8px; margin-bottom:3px; }
     .plan__nm{ font-size:15.5px; font-weight:800; }
     .plan__days{ font-size:12.5px; font-weight:700; color:var(--ink-3); }
-    .plan__off{ font-size:12px; font-weight:800; color:var(--brand); background:var(--brand-tint); padding:2px 8px; border-radius:6px; }
+    .plan__off{ font-size:12px; font-weight:800; color:var(--brand-ink); background:var(--brand-tint); padding:2px 8px; border-radius:6px; }
     .plan__price{ text-align:right; flex:none; }
     .plan__list{ font-size:12.5px; color:var(--ink-3); text-decoration:line-through; font-variant-numeric:tabular-nums; }
     .plan__now{ font-size:18px; font-weight:800; color:var(--ink); font-variant-numeric:tabular-nums; }
@@ -119,7 +119,7 @@
                 <div class="sum__row"><span class="sum__k">선택한 이용권</span><span class="sum__v" id="sumSubj">리딩수학</span></div>
                 <div class="sum__row"><span class="sum__k">이용 기간</span><span class="sum__v placeholder" id="sumTerm">기간을 선택해 주세요</span></div>
                 <div class="sum__row"><span class="sum__k">결제 방법</span><span class="sum__v" id="sumMethod">신용카드 결제</span></div>
-                <div class="sum__row" style="border-bottom:0"><span class="sum__k">할인 혜택</span><span class="sum__v" id="sumOff" style="color:var(--brand)">-0원</span></div>
+                <div class="sum__row" style="border-bottom:0"><span class="sum__k">할인 혜택</span><span class="sum__v" id="sumOff" style="color:var(--brand-ink)">-0원</span></div>
                 <div class="coupon">
                   <input class="u-field" id="coupon" placeholder="쿠폰 번호를 입력해 주세요">
                   <button class="u-btn u-btn--sm" id="couponBtn" style="height:42px">적용</button>

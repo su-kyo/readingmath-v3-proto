@@ -5,11 +5,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>서술형 훈련 · 기본 다지기 해설 — 리딩수학과학</title>
-  <link rel="stylesheet" href="styles/tokens.css?v=18" />
-  <link rel="stylesheet" href="styles/base.css?v=5" />
-  <link rel="stylesheet" href="styles/components.css?v=5" />
-  <link rel="stylesheet" href="styles/learn-shell.css?v=7" />
-  <link rel="stylesheet" href="styles/essay.css?v=13" />
+  <link rel="stylesheet" href="styles/tokens.css?v=22" />
+  <link rel="stylesheet" href="styles/base.css?v=7" />
+  <link rel="stylesheet" href="styles/components.css?v=8" />
+  <link rel="stylesheet" href="styles/learn-shell.css?v=8" />
+  <link rel="stylesheet" href="styles/essay.css?v=8" />
   <style>
     /* ============ 서술형 = 퍼플 (essay-drill 셸 재사용) ============ */
     .content {
@@ -17,16 +17,16 @@
       --guide: rgba(249,249,249,.94); --card: var(--surface-1); --card-br: rgba(255,255,255,.08); --card-sh: none;
       --step-bg: rgba(255,255,255,.07); --step-fg: var(--text-muted);
       /* 채점 색 (다크) */
-      --ok-bg: rgba(16,188,132,.16); --ok-br: rgba(16,188,132,.55); --ok-fg: var(--ok-solid); --ok-ink: var(--ok-tint);
-      --no-bg: rgba(229,88,95,.16); --no-br: rgba(229,88,95,.6); --no-fg: var(--no-solid); --no-ink: var(--no-tint);
+      --ok-bg: rgba(16,188,132,.16); --ok-br: rgba(16,188,132,.55); --ok-fg: var(--ok-ink); --ok-ink: var(--ok-tint);
+      --no-bg: rgba(229,88,95,.16); --no-br: rgba(229,88,95,.6); --no-fg: var(--no-ink); --no-ink: var(--no-tint);
     }
     :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
     :root[data-theme="light"] .content {
       background: var(--n-000); border-color: var(--th-static);
       --guide: var(--n-650); --card: var(--n-000); --card-br: var(--n-050); --card-sh: 0 12px 30px -22px rgba(60,40,130,.5);
       --step-bg: var(--n-100); --step-fg: var(--text-meta);
-      --ok-bg: rgba(16,140,100,.12); --ok-br: rgba(16,140,100,.45); --ok-fg: var(--ok-solid); --ok-ink: var(--ok-ink);
-      --no-bg: rgba(210,50,58,.1); --no-br: rgba(210,50,58,.45); --no-fg: var(--no-solid); --no-ink: var(--no-ink);
+      --ok-bg: rgba(16,140,100,.12); --ok-br: rgba(16,140,100,.45); --ok-fg: var(--ok-ink); --ok-ink: var(--ok-ink);
+      --no-bg: rgba(210,50,58,.1); --no-br: rgba(210,50,58,.45); --no-fg: var(--no-ink); --no-ink: var(--no-ink);
     }
 
     /* ============ 상단 진행/네비 ============ */
@@ -41,7 +41,7 @@
     .nav__btn { width: 34px; height: 34px; border-radius: 10px; border: 0; cursor: pointer;
       display: inline-flex; align-items: center; justify-content: center; color: var(--guide);
       background: var(--step-bg); transition: background .15s, opacity .15s; }
-    .nav__btn:hover:not(:disabled) { background: var(--th-accent); color: var(--n-000); }
+    .nav__btn:hover:not(:disabled) { background: var(--th-solid); color: var(--n-000); }
     .nav__btn:disabled { opacity: .3; cursor: default; }
     .nav__btn svg { width: 18px; height: 18px; }
 
@@ -55,7 +55,7 @@
     .card + .card { margin-top: 14px; }
     .sec-label { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 999px;
       font-family: var(--font-sans); font-size: 12.5px; font-weight: 800; letter-spacing: .01em; }
-    .sec-label--problem { background: var(--th-accent); color: var(--n-000); }
+    .sec-label--problem { background: var(--th-solid); color: var(--n-000); }
     .sec-label--sol { background: rgba(124,58,237,.15); color: var(--th-accent-hi); }
     :root[data-theme="light"] .sec-label--sol { background: rgba(124,58,237,.1); color: var(--th-accent-strong); }
 
@@ -121,7 +121,7 @@
     .rblank.is-wrong.show-ans::after, .rslot.is-wrong.show-ans::after { content: none; }
 
     /* 하단 결과 버튼 (윗면·아랫면 모두 바이올렛으로 일치) */
-    .toolbtn--primary { background: var(--th-accent); box-shadow: 0 4px 0 color-mix(in srgb, var(--th-accent) 62%, #000); }
+    .toolbtn--primary { background: var(--th-solid); box-shadow: 0 4px 0 color-mix(in srgb, var(--th-accent) 62%, #000); }
   </style>
 </head>
 <body class="learn-body">

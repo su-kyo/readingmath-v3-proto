@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>과제 풀이 — 리딩수학과학</title>
   <script>try{if(localStorage.getItem('rm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
-  <link rel="stylesheet" href="styles/tokens.css?v=18" />
+  <link rel="stylesheet" href="styles/tokens.css?v=22" />
   <style>
     /* =========================================================================
        과제 센터 · 풀이 화면 (assignment-solve) — 우주 셸
@@ -15,7 +15,7 @@
        · 객관식/주관식(키패드) 혼합, 라이트·다크 토글
        ========================================================================= */
     :root {
-      --hd: var(--th-static); --blue: var(--th-accent); --blue-d: var(--blue-500); --yellow: var(--current);
+      --hd: var(--th-static); --blue: var(--th-ink-accent); --blue-d: var(--blue-500); --yellow: var(--current);
       /* 라이트 표면 — content 거터(살짝틴트) → qpanel 흰색 / omr 살짝틴트 */
       --content: var(--n-000); --qpanel: var(--n-000); --panel: var(--n-050); --ink: var(--n-650); --sub: var(--text-muted);
       --line: var(--n-200); --opt: var(--n-000); --opt-hover: var(--n-050); --track: var(--n-100); --dash: var(--n-200);
@@ -23,7 +23,7 @@
     :root[data-theme="dark"] {
       /* 다크 표면 — 뉴트럴 램프 단조증가(bg n-900 < 패널 n-800 < 카드 n-600)로 대비 확보 */
       --content: var(--n-900); --qpanel: var(--n-800); --panel: var(--n-800); --ink: var(--n-050); --sub: var(--text-muted);
-      --line: var(--border-strong); --opt: var(--n-600); --opt-hover: var(--n-500); --track: var(--n-900); --dash: var(--n-500);
+      --line: var(--border-strong); --opt: var(--n-600); --opt-hover: var(--n-500); --track: var(--n-900); --dash: var(--n-350);
     }
     * { box-sizing: border-box; }
     html, body { height: 100%; margin: 0; }
@@ -63,7 +63,7 @@
     .qmeta__type { font-size: 15px; font-weight: 700; color: var(--hd); letter-spacing: -.01em; }
     :root[data-theme="dark"] .qmeta__type { color: var(--th-accent-hi); }
     .lvl { padding: 3px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 800; margin-left: auto; }
-    .lvl--기본 { background: color-mix(in srgb, var(--info-solid) 18%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--info-solid) 42%, transparent); color: var(--info-ink); }
+    .lvl--기본 { background: color-mix(in srgb, var(--info-solid) 18%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--info-solid) 42%, transparent); color: var(--info-on-dark); }
     .lvl--실력 { background: color-mix(in srgb, var(--th-accent) 18%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--th-accent) 42%, transparent); color: var(--th-ink-accent); }
     .lvl--심화 { background: color-mix(in srgb, var(--warn-solid) 18%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--warn-solid) 42%, transparent); color: var(--warn-ink); }
 
@@ -99,10 +99,10 @@
     /* ===== OMR 사이드바 ===== */
     .seg { flex: none; display: flex; gap: 3px; padding: 3px; background: var(--n-200); border-radius: 999px; }
     :root[data-theme="dark"] .seg { background: var(--n-500); }
-    .seg__btn { flex: 1; padding: 9px 8px; border: 0; background: transparent; border-radius: 999px; font-family: inherit; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: .14s; }
+    .seg__btn { flex: 1; padding: 9px 8px; border: 0; background: transparent; border-radius: 999px; font-family: inherit; font-size: 15px; font-weight: 700; color: var(--n-050); cursor: pointer; transition: .14s; }
     /* is-active는 accent 배경 위 흰 글자로 고정(라이트·다크 공통). 다크 규칙이 active까지 덮지 않게 :not */
-    :root[data-theme="dark"] .seg__btn:not(.is-active) { color: var(--text-muted); }
-    .seg__btn.is-active { background: var(--th-accent); color: var(--n-000); }
+    :root[data-theme="dark"] .seg__btn:not(.is-active) { color: var(--n-050); }
+    .seg__btn.is-active { background: var(--th-solid); color: var(--n-000); }
     .omr__prog { display: flex; flex-direction: column; gap: 8px; }
     .omr__ptop { display: flex; align-items: center; justify-content: space-between; }
     .omr__ptop b { font-size: 16px; font-weight: 700; color: var(--ink); }
@@ -155,7 +155,7 @@
     @keyframes padDrop { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
     @media (prefers-reduced-motion: reduce) { .qrow__pad { animation: none; } }
     /* 키패드 아래 입력완료 = 답 확정 + 아코디언 접기 */
-    .qrow__pad-ok { width: 100%; padding: 11px; border: 0; border-radius: 12px; background: var(--th-accent); color: var(--n-000); font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer; transition: filter .1s; }
+    .qrow__pad-ok { width: 100%; padding: 11px; border: 0; border-radius: 12px; background: var(--th-solid); color: var(--n-000); font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer; transition: filter .1s; }
     .qrow__pad-ok:hover { filter: brightness(1.06); }
     .qrow__pad-ok:active { transform: translateY(1px); }
     .sheet__list::-webkit-scrollbar { width: 10px; }
@@ -167,8 +167,8 @@
     .bar__deco--l { margin-right: -1px; } .bar__deco--r { margin-left: -1px; }
     /* 하단 콘솔 = 일러스트(좌우 console-task SVG와 이어지는 고정색, 토큰/테마 무관).
        #eef0f6 = 콘솔 상단 립, #e0e6ef = 콘솔 본체 밴드 (SVG 실측 seam 색) */
-    .bar__mid { flex: 1; height: 75px; background: #eef0f6; padding-top: 11px; align-self: flex-end; pointer-events: auto; }
-    .bar__tray { height: 64px; background: #e0e6ef; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 clamp(16px,3vw,30px); }
+    .bar__mid { flex: 1; height: 75px; background: var(--asset-console-task-rim); padding-top: 11px; align-self: flex-end; pointer-events: auto; }
+    .bar__tray { height: 64px; background: var(--asset-console-task-tray); display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 clamp(16px,3vw,30px); }
     .bar__group { display: flex; gap: 12px; align-items: center; }
     .tbtn { display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; padding: 9px 18px; border: 0; border-radius: 16px; background: var(--n-500); color: var(--n-000); font-family: inherit; font-weight: 700; font-size: 15px; cursor: pointer; box-shadow: 0 4px 0 var(--n-650); transition: filter .12s, transform .06s, box-shadow .06s; }
     .tbtn:hover { filter: brightness(1.1); }

@@ -5,11 +5,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>유형 훈련 · 1차 유형 문제 — 리딩수학과학</title>
-  <link rel="stylesheet" href="styles/tokens.css?v=18" />
-  <link rel="stylesheet" href="styles/base.css?v=5" />
-  <link rel="stylesheet" href="styles/components.css?v=5" />
-  <link rel="stylesheet" href="styles/learn-shell.css?v=7" />
-  <link rel="stylesheet" href="styles/type.css?v=4" />
+  <link rel="stylesheet" href="styles/tokens.css?v=22" />
+  <link rel="stylesheet" href="styles/base.css?v=7" />
+  <link rel="stylesheet" href="styles/components.css?v=8" />
+  <link rel="stylesheet" href="styles/learn-shell.css?v=8" />
+  <link rel="stylesheet" href="styles/type.css?v=8" />
   <style>
     /* ===== 유형 훈련 = 틸 테마 ===== */
     .lheader { background: var(--th-static); }
@@ -17,7 +17,7 @@
     :root[data-theme="dark"] .content { background: var(--n-650); border-color: var(--th-static); }
     /* 라이트 = 쿨톤 베이스(스터디 페이퍼). 옵션/보기는 이 위에 카드로 은은히 분리 */
     :root[data-theme="light"] .content { background: var(--n-000); border-color: var(--th-static); --fade: var(--n-000); }
-    .content { position: relative; flex-direction: column; padding: 0 0 96px; overflow: hidden; --fade: var(--n-050); --subj: var(--th-accent); }
+    .content { position: relative; flex-direction: column; padding: 0 0 96px; overflow: hidden; --fade: var(--n-050); --subj: var(--th-accent); --subj-solid: var(--th-solid); }
     :root[data-theme="dark"] .content { --fade: var(--n-650); }
 
     /* 스크롤 영역 (cap 아래) + 상하 페이드 */
@@ -99,7 +99,7 @@
 
     /* 하단바 = 유형 버전 (크림/베이지 트레이 + 틸 콘솔 데코) */
     .bar__mid { background: var(--amber-050); }
-    .bar__tray { background: #ECE3D8; }  /* §3.5 console-type 트레이 에셋색 */
+    .bar__tray { background: var(--asset-console-type-tray); }  /* §3.5 console-type 트레이 에셋색 */
     .toolbtn:disabled { opacity: .5; filter: grayscale(.5); cursor: not-allowed; }
 
     /* ===== 계산기 키패드 (유형=틸) ===== */

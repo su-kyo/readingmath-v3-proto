@@ -10,7 +10,7 @@
      전역과 이름이 겹치는 tint류는 순환을 피해 프리미티브를 직접 참조. */
   --paper:var(--n-050); --surface:var(--n-000); --surface-2:var(--n-050); --surface-3:var(--n-050);
   --line:var(--n-100); --line-2:var(--n-050);
-  --ink:var(--n-650); --ink-2:var(--n-400); --ink-3:var(--n-300);
+  --ink:var(--n-650); --ink-2:var(--n-500); --ink-3:var(--n-400);  /* 흰 배경 9.3 / 5.4 — 기존 n-400/n-300은 2.2로 미달 */
   /* 단일 액센트 = 브랜드 블루 (구 #2B60E0 이원화 해소) */
   --brand:var(--blue-500); --brand-ink:var(--blue-600); --brand-tint:var(--blue-050);
   --cta:var(--primary); --cta-ink:var(--primary-pressed);
@@ -35,13 +35,13 @@
   padding-bottom:20px; margin-bottom:28px; border-bottom:1px solid var(--line); }
 .u-head__l{ display:flex; align-items:center; gap:15px; min-width:0; }
 .u-head__ico{ width:46px; height:46px; border-radius:13px; flex:none; display:grid; place-items:center;
-  background:var(--brand-tint); color:var(--brand); }
+  background:var(--brand-tint); color:var(--brand-ink); }
 .u-head__ico svg{ width:24px; height:24px; }
 .u-head__t{ font-size:27px; font-weight:800; letter-spacing:-.045em; line-height:1.1; color:var(--ink); }
 .u-head__sub{ margin-top:6px; font-size:14px; font-weight:500; color:var(--ink-2); }
 .u-head__act{ display:flex; align-items:center; gap:9px; flex:none; }
 .u-crumb{ display:flex; align-items:center; gap:6px; font-size:13px; font-weight:600; color:var(--ink-3); margin-bottom:14px; }
-.u-crumb a{ color:var(--ink-3); text-decoration:none; transition:color .13s; } .u-crumb a:hover{ color:var(--brand); }
+.u-crumb a{ color:var(--ink-3); text-decoration:none; transition:color .13s; } .u-crumb a:hover{ color:var(--brand-ink); }
 .u-crumb svg{ width:13px; height:13px; }
 
 /* ---- buttons ---- */
@@ -50,7 +50,7 @@
   font-family:inherit; font-size:14px; font-weight:700; cursor:pointer; transition:.14s; white-space:nowrap; }
 .u-btn:hover{ background:var(--surface-2); border-color:var(--line); }
 .u-btn svg{ width:17px; height:17px; }
-.u-btn--primary{ background:var(--brand); border-color:var(--brand); color:var(--n-000); }
+.u-btn--primary{ background:var(--brand-ink); border-color:var(--brand-ink); color:var(--n-000); }
 .u-btn--primary:hover{ background:var(--brand-ink); border-color:var(--brand-ink); }
 .u-btn--cta{ background:var(--cta); border-color:var(--cta); color:var(--n-000); }
 .u-btn--cta:hover{ background:var(--cta-ink); border-color:var(--cta-ink); }
@@ -64,7 +64,7 @@
 .u-card__hd{ display:flex; align-items:center; justify-content:space-between; gap:12px;
   padding:18px 26px; border-bottom:1px solid var(--line-2); }
 .u-card__ttl{ font-size:16.5px; font-weight:800; letter-spacing:-.03em; display:flex; align-items:center; gap:10px; }
-.u-card__ttl::before{ content:""; width:4px; height:16px; border-radius:2px; background:var(--brand); }
+.u-card__ttl::before{ content:""; width:4px; height:16px; border-radius:2px; background:var(--brand-ink); }
 
 /* ---- tags (채도 낮춘 상태색) ---- */
 .u-tag{ display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:700; padding:4px 10px;
@@ -91,10 +91,10 @@
 .u-table .col-no{ width:76px; color:var(--ink-3); font-weight:700; font-variant-numeric:tabular-nums; }
 .u-table .col-date{ color:var(--ink-2); font-weight:600; font-variant-numeric:tabular-nums; white-space:nowrap; }
 .u-table .u-ttl{ font-weight:700; letter-spacing:-.02em; transition:color .12s; }
-.u-table tr:hover .u-ttl{ color:var(--brand); }
+.u-table tr:hover .u-ttl{ color:var(--brand-ink); }
 .u-new{ display:inline-flex; align-items:center; justify-content:center; margin-left:7px; min-width:17px; height:17px; padding:0 4px;
-  border-radius:5px; background:var(--brand); color:var(--n-000); font-size:10px; font-weight:800; vertical-align:middle; }
-.u-open{ display:inline-flex; align-items:center; gap:5px; color:var(--brand); font-size:12.5px; font-weight:700; opacity:0; transition:opacity .12s; }
+  border-radius:5px; background:var(--brand-ink); color:var(--n-000); font-size:10px; font-weight:800; vertical-align:middle; }
+.u-open{ display:inline-flex; align-items:center; gap:5px; color:var(--brand-ink); font-size:12.5px; font-weight:700; opacity:0; transition:opacity .12s; }
 .u-open svg{ width:14px; height:14px; }
 .u-table tr:hover .u-open{ opacity:1; }
 
@@ -104,7 +104,7 @@
   background:transparent; color:var(--ink-2); font-family:inherit; font-size:14px; font-weight:700; cursor:pointer;
   display:grid; place-items:center; transition:.13s; }
 .u-pager button:hover{ background:var(--surface); border-color:var(--line); }
-.u-pager button.is-on{ background:var(--brand); color:var(--n-000); }
+.u-pager button.is-on{ background:var(--brand-ink); color:var(--n-000); }
 .u-pager button:disabled{ opacity:.35; cursor:default; background:transparent; border-color:transparent; }
 .u-pager svg{ width:17px; height:17px; }
 
@@ -118,7 +118,7 @@
 .u-seg button{ padding:9px 18px; border:0; border-radius:9px; background:transparent; color:var(--ink-2);
   font-family:inherit; font-size:14.5px; font-weight:700; cursor:pointer; transition:.13s; letter-spacing:-.02em; }
 .u-seg button:hover{ color:var(--ink); }
-.u-seg button.is-on{ background:var(--surface); color:var(--brand); box-shadow:var(--shadow); }
+.u-seg button.is-on{ background:var(--surface); color:var(--brand-ink); box-shadow:var(--shadow); }
 
 /* ---- 문서 상세 ---- */
 .u-doc__meta{ display:flex; align-items:center; gap:12px; padding-bottom:20px; border-bottom:1px solid var(--line); margin-bottom:28px; }
@@ -129,9 +129,9 @@
 .u-doc__body h3{ font-size:17px; font-weight:800; color:var(--ink); margin:28px 0 11px; display:flex; align-items:center; gap:8px; }
 .u-doc__body img{ max-width:100%; border-radius:12px; border:1px solid var(--line); margin:8px 0; }
 .u-doc__body ul{ margin:0 0 15px; padding-left:2px; list-style:none; } .u-doc__body li{ position:relative; margin:8px 0; padding-left:19px; }
-.u-doc__body li::before{ content:""; position:absolute; left:2px; top:9px; width:6px; height:6px; border-radius:50%; background:var(--brand); }
+.u-doc__body li::before{ content:""; position:absolute; left:2px; top:9px; width:6px; height:6px; border-radius:50%; background:var(--brand-ink); }
 .u-doc__file{ display:flex; align-items:center; gap:10px; margin-top:32px; padding-top:22px; border-top:1px solid var(--line); }
-.u-doc__file a{ display:inline-flex; align-items:center; gap:7px; color:var(--brand); font-size:14px; font-weight:700; text-decoration:none; }
+.u-doc__file a{ display:inline-flex; align-items:center; gap:7px; color:var(--brand-ink); font-size:14px; font-weight:700; text-decoration:none; }
 .u-doc__file a:hover{ text-decoration:underline; }
 .u-doc__file svg{ width:17px; height:17px; }
 .u-doc__foot{ display:flex; align-items:center; justify-content:space-between; margin-top:28px; }
@@ -154,7 +154,7 @@
 /* fields */
 .u-field{ width:100%; height:44px; padding:0 14px; border-radius:11px; border:1px solid var(--line);
   background:var(--surface); color:var(--ink); font-family:inherit; font-size:14px; font-weight:600; }
-.u-field:focus{ outline:none; border-color:var(--brand); box-shadow:0 0 0 3px var(--brand-tint); }
+.u-field:focus{ outline:none; border-color:var(--brand-ink); box-shadow:0 0 0 3px var(--brand-tint); }
 
 /* toast */
 .u-toast{ position:fixed; left:50%; bottom:30px; transform:translateX(-50%) translateY(14px); z-index:60;

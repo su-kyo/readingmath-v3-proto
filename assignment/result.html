@@ -6,17 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>과제 결과 — 리딩수학과학</title>
   <script>try{if(localStorage.getItem('rm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
-  <link rel="stylesheet" href="styles/tokens.css?v=18" />
+  <link rel="stylesheet" href="styles/tokens.css?v=22" />
   <style>
     /* =========================================================================
        과제 센터 · 결과 화면 (assignment-result) — 우주 셸 (풀이 화면과 동일)
        · 헤더 블록(과제 결과 + 제출완료) · 요약(점수/정답·오답·미입력) · 문항별 채점표
        ========================================================================= */
     :root {
-      --hd: var(--th-static); --blue: var(--th-ink-accent); --ink: var(--n-650); --sub: var(--text-meta); --faint: var(--text-muted);
+      --hd: var(--th-static); --blue: var(--th-accent-hi); --ink: var(--n-650); --sub: var(--text-meta); --faint: var(--text-muted);
       /* 라이트 표면 — content 거터(살짝틴트) → rpanel(메인) 흰색 */
       --panel: var(--n-000); --content: var(--n-100); --line: var(--n-200); --line-2: var(--border);
-      --good: var(--ok-ink); --bad: var(--no-solid); --bad-ic: var(--no-solid); --correct: var(--ok-ink);
+      --good: var(--ok-on-dark); --bad: var(--no-on-dark); --bad-ic: var(--no-solid); --correct: var(--ok-on-dark);
       --score-bg: var(--n-100);
     }
     :root[data-theme="dark"] {

@@ -6,10 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>시험 대비 · 메인 — 리딩수학과학</title>
   <script>try{if(localStorage.getItem('rm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
-  <link rel="stylesheet" href="styles/gnb.css?v=5" />
+  <link rel="stylesheet" href="styles/gnb.css?v=8" />
   <script src="scripts/gnb-drawer.js?v=6"></script>
-  <link rel="stylesheet" href="styles/tokens.css?v=18" />
-  <link rel="stylesheet" href="styles/base.css?v=5" />
+  <link rel="stylesheet" href="styles/tokens.css?v=22" />
+  <link rel="stylesheet" href="styles/base.css?v=7" />
   <style>
     /* =========================================================================
        시험대비 메인 홈 — 모던 툴 UI (exam-solve와 동일 디자인 언어)
@@ -17,7 +17,7 @@
        ========================================================================= */
     :root {
       --canvas: var(--n-050); --surface: var(--n-000); --rail: var(--n-050);
-      --ink: var(--n-900); --ink2: var(--n-500); --muted: var(--text-meta); --faint: var(--n-300);
+      --ink: var(--n-900); --ink2: var(--n-500); --muted: var(--text-meta); --faint: var(--n-400);
       --line: var(--n-100); --line-2: var(--n-050); --line-strong: var(--n-200);
       --accent: var(--th-accent); --accent-ink: var(--th-ink-accent); --accent-tint: var(--th-tint); --accent-tint-br: var(--violet-200);
       --good: var(--ok-ink); --good-tint: var(--ok-tint); --bad: var(--no-solid); --bad-tint: var(--no-tint);
@@ -28,9 +28,9 @@
     /* ===== 다크 모드 — 로컬 var 리매핑(뉴트럴 램프 + 퍼플 액센트 밝게) ===== */
     :root[data-theme="dark"] {
       --canvas: var(--n-900); --surface: var(--n-800); --rail: var(--n-700);
-      --ink: var(--n-050); --ink2: var(--n-200); --muted: var(--n-300); --faint: var(--n-400);
+      --ink: var(--n-050); --ink2: var(--n-200); --muted: var(--n-300); --faint: var(--n-350);
       --line: var(--border-strong); --line-2: var(--border); --line-strong: var(--n-500);
-      --accent: var(--th-accent); --accent-ink: var(--th-accent-hi);
+      --accent: var(--th-accent-hi); --accent-ink: var(--th-accent-hi);
       /* 다크 표면용 틴트 토큰 부재 — 기존 반투명 rgba 유지(라이트 위 글자 대비 보존) */
       --accent-tint: rgba(119,119,255,.18); --accent-tint-br: rgba(119,119,255,.4);
       --good: var(--ok-solid); --good-tint: rgba(79,214,160,.15);
@@ -125,7 +125,7 @@
       border: 1px solid var(--line); background: var(--surface); font-size: 13.5px; font-weight: 600; color: var(--ink2);
       cursor: pointer; white-space: nowrap; transition: .13s; }
     .chip:hover { border-color: var(--line-strong); }
-    .chip.is-active { background: var(--accent); border-color: var(--accent); color: var(--th-on-accent); }
+    .chip.is-active { background: var(--th-solid); border-color: var(--th-solid); color: var(--th-on-accent); }
     .chip .cico { display: inline-flex; align-items: center; justify-content: center; width: 15px; height: 15px; flex: none; }
     .chip .cico svg { width: 100%; height: 100%; display: block; }
     .chip[data-f="r"] .cico { color: var(--bad); }
@@ -153,7 +153,7 @@
     .panel { position: relative; flex: 1; min-width: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; padding: 2px 6px 40px 2px; }
     .unit-sec { display: flex; flex-direction: column; gap: 12px; }
     .unit-sec__head { display: flex; align-items: center; gap: 10px; padding: 2px; }
-    .unit-badge { padding: 4px 10px; border-radius: 7px; background: var(--accent); color: var(--th-on-accent); font-size: 12px; font-weight: 800; }
+    .unit-badge { padding: 4px 10px; border-radius: 7px; background: var(--th-solid); color: var(--th-on-accent); font-size: 12px; font-weight: 800; }
     .unit-sec__head h3 { font-size: 19px; font-weight: 800; letter-spacing: -.02em; }
 
     .subunit { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--sh);
@@ -275,7 +275,7 @@
     .hicon--o { background: var(--ok-solid); } .hicon--x { background: var(--no-solid); }
     .hitem__main { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
     .hitem__top { font-size: 12.5px; font-weight: 600; color: var(--ink2); }
-    .htag { font-weight: 800; } .htag--o { color: var(--good); } .htag--x { color: var(--bad); }
+    .htag { font-weight: 800; } .htag--o { color: var(--ok-on-dark); } .htag--x { color: var(--no-on-dark); }
     .hitem__time { font-family: var(--font-mono); font-size: 11px; color: var(--faint); }
 
     /* 스크롤바 */

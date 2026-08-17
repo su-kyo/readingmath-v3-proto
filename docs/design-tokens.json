@@ -6,27 +6,27 @@
     },
     "n-050": {
       "$type": "color",
-      "$value": "#F4F6FB"
+      "$value": "#F0F5FE"
     },
     "n-100": {
       "$type": "color",
-      "$value": "#E7ECF7"
+      "$value": "#E4ECFB"
     },
     "n-200": {
       "$type": "color",
-      "$value": "#C1CBE0"
+      "$value": "#CBD7EE"
     },
     "n-300": {
       "$type": "color",
-      "$value": "#AEB8D6"
+      "$value": "#A0B0CD"
     },
     "n-400": {
       "$type": "color",
-      "$value": "#8A93AD"
+      "$value": "#586B8C"
     },
     "n-500": {
       "$type": "color",
-      "$value": "#5A6488"
+      "$value": "#3A466A"
     },
     "n-600": {
       "$type": "color",
@@ -50,39 +50,39 @@
     },
     "blue-700": {
       "$type": "color",
-      "$value": "#0A3D8E"
+      "$value": "#03438E"
     },
     "blue-500": {
       "$type": "color",
-      "$value": "#2D6BCA"
+      "$value": "#0A7AF8"
     },
     "blue-400": {
       "$type": "color",
-      "$value": "#4C81D5"
+      "$value": "#6EAAFD"
     },
     "blue-300": {
       "$type": "color",
-      "$value": "#87AEEC"
+      "$value": "#93BFFE"
     },
     "blue-200": {
       "$type": "color",
-      "$value": "#A8CBF3"
+      "$value": "#B8D5FE"
     },
     "blue-100": {
       "$type": "color",
-      "$value": "#C7D9F4"
+      "$value": "#DDEBFF"
     },
     "blue-600": {
       "$type": "color",
-      "$value": "#1E63C8"
+      "$value": "#0559B8"
     },
     "blue-800": {
       "$type": "color",
-      "$value": "#12305A"
+      "$value": "#01306A"
     },
     "blue-900": {
       "$type": "color",
-      "$value": "#0A244E"
+      "$value": "#011F48"
     },
     "navy-500": {
       "$type": "color",
@@ -102,31 +102,31 @@
     },
     "teal-800": {
       "$type": "color",
-      "$value": "#005752"
+      "$value": "#023C35"
     },
     "teal-500": {
       "$type": "color",
-      "$value": "#02BAA2"
+      "$value": "#0D9484"
     },
     "teal-300": {
       "$type": "color",
-      "$value": "#4BD0BA"
+      "$value": "#19DAC4"
     },
     "teal-100": {
       "$type": "color",
-      "$value": "#B3ECE3"
+      "$value": "#B4FAED"
     },
     "cyan-400": {
       "$type": "color",
-      "$value": "#3AE4FA"
+      "$value": "#14BAE1"
     },
     "cyan-500": {
       "$type": "color",
-      "$value": "#05C5EC"
+      "$value": "#0D8EAB"
     },
     "cyan-100": {
       "$type": "color",
-      "$value": "#DCFDFF"
+      "$value": "#C9F1FF"
     },
     "purple-900": {
       "$type": "color",
@@ -150,51 +150,51 @@
     },
     "orange-300": {
       "$type": "color",
-      "$value": "#FFA94D"
+      "$value": "#FEA46D"
     },
     "orange-400": {
       "$type": "color",
-      "$value": "#FF8D28"
+      "$value": "#FE811B"
     },
     "orange-500": {
       "$type": "color",
-      "$value": "#FF7F00"
+      "$value": "#C3600A"
     },
     "orange-600": {
       "$type": "color",
-      "$value": "#CE6700"
+      "$value": "#904505"
     },
     "orange-800": {
       "$type": "color",
-      "$value": "#7D3E00"
+      "$value": "#522401"
     },
     "green-500": {
       "$type": "color",
-      "$value": "#58CC02"
+      "$value": "#189A0A"
     },
     "green-600": {
       "$type": "color",
-      "$value": "#46A302"
+      "$value": "#0F7105"
     },
     "green-300": {
       "$type": "color",
-      "$value": "#8FDD55"
+      "$value": "#68DB5E"
     },
     "green-050": {
       "$type": "color",
-      "$value": "#EEFAE6"
+      "$value": "#EDFCEB"
     },
     "red-500": {
       "$type": "color",
-      "$value": "#FF404C"
+      "$value": "#EC102B"
     },
     "red-100": {
       "$type": "color",
-      "$value": "#FAF0F0"
+      "$value": "#FFE2DF"
     },
     "red-050": {
       "$type": "color",
-      "$value": "#FFECED"
+      "$value": "#FFF4F3"
     },
     "yellow-500": {
       "$type": "color",
@@ -215,6 +215,14 @@
     "bronze-500": {
       "$type": "color",
       "$value": "#E08A4B"
+    },
+    "orange-450": {
+      "$type": "color",
+      "$value": "#B75301"
+    },
+    "n-350": {
+      "$type": "color",
+      "$value": "#7285A6"
     }
   },
   "rm-tokens": {

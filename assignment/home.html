@@ -5,9 +5,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>과제 센터 · 홈 — 리딩수학과학</title>
-  <link rel="stylesheet" href="styles/gnb.css?v=5" />
+  <link rel="stylesheet" href="styles/gnb.css?v=8" />
   <script src="scripts/gnb-drawer.js?v=6"></script>
-  <link rel="stylesheet" href="styles/tokens.css?v=18" />
+  <link rel="stylesheet" href="styles/tokens.css?v=22" />
   <style>
     /* =========================================================================
        과제 센터 · 홈 (assignment-home) — 리파인
@@ -17,7 +17,7 @@
        ========================================================================= */
     :root {
       /* 상태색 */
-      --s-blue: var(--th-accent);  --s-blue-t: var(--th-tint);
+      --s-blue: var(--th-ink-accent);  --s-blue-t: var(--th-tint);
       --s-amber: var(--warn-solid); --s-amber-t: var(--warn-tint); --s-amber-ink: var(--warn-ink);
       --s-green: var(--ok-ink); --s-green-t: var(--ok-tint);
       --s-indigo: var(--violet-500); --s-indigo-t: var(--violet-050);
@@ -135,7 +135,7 @@
     /* 완료 점수 블록 */
     .scoreblk { flex: none; display: flex; align-items: center; gap: 18px; }
     .scoreblk__col { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
-    .badge-done { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 999px; background: var(--ok-solid); color: var(--n-000); font-size: 11px; font-weight: 800; }
+    .badge-done { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 999px; background: var(--ok-ink); color: var(--n-000); font-size: 11px; font-weight: 800; }
     .badge-done svg { width: 11px; height: 11px; }
     .scoreblk__num { font-family: var(--font-mono); font-size: 26px; font-weight: 700; color: var(--ink); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
     .scoreblk__num small { font-family: var(--font-sans); font-size: 13px; color: var(--faint); font-weight: 700; margin-left: 1px; }

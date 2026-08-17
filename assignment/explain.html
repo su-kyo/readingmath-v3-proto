@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>과제 해설 — 리딩수학과학</title>
   <script>try{if(localStorage.getItem('rm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
-  <link rel="stylesheet" href="styles/tokens.css?v=18" />
+  <link rel="stylesheet" href="styles/tokens.css?v=22" />
   <style>
     /* =========================================================================
        과제 센터 · 해설 화면 (assignment-explain) — 풀이 화면의 리뷰(정답 공개) 버전
@@ -14,8 +14,8 @@
        · 우측 "정답 N/15" + OMR 초록·빨강 그리드(현재=노랑테) · 하단 결과 보기
        ========================================================================= */
     :root {
-      --hd: var(--th-static); --blue: var(--th-accent); --yellow: var(--current);
-      --good: var(--ok-ink); --bad: var(--no-solid);
+      --hd: var(--th-static); --blue: var(--th-ink-accent); --yellow: var(--current);
+      --good: var(--ok-on-dark); --bad: var(--no-on-dark);
       /* 라이트 표면 — content 거터(살짝틴트) → qpanel 흰색 / omr 살짝틴트 */
       --content: var(--n-000); --qpanel: var(--n-000); --panel: var(--n-050); --ink: var(--n-650); --sub: var(--text-muted);
       --line: var(--n-200); --opt: var(--n-000); --track: var(--n-100); --dash: var(--n-200);
@@ -23,7 +23,7 @@
     :root[data-theme="dark"] {
       /* 다크 표면 — 뉴트럴 램프 단조증가(bg n-900 < 패널 n-800 < 카드 n-600)로 대비 확보 */
       --content: var(--n-900); --qpanel: var(--n-800); --panel: var(--n-800); --ink: var(--n-050); --sub: var(--text-muted);
-      --line: var(--border-strong); --opt: var(--n-600); --track: var(--n-900); --dash: var(--n-500);
+      --line: var(--border-strong); --opt: var(--n-600); --track: var(--n-900); --dash: var(--n-350);
     }
     * { box-sizing: border-box; }
     html, body { height: 100%; margin: 0; }
@@ -77,7 +77,7 @@
     .opt__n svg { width: 13px; height: 13px; }
     .opt__t { font-size: 16px; font-weight: 600; color: var(--ink); }
     .opt--correct { border-color: var(--good); background: var(--ok-tint); }
-    .opt--correct .opt__n { border-color: var(--good); background: var(--ok-solid); color: var(--n-000); }
+    .opt--correct .opt__n { border-color: var(--good); background: var(--ok-ink); color: var(--n-000); }
     .opt--wrong { border-color: var(--bad); background: var(--no-tint); }
     .opt--wrong .opt__n { border-color: var(--bad); background: var(--bad); color: var(--n-000); }
 

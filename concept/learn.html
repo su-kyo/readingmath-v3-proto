@@ -5,9 +5,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>개념 학습 · 개념 훈련 — 리딩수학과학</title>
-  <link rel="stylesheet" href="styles/tokens.css?v=18" />
-  <link rel="stylesheet" href="styles/base.css?v=5" />
-  <link rel="stylesheet" href="styles/components.css?v=5" />
+  <link rel="stylesheet" href="styles/tokens.css?v=22" />
+  <link rel="stylesheet" href="styles/base.css?v=7" />
+  <link rel="stylesheet" href="styles/components.css?v=8" />
   <style>
     /* 지문 전용 폰트: Noto Serif KR (수식/기호도 여기에 얹힘) */
     @import url("https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&display=swap");
@@ -69,7 +69,7 @@
     /* 답 대기 · 선택 중: 테두리 대신 fill로 채워 hover에도 확실히 보이게 (읽기 유도) */
     .seg--blank.is-current, .seg--blank.is-open,
     .seg--blank.is-current:hover, .seg--blank.is-open:hover {
-      cursor: pointer; background: var(--th-accent); color: var(--n-000); box-shadow: none;
+      cursor: pointer; background: var(--th-solid); color: var(--n-000); box-shadow: none;
     }
     /* 입력 완료: CTA처럼 튀지 않게 배경보다 살짝 밝은 은은한 톤 차이만 (읽기 흐름 유지) */
     .seg--blank.is-filled, .seg--blank.is-filled.is-read {
@@ -94,7 +94,7 @@
     .answer-opt { display: flex; align-items: center; gap: 10px; padding: 11px 12px; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 15px; color: var(--n-600); }
     .answer-opt__dot { width: 18px; height: 18px; border-radius: 50%; flex: none; box-shadow: inset 0 0 0 2px var(--th-accent-hi); transition: box-shadow .12s; }
     .answer-opt:hover { background: var(--th-tint); }
-    .answer-opt.is-selected { background: var(--th-accent); color: var(--n-000); }
+    .answer-opt.is-selected { background: var(--th-solid); color: var(--n-000); }
     .answer-opt.is-selected .answer-opt__dot { box-shadow: inset 0 0 0 5px var(--n-000); }
     /* 오답: 빨간 톤 + 흔들림, 팝오버는 열린 채로 재시도 유도 */
     .answer-opt.is-wrong { background: color-mix(in srgb, var(--no-ink) 14%, transparent); color: var(--no-ink); animation: blankShake .4s; }
@@ -130,8 +130,8 @@
     .bar__deco--l { margin-right: -1px; } .bar__deco--r { margin-left: -1px; }
     /* 하단 콘솔 = 일러스트(우주선). 좌우 console SVG와 이어지는 고정색, 토큰/테마 영향 없음.
        #dae6f9 = 콘솔 상단 립, #87aeec = 콘솔 본체 밴드 (SVG 실측 seam 색) */
-    .bar__mid { flex: 1; height: 75px; background: #dae6f9; padding-top: 11px; align-self: flex-end; }
-    .bar__tray { height: 64px; background: #87aeec; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 clamp(16px, 3vw, 32px); }
+    .bar__mid { flex: 1; height: 75px; background: var(--asset-console-concept-rim); padding-top: 11px; align-self: flex-end; }
+    .bar__tray { height: 64px; background: var(--asset-console-concept-tray); display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 clamp(16px, 3vw, 32px); }
     .bar__group { display: flex; gap: 12px; align-items: center; }
     .toolbtn { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; padding: 8px 16px; border-radius: 16px; background: var(--n-500); color: var(--n-000); font-weight: 700; font-size: clamp(13px, 1.1vw, 16px); box-shadow: 0 4px 0 var(--n-650); }
     .toolbtn:hover { filter: brightness(1.12); }
@@ -158,7 +158,7 @@
     :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
     :root[data-theme="dark"] .article { color: var(--text); }
     :root[data-theme="dark"] .article .hl-underline { color: var(--th-accent-hi); }
-    :root[data-theme="dark"] .article .hl-mark { background: #124F3C; color: #8FF0C9; }
+    :root[data-theme="dark"] .article .hl-mark { background: var(--art-mark-bg); color: var(--art-mark-fg); }
     /* 다크: 파란 글자는 다크 바탕과 대비 약함 → 글자는 밝게(plain) 두고 highlight로만 강조 */
     :root[data-theme="dark"] .seg.is-current,
     :root[data-theme="dark"] .seg.is-current:hover { background: var(--th-tint-strong); box-shadow: 0 0 0 3px var(--th-tint-strong); color: var(--text); }
@@ -171,7 +171,7 @@
     /* 답 대기·선택 중 = fill (테두리 clobber 방지) */
     :root[data-theme="dark"] .seg--blank.is-current, :root[data-theme="dark"] .seg--blank.is-open,
     :root[data-theme="dark"] .seg--blank.is-current:hover, :root[data-theme="dark"] .seg--blank.is-open:hover {
-      background: var(--th-accent); color: var(--n-000); box-shadow: none;
+      background: var(--th-solid); color: var(--n-000); box-shadow: none;
     }
     /* 입력 완료 = 은은한 톤 (다크 패널보다 살짝 밝게) */
     :root[data-theme="dark"] .seg--blank.is-filled, :root[data-theme="dark"] .seg--blank.is-filled.is-read {
@@ -233,7 +233,7 @@
     .summary__card { width: min(820px, 90vw); background: var(--sm-card); border: 1px solid var(--sm-border); border-radius: 28px; padding: 22px 26px; }
     .summary__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
     .summary__title { font-size: clamp(18px, 1.8vw, 22px); font-weight: 800; color: var(--sm-title); }
-    .summary__close { width: 40px; height: 40px; border-radius: 50%; background: var(--no-solid); color: var(--n-000); font-size: 17px; display: flex; align-items: center; justify-content: center; }
+    .summary__close { width: 40px; height: 40px; border-radius: 50%; background: var(--no-ink); color: var(--n-000); font-size: 17px; display: flex; align-items: center; justify-content: center; }
     .summary__close:hover { filter: brightness(1.08); }
     .summary__box { background: var(--sm-box); border: 1px solid var(--sm-box-br); border-radius: 20px; padding: 24px 28px; max-height: 42vh; overflow: auto; display: flex; flex-direction: column; gap: 10px; }
     /* 모달 내 끊어읽기 */
@@ -246,7 +246,7 @@
     .sblank { display: inline-flex; align-items: center; justify-content: center; min-width: 84px; height: 32px; padding: 0 12px; margin: 0 3px; border-radius: 8px; font-weight: 700; vertical-align: middle; background: transparent; color: var(--sm-blank-muted); box-shadow: inset 0 0 0 1.5px var(--sm-blank-br); }
     .sblank.is-active { color: var(--ok-solid); box-shadow: inset 0 0 0 2px var(--ok-solid); }
     .sblank.is-active::before { content: "?"; }
-    .sblank.is-filled { background: var(--th-accent); color: var(--n-000); box-shadow: none; }
+    .sblank.is-filled { background: var(--th-solid); color: var(--n-000); box-shadow: none; }
     .sblank__thumb { width: 24px; height: 18px; border-radius: 3px; background: var(--th-tint); }
     /* 선지 — 현재 구간이 빈칸일 때만 채우고, 공간은 항상 예약(박스 안 흔들림) */
     /* 선지 & '다음으로'를 같은 고정 슬롯에 (번갈아 표시 → 총 높이 불변, 안 밀림/안 벙벙) */

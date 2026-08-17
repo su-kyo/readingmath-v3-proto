@@ -5,13 +5,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>자유 모드 — 리딩수학과학</title>
-  <link rel="stylesheet" href="styles/tokens.css?v=18" />
-  <link rel="stylesheet" href="styles/base.css?v=5" />
-  <link rel="stylesheet" href="styles/space-bg.css?v=2" />
-  <link rel="stylesheet" href="styles/gnb.css?v=5" />
+  <link rel="stylesheet" href="styles/tokens.css?v=22" />
+  <link rel="stylesheet" href="styles/base.css?v=7" />
+  <link rel="stylesheet" href="styles/space-bg.css?v=4" />
+  <link rel="stylesheet" href="styles/gnb.css?v=8" />
   <style>
     :root{
-      --ink:var(--text); --muted:var(--text-muted); --blue:var(--info-solid); --green:var(--ok-on-dark); --green2:var(--ok-solid);
+      --ink:var(--text); --muted:var(--text-muted); --blue:var(--info-ink); --green:var(--ok-on-dark); --green2:var(--ok-solid);
       --panel:var(--surface-1); --card:var(--n-650); --rail:var(--surface-3);
     }
     *{ box-sizing:border-box; margin:0; padding:0; }
@@ -24,7 +24,7 @@
     /* ---- 상단 토글 ---- */
     .fm__top{ position:absolute; top:16px; right:16px; z-index:6; display:flex; align-items:center; gap:16px; }
     .seg{ display:flex; padding:4px; background:var(--n-000); border-radius:20px; }
-    .seg button{ padding:8px 16px; border:0; border-radius:16px; background:transparent; color:var(--text-meta);
+    .seg button{ padding:8px 16px; border:0; border-radius:16px; background:transparent; color:var(--n-500);
       font-family:inherit; font-size:15px; font-weight:800; cursor:pointer; letter-spacing:-.03em; transition:.15s; }
     .seg button.is-on{ background:var(--blue); color:var(--n-000); }
     .switch{ display:flex; align-items:center; gap:9px; }
@@ -441,12 +441,12 @@
     var CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
     var GOARW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
     // ---- 등급 별 (색=등급): A금 B은 C동 · S프리즘(무지개)
-    var GCOL = { s:'#12BEC6', a:'#FFB000', b:'#7D9AC2', c:'#C77326' };
+    var GCOL = { s:'var(--art-grade-s)', a:'var(--art-grade-a)', b:'var(--art-grade-b)', c:'var(--art-grade-c)' };
     (function(){ if(document.getElementById('rmStarDefs')) return;
       var d=document.createElement('div'); d.style.cssText='position:absolute;width:0;height:0;overflow:hidden';
       d.innerHTML='<svg id="rmStarDefs" aria-hidden="true"><defs><linearGradient id="rmPrism" x1="0" y1="0" x2="1" y2="1">'
-        + '<stop offset="0" stop-color="#31E0C4"/><stop offset=".38" stop-color="#5FB6FF"/>'
-        + '<stop offset=".72" stop-color="#B78CF7"/><stop offset="1" stop-color="#FF93C8"/></linearGradient></defs></svg>';
+        + '<stop offset="0" stop-color="var(--art-planet-1)"/><stop offset=".38" stop-color="var(--art-planet-2)"/>'
+        + '<stop offset=".72" stop-color="var(--art-planet-3)"/><stop offset="1" stop-color="var(--art-planet-4)"/></linearGradient></defs></svg>';
       document.body.appendChild(d);
     })();
     function miniStar(g){

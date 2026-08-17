@@ -5,7 +5,7 @@
    ========================================================================= */
 
 html, body { height: 100%; }
-body.learn-body { background: #AFC6E8; overflow: hidden; }
+body.learn-body { background: var(--asset-console-concept-body); overflow: hidden; }
 
 .screen { position: relative; width: 100%; height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
 .screen__bg { position: absolute; inset: 0; background: url("../assets/img/bg/bg-spaceship-light.webp") center/cover no-repeat; }
@@ -47,8 +47,8 @@ body.learn-body { background: #AFC6E8; overflow: hidden; }
 .bar { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; display: flex; align-items: flex-end; height: 99px; }
 .bar__deco { width: 262px; height: 99px; flex: none; }
 .bar__deco--l { margin-right: -1px; } .bar__deco--r { margin-left: -1px; }
-.bar__mid { flex: 1; height: 75px; background: #DAE6F9; padding-top: 11px; align-self: flex-end; }
-.bar__tray { height: 64px; background: #87AEEC; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 clamp(16px, 3vw, 32px); }
+.bar__mid { flex: 1; height: 75px; background: var(--asset-console-concept-rim); padding-top: 11px; align-self: flex-end; }
+.bar__tray { height: 64px; background: var(--asset-console-concept-tray); display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 clamp(16px, 3vw, 32px); }
 .bar__group { display: flex; gap: 12px; align-items: center; }
 .toolbtn { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; padding: 8px 16px; border-radius: var(--r-lg); background: var(--n-500); color: var(--n-000); font-weight: 700; font-size: clamp(13px, 1.1vw, 16px); box-shadow: 0 4px 0 var(--n-650); }
 .toolbtn:hover { filter: brightness(1.12); }
@@ -73,7 +73,7 @@ body.learn-body { background: #AFC6E8; overflow: hidden; }
 .step-card.is-open { border-style: dashed; border-color: color-mix(in srgb, var(--accent, var(--th-accent)) 55%, transparent); }
 /* 시작하기 = pill 버튼 */
 .step-card__start { display: inline-flex; align-items: center; gap: 4px; padding: 9px 16px; border-radius: 999px;
-  background: var(--subj, var(--th-accent)); color: var(--n-000) !important; font-weight: 800; font-size: 15px; white-space: nowrap;
+  background: var(--subj-solid, var(--th-solid)); color: var(--n-000) !important; font-weight: 800; font-size: 15px; white-space: nowrap;
   box-shadow: 0 4px 0 rgba(0,0,0,.2); transition: filter .12s; }
 .step-card.is-open:hover .step-card__start { filter: brightness(1.12); }
 

@@ -5,18 +5,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>유형 훈련 · 해설 보기 — 리딩수학과학</title>
-  <link rel="stylesheet" href="styles/tokens.css?v=18" />
-  <link rel="stylesheet" href="styles/base.css?v=5" />
-  <link rel="stylesheet" href="styles/components.css?v=5" />
-  <link rel="stylesheet" href="styles/learn-shell.css?v=7" />
-  <link rel="stylesheet" href="styles/type.css?v=4" />
+  <link rel="stylesheet" href="styles/tokens.css?v=22" />
+  <link rel="stylesheet" href="styles/base.css?v=7" />
+  <link rel="stylesheet" href="styles/components.css?v=8" />
+  <link rel="stylesheet" href="styles/learn-shell.css?v=8" />
+  <link rel="stylesheet" href="styles/type.css?v=8" />
   <style>
     /* ===== 유형 = 틸 테마 ===== */
     .lheader { background: var(--th-static); }
     .screen__bg { background: url("assets/img/bg/bg-spaceship-teal.webp") center/cover no-repeat; }
     :root[data-theme="dark"] .content { background: var(--n-650); border-color: var(--th-static); }  /* 공통 뉴트럴 다크 · 틸 프레임 유지 */
     :root[data-theme="light"] .content { background: var(--n-000); border-color: var(--th-static); --fade: var(--n-000); }  /* 공통 뉴트럴 라이트 · 틸 프레임 유지 */
-    .content { position: relative; flex-direction: column; padding: 0 0 96px; overflow: hidden; --fade: var(--n-050); --subj: var(--primary); }  /* 액센트 = 오렌지 */
+    .content { position: relative; flex-direction: column; padding: 0 0 96px; overflow: hidden; --fade: var(--n-050); --subj: var(--primary); --subj-solid: var(--th-solid); }  /* 액센트 = 오렌지 */
     :root[data-theme="dark"] .content { --fade: var(--n-650); }
 
     .ops-wrap { flex: 1; min-height: 0; position: relative; margin-top: 40px; }
@@ -72,10 +72,10 @@
     /* 이미지 배지는 항상 밝은 이미지 위 → 테마 무관 진한 배지+흰 숫자 (정답/오답 색은 뒤 규칙이 우선) */
     .opt.opt--img .opt__num { background: var(--th-static); color: var(--n-000); }
     .opt.is-correct { background: color-mix(in srgb, var(--ok-solid) 22%, var(--opt-bg)); box-shadow: inset 0 0 0 2px var(--ok-solid); }
-    .opt.is-correct .opt__num { background: var(--ok-solid); color: var(--n-000); }
+    .opt.is-correct .opt__num { background: var(--ok-ink); color: var(--n-000); }
     :root[data-theme="dark"] .opt.is-correct .opt__num { color: var(--n-900); }  /* 다크=밝은민트 위 어두운 글씨 */
     .opt.is-wrong { background: color-mix(in srgb, var(--no-solid) 20%, var(--opt-bg)); box-shadow: inset 0 0 0 2px var(--no-solid); }
-    .opt.is-wrong .opt__num { background: var(--no-solid); color: var(--n-000); font-size: 0; }  /* 숫자 숨기고 ✕만 */
+    .opt.is-wrong .opt__num { background: var(--no-ink); color: var(--n-000); font-size: 0; }  /* 숫자 숨기고 ✕만 */
     .opt.is-wrong .opt__num::after { content: "✕"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 15px; }
 
     .answer-row { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; }
@@ -99,7 +99,7 @@
     .btn-move:hover:not(:disabled) { filter: brightness(1.08); } .btn-move:disabled { background: var(--n-500); color: var(--text-muted); box-shadow: none; cursor: not-allowed; }
 
     /* 하단바 = 유형 footer */
-    .bar__mid { background: var(--amber-050); } .bar__tray { background: #ECE3D8; }  /* §3.5 console-type 트레이 에셋색 */
+    .bar__mid { background: var(--amber-050); } .bar__tray { background: var(--asset-console-type-tray); }  /* §3.5 console-type 트레이 에셋색 */
     .toolbtn:disabled { opacity: .5; filter: grayscale(.5); cursor: not-allowed; }
 
     /* 좁은 폭에서도 화살표 유지(사라지지 않음) — 크기만 축소 */
