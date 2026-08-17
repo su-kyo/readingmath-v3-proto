@@ -8,7 +8,7 @@
   var correct = RESULTS.filter(Boolean).length;
   var rate = Math.round((correct / total) * 100);
   function gradeOf(r) { return r >= 95 ? 's' : r >= 80 ? 'a' : r >= 70 ? 'b' : 'c'; }
-  var badge = 'assets/figma/grade-' + gradeOf(rate) + '.webp';
+  var badge = 'assets/img/grade/grade-' + gradeOf(rate) + '.webp';
 
   document.getElementById('rate').textContent = rate;
   document.getElementById('score').textContent = correct;

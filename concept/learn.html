@@ -17,7 +17,7 @@
     body.learn-body { background: var(--bg); overflow: hidden; }
 
     .screen { position: relative; width: 100%; height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
-    .screen__bg { position: absolute; inset: 0; background: url("assets/figma/bg-spaceship-light.webp") center/cover no-repeat; }
+    .screen__bg { position: absolute; inset: 0; background: url("assets/img/bg/bg-spaceship-light.webp") center/cover no-repeat; }
     .screen__container { position: relative; z-index: 1; flex: 1; min-height: 0; display: flex; flex-direction: column; padding: clamp(16px, 2.5vw, 32px) clamp(20px, 6vw, 80px) 0; gap: 16px; }
 
     /* ===== 헤더 ===== */
@@ -30,8 +30,8 @@
     .lheader__actions { display: flex; align-items: center; gap: 8px; flex: none; }
     /* 라이트/다크 토글 — 해/달 illust 자체가 노브. 라이트=해(좌), 다크=달(우) */
     .theme-toggle { width: 64px; height: 34px; border-radius: 999px; background: rgba(0,0,0,.3); position: relative; flex: none; }
-    .theme-toggle__knob { position: absolute; top: 2px; left: 2px; width: 30px; height: 30px; background: center / contain no-repeat url("assets/figma/icons/ico-sun.svg"); transition: left .2s ease; }
-    :root[data-theme="dark"] .theme-toggle__knob { left: 32px; background-image: url("assets/figma/icons/ico-moon.svg"); }
+    .theme-toggle__knob { position: absolute; top: 2px; left: 2px; width: 30px; height: 30px; background: center / contain no-repeat url("assets/icons/ico-sun.svg"); transition: left .2s ease; }
+    :root[data-theme="dark"] .theme-toggle__knob { left: 32px; background-image: url("assets/icons/ico-moon.svg"); }
     .nav-ico { width: 32px; height: 32px; border-radius: 12px; background: rgba(255,255,255,.14); display: inline-flex; align-items: center; justify-content: center; }
     .nav-ico img { width: 20px; height: 20px; }
     .nav-ico:hover { background: rgba(255,255,255,.26); }
@@ -283,8 +283,8 @@
           <button class="theme-toggle" id="themeToggle" title="라이트/다크 전환">
             <span class="theme-toggle__knob"></span>
           </button>
-          <button class="nav-ico" title="알림"><img src="assets/figma/icons/ico-siren.svg" alt="알림" /></button>
-          <button class="nav-ico" title="나가기"><img src="assets/figma/icons/ico-exit.svg" alt="나가기" /></button>
+          <button class="nav-ico" title="알림"><img src="assets/icons/ico-siren.svg" alt="알림" /></button>
+          <button class="nav-ico" title="나가기"><img src="assets/icons/ico-exit.svg" alt="나가기" /></button>
         </div>
       </header>
 
@@ -363,20 +363,20 @@
 
     <!-- 하단 콘솔 바 -->
     <div class="bar">
-      <img class="bar__deco bar__deco--l" src="assets/figma/console-right.svg" alt="" />
+      <img class="bar__deco bar__deco--l" src="assets/icons/console/console-right.svg" alt="" />
       <div class="bar__mid">
         <div class="bar__tray">
           <div class="bar__group">
-            <button class="toolbtn"><img src="assets/figma/icons/ico-note.svg" alt="" /><span>연습장</span></button>
-            <button class="toolbtn"><img src="assets/figma/icons/ico-text.svg" alt="" /><span>글자</span></button>
+            <button class="toolbtn"><img src="assets/icons/ico-note.svg" alt="" /><span>연습장</span></button>
+            <button class="toolbtn"><img src="assets/icons/ico-text.svg" alt="" /><span>글자</span></button>
           </div>
           <div class="bar__group">
-            <button class="toolbtn" id="videoBtn"><img src="assets/figma/icons/ico-play.svg" alt="" /><span>개념 영상 보기</span></button>
-            <button class="toolbtn toolbtn--primary" id="summaryBtn" disabled title="끊어읽기를 모두 끝내면 활성화돼요"><img src="assets/figma/icons/ico-summary.svg" alt="" /><span>개념 요약하기</span></button>
+            <button class="toolbtn" id="videoBtn"><img src="assets/icons/ico-play.svg" alt="" /><span>개념 영상 보기</span></button>
+            <button class="toolbtn toolbtn--primary" id="summaryBtn" disabled title="끊어읽기를 모두 끝내면 활성화돼요"><img src="assets/icons/ico-summary.svg" alt="" /><span>개념 요약하기</span></button>
           </div>
         </div>
       </div>
-      <img class="bar__deco bar__deco--r" src="assets/figma/console-left.svg" alt="" />
+      <img class="bar__deco bar__deco--r" src="assets/icons/console/console-left.svg" alt="" />
     </div>
 
     <!-- 개념 요약하기 모달 (끊어읽기 위 오버레이) -->

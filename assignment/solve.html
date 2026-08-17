@@ -30,7 +30,7 @@
     body { font-family: var(--font-sans); background: var(--assign-body); overflow: hidden; -webkit-font-smoothing: antialiased; }
 
     .screen { position: relative; width: 100%; height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
-    .screen__bg { position: absolute; inset: 0; z-index: 0; background: url("assets/figma/bg-spaceship-task.webp") center/cover no-repeat; }
+    .screen__bg { position: absolute; inset: 0; z-index: 0; background: url("assets/img/bg/bg-spaceship-task.webp") center/cover no-repeat; }
     :root[data-theme="dark"] .screen__bg::after { content: ""; position: absolute; inset: 0; background: rgba(4,10,30,.45); }
     .wrap { position: relative; z-index: 1; flex: 1; min-height: 0; display: flex; flex-direction: column; padding: clamp(16px,2.4vw,30px) clamp(20px,5vw,72px) 0; gap: 14px; }
 
@@ -43,8 +43,8 @@
     .bc__sep { opacity: .5; flex: none; }
     .hd__acts { display: flex; align-items: center; gap: 8px; flex: none; }
     .toggle { width: 62px; height: 32px; border-radius: 999px; background: rgba(0,0,0,.28); border: 0; position: relative; cursor: pointer; padding: 0; }
-    .toggle__k { position: absolute; top: 2px; left: 2px; width: 28px; height: 28px; border-radius: 50%; background: center/contain no-repeat url("assets/figma/icons/ico-sun.svg"); transition: left .2s ease; }
-    :root[data-theme="dark"] .toggle__k { left: 32px; background-image: url("assets/figma/icons/ico-moon.svg"); }
+    .toggle__k { position: absolute; top: 2px; left: 2px; width: 28px; height: 28px; border-radius: 50%; background: center/contain no-repeat url("assets/icons/ico-sun.svg"); transition: left .2s ease; }
+    :root[data-theme="dark"] .toggle__k { left: 32px; background-image: url("assets/icons/ico-moon.svg"); }
     .hd__ico { width: 34px; height: 34px; border: 0; border-radius: 11px; background: rgba(255,255,255,.14); color: var(--n-000); display: grid; place-items: center; cursor: pointer; transition: .14s; }
     .hd__ico:hover { background: rgba(255,255,255,.26); }
     .hd__ico svg, .hd__ico img { width: 19px; height: 19px; }
@@ -211,8 +211,8 @@
         </nav>
         <div class="hd__acts">
           <button class="toggle" id="themeToggle" title="라이트/다크 전환"><span class="toggle__k"></span></button>
-          <button class="hd__ico" title="알림"><img src="assets/figma/icons/ico-siren.svg" alt="알림" /></button>
-          <button class="hd__ico" title="나가기"><img src="assets/figma/icons/ico-exit.svg" alt="나가기" /></button>
+          <button class="hd__ico" title="알림"><img src="assets/icons/ico-siren.svg" alt="알림" /></button>
+          <button class="hd__ico" title="나가기"><img src="assets/icons/ico-exit.svg" alt="나가기" /></button>
         </div>
       </header>
 
@@ -235,7 +235,7 @@
 
     <!-- 하단 콘솔 바 -->
     <div class="bar">
-      <img class="bar__deco bar__deco--l" src="assets/figma/console-task-right.svg" alt="" />
+      <img class="bar__deco bar__deco--l" src="assets/icons/console/console-task-right.svg" alt="" />
       <div class="bar__mid">
         <div class="bar__tray">
           <div class="bar__group">
@@ -248,7 +248,7 @@
           </div>
         </div>
       </div>
-      <img class="bar__deco bar__deco--r" src="assets/figma/console-task-left.svg" alt="" />
+      <img class="bar__deco bar__deco--r" src="assets/icons/console/console-task-left.svg" alt="" />
     </div>
 
     <!-- 답안표 입력 오버레이 -->

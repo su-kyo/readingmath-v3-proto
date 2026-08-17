@@ -29,10 +29,10 @@
     '오답노트를 확인한 뒤 2차 유형 문제를 한 번 더 복습해 보세요.';
 
   function gradeOf(r) { return r >= 95 ? 's' : r >= 80 ? 'a' : r >= 70 ? 'b' : 'c'; }
-  function stepBadge(g) { return 'assets/figma/grade-step-' + g.toLowerCase() + '.webp'; }
+  function stepBadge(g) { return 'assets/img/grade/grade-step-' + g.toLowerCase() + '.webp'; }
 
   /* ---------- 총점 별 + 점수 ---------- */
-  document.getElementById('totalStar').src = 'assets/figma/star-' + gradeOf(SCORE) + '.svg';
+  document.getElementById('totalStar').src = 'assets/icons/star/star-' + gradeOf(SCORE) + '.svg';
   var scoreEl = document.getElementById('score');
   var sN = 0, sTimer = setInterval(function () {
     sN += Math.max(1, Math.round(SCORE / 22));

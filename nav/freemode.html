@@ -399,7 +399,7 @@
     var trackX = 0, dragMoved = false;
 
     function curList(){ return state.view==='strand' ? STRANDS[state.u] : UNIV[state.u].planets; }
-    function curDir(){ return state.view==='strand' ? 'assets/figma/strands/' : 'assets/figma/planets/'; }
+    function curDir(){ return state.view==='strand' ? 'assets/img/strands/' : 'assets/img/planets/'; }
 
     /* ============ 캐러셀 ============ */
     function render(){
@@ -456,7 +456,7 @@
         + ' stroke-linejoin="round" stroke-linecap="round" role="img" aria-label="'+(g?g.toUpperCase()+'등급':'미획득')
         + '"><path d="M12 4.2 14.7 8.7 19.8 9.6 16.3 13.4 16.9 18.6 12 16.4 7.1 18.6 7.7 13.4 4.2 9.6 9.3 8.7Z"/></svg>';
     }
-    function gradeStarImg(g){ var a=g?'star-'+g:'star-b'; return '<span class="hyc__star"><img class="'+(g?'':'x')+'" src="assets/figma/'+a+'.svg" alt="'+(g?g.toUpperCase()+'등급':'미획득')+'"></span>'; }
+    function gradeStarImg(g){ var a=g?'star-'+g:'star-b'; return '<span class="hyc__star"><img class="'+(g?'':'x')+'" src="assets/icons/star/'+a+'.svg" alt="'+(g?g.toUpperCase()+'등급':'미획득')+'"></span>'; }
     // {round(지금 할 라운드), grade(최고)} → 3라운드 세그
     function fmBar(rg){ rg=rg||{round:1,grade:null}; var segs=[]; for(var i=1;i<=3;i++){ segs.push(i<rg.round?'done':(i===rg.round?(rg.grade?'done':'cur'):'todo')); } return { best:rg.grade, segs:segs }; }
     // 흐름 B: 훈련 선택 → curriculum 허브(해당 탭 켜진 채)
@@ -507,7 +507,7 @@
       } else {
         strandGroups(item.key, item.label).forEach(function(grp,gi){
           var hd=document.createElement('div'); hd.className='semhd';
-          hd.innerHTML='<img class="semhd__img" src="assets/figma/planets/'+grp.semKey+'.webp" alt=""><span class="semhd__t">'+grp.semLabel+'</span>';
+          hd.innerHTML='<img class="semhd__img" src="assets/img/planets/'+grp.semKey+'.webp" alt=""><span class="semhd__t">'+grp.semLabel+'</span>';
           host.appendChild(hd);
           grp.units.forEach(function(u,ui){ host.appendChild(buildUnitEl(u)); });
         });
@@ -534,7 +534,7 @@
     /* ============ 모두보기 ============ */
     function ucardEl(planetKey, label, units){
       var c=document.createElement('div'); c.className='ucard';
-      var img=document.createElement('img'); img.className='ucard__img'; img.src='assets/figma/planets/'+planetKey+'.webp'; img.alt='';
+      var img=document.createElement('img'); img.className='ucard__img'; img.src='assets/img/planets/'+planetKey+'.webp'; img.alt='';
       var body=document.createElement('div'); body.className='ucard__body';
       body.innerHTML='<div class="ucard__nm">'+label+'</div>';
       units.forEach(function(u){
@@ -560,7 +560,7 @@
       } else {
         STRANDS[state.u].forEach(function(s){
           var blk=document.createElement('div'); blk.className='strandblk';
-          blk.innerHTML='<div class="strandblk__hd"><img class="strandblk__img" src="assets/figma/strands/'+s.key+'.webp" alt=""><div class="strandblk__t">'+s.label+'</div></div>';
+          blk.innerHTML='<div class="strandblk__hd"><img class="strandblk__img" src="assets/img/strands/'+s.key+'.webp" alt=""><div class="strandblk__t">'+s.label+'</div></div>';
           var grid=document.createElement('div'); grid.className='strandgrid';
           UNIV[state.u].planets.forEach(function(p){ grid.appendChild(ucardEl(p.key,p.label,unitsForStrand(p.key,s.label))); });
           blk.appendChild(grid); host.appendChild(blk);

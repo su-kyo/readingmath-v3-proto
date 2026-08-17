@@ -318,7 +318,7 @@
     // 펼침용: 현재 등급 별 에셋(그대로). 미획득=은별 탈색
     function gradeStarImg(g){
       var asset = g ? 'star-'+g : 'star-b';
-      return '<span class="hyc__star"><img class="'+(g?'':'x')+'" src="assets/figma/'+asset+'.svg" alt="'+(g?g.toUpperCase()+'등급':'미획득')+'"></span>';
+      return '<span class="hyc__star"><img class="'+(g?'':'x')+'" src="assets/icons/star/'+asset+'.svg" alt="'+(g?g.toUpperCase()+'등급':'미획득')+'"></span>';
     }
     // 시험대비 왕관 수 (데모: chal의 '정복' 수 / 전체)
     function crownOf(s){
@@ -386,7 +386,7 @@
         var top=document.createElement('div'); top.className='rcard__top';
         top.innerHTML='<span class="rcard__bar" style="background:'+(o.lock?'var(--n-500)':'var(--mint)')+'"></span><span class="rcard__name">Round '+o.r+'</span>';
         // 라운드 = 별 점수
-        if(o.g){ var gi=document.createElement('div'); gi.className='rcard__grade'; gi.innerHTML='<img src="assets/figma/star-'+o.g+'.svg" width="38" height="38" alt="'+o.g.toUpperCase()+'등급">'; top.appendChild(gi); }
+        if(o.g){ var gi=document.createElement('div'); gi.className='rcard__grade'; gi.innerHTML='<img src="assets/icons/star/star-'+o.g+'.svg" width="38" height="38" alt="'+o.g.toUpperCase()+'등급">'; top.appendChild(gi); }
         else if(o.lock){ var lm=document.createElement('span'); lm.className='rcard__lockmsg'; lm.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> 이전 라운드 완료 후 열려요'; top.appendChild(lm); }
         else if(o.cur){ var cm=document.createElement('span'); cm.className='rcard__lockmsg'; cm.style.color='var(--mint)'; cm.textContent='진행중'; top.appendChild(cm); }
         card.appendChild(top);

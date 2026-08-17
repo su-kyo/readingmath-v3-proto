@@ -250,10 +250,10 @@
   background-size: contain;
   font-size: 0; color: transparent;
 }
-.grade--s { background-image: url("../assets/figma/grade-s.webp"); }
-.grade--a { background-image: url("../assets/figma/grade-a.webp"); }
-.grade--b { background-image: url("../assets/figma/grade-b.webp"); }
-.grade--c { background-image: url("../assets/figma/grade-c.webp"); }
+.grade--s { background-image: url("../assets/img/grade/grade-s.webp"); }
+.grade--a { background-image: url("../assets/img/grade/grade-a.webp"); }
+.grade--b { background-image: url("../assets/img/grade/grade-b.webp"); }
+.grade--c { background-image: url("../assets/img/grade/grade-c.webp"); }
 .grade--lg { width: 88px; height: 88px; }
 .grade--sm { width: 40px; height: 40px; }
 
@@ -268,12 +268,12 @@
   background-position: center;
   background-size: contain;
 }
-.star--platinum { background-image: url("../assets/figma/star-s.svg"); } /* S */
-.star--gold     { background-image: url("../assets/figma/star-a.svg"); } /* A */
-.star--silver   { background-image: url("../assets/figma/star-b.svg"); } /* B */
-.star--bronze   { background-image: url("../assets/figma/star-c.svg"); } /* C */
+.star--platinum { background-image: url("../assets/icons/star/star-s.svg"); } /* S */
+.star--gold     { background-image: url("../assets/icons/star/star-a.svg"); } /* A */
+.star--silver   { background-image: url("../assets/icons/star/star-b.svg"); } /* B */
+.star--bronze   { background-image: url("../assets/icons/star/star-c.svg"); } /* C */
 /* 미획득(빈) 별 — 실버 실루엣을 흐리게 */
-.star--empty    { background-image: url("../assets/figma/star-b.svg"); filter: grayscale(1) brightness(.6) opacity(.3); }
+.star--empty    { background-image: url("../assets/icons/star/star-b.svg"); filter: grayscale(1) brightness(.6) opacity(.3); }
 .star--sm { width: 18px; height: 18px; }
 .star--lg { width: 40px; height: 40px; }
 .star-row { display: inline-flex; gap: var(--space-1); }

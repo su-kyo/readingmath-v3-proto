@@ -40,7 +40,7 @@
         '② 준비한 다섯 가지 재료를 빈 그릇에 모두 넣고 골고루 섞어 줍니다.\n' +
         '③ 그릇 안에서 서로 섞여 있는 물질들의 상태와 성질을 다시 한번 살펴봅니다.\n' +
         '④ 섞기 전의 성질과 섞인 후의 성질을 서로 비교하며 친구들과 이야기해 봅니다.</div>' +
-        '<div class="rt-img"><img src="assets/figma/report-process.webp" alt="실험 과정 이미지" /></div>' +
+        '<div class="rt-img"><img src="assets/img/misc/report-process.webp" alt="실험 과정 이미지" /></div>' +
         '<div class="rt-text">2. 관찰 및 측정\n' +
         '① 섞기 전: 검은콩은 크고 검은색이며, 조는 아주 작고 노란색인 것처럼 각 물질은 고유한 모양과 색깔을 가집니다.\n' +
         '② 섞은 후: 여러 재료가 한데 모여 있지만, 검은콩은 여전히 크고 검으며 조는 여전히 작고 노란색입니다.</div>'
