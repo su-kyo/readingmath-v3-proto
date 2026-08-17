@@ -6,16 +6,14 @@
     elem: [['elem-3-1','초등 3-1'],['elem-3-2','초등 3-2'],['elem-4-1','초등 4-1'],['elem-4-2','초등 4-2'],
            ['elem-5-1','초등 5-1'],['elem-5-2','초등 5-2'],['elem-6-1','초등 6-1'],['elem-6-2','초등 6-2']],
     mid:  [['mid-1-1','중등 1-1'],['mid-1-2','중등 1-2'],['mid-2-1','중등 2-1'],['mid-2-2','중등 2-2'],
-           ['mid-3-1','중등 3-1'],['mid-3-2','중등 3-2'],['high-1-1','통합과학 1'],['high-1-2','통합과학 2']]
+           ['mid-3-1','중등 3-1'],['mid-3-2','중등 3-2'],['high-1-1','고등 1-1'],['high-1-2','고등 1-2']]
   };
-  var SEM_LABEL = {};
-  ['elem','mid'].forEach(function(g){ SEM[g].forEach(function(p){ SEM_LABEL[p[0]] = p[1].replace('초등','초등 ').replace('중등','중등 '); }); });
+  /* 학교급 이름은 홈(nav/home.html)과 같은 규칙을 쓴다 — 둘이 어긋나면 학기 표기가 화면마다 달라진다.
+     고등 과목명(공통수학·통합과학 등)은 아직 확정 전이라 학년·학기로만 부른다. */
+  var LVL = { elem:'초등', mid:'중등', high:'고등' };
   function fullLabel(key){
-    var m = { 'elem':'초등 ', 'mid':'중등 ', 'high':'통합과학 ' };
-    if(key.indexOf('high')===0) return key==='high-1-1'?'통합과학 1':'통합과학 2';
-    var parts = key.split('-'); // elem-3-1
-    var grade = parts[1], sem = parts[2];
-    return (parts[0]==='elem'?'초등':'중등') + ' ' + grade + '학년 ' + sem + '학기';
+    var p = key.split('-');            // elem-3-1
+    return LVL[p[0]] + ' ' + p[1] + '학년 ' + p[2] + '학기';
   }
 
   function subject(){ return localStorage.getItem('rm-subject') || 'math'; }
