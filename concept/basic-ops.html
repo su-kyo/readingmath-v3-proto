@@ -5,9 +5,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>기초 연산 · 개념 훈련 — 리딩수학과학</title>
-  <link rel="stylesheet" href="styles/tokens.css?v=22" />
+  <link rel="stylesheet" href="styles/tokens.css?v=23" />
   <link rel="stylesheet" href="styles/base.css?v=7" />
-  <link rel="stylesheet" href="styles/components.css?v=8" />
+  <link rel="stylesheet" href="styles/components.css?v=9" />
   <link rel="stylesheet" href="styles/learn-shell.css?v=8" />
   <style>
     /* 콘텐츠 패널을 세로 3분할: [상단 프로그레스 고정] [문제 스크롤] [채점 버튼 고정] */
@@ -154,12 +154,12 @@
     .kp-key:active { transform: translateY(1px); box-shadow: none; }
     .kp-key--op { color: var(--kp-accent); font-size: 20px; }
     .kp-key[data-k="0"] { grid-column: span 2; }
-    .kp-ok { grid-column: span 4; height: 48px; background: var(--kp-accent); color: var(--n-000); font-weight: 800; font-size: 18px; box-shadow: none; }
+    .kp-ok { grid-column: span 4; height: 48px; background: var(--th-vivid); color: var(--n-000); font-weight: 800; font-size: 19px; box-shadow: none; }   /* 정체성 칠면 450 — 흰 굵은 글자 3:1 */
     .kp-ok:hover { background: var(--kp-accent); filter: brightness(1.08); }
 
     /* ===== 하단 고정 채점 버튼 ===== */
     .ops__foot { flex: none; display: flex; justify-content: center; padding: 10px 0 4px; }
-    .btn-grade { padding: 14px 44px; border-radius: 16px; background: var(--th-solid); color: var(--n-000); font-weight: 800; font-size: 18px; box-shadow: 0 4px 0 var(--th-accent-strong); }
+    .btn-grade { padding: 14px 44px; border-radius: 16px; background: var(--th-vivid); color: var(--n-000); font-weight: 800; font-size: 19px; box-shadow: 0 4px 0 var(--th-accent-strong); }   /* 정체성 칠면 450 */
     .btn-grade:hover:not(:disabled) { background: var(--th-accent); } .btn-grade:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 2px 0 var(--th-accent-strong); }
     .btn-grade:disabled { background: var(--n-500); color: var(--n-050); box-shadow: none; cursor: not-allowed; }
     .btn-grade--next { background: var(--primary); box-shadow: 0 4px 0 var(--primary-pressed); }

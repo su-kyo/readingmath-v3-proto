@@ -32,46 +32,50 @@
   --n-900: #060E20;   /* 다크 배경·GNB */
   --n-950: #03060F;   /* 최심부 */
 
+  /* v1.6 신설 450 = IDENTITY 스텝 — "흰 굵은 글자(≥19px w700) 3:1을 정확히 만족하는
+     가장 밝은 색"을 가족마다 수치로 푼 값 (palette-gen.py solve_identity).
+     CTA·GNB 모드탭·채점/확인 버튼 같은 정체성 칠면 전용. 작은 글자는 얹지 않는다. */
+
   /* 블루 (개념·과제·유틸·info) — hue 257° */
   --blue-050: #F2F7FF; --blue-100: #DDEBFF; --blue-200: #B8D5FE; --blue-300: #93BFFE;
-  --blue-400: #6EAAFD; --blue-500: #0A7AF8; --blue-600: #0559B8; --blue-700: #03438E;
-  --blue-800: #01306A; --blue-900: #011F48;
+  --blue-400: #6EAAFD; --blue-450: #4693FD; --blue-500: #0A7AF8; --blue-600: #0559B8;
+  --blue-700: #03438E; --blue-800: #01306A; --blue-900: #011F48;
 
   /* 시안 (우주 액센트·별·등급S) — hue 220° */
   --cyan-050: #EBFAFF; --cyan-100: #C9F1FF; --cyan-200: #86E2FE; --cyan-300: #18D1FC;
-  --cyan-400: #14BAE1; --cyan-500: #0D8EAB; --cyan-600: #06687E; --cyan-700: #044F60;
-  --cyan-800: #023947; --cyan-900: #01252F;
+  --cyan-400: #14BAE1; --cyan-450: #10A0C2; --cyan-500: #0D8EAB; --cyan-600: #06687E;
+  --cyan-700: #044F60; --cyan-800: #023947; --cyan-900: #01252F;
 
   /* 틸 (유형) — hue 182° */
   --teal-050: #E5FDF8; --teal-100: #B4FAED; --teal-200: #68ECD8; --teal-300: #19DAC4;
-  --teal-400: #15C2AE; --teal-500: #0D9484; --teal-600: #076C61; --teal-700: #045249;
-  --teal-800: #023C35; --teal-900: #012722;
+  --teal-400: #15C2AE; --teal-450: #10A594; --teal-500: #0D9484; --teal-600: #076C61;
+  --teal-700: #045249; --teal-800: #023C35; --teal-900: #012722;
 
   /* 그린 (자유모드·정답) — hue 142° */
   --green-050: #EDFCEB; --green-100: #CFF6CA; --green-200: #A5E79D; --green-300: #68DB5E;
-  --green-400: #23CB12; --green-500: #189A0A; --green-600: #0F7105; --green-700: #095603;
-  --green-800: #053F01; --green-900: #022901;
+  --green-400: #23CB12; --green-450: #1CAA0D; --green-500: #189A0A; --green-600: #0F7105;
+  --green-700: #095603; --green-800: #053F01; --green-900: #022901;
 
   /* 앰버 (주의·현재마커·골드텍스트) — hue 80° */
   --amber-050: #FFF6E6; --amber-100: #FFE6BE; --amber-200: #FCCA72; --amber-300: #F3AF14;
-  --amber-400: #D99C11; --amber-500: #A5760A; --amber-600: #795605; --amber-700: #5D4103;
-  --amber-800: #442E01; --amber-900: #2D1D01;
+  --amber-400: #D99C11; --amber-450: #C0890D; --amber-500: #A5760A; --amber-600: #795605;
+  --amber-700: #5D4103; --amber-800: #442E01; --amber-900: #2D1D01;
 
   /* 오렌지 (CTA·과제모드) — hue 52° */
   --orange-050: #FFF4EE; --orange-100: #FFE3D4; --orange-200: #FEC4A2; --orange-300: #FEA46D;
-  --orange-400: #FE811B; --orange-450: #B75301; /* CTA 표면 — 흰 글자 4.94 확보 */
+  --orange-400: #FE811B; --orange-450: #E7730E; /* IDENTITY — 흰 굵은 글자 3.06 (구 #B75301 폐기) */
   --orange-500: #C3600A; --orange-600: #904505; --orange-700: #6E3403;
   --orange-800: #522401; --orange-900: #371601;
 
   /* 레드 (오답) — hue 25° */
   --red-050: #FFF4F3; --red-100: #FFE2DF; --red-200: #FEC1BB; --red-300: #FEA098;
-  --red-400: #FE7A73; --red-500: #EC102B; --red-600: #AF081D; --red-700: #870514;
-  --red-800: #65020C; --red-900: #430206;
+  --red-400: #FE7A73; --red-450: #FD5C59; --red-500: #EC102B; --red-600: #AF081D;
+  --red-700: #870514; --red-800: #65020C; --red-900: #430206;
 
   /* 바이올렛 (서술형·시험) — hue 288° */
   --violet-050: #F6F6FF; --violet-100: #E8E7FF; --violet-200: #D0CCFE; --violet-300: #B9B2FE;
-  --violet-400: #A598FD; --violet-500: #805AFD; --violet-600: #5F38C9; --violet-700: #472A9A;
-  --violet-800: #341C74; --violet-900: #20144A;
+  --violet-400: #A598FD; --violet-450: #9581FD; --violet-500: #805AFD; --violet-600: #5F38C9;
+  --violet-700: #472A9A; --violet-800: #341C74; --violet-900: #20144A;
 
   /* 골드/브론즈 (별·등급, 에셋 세트) */
   --gold-500: #FFC800;   /* [에셋연동] star/grade PNG */
@@ -111,9 +115,10 @@
   --art-planet-3: #B78CF7;
   --art-planet-4: #FF93C8;
 
-  /* 개념 학습 형광펜 (다크) */
-  --art-mark-bg: #124F3C;
-  --art-mark-fg: #8FF0C9;
+  /* 개념 학습 형광펜 (다크) — v1.6 수치 재도출: 면 vs n-800 2.96 · 글자 vs 면 5.04
+     (구 #124F3C는 배경과 1.95로 형광펜 면이 안 보였음) */
+  --art-mark-bg: #076E53;
+  --art-mark-fg: #A8F7D8;
 
   /* =======================================================================
      2단 · SEMANTIC — 전역 역할 [다크 기본]
@@ -141,11 +146,12 @@
   --shadow-2: 0 8px 24px rgba(0, 0, 0, 0.36);
   --shadow-card: 0 12px 30px -22px rgba(60, 40, 130, 0.5);
 
-  /* 상태색 매트릭스 (전 섹션 공용 · 4역할 × 4변형) */
-  --ok-solid: var(--green-500); --ok-on-dark: var(--green-300); --ok-ink: var(--green-600); --ok-tint: var(--green-050);
-  --no-solid: var(--red-500);   --no-on-dark: var(--red-300);   --no-ink: var(--red-600);   --no-tint: var(--red-050);
-  --warn-solid: var(--amber-300); --warn-on-dark: var(--amber-300); --warn-ink: var(--amber-600); --warn-tint: var(--amber-050);
-  --info-solid: var(--blue-500);  --info-on-dark: var(--blue-300);  --info-ink: var(--blue-600);  --info-tint: var(--blue-050);
+  /* 상태색 매트릭스 (전 섹션 공용 · 4역할 × 5변형)
+     v1.6: vivid(450) 추가 — 정오답 강조 등 "정체성 순간"의 칠. 글자는 ≥19px w700만. */
+  --ok-solid: var(--green-500); --ok-vivid: var(--green-450); --ok-on-dark: var(--green-300); --ok-ink: var(--green-600); --ok-tint: var(--green-050);
+  --no-solid: var(--red-500);   --no-vivid: var(--red-450);   --no-on-dark: var(--red-300);   --no-ink: var(--red-600);   --no-tint: var(--red-050);
+  --warn-solid: var(--amber-300); --warn-vivid: var(--amber-300); --warn-on-dark: var(--amber-300); --warn-ink: var(--amber-600); --warn-tint: var(--amber-050);
+  --info-solid: var(--blue-500);  --info-vivid: var(--blue-450);  --info-on-dark: var(--blue-300);  --info-ink: var(--blue-600);  --info-tint: var(--blue-050);
 
   /* 현재 위치 마커 (섹션 액센트와 역할 분리 — "지금 여기") */
   --current: var(--amber-300);
@@ -157,21 +163,25 @@
   --grade-c: var(--n-300);
 
   /* 주요 CTA (오렌지 — 전 섹션 공통)
-     표면은 450스텝. 400은 흰 글자 대비가 2.5로 크게 미달이라 CTA 배경으로 쓰지 않는다.
-     400은 아이콘·테두리·장식 등 글자가 올라가지 않는 곳에만. */
-  --primary:         var(--orange-450);  /* 흰 글자 4.94 */
-  --primary-hover:   var(--orange-500);  /* 살짝 밝게 */
-  --primary-pressed: var(--orange-600);  /* 눌림 */
-  --primary-deep:    var(--orange-700);
-  --primary-edge:    var(--orange-700);  /* 버튼 아래 두께감 */
+     v1.6: 표면 = 450 IDENTITY(#E7730E · 흰 굵은 글자 정확히 3.06).
+     ★라벨 규칙: CTA 위 글자는 반드시 19px 이상 + w700 이상 (WCAG 큰 텍스트 3:1).
+     작은 글자를 얹어야 하면 CTA가 아니다 — 600 칠면 또는 tint+ink를 쓴다. */
+  --primary:         var(--orange-450);  /* 흰 굵은 글자 3.06 (≥19px w700 전제) */
+  --primary-hover:   var(--orange-400);  /* 호버 = 더 밝게(살아남) */
+  --primary-pressed: var(--orange-500);  /* 눌림 = 더 깊게 */
+  --primary-deep:    var(--orange-800);  /* v1.6: 700→800 — 밝은 배경에서 경계 담당(32배경 생존) */
+  --primary-edge:    var(--orange-800);  /* 버튼 아래 두께감 */
+  /* 32배경 생존 장치 (그림/아트 배경 위 CTA 전용 라이트 링) — 경계 3중 분담:
+     어두운 배경=면(450) · 밝은 배경=딥 엣지(700) · 중간 명도=이 링. tools/cta-check.html로 판정 */
+  --primary-ring:    rgba(255, 255, 255, 0.70);
 
   /* A층/GNB 모드색 = 포인트 컬러(Figma 정합: 기본 블루·자유 그린·시험 퍼플·과제 오렌지).
-     탭 위에 흰 글자가 올라가므로 600스텝. 500/브랜드값은 4.4 이하로 미달이었다.
-     브랜드 원색(Figma #008CFF·#58CC02 등)은 글자가 얹히지 않는 장식에만 쓴다. */
-  --mode-basic:  var(--blue-600);   /* 흰 글자 6.71 */
-  --mode-free:   var(--green-600);  /* 흰 글자 6.20 (Figma #58CC02는 2.09로 미달) */
-  --mode-exam:   var(--violet-600); /* 흰 글자 7.25 */
-  --mode-assign: var(--orange-600); /* 흰 글자 6.91 */
+     v1.6: 600 → 450 IDENTITY. 모드탭은 정체성 칠면 — 흰 굵은 글자(≥19px w700) 3:1과
+     다크 GNB 배경과의 면 대비 6.3을 동시에 만족한다. 600은 "칙칙" 판정으로 폐기. */
+  --mode-basic:  var(--blue-450);
+  --mode-free:   var(--green-450);
+  --mode-exam:   var(--violet-450);
+  --mode-assign: var(--orange-450);
 
   /* 브랜드 원색 — 글자가 올라가지 않는 장식·아이콘 전용 */
   --brand-free-vivid: #58CC02;
@@ -190,9 +200,10 @@
   --th-accent-hi:     var(--blue-300);
   --th-ink-accent:    var(--blue-600);
   --th-on-accent:     #FFFFFF;
-  /* 흰 글자가 올라가는 칠면(활성 탭·솔리드 버튼·배지)은 반드시 이 슬롯을 쓴다.
-     --th-accent(500)는 4.1~4.4로 미달이므로 글자 받침으로 쓰지 않는다. */
+  /* 작은 흰 글자가 올라가는 칠면(배지·작은 탭)은 --th-solid(600 · 4.5 이상).
+     크고 굵은 라벨(≥19px w700)의 정체성 버튼(채점·확인)은 --th-vivid(450 · 3:1). */
   --th-solid:         var(--blue-600);
+  --th-vivid:         var(--blue-450);
   --th-tint:          color-mix(in srgb, var(--th-accent) 8%, transparent);
   --th-tint-strong:   color-mix(in srgb, var(--th-accent) 15%, transparent);
   --th-chip:          var(--blue-050);
@@ -274,8 +285,14 @@
 
   --th-focus: var(--th-accent);
 }
-/* 다크에서 포커스 링은 밝힌 액센트 */
-:root:not([data-theme="light"]) { --th-focus: var(--th-accent-hi); }
+/* 다크에서 포커스 링은 밝힌 액센트 + 틴트는 더 진하게 (v1.6)
+   — 라이트용 8/15% 틴트는 다크 표면에서 식별 불가(끊어읽기 하이라이트·빈칸 채움이
+   배경과 안 갈라지던 원인). 다크는 24/38%로 올려 "칠해졌다"가 보이게 한다. */
+:root:not([data-theme="light"]) {
+  --th-focus: var(--th-accent-hi);
+  --th-tint: color-mix(in srgb, var(--th-accent) 24%, transparent);
+  --th-tint-strong: color-mix(in srgb, var(--th-accent) 38%, transparent);
+}
 
 /* =========================================================================
    3단 · 섹션 테마 블록 (§3.4) — 슬롯 = 가족 + 스텝, 값만 교체
@@ -291,6 +308,7 @@
   --th-accent-hi: var(--blue-300);
   --th-ink-accent: var(--blue-600);
   --th-solid: var(--blue-600);   /* 흰 글자 받침 */
+  --th-vivid: var(--blue-450);   /* 정체성 버튼(≥19px w700 흰 라벨) */
   --th-chip: var(--blue-050);
   --th-panel: var(--n-000);   /* 콘텐츠 패널 = 라이트에서 흰색 (다크는 .content 규칙이 surface-1로 덮음) */
 }
@@ -303,6 +321,7 @@
   --th-accent-hi: var(--teal-300);
   --th-ink-accent: var(--teal-600);
   --th-solid: var(--teal-600);   /* 흰 글자 받침 */
+  --th-vivid: var(--teal-450);   /* 정체성 버튼(≥19px w700 흰 라벨) */
   --th-chip: var(--teal-050);
   --th-panel: var(--n-000);   /* 콘텐츠 패널 = 라이트에서 흰색 */
 }
@@ -315,6 +334,7 @@
   --th-accent-hi: var(--violet-300);
   --th-ink-accent: var(--violet-600);
   --th-solid: var(--violet-600);   /* 흰 글자 받침 */
+  --th-vivid: var(--violet-450);   /* 정체성 버튼(≥19px w700 흰 라벨) */
   --th-chip: var(--violet-050);
   --th-panel: var(--n-000);   /* 콘텐츠 패널 = 라이트에서 흰색 */
 }
@@ -327,6 +347,7 @@
   --th-accent-hi: var(--violet-300);
   --th-ink-accent: var(--violet-600);
   --th-solid: var(--violet-600);   /* 흰 글자 받침 */
+  --th-vivid: var(--violet-450);   /* 정체성 버튼(≥19px w700 흰 라벨) */
   --th-chip: var(--violet-050);
   --th-panel: var(--n-050);
 }
@@ -339,6 +360,7 @@
   --th-accent-hi: var(--blue-300);
   --th-ink-accent: var(--blue-600);
   --th-solid: var(--blue-600);   /* 흰 글자 받침 */
+  --th-vivid: var(--blue-450);   /* 정체성 버튼(≥19px w700 흰 라벨) */
   --th-chip: var(--blue-050);
   --th-panel: var(--n-100);
 }
@@ -351,6 +373,7 @@
   --th-accent-hi: var(--blue-300);
   --th-ink-accent: var(--blue-600);
   --th-solid: var(--blue-600);   /* 흰 글자 받침 */
+  --th-vivid: var(--blue-450);   /* 정체성 버튼(≥19px w700 흰 라벨) */
   --th-chip: var(--blue-050);
   --th-panel: var(--n-100);
 }
@@ -363,6 +386,7 @@
   --th-accent-hi: var(--blue-300);
   --th-ink-accent: var(--blue-300);
   --th-solid: var(--cyan-600);   /* 흰 글자 받침 */
+  --th-vivid: var(--blue-450);   /* A층 정체성(기본모드 블루) */
   --th-chip: var(--n-800);
   --th-panel: var(--surface-1);
 }

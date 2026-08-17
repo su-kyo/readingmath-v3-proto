@@ -38,3 +38,4 @@ node_modules/
 *.tif
 assets/**/*_origin/
 assets/**/*-origin/
+__pycache__/

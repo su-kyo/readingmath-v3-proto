@@ -54,6 +54,7 @@
 .btn--orange {
   background: var(--primary);
   box-shadow: var(--btn-drop) var(--primary-deep);
+  font-size: 19px;   /* CTA 라벨 규칙: 450 칠면 위 흰 글자는 ≥19px w700 (§3.4b) */
 }
 .btn--orange:hover { background: var(--primary-hover); }
 .btn--orange:active { box-shadow: 0 0 0 var(--primary-deep); }
@@ -96,7 +97,7 @@
   padding: 12px var(--space-5);
   border-radius: var(--r-md);
   font-weight: var(--fw-bold);
-  font-size: var(--fs-sm);
+  font-size: 19px;   /* 정체성 칠면(--primary) 라벨 규칙 ≥19px w700 (§3.4b) */
 }
 /* 학습 전 */
 .cta-step--todo {

@@ -74,7 +74,8 @@ STEPS = {  # step: (OKLCH L, 목표 C)  — v1.5 vivid 밴드 명도↑(solid �
     '100': (0.935, 0.072),   # 칩 배경
     '200': (0.865, 0.120),   # 라이트 보더 · 소프트
     '300': (0.798, 0.196),   # 다크 표면 위 텍스트/아이콘 · 뱃지
-    '400': (0.732, 0.252),   # VIVID — 정체성(모드탭·CTA·마커·호버)
+    '400': (0.732, 0.252),   # VIVID — 장식·아이콘·다크 위 잉크글자 칩 (흰 글자 금지)
+    # '450' IDENTITY 스텝은 아래에서 수치로 풀어서 생성 (가족마다 L이 다름)
     '500': (0.598, 0.264),   # CORE — solid 칠 (흰 글자 AA-large ≥3 · 굵은/큰 텍스트 전용)
     '600': (0.478, 0.210),   # pressed · 흰 배경 컬러 텍스트(작은 글자 ≥4.5)
     '700': (0.395, 0.170),   # ink · 딥 프레임 (섹션 static)
@@ -82,6 +83,30 @@ STEPS = {  # step: (OKLCH L, 목표 C)  — v1.5 vivid 밴드 명도↑(solid �
     '900': (0.245, 0.095),
 }
 GAMUT_SAFETY = 0.98   # sRGB 경계 98%까지 (채도 여지 최대한 확보)
+
+# -------------------------------------------------------------------------
+# v1.6 IDENTITY 스텝 '450' — "정체성 칠면" (CTA·GNB 모드탭·채점/확인 버튼)
+# 정의: 흰 굵은 글자(WCAG 큰 텍스트 = 19px 이상 · w700 이상)의 3:1을
+#       "정확히 만족하는 가장 밝은 색"을 가족마다 수치로 푼다.
+#       L을 고정하지 않고 대비로 푸는 이유: 같은 L이라도 hue마다 휘도가 달라
+#       (노랑은 밝고 파랑은 어두움) 흰 글자 대비가 널뛰기 때문.
+# 대가: 450 위 글자는 반드시 ≥19px w700. 작은 글자가 필요하면 600 또는 tint+ink.
+# -------------------------------------------------------------------------
+IDENTITY_C = 0.258            # 400(.252)과 500(.264) 사이 — vivid 유지
+IDENTITY_TARGET = 3.06        # 흰 글자 대비 목표 (3.0 + 반올림 안전 마진)
+
+def solve_identity(h, mult):
+    lo, hi = 0.35, 0.80       # OKLCH L 탐색 구간
+    for _ in range(60):
+        L = (lo + hi) / 2
+        c = min(IDENTITY_C * mult, max_chroma(L, h) * GAMUT_SAFETY)
+        hx = to_hex(oklch_to_rgb(L, c, h))
+        if contrast('#FFFFFF', hx) > IDENTITY_TARGET:
+            lo = L            # 아직 어두움 → 더 밝게
+        else:
+            hi = L
+    c = min(IDENTITY_C * mult, max_chroma(lo, h) * GAMUT_SAFETY)
+    return to_hex(oklch_to_rgb(lo, c, h))
 
 # 색상 가족 — 색상각(h)과 채도 배율만 정의. 나머지는 사다리가 결정.
 HUES = {
@@ -133,26 +158,31 @@ def build():
         for step,(L,C) in STEPS.items():
             c = min(C*mult, max_chroma(L,h)*GAMUT_SAFETY)
             ramp[step] = to_hex(oklch_to_rgb(L,c,h))
-        fams[name] = ramp
+        ramp['450'] = solve_identity(h, mult)   # IDENTITY — 흰 굵은 글자 3:1 경계
+        # 표시 순서 정렬 (050…400, 450, 500…900)
+        fams[name] = dict(sorted(ramp.items(), key=lambda kv: int(kv[0])))
     return fams
 
 def report(fams):
-    steps = list(STEPS.keys())
+    steps = list(next(iter(fams.values())).keys())
     print('=== RMDS 생성 팔레트 ===')
     print(f"{'':8}" + ''.join(f'{s:>9}' for s in steps))
     for name,ramp in fams.items():
         print(f'{name:8}' + ''.join(f'{ramp[s]:>9}' for s in steps))
     print()
-    print('=== 대비 검증 (WCAG) — 목표: ①흰글자on500 ≥4.5 ②600on흰 ≥4.5 ③700on흰 ≥7 ④300on n-800 ≥4.5 ⑤400on n-900 ≥3(모드탭) ===')
+    print('=== 대비 검증 (v1.6 역할별 기준) ===')
+    print('①흰굵은글자(≥19px w700) on 450 ≥3  ②450 면 vs n-900 배경 ≥3(다크 위 정체성 면)')
+    print('③n-900 잉크글자 on 400 ≥4.5(비비드+잉크 대안)  ④600 on 흰 ≥4.5  ⑤700 on 흰 ≥7  ⑥300 on n-800 ≥4.5')
     n800, n900 = NEUTRAL['800'], NEUTRAL['900']
     for name,ramp in fams.items():
-        c1 = contrast('#FFFFFF', ramp['500'])
-        c2 = contrast(ramp['600'], '#FFFFFF')
-        c3 = contrast(ramp['700'], '#FFFFFF')
-        c4 = contrast(ramp['300'], n800)
-        c5 = contrast(ramp['400'], n900)
+        c1 = contrast('#FFFFFF', ramp['450'])
+        c2 = contrast(ramp['450'], n900)
+        c3 = contrast(n900, ramp['400'])
+        c4 = contrast(ramp['600'], '#FFFFFF')
+        c5 = contrast(ramp['700'], '#FFFFFF')
+        c6 = contrast(ramp['300'], n800)
         flag = lambda v,t: ('OK ' if v>=t else '!! ')
-        print(f'{name:8} ①{flag(c1,4.5)}{c1:4.1f}  ②{flag(c2,4.5)}{c2:4.1f}  ③{flag(c3,7)}{c3:4.1f}  ④{flag(c4,4.5)}{c4:4.1f}  ⑤{flag(c5,3)}{c5:4.1f}')
+        print(f'{name:8} ①{flag(c1,3)}{c1:4.2f}  ②{flag(c2,3)}{c2:4.1f}  ③{flag(c3,4.5)}{c3:4.1f}  ④{flag(c4,4.5)}{c4:4.1f}  ⑤{flag(c5,7)}{c5:4.1f}  ⑥{flag(c6,4.5)}{c6:4.1f}')
     print()
     print('=== 뉴트럴 진단: OLD(측정) vs NEW(생성) — L/C/h ===')
     for step in NEUTRAL:
@@ -172,7 +202,7 @@ def report(fams):
         print(f'{name:8} old {old} (L{oL:.2f}) → new {new} (L{nL:.2f})')
 
 def html(fams):
-    steps = list(STEPS.keys())
+    steps = list(next(iter(fams.values())).keys())
     rows = ''
     for name,ramp in fams.items():
         cells = ''.join(

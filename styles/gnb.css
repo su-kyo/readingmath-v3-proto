@@ -2,7 +2,8 @@
    gnb.css — 공용 상단 네비게이션(GNB) · 토큰 소비자
    기본모드 홈 · 자유모드 · 과제센터 = 다크 스킨 (항상 다크)
    시험대비 = .gnb--light 라이트 스킨
-   모드 활성색 = 각 가족 400스텝 (--mode-basic/free/exam/assign)
+   모드 활성색 = 각 가족 450 IDENTITY 스텝 (--mode-basic/free/exam/assign)
+   — 활성 탭 = 정체성 칠면: 흰 굵은 라벨 19px w700 이상 (3:1), 다크 GNB와 면 대비 6.3
    ========================================================================= */
 .gnb{
   flex:none; height:60px; display:flex; align-items:stretch; gap:16px; padding:0 16px;
@@ -19,7 +20,7 @@
 
 /* 탭이 상단 8px만 띄우고 GNB 하단까지 꽉 채움(Figma: mode-nav 패딩 8px 0 0) — 위 공백 최소화 */
 .gnb__modes{ display:flex; align-items:stretch; gap:4px; align-self:stretch; padding-top:8px; }
-.gnb__mode{ position:relative; padding:0 16px; display:flex; align-items:center; font-size:16px; font-weight:700;
+.gnb__mode{ position:relative; padding:0 16px; display:flex; align-items:center; font-size:19px; font-weight:700;
   letter-spacing:-.02em; color:var(--n-300); cursor:pointer; border-radius:12px 12px 0 0;
   transition:color var(--t-fast), background var(--t-fast); white-space:nowrap; border:0; background:transparent;
   font-family:inherit; }

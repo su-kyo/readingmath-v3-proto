@@ -52,8 +52,9 @@
 .u-btn svg{ width:17px; height:17px; }
 .u-btn--primary{ background:var(--brand-ink); border-color:var(--brand-ink); color:var(--n-000); }
 .u-btn--primary:hover{ background:var(--brand-ink); border-color:var(--brand-ink); }
-.u-btn--cta{ background:var(--cta); border-color:var(--cta); color:var(--n-000); }
+.u-btn--cta{ background:var(--cta); border-color:var(--cta); color:var(--n-000); font-size:19px; font-weight:800; }
 .u-btn--cta:hover{ background:var(--cta-ink); border-color:var(--cta-ink); }
+.u-btn--cta.u-btn--lg{ font-size:19px; }   /* CTA 라벨 규칙 ≥19px w700 — --lg(16px)보다 우선 */
 .u-btn--lg{ height:52px; padding:0 24px; font-size:16px; font-weight:800; border-radius:13px; }
 .u-btn--sm{ height:36px; padding:0 13px; font-size:13px; border-radius:9px; }
 .u-btn:disabled{ opacity:.45; cursor:not-allowed; }

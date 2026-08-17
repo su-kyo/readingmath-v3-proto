@@ -21,13 +21,13 @@
 .content {
   --bl-bg: rgba(255,255,255,.07); --bl-line: rgba(200,205,225,.42);
   --bl-bgh: rgba(255,255,255,.13); --bl-lineh: rgba(200,205,225,.72);
-  --bl-selbg: rgba(255,127,0,.24); --bl-selline: var(--primary-hover); --bl-selbadge: var(--orange-300);
+  --bl-selbg: color-mix(in srgb, var(--orange-400) 26%, transparent); --bl-selline: var(--orange-400); --bl-selbadge: var(--orange-300);
   --bl-badge: rgba(255,255,255,.18); --bl-fill: rgba(193,203,224,.22); --bl-ans: var(--n-000);
 }
 :root[data-theme="light"] .content {
   --bl-bg: rgba(96,80,168,.07); --bl-line: rgba(108,99,201,.30);
   --bl-bgh: rgba(96,80,168,.13); --bl-lineh: rgba(108,99,201,.5);
-  --bl-selbg: rgba(255,127,0,.18); --bl-selline: var(--primary); --bl-selbadge: var(--orange-600);
+  --bl-selbg: color-mix(in srgb, var(--orange-400) 16%, transparent); --bl-selline: var(--primary); --bl-selbadge: var(--orange-600);
   --bl-badge: rgba(72,58,142,.2); --bl-fill: rgba(108,99,201,.12); --bl-ans: var(--n-650);
 }
 
@@ -69,7 +69,7 @@
 .pop-opt { width: 100%; text-align: center; padding: 10px 14px; border-radius: 10px; border: 1.5px solid var(--n-500);
   background: rgba(255,255,255,.06); color: var(--n-050); font-family: var(--font-serif); font-size: 17px; font-weight: 700;
   line-height: 1.35; white-space: normal; word-break: keep-all; cursor: pointer; transition: border-color .12s, background .12s, opacity .2s; }
-.pop-opt:hover { border-color: var(--primary); background: rgba(255,127,0,.24); color: var(--n-000); }
+.pop-opt:hover { border-color: var(--primary); background: color-mix(in srgb, var(--orange-400) 24%, transparent); color: var(--n-000); }
 .pop-opt.is-wrong { border-color: var(--no-solid); background: rgba(229,88,95,.2); animation: qShake .3s; }
 .pop-opt.is-dead { opacity: .34; filter: grayscale(.5); pointer-events: none; text-decoration: line-through; }
 @keyframes qShake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-4px)} 75%{transform:translateX(4px)} }
@@ -90,14 +90,14 @@
   font-family: var(--font-mono); font-weight: 700; font-size: 17px; cursor: pointer; transition: background .12s; }
 .qpop__key:hover { background: rgba(255,255,255,.14); }
 .qpop__key svg { width: 19px; height: 19px; }
-.qpop__key--ok { grid-column: span 2; background: var(--primary); color: var(--n-000); font-family: var(--font-sans); font-weight: 800; }
+.qpop__key--ok { grid-column: span 2; background: var(--primary); color: var(--n-000); font-family: var(--font-sans); font-weight: 800; font-size: 19px; }   /* CTA 라벨 규칙 ≥19px */
 .qpop__key--ok:hover { background: var(--primary-hover); }
 
 /* ── 라이트 전용: 톤 완화(밝은 라벤더 팝오버 + 진한 잉크). 다크는 위 공용 팔레트 유지 ── */
 :root[data-theme="light"] .qpop__inner { background: var(--n-050); border-color: var(--n-100); box-shadow: 0 16px 38px -16px rgba(60,40,120,.30), 0 2px 8px rgba(60,40,120,.08); }
 :root[data-theme="light"] .qpop__caret { background: var(--n-050); border-color: var(--n-100); }
 :root[data-theme="light"] .pop-opt { border-color: var(--n-100); background: var(--n-050); color: var(--n-650); }
-:root[data-theme="light"] .pop-opt:hover { border-color: var(--primary); background: rgba(255,127,0,.15); }
+:root[data-theme="light"] .pop-opt:hover { border-color: var(--primary); background: color-mix(in srgb, var(--orange-400) 15%, transparent); }
 :root[data-theme="light"] .pop-opt.is-wrong { border-color: var(--no-ink); background: rgba(199,60,67,.10); }
 :root[data-theme="light"] .qpop__display { background: var(--n-000); color: var(--n-800); box-shadow: inset 0 0 0 1.5px var(--n-200); }
 :root[data-theme="light"] .qpop__display.is-wrong { color: var(--no-ink); box-shadow: inset 0 0 0 1.5px var(--no-solid); }

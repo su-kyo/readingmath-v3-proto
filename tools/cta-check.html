@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko" data-section="space">
+<head>
+  <base href="../">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CTA 32배경 생존 검증 — 리딩수학과학</title>
+  <link rel="stylesheet" href="styles/tokens.css?v=23">
+  <link rel="stylesheet" href="styles/base.css?v=7">
+  <style>
+    /* 검증 도구 (배포 제외) — CTA 하나가 행성 홈 32종 배경 전부에서 버티는지 판정.
+       기준: WCAG 1.4.11 비텍스트 대비 3:1. 버튼 주변 4스트립마다 생존 장치 3종
+       (면 450 · 딥 엣지 700 · 라이트 링) 중 최선값으로 재고, 최악 스트립으로 판정. */
+    body{ background:var(--bg); color:var(--text); font-family:var(--font-sans); margin:0; padding:28px; }
+    h1{ font-size:20px; margin:0 0 4px; }
+    .sub{ color:var(--text-muted); font-size:13px; margin-bottom:6px; }
+    .sum{ font-size:15px; font-weight:700; margin-bottom:20px; }
+    .sum b.ok{ color:var(--ok-on-dark); } .sum b.bad{ color:var(--no-on-dark); }
+    .grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+    .tile{ position:relative; border-radius:12px; overflow:hidden; background:var(--surface-1); }
+    .tile canvas{ display:block; width:100%; height:auto; }
+    .tile .cta-mini{ position:absolute; left:50%; bottom:5%; transform:translateX(-50%);
+      display:inline-flex; align-items:center; gap:4px; height:24px; padding:0 14px; border-radius:8px;
+      background:var(--primary); color:var(--n-000); font-size:10px; font-weight:800; pointer-events:none;
+      box-shadow:0 0 0 1.5px var(--primary-ring), 0 3px 0 var(--primary-deep), 0 6px 12px -5px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.3); }
+    .tile .tag{ position:absolute; left:8px; top:8px; font-size:11px; font-weight:700;
+      background:rgba(3,6,15,.62); color:#fff; padding:3px 8px; border-radius:99px; }
+    .tile .score{ position:absolute; right:8px; top:8px; font-size:11px; font-weight:800;
+      font-family:var(--font-mono); padding:3px 8px; border-radius:99px; color:#fff; }
+    .score.p{ background:var(--ok-solid); } .score.w{ background:var(--warn-solid); color:var(--n-900); }
+    .score.f{ background:var(--no-solid); }
+  </style>
+</head>
+<body>
+  <h1>CTA 32배경 생존 검증</h1>
+  <div class="sub">기준: WCAG 비텍스트 대비 3:1 — 버튼 주변 4스트립(최악 기준)마다 생존 장치 3종(면 450 · 딥 엣지 700 · 라이트 링) 중 최선값으로 판정 · 홈과 동일 위치(중앙 · bottom 5%)</div>
+  <div class="sum" id="sum">측정 중…</div>
+  <div class="grid" id="grid"></div>
+
+  <script>
+    const DIRS = [
+      'math-elem-3-1','math-elem-3-2','math-elem-4-1','math-elem-4-2',
+      'math-elem-5-1','math-elem-5-2','math-elem-6-1','math-elem-6-2',
+      'math-mid-1-1','math-mid-1-2','math-mid-2-1','math-mid-2-2',
+      'math-mid-3-1','math-mid-3-2','math-high-1-1','math-high-1-2',
+      'sci-elem-3-1','sci-elem-3-2','sci-elem-4-1','sci-elem-4-2',
+      'sci-elem-5-1','sci-elem-5-2','sci-elem-6-1','sci-elem-6-2',
+      'sci-mid-1-1','sci-mid-1-2','sci-mid-2-1','sci-mid-2-2',
+      'sci-mid-3-1','sci-mid-3-2','sci-high-1-1','sci-high-1-2',
+    ];
+
+    const lin = c => { c/=255; return c<=0.04045 ? c/12.92 : Math.pow((c+0.055)/1.055, 2.4); };
+    const lum = (r,g,b) => 0.2126*lin(r)+0.7152*lin(g)+0.0722*lin(b);
+    const ratio = (l1,l2) => (Math.max(l1,l2)+0.05)/(Math.min(l1,l2)+0.05);
+
+    // --primary 실제값 읽기 (토큰이 바뀌면 이 도구도 자동 추종)
+    const probe = document.createElement('div');
+    probe.style.cssText = 'background:var(--primary);display:none'; document.body.appendChild(probe);
+    const m = getComputedStyle(probe).backgroundColor.match(/\d+/g).map(Number);
+    const BTN_LUM = lum(m[0], m[1], m[2]);
+    const BTN_HEX = '#'+m.slice(0,3).map(v=>v.toString(16).padStart(2,'0')).join('').toUpperCase();
+
+    // 버튼 경계는 세 가지가 분담해서 만든다 (§3.4b 생존 장치 3종):
+    //   ① 면(--primary·450)      — 어두운 배경 담당
+    //   ② 드롭 엣지(--primary-deep·800) — 밝은 배경 담당
+    //   ③ 라이트 링(--primary-ring·흰 55%) — 중간 명도 배경 담당
+    // 판정: 버튼 주변 4개 스트립(상·하·좌·우, 버튼 밖 26px 띠)마다
+    //       max(면, 엣지, 링 대비)를 재고, 그중 최악값 ≥3 이면 생존.
+    const probe2 = document.createElement('div');
+    probe2.style.cssText = 'background:var(--primary-deep);display:none'; document.body.appendChild(probe2);
+    const m2 = getComputedStyle(probe2).backgroundColor.match(/\d+/g).map(Number);
+    const EDGE_LUM = lum(m2[0], m2[1], m2[2]);
+    const RING_A = 0.70;   // --primary-ring 알파 (흰색) — 배경 위에 합성해서 판정
+
+    // 홈 실측 지오메트리(1280×720 기준): 버튼 중앙 하단, 높이 56, 폭 ≈ 190, bottom 5%
+    function judge(img){
+      const W=320, H=Math.round(320*img.naturalHeight/img.naturalWidth);
+      const cv=document.createElement('canvas'); cv.width=W; cv.height=H;
+      const cx=cv.getContext('2d'); cx.drawImage(img,0,0,W,H);
+      const s=W/1280;
+      const bw=190*s, bh=56*s, pad=26*s;
+      const bx=W/2-bw/2, by=H-(0.05*H)-bh;
+      const strips=[[bx-pad,by-pad,bw+2*pad,pad],        // 상
+                    [bx-pad,by+bh,bw+2*pad,pad],         // 하 (엣지 포함 구간)
+                    [bx-pad,by,pad,bh],                  // 좌
+                    [bx+bw,by,pad,bh]];                  // 우
+      let worst=Infinity;
+      for(const [qx,qy,qw,qh] of strips){
+        const d=cx.getImageData(Math.max(0,qx),Math.max(0,qy),Math.min(qw,W-qx),Math.min(qh,H-qy)).data;
+        let R=0,G=0,B=0,L=0,n=0;
+        for(let i=0;i<d.length;i+=16){ R+=d[i];G+=d[i+1];B+=d[i+2]; L+=lum(d[i],d[i+1],d[i+2]); n++; }
+        const avg=L/n;
+        // 링 = 흰 70%를 배경 평균색 위에 채널별 합성한 실효색
+        const ringLum = lum(RING_A*255+(1-RING_A)*R/n, RING_A*255+(1-RING_A)*G/n, RING_A*255+(1-RING_A)*B/n);
+        const best=Math.max(ratio(BTN_LUM,avg), ratio(EDGE_LUM,avg), ratio(ringLum,avg));
+        worst=Math.min(worst, best);
+      }
+      return { worst, canvas:cv };
+    }
+
+    const grid=document.getElementById('grid');
+    let done=0, pass=0, warn=0, fail=0;
+    const results=[];
+    DIRS.forEach(dir=>{
+      const img=new Image();
+      img.src='assets/img/home/'+dir+'/bg.webp';
+      img.onload=()=>{
+        const r=judge(img);
+        const tile=document.createElement('div'); tile.className='tile';
+        tile.appendChild(r.canvas);
+        const cls = r.worst>=3 ? 'p' : (r.worst>=2.5 ? 'w' : 'f');
+        if(cls==='p')pass++; else if(cls==='w')warn++; else fail++;
+        tile.insertAdjacentHTML('beforeend',
+          `<span class="tag">${dir}</span>
+           <span class="score ${cls}">${r.worst.toFixed(2)}</span>
+           <span class="cta-mini">시작하기 →</span>`);
+        grid.appendChild(tile);
+        results.push({dir, worst:+r.worst.toFixed(2)});
+        if(++done===DIRS.length){
+          const minR=Math.min(...results.map(x=>x.worst));
+          document.getElementById('sum').innerHTML =
+            `--primary ${BTN_HEX} · 32배경 중 <b class="ok">통과(≥3.0) ${pass}</b> · 주의(2.5~3.0) ${warn} · <b class="${fail? 'bad':'ok'}">미달(<2.5) ${fail}</b> · 최악값 ${minR.toFixed(2)}`;
+          window.__ctaResults = results;   // 콘솔 확인용
+        }
+      };
+      img.onerror=()=>{ done++; };
+    });
+  </script>
+</body>
+</html>
