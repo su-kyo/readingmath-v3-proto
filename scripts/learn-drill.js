@@ -39,7 +39,18 @@
         '<div class="vsub__line"></div>' +
         '<span></span><span class="dblank"></span><span class="dblank"></span><span class="dblank"></span>' +
         '</div>',
-      answers: ['2', '1', '5'] }
+      answers: ['2', '1', '5'] },
+
+    /* 수식 라이브러리(KaTeX) 본보기 — Phase 6-④.
+       검증 포인트: ① 온전한 세로 분수 ② 미지수·루트·지수 ③ 수식 '안'에 빈칸을 심고
+       공용 키패드로 입력 → 기존 blank 채점이 그대로 동작. */
+    { type: 'blank',
+      q: '수식의 빈칸에 알맞은 수를 써넣으세요. (수식 렌더 본보기 — 분수·미지수·루트·지수)',
+      tex: [
+        'x^{2} = \\sqrt{81} + 7 \\quad\\Rightarrow\\quad x = 4',
+        '\\dfrac{\\htmlClass{dblank}{?}}{8} + \\dfrac{3}{8} = \\dfrac{5}{8}'
+      ],
+      answers: ['2'] }
   ];
 
   var TOTAL = PROBLEMS.length;
@@ -194,7 +205,17 @@
 
   /* ---- 빈칸(인라인 채우기) ---- */
   function renderBlank(p) {
-    var box = el('div', 'qblank', p.html);
+    var box = el('div', 'qblank', p.html || '');
+    if (p.tex && window.katex) {
+      box.classList.add('qblank--math');
+      p.tex.forEach(function (src) {
+        var line = el('div', 'mathline');
+        /* trust: \htmlClass 만 허용 — 수식 안에 입력 칸(span.dblank)을 심는 통로 */
+        window.katex.render(src, line, { displayMode: true, strict: false,
+          trust: function (ctx) { return ctx.command === '\\htmlClass'; } });
+        box.appendChild(line);
+      });
+    }
     box.querySelectorAll('.dblank').forEach(function (b, i) {
       b.dataset.i = i;
       b.addEventListener('click', function () { if (!graded) openPad(this); });

@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="styles/components.css?v=10" />
   <link rel="stylesheet" href="styles/learn-shell.css?v=8" />
   <link rel="stylesheet" href="styles/keypad.css?v=1" />
+  <link rel="stylesheet" href="scripts/vendor/katex/katex.min.css" />
   <style>
     /* 콘텐츠 패널을 세로 3분할: [상단 프로그레스 고정] [문제 스크롤] [채점 버튼 고정] */
     .content { position: relative; flex-direction: column; padding: 0 0 96px; overflow: hidden; --fade: var(--th-panel); }
@@ -140,6 +141,12 @@
 
     /* 계산기 키패드 = 공용 styles/keypad.css (마크업은 scripts/keypad.js) */
 
+    /* ===== 수식 본보기 (KaTeX · Phase 6-④) ===== */
+    .qblank--math { display: flex; flex-direction: column; gap: 4px; align-items: center; }
+    .qblank--math .mathline { font-size: 21px; }
+    .qblank--math .katex-display { margin: 10px 0; }
+    .qblank--math .dblank { min-width: 46px; padding: 0 10px; }
+
     /* ===== 하단 고정 채점 버튼 ===== */
     .ops__foot { flex: none; display: flex; justify-content: center; padding: 10px 0 4px; }
     .btn-grade { padding: 14px 44px; border-radius: 16px; background: var(--th-vivid); color: var(--n-000); font-weight: 800; font-size: 19px; box-shadow: 0 4px 0 var(--th-accent-strong); }   /* 정체성 칠면 450 */
@@ -269,8 +276,9 @@
   <script src="scripts/scratchpad.js?v=1"></script>
   <script src="scripts/debug-panel.js?v=3"></script>
   <!-- 키패드 물리 키보드 입력 (공용) -->
+  <script src="scripts/vendor/katex/katex.min.js"></script>
   <script src="scripts/keypad.js?v=1"></script>
   <script src="scripts/keypad-input.js?v=3"></script>
-  <script src="scripts/learn-drill.js?v=7"></script>
+  <script src="scripts/learn-drill.js?v=8"></script>
 </body>
 </html>
