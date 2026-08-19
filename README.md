@@ -45,7 +45,11 @@ RM/
 │  └─ training-result.html 학습 결과
 │
 ├─ styles/               tokens.css(색·글자 변수) · base · components · 화면별 CSS
-├─ scripts/              화면별 동작 JS + theme.js(라이트/다크) + space-bg.js(우주 배경)
+├─ scripts/              화면별 동작 JS + 공용 스크립트
+│  ├─ theme.js            라이트/다크
+│  ├─ space-bg.js         우주 배경
+│  ├─ debug-panel.js      검수 패널 (?debug=1 일 때만 — 아래 「검수 도구」 참고)
+│  └─ keypad-input.js     키패드에 컴퓨터 키보드 입력
 ├─ assets/               화면이 부르는 재료 — 전부 "쓰임" 기준으로 분류
 │  ├─ img/               그림(webp) — 코드가 그대로 띄우는 것
 │  │  ├─ bg/               화면 배경 (우주선·우주) 5장
@@ -63,11 +67,13 @@ RM/
 ├─ docs/                 깊은 문서 (아래 「문서 세 개」 참고)
 │  ├─ design-system.md     디자인 원칙과 토큰 구조
 │  ├─ design-tokens.json   토큰 스냅샷 (2026-07-14 시점)
-│  └─ plan-2026-07.md      7월 작업 계획 (보관용)
+│  ├─ plan-2026-07.md      7월 작업 계획 (보관용)
+│  └─ phase6-brief.md      다음 회차 착수 지시서 (끝나면 삭제)
 │
 ├─ figma-palette/        기존 팔레트 유지 스냅샷 (내부 비교용, 배포 제외)
 ├─ tools/                로컬 전용 검수 도구 (배포 제외)
 │  ├─ palette-preview.html 팔레트 미리보기
+│  ├─ cta-check.html       CTA가 홈 32배경에서 버티는지 자동 판정
 │  └─ home-contact.html    행성 홈 32화면 한눈에 보기 (비율 4:3·16:9·21:9 전환)
 ├─ video/                소개 영상 제작 폴더 (깃·배포 모두 제외, 아래 참고)
 │
@@ -101,6 +107,30 @@ RM/
 화면끼리 오가는 링크도 같은 기준이라 `href="type/quiz.html"`처럼 씁니다.
 
 최상위에 있는 `index.html`과 `styleguide.html`에는 **넣지 않습니다.**
+
+## 화면을 검수할 때 — 문제를 직접 풀지 않아도 됩니다
+
+주소 끝에 **`?debug=1`** 을 붙이면 화면 왼쪽 아래에 작은 패널이 뜹니다.
+정답·오답·전부 풀기·시간 초과 같은 상태를 버튼으로 오갈 수 있습니다.
+
+```
+concept/drill.html?debug=1
+```
+
+**주소만으로 특정 상태를 바로 열 수도 있습니다.** 스크린샷을 찍거나
+"이 상태 좀 봐 주세요"라고 공유할 때 씁니다.
+
+```
+concept/drill.html?debug=1&theme=dark&do=오답 처리
+```
+
+- `theme` — `light` / `dark`
+- `do` — 패널 버튼에 적힌 라벨 그대로. 여러 개는 `|` 로 이어 붙입니다
+
+`?debug=1`이 없으면 아무것도 안 보입니다. 배포본에서 학생이 볼 일은 없습니다.
+
+**키패드가 있는 화면에서는 컴퓨터 키보드도 됩니다** — 숫자, `Backspace`(지우기),
+`Enter`(확인). 태블릿 없이 검수할 때 편합니다.
 
 ## 색을 바꾸고 싶다면
 
