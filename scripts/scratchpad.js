@@ -24,7 +24,7 @@
     var buttons = [];
     var byId = document.getElementById('scratchBtn');
     if (byId) buttons.push(byId);
-    document.querySelectorAll('button.toolbtn, button.tbtn').forEach(function (b) {
+    document.querySelectorAll('button.toolbtn').forEach(function (b) {
       if (buttons.indexOf(b) < 0 && /연습장/.test(b.textContent)) buttons.push(b);
     });
     if (!buttons.length) return;

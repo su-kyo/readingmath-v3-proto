@@ -175,7 +175,7 @@
     .sblock { display: flex; flex-direction: column; gap: 11px; padding: 20px 0; border-top: 1px solid var(--line); }
     .sblock:first-child { padding-top: 2px; border-top: none; }
     .sblock:last-child { padding-bottom: 4px; }
-    .scap { font-size: 11px; font-weight: 800; letter-spacing: .09em; color: var(--faint); text-transform: uppercase; }
+    .dblock__cap { font-size: 11px; font-weight: 800; letter-spacing: .09em; color: var(--faint); text-transform: uppercase; }
     .sbadges { display: flex; gap: 6px; }
     .sbadge { padding: 4px 10px; border-radius: 7px; font-size: 12px; font-weight: 800; }
     .sbadge--con { background: var(--th-solid); color: var(--th-on-accent); }
@@ -189,16 +189,16 @@
     .pcard { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); padding: 15px 16px; display: flex; flex-direction: column; gap: 9px; }
     .pcard__q { font-size: 14px; font-weight: 700; color: var(--ink2); }
     .pcard__ex { text-align: center; font-family: var(--font-mono); font-size: 20px; font-weight: 700; letter-spacing: .01em; color: var(--ink); padding: 4px 0 2px; }
-    .hist { display: flex; flex-direction: column; }
-    .hitem { display: flex; align-items: center; gap: 11px; padding: 11px 0; border-top: 1px solid var(--line-2); }
-    .hitem:first-child { border-top: none; padding-top: 2px; }
-    .hicon { width: 24px; height: 24px; flex: none; border-radius: 50%; display: grid; place-items: center; color: var(--n-000); }
-    .hicon svg { width: 13px; height: 13px; }
-    .hicon--o { background: var(--good); } .hicon--x { background: var(--bad); }
-    .hitem__main { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-    .hitem__top { font-size: 13px; font-weight: 600; color: var(--ink2); }
-    .htag { font-weight: 800; } .htag--o { color: var(--ok-on-dark); } .htag--x { color: var(--no-on-dark); }
-    .hitem__time { font-family: var(--font-mono); font-size: 11.5px; color: var(--faint); font-variant-numeric: tabular-nums; }
+    .history { display: flex; flex-direction: column; }
+    .history__item { display: flex; align-items: center; gap: 11px; padding: 11px 0; border-top: 1px solid var(--line-2); }
+    .history__item:first-child { border-top: none; padding-top: 2px; }
+    .history__icon { width: 24px; height: 24px; flex: none; border-radius: 50%; display: grid; place-items: center; color: var(--n-000); }
+    .history__icon svg { width: 13px; height: 13px; }
+    .history__icon--ok { background: var(--good); } .history__icon--no { background: var(--bad); }
+    .history__main { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .history__top { font-size: 13px; font-weight: 600; color: var(--ink2); }
+    .history__tag { font-weight: 800; } .history__tag--ok { color: var(--ok-on-dark); } .history__tag--no { color: var(--no-on-dark); }
+    .history__time { font-family: var(--font-mono); font-size: 11.5px; color: var(--faint); font-variant-numeric: tabular-nums; }
 
     /* ===== 하단 액션 (투명 바 + 헤어라인) ===== */
     .sfoot { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 12px;
@@ -264,24 +264,24 @@
 
       <aside class="sinfo">
         <div class="sblock">
-          <span class="scap">유형 정보</span>
+          <span class="dblock__cap">유형 정보</span>
           <div class="sbadges"><span class="sbadge sbadge--con">정복</span><span class="sbadge sbadge--adv">심화</span></div>
           <span class="stype">올림이 없는 몇십몇 × 몇의 활용</span>
         </div>
         <div class="sblock">
-          <span class="scap">대표 유형 동영상</span>
+          <span class="dblock__cap">대표 유형 동영상</span>
           <div class="svideo"><span class="svideo__play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span></div>
         </div>
         <div class="sblock">
-          <span class="scap">대표 유형 문제</span>
+          <span class="dblock__cap">대표 유형 문제</span>
           <div class="pcard"><span class="pcard__q">다음 식을 계산하여 값을 구하시오.</span><span class="pcard__ex">124 + 352 = □</span></div>
         </div>
         <div class="sblock">
-          <span class="scap">최근 풀이 이력</span>
-          <div class="hist">
-            <div class="hitem"><span class="hicon hicon--o"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span><div class="hitem__main"><span class="hitem__top">시험 대비 · <span class="htag htag--o">정답</span></span><span class="hitem__time">2026.06.03. 09:00:00</span></div></div>
-            <div class="hitem"><span class="hicon hicon--x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg></span><div class="hitem__main"><span class="hitem__top">시험 대비 · <span class="htag htag--x">오답</span></span><span class="hitem__time">2026.06.02. 14:30:00</span></div></div>
-            <div class="hitem"><span class="hicon hicon--o"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span><div class="hitem__main"><span class="hitem__top">시험 대비 · <span class="htag htag--o">정답</span></span><span class="hitem__time">2026.05.30. 16:12:40</span></div></div>
+          <span class="dblock__cap">최근 풀이 이력</span>
+          <div class="history">
+            <div class="history__item"><span class="history__icon history__icon--ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span><div class="history__main"><span class="history__top">시험 대비 · <span class="history__tag history__tag--ok">정답</span></span><span class="history__time">2026.06.03. 09:00:00</span></div></div>
+            <div class="history__item"><span class="history__icon history__icon--no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg></span><div class="history__main"><span class="history__top">시험 대비 · <span class="history__tag history__tag--no">오답</span></span><span class="history__time">2026.06.02. 14:30:00</span></div></div>
+            <div class="history__item"><span class="history__icon history__icon--ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span><div class="history__main"><span class="history__top">시험 대비 · <span class="history__tag history__tag--ok">정답</span></span><span class="history__time">2026.05.30. 16:12:40</span></div></div>
           </div>
         </div>
       </aside>
