@@ -1,0 +1,97 @@
+/* ============================================================
+   keypad.css — 주관식 숫자 키패드 한 벌 (Phase 6 통일)
+   ------------------------------------------------------------
+   마크업은 scripts/keypad.js(RMKeypad.html)가 만든다.
+   골격은 개념 훈련 키패드(구 .kp-key 모달): 틴트 트레이 + 흰 키 +
+   어두운 LCD 디스플레이. 계산기는 우주선의 '물건'이라
+   라이트·다크 어디서나 같은 모습이다(프레임은 정적 원칙).
+   섹션 차이는 --th-* 슬롯 값 교체만으로 난다.
+
+   .keypad             트레이 + 그리드(+디스플레이) — 붙박이 자리
+   .keypad--float      떠 있는 자리: fixed + 그림자 + 여닫이
+   ============================================================ */
+
+.keypad{
+  width: 244px; padding: 12px;
+  border-radius: 22px;
+  background: var(--th-chip);
+  border: 1.5px solid var(--border-strong);
+  box-shadow: inset 0 0 0 3.5px var(--n-050);   /* 안쪽 링(베젤) */
+}
+
+.keypad__display{
+  height: 50px;
+  border-radius: var(--r-md);
+  background: var(--n-700);
+  color: var(--th-accent-hi);
+  font-family: var(--font-mono);
+  font-size: 24px; font-weight: var(--fw-bold);
+  font-variant-numeric: tabular-nums;
+  display: flex; align-items: center; justify-content: flex-end;
+  padding: 0 14px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+/* 채점형(서술형 다지기)의 오답 표시 */
+.keypad__display.is-wrong{
+  box-shadow: inset 0 0 0 1.5px var(--no-solid);
+  color: var(--no-on-dark);
+  animation: kpShake .3s;
+}
+@keyframes kpShake{ 0%,100%{transform:translateX(0)} 25%{transform:translateX(-4px)} 75%{transform:translateX(4px)} }
+@media (prefers-reduced-motion: reduce){ .keypad__display.is-wrong{ animation: none; } }
+
+.keypad__grid{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.keypad__key{
+  height: 46px;
+  border: 0; cursor: pointer;
+  border-radius: var(--r-md);
+  background: var(--n-000);
+  color: var(--n-650);
+  font-family: var(--font-mono);
+  font-size: 19px; font-weight: var(--fw-bold);
+  font-variant-numeric: tabular-nums;
+  display: inline-flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 3px rgba(20, 40, 90, 0.1);
+  transition: background var(--t-fast);
+}
+.keypad__key:hover{ background: var(--n-050); }
+.keypad__key:active{ transform: translateY(1px); box-shadow: none; }
+.keypad__key svg{ width: 20px; height: 20px; }
+
+/* 기능키(⌫·C·−) — 섹션 액센트 글자 + 옅은 틴트 */
+.keypad__key--fn{
+  background: color-mix(in srgb, var(--th-accent) 8%, var(--n-000));
+  color: var(--th-ink-accent);
+  font-family: var(--font-sans);
+  font-size: 18px;
+}
+.keypad__key--fn:hover{ background: color-mix(in srgb, var(--th-accent) 15%, var(--n-000)); }
+
+/* 확인 — 채점/확인 버튼 = 정체성 칠면(450) + 19px w800 라벨 (§3.0b-B) */
+.keypad__key--ok{
+  grid-column: span 2;
+  background: var(--th-vivid);
+  color: var(--th-on-accent, #fff);
+  font-family: var(--font-sans);
+  font-size: 19px; font-weight: var(--fw-heavy);
+  box-shadow: none;
+}
+.keypad__key--ok:hover{ filter: brightness(1.06); }
+
+/* ── 떠 있는 자리 (개념·유형 — 빈칸 옆) ── */
+.keypad--float{
+  position: fixed; z-index: 400;
+  box-shadow: 0 24px 55px rgba(9, 19, 40, 0.4), inset 0 0 0 3.5px var(--n-050);
+  opacity: 0; visibility: hidden; translate: 0 6px;
+  transition: opacity .14s ease, translate .14s ease, visibility .14s;
+}
+.keypad--float.is-open{ opacity: 1; visibility: visible; translate: 0 0; }
+
+/* 채점 뒤 잠금 (시험) */
+.keypad.is-locked{ opacity: .45; pointer-events: none; }

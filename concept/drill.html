@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="styles/base.css?v=7" />
   <link rel="stylesheet" href="styles/components.css?v=10" />
   <link rel="stylesheet" href="styles/learn-shell.css?v=8" />
+  <link rel="stylesheet" href="styles/keypad.css?v=1" />
   <style>
     /* 콘텐츠 패널을 세로 3분할: [상단 프로그레스 고정] [문제 스크롤] [채점 버튼 고정] */
     .content { position: relative; flex-direction: column; padding: 0 0 96px; overflow: hidden; --fade: var(--th-panel); }
@@ -137,26 +138,7 @@
     .ans-correct.show { display: inline-flex; }
     .ans-correct b { color: var(--st-ok); font-size: 19px; }
 
-    /* ===== 계산기 키패드 (라이트·다크 공통 / 과목색 베리에이션) ===== */
-    .keypad {
-      position: fixed; z-index: 45; width: 244px; padding: 12px;
-      background: var(--th-chip); border-radius: 22px; border: 1.5px solid var(--border-strong);
-      box-shadow: 0 24px 55px rgba(10,24,60,.42), inset 0 0 0 3.5px var(--n-050);   /* 피그마 정합: 외곽 테두리 + 안쪽 링(베젤) */
-      opacity: 0; visibility: hidden; translate: 0 6px; transition: opacity .14s, translate .14s, visibility .14s;
-      --kp-accent: var(--th-accent); --kp-num: var(--cyan-400);   /* 기본(개념) = 블루/시안 */
-    }
-    .keypad.is-open { opacity: 1; visibility: visible; translate: 0 0; }
-    .keypad--type  { --kp-accent: var(--teal-500); --kp-num: var(--teal-300); }   /* 유형 */
-    .keypad--essay { --kp-accent: var(--violet-500); --kp-num: var(--violet-300); }   /* 서술형 */
-    .keypad__display { height: 50px; border-radius: 12px; background: var(--n-700); color: var(--kp-num); display: flex; align-items: center; justify-content: flex-end; padding: 0 16px; font-size: 24px; font-weight: 700; font-family: var(--font-mono); margin-bottom: 10px; }
-    .keypad__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-    .kp-key { height: 46px; border-radius: 12px; background: var(--n-000); color: var(--n-600); font-weight: 700; font-size: 18px; font-family: var(--font-sans); display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 3px rgba(20,40,90,.1); }
-    .kp-key:hover { background: var(--n-050); }
-    .kp-key:active { transform: translateY(1px); box-shadow: none; }
-    .kp-key--op { color: var(--kp-accent); font-size: 20px; }
-    .kp-key[data-k="0"] { grid-column: span 2; }
-    .kp-ok { grid-column: span 4; height: 48px; background: var(--th-vivid); color: var(--n-000); font-weight: 800; font-size: 19px; box-shadow: none; }   /* 정체성 칠면 450 — 흰 굵은 글자 3:1 */
-    .kp-ok:hover { background: var(--kp-accent); filter: brightness(1.08); }
+    /* 계산기 키패드 = 공용 styles/keypad.css (마크업은 scripts/keypad.js) */
 
     /* ===== 하단 고정 채점 버튼 ===== */
     .ops__foot { flex: none; display: flex; justify-content: center; padding: 10px 0 4px; }
@@ -262,28 +244,8 @@
       </main>
     </div>
 
-    <!-- 계산기 키패드 (주관식) -->
-    <div class="keypad" id="keypad" role="dialog" aria-label="숫자 입력">
-      <div class="keypad__display">0</div>
-      <div class="keypad__grid">
-        <button class="kp-key" data-k="7">7</button>
-        <button class="kp-key" data-k="8">8</button>
-        <button class="kp-key" data-k="9">9</button>
-        <button class="kp-key kp-key--op" data-k="back">⌫</button>
-        <button class="kp-key" data-k="4">4</button>
-        <button class="kp-key" data-k="5">5</button>
-        <button class="kp-key" data-k="6">6</button>
-        <button class="kp-key kp-key--op" data-k="+">+</button>
-        <button class="kp-key" data-k="1">1</button>
-        <button class="kp-key" data-k="2">2</button>
-        <button class="kp-key" data-k="3">3</button>
-        <button class="kp-key kp-key--op" data-k="-">−</button>
-        <button class="kp-key" data-k="0">0</button>
-        <button class="kp-key" data-k=".">.</button>
-        <button class="kp-key kp-key--op" data-k="clear">↻</button>
-        <button class="kp-key kp-ok" data-k="ok">확인</button>
-      </div>
-    </div>
+    <!-- 계산기 키패드 (주관식) — 안은 scripts/keypad.js가 채운다 -->
+    <div class="keypad keypad--float" id="keypad" role="dialog" aria-label="숫자 입력"></div>
 
     <!-- 하단 콘솔 바 -->
     <div class="bar">
@@ -305,7 +267,8 @@
   <!-- 검수용 디버그 패널 (?debug=1 일 때만 보임) -->
   <script src="scripts/debug-panel.js?v=3"></script>
   <!-- 키패드 물리 키보드 입력 (공용) -->
-  <script src="scripts/keypad-input.js?v=2"></script>
-  <script src="scripts/learn-drill.js?v=6"></script>
+  <script src="scripts/keypad.js?v=1"></script>
+  <script src="scripts/keypad-input.js?v=3"></script>
+  <script src="scripts/learn-drill.js?v=7"></script>
 </body>
 </html>

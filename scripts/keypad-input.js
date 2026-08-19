@@ -5,26 +5,23 @@
    입력 로직을 따로 만들지 않는다 — 눌린 키에 해당하는 **화면 키패드 버튼을 대신
    클릭**해 준다. 그래서 채점·표시·다음 단계 이동까지 손으로 누른 것과 완전히 같다.
 
-   지금 화면에 키패드가 세 종류 있다(Phase 6에서 한 벌로 통일 예정).
-   이 파일은 세 종류를 모두 받으므로, 통일되면 이 파일만 손보면 된다.
+   키패드는 Phase 6에서 한 벌(scripts/keypad.js · .keypad__key[data-k])로
+   통일됐다. 자리만 두 가지다:
+     · 떠 있는 자리  .keypad--float.is-open (개념·유형) / .qpop.is-open (서술형)
+     · 붙박이 자리   .keypad (과제·시험 — 화면에 늘 보임)
 
-     ① 개념·유형   #keypad.is-open  안의  .kp-key[data-k]      (모달형)
-     ② 과제·시험   .keypad          안의  .kp[data-k]          (화면에 늘 보임)
-     ③ 서술형      #qpop.is-open    안의  .qpop__key[data-k]   (빈칸 드롭다운)
-
-   키 대응 : 0~9 / Backspace=지우기 / Delete=전체지우기 / Enter=확인 / . - +
+   키 대응 : 0~9 / Backspace=지우기 / Delete=전체지우기 / Enter=확인 / .(소수점) / -(부호)
    ========================================================================= */
 (function () {
   'use strict';
 
-  // 키보드 키 → 키패드 버튼의 data-k 후보 (화면마다 이름이 조금 다르다)
+  // 키보드 키 → 키패드 버튼의 data-k (통일된 한 벌 기준)
   var MAP = {
-    'Backspace': ['back'],
-    'Delete': ['clear'],
-    'Enter': ['ok'],
-    '.': ['.', 'dot'],
-    '-': ['-', 'minus'],
-    '+': ['+']
+    'Backspace': 'back',
+    'Delete': 'clear',
+    'Enter': 'ok',
+    '.': 'dot',
+    '-': 'minus'
   };
 
   /* 화면에 실제로 보이는가.
@@ -65,13 +62,10 @@
   }
 
   function keyFor(pad, e) {
-    var names = MAP[e.key] || (/^[0-9]$/.test(e.key) ? [e.key] : null);
-    if (!names) return null;
-    for (var i = 0; i < names.length; i++) {
-      var btn = pad.querySelector('[data-k="' + names[i] + '"]');
-      if (btn && !btn.disabled) return btn;
-    }
-    return null;
+    var name = MAP[e.key] || (/^[0-9]$/.test(e.key) ? e.key : null);
+    if (!name) return null;
+    var btn = pad.querySelector('[data-k="' + name + '"]');
+    return (btn && !btn.disabled) ? btn : null;
   }
 
   document.addEventListener('keydown', function (e) {

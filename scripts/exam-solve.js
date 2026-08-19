@@ -72,12 +72,7 @@
     }
 
     if (Q.type === 'short') {
-      var keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'clear', '0', 'back'];
-      var keypad = keys.map(function (k) {
-        var fn = k === 'back' || k === 'clear';
-        var label = k === 'back' ? ICON.back : k === 'clear' ? 'C' : k;
-        return '<button class="kp' + (fn ? ' kp--fn' : '') + '" data-k="' + k + '">' + label + '</button>';
-      }).join('');
+      var keypad = window.RMKeypad.html({ display: false });   /* 키 구성 정본 = scripts/keypad.js */
       html += '<div class="short"><span class="short__label">답</span>' +
         '<div class="short__field" id="shortField">' +
         '<input class="short__input" id="shortInput" readonly placeholder="키패드로 입력" autocomplete="off" />' +
@@ -131,11 +126,10 @@
   }
   qarea.addEventListener('click', function (e) {
     if (submitted) return;
-    var k = e.target.closest('.kp'); if (!k) return;
+    var k = e.target.closest('.keypad__key'); if (!k) return;
     var inp = document.getElementById('shortInput'); var key = k.dataset.k;
-    if (key === 'back') inp.value = inp.value.slice(0, -1);
-    else if (key === 'clear') inp.value = '';
-    else if (inp.value.length < 7) inp.value += key;
+    if (key === 'ok') { if (!primaryBtn.disabled) primaryBtn.click(); return; }   /* 확인 = 답 확정(제출) */
+    inp.value = window.RMKeypad.apply(inp.value, key, { max: 7 });
     updateShort();
   });
 

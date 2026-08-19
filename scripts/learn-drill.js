@@ -80,6 +80,7 @@
 
   /* ---- 주관식/빈칸 숫자 키패드 ---- */
   var pad = document.getElementById('keypad');
+  pad.innerHTML = window.RMKeypad.html();          /* 키 구성 정본 = scripts/keypad.js */
   var kpDisplay = pad.querySelector('.keypad__display');
   var activeInput = null;
   function positionPad(input) {
@@ -101,14 +102,12 @@
   }
   function closePad() { pad.classList.remove('is-open'); if (activeInput) activeInput.classList.remove('is-active-input'); activeInput = null; }
   pad.addEventListener('click', function (e) { e.stopPropagation(); });
-  pad.querySelectorAll('.kp-key').forEach(function (key) {
+  pad.querySelectorAll('[data-k]').forEach(function (key) {
     key.addEventListener('click', function () {
       if (!activeInput) return;
-      var k = key.dataset.k, v = getV(activeInput);
-      if (k === 'back') v = v.slice(0, -1);
-      else if (k === 'clear') v = '';
-      else if (k === 'ok') { closePad(); return; }
-      else v += k;
+      var k = key.dataset.k;
+      if (k === 'ok') { closePad(); return; }
+      var v = window.RMKeypad.apply(getV(activeInput), k);
       setV(activeInput, v); kpDisplay.textContent = v || '0'; checkFilled();
     });
   });

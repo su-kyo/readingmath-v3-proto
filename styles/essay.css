@@ -52,60 +52,34 @@
 .blank.is-sel .blank__badge { color: var(--bl-selbadge); }
 
 /* ============ 빈칸 입력 드롭다운 (팝오버) ============ */
-.qpop { position: fixed; z-index: 200; width: max-content; max-width: 320px; display: none; }
+/* Phase 6: 껍데기를 공용 키패드 트레이(keypad.css)와 같은 정적 하드웨어 톤으로 통일.
+   계산기처럼 라이트·다크 어디서나 같은 모습 — 모드 분기 없음.
+   주관식 키패드의 안쪽(디스플레이·키)은 keypad.css가 담당, 마크업은 scripts/keypad.js. */
+.qpop { position: fixed; z-index: 400; width: max-content; max-width: 320px; display: none; }
 .qpop.is-open { display: block; }
-/* 공용 중간톤(라이트·다크 공용) — 라이트 패널 위에선 진해서, 다크 패널 위에선 밝아서 대비.
-   개념/서술형 어디서든 재사용 가능하도록 모드 분기 없이 한 팔레트로 통일. */
-.qpop__inner { position: relative; background: var(--n-500); border: 1px solid var(--n-500); border-radius: 14px;
-  padding: 9px; box-shadow: 0 18px 42px -14px rgba(20,10,50,.55); font-family: var(--font-sans); animation: qpop .13s ease; }
+.qpop__inner { position: relative; background: var(--th-chip); border: 1.5px solid var(--border-strong); border-radius: 20px;
+  padding: 10px; box-shadow: 0 18px 42px -14px rgba(20,10,50,.45), inset 0 0 0 3.5px var(--n-050);
+  font-family: var(--font-sans); animation: qpop .13s ease; }
 @keyframes qpop { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .qpop__inner { animation: none; } }
 /* 캐럿 */
-.qpop__caret { position: absolute; width: 12px; height: 12px; background: var(--n-500); border: 1px solid var(--n-500); transform: rotate(45deg); }
+.qpop__caret { position: absolute; width: 12px; height: 12px; background: var(--th-chip); border: 1.5px solid var(--border-strong); transform: rotate(45deg); }
 .qpop:not(.qpop--up) .qpop__caret { border-right: 0; border-bottom: 0; }   /* 위쪽 화살표(아래로 열림) */
 .qpop.qpop--up .qpop__caret { border-left: 0; border-top: 0; }             /* 아래쪽 화살표(위로 열림) */
 /* 객관식 옵션 = 세로 1열로 쌓기 (긴 수식도 수용) */
 .qpop__opts { display: flex; flex-direction: column; gap: 6px; min-width: 168px; }
-.pop-opt { width: 100%; text-align: center; padding: 10px 14px; border-radius: 10px; border: 1.5px solid var(--n-500);
-  background: rgba(255,255,255,.06); color: var(--n-050); font-family: var(--font-serif); font-size: 17px; font-weight: 700;
+.pop-opt { width: 100%; text-align: center; padding: 10px 14px; border-radius: 10px; border: 1.5px solid var(--n-100);
+  background: var(--n-000); color: var(--n-650); font-family: var(--font-serif); font-size: 17px; font-weight: 700;
   line-height: 1.35; white-space: normal; word-break: keep-all; cursor: pointer; transition: border-color .12s, background .12s, opacity .2s; }
-.pop-opt:hover { border-color: var(--primary); background: color-mix(in srgb, var(--orange-400) 24%, transparent); color: var(--n-000); }
-.pop-opt.is-wrong { border-color: var(--no-solid); background: rgba(229,88,95,.2); animation: qShake .3s; }
+.pop-opt:hover { border-color: var(--primary); background: color-mix(in srgb, var(--orange-400) 15%, var(--n-000)); }
+.pop-opt.is-wrong { border-color: var(--no-ink); background: color-mix(in srgb, var(--no-solid) 10%, var(--n-000)); animation: qShake .3s; }
 /* 이미 쓴 선지 = 흐리게만. 취소선은 긋지 않는다(내용을 읽기 어렵게 만든다) */
 .pop-opt.is-dead { opacity: .34; filter: grayscale(.5); pointer-events: none; }
 @keyframes qShake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-4px)} 75%{transform:translateX(4px)} }
 @media (prefers-reduced-motion: reduce) { .pop-opt.is-wrong { animation: none; } }
 
-/* 주관식 = 숫자 키패드 (개념 훈련 계산기의 서술형 버전) */
+/* 주관식 = 공용 숫자 키패드 (keypad.css) — 폭만 여기서 잡는다 */
 .qpop__pad { width: 208px; }
-/* 입력 디스플레이 = 라이트·다크 공통으로 '움푹한 입력 박스' 느낌(테두리 인셋) + 크리스프 숫자 */
-.qpop__display { height: 44px; border-radius: 10px; background: var(--n-800); color: var(--n-000);
-  box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.12);
-  display: flex; align-items: center; justify-content: flex-end; padding: 0 14px; margin-bottom: 8px;
-  font-family: var(--font-mono); font-size: 22px; font-weight: 800; letter-spacing: .01em; }
-.qpop__display.is-wrong { box-shadow: inset 0 0 0 1.5px var(--no-solid); color: var(--no-on-dark); animation: qShake .3s; }
-@media (prefers-reduced-motion: reduce) { .qpop__display.is-wrong { animation: none; } }
-.qpop__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-.qpop__key { height: 44px; border-radius: 10px; border: 0; background: rgba(255,255,255,.07); color: var(--n-000);
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-mono); font-weight: 700; font-size: 17px; cursor: pointer; transition: background .12s; }
-.qpop__key:hover { background: rgba(255,255,255,.14); }
-.qpop__key svg { width: 19px; height: 19px; }
-.qpop__key--ok { grid-column: span 2; background: var(--primary); color: var(--n-000); font-family: var(--font-sans); font-weight: 800; font-size: 19px; }   /* CTA 라벨 규칙 ≥19px */
-.qpop__key--ok:hover { background: var(--primary-hover); }
-
-/* ── 라이트 전용: 톤 완화(밝은 라벤더 팝오버 + 진한 잉크). 다크는 위 공용 팔레트 유지 ── */
-:root[data-theme="light"] .qpop__inner { background: var(--n-050); border-color: var(--n-100); box-shadow: 0 16px 38px -16px rgba(60,40,120,.30), 0 2px 8px rgba(60,40,120,.08); }
-:root[data-theme="light"] .qpop__caret { background: var(--n-050); border-color: var(--n-100); }
-:root[data-theme="light"] .pop-opt { border-color: var(--n-100); background: var(--n-050); color: var(--n-650); }
-:root[data-theme="light"] .pop-opt:hover { border-color: var(--primary); background: color-mix(in srgb, var(--orange-400) 15%, transparent); }
-:root[data-theme="light"] .pop-opt.is-wrong { border-color: var(--no-ink); background: rgba(199,60,67,.10); }
-:root[data-theme="light"] .qpop__display { background: var(--n-000); color: var(--n-800); box-shadow: inset 0 0 0 1.5px var(--n-200); }
-:root[data-theme="light"] .qpop__display.is-wrong { color: var(--no-ink); box-shadow: inset 0 0 0 1.5px var(--no-solid); }
-:root[data-theme="light"] .qpop__key { background: var(--n-000); color: var(--n-800); box-shadow: inset 0 0 0 1px var(--n-100); }
-:root[data-theme="light"] .qpop__key:hover { background: var(--n-100); }
-:root[data-theme="light"] .qpop__key--ok { background: var(--primary); color: var(--n-000); box-shadow: none; }
-:root[data-theme="light"] .qpop__key--ok:hover { background: var(--primary-hover); }
 
 /* ============ 하단바 = 서술형 버전 (퍼플 트레이 + 오렌지 CTA) ============ */
 /* 바이올렛 램프에 맞춘 값. 양옆 콘솔 데코 SVG(console-essay-*.svg)의 면색도 동일하게 맞춤. */

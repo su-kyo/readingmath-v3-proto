@@ -55,25 +55,10 @@
   var cur = 0;
   var openShort = -1; // 답안표에서 키패드가 펼쳐진 주관식 문항 (−1=없음)
 
-  // ── 키패드 공용 (문제 패널 · 답안표 공유) ──
-  function keypadHTML() {
-    var keys = ['7', '8', '9', 'back', '4', '5', '6', 'clear', '1', '2', '3', 'minus', '0', 'dot'];
-    return keys.map(function (k) {
-      var fn = (k === 'back' || k === 'clear');
-      var label = k === 'back' ? IC.back : k === 'clear' ? 'C' : k === 'minus' ? '−' : k === 'dot' ? '.' : k;
-      var span = k === '0' ? ' style="grid-column:span 2"' : '';
-      return '<button class="kp' + (fn ? ' kp--fn' : '') + '" data-k="' + k + '"' + span + '>' + label + '</button>';
-    }).join('');
-  }
+  // ── 키패드 공용 (문제 패널 · 답안표 공유) — 정본은 scripts/keypad.js ──
+  function keypadHTML() { return window.RMKeypad.html({ display: false }); }
   // 키 입력을 현재 값 문자열에 적용 (숫자 최대 6자리)
-  function applyKey(v, key) {
-    if (key === 'back') v = v.slice(0, -1);
-    else if (key === 'clear') v = '';
-    else if (key === 'minus') v = (v.charAt(0) === '−') ? v.slice(1) : '−' + v;
-    else if (key === 'dot') { if (v.indexOf('.') === -1 && v !== '' && v !== '−') v += '.'; }
-    else if (v.replace('−', '').replace('.', '').length < 6) v += key;
-    return v;
-  }
+  function applyKey(v, key) { return window.RMKeypad.apply(v, key, { max: 6 }); }
 
   var qpanel = document.getElementById('qpanel');
   var omrGrid = document.getElementById('omrGrid');
@@ -139,8 +124,9 @@
   qpanel.addEventListener('click', function (e) {
     var opt = e.target.closest('.opt');
     if (opt) { answers[cur] = +opt.dataset.i; render(); return; }
-    var k = e.target.closest('.kp');
+    var k = e.target.closest('.keypad__key');
     if (k) {
+      if (k.dataset.k === 'ok') { if (!nextBtn.disabled) nextBtn.click(); return; }   /* 확인 = 이 문항 입력 끝 → 다음 문항 */
       var v = applyKey(answers[cur] == null ? '' : String(answers[cur]), k.dataset.k);
       answers[cur] = v === '' ? null : v;
       var el = document.getElementById('shortVal'); if (el) el.textContent = v;
@@ -181,8 +167,7 @@
           pad = '<div class="qrow__pad" data-pad="' + i + '">' +
             '<div class="short__field"><span class="short__val">' + val + '</span>' +
             (q.unit ? '<span class="short__unit">' + q.unit + '</span>' : '') + '</div>' +
-            '<div class="keypad">' + keypadHTML() + '</div>' +
-            '<button class="qrow__pad-ok" data-pad-ok="' + i + '">입력 완료</button></div>';
+            '<div class="keypad">' + keypadHTML() + '</div></div>';
         }
       } else {
         body = '<div class="qrow__opts">' + q.opts.map(function (o, oi) {
@@ -222,13 +207,11 @@
       if (qi === cur) render();
       return;
     }
-    // 주관식 '입력 완료' = 답 확정(이미 저장됨) + 아코디언 접기
-    var padOk = e.target.closest('.qrow__pad-ok');
-    if (padOk) { openShort = -1; renderSheet(true); refreshGrid(); return; }
-    // 주관식 인라인 키패드 입력
+    // 주관식 인라인 키패드 입력 (확인 = 답 확정 + 아코디언 접기)
     var pad = e.target.closest('.qrow__pad');
     if (pad) {
-      var k = e.target.closest('.kp'); if (!k) return;
+      var k = e.target.closest('.keypad__key'); if (!k) return;
+      if (k.dataset.k === 'ok') { openShort = -1; renderSheet(true); refreshGrid(); return; }
       var i = +pad.dataset.pad;
       var v = applyKey(answers[i] == null ? '' : String(answers[i]), k.dataset.k);
       answers[i] = v === '' ? null : v;

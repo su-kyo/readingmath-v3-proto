@@ -8,6 +8,7 @@
   <script>try{if(localStorage.getItem('rm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
   <link rel="stylesheet" href="styles/tokens.css?v=23" />
   <link rel="stylesheet" href="styles/base.css?v=7" />
+  <link rel="stylesheet" href="styles/keypad.css?v=1" />
   <style>
     /* =========================================================================
        시험대비 문제 풀이 — 모던 툴 UI
@@ -155,15 +156,8 @@
     .short__answer { font-size: 14px; color: var(--muted); }
     .short__answer b { color: var(--good); font-weight: 800; font-family: var(--font-mono); }
     /* 키패드 (주관식 입력) */
-    .keypad { display: grid; grid-template-columns: repeat(3, 74px); gap: 8px; margin-top: 4px; }
-    .kp { height: 50px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface);
-      font-family: var(--font-mono); font-size: 19px; font-weight: 700; color: var(--ink); cursor: pointer;
-      display: grid; place-items: center; transition: .1s; font-variant-numeric: tabular-nums; }
-    .kp:hover { border-color: var(--line-strong); background: var(--hover); }
-    .kp:active { background: var(--accent-tint); border-color: var(--accent-tint-br); }
-    .kp--fn { color: var(--muted); }
-    .kp--fn svg { width: 19px; height: 19px; }
-    .keypad.is-locked { opacity: .45; pointer-events: none; }
+    /* 키패드 = 공용 styles/keypad.css (마크업·키 구성은 scripts/keypad.js) */
+    .keypad { margin-top: 4px; }
 
     /* 해설 */
     .explain { border: 1px solid var(--line); background: var(--rail); border-radius: var(--r-md); padding: 16px 18px;
@@ -318,7 +312,8 @@
   <!-- 검수용 디버그 패널 (?debug=1 일 때만 보임) -->
   <script src="scripts/debug-panel.js?v=3"></script>
   <!-- 키패드 물리 키보드 입력 (공용) -->
-  <script src="scripts/keypad-input.js?v=2"></script>
-  <script src="scripts/exam-solve.js?v=2"></script>
+  <script src="scripts/keypad.js?v=1"></script>
+  <script src="scripts/keypad-input.js?v=3"></script>
+  <script src="scripts/exam-solve.js?v=3"></script>
 </body>
 </html>

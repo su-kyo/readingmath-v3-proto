@@ -8,6 +8,7 @@
   <script>try{if(localStorage.getItem('rm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
   <link rel="stylesheet" href="styles/tokens.css?v=23" />
   <link rel="stylesheet" href="styles/monitor.css?v=1" />
+  <link rel="stylesheet" href="styles/keypad.css?v=1" />
   <style>
     /* =========================================================================
        과제 센터 · 풀이 화면 (assignment-solve) — 우주 셸
@@ -90,12 +91,7 @@
     .short__val { font-family: var(--font-mono); font-size: 22px; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; min-width: 1ch; }
     .short__val:empty::before { content: "답을 입력해주세요"; font-family: var(--font-sans); font-size: 16px; font-weight: 500; color: var(--sub); opacity: .7; }
     .short__unit { font-size: 16px; font-weight: 700; color: var(--sub); }
-    .keypad { display: grid; grid-template-columns: repeat(4, 56px); gap: 8px; }
-    .kp { height: 48px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface-3); color: var(--text); font-family: var(--font-mono); font-size: 20px; font-weight: 700; cursor: pointer; transition: .1s; display: grid; place-items: center; }
-    .kp:hover { background: var(--opt-hover); }
-    .kp:active { transform: translateY(1px); }
-    .kp--fn { color: var(--th-accent); background: var(--th-tint); }
-    .kp svg { width: 20px; height: 20px; }
+    /* 키패드 = 공용 styles/keypad.css (마크업·키 구성은 scripts/keypad.js) */
 
     /* ===== OMR 사이드바 ===== */
     .seg { flex: none; display: flex; gap: 3px; padding: 3px; background: var(--n-200); border-radius: 999px; }
@@ -145,13 +141,9 @@
     .qrow__chev { width: 16px; height: 16px; flex: none; color: var(--sub); transition: transform .2s; }
     .qrow__short.is-open .qrow__chev { transform: rotate(180deg); color: var(--yellow); }
     /* 주관식 인라인 키패드 패널 */
-    .qrow__pad { display: flex; flex-direction: column; align-items: center; gap: 12px; margin: -2px 4px 4px; padding: 16px; border: 1px solid var(--line); border-radius: 16px; background: var(--panel); animation: padDrop .2s ease; }
+    .qrow__pad { display: flex; flex-direction: column; align-items: center; gap: 12px; margin: -2px 4px 8px; animation: padDrop .2s ease; }   /* 트레이(키패드)가 이미 면이라 박스를 덧대지 않는다 */
     @keyframes padDrop { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
     @media (prefers-reduced-motion: reduce) { .qrow__pad { animation: none; } }
-    /* 키패드 아래 입력완료 = 답 확정 + 아코디언 접기 */
-    .qrow__pad-ok { width: 100%; padding: 11px; border: 0; border-radius: 12px; background: var(--th-solid); color: var(--n-000); font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer; transition: filter .1s; }
-    .qrow__pad-ok:hover { filter: brightness(1.06); }
-    .qrow__pad-ok:active { transform: translateY(1px); }
     .sheet__list::-webkit-scrollbar { width: 10px; }
     .sheet__list::-webkit-scrollbar-thumb { background: var(--n-200); border-radius: 999px; border: 3px solid var(--panel); background-clip: padding-box; }
 
@@ -273,7 +265,8 @@
   <!-- 검수용 디버그 패널 (?debug=1 일 때만 보임) -->
   <script src="scripts/debug-panel.js?v=3"></script>
   <!-- 키패드 물리 키보드 입력 (공용) -->
-  <script src="scripts/keypad-input.js?v=2"></script>
-  <script src="scripts/assignment-solve.js?v=4"></script>
+  <script src="scripts/keypad.js?v=1"></script>
+  <script src="scripts/keypad-input.js?v=3"></script>
+  <script src="scripts/assignment-solve.js?v=5"></script>
 </body>
 </html>

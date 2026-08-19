@@ -150,13 +150,6 @@
     caret.style.top = up ? (ph - 6) + 'px' : '-6px';
   }
 
-  // 숫자 키패드 (개념 훈련 계산기의 서술형 버전) — 7-9⌫ / 4-6C / 1-3− / 0.확인
-  var PAD_KEYS = [
-    ['7', '7'], ['8', '8'], ['9', '9'], ['back', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5H9l-6 7 6 7h11a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1z"/><path d="M16 9l-4 4M12 9l4 4"/></svg>'],
-    ['4', '4'], ['5', '5'], ['6', '6'], ['clear', 'C'],
-    ['1', '1'], ['2', '2'], ['3', '3'], ['-', '−'],
-    ['0', '0'], ['.', '.'], ['ok', '확인']
-  ];
   var buffer = '';
 
   function openPop(anchor) {
@@ -172,12 +165,9 @@
       }).join('') + '</div>';
     } else {
       buffer = answers[id] || '';   // 이미 입력한 값이 있으면 이어서 수정
-      var grid = PAD_KEYS.map(function (k) {
-        return '<button class="qpop__key' + (k[0] === 'ok' ? ' qpop__key--ok' : '') +
-          '" data-k="' + k[0] + '">' + k[1] + '</button>';
-      }).join('');
-      popBody.innerHTML = '<div class="qpop__pad"><div class="qpop__display" id="popDisp">' + (buffer || '0') + '</div>' +
-        '<div class="qpop__grid">' + grid + '</div></div>';
+      popBody.innerHTML = '<div class="qpop__pad">' + window.RMKeypad.html() + '</div>';
+      var disp = popBody.querySelector('.keypad__display');
+      disp.id = 'popDisp'; disp.textContent = buffer || '0';   /* 키패드 정본 = scripts/keypad.js */
     }
 
     pop.classList.add('is-open');
@@ -199,12 +189,8 @@
 
   // 키패드 입력 처리
   function handleKey(k) {
-    if (k === 'back') buffer = buffer.slice(0, -1);
-    else if (k === 'clear') buffer = '';
-    else if (k === 'ok') { if (buffer !== '') submit(buffer); return; }
-    else if (k === '-') buffer = buffer.charAt(0) === '-' ? buffer.slice(1) : '-' + buffer;  // 부호 토글
-    else if (k === '.') { if (buffer.replace('-', '').indexOf('.') < 0) buffer += (buffer === '' || buffer === '-' ? '0.' : '.'); }
-    else buffer += k;
+    if (k === 'ok') { if (buffer !== '') submit(buffer); return; }
+    buffer = window.RMKeypad.apply(buffer, k);   /* 값 편집 규칙 = 공용 */
     var d = document.getElementById('popDisp');
     if (d) d.textContent = buffer || '0';
   }
@@ -221,7 +207,7 @@
   popBody.addEventListener('click', function (e) {
     var opt = e.target.closest('.pop-opt');
     if (opt) { submit(opt.dataset.val); return; }   // 고른 보기를 그대로 입력 (채점 없음)
-    var key = e.target.closest('.qpop__key');
+    var key = e.target.closest('.keypad__key');
     if (key) handleKey(key.dataset.k);
   });
 
