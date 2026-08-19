@@ -140,5 +140,8 @@
     function toggle() { root.classList.contains('is-open') ? close() : open(); }
 
     buttons.forEach(function (b) { b.addEventListener('click', toggle); });
+
+    /* 검수용 — 주소에 ?scratch=1 을 붙이면 열린 상태로 시작 */
+    try { if (new URLSearchParams(location.search).get('scratch') === '1') open(); } catch (e) {}
   });
 })();

@@ -366,7 +366,8 @@
     actions: [
       { label: '정답 처리', tone: 'ok', run: function () { dbgAnswer(true); } },
       { label: '오답 처리', tone: 'no', run: function () { dbgAnswer(false); } },
-      { label: '전부 풀기', run: dbgSolveAll }
+      { label: '전부 풀기', run: dbgSolveAll },
+      { label: '키패드 열기', run: function () { var f = qEl.querySelector('.sinput, .dblank'); if (f) openPad(f); } }
     ]
   });
 
