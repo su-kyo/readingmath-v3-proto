@@ -51,7 +51,7 @@
       /* 딤 — 문제 영역에 구멍을 뚫은 스포트라이트. 콘솔바 띠(bottom)는 아예 제외 */
       '.scratch__dim{ position:absolute; left:0; right:0; top:0; overflow:hidden; opacity:0; transition:opacity .28s; pointer-events:none; }',
       '.scratch.is-in .scratch__dim{ opacity:1; }',
-      '.scratch__hole{ position:absolute; box-shadow:0 0 0 9999px color-mix(in srgb, var(--scrim) 50%, transparent); }',
+      '.scratch__hole{ position:absolute; box-shadow:0 0 0 9999px var(--scrim); }',
 
       '.scratch__canvas{ position:absolute; inset:0; width:100%; height:100%; touch-action:none; cursor:crosshair; }',
 
@@ -64,8 +64,8 @@
       '.scratch.is-in .bar{ transform: translateY(0); }',
       '.scratch .bar__mid{ background: var(--n-500); pointer-events:auto; }',
       '.scratch .bar__tray{ background: var(--n-650); }',
-      /* 좌우 일러스트도 네이비 단색조로 — 회색화 → 세피아 → 파랑으로 회전 */
-      '.scratch .bar__deco{ filter: grayscale(1) sepia(1) hue-rotate(185deg) saturate(1.6) brightness(.52); }',
+      /* 좌우 일러스트는 네이비 램프로 다시 칠한다 (듀오톤 — 아래 SVG 필터가 실제 색을 매핑) */
+      '.scratch .bar__deco{ filter: url(#scratchNavy); }',
 
       /* 도구 바 속 — 램프 + 타이틀 + 물리 버튼 (보조 모니터 하드웨어 언어) */
       '.scratch__ttl{ display:flex; align-items:center; gap:10px; color:var(--n-000); font-size:17px; font-weight:700; }',
@@ -89,7 +89,24 @@
     root.className = 'scratch';
     root.id = 'scratchpad';
     root.setAttribute('aria-hidden', 'true');
+    /* 좌우 일러스트 리컬러 필터 — 밝기를 네이비 램프(n-900…n-300)로 다시 칠한다.
+       색조만 씌우는 filter()가 아니라 명암 단계를 토큰 색으로 갈아끼우는 듀오톤이라
+       원본의 요철·하이라이트가 그대로 살아 있고 트레이와 한 덩어리로 읽힌다. */
     root.innerHTML =
+      '<svg width="0" height="0" style="position:absolute" aria-hidden="true">' +
+        '<filter id="scratchNavy" color-interpolation-filters="sRGB">' +
+          '<feColorMatrix type="matrix" values="' +
+            '.2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  0 0 0 1 0"/>' +
+          '<feComponentTransfer>' +
+            /* n-950 · n-900 · n-800 · n-700 · n-650 · n-600 · n-500 · n-400
+               — 원본 일러스트가 대체로 밝아서 넓은 면이 n-650/n-600(트레이 색)에 앉는다.
+                 하이라이트만 n-500/n-400으로 떠서 요철이 남는다. */
+            '<feFuncR type="table" tableValues="0.012 0.024 0.035 0.059 0.071 0.122 0.227 0.345"/>' +
+            '<feFuncG type="table" tableValues="0.024 0.055 0.075 0.098 0.118 0.169 0.275 0.420"/>' +
+            '<feFuncB type="table" tableValues="0.059 0.125 0.157 0.188 0.216 0.286 0.416 0.549"/>' +
+          '</feComponentTransfer>' +
+        '</filter>' +
+      '</svg>' +
       '<div class="scratch__dim"><i class="scratch__hole"></i></div>' +
       '<canvas class="scratch__canvas" aria-label="연습장 필기면"></canvas>';
 
