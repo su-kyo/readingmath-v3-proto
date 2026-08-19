@@ -118,7 +118,7 @@
 
   var toast = document.getElementById('toast'), toastT = null;
   function showToast(msg) { toast.textContent = msg; toast.classList.add('is-on'); clearTimeout(toastT); toastT = setTimeout(function () { toast.classList.remove('is-on'); }, 2200); }
-  document.getElementById('scratchBtn').addEventListener('click', function () { showToast('연습장은 준비 중이에요.'); });
+  /* 연습장 = 공용 scripts/scratchpad.js 가 담당 */
   document.getElementById('resultBtn').addEventListener('click', function () { window.location.href = 'assignment/result.html'; });
 
   function applyTheme(t) {
