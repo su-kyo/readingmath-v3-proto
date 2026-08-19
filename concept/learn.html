@@ -440,7 +440,7 @@
   </div>
 
   <!-- 검수용 디버그 패널 (?debug=1 일 때만 보임) -->
-  <script src="scripts/debug-panel.js?v=2"></script>
+  <script src="scripts/debug-panel.js?v=3"></script>
   <script src="scripts/learn-concept.js?v=4"></script>
   <script>
     /* 개념 영상 레이어 — 진입 시 자동 표시(dim), '개념 영상 보기'로 재호출.
@@ -462,6 +462,15 @@
       if (closeBtn) closeBtn.addEventListener('click', close);
       box.addEventListener('click', function (e) { if (e.target === box) close(); });
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && box.classList.contains('is-open')) close(); });
+      /* 검수용 훅 — 영상 레이어를 열고 닫아 아래 화면을 볼 수 있게 */
+      if (window.RMDebug) window.RMDebug.register({
+        title: '개념 영상 레이어',
+        actions: [
+          { label: '영상 닫기', run: close },
+          { label: '영상 열기', run: open }
+        ]
+      });
+
       open();   // 진입 시 자동 표시
     })();
   </script>

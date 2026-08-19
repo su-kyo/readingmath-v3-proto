@@ -17,6 +17,11 @@
 
    register()는 여러 번 불러도 된다(모달처럼 화면 안에 엔진이 둘 이상인 경우).
    ?debug=1 이 없으면 등록만 받아두고 아무것도 그리지 않는다.
+
+   주소로 상태를 바로 여는 것도 된다 (스크린샷·공유용):
+     ?debug=1&do=오답 처리      버튼 라벨과 같은 값을 주면 그 동작을 바로 실행
+     ?debug=1&do=정답 처리|다음 문제   여러 개는 | 로 이어 붙임
+     ?debug=1&theme=dark        라이트/다크 강제
    ========================================================================= */
 (function () {
   'use strict';
@@ -32,11 +37,35 @@
     register: function (group) {
       if (!group || !group.actions || !group.actions.length) return;
       groups.push(group);
-      if (ON) { ensure(); paint(); }
+      if (ON) { ensure(); paint(); runFromUrl(); }
     }
   };
   window.RMDebug = API;
   if (!ON) return;
+
+  /* ---- 주소로 테마·동작 지정 (스크린샷·공유용) ---- */
+  var params = new URLSearchParams(window.location.search);
+  var forceTheme = params.get('theme');
+  if (forceTheme === 'dark' || forceTheme === 'light') {
+    document.documentElement.setAttribute('data-theme', forceTheme);
+  }
+  var queue = (params.get('do') || '').split('|').map(function (x) { return x.trim(); }).filter(Boolean);
+  function runFromUrl() {
+    if (!queue.length) return;
+    // 등록이 끝난 뒤 실행 (엔진이 여럿이면 register가 여러 번 불린다)
+    clearTimeout(runFromUrl.t);
+    runFromUrl.t = setTimeout(function () {
+      queue.forEach(function (label) {
+        groups.forEach(function (g) {
+          g.actions.forEach(function (a) {
+            if (a.label === label) { try { a.run(); } catch (e) { console.warn('[RMDebug]', label, e); } }
+          });
+        });
+      });
+      queue = [];
+      if (forceTheme) document.documentElement.setAttribute('data-theme', forceTheme);
+    }, 0);
+  }
 
   /* ---- 패널 뼈대 (1회 생성) ---- */
   function ensure() {

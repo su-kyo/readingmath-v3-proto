@@ -31,11 +31,15 @@
       --qtext: var(--text); --muted: var(--text-muted); --ex-bg: var(--surface-2); --ex-br: rgba(255,255,255,.06);
       --opt-bg: var(--surface-3); --opt-br: rgba(255,255,255,.08); --opt-hover: var(--surface-hover);
       --input-bg: var(--surface-2); --input-br: var(--border-strong);
+      /* 정오답 '글자' 색 — 다크 표면에선 밝힌 단계(300), 라이트에선 잉크 단계(600).
+         테두리·칠은 solid(500) 그대로 두고 글자만 갈아끼운다. */
+      --st-ok: var(--ok-on-dark); --st-no: var(--no-on-dark);
     }
     :root[data-theme="light"] .ops {
       --qtext: var(--n-600); --muted: var(--text-muted); --ex-bg: var(--th-tint); --ex-br: var(--border);
       --opt-bg: var(--n-000); --opt-br: var(--border-strong); --opt-hover: var(--n-050);
       --input-bg: var(--n-000); --input-br: var(--border-strong);
+      --st-ok: var(--ok-ink); --st-no: var(--no-ink);
     }
     /* 스크롤바 확실히 보이게 */
     .ops::-webkit-scrollbar { width: 10px; }
@@ -121,17 +125,17 @@
     }
     .sinput::placeholder { color: var(--muted); font-weight: 500; }
     .sinput:focus, .sinput.is-active-input { outline: none; border-color: var(--primary); }
-    .sinput.is-correct { border-color: var(--ok-solid); color: var(--ok-solid); }
-    .sinput.is-wrong { border-color: var(--no-solid); color: var(--no-solid); }
+    .sinput.is-correct { border-color: var(--ok-solid); color: var(--st-ok); }
+    .sinput.is-wrong { border-color: var(--no-solid); color: var(--st-no); }
     /* 분수 = 분자박스 / 바 / 분모박스 */
     .fraction { display: inline-flex; flex-direction: column; align-items: center; gap: 8px; }
     .fraction .sinput { min-width: 96px; width: 96px; height: 50px; padding: 0 10px; }
     .fraction__bar { width: 104px; height: 3px; background: var(--qtext); border-radius: 2px; }
 
     /* 주관식 오답 시 정답 표시 (별도 공간) */
-    .ans-correct { display: none; margin-top: 22px; padding: 10px 22px; border-radius: 12px; background: color-mix(in srgb, var(--ok-solid) 22%, transparent); color: var(--ok-ink); font-weight: 700; font-size: 16px; align-items: center; gap: 8px; }
+    .ans-correct { display: none; margin-top: 22px; padding: 10px 22px; border-radius: 12px; background: color-mix(in srgb, var(--ok-solid) 22%, transparent); color: var(--st-ok); font-weight: 700; font-size: 16px; align-items: center; gap: 8px; }
     .ans-correct.show { display: inline-flex; }
-    .ans-correct b { color: var(--ok-solid); font-size: 19px; }
+    .ans-correct b { color: var(--st-ok); font-size: 19px; }
 
     /* ===== 계산기 키패드 (라이트·다크 공통 / 과목색 베리에이션) ===== */
     .keypad {
@@ -181,15 +185,16 @@
     /* 활성 = 주황 테두리 하나로 충분. 바깥에 연한 링을 한 겹 더 두르지 않는다 (대비는 한 번만) */
     .dblank.is-active-input { border-color: var(--primary); border-style: solid; border-width: 2.2px; }
     /* 채점 후: 정답 칸은 잠금 */
-    .dblank.is-correct { border-style: solid; border-color: var(--ok-solid); color: var(--ok-solid); cursor: default; }
-    .dblank.is-correct:hover { background: var(--input-bg); }
+    .dblank.is-correct { border-style: solid; border-color: var(--ok-solid); color: var(--st-ok);
+      background: color-mix(in srgb, var(--ok-solid) 12%, transparent); cursor: default; }
+    .dblank.is-correct:hover { background: color-mix(in srgb, var(--ok-solid) 12%, transparent); }
     /* 오답 = 내 답(빨강 채움). 취소선은 긋지 않는다 — 오답도 읽어야 할 정보다.
        오답임은 색·코너 뱃지(✕)로 알리고, 내용은 가리지 않는다.
        클릭하면 같은 칸이 정답(초록)으로 토글 — 정답을 옆에 병렬 표시하지 않음 */
-    .dblank.is-wrong { border-style: solid; border-color: var(--no-solid); color: var(--no-ink);
+    .dblank.is-wrong { border-style: solid; border-color: var(--no-solid); color: var(--st-no);
       background: color-mix(in srgb, var(--no-solid) 12%, transparent); }
     .dblank.is-wrong:hover { background: color-mix(in srgb, var(--no-solid) 20%, transparent); }
-    .dblank.is-wrong.show-ans { border-color: var(--ok-solid); color: var(--ok-ink);
+    .dblank.is-wrong.show-ans { border-color: var(--ok-solid); color: var(--st-ok);
       background: color-mix(in srgb, var(--ok-solid) 12%, transparent); }
     .dblank.is-wrong.show-ans:hover { background: color-mix(in srgb, var(--ok-solid) 20%, transparent); }
     /* 정답 확인 = 우측 상단 원형 뱃지 (정답 초록 ✓ / 오답 빨강 ✕) — 색맹도 모양으로 구분.
@@ -298,7 +303,7 @@
   </div>
 
   <!-- 검수용 디버그 패널 (?debug=1 일 때만 보임) -->
-  <script src="scripts/debug-panel.js?v=2"></script>
+  <script src="scripts/debug-panel.js?v=3"></script>
   <!-- 키패드 물리 키보드 입력 (공용) -->
   <script src="scripts/keypad-input.js?v=2"></script>
   <script src="scripts/learn-drill.js?v=6"></script>
