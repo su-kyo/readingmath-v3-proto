@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="styles/tokens.css?v=23" />
   <link rel="stylesheet" href="styles/base.css?v=7" />
   <link rel="stylesheet" href="styles/components.css?v=10" />
+  <link rel="stylesheet" href="styles/monitor.css?v=1" />
   <style>
     /* 지문 전용 폰트: Noto Serif KR (수식/기호도 여기에 얹힘) */
     @import url("https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&display=swap");
@@ -121,14 +122,12 @@
     .viewer__pager button { width: 34px; height: 34px; border-radius: 50%; background: var(--th-tint); color: var(--th-ink-accent); font-size: 15px; }
     .viewer__pager button:hover { background: var(--th-tint-strong); }
 
-    /* ===== 라이트박스 ===== */
-    .lightbox { position: fixed; inset: 0; z-index: 60; background: rgba(8,14,30,.74); display: none; align-items: center; justify-content: center; padding: 40px; }
-    .lightbox.is-open { display: flex; }
+    /* ===== 라이트박스 — 프레임은 공용 monitor, 안은 이미지뿐 ===== */
+    #lightbox { --mon-w: 760px; }
     /* 실제 이미지가 들어간다고 가정한 더미 (테마 무관 = 사진처럼 고정) */
-    .lightbox__img { position: relative; overflow: hidden; width: min(760px, 82vw); aspect-ratio: 4 / 3; border-radius: 22px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; letter-spacing: .02em; color: rgba(255,255,255,.92); box-shadow: 0 40px 90px rgba(0,0,0,.5);
+    .lightbox__img { position: relative; overflow: hidden; width: 100%; aspect-ratio: 4 / 3; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; letter-spacing: .02em; color: rgba(255,255,255,.92);
       background: linear-gradient(135deg, #4a80e6 0%, #2456c4 46%, #16307a 100%); }
     .lightbox__img::after { content: ""; position: absolute; inset: 0; background: radial-gradient(120% 90% at 22% 18%, rgba(255,255,255,.28), transparent 55%); pointer-events: none; }
-    .lightbox__close { position: absolute; top: 22px; right: 28px; width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,.16); color: var(--n-000); font-size: 22px; display: flex; align-items: center; justify-content: center; }
 
     /* ===== 하단 콘솔 바 ===== */
     .bar { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; display: flex; align-items: flex-end; height: 99px; }
@@ -201,50 +200,33 @@
     :root[data-theme="dark"] .answer-opt.is-wrong { background: color-mix(in srgb, var(--no-on-dark) 16%, transparent); color: var(--no-on-dark); }
     :root[data-theme="dark"] .answer-opt.is-wrong .answer-opt__dot { box-shadow: inset 0 0 0 2px var(--no-on-dark); }
 
-    /* ===== 개념 영상 레이어 (진입 시 dim 오버레이 · '개념 영상 보기'로 재호출) ===== */
-    .videobox { position: fixed; inset: 0; z-index: 70; display: none; align-items: center; justify-content: center; padding: clamp(20px, 4vw, 48px); background: rgba(6,12,28,.82); }
-    .videobox.is-open { display: flex; animation: vbIn .2s ease; }
-    @keyframes vbIn { from { opacity: 0; } to { opacity: 1; } }
-    @media (prefers-reduced-motion: reduce) { .videobox.is-open { animation: none; } }
-    .videobox__card { width: min(900px, 94vw); background: var(--n-700); border-radius: 24px; overflow: hidden; box-shadow: 0 44px 110px rgba(0,0,0,.62); }
-    .videobox__head { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; color: var(--n-000); }
-    .videobox__title { font-weight: 800; font-size: clamp(15px, 1.5vw, 18px); display: inline-flex; align-items: center; gap: 9px; }
-    .videobox__title::before { content: ""; width: 0; height: 0; border-left: 11px solid var(--primary); border-top: 7px solid transparent; border-bottom: 7px solid transparent; }
-    .videobox__close { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,.14); color: var(--n-000); font-size: 18px; display: flex; align-items: center; justify-content: center; }
-    .videobox__close:hover { background: rgba(255,255,255,.26); }
+    /* ===== 개념 영상 레이어 — 프레임은 공용 monitor, 안은 16:9 영상뿐 ===== */
+    #videobox { --mon-w: 900px; }
+    #videobox .monitor__screen { background: var(--n-950); }
     .videobox__frame { position: relative; width: 100%; aspect-ratio: 16 / 9; background: var(--n-950); }
     .videobox__frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
     .videobox__fallback { position: absolute; inset: 0; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: var(--th-accent-hi); text-align: center; padding: 24px; font-family: var(--font-sans); }
     .videobox__fallback a { color: var(--th-accent-hi); font-weight: 700; }
 
-    /* ===== 개념 요약하기 모달 (현재 테마 따라감) ===== */
+    /* ===== 개념 요약하기 — 프레임은 공용 monitor, 안(끊어읽기·선지)은 그대로 ===== */
     .toolbtn:disabled { opacity: .5; filter: grayscale(.5); cursor: not-allowed; }
     .summary {
-      position: fixed; inset: 0; z-index: 50; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 40px;
+      --mon-w: 820px;
       /* 라이트 기본 토큰 */
-      --sm-scrim: rgba(18,28,52,.5); --sm-card: var(--n-000); --sm-border: var(--th-tint); --sm-title: var(--n-600);
-      --sm-box: transparent; --sm-box-br: transparent; --sm-text: var(--n-600); --sm-current: var(--th-tint);
+      --sm-card: var(--n-000); --sm-text: var(--n-600); --sm-current: var(--th-tint);
       --sm-blank-br: var(--th-accent-hi); --sm-blank-muted: var(--text-muted);
       /* 선지 = 박스(연블루)와 구분되는 흰 버튼 + 진한 글자 + 파란 입체 그림자 (기존엔 박스와 같은 8% 틴트라 흐릿) */
       --sm-opt: var(--n-000); --sm-opt-text: var(--n-600); --sm-opt-sh: var(--th-accent-hi);
-      background: var(--sm-scrim);
     }
-    /* 다크 = 위에 뜨는 레이어가 더 밝다. 카드는 dim(scrim)보다 확실히 밝은 면(n-600),
-       선지는 카드보다 한 단계 더 밝은 면(n-500)으로 층을 만든다. */
+    /* 다크 = 위에 뜨는 레이어가 더 밝다. 화면부는 dim(scrim)보다 확실히 밝은 면(n-600),
+       선지는 그보다 한 단계 더 밝은 면(n-500)으로 층을 만든다. */
     :root[data-theme="dark"] .summary {
-      --sm-scrim: rgba(3,6,15,.78); --sm-card: var(--n-600); --sm-border: rgba(255,255,255,.10); --sm-title: var(--n-000);
-      --sm-box: transparent; --sm-box-br: transparent; --sm-text: var(--n-050); --sm-current: var(--th-tint);
+      --sm-card: var(--n-600); --sm-text: var(--n-050); --sm-current: var(--th-tint);
       --sm-blank-br: var(--th-accent-hi); --sm-blank-muted: var(--n-300);
       --sm-opt: var(--n-500); --sm-opt-text: var(--n-000); --sm-opt-sh: var(--n-700);
     }
-    .summary.is-open { display: flex; }
-    .summary__card { width: min(820px, 90vw); background: var(--sm-card); border: 1px solid var(--sm-border); border-radius: 28px; padding: 22px 26px; }
-    .summary__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
-    .summary__title { font-size: clamp(18px, 1.8vw, 22px); font-weight: 800; color: var(--sm-title); }
-    .summary__close { width: 40px; height: 40px; border-radius: 50%; background: var(--no-ink); color: var(--n-000); font-size: 17px; display: flex; align-items: center; justify-content: center; }
-    .summary__close:hover { filter: brightness(1.08); }
-    /* 모달 프레임이 이미 하나의 면이므로 안쪽에 또 박스를 두지 않는다 (대비는 한 번만) */
-    .summary__box { background: transparent; border: 0; padding: 4px 2px 2px; max-height: 42vh; overflow: auto; display: flex; flex-direction: column; gap: 10px; }
+    .summary .monitor__screen { background: var(--sm-card); padding: 18px 24px 20px; }
+    .summary__box { background: transparent; border: 0; padding: 0; max-height: 42vh; overflow: auto; display: flex; flex-direction: column; gap: 10px; }
     /* 모달 내 끊어읽기 */
     .sline { font-size: clamp(16px, 1.5vw, 20px); line-height: 1.95; color: var(--sm-text); letter-spacing: -0.02em; }
     .sseg { border-radius: 5px; padding: 1px 0; transition: filter .2s ease, opacity .2s ease, background .15s ease; }
@@ -259,7 +241,7 @@
     .sblank__thumb { width: 24px; height: 18px; border-radius: 3px; }
     /* 선지 — 현재 구간이 빈칸일 때만 채우고, 공간은 항상 예약(박스 안 흔들림) */
     /* 선지 & '다음으로'를 같은 고정 슬롯에 (번갈아 표시 → 총 높이 불변, 안 밀림/안 벙벙) */
-    .summary__foot { min-height: 96px; width: min(820px, 90vw); display: flex; align-items: center; justify-content: center; }
+    .summary__foot { min-height: 96px; display: flex; align-items: center; justify-content: center; }
     .summary__options { flex: 1; display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; }
     .summary__options:empty { display: none; }
     .sopt { flex: 1 1 0; min-width: 100px; max-width: 220px; height: 68px; border-radius: 14px; background: var(--sm-opt); color: var(--sm-opt-text); font-size: 22px; font-weight: 800; box-shadow: 0 4px 0 var(--sm-opt-sh); }
@@ -364,10 +346,23 @@
       <div class="answer-opt" role="option" data-value="개수"><span class="answer-opt__dot"></span>개수</div>
     </div>
 
-    <!-- 라이트박스 -->
-    <div class="lightbox" role="dialog" aria-label="이미지 크게 보기">
-      <div class="lightbox__img">이미지</div>
-      <div class="lightbox__close">✕</div>
+    <!-- 라이트박스 (공용 보조 모니터 프레임) -->
+    <div class="lightbox monitor" id="lightbox" role="dialog" aria-label="이미지 크게 보기">
+      <div class="monitor__dim"></div>
+      <div class="monitor__rig">
+        <div class="monitor__mount"><i></i><i></i></div>
+        <div class="monitor__frame">
+          <div class="monitor__hd">
+            <span class="monitor__lamps"><i class="is-live"></i><i></i><i></i></span>
+            <span class="monitor__ttl">이미지 크게 보기</span>
+            <button class="monitor__x" aria-label="닫기"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>
+          </div>
+          <div class="monitor__screen">
+            <div class="lightbox__img">이미지</div>
+          </div>
+          <div class="monitor__chin"><span class="monitor__slit"></span></div>
+        </div>
+      </div>
     </div>
 
     <!-- 하단 콘솔 바 -->
@@ -388,14 +383,19 @@
       <img class="bar__deco bar__deco--r" src="assets/icons/console/console-left.svg" alt="" />
     </div>
 
-    <!-- 개념 요약하기 모달 (끊어읽기 위 오버레이) -->
-    <div class="summary" id="summary">
-      <div class="summary__card">
-        <div class="summary__head">
-          <h2 class="summary__title">개념 요약하기</h2>
-          <button class="summary__close" id="summaryClose" aria-label="닫기">✕</button>
-        </div>
-        <div class="summary__box" id="summaryBox">
+    <!-- 개념 요약하기 (공용 보조 모니터 프레임 · 선지는 프레임 밖 아래 슬롯) -->
+    <div class="summary monitor" id="summary">
+      <div class="monitor__dim"></div>
+      <div class="monitor__rig">
+        <div class="monitor__mount"><i></i><i></i></div>
+        <div class="monitor__frame">
+          <div class="monitor__hd">
+            <span class="monitor__lamps"><i class="is-live"></i><i></i><i></i></span>
+            <span class="monitor__ttl">개념 요약하기</span>
+            <button class="monitor__x" id="summaryClose" aria-label="닫기"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>
+          </div>
+          <div class="monitor__screen">
+            <div class="summary__box" id="summaryBox">
           <p class="sline">
             <span class="sseg">① 받아올림이 한 번 있는</span>
             <span class="sseg">(세 자리 수) + (세 자리 수)</span>
@@ -413,27 +413,38 @@
             <span class="sseg sblank" data-blank="2"></span>
             <span class="sseg">씩 커지게 됩니다.</span>
           </p>
+            </div>
+          </div>
+          <div class="monitor__chin"><span class="monitor__slit"></span></div>
         </div>
-      </div>
-      <div class="summary__foot">
-        <div class="summary__options" id="summaryOptions"></div>
-        <button class="summary__next" id="summaryNext" hidden>다음으로 <span aria-hidden="true">→</span></button>
+        <div class="monitor__below summary__foot">
+          <div class="summary__options" id="summaryOptions"></div>
+          <button class="summary__next" id="summaryNext" hidden>다음으로 <span aria-hidden="true">→</span></button>
+        </div>
       </div>
     </div>
   </div>
 
-    <!-- 개념 영상 레이어 (진입 시 dim 오버레이) -->
-    <div class="videobox" id="videobox" role="dialog" aria-label="개념 영상">
-      <div class="videobox__card">
-        <div class="videobox__head">
-          <span class="videobox__title">개념 영상</span>
-          <button class="videobox__close" id="videoClose" aria-label="닫기">✕</button>
-        </div>
-        <div class="videobox__frame" id="videoFrame">
-          <div class="videobox__fallback" id="videoFallback">
-            <span>영상을 불러올 수 없어요.</span>
-            <a href="https://www.youtube.com/watch?v=SG56wMWcqMU" target="_blank" rel="noopener">유튜브에서 열기 →</a>
+    <!-- 개념 영상 레이어 (공용 보조 모니터 프레임 · 진입 시 자동 표시) -->
+    <div class="videobox monitor" id="videobox" role="dialog" aria-label="개념 영상">
+      <div class="monitor__dim"></div>
+      <div class="monitor__rig">
+        <div class="monitor__mount"><i></i><i></i></div>
+        <div class="monitor__frame">
+          <div class="monitor__hd">
+            <span class="monitor__lamps"><i class="is-live"></i><i></i><i></i></span>
+            <span class="monitor__ttl">개념 영상</span>
+            <button class="monitor__x" id="videoClose" aria-label="닫기"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>
           </div>
+          <div class="monitor__screen">
+            <div class="videobox__frame" id="videoFrame">
+              <div class="videobox__fallback" id="videoFallback">
+                <span>영상을 불러올 수 없어요.</span>
+                <a href="https://www.youtube.com/watch?v=SG56wMWcqMU" target="_blank" rel="noopener">유튜브에서 열기 →</a>
+              </div>
+            </div>
+          </div>
+          <div class="monitor__chin"><span class="monitor__slit"></span></div>
         </div>
       </div>
     </div>
@@ -441,7 +452,7 @@
 
   <!-- 검수용 디버그 패널 (?debug=1 일 때만 보임) -->
   <script src="scripts/debug-panel.js?v=3"></script>
-  <script src="scripts/learn-concept.js?v=4"></script>
+  <script src="scripts/learn-concept.js?v=5"></script>
   <script>
     /* 개념 영상 레이어 — 진입 시 자동 표시(dim), '개념 영상 보기'로 재호출.
        닫을 때 iframe 제거 → 재생/소리 정지. */
@@ -460,7 +471,7 @@
       function close() { box.classList.remove('is-open'); frame.innerHTML = ''; frame.appendChild(fallback); }
       if (openBtn) openBtn.addEventListener('click', open);
       if (closeBtn) closeBtn.addEventListener('click', close);
-      box.addEventListener('click', function (e) { if (e.target === box) close(); });
+      box.addEventListener('click', function (e) { if (e.target === box || e.target.classList.contains('monitor__dim')) close(); });
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && box.classList.contains('is-open')) close(); });
       /* 검수용 훅 — 영상 레이어를 열고 닫아 아래 화면을 볼 수 있게 */
       if (window.RMDebug) window.RMDebug.register({

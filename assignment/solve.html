@@ -7,6 +7,7 @@
   <title>과제 풀이 — 리딩수학과학</title>
   <script>try{if(localStorage.getItem('rm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
   <link rel="stylesheet" href="styles/tokens.css?v=23" />
+  <link rel="stylesheet" href="styles/monitor.css?v=1" />
   <style>
     /* =========================================================================
        과제 센터 · 풀이 화면 (assignment-solve) — 우주 셸
@@ -117,22 +118,15 @@
     .cell.is-cur.is-done { background: var(--blue); color: var(--n-000); }
     .cell.is-cur:not(.is-done) { color: var(--ink); border-style: solid; }
 
-    /* ===== 답안표 입력 오버레이 ===== */
-    .sheet-backdrop { position: fixed; inset: 0; z-index: 30; background: rgba(8,14,30,.42); opacity: 0; visibility: hidden; transition: .28s; }
-    .sheet-backdrop.is-open { opacity: 1; visibility: visible; }
-    .sheet { position: fixed; top: 0; right: 0; height: 100dvh; width: 600px; max-width: 94vw; z-index: 31; background: var(--surface-1); border-radius: 34px 0 0 34px; box-shadow: -6px 0 60px rgba(0,0,0,.28); transform: translateX(101%); transition: transform .3s cubic-bezier(.3,.8,.3,1); display: flex; flex-direction: column; }
-    .sheet.is-open { transform: none; }
-    :root[data-theme="dark"] .sheet { background: var(--n-650); }
-    .sheet__head { position: relative; flex: none; padding: 24px 28px 16px; }
-    .sheet__ttl { font-size: 18px; font-weight: 800; color: var(--th-ink-accent); letter-spacing: -.02em; }
-    :root[data-theme="dark"] .sheet__ttl { color: var(--th-accent-hi); }
-    .sheet__sub { margin: 8px 0 0; font-size: 14px; color: var(--sub); line-height: 1.55; max-width: 44ch; }
+    /* ===== 답안표 입력 — 프레임은 공용 monitor(우측 도킹 변형), 안(OMR)은 그대로 ===== */
+    .sheet { --mon-w: 600px; }
+    :root[data-theme="dark"] .sheet .monitor__screen { background: var(--n-650); }
+    .sheet .monitor__screen { display: flex; flex-direction: column; }
+    .sheet__head { flex: none; padding: 20px 28px 0; }
+    .sheet__sub { margin: 0; font-size: 14px; color: var(--sub); line-height: 1.55; max-width: 44ch; }
     .sheet__sub b { color: var(--th-ink-accent); font-weight: 700; }
     :root[data-theme="dark"] .sheet__sub b { color: var(--th-accent-hi); }
-    .sheet__x { position: absolute; top: 18px; right: 20px; width: 34px; height: 34px; border: 0; background: transparent; border-radius: 9px; color: var(--sub); cursor: pointer; display: grid; place-items: center; }
-    .sheet__x:hover { background: rgba(0,0,0,.06); }
-    .sheet__x svg { width: 18px; height: 18px; }
-    .sheet__list { flex: 1; overflow-y: auto; padding: 6px 28px 130px; display: flex; flex-direction: column; gap: 8px; }
+    .sheet__list { flex: 1; overflow-y: auto; padding: 14px 28px 24px; display: flex; flex-direction: column; gap: 8px; }
     .qrow { display: flex; align-items: center; gap: 16px; padding: 11px 16px; border: 1px solid var(--dash); border-radius: 16px; transition: border-color .13s; }
     .qrow.is-done { border-color: var(--line); }
     .qrow__n { width: 26px; flex: none; text-align: center; font-family: var(--font-mono); font-size: 19px; font-weight: 700; color: var(--sub); font-variant-numeric: tabular-nums; }
@@ -251,15 +245,26 @@
       <img class="bar__deco bar__deco--r" src="assets/icons/console/console-task-left.svg" alt="" />
     </div>
 
-    <!-- 답안표 입력 오버레이 -->
-    <div class="sheet-backdrop" id="sheetBackdrop"></div>
-    <aside class="sheet" id="sheet" aria-hidden="true">
-      <div class="sheet__head">
-        <div class="sheet__ttl">답안표 입력</div>
-        <p class="sheet__sub">문항별 답안을 마킹하거나 입력한 후 하단의 <b>제출하기</b> 버튼을 눌러주세요.</p>
-        <button class="sheet__x" id="sheetClose" title="닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <!-- 답안표 입력 (공용 보조 모니터 프레임 · 우측 도킹 변형) -->
+    <aside class="sheet monitor monitor--side" id="sheet" aria-hidden="true">
+      <div class="monitor__dim" id="sheetBackdrop"></div>
+      <div class="monitor__rig">
+        <div class="monitor__frame">
+          <div class="monitor__hd">
+            <span class="monitor__lamps"><i class="is-live"></i><i></i><i></i></span>
+            <span class="monitor__ttl">답안표 입력</span>
+            <button class="monitor__x" id="sheetClose" aria-label="닫기"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>
+          </div>
+          <div class="monitor__screen">
+            <div class="sheet__head">
+              <p class="sheet__sub">문항별 답안을 마킹하거나 입력한 후 하단의 <b>제출하기</b> 버튼을 눌러주세요.</p>
+            </div>
+            <div class="sheet__list" id="sheetList"></div>
+          </div>
+          <div class="monitor__chin"><span class="monitor__slit"></span></div>
+        </div>
+        <div class="monitor__mount"><i></i><i></i></div>
       </div>
-      <div class="sheet__list" id="sheetList"></div>
     </aside>
 
     <div class="toast" id="toast"></div>
@@ -269,6 +274,6 @@
   <script src="scripts/debug-panel.js?v=3"></script>
   <!-- 키패드 물리 키보드 입력 (공용) -->
   <script src="scripts/keypad-input.js?v=2"></script>
-  <script src="scripts/assignment-solve.js?v=3"></script>
+  <script src="scripts/assignment-solve.js?v=4"></script>
 </body>
 </html>

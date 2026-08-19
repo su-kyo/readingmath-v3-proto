@@ -298,7 +298,8 @@
     actions: [
       { label: '정답 입력', tone: 'ok', run: function () { dbgFill(cur, true); render(); } },
       { label: '오답 입력', tone: 'no', run: function () { dbgFill(cur, false); render(); } },
-      { label: '전부 풀기', run: function () { for (var i = 0; i < N; i++) dbgFill(i, true); render(); } }
+      { label: '전부 풀기', run: function () { for (var i = 0; i < N; i++) dbgFill(i, true); render(); } },
+      { label: '답안표 열기', run: openSheet }
     ]
   });
 

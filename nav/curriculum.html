@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="styles/base.css?v=7" />
   <link rel="stylesheet" href="styles/space-bg.css?v=4" />
   <link rel="stylesheet" href="styles/gnb.css?v=9" />
+  <link rel="stylesheet" href="styles/monitor.css?v=1" />
   <style>
     :root{
       --panel:var(--surface-1); --card:var(--n-650); --card2:var(--surface-2); --rail:var(--surface-3);
@@ -134,19 +135,10 @@
     .homebtn:hover{ border-color:var(--border-strong); background:var(--surface-2); }
     .homebtn svg{ width:17px; height:17px; }
 
-    /* ===== 훈련안내 모달 ===== */
-    .modal{ position:fixed; inset:0; z-index:50; display:none; align-items:center; justify-content:center;
-      background:var(--scrim); }
-    .modal.is-open{ display:flex; }
-    .modal__box{ width:560px; max-width:92vw; max-height:80vh; overflow-y:auto; background:var(--panel);
-      border:2px solid var(--card); border-radius:24px; }
-    .modal__head{ display:flex; align-items:center; justify-content:space-between; padding:16px 24px;
-      position:sticky; top:0; background:var(--panel); }
-    .modal__ttl{ font-size:22px; font-weight:800; }
-    .modal__x{ width:32px; height:32px; border:0; background:transparent; color:var(--n-000); cursor:pointer;
-      display:grid; place-items:center; }
-    .modal__x svg{ width:20px; height:20px; }
+    /* ===== 훈련안내 — 프레임은 공용 monitor(보조 모니터), 안(msec)은 그대로 ===== */
+    #infoModal{ --mon-w: 560px; }
     .msec{ padding:16px 24px; border-top:2px solid var(--card); }
+    .msec:first-child{ border-top:0; }
     .msec__h{ font-size:20px; font-weight:800; margin-bottom:6px; }
     .msec__b{ font-size:14.5px; line-height:1.6; color:var(--body); font-weight:500; }
 
@@ -204,14 +196,24 @@
     </div>
   </div>
 
-  <!-- 훈련 안내 모달 -->
-  <div class="modal" id="infoModal">
-    <div class="modal__box">
-      <div class="modal__head"><span class="modal__ttl">훈련 안내</span>
-        <button class="modal__x" id="infoClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  <!-- 훈련 안내 (공용 보조 모니터 프레임) -->
+  <div class="monitor" id="infoModal">
+    <div class="monitor__dim"></div>
+    <div class="monitor__rig">
+      <div class="monitor__mount"><i></i><i></i></div>
+      <div class="monitor__frame">
+        <div class="monitor__hd">
+          <span class="monitor__lamps"><i class="is-live"></i><i></i><i></i></span>
+          <span class="monitor__ttl">훈련 안내</span>
+          <button class="monitor__x" id="infoClose" aria-label="닫기"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>
+        </div>
+        <div class="monitor__screen">
       <div class="msec"><div class="msec__h" style="color:var(--blue)">개념 훈련</div><div class="msec__b">개념 훈련은 중단원 유형의 개념을 이해하기 위한 첫 번째 훈련입니다. 지문을 읽고 핵심 개념을 정리한 뒤, 개념 요약하기 &amp; 개념 체크 문제로 이해도를 확인합니다. 마지막으로 개념 확인 문제(10문항 고정)를 풀이하면 종료됩니다.</div></div>
       <div class="msec"><div class="msec__h" style="color:var(--green)">유형 훈련</div><div class="msec__b">유형 훈련은 대표 유형 문제를 각각 5문제씩, [1차 유형/유사]와 [2차 유형/유사] 총 4회차로 반복 훈련합니다. 각 회차는 30분을 초과하면 최종 결과에서 10점이 감점됩니다.</div></div>
       <div class="msec"><div class="msec__h" style="color:var(--purple)">서술형 훈련</div><div class="msec__b">서술형 훈련은 답안 완성(2문항) → 문제 &amp; 답안 완성(2문항) → 탐구활동 보고서 만들기(1문항), 총 5문항으로 서술형 문제 해결력을 기릅니다. 30분을 초과하면 10점이 감점됩니다.</div></div>
+        </div>
+        <div class="monitor__chin"><span class="monitor__slit"></span></div>
+      </div>
     </div>
   </div>
 
@@ -427,7 +429,7 @@
     var modal=document.getElementById('infoModal');
     document.getElementById('infoBtn').addEventListener('click', function(){ modal.classList.add('is-open'); });
     document.getElementById('infoClose').addEventListener('click', function(){ modal.classList.remove('is-open'); });
-    modal.addEventListener('click', function(e){ if(e.target===modal) modal.classList.remove('is-open'); });
+    modal.addEventListener('click', function(e){ if(e.target===modal || e.target.classList.contains('monitor__dim')) modal.classList.remove('is-open'); });
     document.addEventListener('keydown', function(e){ if(e.key==='Escape') modal.classList.remove('is-open'); });
 
     // 네비

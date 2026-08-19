@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="styles/components.css?v=10" />
   <link rel="stylesheet" href="styles/learn-shell.css?v=8" />
   <link rel="stylesheet" href="styles/essay.css?v=10" />
+  <link rel="stylesheet" href="styles/monitor.css?v=1" />
   <style>
     /* ============ 서술형 훈련 = 퍼플 테마 (공통은 essay.css) ============ */
     /* 레이아웃 v2 : 기존 세로 단일 스크롤 유지 + 문제 카드 상단 스티키 추가 */
@@ -171,24 +172,17 @@
 
     /* 입력 드롭다운(즉시 채점)·키패드·객관식 세로보기 = essay.css */
 
-    /* ============ 문제 끊어읽기 모달 (655-29991) ============ */
+    /* ============ 문제 끊어읽기 — 프레임은 공용 monitor(잠금형·닫기 없음) ============ */
     /* 처음 문제 읽기 = 모달로 문장별 진행. 다 읽고 '문제 풀기 →' 누르면 풀이 시작. */
-    .rmodal { --rm-card: var(--n-900); --rm-br: rgba(255,255,255,.09);
-      --rm-title: var(--n-000); --rm-panel: rgba(255,255,255,.045); --rm-panel-br: rgba(255,255,255,.08);
+    .rmodal { --rm-card: var(--n-900);
+      --rm-panel: rgba(255,255,255,.045); --rm-panel-br: rgba(255,255,255,.08);
       --rm-read: rgba(249,249,249,.92); --rm-hl: rgba(124,58,237,.30); --rm-hl-fg: var(--n-000); --rm-hint: var(--text-muted);
-      position: fixed; inset: 0; z-index: 300; display: none; align-items: center; justify-content: center; padding: clamp(20px,4vw,48px); }
-    :root[data-theme="light"] .rmodal { --rm-card: var(--n-000); --rm-br: var(--n-100);
-      --rm-title: var(--n-800); --rm-panel: var(--n-050); --rm-panel-br: var(--n-100);
+      --mon-w: 760px; }
+    :root[data-theme="light"] .rmodal { --rm-card: var(--n-000);
+      --rm-panel: var(--n-050); --rm-panel-br: var(--n-100);
       --rm-read: var(--n-700); --rm-hl: rgba(124,58,237,.14); --rm-hl-fg: var(--th-accent-strong); --rm-hint: var(--text-meta); }
-    .rmodal.is-open { display: flex; animation: rmFade .2s ease; }
-    @keyframes rmFade { from { opacity: 0; } to { opacity: 1; } }
-    .rmodal__backdrop { position: absolute; inset: 0; background: rgba(8,5,22,.62); backdrop-filter: blur(3px); }
-    .rmodal__card { position: relative; width: 100%; max-width: 720px; display: flex; flex-direction: column; gap: clamp(18px,2.4vw,26px);
-      padding: clamp(22px,2.8vw,34px); border-radius: 24px; background: var(--rm-card); border: 1px solid var(--rm-br);
-      box-shadow: 0 24px 60px rgba(8,5,22,.5); animation: rmPop .26s cubic-bezier(.2,.9,.3,1.2); }
-    @keyframes rmPop { from { opacity: 0; transform: translateY(14px) scale(.97); } to { opacity: 1; transform: none; } }
-    @media (prefers-reduced-motion: reduce) { .rmodal.is-open, .rmodal__card { animation: none; } }
-    .rmodal__title { font-family: var(--font-sans); font-size: clamp(18px,1.9vw,22px); font-weight: 800; color: var(--rm-title); }
+    .rmodal .monitor__screen { background: var(--rm-card); padding: clamp(22px,2.8vw,34px);
+      display: flex; flex-direction: column; gap: clamp(18px,2.4vw,26px); }
     .rmodal__read { background: var(--rm-panel); border: 1px solid var(--rm-panel-br); border-radius: 16px;
       padding: clamp(20px,2.6vw,30px) clamp(20px,2.8vw,32px); cursor: pointer; }
     .rm-chunk { display: inline; font-family: var(--font-serif); color: var(--rm-read);
@@ -297,17 +291,26 @@
     </div>
   </div>
 
-  <!-- 문제 끊어읽기 모달 (처음 문제 읽기) -->
-  <div class="rmodal" id="rmodal" aria-hidden="true">
-    <div class="rmodal__backdrop"></div>
-    <div class="rmodal__card" role="dialog" aria-modal="true" aria-label="문제 읽기">
-      <div class="rmodal__title" id="rmTitle">문제 1</div>
-      <div class="rmodal__read" id="rmRead"></div>
-      <div class="rmodal__foot">
-        <span class="rmodal__hint" id="rmHint"></span>
-        <button class="rmodal__go" id="rmGo" type="button">문제 풀기
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </button>
+  <!-- 문제 끊어읽기 (공용 보조 모니터 프레임 · 잠금형 — 다 읽어야 나갈 수 있음) -->
+  <div class="rmodal monitor monitor--lock" id="rmodal" aria-hidden="true">
+    <div class="monitor__dim"></div>
+    <div class="monitor__rig" role="dialog" aria-modal="true" aria-label="문제 읽기">
+      <div class="monitor__mount"><i></i><i></i></div>
+      <div class="monitor__frame">
+        <div class="monitor__hd">
+          <span class="monitor__lamps"><i class="is-live"></i><i></i><i></i></span>
+          <span class="monitor__ttl" id="rmTitle">문제 1</span>
+        </div>
+        <div class="monitor__screen">
+          <div class="rmodal__read" id="rmRead"></div>
+          <div class="rmodal__foot">
+            <span class="rmodal__hint" id="rmHint"></span>
+            <button class="rmodal__go" id="rmGo" type="button">문제 풀기
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="monitor__chin"><span class="monitor__slit"></span></div>
       </div>
     </div>
   </div>

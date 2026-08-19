@@ -1,0 +1,178 @@
+/* ============================================================
+   monitor.css — 공통 패널 프레임 「보조 모니터」 (Phase 6 신설)
+   ------------------------------------------------------------
+   화면 위에 뜨는 모든 패널(요약·영상·확대·끊어읽기·보고서·
+   답안표·안내·연습장)이 공유하는 한 벌의 프레임.
+   웹 모달이 아니라 우주선 세계관의 사물 — 위에서 내려오는
+   보조 모니터. 하드웨어(베젤·마운트)는 콘솔 버튼과 같은
+   네이비로 전 과목 공통, 과목 색은 상태등(램프)에만 들어간다.
+
+   기본 골격:
+   <div class="monitor" id="…" aria-hidden="true">
+     <div class="monitor__dim" data-mclose></div>
+     <div class="monitor__rig">
+       <div class="monitor__mount"><i></i><i></i></div>
+       <div class="monitor__frame">
+         <div class="monitor__hd">
+           <span class="monitor__lamps"><i class="is-live"></i><i></i><i></i></span>
+           <span class="monitor__ttl">제목</span>
+           <button class="monitor__x" data-mclose aria-label="닫기">✕svg</button>
+         </div>
+         <div class="monitor__screen"> …화면 고유 내용… </div>
+         <div class="monitor__chin"><span class="monitor__slit"></span></div>
+       </div>
+       (선택) .monitor__below — 프레임 밖 아래 걸리는 부속(요약 선택지 등)
+     </div>
+   </div>
+
+   크기: 페이지에서 --mon-w 만 지정 (#summary{ --mon-w: 820px })
+   변형: .monitor--side  우측 도킹(답안표) — 내려오는 대신 옆에서 나옴
+         .monitor--lock  닫기 없음(끊어읽기처럼 흐름 강제) — dim 클릭 무시
+   여닫기: 루트에 .is-open 토글 (기존 관행 그대로)
+   ============================================================ */
+
+.monitor{
+  position: fixed; inset: 0; z-index: 300;
+  display: none;
+}
+.monitor.is-open{ display: flex; flex-direction: column; align-items: center; }
+
+.monitor__dim{
+  position: absolute; inset: 0;
+  background: var(--scrim);
+}
+
+/* ── 내려오는 조립체 ── */
+.monitor__rig{
+  position: relative;
+  display: flex; flex-direction: column; align-items: center;
+  width: min(var(--mon-w, 680px), 92vw);
+  max-height: 100dvh;
+}
+.monitor.is-open .monitor__rig{
+  animation: monDown 340ms cubic-bezier(.2, .9, .3, 1.14) both;
+}
+@keyframes monDown{
+  from{ transform: translateY(-36px); opacity: 0; }
+  to{   transform: translateY(0);     opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce){
+  .monitor.is-open .monitor__rig{ animation-duration: 1ms; }
+}
+
+/* 마운트 암 — 천장에서 내려온 고정 축 2개 */
+.monitor__mount{ display: flex; gap: 110px; flex: none; }
+.monitor__mount i{
+  width: 18px; height: 40px;
+  background: var(--n-400);
+  border-radius: 0 0 8px 8px;
+}
+
+/* ── 베젤 (하드웨어 — 테마 불변 네이비) ── */
+.monitor__frame{
+  display: flex; flex-direction: column; min-height: 0;
+  width: 100%;
+  background: var(--n-650);
+  border-radius: var(--r-frame);
+  padding: 10px 10px 14px;
+  box-shadow: var(--shadow-2);
+}
+
+.monitor__hd{
+  flex: none;
+  display: flex; align-items: center; gap: 8px;
+  padding: 4px 6px 12px 12px;
+}
+.monitor__lamps{ display: flex; gap: 6px; margin-right: 6px; }
+.monitor__lamps i{
+  width: 9px; height: 9px; border-radius: var(--r-full);
+  background: var(--n-500);
+}
+.monitor__lamps i.is-live{ background: var(--th-accent-hi, var(--blue-300)); }
+.monitor__ttl{
+  color: var(--n-000);
+  font-family: var(--font-sans);
+  font-size: var(--fs-title); font-weight: var(--fw-bold);
+  letter-spacing: -0.02em;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* 베젤 위 물리 버튼 (닫기·도구) — 콘솔 버튼과 같은 레시피 */
+.monitor__x,
+.monitor__tool{
+  border: none; cursor: pointer;
+  background: var(--n-500); color: var(--n-000);
+  border-radius: var(--r-md);
+  box-shadow: 0 3px 0 var(--n-900);
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  font-family: var(--font-sans); font-size: var(--fs-sm); font-weight: var(--fw-bold);
+  transition: transform var(--t-fast);
+}
+.monitor__x:active,
+.monitor__tool:active{ transform: translateY(2px); box-shadow: 0 1px 0 var(--n-900); }
+.monitor__x{ margin-left: auto; width: 40px; height: 36px; flex: none; }
+.monitor__tool{ height: 36px; padding: 0 14px; flex: none; }
+.monitor__tools{ display: flex; gap: 8px; margin-left: auto; }
+.monitor__tools + .monitor__x{ margin-left: 0; }
+
+/* ── 화면부 — 여기만 테마를 탄다 ── */
+.monitor__screen{
+  min-height: 0; flex: 1 1 auto;
+  background: var(--surface-1);
+  border-radius: var(--r-xl);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* 하단 턱 */
+.monitor__chin{
+  flex: none;
+  display: flex; align-items: center; justify-content: center;
+  padding-top: 12px;
+}
+.monitor__slit{
+  width: 64px; height: 6px; border-radius: var(--r-full);
+  background: var(--n-500);
+}
+
+/* 프레임 밖 아래로 걸리는 부속 (요약 선택지처럼 패널 밖 UI) */
+.monitor__below{ width: 100%; flex: none; margin-top: 16px; }
+
+/* ── 기본(내려오는) 배치: 위에서 매달림 ── */
+.monitor:not(.monitor--side) .monitor__rig{ margin-bottom: auto; }
+.monitor:not(.monitor--side) .monitor__frame{
+  max-height: calc(100dvh - 148px);
+}
+
+/* ── 변형: 우측 도킹 (답안표 드로어) ── */
+.monitor--side{ z-index: 200; }
+.monitor--side.is-open{ flex-direction: row; justify-content: flex-end; align-items: stretch; }
+.monitor--side .monitor__rig{
+  flex-direction: row; align-items: center;
+  width: auto; max-width: 94vw;
+  margin: 10px 0;
+}
+.monitor--side.is-open .monitor__rig{ animation-name: monSide; }
+@keyframes monSide{
+  from{ transform: translateX(48px); opacity: 0; }
+  to{   transform: translateX(0);    opacity: 1; }
+}
+.monitor--side .monitor__mount{
+  order: 2; flex-direction: column; gap: 90px;
+}
+.monitor--side .monitor__mount i{
+  width: 40px; height: 18px;
+  border-radius: 8px 0 0 8px;
+}
+.monitor--side .monitor__frame{
+  width: var(--mon-w, 600px); max-width: calc(94vw - 40px);
+  height: 100%;
+  border-radius: var(--r-frame) 0 0 var(--r-frame);
+  padding: 10px 0 14px 10px;
+}
+.monitor--side .monitor__hd{ padding-right: 16px; }
+.monitor--side .monitor__screen{ border-radius: var(--r-xl) 0 0 var(--r-xl); }
+.monitor--side .monitor__chin{ padding-right: 10px; }
+
+/* ── 변형: 잠금(닫기 없음 — 끊어읽기 등 흐름 강제) ── */
+.monitor--lock .monitor__x{ display: none; }

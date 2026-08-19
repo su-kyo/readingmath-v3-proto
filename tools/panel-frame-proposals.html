@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ko" data-section="concept" data-theme="light">
+<head>
+<base href="../">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>공통 패널 프레임 시안 3종 — 보조 모니터</title>
+<link rel="stylesheet" href="styles/tokens.css?v=18">
+<link rel="stylesheet" href="styles/base.css?v=10">
+<style>
+  /* ── 페이지 골격 (검수 도구 — 배포 제외) ─────────────────── */
+  body{
+    margin:0; padding:28px 20px 80px;
+    background:var(--bg, var(--n-100));
+    font-family:var(--font-sans);
+    color:var(--text);
+  }
+  :root[data-theme="dark"] body{ background:var(--n-900); }
+  .page{ max-width:1040px; margin:0 auto; }
+  .page__hd{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:6px; }
+  .page__ttl{ font-size:var(--fs-h1); font-weight:var(--fw-heavy); letter-spacing:-0.03em; margin:0; }
+  .page__sub{ font-size:var(--fs-sm); color:var(--text-muted); margin:4px 0 22px; line-height:1.6; }
+
+  .ctl{ display:flex; gap:8px; margin-left:auto; }
+  .ctl__btn{
+    height:38px; padding:0 16px; border-radius:var(--r-md);
+    border:1px solid var(--border-strong); background:var(--surface-3);
+    color:var(--text); font-family:var(--font-sans); font-size:var(--fs-sm);
+    font-weight:var(--fw-bold); cursor:pointer; transition:background var(--t-fast);
+  }
+  .ctl__btn:hover{ background:var(--surface-hover); }
+  .ctl__btn.is-on{ background:var(--th-accent); border-color:var(--th-accent); color:var(--th-on-accent); }
+
+  /* ── 시안 스테이지: 학습 화면 축소 모형 + dim + 패널 ─────── */
+  .prop{ margin:34px 0 0; }
+  .prop__hd{ display:flex; align-items:baseline; gap:12px; margin-bottom:10px; }
+  .prop__name{ font-size:var(--fs-h2); font-weight:var(--fw-heavy); letter-spacing:-0.02em; }
+  .prop__desc{ font-size:var(--fs-sm); color:var(--text-muted); }
+  .prop__replay{
+    margin-left:auto; height:32px; padding:0 12px; border-radius:var(--r-full);
+    border:1px solid var(--border-strong); background:transparent;
+    color:var(--text-muted); font-size:var(--fs-xs); font-weight:var(--fw-bold);
+    font-family:var(--font-sans); cursor:pointer;
+  }
+  .prop__replay:hover{ color:var(--text); background:var(--surface-3); }
+
+  .stage{
+    position:relative; height:540px; border-radius:var(--r-xl);
+    overflow:hidden; border:1px solid var(--border-strong);
+  }
+  /* 뒤에 깔리는 가짜 학습 화면 */
+  .mock{ position:absolute; inset:0; background:var(--th-panel); }
+  :root[data-theme="dark"] .mock{ background:var(--n-900); }
+  .mock__hd{ height:52px; background:var(--th-static); }
+  .mock__body{ display:flex; gap:24px; padding:26px 30px; }
+  .mock__col{ flex:1; }
+  .mock__line{ height:13px; border-radius:var(--r-full); background:var(--n-200); margin-bottom:13px; }
+  :root[data-theme="dark"] .mock__line{ background:var(--n-600); }
+  .mock__line--short{ width:62%; }
+  .mock__card{
+    flex:0 0 36%; border-radius:var(--r-card); background:var(--n-000);
+    border:1px solid var(--border);
+  }
+  :root[data-theme="dark"] .mock__card{ background:var(--surface-1); }
+
+  .dim{ position:absolute; inset:0; background:var(--scrim); }
+
+  /* ── 패널 공통: 위에서 내려오는 조립체 ───────────────────── */
+  .rig{
+    position:absolute; left:50%; top:0; transform:translateX(-50%);
+    display:flex; flex-direction:column; align-items:center;
+    width:min(620px, 86%);
+  }
+  .rig.is-in{ animation:rigDown var(--t-panel) both; }
+  .rig--pop.is-in{ animation:rigDown 340ms cubic-bezier(.2,.9,.3,1.14) both; }
+  @keyframes rigDown{
+    from{ transform:translateX(-50%) translateY(-36px); opacity:0; }
+    to{   transform:translateX(-50%) translateY(0);     opacity:1; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .rig.is-in{ animation-duration:1ms; }
+  }
+
+  /* 패널 안 샘플 콘텐츠 (셋이 동일 — 프레임만 비교) */
+  .demo__read{
+    font-family:var(--font-serif); font-size:var(--fs-read); line-height:1.8;
+    color:var(--text); word-break:keep-all; margin:0 0 18px;
+  }
+  .demo__blank{
+    display:inline-block; min-width:64px; padding:2px 10px; border-radius:var(--r-sm);
+    border:2px dashed var(--border-strong); background:var(--th-tint);
+    color:var(--th-ink-accent); font-family:var(--font-mono); font-weight:var(--fw-bold);
+    text-align:center;
+  }
+  :root[data-theme="dark"] .demo__blank{ color:var(--th-accent-hi); }
+  .demo__foot{ display:flex; justify-content:flex-end; }
+  .demo__go{
+    height:48px; padding:0 26px; border:none; border-radius:var(--r-md);
+    background:var(--primary); color:var(--n-000);
+    font-family:var(--font-sans); font-size:19px; font-weight:var(--fw-bold);
+    box-shadow:0 4px 0 var(--primary-deep); cursor:pointer;
+  }
+
+  /* ═══ 시안 A — 슬림 베젤 ═══════════════════════════════════ */
+  .fA__stem{ width:52px; height:36px; background:var(--n-400); border-radius:0 0 10px 10px; }
+  .fA__panel{
+    width:100%; border-radius:var(--r-panel);
+    background:var(--surface-1); border:8px solid var(--n-650);
+    box-shadow:var(--shadow-2);
+  }
+  :root[data-theme="dark"] .fA__panel{ border-color:var(--n-500); }
+  .fA__hd{
+    display:flex; align-items:center; gap:10px;
+    padding:16px 16px 0 22px;
+  }
+  .fA__dot{ width:10px; height:10px; border-radius:var(--r-full); background:var(--th-vivid); }
+  .fA__ttl{ font-size:var(--fs-title); font-weight:var(--fw-bold); letter-spacing:-0.02em; }
+  .fA__x{
+    margin-left:auto; width:38px; height:38px; border-radius:var(--r-md);
+    border:none; background:var(--surface-3); color:var(--text); cursor:pointer;
+    display:grid; place-items:center; transition:background var(--t-fast);
+  }
+  .fA__x:hover{ background:var(--surface-hover); }
+  .fA__body{ padding:16px 22px 22px; }
+
+  /* ═══ 시안 B — 콘솔 모니터 ═════════════════════════════════ */
+  .fB__mount{ display:flex; gap:110px; }
+  .fB__arm{ width:18px; height:40px; background:var(--n-400); border-radius:0 0 8px 8px; }
+  .fB__panel{
+    width:100%; border-radius:var(--r-frame);
+    background:var(--n-650); padding:10px 10px 14px;
+    box-shadow:var(--shadow-2);
+  }
+  .fB__hd{ display:flex; align-items:center; gap:8px; padding:4px 6px 12px 12px; }
+  .fB__lamps{ display:flex; gap:6px; margin-right:6px; }
+  .fB__lamp{ width:9px; height:9px; border-radius:var(--r-full); background:var(--n-500); }
+  .fB__lamp.is-live{ background:var(--th-accent-hi); }
+  .fB__ttl{ color:var(--n-000); font-size:var(--fs-title); font-weight:var(--fw-bold); letter-spacing:-0.02em; }
+  .fB__x{
+    margin-left:auto; width:40px; height:36px; border-radius:var(--r-md);
+    border:none; background:var(--n-500); color:var(--n-000); cursor:pointer;
+    display:grid; place-items:center;
+    box-shadow:0 3px 0 var(--n-900); transition:transform var(--t-fast);
+  }
+  .fB__x:active{ transform:translateY(2px); box-shadow:0 1px 0 var(--n-900); }
+  .fB__screen{
+    border-radius:var(--r-xl); background:var(--surface-1);
+    padding:20px 22px 22px;
+  }
+  .fB__chin{ display:flex; justify-content:center; padding-top:12px; }
+  .fB__slit{ width:64px; height:6px; border-radius:var(--r-full); background:var(--n-500); }
+
+  /* ═══ 시안 C — 풀 콕핏 ═════════════════════════════════════ */
+  .fC__ant{ display:flex; flex-direction:column; align-items:center; }
+  .fC__sig{ width:10px; height:10px; border-radius:var(--r-full); background:var(--th-accent-hi); }
+  .fC__pole{ width:6px; height:26px; background:var(--n-400); }
+  .fC__panel{
+    position:relative; width:100%; border-radius:var(--r-frame);
+    background:var(--n-650); padding:12px 12px 16px;
+    box-shadow:var(--shadow-2);
+  }
+  .fC__screw{ position:absolute; width:8px; height:8px; border-radius:var(--r-full); background:var(--n-400); }
+  .fC__screw--tl{ top:10px; left:12px; } .fC__screw--tr{ top:10px; right:12px; }
+  .fC__screw--bl{ bottom:10px; left:12px; } .fC__screw--br{ bottom:10px; right:12px; }
+  .fC__hd{ display:flex; align-items:center; gap:10px; padding:6px 6px 12px 16px; }
+  .fC__lcd{
+    display:inline-flex; align-items:center; gap:8px;
+    height:34px; padding:0 14px; border-radius:var(--r-sm);
+    background:var(--n-900);
+  }
+  .fC__lcd i{ width:7px; height:7px; border-radius:var(--r-full); background:var(--th-accent-hi); font-style:normal; }
+  .fC__lcd span{
+    font-family:var(--font-mono); font-size:15px; font-weight:var(--fw-semibold);
+    color:var(--th-accent-hi); letter-spacing:0.04em;
+  }
+  .fC__x{
+    margin-left:auto; width:40px; height:36px; border-radius:var(--r-md);
+    border:none; background:var(--n-500); color:var(--n-000); cursor:pointer;
+    display:grid; place-items:center; box-shadow:0 3px 0 var(--n-900);
+  }
+  .fC__screen{ border-radius:var(--r-xl); background:var(--surface-1); padding:20px 22px 22px; }
+  .fC__chin{ display:flex; align-items:center; justify-content:space-between; padding:12px 22px 0; }
+  .fC__vents{ display:flex; gap:5px; }
+  .fC__vents i{ width:22px; height:5px; border-radius:var(--r-full); background:var(--n-500); }
+  .fC__stat{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.08em;
+    color:var(--n-300);
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="page__hd">
+    <h1 class="page__ttl">패널 프레임 시안 3종 — 보조 모니터</h1>
+    <div class="ctl">
+      <button class="ctl__btn" data-sec="concept">개념</button>
+      <button class="ctl__btn" data-sec="essay">서술형</button>
+      <button class="ctl__btn" data-sec="assign">과제</button>
+      <button class="ctl__btn" id="themeBtn">🌙 다크</button>
+    </div>
+  </div>
+  <p class="page__sub">
+    세 시안 모두 「위에서 내려오는 보조 모니터」라는 같은 콘셉트입니다. 다른 것은 <b>어휘의 농도</b>뿐입니다.
+    안의 내용(샘플)은 셋이 동일 — 프레임만 비교하면 됩니다. 하드웨어(베젤)는 콘솔 버튼과 같은
+    네이비로 전 과목 공통이고, 과목 색은 상태등에만 들어갑니다.
+  </p>
+
+  <!-- ═══ 시안 A ═══ -->
+  <section class="prop">
+    <div class="prop__hd">
+      <span class="prop__name">A. 슬림 베젤</span>
+      <span class="prop__desc">최소 어휘 — 네이비 베젤 + 매달림 축 + 상태등 하나. 콘텐츠 간섭이 가장 적다.</span>
+      <button class="prop__replay" data-replay="rigA">↻ 내려오기 다시</button>
+    </div>
+    <div class="stage">
+      <div class="mock">
+        <div class="mock__hd"></div>
+        <div class="mock__body">
+          <div class="mock__col">
+            <div class="mock__line"></div><div class="mock__line"></div>
+            <div class="mock__line mock__line--short"></div><div class="mock__line"></div>
+            <div class="mock__line mock__line--short"></div>
+          </div>
+          <div class="mock__card"></div>
+        </div>
+      </div>
+      <div class="dim"></div>
+      <div class="rig is-in" id="rigA" style="padding-top:0">
+        <div class="fA__stem"></div>
+        <div class="fA__panel">
+          <div class="fA__hd">
+            <span class="fA__dot"></span>
+            <span class="fA__ttl">개념 요약하기</span>
+            <button class="fA__x" aria-label="닫기">
+              <svg width="14" height="14" viewBox="0 0 14 14"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+          <div class="fA__body">
+            <p class="demo__read">식물 세포에는 동물 세포에 없는 <span class="demo__blank">세포벽</span>이 있어서, 세포의 모양을 단단하게 지켜 준다. 요약한 문장의 빈칸을 채워 보자.</p>
+            <div class="demo__foot"><button class="demo__go">다음</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 시안 B ═══ -->
+  <section class="prop">
+    <div class="prop__hd">
+      <span class="prop__name">B. 콘솔 모니터</span>
+      <span class="prop__desc">콘솔과 같은 층 구조 — 마운트 암 2개 + 네이비 베젤 헤더 + 인디케이터 + 물리 닫기 버튼.</span>
+      <button class="prop__replay" data-replay="rigB">↻ 내려오기 다시</button>
+    </div>
+    <div class="stage">
+      <div class="mock">
+        <div class="mock__hd"></div>
+        <div class="mock__body">
+          <div class="mock__col">
+            <div class="mock__line"></div><div class="mock__line"></div>
+            <div class="mock__line mock__line--short"></div><div class="mock__line"></div>
+            <div class="mock__line mock__line--short"></div>
+          </div>
+          <div class="mock__card"></div>
+        </div>
+      </div>
+      <div class="dim"></div>
+      <div class="rig rig--pop is-in" id="rigB">
+        <div class="fB__mount"><span class="fB__arm"></span><span class="fB__arm"></span></div>
+        <div class="fB__panel">
+          <div class="fB__hd">
+            <span class="fB__lamps"><i class="fB__lamp is-live"></i><i class="fB__lamp"></i><i class="fB__lamp"></i></span>
+            <span class="fB__ttl">개념 요약하기</span>
+            <button class="fB__x" aria-label="닫기">
+              <svg width="14" height="14" viewBox="0 0 14 14"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+          <div class="fB__screen">
+            <p class="demo__read">식물 세포에는 동물 세포에 없는 <span class="demo__blank">세포벽</span>이 있어서, 세포의 모양을 단단하게 지켜 준다. 요약한 문장의 빈칸을 채워 보자.</p>
+            <div class="demo__foot"><button class="demo__go">다음</button></div>
+          </div>
+          <div class="fB__chin"><span class="fB__slit"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 시안 C ═══ -->
+  <section class="prop">
+    <div class="prop__hd">
+      <span class="prop__name">C. 풀 콕핏</span>
+      <span class="prop__desc">최대 어휘 — B에 안테나 · LCD 타이틀(모노) · 나사 · 통풍구 · 상태 표시줄까지.</span>
+      <button class="prop__replay" data-replay="rigC">↻ 내려오기 다시</button>
+    </div>
+    <div class="stage">
+      <div class="mock">
+        <div class="mock__hd"></div>
+        <div class="mock__body">
+          <div class="mock__col">
+            <div class="mock__line"></div><div class="mock__line"></div>
+            <div class="mock__line mock__line--short"></div><div class="mock__line"></div>
+            <div class="mock__line mock__line--short"></div>
+          </div>
+          <div class="mock__card"></div>
+        </div>
+      </div>
+      <div class="dim"></div>
+      <div class="rig rig--pop is-in" id="rigC">
+        <div class="fC__ant"><span class="fC__sig"></span><span class="fC__pole"></span></div>
+        <div class="fC__panel">
+          <i class="fC__screw fC__screw--tl"></i><i class="fC__screw fC__screw--tr"></i>
+          <i class="fC__screw fC__screw--bl"></i><i class="fC__screw fC__screw--br"></i>
+          <div class="fC__hd">
+            <span class="fC__lcd"><i></i><span>SUMMARY</span></span>
+            <span class="fB__ttl">개념 요약하기</span>
+            <button class="fC__x" aria-label="닫기">
+              <svg width="14" height="14" viewBox="0 0 14 14"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+          <div class="fC__screen">
+            <p class="demo__read">식물 세포에는 동물 세포에 없는 <span class="demo__blank">세포벽</span>이 있어서, 세포의 모양을 단단하게 지켜 준다. 요약한 문장의 빈칸을 채워 보자.</p>
+            <div class="demo__foot"><button class="demo__go">다음</button></div>
+          </div>
+          <div class="fC__chin">
+            <span class="fC__vents"><i></i><i></i><i></i></span>
+            <span class="fC__stat">AUX-MON · LINK OK</span>
+            <span class="fC__vents"><i></i><i></i><i></i></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  const root = document.documentElement;
+  const themeBtn = document.getElementById('themeBtn');
+  themeBtn.addEventListener('click', () => {
+    const dark = root.getAttribute('data-theme') === 'dark';
+    root.setAttribute('data-theme', dark ? 'light' : 'dark');
+    themeBtn.textContent = dark ? '🌙 다크' : '☀️ 라이트';
+  });
+  document.querySelectorAll('[data-sec]').forEach(b => {
+    b.addEventListener('click', () => {
+      root.setAttribute('data-section', b.dataset.sec);
+      document.querySelectorAll('[data-sec]').forEach(x => x.classList.toggle('is-on', x === b));
+    });
+  });
+  document.querySelector('[data-sec="concept"]').classList.add('is-on');
+  document.querySelectorAll('[data-replay]').forEach(b => {
+    b.addEventListener('click', () => {
+      const rig = document.getElementById(b.dataset.replay);
+      rig.classList.remove('is-in');
+      void rig.offsetWidth;
+      rig.classList.add('is-in');
+    });
+  });
+  // 주소 파라미터: ?theme=dark · ?only=A|B|C (스크린샷용)
+  const q = new URLSearchParams(location.search);
+  if (q.get('theme') === 'dark') themeBtn.click();
+  if (q.get('sec')) document.querySelector(`[data-sec="${q.get('sec')}"]`)?.click();
+  const only = (q.get('only') || '').toUpperCase();
+  if (['A','B','C'].includes(only)) {
+    document.querySelectorAll('.prop').forEach((p, i) => {
+      if ('ABC'[i] !== only) p.style.display = 'none';
+    });
+  }
+</script>
+</body>
+</html>

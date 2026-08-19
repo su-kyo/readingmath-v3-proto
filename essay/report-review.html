@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="styles/components.css?v=10" />
   <link rel="stylesheet" href="styles/learn-shell.css?v=8" />
   <link rel="stylesheet" href="styles/essay.css?v=10" />
+  <link rel="stylesheet" href="styles/monitor.css?v=1" />
   <style>
     /* ============ 서술형(과학) 보고서 해설 = 퍼플 테마 ============ */
     .content {
@@ -77,23 +78,10 @@
 
     /* ============ 추천 보고서 모달 (essay-report 미리보기 재사용) ============ */
     /* ⚠ 의도적 뉴트럴: 실제 인쇄물을 흉내내는 흰 종이 프리뷰라 중성 톤 유지. 테마 불변 위해 고정 뉴트럴 프리미티브(--n-*)로 토큰화. */
-    .pmodal { position: fixed; inset: 0; z-index: 300; display: none; align-items: center; justify-content: center; padding: 24px; }
-    .pmodal.is-open { display: flex; }
-    .pmodal__backdrop { position: absolute; inset: 0; background: rgba(8,5,22,.55); backdrop-filter: blur(2px); }
-    .pmodal__card { position: relative; width: 100%; max-width: 780px; max-height: 88vh; display: flex; flex-direction: column;
-      background: var(--n-050); border-radius: 20px; overflow: hidden; box-shadow: 0 30px 70px -20px rgba(0,0,0,.6); }
-    .pmodal__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 18px;
-      background: var(--n-000); border-bottom: 1px solid var(--n-100); flex: none; }
-    .pmodal__title { font-family: var(--font-sans); font-size: 17px; font-weight: 800; color: var(--n-650); display: inline-flex; align-items: center; gap: 8px; }
-    .pmodal__title::before { content: '★'; color: var(--primary); }
-    .pmodal__tools { display: flex; align-items: center; gap: 8px; }
-    .pmodal__btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 10px; border: 1px solid var(--n-100);
-      background: var(--n-050); color: var(--n-500); font-family: var(--font-sans); font-weight: 700; font-size: 14px; cursor: pointer; transition: background .12s; }
-    .pmodal__btn:hover { background: var(--n-100); }
-    .pmodal__btn svg { width: 16px; height: 16px; }
-    .pmodal__x { width: 34px; height: 34px; border-radius: 9px; border: 0; background: transparent; color: var(--n-400); font-size: 17px; cursor: pointer; }
-    .pmodal__x:hover { background: var(--n-050); }
-    .pmodal__scroll { overflow-y: auto; padding: 24px; }
+    .pmodal { --mon-w: 820px; }
+    .pmodal .monitor__screen { background: var(--n-050); padding: 24px; }
+    .pmodal .monitor__tool svg { width: 16px; height: 16px; }
+    .pmodal .monitor__ttl::before { content: '★ '; color: var(--primary-hover); }
     .pmodal__paper { max-width: 680px; margin: 0 auto; background: var(--n-000); padding: 32px 34px; border-radius: 6px;
       box-shadow: 0 2px 12px rgba(0,0,0,.09); font-family: var(--font-sans); color: var(--n-650); }
     .rp-title { font-size: 20px; font-weight: 800; text-align: center; margin-bottom: 6px; color: var(--n-650); }
@@ -170,19 +158,24 @@
     </div>
   </div>
 
-  <!-- 추천 보고서 모달 -->
-  <div class="pmodal" id="pmodal" aria-hidden="true">
-    <div class="pmodal__backdrop" data-pclose></div>
-    <div class="pmodal__card" role="dialog" aria-modal="true" aria-label="추천 보고서">
-      <div class="pmodal__head">
-        <h2 class="pmodal__title">추천 보고서</h2>
-        <div class="pmodal__tools">
-          <button class="pmodal__btn" id="printBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>인쇄</button>
-          <button class="pmodal__btn" id="dlBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>저장</button>
-          <button class="pmodal__x" data-pclose aria-label="닫기">✕</button>
+  <!-- 추천 보고서 (공용 보조 모니터 프레임 · 안은 의도된 흰 종이) -->
+  <div class="pmodal monitor" id="pmodal" aria-hidden="true">
+    <div class="monitor__dim" data-pclose></div>
+    <div class="monitor__rig" role="dialog" aria-modal="true" aria-label="추천 보고서">
+      <div class="monitor__mount"><i></i><i></i></div>
+      <div class="monitor__frame">
+        <div class="monitor__hd">
+          <span class="monitor__lamps"><i class="is-live"></i><i></i><i></i></span>
+          <span class="monitor__ttl">추천 보고서</span>
+          <div class="monitor__tools">
+            <button class="monitor__tool" id="printBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>인쇄</button>
+            <button class="monitor__tool" id="dlBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>저장</button>
+          </div>
+          <button class="monitor__x" data-pclose aria-label="닫기"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>
         </div>
+        <div class="monitor__screen"><div class="pmodal__paper" id="pmodalPaper"></div></div>
+        <div class="monitor__chin"><span class="monitor__slit"></span></div>
       </div>
-      <div class="pmodal__scroll"><div class="pmodal__paper" id="pmodalPaper"></div></div>
     </div>
   </div>
 

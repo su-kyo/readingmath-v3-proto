@@ -153,7 +153,10 @@
   });
   viewer.querySelector('.viewer__prev').addEventListener('click', function (e) { e.stopPropagation(); stepImg(-1); });
   viewer.querySelector('.viewer__next').addEventListener('click', function (e) { e.stopPropagation(); stepImg(1); });
-  lightbox.addEventListener('click', closeLightbox);
+  /* 닫기 = dim 클릭 또는 X 버튼 (이미지 자체를 눌러도 닫히지 않게) */
+  lightbox.addEventListener('click', function (e) {
+    if (e.target.closest('.monitor__x') || e.target.classList.contains('monitor__dim')) closeLightbox();
+  });
 
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') { closePop(); closeLightbox(); }
@@ -293,7 +296,7 @@
     ]
   });
   closeBtn.addEventListener('click', function () { modal.classList.remove('is-open'); });
-  modal.addEventListener('click', function (e) { if (e.target === modal) modal.classList.remove('is-open'); });
+  modal.addEventListener('click', function (e) { if (e.target === modal || e.target.classList.contains('monitor__dim')) modal.classList.remove('is-open'); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') modal.classList.remove('is-open'); });
 
   render();
