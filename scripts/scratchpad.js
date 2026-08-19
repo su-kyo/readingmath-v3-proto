@@ -62,9 +62,8 @@
       /* 도구 바 = 화면 .bar의 복제본 + 네이비 톤. 형태는 화면 CSS를 그대로 물려받는다 */
       '.scratch .bar{ transform: translateY(112%); transition: transform .32s cubic-bezier(.2,.8,.3,1.08); pointer-events:auto; z-index:2; }',
       '.scratch.is-in .bar{ transform: translateY(0); }',
-      '.scratch .bar__mid{ background: var(--n-500); pointer-events:auto; }',
-      '.scratch .bar__tray{ background: var(--n-650); }',
-      /* 좌우 일러스트는 네이비 램프로 다시 칠한다 (듀오톤 — 아래 SVG 필터가 실제 색을 매핑) */
+      '.scratch .bar__mid{ pointer-events:auto; }',   /* 면색은 아래 recolor()가 인라인으로 넣는다 */
+      /* 좌우 일러스트는 네이비 램프로 다시 칠한다 (아래 SVG 필터가 실제 색을 매핑) */
       '.scratch .bar__deco{ filter: url(#scratchNavy); }',
 
       /* 도구 바 속 — 램프 + 타이틀 + 물리 버튼 (보조 모니터 하드웨어 언어) */
@@ -89,21 +88,76 @@
     root.className = 'scratch';
     root.id = 'scratchpad';
     root.setAttribute('aria-hidden', 'true');
-    /* 좌우 일러스트 리컬러 필터 — 밝기를 네이비 램프(n-900…n-300)로 다시 칠한다.
-       색조만 씌우는 filter()가 아니라 명암 단계를 토큰 색으로 갈아끼우는 듀오톤이라
-       원본의 요철·하이라이트가 그대로 살아 있고 트레이와 한 덩어리로 읽힌다. */
+    /* ── 좌우 일러스트 리컬러 ──────────────────────────────────────────────
+       ① 채도를 살짝만 낮춘다(SAT) — 램프·레이더 같은 포인트 컬러가 살아남는다.
+       ② 명암 단계를 네이비 램프(RAMP)로 갈아끼운다.
+       같은 계산을 아래 recolor()가 JS로도 하기 때문에, 데코의 밴드색과
+       바 가운데(.bar__mid·.bar__tray) 면색이 정확히 같은 값이 되어 이음매가 없다. */
+    var SAT = 0.42;
+    /* n-950 · n-900 · n-800 · n-700 · n-650 · n-600 · n-500 · n-350 */
+    var RAMP = {
+      r: [0.012, 0.024, 0.035, 0.059, 0.071, 0.122, 0.227, 0.447],
+      g: [0.024, 0.055, 0.075, 0.098, 0.118, 0.169, 0.275, 0.522],
+      b: [0.059, 0.125, 0.157, 0.188, 0.216, 0.286, 0.416, 0.651]
+    };
+    /* 섹션마다 원본 콘솔 밝기가 다르다(개념 파랑 .67 · 유형 베이지 .89 …).
+       그대로 두면 연습장 바가 화면마다 다른 어둡기로 나오므로, 트레이 밝기를
+       기준값에 맞추는 배율을 먼저 건다 — 어느 화면이든 같은 톤의 연습장이 된다. */
+    var TARGET_L = 0.667;
+    var SLOPE = (function () {
+      var t = pageBar.querySelector('.bar__tray');
+      var m = t && /rgba?\(([^)]+)\)/.exec(getComputedStyle(t).backgroundColor);
+      if (!m) return 1;
+      var p = m[1].split(',').map(parseFloat);
+      var L = (0.2126 * p[0] + 0.7152 * p[1] + 0.0722 * p[2]) / 255;
+      if (!L) return 1;
+      return Math.min(1.4, Math.max(0.5, TARGET_L / L));
+    })();
+    function satMatrix(s) {
+      return [
+        0.213 + 0.787 * s, 0.715 - 0.715 * s, 0.072 - 0.072 * s,
+        0.213 - 0.213 * s, 0.715 + 0.285 * s, 0.072 - 0.072 * s,
+        0.213 - 0.213 * s, 0.715 - 0.715 * s, 0.072 + 0.928 * s
+      ];
+    }
+    function tableAt(v, c) {                     /* feFuncR/G/B type="table"과 같은 보간 */
+      c = Math.min(1, Math.max(0, c));
+      var n = v.length - 1, k = Math.min(n - 1, Math.floor(c * n)), t = c * n - k;
+      return v[k] + t * (v[k + 1] - v[k]);
+    }
+    function recolorRGB(r, g, b) {               /* 0–255 → 0–255 (필터와 동일 계산) */
+      var m = satMatrix(SAT);
+      r /= 255; g /= 255; b /= 255;
+      var R = (m[0] * r + m[1] * g + m[2] * b) * SLOPE;
+      var G = (m[3] * r + m[4] * g + m[5] * b) * SLOPE;
+      var B = (m[6] * r + m[7] * g + m[8] * b) * SLOPE;
+      return [
+        Math.round(tableAt(RAMP.r, R) * 255),
+        Math.round(tableAt(RAMP.g, G) * 255),
+        Math.round(tableAt(RAMP.b, B) * 255)
+      ];
+    }
+    function recolorCSS(css) {                   /* "rgb(135,174,236)" → "rgb(...)" */
+      var m = /rgba?\(([^)]+)\)/.exec(css || '');
+      if (!m) return null;
+      var p = m[1].split(',').map(parseFloat);
+      var o = recolorRGB(p[0], p[1], p[2]);
+      return 'rgb(' + o[0] + ',' + o[1] + ',' + o[2] + ')';
+    }
+
     root.innerHTML =
       '<svg width="0" height="0" style="position:absolute" aria-hidden="true">' +
         '<filter id="scratchNavy" color-interpolation-filters="sRGB">' +
-          '<feColorMatrix type="matrix" values="' +
-            '.2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  0 0 0 1 0"/>' +
+          '<feColorMatrix type="saturate" values="' + SAT + '"/>' +
           '<feComponentTransfer>' +
-            /* n-950 · n-900 · n-800 · n-700 · n-650 · n-600 · n-500 · n-400
-               — 원본 일러스트가 대체로 밝아서 넓은 면이 n-650/n-600(트레이 색)에 앉는다.
-                 하이라이트만 n-500/n-400으로 떠서 요철이 남는다. */
-            '<feFuncR type="table" tableValues="0.012 0.024 0.035 0.059 0.071 0.122 0.227 0.345"/>' +
-            '<feFuncG type="table" tableValues="0.024 0.055 0.075 0.098 0.118 0.169 0.275 0.420"/>' +
-            '<feFuncB type="table" tableValues="0.059 0.125 0.157 0.188 0.216 0.286 0.416 0.549"/>' +
+            '<feFuncR type="linear" slope="' + SLOPE + '"/>' +
+            '<feFuncG type="linear" slope="' + SLOPE + '"/>' +
+            '<feFuncB type="linear" slope="' + SLOPE + '"/>' +
+          '</feComponentTransfer>' +
+          '<feComponentTransfer>' +
+            '<feFuncR type="table" tableValues="' + RAMP.r.join(' ') + '"/>' +
+            '<feFuncG type="table" tableValues="' + RAMP.g.join(' ') + '"/>' +
+            '<feFuncB type="table" tableValues="' + RAMP.b.join(' ') + '"/>' +
           '</feComponentTransfer>' +
         '</filter>' +
       '</svg>' +
@@ -133,6 +187,16 @@
         '<span class="scratch__sep"></span>' +
         '<button class="scratch__done" data-tool="close">완료</button>' +
       '</div>';
+    /* 가운데 면색도 데코와 똑같은 계산으로 옮긴다 — 이래야 이음매가 안 보인다.
+       화면마다 트레이 색이 다르지만(개념 파랑·유형 베이지·서술형 보라·과제 회색)
+       실제 계산된 색을 읽어 변환하므로 어느 화면이든 데코 밴드와 정확히 맞는다. */
+    ['.bar__mid', '.bar__tray'].forEach(function (sel) {
+      var src = pageBar.querySelector(sel), dst = toolbar.querySelector(sel);
+      if (!src || !dst) return;
+      var next = recolorCSS(getComputedStyle(src).backgroundColor);
+      if (next) dst.style.background = next;
+    });
+
     root.appendChild(toolbar);
     document.body.appendChild(root);
 
