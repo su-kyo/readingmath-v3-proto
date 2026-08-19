@@ -111,10 +111,13 @@
     });
   });
 
-  /* 선지 선택 → 정답이면 채우고 전진 / 오답이면 빨간 표시 + 흔들림, 팝오버 유지(재시도) */
-  var wrongT;
+  /* 선지 선택 → 정답이면 채우고 전진 / 오답이면 빨간 표시 + 흔들림, 팝오버 유지(재시도)
+     정답일 때는 초록 표시를 0.5초 보여준 뒤 팝오버를 닫고 다음 구간으로 간다
+     (바로 닫으면 맞혔다는 신호를 볼 새가 없다). 그 0.5초 동안은 다시 못 누른다. */
+  var wrongT, okT, advancing = false;
   pop.querySelectorAll('.answer-opt').forEach(function (o) {
     o.addEventListener('click', function () {
+      if (advancing) return;
       var isCorrect = o.hasAttribute('data-correct');
       if (!isCorrect) {                                    // 오답
         o.classList.remove('is-wrong');                    // 재트리거를 위해 리셋
@@ -126,14 +129,21 @@
         return;                                            // 전진하지 않음
       }
       // 정답
-      pop.querySelectorAll('.answer-opt').forEach(function (x) { x.classList.remove('is-selected', 'is-wrong'); });
-      o.classList.add('is-selected');
+      pop.querySelectorAll('.answer-opt').forEach(function (x) { x.classList.remove('is-selected', 'is-wrong', 'is-correct'); });
+      o.classList.add('is-selected', 'is-correct');
       blank.querySelector('.seg--blank__text').textContent = o.dataset.value;
       blank.classList.remove('is-wrong');
-      blank.classList.add('is-filled');
-      closePop();
-      var bi = segs.indexOf(blank);
-      if (cursor === bi) { cursor++; render(); }
+      blank.classList.add('is-filled', 'is-just-correct');
+      advancing = true;
+      clearTimeout(okT);
+      okT = setTimeout(function () {
+        advancing = false;
+        o.classList.remove('is-correct');
+        blank.classList.remove('is-just-correct');
+        closePop();
+        var bi = segs.indexOf(blank);
+        if (cursor === bi) { cursor++; render(); }
+      }, 500);
     });
   });
 
@@ -159,6 +169,31 @@
       document.documentElement.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
     });
   }
+
+  /* ---- 검수용 디버그 훅 (?debug=1일 때만 패널에 뜸) ---- */
+  function dbgBlank(ok) {
+    if (!pop.classList.contains('is-open')) openPop();
+    var o = ok ? pop.querySelector('.answer-opt[data-correct]')
+               : pop.querySelector('.answer-opt:not([data-correct])');
+    if (o) o.click();
+  }
+  function dbgReadAll() {
+    var o = pop.querySelector('.answer-opt[data-correct]');
+    if (o && !blank.classList.contains('is-filled')) {
+      blank.querySelector('.seg--blank__text').textContent = o.dataset.value;
+      blank.classList.add('is-filled');
+    }
+    closePop();
+    cursor = segs.length; render();
+  }
+  if (window.RMDebug) window.RMDebug.register({
+    title: '끊어읽기',
+    actions: [
+      { label: '빈칸 정답', tone: 'ok', run: function () { dbgBlank(true); } },
+      { label: '빈칸 오답', tone: 'no', run: function () { dbgBlank(false); } },
+      { label: '끝까지 읽기', run: dbgReadAll }
+    ]
+  });
 
   render();
   updateViewer();
@@ -235,6 +270,27 @@
     if (openBtn.disabled) return;
     modal.classList.add('is-open');
     render();
+  });
+
+  /* ---- 검수용 디버그 훅 ---- */
+  function dbgOpen() { openBtn.disabled = false; modal.classList.add('is-open'); render(); }
+  function dbgFillAll() {
+    dbgOpen();
+    var guard = 0;
+    while (cursor < segs.length && guard++ < 200) {
+      var cur = segs[cursor];
+      if (cur.classList.contains('sblank') && !cur.classList.contains('is-filled')) {
+        var d = DATA[cur.dataset.blank];
+        fill(cur, d.kind, d.options[0]);
+      } else { cursor++; render(); }
+    }
+  }
+  if (window.RMDebug) window.RMDebug.register({
+    title: '개념 요약하기 모달',
+    actions: [
+      { label: '모달 열기', run: dbgOpen },
+      { label: '전부 채우기', tone: 'ok', run: dbgFillAll }
+    ]
   });
   closeBtn.addEventListener('click', function () { modal.classList.remove('is-open'); });
   modal.addEventListener('click', function (e) { if (e.target === modal) modal.classList.remove('is-open'); });

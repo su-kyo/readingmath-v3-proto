@@ -7,7 +7,7 @@
   <title>유형 훈련 · 1차 유형 문제 — 리딩수학과학</title>
   <link rel="stylesheet" href="styles/tokens.css?v=23" />
   <link rel="stylesheet" href="styles/base.css?v=7" />
-  <link rel="stylesheet" href="styles/components.css?v=9" />
+  <link rel="stylesheet" href="styles/components.css?v=10" />
   <link rel="stylesheet" href="styles/learn-shell.css?v=8" />
   <link rel="stylesheet" href="styles/type.css?v=8" />
   <style>
@@ -67,7 +67,7 @@
     .opt__num { flex: none; width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,.14); color: var(--qtext); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 15px; position: relative; }
     :root[data-theme="light"] .opt__num { background: var(--th-tint-strong); color: var(--th-ink-accent); }
     .opt--num { justify-content: center; } .opt--num .opt__num { width: 34px; height: 34px; }
-    .opt__img { width: 100%; height: 96px; border-radius: 10px; background: var(--n-200); }
+    .opt__img { width: 100%; height: 96px; border-radius: 10px; }
     .opt--img { flex-direction: column; align-items: stretch; gap: 10px; padding: 12px; }
     .opt.is-selected { background: var(--subj); box-shadow: none; color: var(--n-000); }
     .opt.is-selected .opt__num { background: var(--n-000); color: transparent; }
@@ -182,6 +182,10 @@
     </div>
   </div>
 
-  <script src="scripts/type-quiz.js?v=5"></script>
+  <!-- 검수용 디버그 패널 (?debug=1 일 때만 보임) -->
+  <script src="scripts/debug-panel.js?v=2"></script>
+  <!-- 키패드 물리 키보드 입력 (공용) -->
+  <script src="scripts/keypad-input.js?v=2"></script>
+  <script src="scripts/type-quiz.js?v=6"></script>
 </body>
 </html>

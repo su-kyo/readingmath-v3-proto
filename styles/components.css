@@ -437,3 +437,48 @@
 .mroot { display: inline-flex; align-items: flex-start; }
 .mroot::before { content: "√"; margin-right: 1px; }
 .mroot__r { border-top: 1.5px solid currentColor; padding: 1px 3px 0; }
+
+/* =========================================================================
+   더미 이미지 자리 (.dummy-img) — "더미는 더미로 보이게"
+   실제 그림이 들어오기 전 임시 자리. 빗금 + '이미지 예시' 라벨로 한눈에 구분한다.
+   화면마다 이름이 다른 자리(.opt__img · .ex__skel · .sopt__img · .sblank__thumb)도
+   같은 규칙을 받는다 — 새 자리를 만들면 .dummy-img 를 붙이면 된다.
+   빗금·테두리는 currentColor에서 뽑아 어떤 면 위에 놓여도 같은 세기로 읽힌다.
+   ========================================================================= */
+.dummy-img,
+.opt__img,
+.ex__skel,
+.sopt__img,
+.sblank__thumb {
+  position: relative;
+  background-color: color-mix(in srgb, currentColor 7%, transparent);
+  background-image: repeating-linear-gradient(-45deg,
+    color-mix(in srgb, currentColor 26%, transparent) 0 1.5px,
+    transparent 1.5px 9px);
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, currentColor 24%, transparent);
+}
+/* 라벨 = 빗금 위에 얹는 작은 필 (자리가 작은 .sblank__thumb 는 빗금만) */
+.dummy-img::after,
+.opt__img::after,
+.sopt__img::after,
+.ex__skel::before {
+  content: "이미지 예시";
+  padding: 3px 9px;
+  border-radius: var(--r-full);
+  background: var(--surface-1);
+  color: var(--text-meta);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: var(--fw-bold);
+  letter-spacing: .02em;
+  white-space: nowrap;
+}
+.dummy-img::after,
+.opt__img::after,
+.sopt__img::after {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+}
+/* .ex__skel 은 자체 설명글이 있으므로 라벨을 위에 얹고 세로로 쌓는다 */
+.ex__skel { flex-direction: column; gap: 10px; }

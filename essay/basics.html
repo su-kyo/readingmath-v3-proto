@@ -7,9 +7,9 @@
   <title>서술형 훈련 · 기초 기르기 — 리딩수학과학</title>
   <link rel="stylesheet" href="styles/tokens.css?v=23" />
   <link rel="stylesheet" href="styles/base.css?v=7" />
-  <link rel="stylesheet" href="styles/components.css?v=9" />
+  <link rel="stylesheet" href="styles/components.css?v=10" />
   <link rel="stylesheet" href="styles/learn-shell.css?v=8" />
-  <link rel="stylesheet" href="styles/essay.css?v=9" />
+  <link rel="stylesheet" href="styles/essay.css?v=10" />
   <style>
     /* ============ 서술형 훈련 = 퍼플 테마 (공통은 essay.css) ============ */
     /* 페이지 고유 토큰만 여기서 선언 (--bl-* / .blank / .qpop / 하단바 = essay.css) */
@@ -44,7 +44,7 @@
       font-weight: 700; font-size: 16px; text-align: center; transition: background .15s, box-shadow .15s; }
     .qtab { background: rgba(255,255,255,.12); color: rgba(255,255,255,.5); }              /* 미완료 (다크 카드) */
     .qtab.is-done { background: rgba(114,111,233,.55); color: var(--n-000); }                      /* 완료 */
-    .qtab.is-active { background: var(--th-solid); color: var(--n-000); box-shadow: 0 0 0 3px rgba(114,111,233,.30); }  /* 현재 */
+    .qtab.is-active { background: var(--th-solid); color: var(--n-000); }  /* 현재 — 채움 하나로 (바깥 링 제거) */
     :root[data-theme="light"] .qtab { background: rgba(114,111,233,.10); color: var(--text-muted); }
     :root[data-theme="light"] .qtab.is-done { background: rgba(114,111,233,.20); color: var(--th-ink-accent); }
     :root[data-theme="light"] .qtab.is-active { background: var(--th-solid); color: var(--n-000); }
@@ -187,6 +187,8 @@
     </div>
   </div>
 
+  <!-- 키패드 물리 키보드 입력 (공용) -->
+  <script src="scripts/keypad-input.js?v=2"></script>
   <script src="scripts/essay-basics.js?v=4"></script>
 </body>
 </html>

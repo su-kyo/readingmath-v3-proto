@@ -22,7 +22,10 @@
     { no: 2, name: '기본 다지기', grade: 'A', correct: 9, total: 10 },
     { no: 3, name: '실력 키우기', grade: 'S', correct: 10, total: 10 }
   ];
-  var SCORE = 72;            // 총점 (시간 초과 감점 반영)
+  /* 시간 초과 감점(10점) 여부 — 검수 패널에서 토글할 수 있다 */
+  var BASE_SCORE = 82, PENALTY = 10;
+  var overtime = true;
+  var SCORE = BASE_SCORE - (overtime ? PENALTY : 0);
   var COMMENT =
     '진방울님의 서술형 훈련 결과는 100점 만점 중 ' + SCORE + '점 입니다.\n' +
     '문제를 해결하는 과정은 일부 잘 따라왔지만, 계산 과정과 서술의 정확성이 흔들린 부분이 있습니다.\n' +
@@ -87,5 +90,30 @@
   document.addEventListener('click', function (e) {
     var v = e.target.closest && e.target.closest('.tview');
     if (v) showToast(v.getAttribute('data-no') + '단계 해설은 준비 중이에요');
+  });
+
+  /* ---------- 시간 초과 상태 토글 (검수용) ---------- */
+  var overPill = document.getElementById('overPill');
+  var totalNote = document.getElementById('totalNote');
+  var commentEl = document.getElementById('comment');
+  function setOvertime(on, initial) {
+    overtime = on;
+    SCORE = BASE_SCORE - (on ? PENALTY : 0);
+    // 최초 1회는 점수 카운트업 애니메이션을 살려 둔다(SCORE를 읽어 올라간다)
+    if (!initial) { clearInterval(sTimer); scoreEl.textContent = SCORE; }
+    document.getElementById('totalStar').src = 'assets/icons/star/star-' + gradeOf(SCORE) + '.svg';
+    if (overPill) overPill.hidden = !on;
+    if (totalNote) totalNote.textContent = on ? 'ⓘ 시간 초과 감점 있음' : 'ⓘ 서술형 훈련 3단계 종합';
+    if (commentEl) commentEl.textContent = commentEl.textContent
+      .replace(/100점 만점 중 \d+점/, '100점 만점 중 ' + SCORE + '점');
+  }
+  setOvertime(overtime, true);
+
+  if (window.RMDebug) window.RMDebug.register({
+    title: '서술형 훈련 결과 · 시간',
+    actions: [
+      { label: '시간 초과', tone: 'no', run: function () { setOvertime(true); } },
+      { label: '제한 시간 내', tone: 'ok', run: function () { setOvertime(false); } }
+    ]
   });
 })();

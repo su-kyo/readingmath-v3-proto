@@ -182,5 +182,29 @@
     else { window.location.href = 'exam/home.html'; }   // 마지막: 유형 상세(데모→홈)
   });
 
+  /* ---- 검수용 디버그 훅 (?debug=1일 때만 패널에 뜸) ---- */
+  function dbgSubmit(ok) {
+    if (submitted) return;
+    var Q = QUESTIONS[idx];
+    if (Q.type === 'short') {
+      var inp = document.getElementById('shortInput'); if (!inp) return;
+      inp.value = ok ? String(Q.answer) : '0';
+      updateShort();
+    } else {
+      var opts = qarea.querySelectorAll('.opt');
+      var pick = ok ? Q.answer : (Q.answer + 1) % opts.length;
+      if (opts[pick]) opts[pick].click();
+    }
+    grade();
+  }
+  if (window.RMDebug) window.RMDebug.register({
+    title: '시험 문제 풀이',
+    actions: [
+      { label: '정답 제출', tone: 'ok', run: function () { dbgSubmit(true); } },
+      { label: '오답 제출', tone: 'no', run: function () { dbgSubmit(false); } },
+      { label: '다음 문제', run: function () { if (submitted) primaryBtn.click(); } }
+    ]
+  });
+
   render();
 })();

@@ -290,5 +290,40 @@
     document.documentElement.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
   });
 
+  /* ---- 검수용 디버그 훅 (?debug=1일 때만 패널에 뜸) ---- */
+  function dbgAnswer(ok) {
+    if (graded) return;
+    var p = PROBLEMS[idx];
+    if (p.type === 'mc-num' || p.type === 'mc-text' || p.type === 'mc-image') {
+      var opts = qEl.querySelectorAll('.opt');
+      var pick = ok ? p.answer : (p.answer + 1) % opts.length;
+      if (opts[pick]) opts[pick].click();
+    } else if (p.type === 'short-1') {
+      qEl.querySelector('.sinput').value = ok ? p.answer : '0'; checkFilled();
+    } else if (p.type === 'short-2') {
+      var ins = qEl.querySelectorAll('.sinput');
+      ins[0].value = ok ? p.answer[0] : '0'; ins[1].value = ok ? p.answer[1] : '0'; checkFilled();
+    } else if (p.type === 'fraction') {
+      qEl.querySelector('[data-i="num"]').value = ok ? p.answer.num : '0';
+      qEl.querySelector('[data-i="den"]').value = ok ? p.answer.den : '0'; checkFilled();
+    }
+    grade();
+  }
+  function dbgSolveAll() {
+    while (true) {
+      if (!graded) dbgAnswer(true);
+      if (idx >= TOTAL - 1) break;
+      next();
+    }
+  }
+  if (window.RMDebug) window.RMDebug.register({
+    title: '기초 연산 · 현재 문제',
+    actions: [
+      { label: '정답 처리', tone: 'ok', run: function () { dbgAnswer(true); } },
+      { label: '오답 처리', tone: 'no', run: function () { dbgAnswer(false); } },
+      { label: '전부 풀기', run: dbgSolveAll }
+    ]
+  });
+
   renderQ();
 })();

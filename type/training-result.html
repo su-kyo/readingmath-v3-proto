@@ -7,7 +7,7 @@
   <title>유형 훈련 · 학습 결과 — 리딩수학과학</title>
   <link rel="stylesheet" href="styles/tokens.css?v=23" />
   <link rel="stylesheet" href="styles/base.css?v=7" />
-  <link rel="stylesheet" href="styles/components.css?v=9" />
+  <link rel="stylesheet" href="styles/components.css?v=10" />
   <link rel="stylesheet" href="styles/learn-shell.css?v=8" />
   <link rel="stylesheet" href="styles/type.css?v=8" />
   <style>
@@ -54,6 +54,8 @@
       font-family: var(--font-sans); font-size: clamp(13px,1.2vw,15px); font-weight: 600; color: var(--ink); }
     .pill svg { width: 16px; height: 16px; color: var(--muted); }
     .pill--round { font-weight: 800; letter-spacing: .02em; }
+    .pill--warn { color: var(--warn-solid); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--warn-solid) 50%, transparent); }
+    .pill--warn svg { color: var(--warn-solid); }
     .pill b { font-weight: 700; }
 
     /* ===== 본문: 총점 카드 + 표 ===== */
@@ -138,6 +140,7 @@
             <span class="pill pill--round">ROUND 1</span>
             <span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>완료 <b>2024-04-15 16:05</b></span>
             <span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/></svg>소요 <b>41:20</b></span>
+            <span class="pill pill--warn" id="overPill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.2 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.2a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>시간 초과 감점</span>
           </div>
 
           <!-- 총점 + 표 -->
@@ -145,7 +148,7 @@
             <div class="total">
               <img class="total__star" id="totalStar" src="assets/icons/star/star-a.svg" alt="등급" />
               <div class="total__score"><b id="score">0</b><span>점</span></div>
-              <div class="total__note">ⓘ 유형 훈련 4단계 종합</div>
+              <div class="total__note" id="totalNote">ⓘ 유형 훈련 4단계 종합</div>
             </div>
             <div class="detail">
               <div class="trow thead">
@@ -188,6 +191,8 @@
 
   <div class="rtoast" id="toast"></div>
 
-  <script src="scripts/type-training-result.js"></script>
+  <!-- 검수용 디버그 패널 (?debug=1 일 때만 보임) -->
+  <script src="scripts/debug-panel.js?v=2"></script>
+  <script src="scripts/type-training-result.js?v=2"></script>
 </body>
 </html>

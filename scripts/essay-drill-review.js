@@ -113,10 +113,14 @@
   var fillDoc = document.getElementById('fillDoc');
   var arrangeDoc = document.getElementById('arrangeDoc');
   var reviewHint = document.getElementById('reviewHint');
-  var stepsQ = document.getElementById('stepsQ');
-  var prevBtn = document.getElementById('prevBtn');
-  var nextBtn = document.getElementById('nextBtn');
-  var pi = -1, P = null;
+  var qtabs = document.getElementById('qtabs');
+  var pillFill = document.getElementById('pillFill');
+  var pillArrange = document.getElementById('pillArrange');
+  var wsLabel = document.getElementById('wsLabel');
+  var primaryBtn = document.getElementById('primaryBtn');
+  var primaryLabel = document.getElementById('primaryLabel');
+  // phase = 'fill' | 'arrange' — 푼 순서대로 한 번에 한 단계만 보여준다
+  var pi = -1, P = null, phase = 'fill';
 
   function norm(s) { return String(s).replace(/\s+/g, '').trim(); }
 
@@ -147,8 +151,24 @@
       '<span class="rslot__val">' + my + '</span></span>';
   }
 
+  /* 문제 번호탭 (헤더) — 누르면 그 문제 해설로 이동 */
+  function renderTabs() {
+    var html = '';
+    for (var i = 0; i < N; i++) {
+      var cls = 'qtab' + (i === pi ? ' is-active' : (i < pi ? ' is-done' : ''));
+      html += '<span class="' + cls + '" data-i="' + i + '">' + (i + 1) + '</span>';
+    }
+    qtabs.innerHTML = html;
+  }
+  /* 단계 스텝바 — 지금 보고 있는 해설이 어느 단계인지 */
+  function setSteps() {
+    if (phase === 'arrange') { pillFill.className = 'stepbar__i is-done'; pillArrange.className = 'stepbar__i is-on'; }
+    else { pillFill.className = 'stepbar__i is-on'; pillArrange.className = 'stepbar__i'; }
+  }
+
   function render() {
-    stepsQ.textContent = '문제 ' + (pi + 1) + ' / ' + N;
+    renderTabs();
+    setSteps();
 
     // 문제 카드 (읽기전용, 접기 가능 · 기본 접힘)
     readBody.innerHTML = P.statement.map(function (s) { return '<span class="rline rline--q">' + s + '</span>'; }).join('');
@@ -169,13 +189,37 @@
       return '<span class="rline rline--muted">' + c.text + '</span>';
     }).join('');
 
-    // 오답이 하나라도 있으면 안내문 노출
-    var hasWrong = !!(fillDoc.querySelector('.is-wrong') || arrangeDoc.querySelector('.is-wrong'));
-    reviewHint.style.display = hasWrong ? '' : 'none';
-
-    prevBtn.disabled = pi <= 0;
-    nextBtn.disabled = pi >= N - 1;
+    showPhase(phase);
   }
+
+  /* 단계 전환 — 빈칸 해설 → 순서 해설 (푼 순서 그대로) */
+  function showPhase(next) {
+    phase = next;
+    setSteps();
+    var arrange = (phase === 'arrange');
+    fillDoc.hidden = arrange;
+    arrangeDoc.hidden = !arrange;
+    wsLabel.textContent = arrange ? '② 순서 맞추기' : '① 빈칸 맞추기';
+
+    // 안내문 = 지금 보고 있는 단계에 오답이 있을 때만
+    var view = arrange ? arrangeDoc : fillDoc;
+    reviewHint.style.display = view.querySelector('.is-wrong') ? '' : 'none';
+
+    if (!arrange) primaryLabel.textContent = '순서 맞추기 해설';
+    else primaryLabel.textContent = (pi < N - 1) ? '다음 문제' : '결과로 돌아가기';
+  }
+
+  primaryBtn.addEventListener('click', function () {
+    if (phase === 'fill') { showPhase('arrange'); return; }
+    if (pi < N - 1) { pi++; P = PROBLEMS[pi]; phase = 'fill'; render(); document.querySelector('.stage-scroll').scrollTop = 0; }
+    else window.location.href = 'essay/step-result.html';
+  });
+
+  qtabs.addEventListener('click', function (e) {
+    var t = e.target.closest('.qtab'); if (!t) return;
+    pi = +t.dataset.i; P = PROBLEMS[pi]; phase = 'fill'; render();
+    document.querySelector('.stage-scroll').scrollTop = 0;
+  });
 
   /* 오답 토글 (빈칸·슬롯 공용): 내 답 ↔ 정답 */
   function wireToggle(root) {
@@ -197,9 +241,6 @@
   // 문제 카드 접기
   problemHead.addEventListener('click', function () { problem.classList.toggle('is-collapsed'); });
 
-  prevBtn.addEventListener('click', function () { if (pi > 0) { pi--; P = PROBLEMS[pi]; render(); } });
-  nextBtn.addEventListener('click', function () { if (pi < N - 1) { pi++; P = PROBLEMS[pi]; render(); } });
-
   var resultBtn = document.getElementById('resultBtn');
   if (resultBtn) resultBtn.addEventListener('click', function () { window.location.href = 'essay/step-result.html'; });
 
@@ -209,6 +250,16 @@
   if (themeBtn) themeBtn.addEventListener('click', function () {
     var c = document.documentElement.getAttribute('data-theme');
     document.documentElement.setAttribute('data-theme', c === 'dark' ? 'light' : 'dark');
+  });
+
+  /* ---- 검수용 디버그 훅 (?debug=1일 때만 패널에 뜸) ---- */
+  if (window.RMDebug) window.RMDebug.register({
+    title: '기본 다지기 해설',
+    actions: [
+      { label: '빈칸 해설', run: function () { showPhase('fill'); } },
+      { label: '순서 해설', run: function () { showPhase('arrange'); } },
+      { label: '다음 문제', run: function () { if (pi < N - 1) { pi++; P = PROBLEMS[pi]; phase = 'fill'; render(); } } }
+    ]
   });
 
   pi = 0; P = PROBLEMS[0];

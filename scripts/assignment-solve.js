@@ -287,6 +287,21 @@
     applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
   });
 
+  /* ---- 검수용 디버그 훅 (?debug=1일 때만 패널에 뜸) ---- */
+  function dbgFill(i, ok) {
+    var q = Q[i];
+    if (q.type === 'short') answers[i] = ok ? String(q.answer) : '0';
+    else answers[i] = ok ? q.answer : (q.answer + 1) % q.opts.length;
+  }
+  if (window.RMDebug) window.RMDebug.register({
+    title: '과제 풀이 (제출 후 채점)',
+    actions: [
+      { label: '정답 입력', tone: 'ok', run: function () { dbgFill(cur, true); render(); } },
+      { label: '오답 입력', tone: 'no', run: function () { dbgFill(cur, false); render(); } },
+      { label: '전부 풀기', run: function () { for (var i = 0; i < N; i++) dbgFill(i, true); render(); } }
+    ]
+  });
+
   // 초기화
   buildGrid();
   render();

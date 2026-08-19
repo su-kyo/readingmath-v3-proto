@@ -235,7 +235,7 @@
   /* ---- 채점 / 다음 ---- */
   gradeBtn.addEventListener('click', function () { if (!graded) grade(); else next(); });
 
-  /* 채점 후 오답 빈칸 토글: 같은 칸에서 내 답 ↔ 정답 (병렬 표시 아님) */
+  /* 채점 후 오답 빈칸 토글: 같은 칸에서 내 답 ↔ 정답 (병렬 표시 아님 · 취소선 없음) */
   qEl.addEventListener('click', function (e) {
     if (!graded) return;
     var w = e.target.closest('.dblank.is-wrong');
@@ -308,6 +308,46 @@
   if (themeBtn) themeBtn.addEventListener('click', function () {
     var cur = document.documentElement.getAttribute('data-theme');
     document.documentElement.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
+  });
+
+  /* ---- 검수용 디버그 훅 (?debug=1일 때만 패널에 뜸) ---- */
+  function dbgAnswer(ok) {
+    if (graded) return;
+    var p = PROBLEMS[idx];
+    if (p.type === 'mc-num' || p.type === 'mc-text' || p.type === 'mc-image') {
+      var opts = qEl.querySelectorAll('.opt');
+      var pick = ok ? p.answer : (p.answer + 1) % opts.length;
+      if (opts[pick]) opts[pick].click();
+    } else if (p.type === 'blank') {
+      qEl.querySelectorAll('.dblank').forEach(function (b, i) {
+        setV(b, ok ? p.answers[i] : '0');
+      });
+      checkFilled();
+    } else if (p.type === 'short-1') {
+      setV(qEl.querySelector('.sinput'), ok ? p.answer : '0'); checkFilled();
+    } else if (p.type === 'short-2') {
+      var ins = qEl.querySelectorAll('.sinput');
+      setV(ins[0], ok ? p.answer[0] : '0'); setV(ins[1], ok ? p.answer[1] : '0'); checkFilled();
+    } else if (p.type === 'fraction') {
+      setV(qEl.querySelector('[data-i="num"]'), ok ? p.answer.num : '0');
+      setV(qEl.querySelector('[data-i="den"]'), ok ? p.answer.den : '0'); checkFilled();
+    }
+    grade();
+  }
+  function dbgSolveAll() {
+    while (true) {
+      if (!graded) dbgAnswer(true);
+      if (idx >= TOTAL - 1) break;
+      next();
+    }
+  }
+  if (window.RMDebug) window.RMDebug.register({
+    title: '개념 다지기 · 현재 문제',
+    actions: [
+      { label: '정답 처리', tone: 'ok', run: function () { dbgAnswer(true); } },
+      { label: '오답 처리', tone: 'no', run: function () { dbgAnswer(false); } },
+      { label: '전부 풀기', run: dbgSolveAll }
+    ]
   });
 
   renderQ();

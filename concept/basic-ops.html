@@ -7,7 +7,7 @@
   <title>기초 연산 · 개념 훈련 — 리딩수학과학</title>
   <link rel="stylesheet" href="styles/tokens.css?v=23" />
   <link rel="stylesheet" href="styles/base.css?v=7" />
-  <link rel="stylesheet" href="styles/components.css?v=9" />
+  <link rel="stylesheet" href="styles/components.css?v=10" />
   <link rel="stylesheet" href="styles/learn-shell.css?v=8" />
   <style>
     /* 콘텐츠 패널을 세로 3분할: [상단 프로그레스 고정] [문제 스크롤] [채점 버튼 고정] */
@@ -80,7 +80,7 @@
     .opt__num { flex: none; width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,.14); color: var(--qtext); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 15px; position: relative; }
     :root[data-theme="light"] .opt__num { background: var(--th-tint-strong); color: var(--th-ink-accent); }
     .opt--num { justify-content: center; } .opt--num .opt__num { width: 34px; height: 34px; }
-    .opt__img { width: 100%; height: 96px; border-radius: 10px; background: var(--n-200); }
+    .opt__img { width: 100%; height: 96px; border-radius: 10px; }
     .opt--img { flex-direction: column; align-items: stretch; }
     /* 선택: 채움만 (테두리 X) */
     .opt.is-selected { background: var(--th-solid); box-shadow: none; color: var(--n-000); }
@@ -251,6 +251,10 @@
     </div>
   </div>
 
-  <script src="scripts/learn-basic-ops.js?v=3"></script>
+  <!-- 검수용 디버그 패널 (?debug=1 일 때만 보임) -->
+  <script src="scripts/debug-panel.js?v=2"></script>
+  <!-- 키패드 물리 키보드 입력 (공용) -->
+  <script src="scripts/keypad-input.js?v=2"></script>
+  <script src="scripts/learn-basic-ops.js?v=4"></script>
 </body>
 </html>

@@ -7,9 +7,9 @@
   <title>서술형 훈련 · 기본 다지기 해설 — 리딩수학과학</title>
   <link rel="stylesheet" href="styles/tokens.css?v=23" />
   <link rel="stylesheet" href="styles/base.css?v=7" />
-  <link rel="stylesheet" href="styles/components.css?v=9" />
+  <link rel="stylesheet" href="styles/components.css?v=10" />
   <link rel="stylesheet" href="styles/learn-shell.css?v=8" />
-  <link rel="stylesheet" href="styles/essay.css?v=9" />
+  <link rel="stylesheet" href="styles/essay.css?v=10" />
   <style>
     /* ============ 서술형 = 퍼플 (essay-drill 셸 재사용) ============ */
     .content {
@@ -29,23 +29,40 @@
       --no-bg: rgba(210,50,58,.1); --no-br: rgba(210,50,58,.45); --no-fg: var(--no-ink); --no-ink: var(--no-ink);
     }
 
-    /* ============ 상단 진행/네비 ============ */
-    .steps { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 2px 4px 12px; }
-    .steps__q { font-family: var(--font-sans); font-weight: 800; font-size: 15px; color: var(--guide); }
-    .steps__done { display: inline-flex; align-items: center; gap: 8px; }
-    .donepill { display: inline-flex; align-items: center; gap: 5px; padding: 6px 14px; border-radius: 999px;
-      font-family: var(--font-sans); font-size: 13px; font-weight: 700; color: var(--ok-fg);
-      background: var(--ok-bg); box-shadow: inset 0 0 0 1px var(--ok-br); }
-    .donepill::before { content: '✓'; font-weight: 900; }
-    .nav { display: inline-flex; align-items: center; gap: 8px; }
-    .nav__btn { width: 34px; height: 34px; border-radius: 10px; border: 0; cursor: pointer;
-      display: inline-flex; align-items: center; justify-content: center; color: var(--guide);
-      background: var(--step-bg); transition: background .15s, opacity .15s; }
-    .nav__btn:hover:not(:disabled) { background: var(--th-solid); color: var(--n-000); }
-    .nav__btn:disabled { opacity: .3; cursor: default; }
-    .nav__btn svg { width: 18px; height: 18px; }
+    /* ============ 진행 표시 = 단계 스테퍼 (세로 확정안 drill-v2와 동일) ============ */
+    .stepbar { display: inline-flex; align-items: center; gap: 0; }
+    .stepbar__i { display: inline-flex; align-items: center; gap: 7px; padding: 4px 4px;
+      font-family: var(--font-sans); font-size: 13.5px; font-weight: 700; color: var(--step-fg); transition: color .2s; }
+    .stepbar__dot { position: relative; box-sizing: border-box; flex: none; width: 18px; height: 18px; border-radius: 50%;
+      border: 2px solid currentColor; opacity: .5; transition: opacity .2s, background .2s; }
+    .stepbar__track { width: 28px; height: 2px; border-radius: 2px; background: var(--step-fg); opacity: .3; transition: background .25s, opacity .25s; }
+    .stepbar__i.is-on { color: var(--th-ink-accent); }
+    :root[data-theme="dark"] .stepbar__i.is-on { color: var(--th-accent-hi); }
+    .stepbar__i.is-on .stepbar__dot { opacity: 1; background: currentColor; }
+    .stepbar__i.is-done { color: var(--th-ink-accent); }
+    :root[data-theme="dark"] .stepbar__i.is-done { color: var(--th-accent-hi); }
+    .stepbar__i.is-done .stepbar__dot { opacity: 1; background: currentColor; }
+    .stepbar__i.is-done .stepbar__dot::after { content: ''; position: absolute; left: 4.5px; top: 1.5px;
+      width: 4px; height: 8px; border: solid var(--n-000); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+    .stepbar__i.is-done + .stepbar__track { background: var(--th-accent); opacity: 1; }
 
-    .stage-scroll { flex: 1; min-height: 0; overflow-y: auto; padding: clamp(6px, 1.2vw, 12px) clamp(10px, 2vw, 22px) 96px; }
+    /* 문제 카드 헤더 안 = 어두운 패널 위 밝은 톤 */
+    .phead__lead { display: inline-flex; align-items: center; gap: 13px; flex-wrap: wrap; min-width: 0; }
+    .phead__div { width: 1px; height: 22px; background: rgba(255,255,255,.18); flex: none; }
+    .qtabs { display: inline-flex; align-items: center; gap: 8px; }
+    .qtab { min-width: 28px; height: 28px; padding: 0 7px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center;
+      font-family: var(--font-sans); font-weight: 800; font-size: 13px; cursor: pointer;
+      background: rgba(255,255,255,.10); color: rgba(255,255,255,.5); transition: background .16s, color .16s, box-shadow .16s; }
+    .qtab.is-done { background: color-mix(in srgb, var(--th-accent) 52%, transparent); color: var(--n-000); }
+    .qtab.is-active { background: var(--th-solid); color: var(--n-000); box-shadow: 0 0 0 2px var(--n-000), 0 2px 8px rgba(0,0,0,.32); }
+    .problem__head .stepbar__i { color: rgba(255,255,255,.45); font-size: 13px; }
+    .problem__head .stepbar__i.is-on, .problem__head .stepbar__i.is-done { color: var(--th-accent-hi); }
+    .problem__head .stepbar__track { background: rgba(255,255,255,.22); opacity: 1; }
+    .problem__head .stepbar__i.is-done + .stepbar__track { background: var(--th-accent-hi); }
+    .problem__head .stepbar__i.is-done .stepbar__dot::after { border-color: var(--th-static); }
+
+    /* padding-top 0 = 스티키 문제 카드가 스크롤포트 상단에 밀착 (drill-v2와 동일) */
+    .stage-scroll { flex: 1; min-height: 0; overflow-y: auto; padding: 0 clamp(10px, 2vw, 22px) 96px; }
     .stage-scroll::-webkit-scrollbar { width: 10px; }
     .stage-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,.2); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
     :root[data-theme="light"] .stage-scroll::-webkit-scrollbar-thumb { background: rgba(108,99,201,.28); background-clip: padding-box; }
@@ -59,23 +76,30 @@
     .sec-label--sol { background: rgba(124,58,237,.15); color: var(--th-accent-hi); }
     :root[data-theme="light"] .sec-label--sol { background: rgba(124,58,237,.1); color: var(--th-accent-strong); }
 
-    /* 문제 카드 (읽기전용, 접기) */
-    .problem__head { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 10px;
-      padding: 14px 22px; background: transparent; border: 0; text-align: left; border-radius: 20px; cursor: pointer; }
-    .problem__head:hover { background: rgba(124,58,237,.05); }
-    .problem__hint { margin-left: 9px; font-family: var(--font-sans); font-size: 12px; font-weight: 600; color: var(--step-fg); }
-    .problem:not(.is-collapsed) .problem__hint::after { content: '접기'; }
-    .problem.is-collapsed .problem__hint::after { content: '문제 다시 보기'; }
-    .problem__chev { width: 18px; height: 18px; color: var(--step-fg); transition: transform .25s; flex: none; }
-    .problem.is-collapsed .problem__chev { transform: rotate(-90deg); }
-    .problem__body { padding: 0 24px 18px; overflow: hidden; max-height: 1200px; transition: max-height .32s ease, opacity .25s ease, padding .32s ease; }
+    /* 문제 카드 (읽기전용, 접기) = 세로 확정안 drill-v2와 같은 스티키 패널 */
+    .problem { position: sticky; top: 0; z-index: 20; overflow: hidden; max-width: none; margin: 0 auto;
+      background: var(--th-static); border: 0; border-radius: 0 0 18px 18px; box-shadow: 0 10px 24px rgba(8,5,22,.28); }
+    .problem__head { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 10px 16px; background: transparent; border: 0; text-align: left; cursor: pointer; }
+    .problem__chev { width: 22px; height: 22px; color: rgba(255,255,255,.62); transition: transform .25s; flex: none; transform: rotate(180deg); }
+    .problem.is-collapsed .problem__chev { transform: rotate(0); }
+    .problem__body { padding: 6px 18px 18px; overflow: hidden; max-height: 1600px; color: rgba(249,249,249,.92);
+      transition: max-height .32s ease, opacity .25s ease, padding .32s ease; }
     .problem.is-collapsed .problem__body { max-height: 0; opacity: 0; padding-top: 0; padding-bottom: 0; }
+    .problem__body .rline { color: rgba(249,249,249,.92); }
 
-    /* 풀이 카드 */
-    .worksheet { padding: clamp(18px, 2.3vw, 26px) clamp(20px, 2.6vw, 34px) clamp(20px, 2.4vw, 28px); }
-    .ws-sec + .ws-sec { margin-top: 22px; padding-top: 22px; border-top: 1px dashed var(--card-br); }
-    :root[data-theme="light"] .ws-sec + .ws-sec { border-top-color: var(--n-100); }
-    .ws-sec__label { margin-bottom: 14px; }
+    /* ============ 다음 단계 진입 버튼 (drill-v2와 동일 · 콘텐츠 하단) ============ */
+    .stage-action { max-width: 760px; margin: 16px auto 0; }
+    .stage-action__btn { width: 100%; height: 54px; border-radius: 14px; border: 0; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      background: var(--primary); color: var(--n-000); font-family: var(--font-sans); font-size: 19px; font-weight: 800;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.25); transition: background .15s; }
+    .stage-action__btn:hover { background: var(--primary-hover); }
+    .stage-action__btn svg { width: 19px; height: 19px; }
+
+    /* 풀이 카드 — 푼 순서대로 한 번에 한 단계만 (①빈칸 해설 → ②순서 해설) */
+    .worksheet { margin-top: 14px; padding: clamp(18px, 2.3vw, 26px) clamp(20px, 2.6vw, 34px) clamp(20px, 2.4vw, 28px); }
+    .worksheet__label { margin-bottom: 16px; }
 
     /* 안내문 (오답 있을 때) */
     .review-hint { display: flex; align-items: center; gap: 9px; max-width: 760px; margin: 0 auto 14px;
@@ -100,14 +124,13 @@
     /* 정답 */
     .rblank.is-correct, .rslot.is-correct { background: var(--ok-bg); color: var(--ok-fg); box-shadow: inset 0 0 0 1.5px var(--ok-br); }
 
-    /* 오답 = 내 답(빨강·취소선). 클릭하면 같은 칸이 정답(초록)으로 토글 — 병렬 표시 아님 */
+    /* 오답 = 내 답(빨강 채움). 취소선 없음 — 오답도 읽어야 할 정보다.
+       클릭하면 같은 칸이 정답(초록)으로 토글 — 병렬 표시 아님 */
     .rblank.is-wrong, .rslot.is-wrong { background: var(--no-bg); color: var(--no-fg); box-shadow: inset 0 0 0 1.5px var(--no-br); cursor: pointer; transition: box-shadow .15s, background .15s, color .15s; }
     .rblank.is-wrong:hover, .rslot.is-wrong:hover { box-shadow: inset 0 0 0 2px var(--no-br), 0 0 0 3px var(--no-bg); }
-    .rblank.is-wrong .rblank__val, .rslot.is-wrong .rslot__val { text-decoration: line-through; text-decoration-color: var(--no-fg); text-decoration-thickness: 1.5px; }
     /* 토글 상태 = 정답 노출(초록) : 같은 공간 */
     .rblank.is-wrong.show-ans, .rslot.is-wrong.show-ans { background: var(--ok-bg); color: var(--ok-fg); box-shadow: inset 0 0 0 1.5px var(--ok-br); }
     .rblank.is-wrong.show-ans:hover, .rslot.is-wrong.show-ans:hover { box-shadow: inset 0 0 0 2px var(--ok-br), 0 0 0 3px var(--ok-bg); }
-    .rblank.is-wrong.show-ans .rblank__val, .rslot.is-wrong.show-ans .rslot__val { text-decoration: none; }
 
     /* 정답 확인 = 우측 상단 원형 뱃지 (정답 초록 ✓ / 오답 빨강 ✕) — 색맹도 모양으로 구분.
        오답을 눌러 정답으로 치환한 칸은 정답 스타일이되 뱃지 없음(원래 맞힌 칸과 구분) */
@@ -148,45 +171,44 @@
       </header>
 
       <main class="content">
-        <div class="steps">
-          <span class="steps__q" id="stepsQ">문제 1 / 3</span>
-          <span class="steps__done">
-            <span class="donepill">빈칸 맞추기</span>
-            <span class="donepill">순서 맞추기</span>
-          </span>
-          <span class="nav">
-            <button class="nav__btn" id="prevBtn" title="이전 문제"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
-            <button class="nav__btn" id="nextBtn" title="다음 문제"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
-          </span>
-        </div>
-
         <div class="stage-scroll">
-          <!-- 안내문 -->
+          <!-- 문제 카드 (읽기전용 · 번호탭+단계 헤더 · 스크롤 시 상단 스티키) -->
+          <section class="card problem is-collapsed" id="problem">
+            <div class="problem__head" id="problemHead" role="button" tabindex="0" aria-label="문제 펼치기/접기">
+              <span class="phead__lead">
+                <span class="qtabs" id="qtabs"></span>
+                <span class="phead__div"></span>
+                <span class="stepbar">
+                  <span class="stepbar__i is-on" id="pillFill"><i class="stepbar__dot"></i>빈칸 맞추기</span>
+                  <span class="stepbar__track"></span>
+                  <span class="stepbar__i" id="pillArrange"><i class="stepbar__dot"></i>순서 맞추기</span>
+                </span>
+              </span>
+              <svg class="problem__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            </div>
+            <div class="problem__body" id="readBody"></div>
+          </section>
+
+          <!-- 안내문 (오답이 있을 때만) -->
           <div class="review-hint" id="reviewHint">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
             <span>오답을 눌러 정답을 확인해보세요!</span>
           </div>
 
-          <!-- 문제 카드 (읽기전용, 기본 접힘) -->
-          <section class="card problem is-collapsed" id="problem">
-            <button class="problem__head" id="problemHead" type="button">
-              <span><span class="sec-label sec-label--problem">문제</span><span class="problem__hint"></span></span>
-              <svg class="problem__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-            </button>
-            <div class="problem__body" id="readBody"></div>
+          <!-- 풀이(채점) 카드 — 푼 순서대로 한 단계씩 -->
+          <section class="card worksheet">
+            <span class="sec-label sec-label--sol worksheet__label" id="wsLabel">① 빈칸 맞추기</span>
+            <div id="fillDoc"></div>
+            <div id="arrangeDoc" hidden></div>
           </section>
 
-          <!-- 풀이(채점) 카드 -->
-          <section class="card worksheet">
-            <div class="ws-sec">
-              <span class="sec-label sec-label--sol ws-sec__label">① 빈칸 맞추기</span>
-              <div id="fillDoc"></div>
-            </div>
-            <div class="ws-sec">
-              <span class="sec-label sec-label--sol ws-sec__label">② 순서 맞추기</span>
-              <div id="arrangeDoc"></div>
-            </div>
-          </section>
+          <!-- 다음 단계 / 다음 문제 -->
+          <div class="stage-action">
+            <button class="stage-action__btn" id="primaryBtn" type="button">
+              <span id="primaryLabel">순서 맞추기 해설</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
+          </div>
         </div>
       </main>
     </div>
@@ -207,6 +229,8 @@
     </div>
   </div>
 
-  <script src="scripts/essay-drill-review.js?v=2"></script>
+  <!-- 검수용 디버그 패널 (?debug=1 일 때만 보임) -->
+  <script src="scripts/debug-panel.js?v=2"></script>
+  <script src="scripts/essay-drill-review.js?v=3"></script>
 </body>
 </html>

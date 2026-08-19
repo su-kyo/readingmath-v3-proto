@@ -200,5 +200,24 @@
   var hdrTimerSpan = document.getElementById('timer');
   setInterval(function () { elapsed++; if (hdrTimerSpan) hdrTimerSpan.textContent = fmtTime(elapsed); }, 1000);
 
+  /* ---- 검수용 디버그 훅 (?debug=1일 때만 패널에 뜸) ---- */
+  function dbgFill(i, ok) {
+    var p = PROBLEMS[i];
+    if (p.type === 'mc-num' || p.type === 'mc-text' || p.type === 'mc-image') {
+      var n = (p.type === 'mc-image') ? p.options.length : (typeof p.options === 'number' ? p.options : p.options.length);
+      answers[i] = ok ? p.answer : (p.answer + 1) % n;
+    } else if (p.type === 'short-1') answers[i] = ok ? p.answer : '0';
+    else if (p.type === 'short-2') answers[i] = ok ? [p.answer[0], p.answer[1]] : ['0', '0'];
+    else if (p.type === 'fraction') answers[i] = ok ? { num: p.answer.num, den: p.answer.den } : { num: '0', den: '0' };
+  }
+  if (window.RMDebug) window.RMDebug.register({
+    title: '유형 훈련 (제출 후 채점)',
+    actions: [
+      { label: '정답 입력', tone: 'ok', run: function () { dbgFill(idx, true); renderQ(); } },
+      { label: '오답 입력', tone: 'no', run: function () { dbgFill(idx, false); renderQ(); } },
+      { label: '전부 풀기', run: function () { for (var i = 0; i < TOTAL; i++) dbgFill(i, true); renderQ(); } }
+    ]
+  });
+
   renderQ();
 })();

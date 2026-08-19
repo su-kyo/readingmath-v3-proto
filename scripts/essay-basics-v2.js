@@ -257,6 +257,29 @@
     window.location.href = 'essay/step-result.html';
   });
 
+  /* ---- 검수용 디버그 훅 (?debug=1일 때만 패널에 뜸) ---- */
+  function dbgWrongOf(slot) {
+    if (slot.type !== 'choice') return '0';
+    for (var i = 0; i < slot.choices.length; i++) if (slot.choices[i] !== slot.ans) return slot.choices[i];
+    return '0';
+  }
+  function dbgFillAll(ok) {
+    closePop();
+    order.forEach(function (id, i) {
+      var slot = ANSWERS[id];
+      // 오답 모드에서는 홀수번째 칸만 틀리게 (정·오답이 섞인 화면을 보기 위함)
+      var wrong = !ok && (i % 2 === 0);
+      fill(id, wrong ? dbgWrongOf(slot) : slot.ans);
+    });
+  }
+  if (window.RMDebug) window.RMDebug.register({
+    title: '기초 기르기 (세로)',
+    actions: [
+      { label: '전부 정답', tone: 'ok', run: function () { dbgFillAll(true); } },
+      { label: '정오답 섞기', tone: 'no', run: function () { dbgFillAll(false); } }
+    ]
+  });
+
   // 라이트/다크 토글 (헤더 해/달 노브)
   var themeBtn = document.getElementById('themeToggle');
   if (themeBtn) themeBtn.addEventListener('click', function () {

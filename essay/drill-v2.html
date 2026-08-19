@@ -7,9 +7,9 @@
   <title>서술형 훈련 · 기본 다지기 (레이아웃 v2) — 리딩수학과학</title>
   <link rel="stylesheet" href="styles/tokens.css?v=23" />
   <link rel="stylesheet" href="styles/base.css?v=7" />
-  <link rel="stylesheet" href="styles/components.css?v=9" />
+  <link rel="stylesheet" href="styles/components.css?v=10" />
   <link rel="stylesheet" href="styles/learn-shell.css?v=8" />
-  <link rel="stylesheet" href="styles/essay.css?v=9" />
+  <link rel="stylesheet" href="styles/essay.css?v=10" />
   <style>
     /* ============ 서술형 훈련 = 퍼플 테마 (공통은 essay.css) ============ */
     /* 레이아웃 v2 : 기존 세로 단일 스크롤 유지 + 문제 카드 상단 스티키 추가 */
@@ -46,7 +46,8 @@
     /* 진행중 */
     .stepbar__i.is-on { color: var(--th-ink-accent); }
     :root[data-theme="dark"] .stepbar__i.is-on { color: var(--th-accent-hi); }
-    .stepbar__i.is-on .stepbar__dot { opacity: 1; background: currentColor; box-shadow: 0 0 0 4px rgba(124,58,237,.15); }
+    /* 채워진 점 하나로 '진행중'이 읽힌다 — 바깥에 연한 링을 더 두르지 않는다 */
+    .stepbar__i.is-on .stepbar__dot { opacity: 1; background: currentColor; }
     /* 완료 */
     .stepbar__i.is-done { color: var(--th-ink-accent); }
     :root[data-theme="dark"] .stepbar__i.is-done { color: var(--th-accent-hi); }
@@ -138,11 +139,9 @@
     @media (prefers-reduced-motion: reduce) { .chunk__go { animation: none; } }
 
     /* 빈칸: 현재 채울 칸만 활성(주황 펄스) — 코어는 essay.css */
-    .blank.is-active { cursor: pointer; background: var(--bl-selbg); box-shadow: inset 0 0 0 1.5px var(--bl-selline); animation: blPulse 1.6s ease-in-out infinite; }
+    /* 지금 채울 칸 = 주황 채움+테두리 하나로 충분. 바깥 펄스 링(글로우)은 제거 */
+    .blank.is-active { cursor: pointer; background: var(--bl-selbg); box-shadow: inset 0 0 0 1.5px var(--bl-selline); }
     .blank.is-active .blank__badge { color: var(--bl-selbadge); }
-    @keyframes blPulse { 0%,100%{box-shadow: inset 0 0 0 1.5px var(--bl-selline), 0 0 0 0 rgba(255,138,31,0)} 50%{box-shadow: inset 0 0 0 1.5px var(--bl-selline), 0 0 0 4px rgba(255,138,31,.18)} }
-    @media (prefers-reduced-motion: reduce) { .blank.is-active { animation: none; } }
-    .blank.is-sel { animation: none; }
 
     /* ============ 순서 맞추기 인라인 슬롯 ============ */
     .slot { display: inline-flex; align-items: center; justify-content: center; vertical-align: middle;
@@ -322,6 +321,10 @@
 
   <div class="dtoast" id="dtoast"></div>
 
-  <script src="scripts/essay-drill-v2.js?v=5"></script>
+  <!-- 검수용 디버그 패널 (?debug=1 일 때만 보임) -->
+  <script src="scripts/debug-panel.js?v=2"></script>
+  <!-- 키패드 물리 키보드 입력 (공용) -->
+  <script src="scripts/keypad-input.js?v=2"></script>
+  <script src="scripts/essay-drill-v2.js?v=6"></script>
 </body>
 </html>

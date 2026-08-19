@@ -469,5 +469,40 @@
     document.documentElement.setAttribute('data-theme', c === 'dark' ? 'light' : 'dark');
   });
 
+  /* ---- 검수용 디버그 훅 (?debug=1일 때만 패널에 뜸) ---- */
+  function dbgSkipRead() { if (rmodal.classList.contains('is-open')) rmGo.click(); }
+  function dbgFillAll() {
+    dbgSkipRead();
+    if (phase !== 'fill') return;
+    var guard = 0;
+    while (guard++ < 300) {
+      var active = chunkEls[curChunk];
+      var pending = active.querySelector('.blank:not(.is-filled)');
+      if (pending) { closePop(); fillBlank(pending, blankMap[pending.dataset.blank].ans); }
+      else if (curChunk < chunkEls.length - 1) { curChunk++; renderFill(); }
+      else { fillComplete(); break; }
+    }
+  }
+  function dbgArrangeAll() {
+    if (phase === 'fill') { dbgFillAll(); startArrange(); }
+    if (phase !== 'arrange') return;
+    var guard = 0;
+    while (guard++ < 100 && ac < aChunks.length) {
+      if (aChunks[ac].parts) {
+        for (var i = 0; i < aCorrect.length; i++) { aPlaced[i] = aCorrect[i]; aLocked[i] = true; }
+        aPool = []; aChecking = false; renderArrangeChunk();
+      }
+      ac++; enterArrangeChunk();
+    }
+  }
+  if (window.RMDebug) window.RMDebug.register({
+    title: '기본 다지기 (세로)',
+    actions: [
+      { label: '읽기 건너뛰기', run: dbgSkipRead },
+      { label: '빈칸 전부 맞추기', tone: 'ok', run: dbgFillAll },
+      { label: '순서까지 전부', tone: 'ok', run: dbgArrangeAll }
+    ]
+  });
+
   startProblem(0);
 })();

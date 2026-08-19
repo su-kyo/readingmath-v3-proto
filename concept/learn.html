@@ -7,7 +7,7 @@
   <title>개념 학습 · 개념 훈련 — 리딩수학과학</title>
   <link rel="stylesheet" href="styles/tokens.css?v=23" />
   <link rel="stylesheet" href="styles/base.css?v=7" />
-  <link rel="stylesheet" href="styles/components.css?v=9" />
+  <link rel="stylesheet" href="styles/components.css?v=10" />
   <style>
     /* 지문 전용 폰트: Noto Serif KR (수식/기호도 여기에 얹힘) */
     @import url("https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&display=swap");
@@ -99,6 +99,12 @@
     /* 오답: 빨간 톤 + 흔들림, 팝오버는 열린 채로 재시도 유도 */
     .answer-opt.is-wrong { background: color-mix(in srgb, var(--no-ink) 14%, transparent); color: var(--no-ink); animation: blankShake .4s; }
     .answer-opt.is-wrong .answer-opt__dot { box-shadow: inset 0 0 0 2px var(--no-ink); }
+    /* 정답: 초록 톤 — 0.5초 보여주고 나서 팝오버가 닫히며 다음 구간으로 (오답과 대칭) */
+    .answer-opt.is-correct { background: color-mix(in srgb, var(--ok-ink) 16%, transparent); color: var(--ok-ink); font-weight: 700; }
+    .answer-opt.is-correct .answer-opt__dot { box-shadow: inset 0 0 0 5px var(--ok-ink); }
+    /* 방금 맞힌 빈칸도 같은 0.5초 동안 초록으로 (효과를 보고 나서 넘어간다) */
+    .seg--blank.is-just-correct, .seg--blank.is-just-correct.is-read,
+    .seg--blank.is-just-correct:hover { background: var(--ok-solid); color: var(--n-000); box-shadow: none; }
     @media (prefers-reduced-motion: reduce) { .answer-opt.is-wrong, .seg--blank.is-wrong { animation: none; } }
 
     /* ===== 이미지 뷰어 (스켈레톤) ===== */
@@ -217,17 +223,19 @@
       position: fixed; inset: 0; z-index: 50; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 40px;
       /* 라이트 기본 토큰 */
       --sm-scrim: rgba(18,28,52,.5); --sm-card: var(--n-000); --sm-border: var(--th-tint); --sm-title: var(--n-600);
-      --sm-box: var(--th-tint); --sm-box-br: transparent; --sm-text: var(--n-600); --sm-current: var(--th-tint);
+      --sm-box: transparent; --sm-box-br: transparent; --sm-text: var(--n-600); --sm-current: var(--th-tint);
       --sm-blank-br: var(--th-accent-hi); --sm-blank-muted: var(--text-muted);
       /* 선지 = 박스(연블루)와 구분되는 흰 버튼 + 진한 글자 + 파란 입체 그림자 (기존엔 박스와 같은 8% 틴트라 흐릿) */
       --sm-opt: var(--n-000); --sm-opt-text: var(--n-600); --sm-opt-sh: var(--th-accent-hi);
       background: var(--sm-scrim);
     }
+    /* 다크 = 위에 뜨는 레이어가 더 밝다. 카드는 dim(scrim)보다 확실히 밝은 면(n-600),
+       선지는 카드보다 한 단계 더 밝은 면(n-500)으로 층을 만든다. */
     :root[data-theme="dark"] .summary {
-      --sm-scrim: rgba(6,10,22,.8); --sm-card: var(--surface-1); --sm-border: rgba(255,255,255,.08); --sm-title: var(--n-000);
-      --sm-box: var(--surface-3); --sm-box-br: rgba(255,255,255,.08); --sm-text: var(--text); --sm-current: var(--th-tint);
-      --sm-blank-br: var(--th-accent); --sm-blank-muted: var(--text-muted);
-      --sm-opt: var(--surface-3); --sm-opt-text: var(--n-000); --sm-opt-sh: var(--n-600);
+      --sm-scrim: rgba(3,6,15,.78); --sm-card: var(--n-600); --sm-border: rgba(255,255,255,.10); --sm-title: var(--n-000);
+      --sm-box: transparent; --sm-box-br: transparent; --sm-text: var(--n-050); --sm-current: var(--th-tint);
+      --sm-blank-br: var(--th-accent-hi); --sm-blank-muted: var(--n-300);
+      --sm-opt: var(--n-500); --sm-opt-text: var(--n-000); --sm-opt-sh: var(--n-700);
     }
     .summary.is-open { display: flex; }
     .summary__card { width: min(820px, 90vw); background: var(--sm-card); border: 1px solid var(--sm-border); border-radius: 28px; padding: 22px 26px; }
@@ -235,7 +243,8 @@
     .summary__title { font-size: clamp(18px, 1.8vw, 22px); font-weight: 800; color: var(--sm-title); }
     .summary__close { width: 40px; height: 40px; border-radius: 50%; background: var(--no-ink); color: var(--n-000); font-size: 17px; display: flex; align-items: center; justify-content: center; }
     .summary__close:hover { filter: brightness(1.08); }
-    .summary__box { background: var(--sm-box); border: 1px solid var(--sm-box-br); border-radius: 20px; padding: 24px 28px; max-height: 42vh; overflow: auto; display: flex; flex-direction: column; gap: 10px; }
+    /* 모달 프레임이 이미 하나의 면이므로 안쪽에 또 박스를 두지 않는다 (대비는 한 번만) */
+    .summary__box { background: transparent; border: 0; padding: 4px 2px 2px; max-height: 42vh; overflow: auto; display: flex; flex-direction: column; gap: 10px; }
     /* 모달 내 끊어읽기 */
     .sline { font-size: clamp(16px, 1.5vw, 20px); line-height: 1.95; color: var(--sm-text); letter-spacing: -0.02em; }
     .sseg { border-radius: 5px; padding: 1px 0; transition: filter .2s ease, opacity .2s ease, background .15s ease; }
@@ -247,7 +256,7 @@
     .sblank.is-active { color: var(--ok-solid); box-shadow: inset 0 0 0 2px var(--ok-solid); }
     .sblank.is-active::before { content: "?"; }
     .sblank.is-filled { background: var(--th-solid); color: var(--n-000); box-shadow: none; }
-    .sblank__thumb { width: 24px; height: 18px; border-radius: 3px; background: var(--th-tint); }
+    .sblank__thumb { width: 24px; height: 18px; border-radius: 3px; }
     /* 선지 — 현재 구간이 빈칸일 때만 채우고, 공간은 항상 예약(박스 안 흔들림) */
     /* 선지 & '다음으로'를 같은 고정 슬롯에 (번갈아 표시 → 총 높이 불변, 안 밀림/안 벙벙) */
     .summary__foot { min-height: 96px; width: min(820px, 90vw); display: flex; align-items: center; justify-content: center; }
@@ -256,7 +265,7 @@
     .sopt { flex: 1 1 0; min-width: 100px; max-width: 220px; height: 68px; border-radius: 14px; background: var(--sm-opt); color: var(--sm-opt-text); font-size: 22px; font-weight: 800; box-shadow: 0 4px 0 var(--sm-opt-sh); }
     .sopt:hover { filter: brightness(1.05); } .sopt:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--sm-opt-sh); }
     .sopt--img { max-width: 380px; height: 88px; }
-    .sopt__img { display: block; width: 84px; height: 62px; border-radius: 8px; background: var(--n-200); }
+    .sopt__img { display: block; width: 84px; height: 62px; border-radius: 8px; }
     .summary__next { display: inline-flex; align-items: center; gap: 8px; padding: 14px 30px; border-radius: 16px; background: var(--primary); color: var(--n-000); font-weight: 800; font-size: clamp(15px, 1.4vw, 18px); box-shadow: 0 4px 0 var(--primary-pressed); }
     .summary__next[hidden] { display: none; }
     .summary__next:hover { background: var(--primary-hover); }
@@ -430,7 +439,9 @@
     </div>
   </div>
 
-  <script src="scripts/learn-concept.js?v=3"></script>
+  <!-- 검수용 디버그 패널 (?debug=1 일 때만 보임) -->
+  <script src="scripts/debug-panel.js?v=2"></script>
+  <script src="scripts/learn-concept.js?v=4"></script>
   <script>
     /* 개념 영상 레이어 — 진입 시 자동 표시(dim), '개념 영상 보기'로 재호출.
        닫을 때 iframe 제거 → 재생/소리 정지. */

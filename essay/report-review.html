@@ -7,9 +7,9 @@
   <title>서술형 훈련 · 탐구활동 보고서 해설 — 리딩수학과학</title>
   <link rel="stylesheet" href="styles/tokens.css?v=23" />
   <link rel="stylesheet" href="styles/base.css?v=7" />
-  <link rel="stylesheet" href="styles/components.css?v=9" />
+  <link rel="stylesheet" href="styles/components.css?v=10" />
   <link rel="stylesheet" href="styles/learn-shell.css?v=8" />
-  <link rel="stylesheet" href="styles/essay.css?v=9" />
+  <link rel="stylesheet" href="styles/essay.css?v=10" />
   <style>
     /* ============ 서술형(과학) 보고서 해설 = 퍼플 테마 ============ */
     .content {
@@ -58,14 +58,13 @@
       padding: 2px 11px; margin: 0 2px; border-radius: 9px; font-family: var(--font-sans); font-weight: 700; }
     .rblank__val { line-height: 1.3; }
     .rblank.is-correct { background: var(--ok-bg); color: var(--ok-fg); box-shadow: inset 0 0 0 1.5px var(--ok-br); }
-    /* 오답 = 내 답(빨강·취소선). 클릭하면 같은 칸이 정답(초록)으로 토글 — 병렬 표시 아님 */
+    /* 오답 = 내 답(빨강 채움). 취소선 없음 — 오답도 읽어야 할 정보다.
+       클릭하면 같은 칸이 정답(초록)으로 토글 — 병렬 표시 아님 */
     .rblank.is-wrong { background: var(--no-bg); color: var(--no-fg); box-shadow: inset 0 0 0 1.5px var(--no-br);
       cursor: pointer; transition: box-shadow .15s, background .15s, color .15s; }
     .rblank.is-wrong:hover { box-shadow: inset 0 0 0 2px var(--no-br), 0 0 0 3px var(--no-bg); }
-    .rblank.is-wrong .rblank__val { text-decoration: line-through; text-decoration-color: var(--no-fg); text-decoration-thickness: 1.5px; }
     .rblank.is-wrong.show-ans { background: var(--ok-bg); color: var(--ok-fg); box-shadow: inset 0 0 0 1.5px var(--ok-br); }
     .rblank.is-wrong.show-ans:hover { box-shadow: inset 0 0 0 2px var(--ok-br), 0 0 0 3px var(--ok-bg); }
-    .rblank.is-wrong.show-ans .rblank__val { text-decoration: none; }
     /* 정답 확인 = 우측 상단 원형 뱃지 (정답 초록 ✓ / 오답 빨강 ✕) — 색맹도 모양으로 구분.
        오답을 눌러 정답으로 치환한 칸은 정답 스타일이되 뱃지 없음(원래 맞힌 칸과 구분) */
     .rblank.is-correct::after, .rblank.is-wrong::after {
