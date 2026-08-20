@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko" data-theme="light" data-section="essay">
+<!-- 결과 화면 = 항상 다크 계기판 (A층 우주와 같은 취급 · 토글 없음 — Phase 7 사용자 결정) -->
+<html lang="ko" data-section="essay" data-theme="dark">
 <head>
   <base href="../">
   <meta charset="UTF-8" />
@@ -11,85 +12,146 @@
   <link rel="stylesheet" href="styles/learn-shell.css?v=8" />
   <link rel="stylesheet" href="styles/essay.css?v=11" />
   <style>
-    /* ===== 서술형 스텝 결과 = 퍼플 테마 (개념/유형 step-result와 동일 골격) ===== */
-    /* ===== 하나의 '디바이스'로 정돈 — 다크 바이올렛 베젤 + LCD 화면 + (전환되는) 사이드 패널 =====
-       과제화면처럼 두 패널을 부드러운 30px 라운드로 띄우고, 베젤은 은은하게. 단일 퍼플 스케일. */
+    /* ===================================================================
+       서술형 스텝 결과 — Phase 7 ① 계기판 어휘 (개념 shared/step-result와 같은 골격,
+       서술형(바이올렛) 리테마). 서술형 고유: 문제마다 빈칸이 여러 개 → 문제별 행.
+       =================================================================== */
     .rframe {
       flex: 1; min-height: 0; display: flex; gap: 14px;
       background: var(--th-static); border-radius: 34px 34px 0 0; padding: 8px 8px 0;
       --lmain: var(--n-900); --ltext: var(--n-050); --lmuted: var(--n-300);
-      --bar-track: var(--n-650); --lcd: rgba(255,255,255,.05);
-      --accent: var(--th-accent-hi); --title1: var(--th-accent-hi); --title2: var(--th-accent); --rate: var(--th-accent-hi);
-      --row-bg: rgba(255,255,255,.04); --row-br: rgba(139,75,255,.42);
+      --lcd: rgba(255,255,255,.05);
+      --accent: var(--th-accent-hi); --title1: var(--th-accent-hi); --rate: var(--violet-400);
+      --row-bg: rgba(255,255,255,.04);
     }
-    /* 우측 '학습 진행 현황'만 라이트/다크 전환 — 사이드 안에서 토큰 재정의 */
-    .rside { --lside: var(--n-650); --ltext: var(--n-050); --lmuted: var(--n-300); --accent: var(--th-accent-hi); }
-    :root[data-theme="light"] .rside { --lside: var(--n-050); --ltext: var(--n-650); --lmuted: var(--text-meta); --accent: var(--th-accent-strong); }
+    /* 우측 조작 패널 — 면 색은 림(--th-static)과 같은 계열에서 파생(톤온톤) */
+    .rside { --lside: color-mix(in srgb, var(--th-static) 32%, var(--n-900)); --ltext: var(--text); --lmuted: var(--text-muted); --accent: var(--th-accent-hi); }
 
-    /* 좌측 */
-    .rmain { position: relative; flex: 1; min-width: 0; overflow: auto; background: var(--lmain); border-radius: 30px 30px 0 0; padding: clamp(28px,3.2vw,44px) clamp(28px,3.2vw,44px) 104px; display: flex; flex-direction: column; justify-content: center; gap: clamp(22px,2.4vw,32px); }
-    .rmain::before { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0; background: repeating-linear-gradient(0deg, var(--lcd) 0, var(--lcd) 1px, transparent 1px, transparent 5px); }
+    /* 좌측: 결과 (LCD 라인 패턴) */
+    .rmain {
+      position: relative; flex: 1; min-width: 0; overflow: auto;
+      background: var(--lmain); border-radius: 30px 30px 0 0;
+      padding: clamp(28px,3.2vw,44px) clamp(28px,3.2vw,44px) 104px;
+      display: flex; flex-direction: column; justify-content: center; gap: clamp(24px,2.6vw,34px);
+    }
+    .rmain::before { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+      background: repeating-linear-gradient(0deg, var(--lcd) 0, var(--lcd) 1px, transparent 1px, transparent 5px); }
     .rmain > * { position: relative; z-index: 1; }
-    /* 스크롤바 = 화면톤에 녹인 얇은 pill */
-    .rmain::-webkit-scrollbar, .rside::-webkit-scrollbar { width: 10px; height: 10px; }
-    .rmain::-webkit-scrollbar-track, .rside::-webkit-scrollbar-track { background: transparent; }
-    .rmain::-webkit-scrollbar-thumb { background: rgba(198,169,255,.22); border-radius: 999px; border: 3px solid transparent; background-clip: padding-box; }
-    .rmain::-webkit-scrollbar-thumb:hover { background: rgba(198,169,255,.34); background-clip: padding-box; }
-    .rside::-webkit-scrollbar-thumb { background: rgba(237,234,251,.18); border-radius: 999px; border: 3px solid transparent; background-clip: padding-box; }
-    :root[data-theme="light"] .rside::-webkit-scrollbar-thumb { background: rgba(70,50,140,.20); border-radius: 999px; border: 3px solid transparent; background-clip: padding-box; }
-    .rmain, .rside { scrollbar-width: thin; scrollbar-color: rgba(198,169,255,.26) transparent; }
+    .rmain::-webkit-scrollbar, .rside__list::-webkit-scrollbar { width: 10px; height: 10px; }
+    .rmain::-webkit-scrollbar-track, .rside__list::-webkit-scrollbar-track { background: transparent; }
+    .rmain::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--rate) 26%, transparent); border-radius: 999px; border: 3px solid transparent; background-clip: padding-box; }
+    .rside__list::-webkit-scrollbar-thumb { background: rgba(234,240,255,.18); border-radius: 999px; border: 3px solid transparent; background-clip: padding-box; }
+    .rmain, .rside__list { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--rate) 28%, transparent) transparent; }
+
     .rhead { display: flex; flex-direction: column; gap: 8px; }
-    .rtitle { font-size: clamp(30px, 3.4vw, 46px); font-weight: 800; line-height: 1.05; background: linear-gradient(90deg, var(--title1), var(--title2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    .runit { font-size: clamp(20px, 2vw, 28px); font-weight: 700; color: var(--ltext); }
+    .rtitle { font-size: clamp(28px, 3.2vw, 42px); font-weight: 800; line-height: 1.05; color: var(--title1); }
+    .runit { font-size: clamp(18px, 1.8vw, 26px); font-weight: 700; color: var(--ltext); }
+    .rinfo { display: flex; flex-direction: column; gap: clamp(16px,1.8vw,24px); min-width: 0; }
 
-    .rsummary { display: flex; align-items: center; gap: clamp(20px,2.4vw,34px); flex-wrap: wrap; }
-    .rbadge { display: inline-flex; align-items: center; gap: 2px; }
-    .rbracket { color: var(--accent); font-size: 52px; font-weight: 300; line-height: 1; }
-    .rbadge img { width: 72px; height: 72px; }
-    .rstat__label { color: var(--lmuted); font-size: 15px; margin-bottom: 4px; }
-    .rstat__val { font-size: clamp(26px,2.8vw,36px); font-weight: 800; line-height: 1; }
-    .rstat--rate .rstat__val { color: var(--rate); }
-    .rstat--score .rstat__val { color: var(--title2); }
-    .rstat__val small { font-size: 20px; color: var(--lmuted); font-weight: 700; }
-    .rdivider { width: 1px; align-self: stretch; min-height: 44px; background: color-mix(in srgb, var(--lmuted) 40%, transparent); }
+    /* ===== 계기판 히어로 — 다이얼 게이지 + 판독창 ===== */
+    @property --pct { syntax: '<number>'; inherits: true; initial-value: 0; }
+    .rhero { display: flex; align-items: center; gap: clamp(24px,3.2vw,52px); flex-wrap: wrap; }
+    .dial { position: relative; width: clamp(190px,20vw,230px); aspect-ratio: 1; flex: none;
+      transition: --pct 1s cubic-bezier(.3,.8,.3,1); }
+    .dial__face { position: absolute; inset: 0; border-radius: 50%;
+      background: conic-gradient(from 210deg, var(--rate) 0deg calc(var(--pct) * 3deg),
+        rgba(255,255,255,.13) calc(var(--pct) * 3deg) 300deg, transparent 300deg 360deg);
+      -webkit-mask: radial-gradient(closest-side, transparent 71%, #000 72%);
+              mask: radial-gradient(closest-side, transparent 71%, #000 72%); }
+    /* 눈금 두 겹 — 빈 트랙 위엔 밝은 눈금, 채워진 아크 위엔 어두운 눈금 (100%에서도 안 사라짐) */
+    .dial__ticks { position: absolute; inset: 6%; border-radius: 50%; opacity: .55;
+      background: repeating-conic-gradient(from 210deg, var(--lmuted) 0deg 1.6deg, transparent 1.6deg 30deg);
+      -webkit-mask: radial-gradient(closest-side, transparent 84%, #000 85%);
+              mask: radial-gradient(closest-side, transparent 84%, #000 85%); }
+    .dial__ticks--over { background: repeating-conic-gradient(from 210deg, rgba(6,14,32,.6) 0deg 1.6deg, transparent 1.6deg 30deg); opacity: 1; }
+    .dial__needle { position: absolute; left: calc(50% - 2px); bottom: 50%; width: 4px; height: 52%; z-index: 1;
+      border-radius: 2px; background: linear-gradient(to top, transparent 0 62%, var(--current) 62%);
+      transform-origin: 50% 100%; transform: rotate(calc((210 + var(--pct) * 3) * 1deg)); }
+    .dial__read { position: absolute; inset: 0; z-index: 3; display: flex; flex-direction: column;
+      align-items: center; justify-content: flex-end; padding-bottom: 12%; text-align: center; }
+    .dial__read b { font-family: var(--font-mono); font-size: clamp(34px,3.4vw,42px); font-weight: 700; color: var(--ltext); line-height: 1; }
+    .dial__read b small { font-size: .55em; color: var(--lmuted); }
+    .dial__read > span { font-size: 13px; color: var(--lmuted); margin-top: 4px; }
 
-    .rbar { flex: none; height: 14px; border-radius: 999px; background: var(--bar-track); overflow: hidden; }
-    .rbar__fill { height: 100%; background: var(--accent); border-radius: 999px; transition: width .5s ease; }
+    .rmeters { display: flex; gap: 14px; }
+    .win { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 104px;
+      padding: 14px 18px; border-radius: 12px; background: rgba(0,0,0,.25);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.10); }
+    .win__lb { font-size: 12px; color: var(--lmuted); }
+    .win img { width: 48px; height: 48px; }
+    .win b { font-family: var(--font-mono); font-size: 27px; font-weight: 700; color: var(--rate); line-height: 1.3; }
+    .win b small { font-size: 16px; color: var(--lmuted); }
 
-    /* 문항별 결과 행 (서술형 고유: 문제마다 정답 n/m · 정답률) */
+    /* ===== 문제별 결과 행 — 한 칸이 한 빈칸 (서술형 고유) ===== */
     .rrows { display: flex; flex-direction: column; gap: 10px; }
-    .rrow { display: flex; align-items: center; gap: clamp(16px,2.2vw,28px); padding: 13px clamp(18px,2vw,26px); border-radius: 14px; border: 1.5px solid var(--row-br); background: var(--row-bg); }
-    .rrow__no { display: flex; align-items: center; gap: 9px; flex: none; min-width: 58px; font-weight: 800; font-size: 16px; color: var(--ltext); }
-    .rrow__no svg { width: 18px; height: 18px; color: var(--accent); }
-    .rrow__sep { flex: 1; border-top: 1px dashed color-mix(in srgb, var(--lmuted) 45%, transparent); }
-    .rrow__stat { display: flex; align-items: baseline; justify-content: flex-end; gap: 8px; flex: none; width: 108px; }
+    .rrow { display: flex; align-items: center; gap: clamp(16px,2.2vw,28px); padding: 14px clamp(18px,2vw,26px); border-radius: 14px; background: var(--row-bg); }
+    .rrow__name { display: flex; align-items: center; gap: 10px; flex: none; min-width: 118px; font-weight: 800; font-size: clamp(15px,1.5vw,18px); color: var(--ltext); }
+    .rrow__name svg { width: 20px; height: 20px; color: var(--accent); flex: none; }
+    .seg { display: flex; gap: 4px; flex: 1; }
+    .seg i { flex: 1; height: 14px; border-radius: 3px; background: rgba(255,255,255,.07);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.06); transition: background var(--t-fast); }
+    .seg i.on { background: var(--rate); box-shadow: 0 0 10px color-mix(in srgb, var(--rate) 35%, transparent); }
+    .rrow__stat { display: flex; align-items: baseline; justify-content: flex-end; gap: 7px; flex: none; width: 112px; }
     .rrow__stat > span { font-size: 14px; font-weight: 600; color: var(--lmuted); }
-    .rrow__stat > b { font-weight: 800; font-size: 20px; color: var(--accent); }
+    .rrow__stat > b { font-family: var(--font-mono); font-weight: 700; font-size: 19px; color: var(--accent); }
 
-    .rmain__foot { display: flex; justify-content: flex-end; }
-    .btn-review { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 14px; background: transparent; color: var(--accent); font-weight: 800; font-size: 16px; box-shadow: inset 0 0 0 1.5px var(--accent); cursor: pointer; }
-    .btn-review:hover { background: color-mix(in srgb, var(--accent) 14%, transparent); }
-
-    /* 우측 */
-    .rside { width: clamp(300px, 27vw, 400px); flex: none; overflow: auto; background: var(--lside); border-radius: 30px 30px 0 0; padding: clamp(20px,2vw,26px); display: flex; flex-direction: column; gap: 18px; }
-    .rside__title { font-size: 18px; font-weight: 800; color: var(--ltext); }
-    .rside__list { display: flex; flex-direction: column; gap: 16px; }
-    .step-card { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 20px 24px; border-radius: 16px; border: 1.5px solid var(--accent); }
-    .step-card__name { color: var(--ltext); font-size: 18px; font-weight: 700; }
-    .step-card__grade { display: inline-flex; align-items: center; gap: 2px; }
-    .step-card__grade .rbracket { font-size: 32px; } .step-card__grade img { width: 38px; height: 38px; }
-    .step-card__start { color: var(--accent); font-weight: 800; font-size: 16px; cursor: pointer; }
-    .step-card.is-current { border-width: 3px; }
-    .step-card.is-current .step-card__pointer { position: absolute; left: -9px; top: 50%; transform: translateY(-50%); }
-    .step-card__pointer path { fill: var(--accent); stroke: var(--lside); stroke-width: 5px; paint-order: stroke; }
-
-    /* 하단바 = 서술형 (퍼플 트레이) — essay.css 토큰 사용 */
+    /* ===== 우측: 학습 진행 현황 — 조작 패널 (Phase 7 ①-b C안) ===== */
+    .rside {
+      position: relative; width: clamp(300px, 27vw, 400px); flex: none; overflow: hidden;
+      background: var(--lside); border-radius: 30px 30px 0 0;
+      padding: 22px 20px 104px; display: flex; flex-direction: column;
+    }
+    .rside__hd { display: flex; align-items: center; gap: 10px; padding: 0 2px 11px;
+      border-bottom: 1px solid rgba(255,255,255,.10); }
+    .rside__title { font-size: 17px; font-weight: 800; color: var(--ltext); }
+    .rside__prog { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+    .rside__prog i { width: 20px; height: 12px; border-radius: 3px; background: rgba(255,255,255,.10); }
+    .rside__prog i.on { background: var(--rate); box-shadow: 0 0 8px color-mix(in srgb, var(--rate) 45%, transparent); }
+    .rside__prog b { font-family: var(--font-mono); font-size: 14px; font-weight: 700; color: var(--accent); }
+    .rside__prog b small { color: var(--lmuted); font-size: 12px; }
+    .rside__list { display: flex; flex-direction: column; gap: 14px; margin-top: 21px;
+      overflow-y: auto; min-height: 0; padding-bottom: 4px; }
+    .step-card { display: flex; align-items: center; gap: 15px; min-height: 88px; padding: 16px 19px; flex: none;
+      border-radius: 16px; background: rgba(255,255,255,.07); box-shadow: 0 4px 0 rgba(0,0,0,.32); }
+    /* 공용 learn-shell.css 의 구형 카드 표현(점선 테두리·틴트·호버 리프트)을 이 화면에서만 무력화 */
+    .step-card.is-open { border: none; }
+    .step-card.is-done { background: rgba(255,255,255,.07); }
+    .step-card.is-done:hover, .step-card.is-open:hover { transform: none; filter: brightness(1.07); box-shadow: 0 4px 0 rgba(0,0,0,.32); }
+    .step-card.is-done:active, .step-card.is-open:active { transform: translateY(2px); box-shadow: 0 2px 0 rgba(0,0,0,.32); }
+    .step-card.is-current, .step-card.is-current:hover { box-shadow: 0 4px 0 rgba(0,0,0,.32), inset 0 0 0 2.5px var(--accent); }
+    .step-card .lamp2 { width: 14px; height: 14px; border-radius: 50%; flex: none;
+      background: rgba(0,0,0,.35); box-shadow: inset 0 0 0 1px rgba(255,255,255,.14); }
+    .step-card.is-done .lamp2 { background: var(--accent); box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 55%, transparent); }
+    .step-card__id { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+    .step-card__no { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: .16em; color: var(--lmuted); }
+    .step-card__name { font-size: 18px; font-weight: 800; color: var(--ltext); white-space: nowrap; }
+    .step-card.is-open .step-card__name { color: var(--lmuted); }
+    .step-card__grade { height: 40px; margin-left: auto; }
+    .step-card .key { margin-left: auto; padding: 10px 16px; border: none; border-radius: 10px; cursor: pointer;
+      background: var(--n-500); color: var(--n-000); font-family: var(--font-sans); font-weight: 700; font-size: 15px;
+      box-shadow: 0 3px 0 var(--n-650); }
+    .step-card .key:hover { filter: brightness(1.12); }
+    /* 훈련 결과 버튼 — 모든 스텝 완료 시 리스트 끝에 등장 */
+    .pgo { margin-top: 14px; display: flex; align-items: center; justify-content: center; gap: 10px;
+      width: 100%; min-height: 74px; flex: none; border: none; border-radius: 16px; cursor: pointer;
+      background: var(--primary); color: var(--n-000); font-family: var(--font-sans); font-size: 20px; font-weight: 800;
+      box-shadow: 0 5px 0 color-mix(in srgb, var(--primary) 55%, var(--n-900));
+      animation: ignite 2.2s ease-in-out infinite; }
+    .pgo:active { transform: translateY(3px); box-shadow: 0 2px 0 color-mix(in srgb, var(--primary) 55%, var(--n-900)); }
+    @keyframes ignite {
+      0%, 100% { box-shadow: 0 5px 0 color-mix(in srgb, var(--primary) 55%, var(--n-900)), 0 0 0 0 transparent; }
+      50% { box-shadow: 0 5px 0 color-mix(in srgb, var(--primary) 55%, var(--n-900)), 0 0 26px color-mix(in srgb, var(--accent) 40%, transparent); }
+    }
 
     /* 토스트 */
     .rtoast { position: fixed; left: 50%; bottom: 118px; transform: translateX(-50%) translateY(10px); z-index: 400; padding: 10px 18px; border-radius: 999px; font-family: var(--font-sans); font-size: 14px; font-weight: 600; background: rgba(20,14,44,.94); color: var(--n-000); opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
     .rtoast.is-on { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-    @media (max-width: 940px) { .rframe { flex-direction: column; } .rmain, .rside { border-radius: 24px; } .rside { width: auto; } }
+    @media (max-width: 940px) {
+      .rframe { flex-direction: column; }
+      .rmain, .rside { border-radius: 24px; }
+      .rside { width: auto; }
+    }
   </style>
 </head>
 <body class="learn-body" style="--subj:var(--th-accent-strong)">
@@ -111,34 +173,44 @@
         </nav>
         <div class="lheader__actions">
           <div class="lheader__timer is-paused" id="hdrTimer" title="제출 시점 (정지)"><img src="assets/icons/ico-stopwatch.svg" alt="경과 시간(정지)" /><span>10:04</span></div>
-          <button class="theme-toggle" id="themeToggle" title="라이트/다크 전환"><span class="theme-toggle__knob"></span></button>
           <button class="nav-ico" title="알림"><img src="assets/icons/ico-siren.svg" alt="알림" /></button>
           <button class="nav-ico" title="나가기"><img src="assets/icons/ico-exit.svg" alt="나가기" /></button>
         </div>
       </header>
 
       <div class="rframe">
+        <!-- 좌측 -->
         <section class="rmain">
-          <div class="rhead">
-            <h1 class="rtitle" id="title">기초 기르기 완료!</h1>
-            <h2 class="runit" id="unit">(2) 문제 해결</h2>
+          <div class="rhero">
+            <div class="dial" id="rateDial">
+              <div class="dial__ticks"></div>
+              <div class="dial__face"></div>
+              <div class="dial__ticks dial__ticks--over"></div>
+              <div class="dial__needle"></div>
+              <div class="dial__read"><b><span id="rate">0</span><small>%</small></b><span>정답률</span></div>
+            </div>
+            <div class="rinfo">
+              <div class="rhead">
+                <h1 class="rtitle" id="title">기초 기르기 완료!</h1>
+                <h2 class="runit" id="unit">(2) 문제 해결</h2>
+              </div>
+              <div class="rmeters">
+                <div class="win"><span class="win__lb">등급</span><img id="summaryBadge" src="assets/img/grade/grade-b.webp" alt="등급" /></div>
+                <div class="win"><span class="win__lb">정답</span><b><span id="score">0</span><small id="total">/0</small></b></div>
+              </div>
+            </div>
           </div>
-          <div class="rsummary">
-            <span class="rbadge"><span class="rbracket">[</span><img id="summaryBadge" src="assets/img/grade/grade-b.webp" alt="등급" /><span class="rbracket">]</span></span>
-            <div class="rstat rstat--rate"><div class="rstat__label">정답률</div><div class="rstat__val"><span id="rate">0</span>%</div></div>
-            <div class="rdivider"></div>
-            <div class="rstat rstat--score"><div class="rstat__label">정답</div><div class="rstat__val"><span id="score">0</span><small id="total">/0</small></div></div>
-          </div>
-          <div class="rbar"><div class="rbar__fill" id="barFill" style="width:0%"></div></div>
           <div class="rrows" id="rows"></div>
-          <div class="rmain__foot">
-            <button class="btn-review" id="reviewBtn">해설 보기 <span aria-hidden="true">›</span></button>
-          </div>
         </section>
 
+        <!-- 우측: 조작 패널. 스텝 3개 = 훈련 결과(essay-training-result.js STAGES)와 정합 -->
         <aside class="rside">
-          <div class="rside__title">학습 진행 현황</div>
+          <div class="rside__hd">
+            <span class="rside__title">학습 진행 현황</span>
+            <span class="rside__prog" data-prog id="sideProg"></span>
+          </div>
           <div class="rside__list" id="stepList"></div>
+          <button class="pgo" id="trainResultBtn" data-go="essay/training-result.html" style="display:none">훈련 결과 보기 ›</button>
         </aside>
       </div>
     </div>
@@ -150,9 +222,9 @@
         <div class="bar__tray">
           <div class="bar__group">
             <button class="toolbtn"><img src="assets/icons/ico-note-edit.svg" alt="" /><span>연습장</span></button>
+            <button class="toolbtn" id="reviewBtn"><img src="assets/icons/ico-summary.svg" alt="" /><span>해설 보기</span></button>
             <button class="toolbtn" data-home><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11.5 12 4l8 7.5"/><path d="M6 10v9h12v-9"/><path d="M10 19v-5h4v5"/></svg><span>홈으로</span></button>
           </div>
-          <div class="bar__group"><button class="toolbtn toolbtn--primary" id="trainResultBtn" data-go="essay/training-result.html" style="display:none"><img src="assets/icons/ico-summary.svg" alt="" /><span>훈련 결과 보기</span></button></div>
         </div>
       </div>
       <img class="bar__deco bar__deco--r" src="assets/icons/console/console-essay-left.svg" alt="" />
@@ -163,7 +235,7 @@
 
   <!-- 연습장 캔버스 (공용) -->
   <script src="scripts/scratchpad.js?v=13"></script>
-  <script src="scripts/essay-step-result.js?v=5"></script>
-  <script src="scripts/step-progress.js"></script>
+  <script src="scripts/essay-step-result.js?v=6"></script>
+  <script src="scripts/step-progress.js?v=2"></script>
 </body>
 </html>

@@ -213,7 +213,7 @@
         <aside class="rside">
           <div class="rside__hd">
             <span class="rside__title">학습 진행 현황</span>
-            <span class="rside__prog" id="sideProg"><i class="on"></i><i></i><i></i><b>1<small>/3</small></b></span>
+            <span class="rside__prog" data-prog><i class="on"></i><i></i><i></i><b>1<small>/3</small></b></span>
           </div>
           <div class="rside__list">
             <div class="step-card is-current is-done">
@@ -221,12 +221,12 @@
               <div class="step-card__id"><span class="step-card__no">STEP 1</span><span class="step-card__name">개념 학습</span></div>
               <img class="step-card__grade" id="sideBadge" src="assets/img/grade/grade-step-b.webp" alt="등급" />
             </div>
-            <div class="step-card is-open" data-go="concept/drill.html">
+            <div class="step-card is-open" data-go="concept/drill.html" data-demo-grade="s">
               <i class="lamp2"></i>
               <div class="step-card__id"><span class="step-card__no">STEP 2</span><span class="step-card__name">개념 다지기</span></div>
               <button class="key">시작하기 ›</button>
             </div>
-            <div class="step-card is-open" data-go="concept/drill.html">
+            <div class="step-card is-open" data-go="concept/drill.html" data-demo-grade="a">
               <i class="lamp2"></i>
               <div class="step-card__id"><span class="step-card__no">STEP 3</span><span class="step-card__name">개념 확인하기</span></div>
               <button class="key">시작하기 ›</button>
@@ -254,7 +254,7 @@
 
   <!-- 연습장 캔버스 (공용) -->
   <script src="scripts/scratchpad.js?v=13"></script>
-  <script src="scripts/step-result.js?v=5"></script>
-  <script src="scripts/step-progress.js"></script>
+  <script src="scripts/step-result.js?v=6"></script>
+  <script src="scripts/step-progress.js?v=2"></script>
 </body>
 </html>

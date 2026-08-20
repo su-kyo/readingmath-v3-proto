@@ -10,6 +10,31 @@
 (function () {
   'use strict';
 
+  /* ---------- 검수: ?done=1 이면 미학습 스텝을 완료로 (훈련 결과 버튼 노출 확인용) ----------
+     카드의 data-demo-grade(기본 a)로 등급을 정한다. 진행 게이지는 [data-prog]를 채운다. */
+  if (new URLSearchParams(location.search).get('done') === '1') {
+    [].forEach.call(document.querySelectorAll('.step-card.is-open'), function (card) {
+      card.classList.remove('is-open');
+      card.classList.add('is-done');
+      card.removeAttribute('data-go');           // 그 스텝 결과 화면이 없으니 클릭 시 토스트
+      var key = card.querySelector('.key, .step-card__start');
+      if (key) key.remove();
+      var g = card.getAttribute('data-demo-grade') || 'a';
+      var img = document.createElement('img');
+      img.className = 'step-card__grade';
+      img.src = 'assets/img/grade/grade-step-' + g + '.webp';
+      img.alt = g.toUpperCase();
+      card.appendChild(img);
+    });
+    var prog = document.querySelector('[data-prog]');
+    if (prog) {
+      var cells = prog.querySelectorAll('i');
+      [].forEach.call(cells, function (s) { s.classList.add('on'); });
+      var b = prog.querySelector('b');
+      if (b) b.innerHTML = cells.length + '<small>/' + cells.length + '</small>';
+    }
+  }
+
   var ICON = {
     rocket: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 15.5c-1.5 1.3-2 5.5-2 5.5s4.2-.5 5.5-2"/><path d="M15 4c2.5-2.5 6.5-2 6.5-2s.5 4-2 6.5l-5.2 5.2-4.5-4.5L15 4z"/><path d="M9 15l-2.5-2.5"/><circle cx="15.5" cy="8.5" r="1.4"/></svg>',
     close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>'
