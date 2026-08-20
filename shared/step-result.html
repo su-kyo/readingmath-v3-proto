@@ -105,8 +105,6 @@
       background: var(--lside); border-radius: 30px 30px 0 0;
       padding: 22px 20px 104px; display: flex; flex-direction: column;
     }
-    .screw { position: absolute; width: 8px; height: 8px; border-radius: 50%; background: var(--n-500); }
-    .screw.tl { top: 15px; left: 15px; } .screw.tr { top: 15px; right: 15px; }
     /* 헤더 — 진행 표현은 LED 세그 + 수치 한 벌. 구분선은 헤더 묶음에 붙는다(위 11px < 아래 21px) */
     .rside__hd { display: flex; align-items: center; gap: 10px; padding: 0 2px 11px;
       border-bottom: 1px solid rgba(255,255,255,.10); }
@@ -117,8 +115,9 @@
     .rside__prog b { font-family: var(--font-mono); font-size: 14px; font-weight: 700; color: var(--accent); }
     .rside__prog b small { color: var(--lmuted); font-size: 12px; }
     /* 스텝 모듈 — 면판 위에 올라앉은 블록 (크리스프 받침 그림자) */
+    /* 바닥 4px 여유 = 마지막 모듈의 받침 그림자가 스크롤 영역에 안 잘리게 */
     .rside__list { display: flex; flex-direction: column; gap: 14px; margin-top: 21px;
-      overflow-y: auto; min-height: 0; }
+      overflow-y: auto; min-height: 0; padding-bottom: 4px; }
     .step-card { display: flex; align-items: center; gap: 15px; min-height: 88px; padding: 16px 19px; flex: none;
       border-radius: 16px; background: rgba(255,255,255,.07); box-shadow: 0 4px 0 rgba(0,0,0,.32); }
     /* 공용 learn-shell.css 의 구형 카드 표현(점선 테두리·틴트·호버 리프트)을 이 화면에서만 무력화 */
@@ -212,7 +211,6 @@
 
         <!-- 우측: 조작 패널. 스텝 3개 = 훈련 결과(concept-training-result.js STAGES)와 정합 -->
         <aside class="rside">
-          <i class="screw tl"></i><i class="screw tr"></i>
           <div class="rside__hd">
             <span class="rside__title">학습 진행 현황</span>
             <span class="rside__prog" id="sideProg"><i class="on"></i><i></i><i></i><b>1<small>/3</small></b></span>
