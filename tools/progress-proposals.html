@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<!-- Phase 7 ①-b 시안 비교 — '학습 진행 현황' 조작 패널화 + 훈련 결과 진입 플로우 (배포 제외) -->
+<html lang="ko" data-section="concept" data-theme="dark">
+<head>
+  <base href="../">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>진행 현황 패널 시안 — 리딩수학과학 (tools)</title>
+  <link rel="stylesheet" href="styles/tokens.css?v=24" />
+  <link rel="stylesheet" href="styles/base.css?v=7" />
+  <style>
+    body { background: var(--surface-1); color: var(--text); font-family: var(--font-sans);
+      padding: 36px clamp(20px,4vw,56px) 72px; }
+    .page__ttl { font-size: 26px; font-weight: 800; }
+    .page__sub { margin-top: 6px; color: var(--text-muted); font-size: 15px; }
+
+    .cols { display: grid; grid-template-columns: repeat(2, minmax(360px, 430px)); gap: clamp(24px,4vw,64px); margin-top: 30px; }
+    .prop__ttl { font-size: 19px; font-weight: 800; color: var(--th-accent-hi); }
+    .prop__desc { margin: 6px 0 18px; color: var(--text-muted); font-size: 14px; line-height: 1.6; }
+    .state { margin-bottom: 30px; }
+    .state__lb { display: inline-block; margin-bottom: 10px; padding: 4px 12px; border-radius: 999px;
+      background: var(--surface-3); color: var(--text-muted); font-size: 13px; font-weight: 700; }
+
+    /* ===== 패널 공통 — 네이비 림 + 조작반 페이스 (모니터가 아니라 물리 패널: 스캔라인 없음) ===== */
+    .pnl { width: 100%; max-width: 400px; border-radius: 30px; background: var(--th-static);
+      padding: 8px; box-shadow: var(--shadow-2); }
+    .pnl__face { display: flex; flex-direction: column; gap: 16px; min-height: 600px;
+      background: var(--surface-3); border-radius: 24px; padding: 18px; }
+    .pnl__hd { display: flex; align-items: center; gap: 8px; padding: 2px 2px 0; }
+    .lamps { display: flex; gap: 5px; }
+    .lamps i, .lamp { width: 13px; height: 13px; border-radius: 50%; flex: none;
+      background: rgba(255,255,255,.08); box-shadow: inset 0 0 0 1px rgba(255,255,255,.14), inset 0 2px 3px rgba(0,0,0,.4); }
+    .lamps i { width: 8px; height: 8px; }
+    .lamps i.on, .lamp.on { background: var(--th-accent-hi);
+      box-shadow: 0 0 9px color-mix(in srgb, var(--th-accent-hi) 55%, transparent), inset 0 0 0 1px rgba(255,255,255,.25); }
+    .pnl__ttl { font-size: 17px; font-weight: 800; color: var(--text); }
+    .pnl__cnt { margin-left: auto; padding: 4px 12px; border-radius: 999px;
+      background: rgba(0,0,0,.28); box-shadow: inset 0 2px 5px rgba(0,0,0,.4);
+      font-family: var(--font-mono); font-size: 14px; color: var(--th-accent-hi); }
+    .pnl__cnt small { color: var(--text-muted); }
+    .no { width: 22px; height: 22px; border-radius: 7px; background: var(--th-solid); color: var(--n-000);
+      display: inline-grid; place-items: center; font-size: 13px; font-weight: 700; flex: none; }
+    .name { font-weight: 800; font-size: 16px; color: var(--text); }
+    .badge { height: 34px; margin-left: auto; }
+    .key { margin-left: auto; padding: 9px 15px; border: none; border-radius: 10px; cursor: pointer;
+      background: var(--n-500); color: var(--n-000); font-family: var(--font-sans); font-weight: 700; font-size: 14px;
+      box-shadow: 0 3px 0 var(--n-650); }
+    .key:hover { filter: brightness(1.12); }
+    .key:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--n-650); }
+
+    /* ===== A안 — 시퀀스 레일: 램프 + 트랙이 스텝을 잇고, 하단 종착 모듈이 상시 노출(잠김→점화) ===== */
+    .rail { display: flex; flex-direction: column; }
+    .node { display: flex; align-items: center; gap: 13px; }
+    .node__card { flex: 1; display: flex; align-items: center; gap: 10px; min-height: 62px;
+      padding: 12px 16px; border-radius: 14px; background: rgba(255,255,255,.05);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.08); }
+    .node.is-open .node__card { background: rgba(255,255,255,.03); }
+    .node.is-open .name { color: var(--text-muted); }
+    .node.is-current .node__card { box-shadow: inset 0 0 0 2.5px var(--th-accent-hi); }
+    .trk { display: flex; flex-direction: column; gap: 4px; margin: 7px 0 7px 5px; }
+    .trk i { width: 3px; height: 7px; border-radius: 2px; background: rgba(255,255,255,.10); }
+    .trk i.on { background: var(--th-accent-hi); box-shadow: 0 0 6px color-mix(in srgb, var(--th-accent-hi) 50%, transparent); }
+
+    .launch { margin-top: auto; }
+    .launch--locked { display: flex; align-items: center; gap: 12px; padding: 18px;
+      border-radius: 14px; background: rgba(0,0,0,.22);
+      box-shadow: inset 0 3px 9px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.06); }
+    .launch--locked .name { color: var(--text-muted); }
+    .launch--locked svg { margin-left: auto; width: 18px; height: 18px; color: var(--text-muted); opacity: .7; }
+    .launch__btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%;
+      padding: 18px; border: none; border-radius: 14px; cursor: pointer;
+      background: var(--primary); color: var(--n-000); font-family: var(--font-sans); font-size: 19px; font-weight: 800;
+      box-shadow: 0 5px 0 color-mix(in srgb, var(--primary) 55%, var(--n-900));
+      animation: ignite 2.2s ease-in-out infinite; }
+    .launch__btn:active { transform: translateY(3px); box-shadow: 0 2px 0 color-mix(in srgb, var(--primary) 55%, var(--n-900)); }
+    .launch__btn .lamp { width: 11px; height: 11px; }
+    @keyframes ignite {
+      0%, 100% { box-shadow: 0 5px 0 color-mix(in srgb, var(--primary) 55%, var(--n-900)), 0 0 0 0 transparent; }
+      50% { box-shadow: 0 5px 0 color-mix(in srgb, var(--primary) 55%, var(--n-900)),
+        0 0 26px color-mix(in srgb, var(--th-accent-hi) 40%, transparent); }
+    }
+
+    /* ===== B안 — 모듈 베이: 깊게 파인 슬롯(랙), 완료 시 상단에 결과 모듈 등장 ===== */
+    .pseg { margin-left: auto; display: flex; gap: 3px; width: 86px; }
+    .pseg i { flex: 1; height: 11px; border-radius: 3px; background: rgba(255,255,255,.08);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.07); }
+    .pseg i.on { background: var(--cyan-400); box-shadow: 0 0 8px rgba(24,209,252,.4); }
+    .bays { display: flex; flex-direction: column; gap: 13px; }
+    .bay { display: flex; align-items: center; gap: 11px; min-height: 66px; padding: 13px 17px;
+      border-radius: 16px; background: rgba(0,0,0,.20);
+      box-shadow: inset 0 3px 10px rgba(0,0,0,.5), inset 0 0 0 1px rgba(255,255,255,.06); }
+    .bay.is-done { box-shadow: inset 0 3px 10px rgba(0,0,0,.5), inset 0 0 0 1.5px color-mix(in srgb, var(--th-accent-hi) 65%, transparent); }
+    .bay.is-current { box-shadow: inset 0 3px 10px rgba(0,0,0,.5), inset 0 0 0 2.5px var(--th-accent-hi); }
+    .bay.is-open .name { color: var(--text-muted); }
+    .arrive { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%;
+      padding: 18px; border: none; border-radius: 16px; cursor: pointer;
+      background: var(--primary); color: var(--n-000); font-family: var(--font-sans); font-size: 19px; font-weight: 800;
+      box-shadow: 0 5px 0 color-mix(in srgb, var(--primary) 55%, var(--n-900));
+      animation: ignite 2.2s ease-in-out infinite; }
+    .arrive .lamp { width: 11px; height: 11px; }
+
+    @media (max-width: 900px) { .cols { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <h1 class="page__ttl">학습 진행 현황 — 조작 패널 시안 (Phase 7 ①-b)</h1>
+  <p class="page__sub">좌측 결과가 「모니터(스크린)」라면 우측 진행 현황은 「조작반(물리 패널)」 — 스캔라인 없이 램프·트랙·물리 버튼으로 구성. 스타일과 결과 진입 플로우는 서로 조합 가능.</p>
+
+  <div class="cols">
+
+    <!-- ================= A안 ================= -->
+    <section>
+      <h2 class="prop__ttl">A안 — 시퀀스 레일 · 결과 모듈 상시(잠김 → 점화)</h2>
+      <p class="prop__desc">스텝을 램프+트랙으로 잇는 항로. 종착지 「훈련 결과」가 처음부터 하단에 보이고, 마지막 스텝을 마치면 점화된다.</p>
+
+      <div class="state">
+        <span class="state__lb">스텝 1 완료 시점 (1/3)</span>
+        <div class="pnl"><div class="pnl__face">
+          <div class="pnl__hd">
+            <span class="lamps"><i class="on"></i><i></i><i></i></span>
+            <span class="pnl__ttl">학습 진행 현황</span>
+            <span class="pnl__cnt"><b>1</b><small>/3</small></span>
+          </div>
+          <div class="rail">
+            <div class="node is-done is-current"><i class="lamp on"></i>
+              <div class="node__card"><span class="no">1</span><span class="name">개념 학습</span><img class="badge" src="assets/img/grade/grade-step-b.webp" alt="B" /></div>
+            </div>
+            <div class="trk"><i class="on"></i><i class="on"></i><i class="on"></i></div>
+            <div class="node is-open"><i class="lamp"></i>
+              <div class="node__card"><span class="no">2</span><span class="name">개념 다지기</span><button class="key">시작하기 ›</button></div>
+            </div>
+            <div class="trk"><i></i><i></i><i></i></div>
+            <div class="node is-open"><i class="lamp"></i>
+              <div class="node__card"><span class="no">3</span><span class="name">개념 확인하기</span><button class="key">시작하기 ›</button></div>
+            </div>
+          </div>
+          <div class="launch launch--locked">
+            <i class="lamp"></i><span class="name">훈련 결과</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="state">
+        <span class="state__lb">모든 스텝 완료 시점 (3/3)</span>
+        <div class="pnl"><div class="pnl__face">
+          <div class="pnl__hd">
+            <span class="lamps"><i class="on"></i><i class="on"></i><i class="on"></i></span>
+            <span class="pnl__ttl">학습 진행 현황</span>
+            <span class="pnl__cnt"><b>3</b><small>/3</small></span>
+          </div>
+          <div class="rail">
+            <div class="node is-done"><i class="lamp on"></i>
+              <div class="node__card"><span class="no">1</span><span class="name">개념 학습</span><img class="badge" src="assets/img/grade/grade-step-b.webp" alt="B" /></div>
+            </div>
+            <div class="trk"><i class="on"></i><i class="on"></i><i class="on"></i></div>
+            <div class="node is-done"><i class="lamp on"></i>
+              <div class="node__card"><span class="no">2</span><span class="name">개념 다지기</span><img class="badge" src="assets/img/grade/grade-step-s.webp" alt="S" /></div>
+            </div>
+            <div class="trk"><i class="on"></i><i class="on"></i><i class="on"></i></div>
+            <div class="node is-done is-current"><i class="lamp on"></i>
+              <div class="node__card"><span class="no">3</span><span class="name">개념 확인하기</span><img class="badge" src="assets/img/grade/grade-step-a.webp" alt="A" /></div>
+            </div>
+          </div>
+          <div class="launch">
+            <button class="launch__btn"><i class="lamp on"></i>훈련 결과 보기 ›</button>
+          </div>
+        </div></div>
+      </div>
+    </section>
+
+    <!-- ================= B안 ================= -->
+    <section>
+      <h2 class="prop__ttl">B안 — 모듈 베이 · 완료 시 상단 등장</h2>
+      <p class="prop__desc">스텝을 깊게 파인 슬롯(랙 베이)으로. 평소엔 결과 진입이 없고, 모든 스텝을 마치면 최상단에 결과 모듈이 나타난다.</p>
+
+      <div class="state">
+        <span class="state__lb">스텝 1 완료 시점 (1/3)</span>
+        <div class="pnl"><div class="pnl__face">
+          <div class="pnl__hd">
+            <span class="lamps"><i class="on"></i><i></i><i></i></span>
+            <span class="pnl__ttl">학습 진행 현황</span>
+            <span class="pseg"><i class="on"></i><i></i><i></i></span>
+          </div>
+          <div class="bays">
+            <div class="bay is-done is-current"><i class="lamp on"></i><span class="no">1</span><span class="name">개념 학습</span><img class="badge" src="assets/img/grade/grade-step-b.webp" alt="B" /></div>
+            <div class="bay is-open"><i class="lamp"></i><span class="no">2</span><span class="name">개념 다지기</span><button class="key">시작하기 ›</button></div>
+            <div class="bay is-open"><i class="lamp"></i><span class="no">3</span><span class="name">개념 확인하기</span><button class="key">시작하기 ›</button></div>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="state">
+        <span class="state__lb">모든 스텝 완료 시점 (3/3)</span>
+        <div class="pnl"><div class="pnl__face">
+          <div class="pnl__hd">
+            <span class="lamps"><i class="on"></i><i class="on"></i><i class="on"></i></span>
+            <span class="pnl__ttl">학습 진행 현황</span>
+            <span class="pseg"><i class="on"></i><i class="on"></i><i class="on"></i></span>
+          </div>
+          <button class="arrive"><i class="lamp on"></i>훈련 결과 보기 ›</button>
+          <div class="bays">
+            <div class="bay is-done"><i class="lamp on"></i><span class="no">1</span><span class="name">개념 학습</span><img class="badge" src="assets/img/grade/grade-step-b.webp" alt="B" /></div>
+            <div class="bay is-done"><i class="lamp on"></i><span class="no">2</span><span class="name">개념 다지기</span><img class="badge" src="assets/img/grade/grade-step-s.webp" alt="S" /></div>
+            <div class="bay is-done is-current"><i class="lamp on"></i><span class="no">3</span><span class="name">개념 확인하기</span><img class="badge" src="assets/img/grade/grade-step-a.webp" alt="A" /></div>
+          </div>
+        </div></div>
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>
