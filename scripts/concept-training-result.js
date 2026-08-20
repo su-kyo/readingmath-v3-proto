@@ -1,6 +1,7 @@
 /* =====================================================================
-   개념 훈련 · 학습 결과 — 세부 단계 전부 완료 후 (스텝 결과와 별개)
-   서술형 학습 결과와 동일 골격, 개념(블루) 데이터.
+   개념 훈련 · 학습 결과 — Phase 7 ① 계기판 어휘 (A안 조합)
+   총점 = 별 + 점수(상위 종합). 단계별 행 = 육각 뱃지 + 문항 LED.
+   「보기」 = 스텝 결과 스크린창(보조 모니터 · 다이얼 게이지).
    ===================================================================== */
 (function () {
   'use strict';
@@ -8,6 +9,8 @@
   /* ---------- 테마 (rm-theme 공유 키) ---------- */
   var root = document.documentElement;
   (function () { var s; try { s = localStorage.getItem('rm-theme'); } catch (e) {} if (s) root.setAttribute('data-theme', s); })();
+  /* ?theme=dark|light 이 저장된 테마보다 우선 (검수·스크린샷용) */
+  (function () { var f = new URLSearchParams(location.search).get('theme'); if (f) root.setAttribute('data-theme', f); })();
   var toggle = document.getElementById('themeToggle');
   if (toggle) toggle.addEventListener('click', function () {
     var t = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
@@ -32,6 +35,7 @@
 
   function gradeOf(r) { return r >= 95 ? 's' : r >= 80 ? 'a' : r >= 70 ? 'b' : 'c'; }
   function stepBadge(g) { return 'assets/img/grade/grade-step-' + g.toLowerCase() + '.webp'; }
+  function bigBadge(g)  { return 'assets/img/grade/grade-' + g.toLowerCase() + '.webp'; }
 
   /* ---------- 총점 별 + 점수 ---------- */
   document.getElementById('totalStar').src = 'assets/icons/star/star-' + gradeOf(SCORE) + '.svg';
@@ -42,21 +46,25 @@
     scoreEl.textContent = sN;
   }, 26);
 
-  /* ---------- 단계별 표 ---------- */
+  /* ---------- 단계별 행 (뱃지 + 문항 LED + 보기) ---------- */
+  function segHTML(correct, total) {
+    var s = '';
+    for (var i = 0; i < total; i++) s += '<i data-on="' + (i < correct ? 1 : 0) + '"></i>';
+    return '<span class="seg">' + s + '</span>';
+  }
   var rows = document.getElementById('rows');
   var sumCorrect = 0, sumTotal = 0;
-  STAGES.forEach(function (s, idx) {
+  STAGES.forEach(function (s) {
     var rate = s.total ? Math.round((s.correct / s.total) * 100) : 0;
     sumCorrect += s.correct; sumTotal += s.total;
     var row = document.createElement('div');
     row.className = 'trow trow--data';
-    row.style.marginTop = idx ? '8px' : '0';
     row.innerHTML =
       '<div class="tcell tcell--name"><span class="tnum">' + s.no + '</span><span class="tname">' + s.name + '</span></div>' +
       '<div class="tcell"><img class="tgrade" src="' + stepBadge(s.grade) + '" alt="' + s.grade + '" /></div>' +
-      '<div class="tcell tbig">' + s.correct + '</div>' +
-      '<div class="tcell tbig">' + s.total + '</div>' +
-      '<div class="tcell tcell--rate"><div class="trate__val">' + rate + '%</div><div class="trate__bar"><div class="trate__fill" data-w="' + rate + '" style="width:0%"></div></div></div>' +
+      '<div class="tcell">' + segHTML(s.correct, s.total) + '</div>' +
+      '<div class="tcell tst">' + s.correct + '<small>/' + s.total + '</small></div>' +
+      '<div class="tcell tpc">' + rate + '%</div>' +
       '<div class="tcell"><button class="tview" data-no="' + s.no + '">보기</button></div>';
     rows.appendChild(row);
   });
@@ -66,18 +74,56 @@
   document.getElementById('totalRow').innerHTML =
     '<div class="tcell tcell--name"><span class="tname">전체</span></div>' +
     '<div class="tcell"></div>' +
-    '<div class="tcell tbig">' + sumCorrect + '</div>' +
-    '<div class="tcell tbig">' + sumTotal + '</div>' +
-    '<div class="tcell tcell--rate"><div class="trate__val">' + totalRate + '%</div><div class="trate__bar"><div class="trate__fill" data-w="' + totalRate + '" style="width:0%"></div></div></div>' +
+    '<div class="tcell">' + segHTML(sumCorrect, sumTotal) + '</div>' +
+    '<div class="tcell tst">' + sumCorrect + '<small>/' + sumTotal + '</small></div>' +
+    '<div class="tcell tpc">' + totalRate + '%</div>' +
     '<div class="tcell"></div>';
 
-  /* 정답률 바 애니메이션 (setTimeout — rAF 불안정 환경 대비) */
-  setTimeout(function () {
-    [].forEach.call(document.querySelectorAll('.trate__fill'), function (f) { f.style.width = f.getAttribute('data-w') + '%'; });
-  }, 80);
+  /* 문항 LED 순차 점등 */
+  var cells = document.querySelectorAll('.tbl .seg i[data-on="1"]');
+  [].forEach.call(cells, function (c, i) {
+    setTimeout(function () { c.classList.add('on'); }, 180 + i * 22);
+  });
 
   /* ---------- 코멘트 ---------- */
   document.getElementById('comment').textContent = COMMENT;
+
+  /* ---------- 「보기」 → 스텝 결과 스크린창 ---------- */
+  var stepMon = document.getElementById('stepMon');
+  var stepDial = document.getElementById('stepDial');
+  function openStepMonitor(stage) {
+    var rate = stage.total ? Math.round((stage.correct / stage.total) * 100) : 0;
+    document.getElementById('stepMonTtl').textContent = '스텝 결과 — ' + stage.name;
+    document.getElementById('stepBadge').src = bigBadge(stage.grade);
+    document.getElementById('stepRate').textContent = rate;
+    document.getElementById('stepScore').textContent = stage.correct + '/' + stage.total;
+    stepDial.style.setProperty('--pct', 0);
+    stepMon.classList.add('is-open');
+    stepMon.setAttribute('aria-hidden', 'false');
+    requestAnimationFrame(function () { requestAnimationFrame(function () {
+      stepDial.style.setProperty('--pct', rate);
+    }); });
+  }
+  function closeStepMonitor() {
+    stepMon.classList.remove('is-open');
+    stepMon.setAttribute('aria-hidden', 'true');
+  }
+  /* ?view=1|2|3 로 열면 그 스텝의 스크린창을 바로 띄움 (검수·스크린샷용) */
+  var wantView = +(new URLSearchParams(location.search).get('view') || 0);
+  if (wantView) setTimeout(function () {
+    var stage = STAGES.filter(function (s) { return s.no === wantView; })[0];
+    if (stage) openStepMonitor(stage);
+  }, 900);
+  document.addEventListener('click', function (e) {
+    var v = e.target.closest && e.target.closest('.tview');
+    if (v) {
+      var no = +v.getAttribute('data-no');
+      var stage = STAGES.filter(function (s) { return s.no === no; })[0];
+      if (stage) openStepMonitor(stage);
+      return;
+    }
+    if (e.target.closest && e.target.closest('[data-mclose]')) closeStepMonitor();
+  });
 
   /* ---------- 액션 ---------- */
   var toast = document.getElementById('toast'), tt;
@@ -86,14 +132,10 @@
   if (noteBtn) noteBtn.addEventListener('click', function () { showToast('오답노트 화면은 준비 중이에요'); });
   var homeBtn = document.getElementById('homeBtn');
   if (homeBtn) homeBtn.addEventListener('click', function () { window.location.href = 'index.html'; });
-  document.addEventListener('click', function (e) {
-    var v = e.target.closest && e.target.closest('.tview');
-    if (v) showToast(v.getAttribute('data-no') + '단계 해설은 준비 중이에요');
-  });
 
   /* ---------- 시간 초과 상태 토글 (검수용) ---------- */
   var overPill = document.getElementById('overPill');
-  var totalNote = document.getElementById('totalNote');
+  var overLamp = document.getElementById('overLamp');
   var commentEl = document.getElementById('comment');
   function setOvertime(on, initial) {
     overtime = on;
@@ -102,7 +144,7 @@
     if (!initial) { clearInterval(sTimer); scoreEl.textContent = SCORE; }
     document.getElementById('totalStar').src = 'assets/icons/star/star-' + gradeOf(SCORE) + '.svg';
     if (overPill) overPill.hidden = !on;
-    if (totalNote) totalNote.textContent = on ? 'ⓘ 시간 초과 감점 있음' : 'ⓘ 개념 훈련 3단계 종합';
+    if (overLamp) overLamp.style.display = on ? '' : 'none';
     if (commentEl) commentEl.textContent = commentEl.textContent
       .replace(/100점 만점 중 \d+점/, '100점 만점 중 ' + SCORE + '점');
   }

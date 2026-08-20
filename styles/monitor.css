@@ -60,13 +60,9 @@
   .monitor.is-open .monitor__rig{ animation-duration: 1ms; }
 }
 
-/* 마운트 암 — 천장에서 내려온 고정 축 2개 */
-.monitor__mount{ display: flex; gap: 110px; flex: none; }
-.monitor__mount i{
-  width: 18px; height: 40px;
-  background: var(--n-400);
-  border-radius: 0 0 8px 8px;
-}
+/* 마운트 암 — Phase 7에서 제거 (사용자 결정: 프레임만 남긴다).
+   화면들의 마크업(.monitor__mount)은 그대로 두고 여기서 숨긴다. */
+.monitor__mount{ display: none; }
 
 /* ── 베젤 (하드웨어 — 테마 불변 네이비) ── */
 .monitor__frame{
@@ -156,13 +152,6 @@
 @keyframes monSide{
   from{ transform: translateX(48px); opacity: 0; }
   to{   transform: translateX(0);    opacity: 1; }
-}
-.monitor--side .monitor__mount{
-  order: 2; flex-direction: column; gap: 90px;
-}
-.monitor--side .monitor__mount i{
-  width: 40px; height: 18px;
-  border-radius: 8px 0 0 8px;
 }
 .monitor--side .monitor__frame{
   width: var(--mon-w, 600px); max-width: calc(94vw - 40px);
