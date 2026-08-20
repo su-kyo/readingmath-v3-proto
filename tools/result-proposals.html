@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="ko" data-section="concept" data-theme="light">
+<head>
+<base href="../">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>결과 화면 시안 3종 — 계기판 어휘</title>
+<link rel="stylesheet" href="styles/tokens.css?v=23">
+<link rel="stylesheet" href="styles/base.css?v=7">
+<style>
+  /* ── 검수 도구 (배포 제외) — Phase 7 ① 결과 화면 계기판 어휘 시안 ── */
+  @property --pct { syntax:'<number>'; inherits:true; initial-value:0; }
+
+  body{ margin:0; padding:28px 20px 90px; background:var(--bg); font-family:var(--font-sans); color:var(--text); }
+  .page{ max-width:1120px; margin:0 auto; }
+  .page__hd{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:6px; }
+  .page__ttl{ font-size:var(--fs-h1); font-weight:var(--fw-heavy); letter-spacing:-0.03em; margin:0; }
+  .page__sub{ font-size:var(--fs-sm); color:var(--text-muted); margin:4px 0 10px; line-height:1.6; }
+  .ctl{ display:flex; gap:8px; margin-left:auto; }
+  .ctl__btn{ height:38px; padding:0 16px; border-radius:var(--r-md); border:1px solid var(--border-strong);
+    background:var(--surface-3); color:var(--text); font-family:var(--font-sans); font-size:var(--fs-sm);
+    font-weight:var(--fw-bold); cursor:pointer; transition:background var(--t-fast); }
+  .ctl__btn:hover{ background:var(--surface-hover); }
+
+  .prop{ margin:42px 0 0; }
+  .prop__hd{ display:flex; align-items:baseline; gap:12px; margin-bottom:4px; flex-wrap:wrap; }
+  .prop__name{ font-size:var(--fs-h2); font-weight:var(--fw-heavy); letter-spacing:-0.02em; }
+  .prop__desc{ font-size:var(--fs-sm); color:var(--text-muted); }
+  .cap{ font-size:var(--fs-xs); font-weight:var(--fw-bold); color:var(--text-meta); margin:14px 0 6px; letter-spacing:.04em; }
+
+  .stage{ display:flex; gap:14px; padding:16px; border-radius:var(--r-xl);
+    border:1px solid var(--border-strong); background:var(--surface-2); }
+
+  .mono{ font-family:var(--font-mono); }
+
+  /* ── 공통: 우측 진행 현황 패널 (시안 대상 아님 — 자리만) ── */
+  .side{ width:250px; flex:none; background:var(--surface-1); border-radius:20px; padding:16px;
+    display:flex; flex-direction:column; gap:12px; }
+  .side__ttl{ font-size:15px; font-weight:var(--fw-heavy); }
+  .side-card{ display:flex; align-items:center; justify-content:space-between; gap:8px;
+    padding:14px 14px; border-radius:12px; border:1.5px solid var(--th-accent-hi); font-size:14px; font-weight:700; }
+  .side-card.is-cur{ border-width:3px; }
+  .side-card img{ width:28px; height:28px; }
+  .side-card .go{ color:var(--th-ink-accent); font-size:13px; }
+  :root[data-theme="dark"] .side-card .go{ color:var(--th-accent-hi); }
+
+  /* ── 공통: 하드웨어(콘솔 네이비 — 테마 불변) ── */
+  .hw{ flex:1; min-width:0; background:var(--n-650); border-radius:26px; padding:10px;
+    box-shadow:var(--shadow-2); display:flex; flex-direction:column; }
+  .hw__hd{ flex:none; display:flex; align-items:center; gap:8px; padding:4px 8px 10px 10px; }
+  .lamps{ display:flex; gap:6px; margin-right:4px; }
+  .lamps i{ width:9px; height:9px; border-radius:var(--r-full); background:var(--n-500); }
+  .lamps i.on{ background:var(--th-accent-hi); }
+  .lamps i.warn{ background:var(--warn-solid); }
+  .hw__ttl{ color:var(--n-000); font-size:15px; font-weight:var(--fw-bold); letter-spacing:-0.02em; }
+  .hw__chips{ margin-left:auto; display:flex; gap:6px; flex-wrap:wrap; }
+  .chip{ display:inline-flex; align-items:center; gap:6px; padding:4px 12px; border-radius:var(--r-full);
+    background:var(--n-500); color:var(--n-050); font-size:12px; font-weight:600; }
+  .chip--warn{ color:var(--amber-200); }
+  .chip--warn::before{ content:""; width:7px; height:7px; border-radius:50%; background:var(--warn-solid); }
+  .hw__screen{ flex:1; min-height:0; position:relative; overflow:hidden;
+    background:var(--n-900); border-radius:18px; padding:24px; }
+  .scan::before{ content:""; position:absolute; inset:0; pointer-events:none; z-index:0;
+    background:repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0, rgba(255,255,255,.05) 1px, transparent 1px, transparent 5px); }
+  .scan > *{ position:relative; z-index:1; }
+
+  /* ── 공통: 눈금 게이지 (수평) ── */
+  .tickbar{ position:relative; height:12px; border-radius:6px; background:rgba(255,255,255,.08); overflow:hidden; }
+  .tickbar__fill{ display:block; width:0; height:100%; background:var(--cyan-400); transition:width .8s cubic-bezier(.3,.8,.3,1); }
+  .tickbar__ticks{ position:absolute; inset:0;
+    background:repeating-linear-gradient(90deg, transparent 0 calc(10% - 2px), var(--n-900) calc(10% - 2px) 10%); }
+
+  /* ══ A안 · 다이얼 게이지 ══════════════════════════════════ */
+  .dial{ position:relative; width:220px; height:220px; flex:none; transition:--pct 1s cubic-bezier(.3,.8,.3,1); }
+  .dial__face{ position:absolute; inset:0; border-radius:50%;
+    background:conic-gradient(from 210deg, var(--cyan-400) 0deg calc(var(--pct) * 3deg),
+      rgba(255,255,255,.13) calc(var(--pct) * 3deg) 300deg, transparent 300deg 360deg);
+    -webkit-mask:radial-gradient(closest-side, transparent 71%, #000 72%);
+            mask:radial-gradient(closest-side, transparent 71%, #000 72%); }
+  .dial__ticks{ position:absolute; inset:6%; border-radius:50%;
+    background:repeating-conic-gradient(from 210deg, var(--n-300) 0deg 1.6deg, transparent 1.6deg 30deg);
+    -webkit-mask:radial-gradient(closest-side, transparent 84%, #000 85%);
+            mask:radial-gradient(closest-side, transparent 84%, #000 85%);
+    opacity:.55; }
+  .dial__needle{ position:absolute; left:calc(50% - 2px); bottom:50%; width:4px; height:34%; z-index:1;
+    border-radius:2px; background:var(--current); transform-origin:50% 100%;
+    transform:rotate(calc((210 + var(--pct) * 3) * 1deg)); }
+  .dial__hub{ position:absolute; left:50%; top:50%; width:14px; height:14px; border-radius:50%; z-index:2;
+    background:var(--n-500); border:3px solid var(--n-300); transform:translate(-50%,-50%); }
+  .dial__read{ position:absolute; inset:0; z-index:3; display:flex; flex-direction:column; align-items:center;
+    justify-content:flex-end; padding-bottom:12%; text-align:center; }
+  .dial__read b{ font-family:var(--font-mono); font-size:40px; font-weight:700; color:var(--n-050); line-height:1; }
+  .dial__read b small{ font-size:22px; color:var(--n-300); }
+  .dial__read span{ font-size:13px; color:var(--n-300); margin-top:4px; }
+
+  .pA{ display:flex; align-items:center; gap:clamp(20px,3vw,40px); flex-wrap:wrap; }
+  .pA__info{ display:flex; flex-direction:column; gap:14px; min-width:0; }
+  .pA__ttl{ margin:0; font-size:clamp(26px,3vw,36px); font-weight:800; line-height:1.1;
+    background:linear-gradient(90deg, var(--th-accent-hi), var(--th-accent));
+    -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .pA__unit{ font-size:clamp(16px,1.6vw,20px); font-weight:700; color:var(--n-050); }
+  .pA__meters{ display:flex; gap:12px; }
+  .win{ display:flex; flex-direction:column; align-items:center; gap:6px; min-width:96px;
+    padding:12px 16px; border-radius:12px; background:rgba(255,255,255,.05);
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.10), inset 0 3px 8px rgba(0,0,0,.5); }
+  .win__lb{ font-size:12px; color:var(--n-300); }
+  .win img{ width:44px; height:44px; }
+  .win b{ font-family:var(--font-mono); font-size:26px; font-weight:700; color:var(--cyan-300); line-height:1.2; }
+  .win b small{ font-size:15px; color:var(--n-300); }
+
+  .pA__rows{ display:flex; flex-direction:column; gap:10px; margin-top:20px; }
+  .pA__row{ display:flex; align-items:center; gap:16px; padding:12px 16px; border-radius:12px;
+    background:rgba(255,255,255,.04); }
+  .pA__row .nm{ flex:none; width:120px; font-size:15px; font-weight:800; color:var(--n-050); }
+  .pA__row .tickbar{ flex:1; }
+  .pA__row .st{ flex:none; width:76px; text-align:right; font-family:var(--font-mono); font-size:17px; color:var(--n-050); }
+  .pA__row .st small{ color:var(--n-300); font-size:13px; }
+  .pA__row .pc{ flex:none; width:64px; text-align:right; font-family:var(--font-mono); font-size:17px; color:var(--cyan-300); }
+
+  .pAt{ display:flex; align-items:center; gap:clamp(20px,3vw,36px); }
+  .dial--score .dial__read b{ font-size:40px; }
+  .pAt__tbl{ flex:1; min-width:0; display:flex; flex-direction:column; gap:8px; }
+  .pAt__hd, .pAt__row{ display:grid; grid-template-columns:1.2fr 64px 84px 1.4fr; align-items:center; gap:12px; padding:8px 14px; }
+  .pAt__hd{ font-size:12px; color:var(--n-300); padding-bottom:0; }
+  .pAt__hd > :nth-child(n+2), .pAt__row > :nth-child(2), .pAt__row .st{ text-align:center; }
+  .pAt__row{ border-radius:12px; background:rgba(255,255,255,.04); }
+  .pAt__row .nm{ font-size:15px; font-weight:800; color:var(--n-050); }
+  .pAt__row img{ width:34px; height:34px; justify-self:center; }
+  .pAt__row .st{ font-family:var(--font-mono); font-size:16px; color:var(--n-050); }
+  .pAt__row .st small{ color:var(--n-300); }
+  .pAt__row .rt{ display:flex; align-items:center; gap:10px; }
+  .pAt__row .rt .tickbar{ flex:1; }
+  .pAt__row .rt b{ font-family:var(--font-mono); font-size:15px; font-weight:700; color:var(--cyan-300); width:44px; text-align:right; }
+  .pAt__row--total{ background:rgba(255,255,255,.09); }
+
+  /* ══ B안 · 텔레메트리 LCD ══════════════════════════════════ */
+  .lcd{ flex:1; min-width:0; position:relative; overflow:hidden; background:var(--n-900);
+    border-radius:22px; padding:26px 28px; box-shadow:inset 0 0 0 1px rgba(143,235,255,.16), var(--shadow-2); }
+  .lcd::after{ content:""; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(120% 90% at 50% 0%, transparent 60%, rgba(3,6,15,.55) 100%); }
+  .lcd > *{ position:relative; z-index:1; }
+  .glow{ text-shadow:0 0 16px rgba(24,209,252,.35); }
+
+  .pB__top{ display:flex; align-items:flex-start; gap:12px; }
+  .pB__ttl{ margin:0; font-size:clamp(26px,3vw,36px); font-weight:800; line-height:1.1; color:var(--cyan-300); }
+  .pB__unit{ font-size:clamp(15px,1.5vw,19px); font-weight:700; color:var(--n-050); margin-top:6px; }
+  .pB__lamps{ margin-left:auto; }
+
+  .pB__main{ display:flex; align-items:center; gap:clamp(18px,2.6vw,34px); margin:22px 0 8px; flex-wrap:wrap; }
+  .rbracket{ color:var(--cyan-300); font-size:46px; font-weight:300; line-height:1; }
+  .pB__badge{ display:inline-flex; align-items:center; gap:2px; }
+  .pB__badge img{ width:60px; height:60px; }
+  .pB__stat span{ display:block; font-size:13px; color:var(--n-300); margin-bottom:4px; }
+  .pB__stat b{ font-family:var(--font-mono); font-size:34px; font-weight:700; color:var(--cyan-300); line-height:1; }
+  .pB__stat b.dim{ color:var(--n-050); }
+  .pB__stat b small{ font-size:19px; color:var(--n-300); }
+  .pB__vr{ width:1px; align-self:stretch; min-height:40px; background:rgba(255,255,255,.16); }
+
+  .seg{ display:flex; gap:4px; }
+  .seg i{ flex:1; height:20px; border-radius:4px; background:rgba(255,255,255,.07);
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.06); transition:background var(--t-fast); }
+  .seg i.on{ background:var(--cyan-400); box-shadow:0 0 10px rgba(24,209,252,.35); }
+  .seg--sm i{ height:12px; border-radius:3px; }
+  .seg__lb{ font-size:12px; color:var(--n-300); margin-top:8px; }
+
+  .pB__rows{ display:flex; flex-direction:column; gap:10px; margin-top:20px; }
+  .pB__row{ display:flex; align-items:center; gap:16px; padding:10px 0 10px;
+    border-top:1px dashed rgba(255,255,255,.14); }
+  .pB__row .nm{ flex:none; width:120px; font-size:15px; font-weight:800; color:var(--n-050); }
+  .pB__row .seg{ flex:1; }
+  .pB__row .st{ flex:none; width:76px; text-align:right; font-family:var(--font-mono); font-size:16px; color:var(--n-050); }
+  .pB__row .st small{ color:var(--n-300); font-size:13px; }
+  .pB__row .pc{ flex:none; width:64px; text-align:right; font-family:var(--font-mono); font-size:16px; color:var(--cyan-300); }
+
+  .pBt__meta{ display:flex; gap:14px; flex-wrap:wrap; font-family:var(--font-mono); font-size:13px; color:var(--n-300); margin-bottom:18px; }
+  .pBt__meta b{ color:var(--n-050); font-weight:600; }
+  .pBt__meta .over{ color:var(--warn-on-dark); }
+  .pBt__body{ display:flex; gap:clamp(20px,3vw,40px); align-items:center; }
+  .pBt__score{ flex:none; text-align:center; }
+  .pBt__score b{ font-family:var(--font-mono); font-size:72px; font-weight:700; color:var(--cyan-300); line-height:1; }
+  .pBt__score span{ font-size:20px; color:var(--n-050); font-weight:700; }
+  .pBt__score em{ display:block; font-style:normal; font-size:12px; color:var(--n-300); margin-top:8px; }
+  .pBt__rows{ flex:1; min-width:0; display:flex; flex-direction:column; gap:2px; }
+  .pBt__row{ display:flex; align-items:center; gap:14px; padding:9px 0; border-top:1px dashed rgba(255,255,255,.14); }
+  .pBt__row:first-child{ border-top:none; }
+  .pBt__row .gd{ flex:none; width:44px; font-family:var(--font-mono); font-size:17px; color:var(--cyan-300); }
+  .pBt__row .nm{ flex:none; width:110px; font-size:15px; font-weight:800; color:var(--n-050); }
+  .pBt__row .seg{ flex:1; }
+  .pBt__row .st{ flex:none; width:72px; text-align:right; font-family:var(--font-mono); font-size:15px; color:var(--n-050); }
+  .pBt__row .st small{ color:var(--n-300); }
+  .pBt__row .pc{ flex:none; width:56px; text-align:right; font-family:var(--font-mono); font-size:15px; color:var(--cyan-300); }
+  .pBt__row--total .nm{ color:var(--cyan-300); }
+
+  /* ══ C안 · 계기 모듈 랙 ══════════════════════════════════ */
+  .rack{ flex:1; min-width:0; background:var(--n-650); border-radius:26px; padding:16px;
+    box-shadow:var(--shadow-2); display:flex; flex-direction:column; gap:14px; }
+  .rack__plate{ display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; padding:6px 8px 0; }
+  .rack__plate h2{ margin:0; font-size:clamp(22px,2.4vw,30px); font-weight:800; color:var(--n-000); letter-spacing:-0.02em; }
+  .rack__plate span{ font-size:15px; font-weight:700; color:var(--n-300); }
+  .rack__plate .lamps{ margin-left:auto; align-self:center; }
+
+  .rack__grid{ display:flex; gap:12px; }
+  .mod{ position:relative; background:var(--n-500); border-radius:16px; padding:10px 12px 12px;
+    display:flex; flex-direction:column; gap:8px;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.14), 0 2px 6px rgba(0,0,0,.3); }
+  .mod--grow{ flex:1; min-width:0; }
+  .mod__lb{ font-size:12px; font-weight:700; color:var(--n-050); letter-spacing:.02em; display:flex; align-items:center; gap:6px; }
+  .mod__lb::after{ content:""; width:6px; height:6px; border-radius:50%; background:var(--th-accent-hi); margin-left:auto; }
+  .mod__win{ flex:1; display:flex; align-items:center; justify-content:center; gap:10px;
+    background:var(--n-900); border-radius:10px; padding:12px 16px; min-height:64px;
+    box-shadow:inset 0 3px 10px rgba(0,0,0,.55), inset 0 0 0 1px rgba(255,255,255,.07); }
+  .mod__win img{ width:44px; height:44px; }
+  .mod__win .val{ font-family:var(--font-mono); font-size:30px; font-weight:700; color:var(--cyan-300); line-height:1; }
+  .mod__win .val small{ font-size:16px; color:var(--n-300); }
+  .mod__win--gauge{ flex-direction:column; align-items:stretch; gap:8px; }
+  .mod__win--gauge .val{ text-align:right; }
+  .counter{ gap:5px; }
+  .counter span{ display:inline-flex; align-items:center; justify-content:center; width:34px; height:46px;
+    border-radius:7px; background:var(--n-650); color:var(--n-000);
+    font-family:var(--font-mono); font-size:27px; font-weight:700;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.10);
+    background-image:linear-gradient(0deg, rgba(0,0,0,.35) 0 49.5%, transparent 49.5% 50.5%, rgba(255,255,255,.05) 50.5% 100%); }
+  .counter em{ font-style:normal; font-family:var(--font-mono); font-size:16px; color:var(--n-300); }
+
+  .cart-list{ display:flex; flex-direction:column; gap:10px; }
+  .cart{ display:flex; align-items:center; gap:14px; background:var(--n-600); border-radius:14px;
+    padding:12px 16px 12px 10px; box-shadow:inset 0 1px 0 rgba(255,255,255,.08); }
+  .cart__grip{ flex:none; width:14px; height:30px; border-radius:4px;
+    background:repeating-linear-gradient(0deg, var(--n-400) 0 3px, var(--n-600) 3px 7px); }
+  .cart__name{ flex:none; width:118px; font-size:15px; font-weight:800; color:var(--n-050); }
+  .cart .tickbar{ flex:1; }
+  .cart__win{ flex:none; display:inline-flex; align-items:baseline; gap:3px; min-width:72px; justify-content:flex-end;
+    padding:6px 12px; border-radius:8px; background:var(--n-900);
+    font-family:var(--font-mono); font-size:16px; color:var(--n-050);
+    box-shadow:inset 0 2px 6px rgba(0,0,0,.5); }
+  .cart__win small{ color:var(--n-300); font-size:13px; }
+  .cart__win.pc{ color:var(--cyan-300); }
+  .cart img{ width:32px; height:32px; flex:none; }
+
+  @media (max-width: 900px){
+    .stage{ flex-direction:column; }
+    .side{ width:auto; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="page__hd">
+    <h1 class="page__ttl">결과 화면 시안 — 계기판 어휘 3종</h1>
+    <div class="ctl"><button class="ctl__btn" id="themeBtn">다크로 보기</button></div>
+  </div>
+  <p class="page__sub">
+    Phase 7 ① — 스텝 결과·훈련 결과를 웹 대시보드 어휘에서 우주선 계기판 어휘로.
+    각 안마다 위가 스텝 결과, 아래가 훈련 결과다. 정답률·정답 수·등급·소요 시간은 세 안 모두 그대로 읽힌다.
+    계기판 하드웨어(네이비 베젤·판독창)는 계산기처럼 라이트·다크에서 같은 모습이고, 주변 화면만 테마를 따른다.
+  </p>
+
+  <!-- ═══ A안 ═══ -->
+  <section class="prop">
+    <div class="prop__hd">
+      <span class="prop__name">A안 · 다이얼 게이지</span>
+      <span class="prop__desc">정답률이 바늘 달린 원형 계기가 된다 — 조종석 아날로그 계기판</span>
+    </div>
+
+    <div class="cap">스텝 결과 (개념 학습 완료)</div>
+    <div class="stage">
+      <div class="hw">
+        <div class="hw__hd">
+          <span class="lamps"><i class="on"></i><i></i><i></i></span>
+          <span class="hw__ttl">스텝 결과</span>
+        </div>
+        <div class="hw__screen scan">
+          <div class="pA">
+            <div class="dial" data-pct="79">
+              <div class="dial__ticks"></div>
+              <div class="dial__face"></div>
+              <div class="dial__needle"></div>
+              <div class="dial__hub"></div>
+              <div class="dial__read"><b>79<small>%</small></b><span>정답률</span></div>
+            </div>
+            <div class="pA__info">
+              <h2 class="pA__ttl">개념 학습 완료!</h2>
+              <div class="pA__unit">(1) 생물의 구성</div>
+              <div class="pA__meters">
+                <div class="win"><span class="win__lb">등급</span><img src="assets/img/grade/grade-b.webp" alt="B등급"></div>
+                <div class="win"><span class="win__lb">정답</span><b>11<small>/14</small></b></div>
+              </div>
+            </div>
+          </div>
+          <div class="pA__rows">
+            <div class="pA__row"><span class="nm">개념 요약하기</span>
+              <div class="tickbar" data-pct="80"><div class="tickbar__fill"></div><div class="tickbar__ticks"></div></div>
+              <span class="st">4<small>/5</small></span><span class="pc">80%</span></div>
+            <div class="pA__row"><span class="nm">개념 다지기</span>
+              <div class="tickbar" data-pct="78"><div class="tickbar__fill"></div><div class="tickbar__ticks"></div></div>
+              <span class="st">7<small>/9</small></span><span class="pc">78%</span></div>
+          </div>
+        </div>
+      </div>
+      <aside class="side">
+        <div class="side__ttl">학습 진행 현황</div>
+        <div class="side-card is-cur"><span>개념 학습</span><img src="assets/img/grade/grade-b.webp" alt="B"></div>
+        <div class="side-card"><span>개념 확인하기</span><span class="go">시작하기 ›</span></div>
+      </aside>
+    </div>
+
+    <div class="cap">훈련 결과 (3단계 종합)</div>
+    <div class="stage">
+      <div class="hw">
+        <div class="hw__hd">
+          <span class="lamps"><i class="on"></i><i class="warn"></i><i></i></span>
+          <span class="hw__ttl">개념 훈련 결과 · ROUND 1</span>
+          <span class="hw__chips">
+            <span class="chip">완료 2024-04-15 15:40</span>
+            <span class="chip">소요 28:10</span>
+            <span class="chip chip--warn">시간 초과 감점</span>
+          </span>
+        </div>
+        <div class="hw__screen scan">
+          <div class="pAt">
+            <div class="dial dial--score" data-pct="88">
+              <div class="dial__ticks"></div>
+              <div class="dial__face"></div>
+              <div class="dial__needle"></div>
+              <div class="dial__hub"></div>
+              <div class="dial__read"><b>88<small>점</small></b><span>총점 · 100점 만점</span></div>
+            </div>
+            <div class="pAt__tbl">
+              <div class="pAt__hd"><span>학습 구분</span><span>등급</span><span>정답</span><span>정답률</span></div>
+              <div class="pAt__row"><span class="nm">개념 학습</span><img src="assets/img/grade/grade-s.webp" alt="S">
+                <span class="st">5<small>/5</small></span>
+                <span class="rt"><span class="tickbar" data-pct="100"><span class="tickbar__fill"></span><span class="tickbar__ticks"></span></span><b>100%</b></span></div>
+              <div class="pAt__row"><span class="nm">개념 다지기</span><img src="assets/img/grade/grade-a.webp" alt="A">
+                <span class="st">4<small>/5</small></span>
+                <span class="rt"><span class="tickbar" data-pct="80"><span class="tickbar__fill"></span><span class="tickbar__ticks"></span></span><b>80%</b></span></div>
+              <div class="pAt__row"><span class="nm">개념 확인하기</span><img src="assets/img/grade/grade-b.webp" alt="B">
+                <span class="st">11<small>/14</small></span>
+                <span class="rt"><span class="tickbar" data-pct="79"><span class="tickbar__fill"></span><span class="tickbar__ticks"></span></span><b>79%</b></span></div>
+              <div class="pAt__row pAt__row--total"><span class="nm">전체</span><span></span>
+                <span class="st">20<small>/24</small></span>
+                <span class="rt"><span class="tickbar" data-pct="83"><span class="tickbar__fill"></span><span class="tickbar__ticks"></span></span><b>83%</b></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ B안 ═══ -->
+  <section class="prop">
+    <div class="prop__hd">
+      <span class="prop__name">B안 · 텔레메트리 LCD</span>
+      <span class="prop__desc">문항 하나가 LED 한 칸 — 판독 화면 자체가 계기</span>
+    </div>
+
+    <div class="cap">스텝 결과 (개념 학습 완료)</div>
+    <div class="stage">
+      <div class="lcd scan">
+        <div class="pB__top">
+          <div>
+            <h2 class="pB__ttl glow">개념 학습 완료!</h2>
+            <div class="pB__unit">(1) 생물의 구성</div>
+          </div>
+          <span class="lamps pB__lamps"><i class="on"></i><i></i><i></i></span>
+        </div>
+        <div class="pB__main">
+          <span class="pB__badge"><span class="rbracket">[</span><img src="assets/img/grade/grade-b.webp" alt="B등급"><span class="rbracket">]</span></span>
+          <div class="pB__stat"><span>정답률</span><b class="glow">79%</b></div>
+          <div class="pB__vr"></div>
+          <div class="pB__stat"><span>정답</span><b class="dim">11<small>/14</small></b></div>
+        </div>
+        <div class="seg seg--main" data-total="14" data-on="11"></div>
+        <div class="seg__lb">문항 판독 — 한 칸이 한 문항 · 켜진 칸이 정답 (11 / 14)</div>
+        <div class="pB__rows">
+          <div class="pB__row"><span class="nm">개념 요약하기</span>
+            <span class="seg seg--sm" data-total="5" data-on="4"></span>
+            <span class="st">4<small>/5</small></span><span class="pc">80%</span></div>
+          <div class="pB__row"><span class="nm">개념 다지기</span>
+            <span class="seg seg--sm" data-total="9" data-on="7"></span>
+            <span class="st">7<small>/9</small></span><span class="pc">78%</span></div>
+        </div>
+      </div>
+      <aside class="side">
+        <div class="side__ttl">학습 진행 현황</div>
+        <div class="side-card is-cur"><span>개념 학습</span><img src="assets/img/grade/grade-b.webp" alt="B"></div>
+        <div class="side-card"><span>개념 확인하기</span><span class="go">시작하기 ›</span></div>
+      </aside>
+    </div>
+
+    <div class="cap">훈련 결과 (3단계 종합)</div>
+    <div class="stage">
+      <div class="lcd scan">
+        <div class="pBt__meta">
+          <span>ROUND 1</span>
+          <span>완료 <b>2024-04-15 15:40</b></span>
+          <span>소요 <b>28:10</b></span>
+          <span class="over">▲ 시간 초과 감점</span>
+        </div>
+        <div class="pBt__body">
+          <div class="pBt__score">
+            <b class="glow">88</b><span>점</span>
+            <em>개념 훈련 3단계 종합</em>
+          </div>
+          <div class="pBt__rows">
+            <div class="pBt__row"><span class="gd">[S]</span><span class="nm">개념 학습</span>
+              <span class="seg seg--sm" data-total="5" data-on="5"></span>
+              <span class="st">5<small>/5</small></span><span class="pc">100%</span></div>
+            <div class="pBt__row"><span class="gd">[A]</span><span class="nm">개념 다지기</span>
+              <span class="seg seg--sm" data-total="5" data-on="4"></span>
+              <span class="st">4<small>/5</small></span><span class="pc">80%</span></div>
+            <div class="pBt__row"><span class="gd">[B]</span><span class="nm">개념 확인하기</span>
+              <span class="seg seg--sm" data-total="14" data-on="11"></span>
+              <span class="st">11<small>/14</small></span><span class="pc">79%</span></div>
+            <div class="pBt__row pBt__row--total"><span class="gd"></span><span class="nm">전체</span>
+              <span class="seg seg--sm" data-total="24" data-on="20"></span>
+              <span class="st">20<small>/24</small></span><span class="pc">83%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ C안 ═══ -->
+  <section class="prop">
+    <div class="prop__hd">
+      <span class="prop__name">C안 · 계기 모듈 랙</span>
+      <span class="prop__desc">정보마다 독립 계기 모듈 — 랙에 꽂힌 하드웨어</span>
+    </div>
+
+    <div class="cap">스텝 결과 (개념 학습 완료)</div>
+    <div class="stage">
+      <div class="rack">
+        <div class="rack__plate">
+          <h2>개념 학습 완료!</h2><span>(1) 생물의 구성</span>
+          <span class="lamps"><i class="on"></i><i></i><i></i></span>
+        </div>
+        <div class="rack__grid">
+          <div class="mod"><span class="mod__lb">등급</span>
+            <div class="mod__win"><img src="assets/img/grade/grade-b.webp" alt="B등급"></div></div>
+          <div class="mod mod--grow"><span class="mod__lb">정답률</span>
+            <div class="mod__win mod__win--gauge">
+              <span class="val">79<small>%</small></span>
+              <div class="tickbar" data-pct="79"><div class="tickbar__fill"></div><div class="tickbar__ticks"></div></div>
+            </div></div>
+          <div class="mod"><span class="mod__lb">정답</span>
+            <div class="mod__win counter"><span>1</span><span>1</span><em>/ 14</em></div></div>
+        </div>
+        <div class="cart-list">
+          <div class="cart"><span class="cart__grip"></span><span class="cart__name">개념 요약하기</span>
+            <div class="tickbar" data-pct="80"><div class="tickbar__fill"></div><div class="tickbar__ticks"></div></div>
+            <span class="cart__win">4<small>/5</small></span><span class="cart__win pc">80%</span></div>
+          <div class="cart"><span class="cart__grip"></span><span class="cart__name">개념 다지기</span>
+            <div class="tickbar" data-pct="78"><div class="tickbar__fill"></div><div class="tickbar__ticks"></div></div>
+            <span class="cart__win">7<small>/9</small></span><span class="cart__win pc">78%</span></div>
+        </div>
+      </div>
+      <aside class="side">
+        <div class="side__ttl">학습 진행 현황</div>
+        <div class="side-card is-cur"><span>개념 학습</span><img src="assets/img/grade/grade-b.webp" alt="B"></div>
+        <div class="side-card"><span>개념 확인하기</span><span class="go">시작하기 ›</span></div>
+      </aside>
+    </div>
+
+    <div class="cap">훈련 결과 (3단계 종합)</div>
+    <div class="stage">
+      <div class="rack">
+        <div class="rack__plate">
+          <h2>개념 훈련 결과</h2><span>ROUND 1</span>
+          <span class="lamps"><i class="on"></i><i class="warn"></i><i></i></span>
+          <span class="hw__chips">
+            <span class="chip">완료 2024-04-15 15:40</span>
+            <span class="chip">소요 28:10</span>
+            <span class="chip chip--warn">시간 초과 감점</span>
+          </span>
+        </div>
+        <div class="rack__grid">
+          <div class="mod"><span class="mod__lb">총점</span>
+            <div class="mod__win"><img src="assets/icons/star/star-a.svg" alt="등급" style="width:52px;height:52px">
+              <span class="counter"><span>8</span><span>8</span><em>점</em></span></div></div>
+          <div class="mod mod--grow"><span class="mod__lb">전체 정답률</span>
+            <div class="mod__win mod__win--gauge">
+              <span class="val">83<small>% · 20/24</small></span>
+              <div class="tickbar" data-pct="83"><div class="tickbar__fill"></div><div class="tickbar__ticks"></div></div>
+            </div></div>
+        </div>
+        <div class="cart-list">
+          <div class="cart"><span class="cart__grip"></span><img src="assets/img/grade/grade-s.webp" alt="S"><span class="cart__name">개념 학습</span>
+            <div class="tickbar" data-pct="100"><div class="tickbar__fill"></div><div class="tickbar__ticks"></div></div>
+            <span class="cart__win">5<small>/5</small></span><span class="cart__win pc">100%</span></div>
+          <div class="cart"><span class="cart__grip"></span><img src="assets/img/grade/grade-a.webp" alt="A"><span class="cart__name">개념 다지기</span>
+            <div class="tickbar" data-pct="80"><div class="tickbar__fill"></div><div class="tickbar__ticks"></div></div>
+            <span class="cart__win">4<small>/5</small></span><span class="cart__win pc">80%</span></div>
+          <div class="cart"><span class="cart__grip"></span><img src="assets/img/grade/grade-b.webp" alt="B"><span class="cart__name">개념 확인하기</span>
+            <div class="tickbar" data-pct="79"><div class="tickbar__fill"></div><div class="tickbar__ticks"></div></div>
+            <span class="cart__win">11<small>/14</small></span><span class="cart__win pc">79%</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+(function(){
+  // ?theme=dark 로 열면 다크로 시작 (검수·스크린샷용)
+  var btn = document.getElementById('themeBtn');
+  if (new URLSearchParams(location.search).get('theme') === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    btn.textContent = '라이트로 보기';
+  }
+  btn.addEventListener('click', function(){
+    var root = document.documentElement;
+    var dark = root.getAttribute('data-theme') === 'dark';
+    root.setAttribute('data-theme', dark ? 'light' : 'dark');
+    btn.textContent = dark ? '다크로 보기' : '라이트로 보기';
+  });
+
+  // 다이얼: 0에서 목표치로 스윕
+  document.querySelectorAll('.dial').forEach(function(d){
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){
+      d.style.setProperty('--pct', d.dataset.pct);
+    });});
+  });
+
+  // 눈금 게이지 채움
+  document.querySelectorAll('.tickbar').forEach(function(b){
+    var f = b.querySelector('.tickbar__fill');
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){
+      f.style.width = b.dataset.pct + '%';
+    });});
+  });
+
+  // 세그먼트 LED — 칸 생성 후 순차 점등
+  document.querySelectorAll('.seg').forEach(function(s){
+    var total = +s.dataset.total, on = +s.dataset.on;
+    for (var i = 0; i < total; i++){
+      var c = document.createElement('i');
+      s.appendChild(c);
+      if (i < on) (function(el, idx){
+        setTimeout(function(){ el.classList.add('on'); }, 200 + idx * 45);
+      })(c, i);
+    }
+  });
+})();
+</script>
+</body>
+</html>
