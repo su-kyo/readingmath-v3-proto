@@ -82,7 +82,9 @@
   font-size: 19px; font-weight: var(--fw-heavy);
   box-shadow: none;
 }
-.keypad__key--ok:hover{ filter: brightness(1.06); }
+/* 배경을 다시 적어 준다 — .keypad__key:hover(0,2,0)가 --ok(0,1,0)를 이겨
+   호버 때 파란 칠이 벗겨지고 흰 라벨이 사라지던 자리 */
+.keypad__key--ok:hover{ background: var(--th-vivid); filter: brightness(1.06); }
 
 /* ── 떠 있는 자리 (개념·유형 — 빈칸 옆) ── */
 .keypad--float{
