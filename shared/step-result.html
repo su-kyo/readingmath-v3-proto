@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="ko" data-section="concept" data-theme="light">
+<!-- 결과 화면 = 항상 다크 계기판 (A층 우주와 같은 취급 · 토글 없음 — Phase 7 사용자 결정) -->
+<html lang="ko" data-section="concept" data-theme="dark">
 <head>
   <base href="../">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>개념 학습 완료 · 스텝 결과 — 리딩수학과학</title>
-  <link rel="stylesheet" href="styles/tokens.css?v=23" />
+  <link rel="stylesheet" href="styles/tokens.css?v=24" />
   <link rel="stylesheet" href="styles/base.css?v=7" />
   <link rel="stylesheet" href="styles/components.css?v=10" />
   <link rel="stylesheet" href="styles/learn-shell.css?v=8" />
@@ -20,9 +21,8 @@
       --accent: var(--th-accent-hi); --title1: var(--th-accent-hi); --title2: var(--th-accent); --rate: var(--cyan-400);
       --row-bg: rgba(255,255,255,.04); --row-br: rgba(76,218,247,.38);
     }
-    /* 우측 '학습 진행 현황'만 라이트/다크 전환 — 사이드 안에서 토큰 재정의 */
+    /* 우측 '학습 진행 현황' — 항상 다크 (결과 화면은 테마를 타지 않는다) */
     .rside { --lside: var(--surface-3); --ltext: var(--text); --lmuted: var(--text-muted); --accent: var(--th-accent-hi); }
-    :root[data-theme="light"] .rside { --lside: var(--surface-1); --ltext: var(--text); --lmuted: var(--text-muted); --accent: var(--th-ink-accent); }
 
     /* 좌측: 결과 (LCD 라인 패턴) */
     .rmain {
@@ -42,7 +42,6 @@
     .rmain::-webkit-scrollbar-thumb { background: rgba(143,235,255,.20); border-radius: 999px; border: 3px solid transparent; background-clip: padding-box; }
     .rmain::-webkit-scrollbar-thumb:hover { background: rgba(143,235,255,.32); background-clip: padding-box; }
     .rside::-webkit-scrollbar-thumb { background: rgba(234,240,255,.18); border-radius: 999px; border: 3px solid transparent; background-clip: padding-box; }
-    :root[data-theme="light"] .rside::-webkit-scrollbar-thumb { background: rgba(30,60,120,.20); border-radius: 999px; border: 3px solid transparent; background-clip: padding-box; }
     .rmain, .rside { scrollbar-width: thin; scrollbar-color: rgba(143,235,255,.24) transparent; }
 
     .rhead { display: flex; flex-direction: column; gap: 8px; }
@@ -60,15 +59,17 @@
         rgba(255,255,255,.13) calc(var(--pct) * 3deg) 300deg, transparent 300deg 360deg);
       -webkit-mask: radial-gradient(closest-side, transparent 71%, #000 72%);
               mask: radial-gradient(closest-side, transparent 71%, #000 72%); }
+    /* 눈금 두 겹 — 빈 트랙 위엔 밝은 눈금, 채워진 아크 위엔 어두운 눈금 (100%에서도 안 사라짐) */
     .dial__ticks { position: absolute; inset: 6%; border-radius: 50%; opacity: .55;
       background: repeating-conic-gradient(from 210deg, var(--lmuted) 0deg 1.6deg, transparent 1.6deg 30deg);
       -webkit-mask: radial-gradient(closest-side, transparent 84%, #000 85%);
               mask: radial-gradient(closest-side, transparent 84%, #000 85%); }
-    .dial__needle { position: absolute; left: calc(50% - 2px); bottom: 50%; width: 4px; height: 34%; z-index: 1;
-      border-radius: 2px; background: var(--current); transform-origin: 50% 100%;
+    .dial__ticks--over { background: repeating-conic-gradient(from 210deg, rgba(6,14,32,.6) 0deg 1.6deg, transparent 1.6deg 30deg); opacity: 1; }
+    /* 바늘 → 링 띠 위 마커 (중심축 침 폐기 — 숫자를 안 가린다) */
+    .dial__needle { position: absolute; left: calc(50% - 2px); bottom: 50%; width: 4px; height: 52%; z-index: 1;
+      border-radius: 2px; background: linear-gradient(to top, transparent 0 62%, var(--current) 62%);
+      transform-origin: 50% 100%;
       transform: rotate(calc((210 + var(--pct) * 3) * 1deg)); }
-    .dial__hub { position: absolute; left: 50%; top: 50%; width: 14px; height: 14px; border-radius: 50%; z-index: 2;
-      background: var(--bar-track); border: 3px solid var(--lmuted); transform: translate(-50%,-50%); }
     .dial__read { position: absolute; inset: 0; z-index: 3; display: flex; flex-direction: column;
       align-items: center; justify-content: flex-end; padding-bottom: 12%; text-align: center; }
     .dial__read b { font-family: var(--font-mono); font-size: clamp(34px,3.4vw,42px); font-weight: 700; color: var(--ltext); line-height: 1; }
@@ -145,7 +146,6 @@
           <span class="crumb crumb--strong">개념 학습</span>
         </nav>
         <div class="lheader__actions">
-          <button class="theme-toggle" id="themeToggle" title="라이트/다크 전환"><span class="theme-toggle__knob"></span></button>
           <button class="nav-ico" title="알림"><img src="assets/icons/ico-siren.svg" alt="알림" /></button>
           <button class="nav-ico" title="나가기"><img src="assets/icons/ico-exit.svg" alt="나가기" /></button>
         </div>
@@ -158,8 +158,8 @@
             <div class="dial" id="rateDial">
               <div class="dial__ticks"></div>
               <div class="dial__face"></div>
+              <div class="dial__ticks dial__ticks--over"></div>
               <div class="dial__needle"></div>
-              <div class="dial__hub"></div>
               <div class="dial__read"><b><span id="rate">0</span><small>%</small></b><span>정답률</span></div>
             </div>
             <div class="rinfo">
@@ -214,7 +214,7 @@
 
   <!-- 연습장 캔버스 (공용) -->
   <script src="scripts/scratchpad.js?v=13"></script>
-  <script src="scripts/step-result.js?v=3"></script>
+  <script src="scripts/step-result.js?v=4"></script>
   <script src="scripts/step-progress.js"></script>
 </body>
 </html>

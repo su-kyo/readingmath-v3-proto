@@ -35,7 +35,7 @@
   position: fixed; inset: 0; z-index: 300;
   display: none;
 }
-.monitor.is-open{ display: flex; flex-direction: column; align-items: center; }
+.monitor.is-open{ display: flex; flex-direction: column; align-items: center; justify-content: center; }
 
 .monitor__dim{
   position: absolute; inset: 0;
@@ -93,19 +93,18 @@
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 
-/* 베젤 위 물리 버튼 (닫기·도구) — 콘솔 버튼과 같은 레시피 */
+/* 베젤 위 버튼 (닫기·도구) — Phase 7: 플랫 (extrude 폐기, 사용자 결정) */
 .monitor__x,
 .monitor__tool{
   border: none; cursor: pointer;
   background: var(--n-500); color: var(--n-000);
   border-radius: var(--r-md);
-  box-shadow: 0 3px 0 var(--n-900);
   display: inline-flex; align-items: center; justify-content: center; gap: 6px;
   font-family: var(--font-sans); font-size: var(--fs-sm); font-weight: var(--fw-bold);
-  transition: transform var(--t-fast);
+  transition: background var(--t-fast);
 }
-.monitor__x:active,
-.monitor__tool:active{ transform: translateY(2px); box-shadow: 0 1px 0 var(--n-900); }
+.monitor__x:hover,
+.monitor__tool:hover{ background: var(--n-400); }
 .monitor__x{ margin-left: auto; width: 40px; height: 36px; flex: none; }
 .monitor__tool{ height: 36px; padding: 0 14px; flex: none; }
 .monitor__tools{ display: flex; gap: 8px; margin-left: auto; }
@@ -134,8 +133,7 @@
 /* 프레임 밖 아래로 걸리는 부속 (요약 선택지처럼 패널 밖 UI) */
 .monitor__below{ width: 100%; flex: none; margin-top: 16px; }
 
-/* ── 기본(내려오는) 배치: 위에서 매달림 ── */
-.monitor:not(.monitor--side) .monitor__rig{ margin-bottom: auto; }
+/* ── 기본 배치: 브라우저 세로 중앙 (Phase 7 — 암 제거 후 매달림 연출 폐기) ── */
 .monitor:not(.monitor--side) .monitor__frame{
   max-height: calc(100dvh - 148px);
 }

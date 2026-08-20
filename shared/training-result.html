@@ -1,32 +1,31 @@
 <!DOCTYPE html>
-<html lang="ko" data-section="concept" data-theme="light">
+<!-- 결과 화면 = 항상 다크 계기판 (A층 우주와 같은 취급 · 토글 없음 — Phase 7 사용자 결정) -->
+<html lang="ko" data-section="concept" data-theme="dark">
 <head>
   <base href="../">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>개념 훈련 · 학습 결과 — 리딩수학과학</title>
-  <link rel="stylesheet" href="styles/tokens.css?v=23" />
+  <link rel="stylesheet" href="styles/tokens.css?v=24" />
   <link rel="stylesheet" href="styles/base.css?v=7" />
   <link rel="stylesheet" href="styles/components.css?v=10" />
   <link rel="stylesheet" href="styles/learn-shell.css?v=8" />
-  <link rel="stylesheet" href="styles/monitor.css?v=2" />
+  <link rel="stylesheet" href="styles/monitor.css?v=3" />
   <style>
     /* ===================================================================
        개념 훈련 '학습 결과' — Phase 7 ① 계기판 어휘 (A안 조합).
        베젤(콘솔 네이비·테마 불변) + LCD 판독 화면. 총점 = 별 + 점수(상위 종합),
        단계별 행 = 육각 뱃지 + 문항 LED. 「보기」 = 스텝 결과 스크린창(보조 모니터).
        =================================================================== */
+    /* 겹 구조 덜어내기(Phase 7) — 학습 셸의 프레임 층(테두리+여백)을 없애고 베젤이 곧 프레임 */
     .content {
       flex-direction: column; overflow: hidden;
-      padding: clamp(14px,1.8vw,20px);
+      padding: 0; border: none; background: transparent; box-shadow: none;
     }
-    /* 프레임 테두리 = 헤더색(정적) · 다크·라이트 불변 */
-    :root[data-theme="dark"] .content,
-    :root[data-theme="light"] .content { background: var(--bg); border-color: var(--th-static); }
 
-    /* ===== 베젤 (하드웨어 — 테마 불변 네이비) ===== */
+    /* ===== 베젤 (하드웨어 — 항상 다크 네이비 · 이 화면의 프레임) ===== */
     .hwf { flex: 1; min-height: 0; display: flex; flex-direction: column;
-      background: var(--n-650); border-radius: 26px; padding: 10px; box-shadow: var(--shadow-2); }
+      background: var(--n-650); border-radius: var(--r-frame) var(--r-frame) 0 0; padding: 10px 10px 0; box-shadow: var(--shadow-2); }
     .hwf__hd { flex: none; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
       padding: 6px 8px 12px 12px; }
     .lamps { display: flex; gap: 6px; margin-right: 4px; }
@@ -45,7 +44,7 @@
 
     /* ===== LCD 판독 화면 (스캔라인은 스크롤을 따라간다) ===== */
     .hwf__screen { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain;
-      border-radius: 18px;
+      border-radius: 18px 18px 0 0;
       background-color: var(--n-900);
       background-image: repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 5px);
       background-attachment: local;
@@ -109,15 +108,17 @@
         rgba(255,255,255,.13) calc(var(--pct) * 3deg) 300deg, transparent 300deg 360deg);
       -webkit-mask: radial-gradient(closest-side, transparent 71%, #000 72%);
               mask: radial-gradient(closest-side, transparent 71%, #000 72%); }
+    /* 눈금 두 겹 — 빈 트랙 위엔 밝은 눈금, 채워진 아크 위엔 어두운 눈금 (100%에서도 안 사라짐) */
     .dial__ticks { position: absolute; inset: 6%; border-radius: 50%; opacity: .55;
       background: repeating-conic-gradient(from 210deg, var(--n-300) 0deg 1.6deg, transparent 1.6deg 30deg);
       -webkit-mask: radial-gradient(closest-side, transparent 84%, #000 85%);
               mask: radial-gradient(closest-side, transparent 84%, #000 85%); }
-    .dial__needle { position: absolute; left: calc(50% - 2px); bottom: 50%; width: 4px; height: 34%; z-index: 1;
-      border-radius: 2px; background: var(--current); transform-origin: 50% 100%;
+    .dial__ticks--over { background: repeating-conic-gradient(from 210deg, rgba(6,14,32,.6) 0deg 1.6deg, transparent 1.6deg 30deg); opacity: 1; }
+    /* 바늘 → 링 띠 위 마커 (중심축 침 폐기 — 숫자를 안 가린다) */
+    .dial__needle { position: absolute; left: calc(50% - 2px); bottom: 50%; width: 4px; height: 52%; z-index: 1;
+      border-radius: 2px; background: linear-gradient(to top, transparent 0 62%, var(--current) 62%);
+      transform-origin: 50% 100%;
       transform: rotate(calc((210 + var(--pct) * 3) * 1deg)); }
-    .dial__hub { position: absolute; left: 50%; top: 50%; width: 14px; height: 14px; border-radius: 50%; z-index: 2;
-      background: var(--n-500); border: 3px solid var(--n-300); transform: translate(-50%,-50%); }
     .dial__read { position: absolute; inset: 0; z-index: 3; display: flex; flex-direction: column;
       align-items: center; justify-content: flex-end; padding-bottom: 12%; text-align: center; }
     .dial__read b { font-family: var(--font-mono); font-size: clamp(34px,3.4vw,40px); font-weight: 700; color: var(--n-050); line-height: 1; }
@@ -131,6 +132,18 @@
     .win img { width: 48px; height: 48px; }
     .win b { font-family: var(--font-mono); font-size: 27px; font-weight: 700; color: var(--cyan-300); line-height: 1.3; }
     .win b small { font-size: 16px; color: var(--n-300); }
+
+    /* 스크린창 안 활동별 행 — 스텝 결과 화면과 같은 구성(문항 LED) */
+    .macts { display: flex; flex-direction: column; gap: 10px; margin-top: clamp(18px,2.2vw,26px); }
+    .mact { display: flex; align-items: center; gap: clamp(14px,2vw,24px); padding: 12px 18px; border-radius: 12px; background: rgba(255,255,255,.04); }
+    .mact__name { display: flex; align-items: center; gap: 10px; flex: none; min-width: 128px;
+      font-weight: 800; font-size: 15px; color: var(--n-050); }
+    .mact__name svg { width: 18px; height: 18px; color: var(--th-accent-hi); flex: none; }
+    .mact .seg { flex: 1; }
+    .mact .seg i { height: 13px; }
+    .mact__stat { display: flex; align-items: baseline; justify-content: flex-end; gap: 6px; flex: none; width: 96px; }
+    .mact__stat > span { font-size: 13px; font-weight: 600; color: var(--n-300); }
+    .mact__stat > b { font-family: var(--font-mono); font-weight: 700; font-size: 17px; color: var(--th-accent-hi); }
 
     /* 토스트 */
     .rtoast { position: fixed; left: 50%; bottom: 118px; transform: translateX(-50%) translateY(10px); z-index: 400; padding: 10px 18px; border-radius: 999px; font-family: var(--font-sans); font-size: 14px; font-weight: 600; background: rgba(10,20,44,.94); color: var(--n-000); opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
@@ -158,7 +171,6 @@
           <span class="crumb crumb--strong">개념 훈련 결과</span>
         </nav>
         <div class="lheader__actions">
-          <button class="theme-toggle" id="themeToggle" title="라이트/다크 전환"><span class="theme-toggle__knob"></span></button>
           <button class="nav-ico" title="알림"><img src="assets/icons/ico-siren.svg" alt="알림" /></button>
           <button class="nav-ico" title="나가기"><img src="assets/icons/ico-exit.svg" alt="나가기" /></button>
         </div>
@@ -238,8 +250,8 @@
             <div class="dial" id="stepDial">
               <div class="dial__ticks"></div>
               <div class="dial__face"></div>
+              <div class="dial__ticks dial__ticks--over"></div>
               <div class="dial__needle"></div>
-              <div class="dial__hub"></div>
               <div class="dial__read"><b><span id="stepRate">0</span><small>%</small></b><span>정답률</span></div>
             </div>
             <div class="rmeters">
@@ -247,6 +259,7 @@
               <div class="win"><span class="win__lb">정답</span><b id="stepScore">0/0</b></div>
             </div>
           </div>
+          <div class="macts" id="stepActs"></div>
         </div>
         <div class="monitor__chin"><span class="monitor__slit"></span></div>
       </div>
@@ -258,6 +271,6 @@
   <!-- 연습장 캔버스 (공용) · 검수용 디버그 패널 (?debug=1) -->
   <script src="scripts/scratchpad.js?v=13"></script>
   <script src="scripts/debug-panel.js?v=3"></script>
-  <script src="scripts/concept-training-result.js?v=3"></script>
+  <script src="scripts/concept-training-result.js?v=4"></script>
 </body>
 </html>

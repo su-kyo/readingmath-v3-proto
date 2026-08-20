@@ -4,11 +4,10 @@
    활동별 행 = 문항 LED 세그먼트(한 칸이 한 문항, 켜진 칸이 정답).
    ========================================================================= */
 (function () {
-  // ?theme=dark|light 로 열면 그 테마로 시작 (검수·스크린샷용 — phase7-brief 관례)
-  var forceTheme = new URLSearchParams(location.search).get('theme');
-  if (forceTheme) document.documentElement.setAttribute('data-theme', forceTheme);
+  // 결과 화면은 항상 다크 계기판 — 테마 토글·강제 없음 (Phase 7 사용자 결정)
 
   // 개념 학습의 채점 활동 결과 (전체 = 11/14 → 79% → B)
+  // ※ concept-training-result.js 의 STAGES[개념 학습].acts 와 같은 숫자를 유지할 것
   var ACTIVITIES = [
     { name: '개념 요약하기', correct: 4, total: 5 },
     { name: '개념 다지기',   correct: 7, total: 9 }
@@ -27,9 +26,13 @@
   document.getElementById('summaryBadge').src = badgeSrc;
   document.getElementById('sideBadge').src = badgeSrc;
 
+  // ?snap=1 이면 애니메이션 생략하고 최종 상태로 (검수·스크린샷용)
+  var SNAP = new URLSearchParams(location.search).get('snap') === '1';
+
   // 다이얼: 0에서 목표치로 스윕 (--pct는 @property로 등록되어 트랜지션됨)
   var dial = document.getElementById('rateDial');
-  requestAnimationFrame(function () { requestAnimationFrame(function () {
+  if (SNAP) { dial.style.transition = 'none'; dial.style.setProperty('--pct', rate); }
+  else requestAnimationFrame(function () { requestAnimationFrame(function () {
     dial.style.setProperty('--pct', rate);
   }); });
 
@@ -51,13 +54,7 @@
   });
   var cells = rows.querySelectorAll('.seg i[data-on="1"]');
   [].forEach.call(cells, function (c, i) {
-    setTimeout(function () { c.classList.add('on'); }, 200 + i * 45);
-  });
-
-  // 라이트/다크 토글
-  var themeBtn = document.getElementById('themeToggle');
-  if (themeBtn) themeBtn.addEventListener('click', function () {
-    var cur = document.documentElement.getAttribute('data-theme');
-    document.documentElement.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
+    if (SNAP) c.classList.add('on');
+    else setTimeout(function () { c.classList.add('on'); }, 200 + i * 45);
   });
 })();

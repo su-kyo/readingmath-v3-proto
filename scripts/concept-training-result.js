@@ -6,41 +6,46 @@
 (function () {
   'use strict';
 
-  /* ---------- 테마 (rm-theme 공유 키) ---------- */
-  var root = document.documentElement;
-  (function () { var s; try { s = localStorage.getItem('rm-theme'); } catch (e) {} if (s) root.setAttribute('data-theme', s); })();
-  /* ?theme=dark|light 이 저장된 테마보다 우선 (검수·스크린샷용) */
-  (function () { var f = new URLSearchParams(location.search).get('theme'); if (f) root.setAttribute('data-theme', f); })();
-  var toggle = document.getElementById('themeToggle');
-  if (toggle) toggle.addEventListener('click', function () {
-    var t = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-    root.setAttribute('data-theme', t);
-    try { localStorage.setItem('rm-theme', t); } catch (e) {}
+  /* 결과 화면은 항상 다크 계기판 — 테마 토글·저장 테마 적용 없음 (Phase 7 사용자 결정).
+     학습 화면으로 돌아가면 rm-theme에 저장된 유저 테마가 그대로 적용된다. */
+
+  /* ---------- 데이터 (개념 훈련 3단계 · 활동까지 한 벌) ----------
+     스텝의 정답·등급은 활동(acts)에서 집계한다.
+     ※ 개념 학습의 acts는 shared/step-result.html(step-result.js)과 같은 숫자를 유지할 것 */
+  var STAGES = [
+    { no: 1, name: '개념 학습',    acts: [ { name: '개념 요약하기', correct: 4, total: 5 },
+                                           { name: '개념 다지기',   correct: 7, total: 9 } ] },
+    { no: 2, name: '개념 다지기',  acts: [ { name: '개념 다지기',   correct: 5, total: 5 } ] },
+    { no: 3, name: '개념 확인하기', acts: [ { name: '개념 확인하기', correct: 12, total: 14 } ] }
+  ];
+  function gradeOf(r) { return r >= 95 ? 's' : r >= 80 ? 'a' : r >= 70 ? 'b' : 'c'; }
+  function stepBadge(g) { return 'assets/img/grade/grade-step-' + g.toLowerCase() + '.webp'; }
+  function bigBadge(g)  { return 'assets/img/grade/grade-' + g.toLowerCase() + '.webp'; }
+  STAGES.forEach(function (s) {
+    s.correct = 0; s.total = 0;
+    s.acts.forEach(function (a) { s.correct += a.correct; s.total += a.total; });
+    s.rate = s.total ? Math.round((s.correct / s.total) * 100) : 0;
+    s.grade = gradeOf(s.rate).toUpperCase();
   });
 
-  /* ---------- 데이터 (개념 훈련 3단계) ---------- */
-  var STAGES = [
-    { no: 1, name: '개념 학습',    grade: 'S', correct: 5,  total: 5 },
-    { no: 2, name: '개념 다지기',  grade: 'A', correct: 4,  total: 5 },
-    { no: 3, name: '개념 확인하기', grade: 'B', correct: 11, total: 14 }
-  ];
   /* 시간 초과 감점(10점) 여부 — 검수 패널에서 토글할 수 있다 */
   var BASE_SCORE = 88, PENALTY = 10;
   var overtime = false;
   var SCORE = BASE_SCORE - (overtime ? PENALTY : 0);
   var COMMENT =
     '진방울님의 개념 훈련 결과는 100점 만점 중 ' + SCORE + '점 입니다.\n' +
-    '개념 학습과 다지기는 탄탄하게 이해했지만, 확인하기에서 몇 문제를 놓쳤어요.\n' +
-    '오답노트를 확인한 뒤 개념 확인하기를 한 번 더 복습해 보세요.';
+    '개념 다지기와 확인하기는 탄탄하게 이해했지만, 개념 학습에서 몇 문제를 놓쳤어요.\n' +
+    '오답노트를 확인한 뒤 개념 학습을 한 번 더 복습해 보세요.';
 
-  function gradeOf(r) { return r >= 95 ? 's' : r >= 80 ? 'a' : r >= 70 ? 'b' : 'c'; }
-  function stepBadge(g) { return 'assets/img/grade/grade-step-' + g.toLowerCase() + '.webp'; }
-  function bigBadge(g)  { return 'assets/img/grade/grade-' + g.toLowerCase() + '.webp'; }
+  /* ?snap=1 이면 애니메이션 생략하고 최종 상태로 (검수·스크린샷용) */
+  var SNAP = new URLSearchParams(location.search).get('snap') === '1';
 
   /* ---------- 총점 별 + 점수 ---------- */
   document.getElementById('totalStar').src = 'assets/icons/star/star-' + gradeOf(SCORE) + '.svg';
   var scoreEl = document.getElementById('score');
-  var sN = 0, sTimer = setInterval(function () {
+  var sN = 0, sTimer = null;
+  if (SNAP) { scoreEl.textContent = SCORE; }
+  else sTimer = setInterval(function () {
     sN += Math.max(1, Math.round(SCORE / 22));
     if (sN >= SCORE) { sN = SCORE; clearInterval(sTimer); }
     scoreEl.textContent = sN;
@@ -55,7 +60,7 @@
   var rows = document.getElementById('rows');
   var sumCorrect = 0, sumTotal = 0;
   STAGES.forEach(function (s) {
-    var rate = s.total ? Math.round((s.correct / s.total) * 100) : 0;
+    var rate = s.rate;
     sumCorrect += s.correct; sumTotal += s.total;
     var row = document.createElement('div');
     row.className = 'trow trow--data';
@@ -82,7 +87,8 @@
   /* 문항 LED 순차 점등 */
   var cells = document.querySelectorAll('.tbl .seg i[data-on="1"]');
   [].forEach.call(cells, function (c, i) {
-    setTimeout(function () { c.classList.add('on'); }, 180 + i * 22);
+    if (SNAP) c.classList.add('on');
+    else setTimeout(function () { c.classList.add('on'); }, 180 + i * 22);
   });
 
   /* ---------- 코멘트 ---------- */
@@ -91,18 +97,40 @@
   /* ---------- 「보기」 → 스텝 결과 스크린창 ---------- */
   var stepMon = document.getElementById('stepMon');
   var stepDial = document.getElementById('stepDial');
+  var stepActs = document.getElementById('stepActs');
+  var DOC = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>';
   function openStepMonitor(stage) {
-    var rate = stage.total ? Math.round((stage.correct / stage.total) * 100) : 0;
+    var rate = stage.rate;
     document.getElementById('stepMonTtl').textContent = '스텝 결과 — ' + stage.name;
     document.getElementById('stepBadge').src = bigBadge(stage.grade);
     document.getElementById('stepRate').textContent = rate;
     document.getElementById('stepScore').textContent = stage.correct + '/' + stage.total;
-    stepDial.style.setProperty('--pct', 0);
+    /* 활동별 행 — 스텝 결과 화면과 같은 구성 통으로 */
+    stepActs.innerHTML = '';
+    stage.acts.forEach(function (a) {
+      var pr = a.total ? Math.round((a.correct / a.total) * 100) : 0;
+      var row = document.createElement('div');
+      row.className = 'mact';
+      row.innerHTML =
+        '<div class="mact__name">' + DOC + '<span>' + a.name + '</span></div>' +
+        segHTML(a.correct, a.total) +
+        '<div class="mact__stat"><span>정답</span><b>' + a.correct + '/' + a.total + '</b></div>' +
+        '<div class="mact__stat"><span>정답률</span><b>' + pr + '%</b></div>';
+      stepActs.appendChild(row);
+    });
     stepMon.classList.add('is-open');
     stepMon.setAttribute('aria-hidden', 'false');
-    requestAnimationFrame(function () { requestAnimationFrame(function () {
-      stepDial.style.setProperty('--pct', rate);
-    }); });
+    if (SNAP) { stepDial.style.transition = 'none'; stepDial.style.setProperty('--pct', rate); }
+    else {
+      stepDial.style.setProperty('--pct', 0);
+      requestAnimationFrame(function () { requestAnimationFrame(function () {
+        stepDial.style.setProperty('--pct', rate);
+      }); });
+    }
+    [].forEach.call(stepActs.querySelectorAll('.seg i[data-on="1"]'), function (c, i) {
+      if (SNAP) c.classList.add('on');
+      else setTimeout(function () { c.classList.add('on'); }, 220 + i * 40);
+    });
   }
   function closeStepMonitor() {
     stepMon.classList.remove('is-open');
