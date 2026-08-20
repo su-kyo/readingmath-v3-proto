@@ -48,8 +48,9 @@
       '.scratch{ position:fixed; inset:0; z-index:400; display:none; }',
       '.scratch.is-open{ display:block; }',
 
-      /* 딤 — 문제 영역에 구멍을 뚫은 스포트라이트. 콘솔바 띠(bottom)는 아예 제외 */
-      '.scratch__dim{ position:absolute; left:0; right:0; top:0; overflow:hidden; opacity:0; transition:opacity .28s; pointer-events:none; }',
+      /* 딤 — 문제 영역에 구멍을 뚫은 스포트라이트. 화면 끝까지 깔고,
+         콘솔바는 그 위에 얹혀(z-index) 안 눌린다 — 데코 곡선 바깥까지 빈틈 없이 덮인다 */
+      '.scratch__dim{ position:absolute; inset:0; overflow:hidden; opacity:0; transition:opacity .28s; pointer-events:none; }',
       '.scratch.is-in .scratch__dim{ opacity:1; }',
       '.scratch__hole{ position:absolute; box-shadow:0 0 0 9999px var(--scratch-dim); }',
 
@@ -209,9 +210,8 @@
     var ink = 1;
     var drawing = false;
 
-    /* ── 딤 구멍 — 문제 영역은 원래 밝기, 콘솔바 띠는 아예 딤 밖 ── */
+    /* ── 딤 구멍 — 문제 영역만 원래 밝기로 남긴다 ── */
     function fitDim() {
-      dim.style.bottom = pageBar.offsetHeight + 'px';
       var target = document.querySelector('.content, .rframe');
       if (target) {
         var r = target.getBoundingClientRect();
