@@ -27,17 +27,12 @@
     .hwf { flex: 1; min-height: 0; display: flex; flex-direction: column;
       background: var(--th-static); border-radius: var(--r-frame) var(--r-frame) 0 0; padding: 8px 8px 0; box-shadow: var(--shadow-2); }
     .hwf__hd { flex: none; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
-      padding: 6px 8px 12px 12px; }
-    .lamps { display: flex; gap: 6px; margin-right: 4px; }
-    /* 꺼진 램프 = 어두운 구멍 (네이비 림 위에서 회색은 대비가 안 나옴) */
-    .lamps i { width: 9px; height: 9px; border-radius: var(--r-full); background: var(--n-900); }
-    .lamps i.is-live { background: var(--th-accent-hi); }
-    .lamps i.is-warn { background: var(--warn-solid); }
+      padding: 6px 8px 12px 16px; }
     .hwf__ttl { color: var(--n-000); font-size: var(--fs-title); font-weight: 800; letter-spacing: -0.02em; }
     .hwf__chips { margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap; }
-    /* 칩 = 림 위의 어두운 판독창 (크리스프 — 페더 인셋 금지) */
+    /* 칩 = 림과 같은 블루 계열의 한두 단계 어두운 톤온톤 (과목 림이 바뀌면 자동으로 따라감) */
     .chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 13px; border-radius: var(--r-full);
-      background: var(--n-900); color: var(--n-050); font-size: 13px; font-weight: 600; }
+      background: color-mix(in srgb, var(--th-static) 45%, var(--n-900)); color: var(--n-050); font-size: 13px; font-weight: 600; }
     .chip b { font-weight: 700; }
     .chip--round { font-weight: 800; letter-spacing: .02em; }
     .chip--warn { color: var(--amber-200); }
@@ -181,7 +176,6 @@
       <main class="content">
         <div class="hwf">
           <div class="hwf__hd">
-            <span class="lamps"><i class="is-live"></i><i class="is-warn" id="overLamp"></i><i></i></span>
             <span class="hwf__ttl">개념 훈련 결과</span>
             <span class="hwf__chips">
               <span class="chip chip--round">ROUND 1</span>

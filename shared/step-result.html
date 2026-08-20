@@ -21,8 +21,8 @@
       --accent: var(--th-accent-hi); --title1: var(--th-accent-hi); --title2: var(--th-accent); --rate: var(--cyan-400);
       --row-bg: rgba(255,255,255,.04); --row-br: rgba(76,218,247,.38);
     }
-    /* 우측 '학습 진행 현황' — 항상 다크 (결과 화면은 테마를 타지 않는다) */
-    .rside { --lside: var(--surface-3); --ltext: var(--text); --lmuted: var(--text-muted); --accent: var(--th-accent-hi); }
+    /* 우측 '학습 진행 현황' — 항상 다크. 면 색은 림(--th-static)과 같은 블루 계열에서 파생(톤온톤) */
+    .rside { --lside: color-mix(in srgb, var(--th-static) 32%, var(--n-900)); --ltext: var(--text); --lmuted: var(--text-muted); --accent: var(--th-accent-hi); }
 
     /* 좌측: 결과 (LCD 라인 패턴) */
     .rmain {

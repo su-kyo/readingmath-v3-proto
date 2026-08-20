@@ -106,17 +106,20 @@
        스텝 모듈 확대 · 결과 버튼은 리스트 바로 아래 + 넘칠 때만 하단 고정(sticky)
        =================================================================== */
     .cols3 { display: grid; grid-template-columns: repeat(3, minmax(340px, 410px)); gap: clamp(20px,2.6vw,40px); margin: 30px 0 56px; }
-    .c-face { position: relative; display: flex; flex-direction: column; gap: 14px; min-height: 600px;
-      overflow-y: auto; background: var(--surface-3); border-radius: 24px; padding: 18px 16px 14px; }
+    /* 면 색 = 림(--th-static)과 같은 블루 계열에서 파생(톤온톤) · 간격은 유닛별 명시(gap 균일 금지) */
+    .c-face { position: relative; display: flex; flex-direction: column; min-height: 600px;
+      overflow-y: auto; background: color-mix(in srgb, var(--th-static) 32%, var(--n-900));
+      border-radius: 24px; padding: 22px 20px 18px; }
     .c-face::-webkit-scrollbar { width: 9px; }
     .c-face::-webkit-scrollbar-thumb { background: rgba(234,240,255,.18); border-radius: 999px; border: 3px solid transparent; background-clip: padding-box; }
-    /* 고정 나사 4개 — 크리스프 점 (조작반 물성) */
-    .screw { position: absolute; width: 6px; height: 6px; border-radius: 50%; background: var(--n-500); }
-    .screw.tl { top: 9px; left: 9px; } .screw.tr { top: 9px; right: 9px; }
-    .screw.bl { bottom: 9px; left: 9px; } .screw.br { bottom: 9px; right: 9px; }
+    /* 고정 나사 4개 — 크리스프 점. 라운드 곡선이 끝난 직선 구간 안쪽에 앉힌다 */
+    .screw { position: absolute; width: 8px; height: 8px; border-radius: 50%; background: var(--n-500); }
+    .screw.tl { top: 15px; left: 15px; } .screw.tr { top: 15px; right: 15px; }
+    .screw.bl { bottom: 15px; left: 15px; } .screw.br { bottom: 15px; right: 15px; }
 
-    /* 헤더 — 진행 표현은 LED 세그 + 수치 라벨 한 벌뿐 (램프 3개 폐기) */
-    .c-hd { display: flex; align-items: center; gap: 10px; padding: 2px 4px 12px;
+    /* 헤더 — 진행 표현은 LED 세그 + 수치 라벨 한 벌뿐 (램프 3개 폐기).
+       구분선은 헤더 묶음에 붙인다: 제목→선 11px < 선→리스트 21px (근접성 위계) */
+    .c-hd { display: flex; align-items: center; gap: 10px; padding: 0 2px 11px;
       border-bottom: 1px solid rgba(255,255,255,.10); }
     .c-ttl { font-size: 17px; font-weight: 800; color: var(--text); }
     .c-prog { margin-left: auto; display: flex; align-items: center; gap: 8px; }
@@ -126,7 +129,7 @@
     .c-prog b small { color: var(--text-muted); font-size: 12px; }
 
     /* 스텝 모듈 — 면판 위에 올라앉은 블록 (크리스프 받침 그림자, 페더 없음) */
-    .c-list { display: flex; flex-direction: column; gap: 14px; }
+    .c-list { display: flex; flex-direction: column; gap: 14px; margin-top: 21px; }
     .mod { display: flex; align-items: center; gap: 15px; min-height: 88px; padding: 16px 19px;
       border-radius: 16px; background: rgba(255,255,255,.07);
       box-shadow: 0 4px 0 rgba(0,0,0,.32); }
