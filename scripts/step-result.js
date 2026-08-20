@@ -24,7 +24,31 @@
   document.getElementById('score').textContent = correct;
   document.getElementById('total').textContent = '/' + total;
   document.getElementById('summaryBadge').src = badgeSrc;
-  document.getElementById('sideBadge').src = badgeSrc;
+  // 사이드 패널의 스텝 등급은 행용 육각 뱃지(grade-step-*)를 쓴다
+  document.getElementById('sideBadge').src = 'assets/img/grade/grade-step-' + gradeOf(rate) + '.webp';
+
+  // ?done=1 이면 나머지 스텝도 완료 상태로 (검수·스크린샷용 — 훈련 결과 버튼 노출 확인)
+  // step-progress.js 가 .is-open 유무로 버튼을 토글하므로 그보다 먼저(이 파일에서) 바꾼다
+  if (new URLSearchParams(location.search).get('done') === '1') {
+    var DEMO_GRADES = ['s', 'a']; // 개념 다지기 S · 개념 확인하기 A (훈련 결과 더미와 동일)
+    [].forEach.call(document.querySelectorAll('.step-card.is-open'), function (card, i) {
+      card.classList.remove('is-open');
+      card.classList.add('is-done');
+      card.removeAttribute('data-go'); // 해당 스텝 결과 화면이 없으니 클릭 시 토스트
+      var key = card.querySelector('.key');
+      if (key) key.remove();
+      var img = document.createElement('img');
+      img.className = 'step-card__grade';
+      img.src = 'assets/img/grade/grade-step-' + (DEMO_GRADES[i] || 'a') + '.webp';
+      img.alt = '등급';
+      card.appendChild(img);
+    });
+    var prog = document.getElementById('sideProg');
+    if (prog) {
+      [].forEach.call(prog.querySelectorAll('i'), function (s) { s.classList.add('on'); });
+      prog.querySelector('b').innerHTML = '3<small>/3</small>';
+    }
+  }
 
   // ?snap=1 이면 애니메이션 생략하고 최종 상태로 (검수·스크린샷용)
   var SNAP = new URLSearchParams(location.search).get('snap') === '1';

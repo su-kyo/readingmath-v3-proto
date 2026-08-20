@@ -37,12 +37,12 @@
     }
     .rmain > * { position: relative; z-index: 1; }
     /* 스크롤바 = 화면톤에 녹인 얇은 pill */
-    .rmain::-webkit-scrollbar, .rside::-webkit-scrollbar { width: 10px; height: 10px; }
-    .rmain::-webkit-scrollbar-track, .rside::-webkit-scrollbar-track { background: transparent; }
+    .rmain::-webkit-scrollbar, .rside__list::-webkit-scrollbar { width: 10px; height: 10px; }
+    .rmain::-webkit-scrollbar-track, .rside__list::-webkit-scrollbar-track { background: transparent; }
     .rmain::-webkit-scrollbar-thumb { background: rgba(143,235,255,.20); border-radius: 999px; border: 3px solid transparent; background-clip: padding-box; }
     .rmain::-webkit-scrollbar-thumb:hover { background: rgba(143,235,255,.32); background-clip: padding-box; }
-    .rside::-webkit-scrollbar-thumb { background: rgba(234,240,255,.18); border-radius: 999px; border: 3px solid transparent; background-clip: padding-box; }
-    .rmain, .rside { scrollbar-width: thin; scrollbar-color: rgba(143,235,255,.24) transparent; }
+    .rside__list::-webkit-scrollbar-thumb { background: rgba(234,240,255,.18); border-radius: 999px; border: 3px solid transparent; background-clip: padding-box; }
+    .rmain, .rside__list { scrollbar-width: thin; scrollbar-color: rgba(143,235,255,.24) transparent; }
 
     .rhead { display: flex; flex-direction: column; gap: 8px; }
     .rtitle { font-size: clamp(28px, 3.2vw, 42px); font-weight: 800; line-height: 1.05; color: var(--title1); }
@@ -97,29 +97,63 @@
     .rrow__stat { display: flex; align-items: baseline; justify-content: flex-end; gap: 7px; flex: none; width: 112px; }
     .rrow__stat > span { font-size: 14px; font-weight: 600; color: var(--lmuted); }
     .rrow__stat > b { font-family: var(--font-mono); font-weight: 700; font-size: 19px; color: var(--accent); }
-    /* 사이드 등급 브래킷 (진행 현황 카드) */
-    .rbracket { color: var(--accent); font-size: 52px; font-weight: 300; line-height: 1; }
-
-    /* 우측: 학습 진행 현황 */
+    /* ===== 우측: 학습 진행 현황 — 조작 패널 (Phase 7 ①-b C안) =====
+       좌측이 모니터(스크린)라면 이쪽은 조작반: 램프·모듈 블록·물리 키. 페더 인셋 금지 — 크리스프만. */
+    /* 버튼은 항상 콘솔바 위에 보이도록: 패널 자체는 안 넘치고, 리스트만 내부 스크롤 */
     .rside {
-      width: clamp(300px, 27vw, 400px); flex: none; overflow: auto;
+      position: relative; width: clamp(300px, 27vw, 400px); flex: none; overflow: hidden;
       background: var(--lside); border-radius: 30px 30px 0 0;
-      padding: clamp(20px,2vw,26px); display: flex; flex-direction: column; gap: 20px;
+      padding: 22px 20px 104px; display: flex; flex-direction: column;
     }
-    .rside__title { font-size: 18px; font-weight: 800; color: var(--ltext); }
-    .rside__list { display: flex; flex-direction: column; gap: 18px; }
-    .step-card {
-      position: relative; display: flex; align-items: center; justify-content: space-between; gap: 12px;
-      padding: 22px 24px; border-radius: 16px; border: 1.5px solid var(--accent);
+    .screw { position: absolute; width: 8px; height: 8px; border-radius: 50%; background: var(--n-500); }
+    .screw.tl { top: 15px; left: 15px; } .screw.tr { top: 15px; right: 15px; }
+    /* 헤더 — 진행 표현은 LED 세그 + 수치 한 벌. 구분선은 헤더 묶음에 붙는다(위 11px < 아래 21px) */
+    .rside__hd { display: flex; align-items: center; gap: 10px; padding: 0 2px 11px;
+      border-bottom: 1px solid rgba(255,255,255,.10); }
+    .rside__title { font-size: 17px; font-weight: 800; color: var(--ltext); }
+    .rside__prog { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+    .rside__prog i { width: 20px; height: 12px; border-radius: 3px; background: rgba(255,255,255,.10); }
+    .rside__prog i.on { background: var(--rate); box-shadow: 0 0 8px rgba(24,209,252,.45); }
+    .rside__prog b { font-family: var(--font-mono); font-size: 14px; font-weight: 700; color: var(--accent); }
+    .rside__prog b small { color: var(--lmuted); font-size: 12px; }
+    /* 스텝 모듈 — 면판 위에 올라앉은 블록 (크리스프 받침 그림자) */
+    .rside__list { display: flex; flex-direction: column; gap: 14px; margin-top: 21px;
+      overflow-y: auto; min-height: 0; }
+    .step-card { display: flex; align-items: center; gap: 15px; min-height: 88px; padding: 16px 19px; flex: none;
+      border-radius: 16px; background: rgba(255,255,255,.07); box-shadow: 0 4px 0 rgba(0,0,0,.32); }
+    /* 공용 learn-shell.css 의 구형 카드 표현(점선 테두리·틴트·호버 리프트)을 이 화면에서만 무력화 */
+    .step-card.is-open { border: none; }
+    .step-card.is-done { background: rgba(255,255,255,.07); }
+    .step-card.is-done:hover, .step-card.is-open:hover { transform: none; filter: brightness(1.07);
+      box-shadow: 0 4px 0 rgba(0,0,0,.32); }
+    .step-card.is-done:active, .step-card.is-open:active { transform: translateY(2px);
+      box-shadow: 0 2px 0 rgba(0,0,0,.32); }
+    .step-card.is-current, .step-card.is-current:hover { box-shadow: 0 4px 0 rgba(0,0,0,.32), inset 0 0 0 2.5px var(--accent); }
+    .step-card .lamp2 { width: 14px; height: 14px; border-radius: 50%; flex: none;
+      background: rgba(0,0,0,.35); box-shadow: inset 0 0 0 1px rgba(255,255,255,.14); }
+    .step-card.is-done .lamp2 { background: var(--accent);
+      box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 55%, transparent); }
+    .step-card__id { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+    .step-card__no { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: .16em; color: var(--lmuted); }
+    .step-card__name { font-size: 18px; font-weight: 800; color: var(--ltext); white-space: nowrap; }
+    .step-card.is-open .step-card__name { color: var(--lmuted); }
+    .step-card__grade { height: 40px; margin-left: auto; }
+    .step-card .key { margin-left: auto; padding: 10px 16px; border: none; border-radius: 10px; cursor: pointer;
+      background: var(--n-500); color: var(--n-000); font-family: var(--font-sans); font-weight: 700; font-size: 15px;
+      box-shadow: 0 3px 0 var(--n-650); }
+    .step-card .key:hover { filter: brightness(1.12); }
+    /* 훈련 결과 버튼 — 모든 스텝 완료 시 리스트 끝에 등장. 세로가 짧으면 리스트가 스크롤되고 버튼은 남는다 */
+    .pgo { margin-top: 14px; display: flex; align-items: center; justify-content: center;
+      gap: 10px; width: 100%; min-height: 74px; flex: none; border: none; border-radius: 16px; cursor: pointer;
+      background: var(--primary); color: var(--n-000); font-family: var(--font-sans); font-size: 20px; font-weight: 800;
+      box-shadow: 0 5px 0 color-mix(in srgb, var(--primary) 55%, var(--n-900));
+      animation: ignite 2.2s ease-in-out infinite; }
+    .pgo:active { transform: translateY(3px); box-shadow: 0 2px 0 color-mix(in srgb, var(--primary) 55%, var(--n-900)); }
+    @keyframes ignite {
+      0%, 100% { box-shadow: 0 5px 0 color-mix(in srgb, var(--primary) 55%, var(--n-900)), 0 0 0 0 transparent; }
+      50% { box-shadow: 0 5px 0 color-mix(in srgb, var(--primary) 55%, var(--n-900)),
+        0 0 26px color-mix(in srgb, var(--accent) 40%, transparent); }
     }
-    .step-card__name { color: var(--ltext); font-size: 18px; font-weight: 700; }
-    .step-card__grade { display: inline-flex; align-items: center; gap: 2px; }
-    .step-card__grade .rbracket { font-size: 32px; }
-    .step-card__grade img { width: 38px; height: 38px; }
-    /* 선택된 스텝: 3px 시안 테두리 + 피그마 포인터(둥근 play + 패널색 halo) */
-    .step-card.is-current { border-width: 3px; }
-    .step-card__pointer { position: absolute; left: -9px; top: 50%; transform: translateY(-50%); }
-    .step-card__pointer path { fill: var(--accent); stroke: var(--lside); stroke-width: 5px; paint-order: stroke; }
 
     @media (max-width: 940px) {
       .rframe { flex-direction: column; }
@@ -176,20 +210,31 @@
           <div class="rrows" id="rows"></div>
         </section>
 
-        <!-- 우측 -->
+        <!-- 우측: 조작 패널. 스텝 3개 = 훈련 결과(concept-training-result.js STAGES)와 정합 -->
         <aside class="rside">
-          <div class="rside__title">학습 진행 현황</div>
+          <i class="screw tl"></i><i class="screw tr"></i>
+          <div class="rside__hd">
+            <span class="rside__title">학습 진행 현황</span>
+            <span class="rside__prog" id="sideProg"><i class="on"></i><i></i><i></i><b>1<small>/3</small></b></span>
+          </div>
           <div class="rside__list">
             <div class="step-card is-current is-done">
-              <svg class="step-card__pointer" viewBox="0 0 27 29" width="23" height="25" fill="none" aria-hidden="true"><path d="M2.5409 8.79388C2.5409 3.94385 7.83197 0.947849 11.9908 3.44311L21.4299 9.10653C25.4691 11.53 25.4691 17.3846 21.4299 19.8081L11.9908 25.4715C7.83197 27.9668 2.5409 24.9708 2.5409 20.1207V8.79388Z" fill="var(--th-accent-hi)"/></svg>
-              <span class="step-card__name">개념 학습</span>
-              <span class="step-card__grade"><span class="rbracket">[</span><img id="sideBadge" src="assets/img/grade/grade-b.webp" alt="등급" /><span class="rbracket">]</span></span>
+              <i class="lamp2"></i>
+              <div class="step-card__id"><span class="step-card__no">STEP 1</span><span class="step-card__name">개념 학습</span></div>
+              <img class="step-card__grade" id="sideBadge" src="assets/img/grade/grade-step-b.webp" alt="등급" />
             </div>
             <div class="step-card is-open" data-go="concept/drill.html">
-              <span class="step-card__name">개념 확인하기</span>
-              <span class="step-card__start">시작하기 ›</span>
+              <i class="lamp2"></i>
+              <div class="step-card__id"><span class="step-card__no">STEP 2</span><span class="step-card__name">개념 다지기</span></div>
+              <button class="key">시작하기 ›</button>
+            </div>
+            <div class="step-card is-open" data-go="concept/drill.html">
+              <i class="lamp2"></i>
+              <div class="step-card__id"><span class="step-card__no">STEP 3</span><span class="step-card__name">개념 확인하기</span></div>
+              <button class="key">시작하기 ›</button>
             </div>
           </div>
+          <button class="pgo" id="trainResultBtn" data-go="shared/training-result.html" style="display:none">훈련 결과 보기 ›</button>
         </aside>
       </div>
     </div>
@@ -203,9 +248,6 @@
             <button class="toolbtn"><img src="assets/icons/ico-note.svg" alt="" /><span>연습장</span></button>
             <button class="toolbtn" data-home><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11.5 12 4l8 7.5"/><path d="M6 10v9h12v-9"/><path d="M10 19v-5h4v5"/></svg><span>홈으로</span></button>
           </div>
-          <div class="bar__group">
-            <button class="toolbtn toolbtn--primary" id="trainResultBtn" data-go="shared/training-result.html" style="display:none"><img src="assets/icons/ico-summary.svg" alt="" /><span>훈련 결과 보기</span></button>
-          </div>
         </div>
       </div>
       <img class="bar__deco bar__deco--r" src="assets/icons/console/console-left.svg" alt="" />
@@ -214,7 +256,7 @@
 
   <!-- 연습장 캔버스 (공용) -->
   <script src="scripts/scratchpad.js?v=13"></script>
-  <script src="scripts/step-result.js?v=4"></script>
+  <script src="scripts/step-result.js?v=5"></script>
   <script src="scripts/step-progress.js"></script>
 </body>
 </html>
