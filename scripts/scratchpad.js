@@ -12,9 +12,10 @@
    · 콘솔바 전환 연출 — 기존 .bar가 아래로 내려가고, 같은 자리에 이 스크립트가
      화면의 .bar를 복제해 네이비 톤으로 칠한 도구 바를 올린다.
      좌우 일러스트도 같은 계산으로 다시 칠해 이음매가 없다(포인트 컬러는 살아 있음).
-   · 도구: 잉크 3색(기본·빨강·파랑) · 지우개 · 뒤로/앞으로 복귀 · 전체 지우기 · 완료.
+   · 도구: 잉크 3색(기본·빨강·파랑) · 지우개 · 뒤로/앞으로 복귀 · 전체 지우기.
+   · 나가는 버튼은 「연습장」 버튼과 같은 왼쪽 자리 — 켠 자리에서 끈다.
    · 잉크는 쓰는 순간의 테마를 따른다 — 라이트=진한 색, 다크=밝은 색.
-   · 연습장 모드 중에는 화면 조작이 잠긴다. 나가는 길은 「완료」뿐.
+   · 연습장 모드 중에는 화면 조작이 잠긴다. 나가는 길은 「연습장 닫기」뿐.
    · 모달(.monitor)이 떠 있으면 콘솔바가 가려지므로 연습장은 열리지 않는다.
    · 필기는 같은 화면 안에서는 닫았다 열어도 남는다 (화면을 떠나면 사라짐 — 프로토타입).
    ========================================================================= */
@@ -69,8 +70,6 @@
       '.scratch .bar__deco{ filter: url(#scratchNavy); }',
 
       /* 도구 바 속 — 램프 + 타이틀 + 물리 버튼 (보조 모니터 하드웨어 언어) */
-      '.scratch__ttl{ display:flex; align-items:center; gap:10px; color:var(--n-000); font-size:17px; font-weight:700; }',
-      '.scratch__ttl i{ width:9px; height:9px; border-radius:50%; background:var(--th-accent-hi, var(--cyan-300)); box-shadow:0 0 6px var(--th-accent-hi, var(--cyan-300)); }',
       '.scratch__tools{ display:flex; align-items:center; gap:9px; }',
       '.scratch__sep{ width:1px; height:26px; background:var(--n-500); margin:0 3px; }',
       '.scratch__swatch{ width:36px; height:36px; border-radius:50%; border:3px solid var(--n-500); background:var(--swatch); cursor:pointer; padding:0; }',
@@ -80,7 +79,7 @@
       '.scratch__tool.is-on{ background:var(--n-000); color:var(--n-650); }',
       '.scratch__tool.is-off{ opacity:.35; pointer-events:none; }',
       '.scratch__tool--ico{ width:44px; padding:0; justify-content:center; }',
-      '.scratch__done{ height:44px; padding:0 22px; border:0; border-radius:12px; background:var(--th-vivid, var(--blue-450)); color:var(--n-000); font-size:19px; font-weight:800; font-family:inherit; box-shadow:0 3px 0 var(--n-900); cursor:pointer; margin-left:4px; }',
+      '.scratch__done{ display:inline-flex; align-items:center; gap:8px; height:44px; padding:0 20px; border:0; border-radius:12px; background:var(--th-vivid, var(--blue-450)); color:var(--n-000); font-size:19px; font-weight:800; font-family:inherit; box-shadow:0 3px 0 var(--n-900); cursor:pointer; }',
       '.scratch__done:active{ transform:translateY(2px); box-shadow:0 1px 0 var(--n-900); }'
     ].join('\n');
     document.head.appendChild(css);
@@ -169,14 +168,18 @@
     var ICO_UNDO = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M8 4L3.5 8.5 8 13" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 8.5h7.5a4.5 4.5 0 0 1 0 9H8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
     var ICO_REDO = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12 4l4.5 4.5L12 13" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 8.5H8.5a4.5 4.5 0 0 0 0 9H12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
 
+    var ICO_CLOSE = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>';
+
     /* 화면의 콘솔바를 복제해 도구 바로 쓴다 — 형태·좌우 일러스트가 그대로 온다 */
     var toolbar = pageBar.cloneNode(true);
     toolbar.classList.remove('scratch-anim', 'scratch-away');
     toolbar.querySelectorAll('[id]').forEach(function (el) { el.removeAttribute('id'); });
     toolbar.removeAttribute('id');
     var tray = toolbar.querySelector('.bar__tray');
+    /* 나가는 버튼은 「연습장」 버튼이 있던 왼쪽 그 자리 — 켠 자리에서 끈다.
+       (오른쪽 끝에 두면 열어만 본 사람이 닫으려고 반대편까지 가야 한다) */
     tray.innerHTML =
-      '<span class="scratch__ttl"><i></i>연습장</span>' +
+      '<button class="scratch__done" data-tool="close">' + ICO_CLOSE + '연습장 닫기</button>' +
       '<div class="scratch__tools">' +
         '<button class="scratch__swatch is-on" data-ink="1" style="--swatch:var(--scratch-ink-1)" aria-label="잉크 기본색"></button>' +
         '<button class="scratch__swatch" data-ink="2" style="--swatch:var(--scratch-ink-2)" aria-label="잉크 빨강"></button>' +
@@ -186,8 +189,6 @@
         '<button class="scratch__tool scratch__tool--ico is-off" data-tool="undo" aria-label="뒤로 복귀">' + ICO_UNDO + '</button>' +
         '<button class="scratch__tool scratch__tool--ico is-off" data-tool="redo" aria-label="앞으로 복귀">' + ICO_REDO + '</button>' +
         '<button class="scratch__tool" data-tool="clear">전체 지우기</button>' +
-        '<span class="scratch__sep"></span>' +
-        '<button class="scratch__done" data-tool="close">완료</button>' +
       '</div>';
     /* 가운데 면색도 데코와 똑같은 계산으로 옮긴다 — 이래야 이음매가 안 보인다.
        화면마다 트레이 색이 다르지만(개념 파랑·유형 베이지·서술형 보라·과제 회색)
@@ -347,12 +348,17 @@
       pageBar.classList.add('scratch-away');            /* 기존 바 퇴장 */
       root.classList.add('is-open');
       root.setAttribute('aria-hidden', 'false');
-      requestAnimationFrame(function () {
-        requestAnimationFrame(function () {
-          root.classList.add('is-in');                  /* 딤 + 도구 바 등장 */
-          ensureBitmap();
-        });
-      });
+      /* 다음 프레임에 등장시켜야 트랜지션이 걸린다. 다만 탭이 가려져 있으면
+         rAF가 멈춰 바가 안 올라오므로, 타이머로도 한 번 더 챙긴다. */
+      var raised = false;
+      function raise() {
+        if (raised) return;
+        raised = true;
+        root.classList.add('is-in');                    /* 딤 + 도구 바 등장 */
+        ensureBitmap();
+      }
+      requestAnimationFrame(function () { requestAnimationFrame(raise); });
+      setTimeout(raise, 60);
     }
     function close() {
       root.classList.remove('is-in');                   /* 딤 + 도구 바 퇴장 */
