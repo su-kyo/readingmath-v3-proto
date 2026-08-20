@@ -8,10 +8,10 @@
    방식 (2026-08-20 확정 + 피드백 반영 — 별도 창 아님):
    · 화면 전체가 필기면 — 콘텐츠를 덮는 투명 캔버스에 문제 위로 바로 쓴다.
    · 딤은 "둘레만" — 문제 영역(.content/.rframe)과 콘솔바 띠는 딤에 깔리지 않고
-     원래 밝기로 남는다. 딤 농도는 --scrim의 절반.
+     원래 밝기로 남는다. 딤 농도는 0.8 — 둘레를 확실히 눌러 문제만 뜨게 한다.
    · 콘솔바 전환 연출 — 기존 .bar가 아래로 내려가고, 같은 자리에 이 스크립트가
      화면의 .bar를 복제해 네이비 톤으로 칠한 도구 바를 올린다.
-     좌우 일러스트도 필터로 네이비 단색조가 된다.
+     좌우 일러스트도 같은 계산으로 다시 칠해 이음매가 없다(포인트 컬러는 살아 있음).
    · 도구: 잉크 3색(기본·빨강·파랑) · 지우개 · 뒤로/앞으로 복귀 · 전체 지우기 · 완료.
    · 잉크는 쓰는 순간의 테마를 따른다 — 라이트=진한 색, 다크=밝은 색.
    · 연습장 모드 중에는 화면 조작이 잠긴다. 나가는 길은 「완료」뿐.
@@ -51,13 +51,14 @@
       /* 딤 — 문제 영역에 구멍을 뚫은 스포트라이트. 콘솔바 띠(bottom)는 아예 제외 */
       '.scratch__dim{ position:absolute; left:0; right:0; top:0; overflow:hidden; opacity:0; transition:opacity .28s; pointer-events:none; }',
       '.scratch.is-in .scratch__dim{ opacity:1; }',
-      '.scratch__hole{ position:absolute; box-shadow:0 0 0 9999px var(--scrim); }',
+      '.scratch__hole{ position:absolute; box-shadow:0 0 0 9999px var(--scratch-dim); }',
 
       '.scratch__canvas{ position:absolute; inset:0; width:100%; height:100%; touch-action:none; cursor:crosshair; }',
 
       /* 잉크 3색 — 쓰는 순간의 테마를 따른다 (다크 기본 / 라이트 뒤집기) */
-      '.scratch{ --scratch-ink-1: var(--n-050); --scratch-ink-2: var(--red-300); --scratch-ink-3: var(--blue-300); }',
-      ':root[data-theme="light"] .scratch{ --scratch-ink-1: var(--n-650); --scratch-ink-2: var(--red-500); --scratch-ink-3: var(--blue-450); }',
+      /* 딤은 --scrim(0.44/0.72)보다 훨씬 진하게 눌러 문제 영역만 뜨게 한다 */
+      '.scratch{ --scratch-dim: rgba(6, 10, 22, .8); --scratch-ink-1: var(--n-050); --scratch-ink-2: var(--red-300); --scratch-ink-3: var(--blue-300); }',
+      ':root[data-theme="light"] .scratch{ --scratch-dim: rgba(20, 28, 48, .8); --scratch-ink-1: var(--n-650); --scratch-ink-2: var(--red-500); --scratch-ink-3: var(--blue-450); }',
 
       /* 도구 바 = 화면 .bar의 복제본 + 네이비 톤. 형태는 화면 CSS를 그대로 물려받는다 */
       '.scratch .bar{ transform: translateY(112%); transition: transform .32s cubic-bezier(.2,.8,.3,1.08); pointer-events:auto; z-index:2; }',
