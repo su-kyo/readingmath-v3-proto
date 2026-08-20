@@ -100,17 +100,151 @@
     .arrive .lamp { width: 11px; height: 11px; }
 
     @media (max-width: 900px) { .cols { grid-template-columns: 1fr; } }
+
+    /* ===================================================================
+       C안 (v2) — 피드백 반영: 진행 표현 한 벌 · 페더 인셋 전면 제거(크리스프만) ·
+       스텝 모듈 확대 · 결과 버튼은 리스트 바로 아래 + 넘칠 때만 하단 고정(sticky)
+       =================================================================== */
+    .cols3 { display: grid; grid-template-columns: repeat(3, minmax(340px, 410px)); gap: clamp(20px,2.6vw,40px); margin: 30px 0 56px; }
+    .c-face { position: relative; display: flex; flex-direction: column; gap: 14px; min-height: 600px;
+      overflow-y: auto; background: var(--surface-3); border-radius: 24px; padding: 18px 16px 14px; }
+    .c-face::-webkit-scrollbar { width: 9px; }
+    .c-face::-webkit-scrollbar-thumb { background: rgba(234,240,255,.18); border-radius: 999px; border: 3px solid transparent; background-clip: padding-box; }
+    /* 고정 나사 4개 — 크리스프 점 (조작반 물성) */
+    .screw { position: absolute; width: 6px; height: 6px; border-radius: 50%; background: var(--n-500); }
+    .screw.tl { top: 9px; left: 9px; } .screw.tr { top: 9px; right: 9px; }
+    .screw.bl { bottom: 9px; left: 9px; } .screw.br { bottom: 9px; right: 9px; }
+
+    /* 헤더 — 진행 표현은 LED 세그 + 수치 라벨 한 벌뿐 (램프 3개 폐기) */
+    .c-hd { display: flex; align-items: center; gap: 10px; padding: 2px 4px 12px;
+      border-bottom: 1px solid rgba(255,255,255,.10); }
+    .c-ttl { font-size: 17px; font-weight: 800; color: var(--text); }
+    .c-prog { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+    .c-prog i { width: 20px; height: 12px; border-radius: 3px; background: rgba(255,255,255,.10); }
+    .c-prog i.on { background: var(--cyan-400); box-shadow: 0 0 8px rgba(24,209,252,.45); }
+    .c-prog b { font-family: var(--font-mono); font-size: 14px; font-weight: 700; color: var(--th-accent-hi); }
+    .c-prog b small { color: var(--text-muted); font-size: 12px; }
+
+    /* 스텝 모듈 — 면판 위에 올라앉은 블록 (크리스프 받침 그림자, 페더 없음) */
+    .c-list { display: flex; flex-direction: column; gap: 14px; }
+    .mod { display: flex; align-items: center; gap: 15px; min-height: 88px; padding: 16px 19px;
+      border-radius: 16px; background: rgba(255,255,255,.07);
+      box-shadow: 0 4px 0 rgba(0,0,0,.32); }
+    .mod .lamp2 { width: 14px; height: 14px; border-radius: 50%; flex: none;
+      background: rgba(0,0,0,.35); box-shadow: inset 0 0 0 1px rgba(255,255,255,.14); }
+    .mod.is-done .lamp2 { background: var(--th-accent-hi);
+      box-shadow: 0 0 10px color-mix(in srgb, var(--th-accent-hi) 55%, transparent); }
+    .mod__id { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+    .mod__step { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: .16em; color: var(--text-muted); }
+    .mod__name { font-size: 18px; font-weight: 800; color: var(--text); white-space: nowrap; }
+    .mod.is-open .mod__name { color: var(--text-muted); }
+    .mod.is-current { box-shadow: 0 4px 0 rgba(0,0,0,.32), inset 0 0 0 2.5px var(--th-accent-hi); }
+    .mod .badge { height: 40px; }
+    .mod .key { padding: 10px 16px; font-size: 15px; }
+
+    /* 결과 버튼 — 완료 시 리스트 바로 아래 등장. 패널이 넘치면 하단에 고정(sticky) */
+    .c-go { position: sticky; bottom: 0; margin-top: 14px; display: flex; align-items: center; justify-content: center; gap: 10px;
+      width: 100%; min-height: 74px; border: none; border-radius: 16px; cursor: pointer;
+      background: var(--primary); color: var(--n-000); font-family: var(--font-sans); font-size: 20px; font-weight: 800;
+      box-shadow: 0 5px 0 color-mix(in srgb, var(--primary) 55%, var(--n-900));
+      animation: ignite 2.2s ease-in-out infinite; }
+    .c-go:active { transform: translateY(3px); box-shadow: 0 2px 0 color-mix(in srgb, var(--primary) 55%, var(--n-900)); }
   </style>
 </head>
 <body>
   <h1 class="page__ttl">학습 진행 현황 — 조작 패널 시안 (Phase 7 ①-b)</h1>
   <p class="page__sub">좌측 결과가 「모니터(스크린)」라면 우측 진행 현황은 「조작반(물리 패널)」 — 스캔라인 없이 램프·트랙·물리 버튼으로 구성. 스타일과 결과 진입 플로우는 서로 조합 가능.</p>
 
+  <!-- ================= C안 (v2 — 피드백 반영) ================= -->
+  <section>
+    <h2 class="prop__ttl" style="margin-top:34px">C안 (v2) — 모듈 보드 · 결과 버튼은 리스트 끝 + 넘치면 하단 고정</h2>
+    <p class="prop__desc">B 계열 발전형. 진행 표현은 헤더의 LED 세그 한 벌뿐(램프 3개 폐기) · 페더 인셋 전면 제거(크리스프 받침 그림자·1px 링만) · 스텝 모듈 확대(STEP 라벨 + 이름 2줄) · 결과 버튼은 완료 시 리스트 바로 아래 등장, 패널이 세로로 넘칠 때만 하단에 붙어 따라온다(세 번째 패널이 그 상태).</p>
+
+    <div class="cols3">
+      <div class="state">
+        <span class="state__lb">스텝 1 완료 시점 (1/3)</span>
+        <div class="pnl"><div class="c-face">
+          <i class="screw tl"></i><i class="screw tr"></i><i class="screw bl"></i><i class="screw br"></i>
+          <div class="c-hd">
+            <span class="c-ttl">학습 진행 현황</span>
+            <span class="c-prog"><i class="on"></i><i></i><i></i><b>1<small>/3</small></b></span>
+          </div>
+          <div class="c-list">
+            <div class="mod is-done is-current"><i class="lamp2"></i>
+              <div class="mod__id"><span class="mod__step">STEP 1</span><span class="mod__name">개념 학습</span></div>
+              <img class="badge" src="assets/img/grade/grade-step-b.webp" alt="B" />
+            </div>
+            <div class="mod is-open"><i class="lamp2"></i>
+              <div class="mod__id"><span class="mod__step">STEP 2</span><span class="mod__name">개념 다지기</span></div>
+              <button class="key">시작하기 ›</button>
+            </div>
+            <div class="mod is-open"><i class="lamp2"></i>
+              <div class="mod__id"><span class="mod__step">STEP 3</span><span class="mod__name">개념 확인하기</span></div>
+              <button class="key">시작하기 ›</button>
+            </div>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="state">
+        <span class="state__lb">모든 스텝 완료 시점 (3/3)</span>
+        <div class="pnl"><div class="c-face">
+          <i class="screw tl"></i><i class="screw tr"></i><i class="screw bl"></i><i class="screw br"></i>
+          <div class="c-hd">
+            <span class="c-ttl">학습 진행 현황</span>
+            <span class="c-prog"><i class="on"></i><i class="on"></i><i class="on"></i><b>3<small>/3</small></b></span>
+          </div>
+          <div class="c-list">
+            <div class="mod is-done"><i class="lamp2"></i>
+              <div class="mod__id"><span class="mod__step">STEP 1</span><span class="mod__name">개념 학습</span></div>
+              <img class="badge" src="assets/img/grade/grade-step-b.webp" alt="B" />
+            </div>
+            <div class="mod is-done"><i class="lamp2"></i>
+              <div class="mod__id"><span class="mod__step">STEP 2</span><span class="mod__name">개념 다지기</span></div>
+              <img class="badge" src="assets/img/grade/grade-step-s.webp" alt="S" />
+            </div>
+            <div class="mod is-done is-current"><i class="lamp2"></i>
+              <div class="mod__id"><span class="mod__step">STEP 3</span><span class="mod__name">개념 확인하기</span></div>
+              <img class="badge" src="assets/img/grade/grade-step-a.webp" alt="A" />
+            </div>
+          </div>
+          <button class="c-go">훈련 결과 보기 ›</button>
+        </div></div>
+      </div>
+
+      <div class="state">
+        <span class="state__lb">세로가 짧은 브라우저 (3/3 · 스크롤)</span>
+        <div class="pnl"><div class="c-face" style="min-height:0;height:340px">
+          <i class="screw tl"></i><i class="screw tr"></i>
+          <div class="c-hd">
+            <span class="c-ttl">학습 진행 현황</span>
+            <span class="c-prog"><i class="on"></i><i class="on"></i><i class="on"></i><b>3<small>/3</small></b></span>
+          </div>
+          <div class="c-list">
+            <div class="mod is-done"><i class="lamp2"></i>
+              <div class="mod__id"><span class="mod__step">STEP 1</span><span class="mod__name">개념 학습</span></div>
+              <img class="badge" src="assets/img/grade/grade-step-b.webp" alt="B" />
+            </div>
+            <div class="mod is-done"><i class="lamp2"></i>
+              <div class="mod__id"><span class="mod__step">STEP 2</span><span class="mod__name">개념 다지기</span></div>
+              <img class="badge" src="assets/img/grade/grade-step-s.webp" alt="S" />
+            </div>
+            <div class="mod is-done is-current"><i class="lamp2"></i>
+              <div class="mod__id"><span class="mod__step">STEP 3</span><span class="mod__name">개념 확인하기</span></div>
+              <img class="badge" src="assets/img/grade/grade-step-a.webp" alt="A" />
+            </div>
+          </div>
+          <button class="c-go">훈련 결과 보기 ›</button>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
   <div class="cols">
 
     <!-- ================= A안 ================= -->
     <section>
-      <h2 class="prop__ttl">A안 — 시퀀스 레일 · 결과 모듈 상시(잠김 → 점화)</h2>
+      <h2 class="prop__ttl">A안 (킵) — 시퀀스 레일 · 결과 모듈 상시(잠김 → 점화)</h2>
       <p class="prop__desc">스텝을 램프+트랙으로 잇는 항로. 종착지 「훈련 결과」가 처음부터 하단에 보이고, 마지막 스텝을 마치면 점화된다.</p>
 
       <div class="state">
@@ -171,7 +305,7 @@
 
     <!-- ================= B안 ================= -->
     <section>
-      <h2 class="prop__ttl">B안 — 모듈 베이 · 완료 시 상단 등장</h2>
+      <h2 class="prop__ttl">B안 (킵) — 모듈 베이 · 완료 시 상단 등장</h2>
       <p class="prop__desc">스텝을 깊게 파인 슬롯(랙 베이)으로. 평소엔 결과 진입이 없고, 모든 스텝을 마치면 최상단에 결과 모듈이 나타난다.</p>
 
       <div class="state">

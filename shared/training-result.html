@@ -29,13 +29,15 @@
     .hwf__hd { flex: none; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
       padding: 6px 8px 12px 12px; }
     .lamps { display: flex; gap: 6px; margin-right: 4px; }
-    .lamps i { width: 9px; height: 9px; border-radius: var(--r-full); background: var(--n-500); }
+    /* 꺼진 램프 = 어두운 구멍 (네이비 림 위에서 회색은 대비가 안 나옴) */
+    .lamps i { width: 9px; height: 9px; border-radius: var(--r-full); background: var(--n-900); }
     .lamps i.is-live { background: var(--th-accent-hi); }
     .lamps i.is-warn { background: var(--warn-solid); }
     .hwf__ttl { color: var(--n-000); font-size: var(--fs-title); font-weight: 800; letter-spacing: -0.02em; }
     .hwf__chips { margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap; }
+    /* 칩 = 림 위의 어두운 판독창 (크리스프 — 페더 인셋 금지) */
     .chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 13px; border-radius: var(--r-full);
-      background: var(--n-500); color: var(--n-050); font-size: 13px; font-weight: 600; }
+      background: var(--n-900); color: var(--n-050); font-size: 13px; font-weight: 600; }
     .chip b { font-weight: 700; }
     .chip--round { font-weight: 800; letter-spacing: .02em; }
     .chip--warn { color: var(--amber-200); }
@@ -126,8 +128,8 @@
     .dial__read > span { font-size: 13px; color: var(--n-300); margin-top: 4px; }
     .rmeters { display: flex; gap: 14px; }
     .win { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 104px;
-      padding: 14px 18px; border-radius: 12px; background: rgba(255,255,255,.05);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.10), inset 0 3px 8px rgba(0,0,0,.5); }
+      padding: 14px 18px; border-radius: 12px; background: rgba(0,0,0,.25);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.10); }
     .win__lb { font-size: 12px; color: var(--n-300); }
     .win img { width: 48px; height: 48px; }
     .win b { font-family: var(--font-mono); font-size: 27px; font-weight: 700; color: var(--cyan-300); line-height: 1.3; }
