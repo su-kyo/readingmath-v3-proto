@@ -70,17 +70,17 @@
       '.scratch .bar__deco{ filter: url(#scratchNavy); }',
 
       /* 도구 바 속 — 램프 + 타이틀 + 물리 버튼 (보조 모니터 하드웨어 언어) */
-      '.scratch__tools{ display:flex; align-items:center; gap:9px; }',
-      '.scratch__sep{ width:1px; height:26px; background:var(--n-500); margin:0 3px; }',
-      '.scratch__swatch{ width:36px; height:36px; border-radius:50%; border:3px solid var(--n-500); background:var(--swatch); cursor:pointer; padding:0; }',
-      '.scratch__swatch.is-on{ border-color:var(--n-000); box-shadow:0 0 0 2px var(--n-900); }',
-      '.scratch__tool{ height:44px; padding:0 16px; border:0; border-radius:12px; background:var(--n-500); color:var(--n-050); font-size:16px; font-weight:700; font-family:inherit; box-shadow:0 3px 0 var(--n-900); cursor:pointer; display:inline-flex; align-items:center; gap:6px; }',
-      '.scratch__tool:active{ transform:translateY(2px); box-shadow:0 1px 0 var(--n-900); }',
-      '.scratch__tool.is-on{ background:var(--n-000); color:var(--n-650); }',
-      '.scratch__tool.is-off{ opacity:.35; pointer-events:none; }',
-      '.scratch__tool--ico{ width:44px; padding:0; justify-content:center; }',
-      '.scratch__done{ display:inline-flex; align-items:center; gap:8px; height:44px; padding:0 20px; border:0; border-radius:12px; background:var(--th-vivid, var(--blue-450)); color:var(--n-000); font-size:19px; font-weight:800; font-family:inherit; box-shadow:0 3px 0 var(--n-900); cursor:pointer; }',
-      '.scratch__done:active{ transform:translateY(2px); box-shadow:0 1px 0 var(--n-900); }'
+      /* 도구 바 속 버튼은 화면이 이미 쓰는 .toolbtn 그대로 —
+         같은 콘솔 패널의 다른 상태로 읽히게 한다. 여기선 연습장 전용 상태만 얹는다. */
+      '.scratch__tools{ display:flex; align-items:center; gap:10px; }',
+      '.scratch__sep{ width:1px; height:24px; background:rgba(255,255,255,.18); margin:0 2px; }',
+      '.scratch__done svg, .scratch__tool svg{ width:18px; height:18px; flex:none; }',
+      '.scratch__tool.is-on{ background:var(--n-000); color:var(--n-650); }',  /* 고른 도구 = 눌린 키 */
+      /* 잉크 칩도 같은 물리 버튼 언어(하드 드롭) */
+      '.scratch__swatch{ width:36px; height:36px; border-radius:50%; border:3px solid var(--n-500); background:var(--swatch); padding:0; box-shadow:0 4px 0 var(--n-650); }',
+      '.scratch__swatch.is-on{ border-color:var(--n-000); }',
+      '.scratch__swatch:hover{ filter:brightness(1.12); }',
+      '.scratch__swatch:active{ transform:translateY(2px); box-shadow:0 2px 0 var(--n-650); }'
     ].join('\n');
     document.head.appendChild(css);
 
@@ -179,16 +179,16 @@
     /* 나가는 버튼은 「연습장」 버튼이 있던 왼쪽 그 자리 — 켠 자리에서 끈다.
        (오른쪽 끝에 두면 열어만 본 사람이 닫으려고 반대편까지 가야 한다) */
     tray.innerHTML =
-      '<button class="scratch__done" data-tool="close">' + ICO_CLOSE + '연습장 닫기</button>' +
+      '<button class="toolbtn toolbtn--primary scratch__done" data-tool="close">' + ICO_CLOSE + '<span>연습장 닫기</span></button>' +
       '<div class="scratch__tools">' +
         '<button class="scratch__swatch is-on" data-ink="1" style="--swatch:var(--scratch-ink-1)" aria-label="잉크 기본색"></button>' +
         '<button class="scratch__swatch" data-ink="2" style="--swatch:var(--scratch-ink-2)" aria-label="잉크 빨강"></button>' +
         '<button class="scratch__swatch" data-ink="3" style="--swatch:var(--scratch-ink-3)" aria-label="잉크 파랑"></button>' +
-        '<button class="scratch__tool" data-tool="eraser">지우개</button>' +
+        '<button class="toolbtn scratch__tool" data-tool="eraser"><span>지우개</span></button>' +
         '<span class="scratch__sep"></span>' +
-        '<button class="scratch__tool scratch__tool--ico is-off" data-tool="undo" aria-label="뒤로 복귀">' + ICO_UNDO + '</button>' +
-        '<button class="scratch__tool scratch__tool--ico is-off" data-tool="redo" aria-label="앞으로 복귀">' + ICO_REDO + '</button>' +
-        '<button class="scratch__tool" data-tool="clear">전체 지우기</button>' +
+        '<button class="toolbtn scratch__tool scratch__tool--ico" data-tool="undo" aria-label="뒤로 복귀" disabled>' + ICO_UNDO + '</button>' +
+        '<button class="toolbtn scratch__tool scratch__tool--ico" data-tool="redo" aria-label="앞으로 복귀" disabled>' + ICO_REDO + '</button>' +
+        '<button class="toolbtn scratch__tool" data-tool="clear"><span>전체 지우기</span></button>' +
       '</div>';
     /* 가운데 면색도 데코와 똑같은 계산으로 옮긴다 — 이래야 이음매가 안 보인다.
        화면마다 트레이 색이 다르지만(개념 파랑·유형 베이지·서술형 보라·과제 회색)
@@ -255,9 +255,9 @@
     var hist = [], redoStack = [], HMAX = 20;
     var undoBtn = toolbar.querySelector('[data-tool="undo"]');
     var redoBtn = toolbar.querySelector('[data-tool="redo"]');
-    function syncUR() {
-      undoBtn.classList.toggle('is-off', !hist.length);
-      redoBtn.classList.toggle('is-off', !redoStack.length);
+    function syncUR() {                          /* 비활성은 화면의 .toolbtn:disabled 규칙을 그대로 탄다 */
+      undoBtn.disabled = !hist.length;
+      redoBtn.disabled = !redoStack.length;
     }
     function snapshot() {
       try {
