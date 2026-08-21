@@ -1,170 +1,218 @@
 <!DOCTYPE html>
-<!-- Phase 7 ② 시안 비교 — 끊어읽기 탈박스 (essay/drill-v2) · 배포 제외 -->
+<!-- Phase 7 ② 시안 v2 — 끊어읽기 탈박스 (essay/drill-v2) · 배포 제외
+     v1의 잘못된 전제(문장 단위 블록 + '계속' pill)를 폐기하고,
+     개념 훈련(concept/learn.html)의 검증된 seg 모델로 다시 세운 판. -->
 <html lang="ko" data-section="essay" data-theme="dark">
 <head>
   <base href="../">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>끊어읽기 탈박스 시안 — 리딩수학과학 (tools)</title>
+  <title>끊어읽기 탈박스 시안 v2 — 리딩수학과학 (tools)</title>
   <link rel="stylesheet" href="styles/tokens.css?v=24" />
   <link rel="stylesheet" href="styles/base.css?v=7" />
   <style>
     body { background: var(--n-900); color: var(--n-050); font-family: var(--font-sans);
-      padding: 36px clamp(20px,4vw,56px) 72px; }
+      padding: 34px clamp(20px,4vw,56px) 80px; }
     .page__ttl { font-size: 26px; font-weight: 800; }
-    .page__sub { margin-top: 6px; color: var(--n-300); font-size: 15px; line-height: 1.6; max-width: 900px; }
-    .prop { margin-top: 40px; }
+    .page__sub { margin-top: 6px; color: var(--n-300); font-size: 15px; line-height: 1.65; max-width: 940px; }
+    .page__sub b { color: var(--violet-300); }
+    .prop { margin-top: 42px; }
     .prop__ttl { font-size: 19px; font-weight: 800; color: var(--violet-300); }
-    .prop__desc { margin: 6px 0 16px; color: var(--n-300); font-size: 14px; line-height: 1.6; max-width: 860px; }
+    .prop__desc { margin: 6px 0 16px; color: var(--n-300); font-size: 14px; line-height: 1.65; max-width: 900px; }
     .duo { display: grid; grid-template-columns: repeat(2, minmax(340px, 560px)); gap: 22px; }
-    @media (max-width: 860px) { .duo { grid-template-columns: 1fr; } }
+    @media (max-width: 900px) { .duo { grid-template-columns: 1fr; } }
     .demo { border-radius: 20px; padding: 26px 30px; }
-    .demo__tag { display: inline-block; margin-bottom: 14px; padding: 3px 11px; border-radius: 999px;
+    .demo__tag { display: inline-block; margin-bottom: 16px; padding: 3px 11px; border-radius: 999px;
       font-size: 12px; font-weight: 700; }
 
-    /* ===== 테마 컨텍스트 (essay 라이트/다크 본문색 재현) ===== */
-    .t-light { background: var(--n-000);
-      --ink: var(--n-650);
-      --face: color-mix(in srgb, var(--violet-500) 10%, transparent); }
+    /* ===== 테마 컨텍스트 (essay 본문색 재현) ===== */
+    .t-light { background: var(--n-000); --ink: var(--n-650);
+      --face: color-mix(in srgb, var(--violet-500) 20%, transparent); --face-ink: var(--violet-600); }
     .t-light .demo__tag { background: var(--n-050); color: var(--n-500); }
     .t-dark { background: var(--surface-1); box-shadow: inset 0 0 0 1px rgba(255,255,255,.07);
       --ink: rgba(249,249,249,.94);
-      --face: color-mix(in srgb, var(--violet-500) 24%, transparent); }
+      --face: color-mix(in srgb, var(--violet-500) 38%, transparent); --face-ink: var(--n-000); }
     .t-dark .demo__tag { background: rgba(255,255,255,.08); color: var(--n-300); }
 
-    /* ===== 끊어읽기 문장 (블록) — 상태 3단: 읽은 · 지금 · 아직 ===== */
-    .ck { display: block; font-family: var(--font-serif); color: var(--ink);
-      font-size: 17.5px; line-height: 2.05; letter-spacing: -0.01em; border-radius: 12px; }
-    .ck + .ck { margin-top: 10px; }
-    /* 지금 = 면 하나 (테두리 없음). 패딩만큼 음수 마진 — 본문 정렬은 그대로, 면만 넓게 */
-    .ck--now { background: var(--face); padding: 8px 16px; margin-left: -16px; margin-right: -16px; cursor: pointer; }
-    .ck--now + .ck { margin-top: 18px; }
-    .ck--read + .ck--now { margin-top: 18px; }
-    /* 계속 pill (탭 어포던스 — 현행 유지) */
-    .go { display: inline-flex; align-items: center; vertical-align: middle; margin-left: 8px;
-      padding: 3px 11px; border-radius: 999px; background: color-mix(in srgb, var(--violet-500) 16%, transparent);
-      color: var(--violet-300); font-family: var(--font-sans); font-size: 12px; font-weight: 700; white-space: nowrap;
-      animation: goPulse 1.4s ease-in-out infinite; }
-    .t-light .go { color: var(--violet-600); background: color-mix(in srgb, var(--violet-500) 12%, transparent); }
-    @keyframes goPulse { 0%,100%{transform:translateX(0)} 50%{transform:translateX(3px)} }
-    /* 읽은 곳 감쇠 (B·C안) */
-    .dim-read .ck--read { color: color-mix(in srgb, var(--ink) 62%, transparent); }
-    /* 아직 안 읽은 곳 — 블러(A·B) vs 저명도(C) */
-    .blur-ahead .ck--ahead { filter: blur(4px); opacity: .28; user-select: none; }
-    .fade-ahead .ck--ahead { opacity: .26; user-select: none; }
+    /* ===== 끊어읽기 구간 = 개념 훈련의 .seg 문법 그대로 =====
+       인라인 span · 끊는 위치는 편집자 자유 · 지금 구간만 면(테두리 아님, 같은 색 3px 확장) */
+    .body { font-family: var(--font-serif); color: var(--ink);
+      font-size: 17.5px; line-height: 2.35; letter-spacing: -0.01em; }
+    .seg { border-radius: 5px; padding: 1px 0;
+      transition: filter .22s ease, opacity .22s ease, background .15s ease; }
+    .seg.is-unread { filter: blur(4.5px); opacity: .3; user-select: none; }
+    .seg.is-current { cursor: pointer; background: var(--face); box-shadow: 0 0 0 3px var(--face);
+      color: var(--face-ink); font-weight: 600; }
+    /* 읽은 곳 — B안에서만 가라앉힌다 */
+    .dim-read .seg.is-read { color: color-mix(in srgb, var(--ink) 60%, transparent); }
 
-    /* 빈칸 칩 (essay 빈칸 문법 축약 — 활성 = 주황) */
-    .bk { display: inline-flex; align-items: center; justify-content: center; vertical-align: middle;
-      min-width: 46px; height: 30px; margin: 0 3px; border-radius: 8px;
+    /* 빈칸 칩 (essay 문법 축약) */
+    .bk { display: inline-flex; align-items: center; justify-content: center; vertical-align: baseline;
+      min-width: 46px; height: 28px; margin: 0 3px; border-radius: 8px; font-family: var(--font-sans);
       background: rgba(255,255,255,.06); box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.22); }
     .t-light .bk { background: var(--n-050); box-shadow: inset 0 0 0 1.5px var(--n-100); }
-    .bk--on { background: color-mix(in srgb, var(--warn-solid) 26%, transparent);
+    .bk--on { background: color-mix(in srgb, var(--warn-solid) 30%, transparent);
       box-shadow: inset 0 0 0 1.5px var(--warn-solid); }
 
-    /* ===== 모달(문제 읽기) 컨텍스트 — 인라인 하이라이트 ===== */
-    .ms { display: inline; font-family: var(--font-serif); color: var(--ink);
-      font-size: 18px; line-height: 2.1; letter-spacing: -0.01em; border-radius: 6px;
-      box-decoration-break: clone; -webkit-box-decoration-break: clone; }
-    .ms--now { background: var(--face); padding: 2px 4px; }
-    .ms--ahead { filter: blur(4px); opacity: .3; }
+    /* 끊는 위치 표시용 (설명 전용 — 실제 화면에는 없음) */
+    .cut { color: var(--violet-300); opacity: .5; font-weight: 700; margin: 0 2px; }
+    .note { margin-top: 12px; font-family: var(--font-sans); font-size: 12.5px; color: var(--n-400); line-height: 1.6; }
+
+    /* ===== 모달 컨텍스트 ===== */
     .mold { border: 1px solid rgba(255,255,255,.12); border-radius: 16px; padding: 22px 26px;
       background: rgba(255,255,255,.045); }
     .t-light .mold { border-color: var(--n-100); background: var(--n-050); }
-    .mnew { padding: 6px 2px; }
-    .mlabel { display: block; margin-bottom: 10px; font-size: 12.5px; font-weight: 700; color: var(--n-400); }
+    .mnew { padding: 4px 2px; }
+    .mimg { margin-top: 16px; border-radius: 12px; overflow: hidden; max-width: 300px;
+      transition: filter .3s ease, opacity .3s ease; }
+    .mimg img { display: block; width: 100%; height: auto; }
+    .mimg.is-unread { filter: blur(9px); opacity: .32; }
+    .foot { display: flex; align-items: center; gap: 12px; margin-top: 18px; }
+    .foot__hint { margin-right: auto; font-family: var(--font-sans); font-size: 12.5px; font-weight: 600; color: var(--n-400); }
+    .t-light .foot__hint { color: var(--n-500); }
+    .foot__go { display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; border-radius: 13px; border: 0;
+      background: var(--primary); color: var(--n-000); font-family: var(--font-sans); font-size: 17px; font-weight: 800;
+      box-shadow: 0 4px 0 color-mix(in srgb, var(--primary) 62%, #000); }
+    .foot__go[disabled] { opacity: .35; box-shadow: none; }
   </style>
 </head>
 <body>
-  <h1 class="page__ttl">끊어읽기 탈박스 — 시안 (Phase 7 ②)</h1>
-  <p class="page__sub">경계 상자를 없애고 「지금 읽는 문장에만 면이 생기는」 상태 구분으로. 세 안 모두 <b>지금 = 보라 면 하나(테두리 없음)</b>는 같고, <b>읽은 곳·아직 안 읽은 곳</b>을 다루는 방식이 다르다. 아래 맨 끝은 문제 읽기 모달의 경계 제거 비교.</p>
+  <h1 class="page__ttl">끊어읽기 탈박스 — 시안 v2 (Phase 7 ②)</h1>
+  <p class="page__sub">v1을 폐기하고 다시 세웠습니다. 끊는 위치는 <b>편집자가 자유롭게 정하므로 문장 단위 블록으로 가정할 수 없고</b>, 그래서 「계속 ›」 알약도 쓸 수 없습니다. <b>개념 훈련(concept/learn.html)이 이미 쓰는 인라인 구간(seg) 문법</b>을 서술형에 그대로 옮깁니다 — 지금 구간만 면, 안 읽은 곳은 항상 블러, 진행은 지금 구간을 눌러서.</p>
 
-  <!-- ================= A안 ================= -->
+  <!-- ================= 1. 끊는 위치 자유도 ================= -->
   <section class="prop">
-    <h2 class="prop__ttl">A안 — 지금만 면 · 읽은 곳은 그대로 · 아직은 블러 (현행 + 면)</h2>
-    <p class="prop__desc">현행 문법에 면 하나만 얹은 최소 변경. 읽은 곳과 지금의 구분은 면 하나가 담당한다.</p>
-    <div class="duo">
-      <div class="demo t-light blur-ahead">
-        <span class="demo__tag">라이트</span>
-        <span class="ck ck--read">(남아 있는 책의 수) = (학급 문고의 책의 수) − (어제까지 빌려간 책의 수) + (오늘 반납한 책의 수) − (오늘 빌려간 책의 수) 입니다.</span>
-        <span class="ck ck--now">따라서 남아 있는 책의 수는 178 − <span class="bk bk--on"></span> + 17 − 35 =<span class="go">계속 ›</span></span>
-        <span class="ck ck--ahead">149 + 17 − 35 = <span class="bk"></span> − 35 =</span>
-        <span class="ck ck--ahead"><span class="bk"></span> (권) 입니다.</span>
-      </div>
-      <div class="demo t-dark blur-ahead">
-        <span class="demo__tag">다크</span>
-        <span class="ck ck--read">(남아 있는 책의 수) = (학급 문고의 책의 수) − (어제까지 빌려간 책의 수) + (오늘 반납한 책의 수) − (오늘 빌려간 책의 수) 입니다.</span>
-        <span class="ck ck--now">따라서 남아 있는 책의 수는 178 − <span class="bk bk--on"></span> + 17 − 35 =<span class="go">계속 ›</span></span>
-        <span class="ck ck--ahead">149 + 17 − 35 = <span class="bk"></span> − 35 =</span>
-        <span class="ck ck--ahead"><span class="bk"></span> (권) 입니다.</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= B안 ================= -->
-  <section class="prop">
-    <h2 class="prop__ttl">B안 (추천) — 지금만 면 · 읽은 곳은 가라앉힘 · 아직은 블러</h2>
-    <p class="prop__desc">상태 3단이 온전히 갈라진다: 읽은 곳(감쇠했지만 읽힘) &lt; 지금(면+본문 잉크) &gt; 아직(블러). 시선이 지금 문장에 모인다.</p>
-    <div class="duo">
-      <div class="demo t-light blur-ahead dim-read">
-        <span class="demo__tag">라이트</span>
-        <span class="ck ck--read">(남아 있는 책의 수) = (학급 문고의 책의 수) − (어제까지 빌려간 책의 수) + (오늘 반납한 책의 수) − (오늘 빌려간 책의 수) 입니다.</span>
-        <span class="ck ck--now">따라서 남아 있는 책의 수는 178 − <span class="bk bk--on"></span> + 17 − 35 =<span class="go">계속 ›</span></span>
-        <span class="ck ck--ahead">149 + 17 − 35 = <span class="bk"></span> − 35 =</span>
-        <span class="ck ck--ahead"><span class="bk"></span> (권) 입니다.</span>
-      </div>
-      <div class="demo t-dark blur-ahead dim-read">
-        <span class="demo__tag">다크</span>
-        <span class="ck ck--read">(남아 있는 책의 수) = (학급 문고의 책의 수) − (어제까지 빌려간 책의 수) + (오늘 반납한 책의 수) − (오늘 빌려간 책의 수) 입니다.</span>
-        <span class="ck ck--now">따라서 남아 있는 책의 수는 178 − <span class="bk bk--on"></span> + 17 − 35 =<span class="go">계속 ›</span></span>
-        <span class="ck ck--ahead">149 + 17 − 35 = <span class="bk"></span> − 35 =</span>
-        <span class="ck ck--ahead"><span class="bk"></span> (권) 입니다.</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= C안 ================= -->
-  <section class="prop">
-    <h2 class="prop__ttl">C안 — 지금만 면 · 명도 3단 (블러 없음)</h2>
-    <p class="prop__desc">아직 안 읽은 곳을 블러 대신 저명도로. 화면이 덜 어지럽지만, 흐린 글자는 미리 읽으려 시도하게 만들 수 있다(끊어읽기 취지와 상충 가능).</p>
-    <div class="duo">
-      <div class="demo t-light fade-ahead dim-read">
-        <span class="demo__tag">라이트</span>
-        <span class="ck ck--read">(남아 있는 책의 수) = (학급 문고의 책의 수) − (어제까지 빌려간 책의 수) + (오늘 반납한 책의 수) − (오늘 빌려간 책의 수) 입니다.</span>
-        <span class="ck ck--now">따라서 남아 있는 책의 수는 178 − <span class="bk bk--on"></span> + 17 − 35 =<span class="go">계속 ›</span></span>
-        <span class="ck ck--ahead">149 + 17 − 35 = <span class="bk"></span> − 35 =</span>
-        <span class="ck ck--ahead"><span class="bk"></span> (권) 입니다.</span>
-      </div>
-      <div class="demo t-dark fade-ahead dim-read">
-        <span class="demo__tag">다크</span>
-        <span class="ck ck--read">(남아 있는 책의 수) = (학급 문고의 책의 수) − (어제까지 빌려간 책의 수) + (오늘 반납한 책의 수) − (오늘 빌려간 책의 수) 입니다.</span>
-        <span class="ck ck--now">따라서 남아 있는 책의 수는 178 − <span class="bk bk--on"></span> + 17 − 35 =<span class="go">계속 ›</span></span>
-        <span class="ck ck--ahead">149 + 17 − 35 = <span class="bk"></span> − 35 =</span>
-        <span class="ck ck--ahead"><span class="bk"></span> (권) 입니다.</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= 모달 공통 — 읽기 패널 경계 제거 ================= -->
-  <section class="prop">
-    <h2 class="prop__ttl">모달(문제 읽기) 공통 — 읽기 패널의 경계 상자 제거</h2>
-    <p class="prop__desc">지금 문장에 면이 있으므로 그걸 감싸는 패널의 테두리·배경은 없앤다(대비는 한 번만). 본문이 스크린에 직접 얹힌다. 왼쪽 = 현행, 오른쪽 = 제거 후.</p>
+    <h2 class="prop__ttl">1. 끊는 위치는 자유 — 같은 문장, 다른 분할</h2>
+    <p class="prop__desc">인라인 구간이라 어디서 끊든 본문 흐름이 그대로 유지됩니다. 아래 둘은 같은 문장을 다르게 끊은 것(<span class="cut">/</span> 는 설명용 표시일 뿐 화면에는 없습니다). 지금 구간은 두 경우 모두 같은 문법으로 표시됩니다.</p>
     <div class="duo">
       <div class="demo t-dark">
-        <span class="demo__tag">현행 — 패널 상자 안</span>
-        <div class="mold">
-          <span class="ms">학급 문고에 책이 178권이 있었습니다. </span>
-          <span class="ms ms--now">어제까지 29권의 책을 빌려갔고, 오늘은 어제까지 빌린 책 중 17권을 학급 문고에 반납하였습니다. </span>
-          <span class="ms ms--ahead">오후에 책장을 보니 오늘은 35권의 책을 빌려갔습니다. </span>
-          <span class="ms ms--ahead">지금 학급 문고에 남아 있는 책은 몇 권인지 구해 보세요.</span>
+        <span class="demo__tag">굵게 끊기 — 3구간</span>
+        <div class="body">
+          <span class="seg is-read">따라서 남아 있는 책의 수는</span>
+          <span class="seg is-current">178 − <span class="bk bk--on"></span>을</span>
+          <span class="seg is-unread">계산합니다.</span>
+        </div>
+        <p class="note">따라서 남아 있는 책의 수는 <span class="cut">/</span> 178 − 16을 <span class="cut">/</span> 계산합니다.</p>
+      </div>
+      <div class="demo t-dark">
+        <span class="demo__tag">잘게 끊기 — 5구간</span>
+        <div class="body">
+          <span class="seg is-read">따라서</span>
+          <span class="seg is-read">남아 있는</span>
+          <span class="seg is-current">책의 수는</span>
+          <span class="seg is-unread">178 − <span class="bk"></span>을</span>
+          <span class="seg is-unread">계산합니다.</span>
+        </div>
+        <p class="note">따라서 <span class="cut">/</span> 남아 있는 <span class="cut">/</span> 책의 수는 <span class="cut">/</span> 178 − 16을 <span class="cut">/</span> 계산합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 2. 읽은 곳 처리 (유일한 선택지) ================= -->
+  <section class="prop">
+    <h2 class="prop__ttl">2. 읽은 곳을 어떻게 둘까 — 이번 항목의 유일한 선택</h2>
+    <p class="prop__desc">지금 구간(면) · 안 읽은 곳(블러)은 확정입니다. 갈리는 건 이미 읽은 곳뿐입니다. 서술형 풀이는 여러 줄이 쌓이므로 개념 본문보다 읽은 곳이 많이 남습니다.</p>
+    <div class="duo">
+      <div class="demo t-dark">
+        <span class="demo__tag">A안 (추천) — 읽은 곳 그대로 · 개념 훈련과 동일</span>
+        <div class="body">
+          <span class="seg is-read">(남아 있는 책의 수) =</span>
+          <span class="seg is-read">(학급 문고의 책의 수) − (어제까지 빌려간 책의 수)</span>
+          <span class="seg is-read">+ (오늘 반납한 책의 수) − (오늘 빌려간 책의 수) 입니다.</span>
+          <span class="seg is-current">따라서 남아 있는 책의 수는 178 − <span class="bk bk--on"></span> + 17 − 35 =</span>
+          <span class="seg is-unread">149 + 17 − 35 = <span class="bk"></span> − 35 =</span>
+          <span class="seg is-unread"><span class="bk"></span> (권) 입니다.</span>
+        </div>
+      </div>
+      <div class="demo t-dark dim-read">
+        <span class="demo__tag">B안 — 읽은 곳 60%로 가라앉힘</span>
+        <div class="body">
+          <span class="seg is-read">(남아 있는 책의 수) =</span>
+          <span class="seg is-read">(학급 문고의 책의 수) − (어제까지 빌려간 책의 수)</span>
+          <span class="seg is-read">+ (오늘 반납한 책의 수) − (오늘 빌려간 책의 수) 입니다.</span>
+          <span class="seg is-current">따라서 남아 있는 책의 수는 178 − <span class="bk bk--on"></span> + 17 − 35 =</span>
+          <span class="seg is-unread">149 + 17 − 35 = <span class="bk"></span> − 35 =</span>
+          <span class="seg is-unread"><span class="bk"></span> (권) 입니다.</span>
+        </div>
+      </div>
+    </div>
+    <div class="duo" style="margin-top:22px">
+      <div class="demo t-light">
+        <span class="demo__tag">A안 · 라이트</span>
+        <div class="body">
+          <span class="seg is-read">(남아 있는 책의 수) =</span>
+          <span class="seg is-read">(학급 문고의 책의 수) − (어제까지 빌려간 책의 수)</span>
+          <span class="seg is-read">+ (오늘 반납한 책의 수) − (오늘 빌려간 책의 수) 입니다.</span>
+          <span class="seg is-current">따라서 남아 있는 책의 수는 178 − <span class="bk bk--on"></span> + 17 − 35 =</span>
+          <span class="seg is-unread">149 + 17 − 35 = <span class="bk"></span> − 35 =</span>
+          <span class="seg is-unread"><span class="bk"></span> (권) 입니다.</span>
+        </div>
+      </div>
+      <div class="demo t-light dim-read">
+        <span class="demo__tag">B안 · 라이트</span>
+        <div class="body">
+          <span class="seg is-read">(남아 있는 책의 수) =</span>
+          <span class="seg is-read">(학급 문고의 책의 수) − (어제까지 빌려간 책의 수)</span>
+          <span class="seg is-read">+ (오늘 반납한 책의 수) − (오늘 빌려간 책의 수) 입니다.</span>
+          <span class="seg is-current">따라서 남아 있는 책의 수는 178 − <span class="bk bk--on"></span> + 17 − 35 =</span>
+          <span class="seg is-unread">149 + 17 − 35 = <span class="bk"></span> − 35 =</span>
+          <span class="seg is-unread"><span class="bk"></span> (권) 입니다.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 3. 모달 — 경계 제거 + 이미지 ================= -->
+  <section class="prop">
+    <h2 class="prop__ttl">3. 문제 읽기 모달 — 경계 제거(확정) + 이미지도 같은 규칙</h2>
+    <p class="prop__desc">본문이 스크린에 직접 얹힙니다. 이미지는 <b>본문을 다 읽기 전까지 블러 + 흐림</b>으로 두고, 다 읽으면 선명해집니다 — 그림에 답이 드러나는 경우를 막습니다. 왼쪽 = 읽는 중, 오른쪽 = 다 읽은 뒤.</p>
+    <div class="duo">
+      <div class="demo t-dark">
+        <span class="demo__tag">읽는 중 — 이미지 블러</span>
+        <div class="mnew body">
+          <span class="seg is-read">학급 문고에 책이 178권이 있었습니다.</span>
+          <span class="seg is-current">어제까지 29권의 책을 빌려갔고,</span>
+          <span class="seg is-unread">오늘은 어제까지 빌린 책 중 17권을 학급 문고에 반납하였습니다.</span>
+          <span class="seg is-unread">지금 학급 문고에 남아 있는 책은 몇 권인지 구해 보세요.</span>
+        </div>
+        <div class="mimg is-unread"><img src="assets/img/misc/report-process.webp" alt="" /></div>
+        <div class="foot">
+          <span class="foot__hint">구간을 눌러 이어 읽어요</span>
+          <button class="foot__go" disabled>문제 풀기 →</button>
         </div>
       </div>
       <div class="demo t-dark">
-        <span class="demo__tag">제거 후 — 본문이 스크린에 직접</span>
-        <div class="mnew">
-          <span class="ms">학급 문고에 책이 178권이 있었습니다. </span>
-          <span class="ms ms--now">어제까지 29권의 책을 빌려갔고, 오늘은 어제까지 빌린 책 중 17권을 학급 문고에 반납하였습니다. </span>
-          <span class="ms ms--ahead">오후에 책장을 보니 오늘은 35권의 책을 빌려갔습니다. </span>
-          <span class="ms ms--ahead">지금 학급 문고에 남아 있는 책은 몇 권인지 구해 보세요.</span>
+        <span class="demo__tag">다 읽은 뒤 — 이미지 선명 · 버튼 활성</span>
+        <div class="mnew body">
+          <span class="seg is-read">학급 문고에 책이 178권이 있었습니다.</span>
+          <span class="seg is-read">어제까지 29권의 책을 빌려갔고,</span>
+          <span class="seg is-read">오늘은 어제까지 빌린 책 중 17권을 학급 문고에 반납하였습니다.</span>
+          <span class="seg is-read">지금 학급 문고에 남아 있는 책은 몇 권인지 구해 보세요.</span>
+        </div>
+        <div class="mimg"><img src="assets/img/misc/report-process.webp" alt="" /></div>
+        <div class="foot">
+          <span class="foot__hint">문제를 다 읽었어요</span>
+          <button class="foot__go">문제 풀기 →</button>
+        </div>
+      </div>
+    </div>
+    <div class="duo" style="margin-top:22px">
+      <div class="demo t-dark">
+        <span class="demo__tag">참고 — 현행(패널 상자 안)</span>
+        <div class="mold body">
+          <span class="seg is-read">학급 문고에 책이 178권이 있었습니다.</span>
+          <span class="seg is-current">어제까지 29권의 책을 빌려갔고,</span>
+          <span class="seg is-unread">오늘은 어제까지 빌린 책 중 17권을 학급 문고에 반납하였습니다.</span>
+          <span class="seg is-unread">지금 학급 문고에 남아 있는 책은 몇 권인지 구해 보세요.</span>
+        </div>
+      </div>
+      <div class="demo t-light">
+        <span class="demo__tag">제거 후 · 라이트</span>
+        <div class="mnew body">
+          <span class="seg is-read">학급 문고에 책이 178권이 있었습니다.</span>
+          <span class="seg is-current">어제까지 29권의 책을 빌려갔고,</span>
+          <span class="seg is-unread">오늘은 어제까지 빌린 책 중 17권을 학급 문고에 반납하였습니다.</span>
+          <span class="seg is-unread">지금 학급 문고에 남아 있는 책은 몇 권인지 구해 보세요.</span>
         </div>
       </div>
     </div>
