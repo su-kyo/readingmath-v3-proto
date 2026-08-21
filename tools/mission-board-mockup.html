@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<!-- Phase 7 ③ 목업 — 과제센터 홈 「밝은 선실의 상황판」 (1안 · 배포 제외)
-     · 딤 제거: 풀이 화면과 같은 밝은 선실(bg-space-hw)이 그대로 보인다
-     · 패널 → 상황판: 풀이 화면(solve)의 파란 헤더 바 + 파란 6px 프레임 문법 이식
-     · 워딩은 현행 유지 (과제 센터 · 진행중/미시작/완료 과제 · 계속 풀기 · 과제 풀기 · 결과 보기)
-     · 신설 정보: 마감(기한)과 「기한 지남」 상태 — 지시서 ③의 핵심 상태 -->
+<!-- Phase 7 ③ 목업 3차 — 과제센터 홈 구조 재구성 (배포 제외)
+     구조가 주인공: KPI 대시보드 → 학생의 질문 순서대로.
+     ① 지금 할 일(히어로 1건 · 기한 지남이면 이 자리가 곧 경보)
+     ② 다음 할 일(마감순 한 줄기 · 상태는 램프·칩으로)
+     ③ 완료 과제(요약 한 줄 + 최근 기록)
+     스킨은 2차 합의분: 선실 딤 .20 · 파란 헤더 바 · 파란 6px 프레임 · 틴트 바탕 위 모듈.
+     상태 보기: ?state=normal (기한 지남 없는 평상시) · 기본은 기한 지남 포함. -->
 <html lang="ko" data-theme="light" data-section="assign">
 <head>
   <base href="../">
@@ -19,13 +21,12 @@
     body { font-family: var(--font-sans); background: var(--assign-body); color: var(--n-650); overflow: hidden; -webkit-font-smoothing: antialiased; }
     .app { display: flex; flex-direction: column; height: 100dvh; }
 
-    /* ===== 스테이지: 밝은 선실 그대로 (딤 없음 — 풀이 화면과 같은 방) ===== */
-    /* 딤은 지우지 않고 낮춘다(원래 .32 → .20) — 선실은 보이되 보드가 앞으로 나온다 */
+    /* ===== 스테이지: 선실 + 옅은 딤(.20) ===== */
     .stage { position: relative; flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: center;
       padding: clamp(16px,2.2vw,26px) clamp(20px,4vw,60px) 0; gap: 13px;
       background: linear-gradient(rgba(9,12,40,.20), rgba(9,12,40,.20)), url("assets/img/bg/bg-space-hw.webp") center/cover no-repeat; }
 
-    /* ===== 상황판 헤더 바 — solve의 .hd 문법 (파란 알약) ===== */
+    /* ===== 상황판 헤더 바 ===== */
     .hd { flex: none; width: 100%; max-width: 1120px; display: flex; align-items: center; gap: 14px;
       background: var(--th-static); border-radius: 30px; padding: 11px 22px 11px 26px; color: var(--n-000); }
     .hd__title { font-size: 19px; font-weight: 800; letter-spacing: -.03em; white-space: nowrap; }
@@ -36,147 +37,133 @@
     .hd__lamps i { width: 9px; height: 9px; border-radius: 50%; background: rgba(0,0,0,.25); }
     .hd__lamps i.on { background: var(--cyan-300); box-shadow: 0 0 8px color-mix(in srgb, var(--cyan-300) 60%, transparent); }
 
-    /* ===== 상황판 프레임 — solve의 .content 문법 (파란 6px · 바닥까지) ===== */
+    /* ===== 상황판 프레임 ===== */
     .board { width: 100%; max-width: 1120px; flex: 1; min-height: 0;
       background: var(--n-000); border: 6px solid var(--th-static); border-bottom: 0;
       border-radius: 34px 34px 0 0; padding: 8px 8px 0;
       box-shadow: 0 2px 6px rgba(6,12,30,.14), 0 30px 60px -26px rgba(6,12,30,.55); }
-    /* 화면부 바탕은 살짝 틴트 — 흰 카드가 '올라앉은 모듈'로 읽히게 (층 분리) */
     .screen { height: 100%; overflow-y: auto; background: var(--n-050); border-radius: 28px 28px 0 0;
       scrollbar-gutter: stable; }
     .screen::-webkit-scrollbar { width: 12px; }
     .screen::-webkit-scrollbar-thumb { background: var(--n-200); border-radius: 999px; border: 3.5px solid var(--n-050); background-clip: padding-box; }
     .screen { scrollbar-width: thin; scrollbar-color: var(--n-200) var(--n-050); }
-    .inner { padding: 30px 34px 40px; display: flex; flex-direction: column; gap: 28px; }
+    .inner { padding: 28px 34px 40px; display: flex; flex-direction: column; gap: 26px; }
 
-    /* ===== 요약 — 판독창 스트립 (키패드·콘솔바와 같은 정적 하드웨어: 항상 네이비) ===== */
-    .gauges { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; align-items: stretch;
-      background: var(--n-650); border-radius: 18px; padding: 8px;
-      box-shadow: 0 3px 0 color-mix(in srgb, var(--n-650) 70%, var(--n-900)); }
-    .gcell { display: flex; align-items: center; gap: 16px; padding: 14px 20px; min-width: 0;
-      background: rgba(0,0,0,.22); box-shadow: inset 0 0 0 1px rgba(255,255,255,.09); }
-    .gcell:first-child { border-radius: 12px 4px 4px 12px; }
-    .gcell:last-child { border-radius: 4px 12px 12px 4px; }
-    .gcell + .gcell { margin-left: 6px; border-radius: 4px; }
-    .gcell:last-child { border-radius: 4px 12px 12px 4px; }
-    .ring { position: relative; width: 72px; height: 72px; flex: none; }
-    .ring > svg { width: 100%; height: 100%; transform: rotate(-90deg); }
-    .ring__c { position: absolute; inset: 0; display: grid; place-items: center; }
-    .ring__c b { font-family: var(--font-mono); font-size: 20px; font-weight: 700; color: var(--n-000); font-variant-numeric: tabular-nums; }
-    .gcell__b { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
-    .gcell__k { font-size: 13px; font-weight: 700; color: var(--n-300); }
-    .gcell__v { font-family: var(--font-mono); font-size: 26px; font-weight: 700; letter-spacing: -.02em; color: var(--n-000); font-variant-numeric: tabular-nums; line-height: 1.15; }
-    .gcell__v small { font-family: var(--font-sans); font-size: 13px; font-weight: 700; color: var(--n-300); margin-left: 2px; }
-    .gcell__sub { display: inline-flex; align-items: center; gap: 5px; font-size: 12.5px; font-weight: 700; color: var(--ok-on-dark); }
-    .gcell__sub svg { width: 14px; height: 14px; }
-
-    /* ===== 기한 지남 알림 스트립 ===== */
-    .notice { display: flex; align-items: center; gap: 11px; padding: 12px 18px; border-radius: 14px;
-      background: var(--no-tint); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--no-solid) 38%, transparent); }
-    .notice__lamp { width: 11px; height: 11px; border-radius: 50%; flex: none; background: var(--no-solid);
-      box-shadow: 0 0 9px color-mix(in srgb, var(--no-solid) 55%, transparent); animation: blink 1.8s ease-in-out infinite; }
-    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
-    .notice b { font-size: 14.5px; font-weight: 800; color: var(--no-ink); }
-    .notice span { font-size: 13.5px; color: var(--n-500); }
-
-    /* ===== 섹션 — 램프 헤더 (워딩 현행 유지) ===== */
-    .sec { display: flex; flex-direction: column; gap: 13px; }
-    .sec__head { display: flex; align-items: center; gap: 10px; padding-bottom: 10px; border-bottom: 1px solid var(--n-100); }
+    /* ===== 공통: 섹션 머리 (램프 + 라벨) ===== */
+    .sec__head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
     .sec__lamp { width: 11px; height: 11px; border-radius: 50%; flex: none; }
-    .sec__title { font-size: 18px; font-weight: 800; letter-spacing: -.03em; color: var(--n-650); }
-    .sec__count { font-family: var(--font-mono); font-size: 12.5px; font-weight: 700; padding: 1px 9px; border-radius: 999px; font-variant-numeric: tabular-nums; }
-    .sec--blue .sec__lamp { background: var(--th-accent); box-shadow: 0 0 8px color-mix(in srgb, var(--th-accent) 45%, transparent); }
-    .sec--blue .sec__count { background: color-mix(in srgb, var(--info-solid) 18%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--info-solid) 42%, transparent); color: var(--th-ink-accent); }
-    .sec--amber .sec__lamp { background: var(--warn-solid); box-shadow: 0 0 8px color-mix(in srgb, var(--warn-solid) 50%, transparent); }
-    .sec--amber .sec__count { background: color-mix(in srgb, var(--warn-solid) 18%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--warn-solid) 42%, transparent); color: var(--warn-ink); }
-    .sec--green .sec__lamp { background: var(--ok-solid); box-shadow: 0 0 8px color-mix(in srgb, var(--ok-solid) 45%, transparent); }
-    .sec--green .sec__count { background: color-mix(in srgb, var(--ok-solid) 18%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ok-solid) 42%, transparent); color: var(--ok-ink); }
-    .list { display: flex; flex-direction: column; gap: 12px; }
+    .sec__title { font-size: 17px; font-weight: 800; letter-spacing: -.03em; color: var(--n-650); }
+    .sec__count { font-family: var(--font-mono); font-size: 12.5px; font-weight: 700; padding: 1px 9px; border-radius: 999px; font-variant-numeric: tabular-nums;
+      background: color-mix(in srgb, var(--info-solid) 18%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--info-solid) 42%, transparent); color: var(--th-ink-accent); }
 
-    /* ===== 과제 카드 — 틴트 바탕 위 흰 모듈 (블러 그림자 대신 크리스프 받침) ===== */
-    .card { display: flex; align-items: center; gap: 20px; background: var(--n-000); border-radius: 16px; padding: 18px 22px;
-      box-shadow: 0 3px 0 rgba(20,32,58,.10); transition: box-shadow .12s, transform .12s; }
-    .card:hover { transform: translateY(-2px); box-shadow: 0 5px 0 rgba(20,32,58,.10); }
-    .card__lamp { width: 13px; height: 13px; border-radius: 50%; flex: none; }
-    .card--run .card__lamp { background: var(--th-accent); box-shadow: 0 0 9px color-mix(in srgb, var(--th-accent) 45%, transparent); }
-    .card--wait .card__lamp { background: var(--warn-solid); box-shadow: 0 0 9px color-mix(in srgb, var(--warn-solid) 50%, transparent); }
-    .card--done .card__lamp { background: var(--ok-solid); box-shadow: 0 0 9px color-mix(in srgb, var(--ok-solid) 45%, transparent); }
-    .card--late .card__lamp { background: var(--no-solid); box-shadow: 0 0 9px color-mix(in srgb, var(--no-solid) 55%, transparent); animation: blink 1.8s ease-in-out infinite; }
-    .card--late { background: color-mix(in srgb, var(--no-solid) 4%, var(--n-000));
-      box-shadow: 0 3px 0 rgba(20,32,58,.10), inset 0 0 0 1.5px color-mix(in srgb, var(--no-solid) 40%, transparent); }
-    .card--late:hover { box-shadow: 0 5px 0 rgba(20,32,58,.10), inset 0 0 0 1.5px color-mix(in srgb, var(--no-solid) 40%, transparent); }
-    .card__main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 9px; }
-    .card__title { font-size: 17px; font-weight: 700; color: var(--n-650); letter-spacing: -.01em; line-height: 1.3; }
+    /* ===== ① 지금 할 일 — 히어로 모듈 ===== */
+    .now .sec__lamp { background: var(--th-accent); box-shadow: 0 0 8px color-mix(in srgb, var(--th-accent) 45%, transparent); }
+    .now.is-late .sec__lamp { background: var(--no-solid); box-shadow: 0 0 9px color-mix(in srgb, var(--no-solid) 55%, transparent); animation: blink 1.8s ease-in-out infinite; }
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
+    .hero { display: flex; align-items: stretch; gap: 26px; background: var(--n-000); border-radius: 20px; padding: 26px 30px;
+      box-shadow: 0 4px 0 rgba(20,32,58,.10); }
+    .now.is-late .hero { background: color-mix(in srgb, var(--no-solid) 4%, var(--n-000));
+      box-shadow: 0 4px 0 rgba(20,32,58,.10), inset 0 0 0 2px color-mix(in srgb, var(--no-solid) 42%, transparent); }
+    .hero__main { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 12px; }
+    .hero__title { font-size: 23px; font-weight: 800; letter-spacing: -.02em; line-height: 1.3; color: var(--n-650); }
     .metarow { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
-    .unit { padding: 3px 9px; border-radius: 7px; background: var(--n-050); color: var(--n-500); font-size: 12px; font-weight: 700; }
-    .meta { display: inline-flex; align-items: center; gap: 5px; font-size: 12.5px; color: var(--text-meta); font-weight: 500; font-variant-numeric: tabular-nums; }
-    .meta svg { width: 13px; height: 13px; }
+    .unit { padding: 3px 9px; border-radius: 7px; background: var(--n-050); color: var(--n-500); font-size: 12.5px; font-weight: 700; }
+    .meta { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; color: var(--text-meta); font-weight: 500; font-variant-numeric: tabular-nums; }
     .meta b { color: var(--n-500); font-weight: 700; }
     .sep { width: 3px; height: 3px; border-radius: 50%; background: var(--n-200); flex: none; }
-    .dday { font-family: var(--font-mono); font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 7px;
-      background: var(--th-tint); color: var(--th-ink-accent); }
-    .dday--late { background: var(--no-tint); color: var(--no-ink); font-family: var(--font-sans); }
-
-    /* 진행률 (워딩 현행: 풀이 진행률) */
-    .prog { flex: none; width: 210px; display: flex; flex-direction: column; gap: 8px; }
-    .prog__top { display: flex; align-items: baseline; justify-content: space-between; }
-    .prog__k { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: var(--text-meta); }
-    .prog__k svg { width: 13px; height: 13px; color: var(--th-ink-accent); }
-    .prog__v { font-family: var(--font-mono); font-size: 17px; font-weight: 700; color: var(--th-ink-accent); font-variant-numeric: tabular-nums; }
-    .prog__v small { color: var(--text-meta); font-size: 12px; margin-left: 2px; }
-    /* 트랙 → 칸(세그) — 계기 어휘의 라이트 버전 */
-    .track { display: flex; gap: 3px; }
+    .hero__note { font-size: 13.5px; font-weight: 600; color: var(--no-ink); }
+    /* 진행률 (히어로) */
+    .prog { display: flex; align-items: center; gap: 12px; max-width: 460px; }
+    .track { display: flex; gap: 3px; flex: 1; }
     .track i { flex: 1; height: 10px; border-radius: 3px; background: var(--n-100); }
     .track i.on { background: var(--th-accent); }
+    .prog__v { font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: var(--th-ink-accent); font-variant-numeric: tabular-nums; flex: none; }
+    .prog__v small { color: var(--text-meta); font-size: 12px; margin-left: 2px; }
+    .qmeta { font-size: 13px; color: var(--text-meta); font-weight: 600; }
+    .qmeta b { font-family: var(--font-mono); font-size: 14px; color: var(--n-650); font-weight: 700; }
+    /* 우측: 마감 판독창(정적 하드웨어 네이비) + 시작 키 */
+    .hero__side { flex: none; display: flex; flex-direction: column; align-items: stretch; justify-content: center; gap: 12px; width: 208px; }
+    .dwin { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 13px 16px 15px; border-radius: 14px;
+      background: var(--n-650); box-shadow: 0 3px 0 color-mix(in srgb, var(--n-650) 70%, var(--n-900)); }
+    .dwin__k { font-size: 12px; font-weight: 700; color: var(--n-300); }
+    .dwin__v { font-family: var(--font-mono); font-size: 30px; font-weight: 700; color: var(--n-000); line-height: 1.1; font-variant-numeric: tabular-nums; }
+    .dwin__d { font-size: 12px; font-weight: 600; color: var(--n-300); font-variant-numeric: tabular-nums; }
+    .now.is-late .dwin__v { color: var(--no-on-dark); }
+    .now.is-late .dwin__k { color: var(--no-on-dark); }
+    /* 버튼 — 물리 키 */
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 0; cursor: pointer; font-family: inherit; font-weight: 800; white-space: nowrap; transition: filter .14s, transform .1s, box-shadow .14s; }
+    .btn svg { width: 18px; height: 18px; }
+    .btn--hero-go { padding: 15px 20px; border-radius: 14px; background: var(--th-ink-accent); color: var(--n-000); font-size: 19px;
+      box-shadow: 0 4px 0 var(--th-accent-strong); }
+    .btn--hero-go:hover { filter: brightness(1.08); }
+    .btn--hero-go:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--th-accent-strong); }
+    .btn--hero-do { padding: 15px 20px; border-radius: 14px; background: var(--warn-solid); color: var(--n-900); font-size: 19px;
+      box-shadow: 0 4px 0 color-mix(in srgb, var(--warn-solid) 55%, var(--n-900)); }   /* 앰버 = 어두운 글자 (§3.3) */
+    .btn--hero-do:hover { filter: brightness(1.05); }
+    .btn--hero-do:active { transform: translateY(2px); box-shadow: 0 2px 0 color-mix(in srgb, var(--warn-solid) 55%, var(--n-900)); }
 
-    /* 문항수 (미시작) — 흰 카드 위에서도 또렷하게 (링 1.5px) */
-    .qcount { flex: none; display: inline-flex; align-items: center; gap: 7px; padding: 8px 14px; border-radius: 10px;
-      background: var(--n-050); box-shadow: inset 0 0 0 1.5px var(--n-200); }
-    .qcount svg { width: 15px; height: 15px; color: var(--warn-ink); }
-    .qcount span { font-size: 12px; color: var(--text-meta); font-weight: 600; }
-    .qcount b { font-family: var(--font-mono); font-size: 14px; color: var(--n-650); font-weight: 700; }
-    /* 기한 지남 카드 위에서는 흰 바탕 + 레드 링으로 분리 */
-    .card--late .qcount { background: var(--n-000); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--no-solid) 45%, transparent); }
-    .card--late .qcount svg { color: var(--no-ink); }
-
-    /* 완료 점수 블록 (워딩 현행: 제출완료 · 점 · 결과 보기) */
-    .scoreblk { flex: none; display: flex; align-items: center; gap: 18px; }
-    .scoreblk__col { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
-    .badge-done { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 999px; background: var(--ok-ink); color: var(--n-000); font-size: 11px; font-weight: 800; }
-    .badge-done svg { width: 11px; height: 11px; }
-    .scoreblk__num { font-family: var(--font-mono); font-size: 26px; font-weight: 700; color: var(--n-650); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
-    .scoreblk__num small { font-family: var(--font-sans); font-size: 13px; color: var(--text-meta); font-weight: 700; margin-left: 1px; }
-
-    /* 버튼 — 물리 키 한 톨 (아래 받침 그림자) · 워딩 현행 유지 */
-    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; border: 0; cursor: pointer; font-family: inherit; font-weight: 700; white-space: nowrap; transition: filter .14s, transform .1s, box-shadow .14s; }
-    .btn svg { width: 17px; height: 17px; }
-    .btn--go { flex: none; padding: 12px 20px; border-radius: 12px; background: var(--th-ink-accent); color: var(--n-000); font-size: 15px;
+    /* ===== ② 다음 할 일 — 마감순 한 줄기 ===== */
+    .queue .sec__lamp { background: var(--th-accent); box-shadow: 0 0 8px color-mix(in srgb, var(--th-accent) 45%, transparent); }
+    .list { display: flex; flex-direction: column; gap: 11px; }
+    .row { display: flex; align-items: center; gap: 18px; background: var(--n-000); border-radius: 16px; padding: 16px 22px;
+      box-shadow: 0 3px 0 rgba(20,32,58,.10); transition: transform .12s, box-shadow .12s; }
+    .row:hover { transform: translateY(-2px); box-shadow: 0 5px 0 rgba(20,32,58,.10); }
+    .row__lamp { width: 13px; height: 13px; border-radius: 50%; flex: none; }
+    .row--run .row__lamp { background: var(--th-accent); box-shadow: 0 0 9px color-mix(in srgb, var(--th-accent) 45%, transparent); }
+    .row--new .row__lamp { background: var(--warn-solid); box-shadow: 0 0 9px color-mix(in srgb, var(--warn-solid) 50%, transparent); }
+    /* 마감 판독 (행 버전) — 히어로 판독창의 축소형 */
+    .row__dday { flex: none; width: 74px; display: flex; flex-direction: column; align-items: center; gap: 1px;
+      padding: 8px 6px 9px; border-radius: 11px; background: var(--n-050); box-shadow: inset 0 0 0 1.5px var(--n-100); }
+    .row__dday b { font-family: var(--font-mono); font-size: 17px; font-weight: 700; color: var(--th-ink-accent); font-variant-numeric: tabular-nums; }
+    .row__dday span { font-size: 10.5px; font-weight: 600; color: var(--text-meta); font-variant-numeric: tabular-nums; }
+    .row__main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 7px; }
+    .row__title { font-size: 16.5px; font-weight: 700; color: var(--n-650); letter-spacing: -.01em; line-height: 1.3; display: flex; align-items: center; gap: 8px; }
+    .newchip { flex: none; padding: 2px 8px; border-radius: 999px; font-size: 11.5px; font-weight: 800;
+      background: color-mix(in srgb, var(--warn-solid) 20%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--warn-solid) 45%, transparent); color: var(--warn-ink); }
+    .row__stat { flex: none; display: flex; align-items: center; gap: 12px; }
+    .row .track { width: 130px; flex: none; }
+    .row .track i { height: 9px; }
+    .btn--go { flex: none; padding: 11px 18px; border-radius: 11px; background: var(--th-ink-accent); color: var(--n-000); font-size: 14.5px; font-weight: 700;
       box-shadow: 0 3px 0 var(--th-accent-strong); }
     .btn--go:hover { filter: brightness(1.08); }
     .btn--go:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--th-accent-strong); }
-    .btn--do { flex: none; padding: 11px 18px; border-radius: 11px; background: var(--warn-solid); color: var(--n-900); font-size: 14px;
-      box-shadow: 0 3px 0 color-mix(in srgb, var(--warn-solid) 55%, var(--n-900)); }   /* 앰버 채움 = 어두운 글자 (§3.3) */
+    .btn--do { flex: none; padding: 11px 18px; border-radius: 11px; background: var(--warn-solid); color: var(--n-900); font-size: 14.5px; font-weight: 700;
+      box-shadow: 0 3px 0 color-mix(in srgb, var(--warn-solid) 55%, var(--n-900)); }
     .btn--do:hover { filter: brightness(1.05); }
     .btn--do:active { transform: translateY(2px); box-shadow: 0 1px 0 color-mix(in srgb, var(--warn-solid) 55%, var(--n-900)); }
-    .btn--result { flex: none; padding: 10px 16px; border-radius: 10px; background: var(--n-050); color: var(--n-500); font-size: 13px;
+
+    /* ===== ③ 완료 과제 — 요약 한 줄 + 최근 기록 ===== */
+    .done .sec__head { margin-bottom: 12px; }
+    .done .sec__lamp { background: var(--ok-solid); box-shadow: 0 0 8px color-mix(in srgb, var(--ok-solid) 45%, transparent); }
+    .done .sec__sum { font-size: 13.5px; font-weight: 700; color: var(--text-meta); }
+    .done .sec__sum b { font-family: var(--font-mono); color: var(--ok-ink); font-weight: 700; }
+    .done__all { margin-left: auto; padding: 8px 15px; border-radius: 999px; background: var(--n-000); border: 0; color: var(--n-500); font-size: 12.5px; font-weight: 700; cursor: pointer;
+      box-shadow: 0 2px 0 var(--n-200); }
+    .done__all:hover { color: var(--n-650); }
+    .lrow { display: flex; align-items: center; gap: 16px; background: var(--n-000); border-radius: 13px; padding: 12px 20px;
+      box-shadow: 0 2px 0 rgba(20,32,58,.08); }
+    .lrow__lamp { width: 10px; height: 10px; border-radius: 50%; flex: none; background: var(--ok-solid); }
+    .lrow__title { flex: 1; min-width: 0; font-size: 15px; font-weight: 600; color: var(--n-500); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .lrow__meta { flex: none; font-size: 12.5px; color: var(--text-meta); font-variant-numeric: tabular-nums; }
+    .lrow__score { flex: none; font-family: var(--font-mono); font-size: 18px; font-weight: 700; color: var(--n-650); font-variant-numeric: tabular-nums; }
+    .lrow__score small { font-family: var(--font-sans); font-size: 11.5px; color: var(--text-meta); font-weight: 700; }
+    .btn--result { flex: none; padding: 8px 13px; border-radius: 9px; background: var(--n-050); color: var(--n-500); font-size: 12.5px; font-weight: 700;
       box-shadow: 0 2px 0 var(--n-200); }
     .btn--result:hover { color: var(--ok-ink); }
     .btn--result:active { transform: translateY(1px); box-shadow: 0 1px 0 var(--n-200); }
-    .more { align-self: center; padding: 10px 18px; border-radius: 999px; background: var(--n-000); border: 0; color: var(--n-500); font-size: 13px; font-weight: 700; cursor: pointer; transition: .14s;
-      box-shadow: 0 2px 0 var(--n-200); }
-    .more:hover { color: var(--n-650); }
-    :focus-visible { outline: 2px solid var(--th-focus); outline-offset: 2px; }
 
+    :focus-visible { outline: 2px solid var(--th-focus); outline-offset: 2px; }
     @media (max-width: 940px) {
-      .gauges { grid-template-columns: 1fr 1fr; }
-      .card { flex-wrap: wrap; }
-      .prog { width: 100%; }
+      .hero { flex-direction: column; }
+      .hero__side { width: 100%; flex-direction: row; }
+      .hero__side .dwin { flex: 1; }
+      .row { flex-wrap: wrap; }
     }
   </style>
 </head>
 <body>
   <div class="app">
-    <!-- ===== GNB (현행 그대로) ===== -->
+    <!-- ===== GNB ===== -->
     <header class="gnb">
       <div class="gnb__info"><span class="gnb__logo"></span><span class="gnb__name">김학생</span></div>
       <nav class="gnb__modes">
@@ -193,9 +180,7 @@
       </div>
     </header>
 
-    <!-- ===== 스테이지: 밝은 선실 + 상황판 ===== -->
     <div class="stage">
-      <!-- 상황판 헤더 바 (solve의 파란 알약 문법 · 워딩 현행) -->
       <div class="hd">
         <span class="hd__title">과제 센터</span>
         <span class="hd__chip">수학</span>
@@ -203,186 +188,139 @@
         <span class="hd__lamps"><i class="on"></i><i></i><i></i></span>
       </div>
 
-      <!-- 상황판 프레임 (solve의 파란 6px 프레임 문법) -->
       <main class="board"><div class="screen"><div class="inner">
 
-        <!-- 요약: 계기 스트립 (워딩 현행: 평균 점수 · 완료 과제 · 제출 문항 · 정답 문항) -->
-        <section class="gauges">
-          <div class="gcell">
-            <div class="ring"><svg viewBox="0 0 80 80">
-              <circle cx="40" cy="40" r="34" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="7"/>
-              <circle cx="40" cy="40" r="34" fill="none" stroke="var(--ok-solid)" stroke-width="7" stroke-linecap="round"
-                stroke-dasharray="213.6" stroke-dashoffset="25.6"/>
-            </svg><span class="ring__c"><b>88</b></span></div>
-            <div class="gcell__b">
-              <span class="gcell__k">평균 점수</span>
-              <span class="gcell__v">88<small>점</small></span>
-              <span class="gcell__sub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 7 13.5 15.5l-4-4L2 19M16 7h6v6"/></svg>정답률 87%</span>
+        <!-- ===== ① 지금 할 일 (기한 지남 상태 — 히어로가 곧 경보) ===== -->
+        <section class="now is-late" data-only="late">
+          <div class="sec__head"><span class="sec__lamp"></span><span class="sec__title">지금 할 일</span></div>
+          <div class="hero">
+            <div class="hero__main">
+              <span class="hero__title">유리수의 소수 표현과 순환소수 심화 문제 풀이</span>
+              <div class="metarow">
+                <span class="unit">1단원 · 유리수와 순환소수</span><span class="sep"></span>
+                <span class="meta">출제 <b>2026.05.15 18:10</b></span><span class="sep"></span>
+                <span class="qmeta">문항수 <b>10문항</b></span>
+              </div>
+              <span class="hero__note">마감이 3일 지났어요. 지금 풀어도 제출할 수 있어요.</span>
+            </div>
+            <div class="hero__side">
+              <div class="dwin">
+                <span class="dwin__k">기한 지남</span>
+                <span class="dwin__v">D+3</span>
+                <span class="dwin__d">마감 2026.05.18</span>
+              </div>
+              <button class="btn btn--hero-do">과제 풀기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
             </div>
           </div>
-          <div class="gcell"><div class="gcell__b">
-            <span class="gcell__k">완료 과제</span><span class="gcell__v">10<small>개</small></span>
-          </div></div>
-          <div class="gcell"><div class="gcell__b">
-            <span class="gcell__k">제출 문항</span><span class="gcell__v">116<small>문항</small></span>
-          </div></div>
-          <div class="gcell"><div class="gcell__b">
-            <span class="gcell__k">정답 문항</span><span class="gcell__v">101<small>문항</small></span>
-          </div></div>
         </section>
 
-        <!-- 기한 지남 알림 (신설 상태 · 워딩은 평어) -->
-        <div class="notice">
-          <i class="notice__lamp"></i>
-          <b>기한이 지난 과제가 1개 있어요.</b>
-          <span>「유리수의 소수 표현과 순환소수 심화 문제 풀이」 — 지금 풀어도 제출할 수 있어요.</span>
-        </div>
-
-        <!-- 진행중 과제 -->
-        <section class="sec sec--blue">
-          <div class="sec__head"><span class="sec__lamp"></span><span class="sec__title">진행중 과제</span><span class="sec__count">2</span></div>
-          <div class="list">
-            <article class="card card--run">
-              <span class="card__lamp"></span>
-              <div class="card__main">
-                <span class="card__title">일차부등식의 활용 실생활 문장제 극복 훈련</span>
-                <div class="metarow">
-                  <span class="unit">2단원 · 일차부등식과 연립방정식</span><span class="sep"></span>
-                  <span class="meta">출제 <b>2026.05.20 19:00</b></span><span class="sep"></span>
-                  <span class="meta">마감 <b>2026.05.22</b></span><span class="dday">D-1</span>
-                </div>
+        <!-- ===== ① 지금 할 일 (평상시 — 가장 마감 가까운 과제) ===== -->
+        <section class="now" data-only="normal">
+          <div class="sec__head"><span class="sec__lamp"></span><span class="sec__title">지금 할 일</span></div>
+          <div class="hero">
+            <div class="hero__main">
+              <span class="hero__title">일차부등식의 활용 실생활 문장제 극복 훈련</span>
+              <div class="metarow">
+                <span class="unit">2단원 · 일차부등식과 연립방정식</span><span class="sep"></span>
+                <span class="meta">출제 <b>2026.05.20 19:00</b></span>
               </div>
               <div class="prog">
-                <div class="prog__top">
-                  <span class="prog__k"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>풀이 진행률</span>
-                  <span class="prog__v">40%<small>6/15</small></span>
-                </div>
                 <div class="track"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                <span class="prog__v">40%<small>6/15</small></span>
               </div>
-              <button class="btn btn--go">계속 풀기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+            </div>
+            <div class="hero__side">
+              <div class="dwin">
+                <span class="dwin__k">마감까지</span>
+                <span class="dwin__v">D-1</span>
+                <span class="dwin__d">마감 2026.05.22</span>
+              </div>
+              <button class="btn btn--hero-go">계속 풀기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===== ② 다음 할 일 — 마감순 ===== -->
+        <section class="queue">
+          <div class="sec__head"><span class="sec__lamp"></span><span class="sec__title">다음 할 일</span><span class="sec__count" data-count>3</span></div>
+          <div class="list">
+            <article class="row row--run" data-only="late">
+              <span class="row__lamp"></span>
+              <span class="row__dday"><b>D-1</b><span>5.22 마감</span></span>
+              <div class="row__main">
+                <span class="row__title">일차부등식의 활용 실생활 문장제 극복 훈련</span>
+                <div class="metarow"><span class="unit">2단원 · 일차부등식과 연립방정식</span><span class="sep"></span><span class="meta">출제 <b>2026.05.20 19:00</b></span></div>
+              </div>
+              <div class="row__stat">
+                <div class="track"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                <span class="prog__v">6<small>/15</small></span>
+              </div>
+              <button class="btn btn--go">계속 풀기</button>
             </article>
-            <article class="card card--run">
-              <span class="card__lamp"></span>
-              <div class="card__main">
-                <span class="card__title">연립일차방정식의 풀이 — 가감법과 대입법 기본 연습</span>
-                <div class="metarow">
-                  <span class="unit">2단원 · 일차부등식과 연립방정식</span><span class="sep"></span>
-                  <span class="meta">출제 <b>2026.05.20 17:00</b></span><span class="sep"></span>
-                  <span class="meta">마감 <b>2026.05.24</b></span><span class="dday">D-3</span>
-                </div>
+            <article class="row row--new">
+              <span class="row__lamp"></span>
+              <span class="row__dday"><b>D-2</b><span>5.23 마감</span></span>
+              <div class="row__main">
+                <span class="row__title">함수의 그래프 기초 훈련<span class="newchip">새 과제</span></span>
+                <div class="metarow"><span class="unit">3단원 · 좌표평면과 그래프</span><span class="sep"></span><span class="meta">출제 <b>2026.05.21 09:00</b></span><span class="sep"></span><span class="qmeta">문항수 <b>8문항</b></span></div>
               </div>
-              <div class="prog">
-                <div class="prog__top">
-                  <span class="prog__k"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>풀이 진행률</span>
-                  <span class="prog__v">75%<small>9/12</small></span>
-                </div>
+              <button class="btn btn--do">과제 풀기</button>
+            </article>
+            <article class="row row--run">
+              <span class="row__lamp"></span>
+              <span class="row__dday"><b>D-3</b><span>5.24 마감</span></span>
+              <div class="row__main">
+                <span class="row__title">연립일차방정식의 풀이 — 가감법과 대입법 기본 연습</span>
+                <div class="metarow"><span class="unit">2단원 · 일차부등식과 연립방정식</span><span class="sep"></span><span class="meta">출제 <b>2026.05.20 17:00</b></span></div>
+              </div>
+              <div class="row__stat">
                 <div class="track"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div>
+                <span class="prog__v">9<small>/12</small></span>
               </div>
-              <button class="btn btn--go">계속 풀기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+              <button class="btn btn--go">계속 풀기</button>
             </article>
           </div>
         </section>
 
-        <!-- 미시작 과제 (기한 지남 포함) -->
-        <section class="sec sec--amber">
-          <div class="sec__head"><span class="sec__lamp"></span><span class="sec__title">미시작 과제</span><span class="sec__count">2</span></div>
-          <div class="list">
-            <article class="card card--late">
-              <span class="card__lamp"></span>
-              <div class="card__main">
-                <span class="card__title">유리수의 소수 표현과 순환소수 심화 문제 풀이</span>
-                <div class="metarow">
-                  <span class="unit">1단원 · 유리수와 순환소수</span><span class="sep"></span>
-                  <span class="meta">출제 <b>2026.05.15 18:10</b></span><span class="sep"></span>
-                  <span class="meta">마감 <b>2026.05.18</b></span><span class="dday dday--late">기한 지남 · 3일</span>
-                </div>
-              </div>
-              <span class="qcount"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span>문항수</span><b>10문항</b></span>
-              <button class="btn btn--do">과제 풀기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-            </article>
-            <article class="card card--wait">
-              <span class="card__lamp"></span>
-              <div class="card__main">
-                <span class="card__title">함수의 그래프 기초 훈련</span>
-                <div class="metarow">
-                  <span class="unit">3단원 · 좌표평면과 그래프</span><span class="sep"></span>
-                  <span class="meta">출제 <b>2026.05.21 09:00</b></span><span class="sep"></span>
-                  <span class="meta">마감 <b>2026.05.23</b></span><span class="dday">D-2</span>
-                </div>
-              </div>
-              <span class="qcount"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span>문항수</span><b>8문항</b></span>
-              <button class="btn btn--do">과제 풀기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-            </article>
+        <!-- ===== ③ 완료 과제 — 요약 + 최근 기록 ===== -->
+        <section class="done">
+          <div class="sec__head">
+            <span class="sec__lamp"></span><span class="sec__title">완료 과제</span>
+            <span class="sec__sum"><b>10개</b> 완료 · 평균 <b>88점</b></span>
+            <button class="done__all">전체 보기</button>
           </div>
-        </section>
-
-        <!-- 완료 과제 -->
-        <section class="sec sec--green">
-          <div class="sec__head"><span class="sec__lamp"></span><span class="sec__title">완료 과제</span><span class="sec__count">10</span></div>
           <div class="list">
-            <article class="card card--done">
-              <span class="card__lamp"></span>
-              <div class="card__main">
-                <span class="card__title">소인수분해 기본 개념 확인 평가</span>
-                <div class="metarow">
-                  <span class="unit">1단원 · 소인수분해</span><span class="sep"></span>
-                  <span class="meta">출제 <b>2026.05.19 18:00</b></span><span class="sep"></span>
-                  <span class="meta">제출 <b>2026.05.19 19:30</b></span>
-                  <span class="meta">· 정답 <b style="color:var(--ok-ink)">8</b>/10문항</span>
-                </div>
-              </div>
-              <div class="scoreblk">
-                <div class="scoreblk__col">
-                  <span class="badge-done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg>제출완료</span>
-                  <span class="scoreblk__num">80<small>점</small></span>
-                </div>
-                <button class="btn btn--result">결과 보기</button>
-              </div>
+            <article class="lrow">
+              <span class="lrow__lamp"></span>
+              <span class="lrow__title">소인수분해 기본 개념 확인 평가</span>
+              <span class="lrow__meta">제출 2026.05.19 · 정답 8/10문항</span>
+              <span class="lrow__score">80<small>점</small></span>
+              <button class="btn btn--result">결과 보기</button>
             </article>
-            <article class="card card--done">
-              <span class="card__lamp"></span>
-              <div class="card__main">
-                <span class="card__title">최대공약수와 최소공배수의 활용 실전</span>
-                <div class="metarow">
-                  <span class="unit">1단원 · 소인수분해</span><span class="sep"></span>
-                  <span class="meta">출제 <b>2026.05.19 00:00</b></span><span class="sep"></span>
-                  <span class="meta">제출 <b>2026.05.19 01:20</b></span>
-                  <span class="meta">· 정답 <b style="color:var(--ok-ink)">7</b>/8문항</span>
-                </div>
-              </div>
-              <div class="scoreblk">
-                <div class="scoreblk__col">
-                  <span class="badge-done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg>제출완료</span>
-                  <span class="scoreblk__num">88<small>점</small></span>
-                </div>
-                <button class="btn btn--result">결과 보기</button>
-              </div>
+            <article class="lrow">
+              <span class="lrow__lamp"></span>
+              <span class="lrow__title">최대공약수와 최소공배수의 활용 실전</span>
+              <span class="lrow__meta">제출 2026.05.19 · 정답 7/8문항</span>
+              <span class="lrow__score">88<small>점</small></span>
+              <button class="btn btn--result">결과 보기</button>
             </article>
-            <article class="card card--done">
-              <span class="card__lamp"></span>
-              <div class="card__main">
-                <span class="card__title">정수와 유리수의 사칙연산 타임어택</span>
-                <div class="metarow">
-                  <span class="unit">2단원 · 정수와 유리수</span><span class="sep"></span>
-                  <span class="meta">출제 <b>2026.05.17 19:00</b></span><span class="sep"></span>
-                  <span class="meta">제출 <b>2026.05.17 20:00</b></span>
-                  <span class="meta">· 정답 <b style="color:var(--ok-ink)">9</b>/10문항</span>
-                </div>
-              </div>
-              <div class="scoreblk">
-                <div class="scoreblk__col">
-                  <span class="badge-done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg>제출완료</span>
-                  <span class="scoreblk__num">90<small>점</small></span>
-                </div>
-                <button class="btn btn--result">결과 보기</button>
-              </div>
-            </article>
-            <button class="more">완료 과제 10개 전체 보기</button>
           </div>
         </section>
 
       </div></div></main>
     </div>
   </div>
+
+  <script>
+    // 상태 보기 전환: 기본 = 기한 지남 포함(late) · ?state=normal = 평상시
+    (function () {
+      var state = new URLSearchParams(location.search).get('state') === 'normal' ? 'normal' : 'late';
+      document.querySelectorAll('[data-only]').forEach(function (el) {
+        if (el.dataset.only !== state) el.style.display = 'none';
+      });
+      var cnt = document.querySelector('[data-count]');
+      if (cnt) cnt.textContent = (state === 'late') ? '3' : '2';
+    })();
+  </script>
 </body>
 </html>
