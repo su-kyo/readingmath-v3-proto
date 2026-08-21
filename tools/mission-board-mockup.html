@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<!-- Phase 7 ③ 목업 6차 — 과제센터 홈 (배포 제외)
-     A안 「밝은 관제실」: 시험 대비(exam/home.html)와 같은 밝은 레지스터로 올림.
-     · 선실 사진 + 딤 + 네이비 뼈대(헤더 바·KPI 스트립·보드 베젤) 폐기 — 정적 하드웨어
-       네이비는 지난 과제 옆 "판독계" 액세서리 하나로 강등.
-     · KPI 정리: 제출·정답 문항은 평균 점수·정답률과 중복이라 제거. 판독계엔 둘만 남김.
-     · 헤더 안내 문구 → 행성 홈 문법의 캐릭터 말풍선 (재미 축 복원).
-     · 지난 과제에 성취 언어 도입: 만점 = 왕관 · 90점 이상 = 별 (시험 대비의 왕관·별과 같은 어휘).
-     · 램프 정리: 장식 램프(헤더 3개·섹션 머리) 제거 — 램프는 행 상태 신호만 맡는다.
-     · 빈 상태 3종 설계: 풀던 과제 없음 / 남은 과제 0(보상 연출) / 첫 방문.
-       왼쪽 아래 「목업 상태」 스위처로 오간다(목업 전용 — 실화면에는 없음).
-     구조는 5차 확정안 유지: 풀던 과제 히어로 → 남은 과제(받은 순) → 지난 과제.
-     시간 모델: 마감 없음 — 신호는 경과(받은 지 N일)뿐. -->
+<!-- Phase 7 ③ 목업 7차 — 과제센터 홈 (배포 제외)
+     방향: 5차 골격 복원 + 6차 목록 정리 유지.
+     · 골격(5차): 선실 배경 + 옅은 딤(.20) 위에 헤더 바 / KPI 스트립 / 프레임 보드.
+       프레임 문법(6px --th-static 베젤 · 34px 라운드)은 과제 풀이(solve.html)와 같다 —
+       목록과 풀이가 같은 프레임을 쓰는 연속성이 이 화면의 근거.
+     · 목록(6차): 행 정리·성취 언어(만점 왕관·90점 이상 별)·빈 상태 3종·말풍선·
+       마이크로카피·터치 타깃 44px — 그대로 유지.
+     · KPI는 상단 복귀. 단 제출·정답 문항(중복)은 넣지 않고
+       평균 점수(정답률 서브) · 완료 과제 · 왕관 · 별 — 성취 어휘로 채운다.
+     · 캐릭터 말풍선은 헤더 바 오른쪽(행성 홈 문법 — 어두운 무대 + 흰 말풍선).
+     · 램프 정리 유지: 장식 램프 없음, 램프는 행 상태 신호 전용.
+     구조는 확정안 유지: 풀던 과제 히어로 → 남은 과제(받은 순) → 지난 과제.
+     시간 모델: 마감 없음 — 신호는 경과(받은 지 N일)뿐.
+     빈 상태 전환: 왼쪽 아래 「목업 상태」 스위처(목업 전용). 6차 밝은 판은 킵(깃 기록 56bc821). -->
 <html lang="ko" data-theme="light" data-section="assign">
 <head>
   <base href="../">
@@ -23,41 +25,61 @@
   <style>
     * { box-sizing: border-box; }
     html, body { height: 100%; margin: 0; }
-    body { font-family: var(--font-sans); background: var(--n-050); color: var(--n-650); overflow: hidden; -webkit-font-smoothing: antialiased;
+    body { font-family: var(--font-sans); background: var(--assign-body); color: var(--n-650); overflow: hidden; -webkit-font-smoothing: antialiased;
       --line: var(--n-100); --line-strong: var(--n-200);
       --sh: 0 1px 2px rgba(13,18,32,.04), 0 20px 40px -28px rgba(13,18,32,.16); }
     .app { display: flex; flex-direction: column; height: 100dvh; }
 
-    /* ===== 본문 틀 — 밝은 캔버스 위 한 컬럼 ===== */
-    .wrap { flex: 1; min-height: 0; width: 100%; max-width: 1120px; margin: 0 auto;
-      display: flex; flex-direction: column; padding: 20px clamp(20px,3vw,34px) 0; }
+    /* ===== 스테이지: 선실 + 옅은 딤(.20) · 세 덩어리 (프레임 문법 = solve.html) ===== */
+    .stage { position: relative; flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: center;
+      padding: clamp(16px,2.2vw,24px) clamp(20px,4vw,60px) 0; gap: 14px;
+      background: linear-gradient(rgba(9,12,40,.20), rgba(9,12,40,.20)), url("assets/img/bg/bg-space-hw.webp") center/cover no-repeat; }
 
-    /* ── 헤더 존: 제목 + 과목 칩 / 캐릭터 말풍선 (행성 홈 문법) ── */
-    .top { flex: none; display: flex; align-items: flex-end; gap: 20px; padding: 4px 2px 18px; }
-    .top__tb { display: flex; flex-direction: column; gap: 7px; padding-bottom: 8px; }
-    .top__row { display: flex; align-items: center; gap: 10px; }
-    .top__title { font-size: 24px; font-weight: 800; letter-spacing: -.03em; color: var(--n-900); }
-    .top__chip { padding: 4px 12px; border-radius: 9px; font-size: 13.5px; font-weight: 800;
-      background: var(--th-tint-strong); color: var(--th-ink-accent); }
-    .top__sub { font-size: 13.5px; font-weight: 500; color: var(--text-meta); }
-    /* 말풍선 + 캐릭터 — nav/home.html .bubble 문법의 가로 배치판 */
-    .greet { margin-left: auto; display: flex; align-items: center; gap: 2px; }
-    .gbubble { position: relative; max-width: 430px; background: var(--n-000); color: var(--n-650);
-      border: 1px solid var(--line); border-radius: 17px; padding: 12px 18px;
-      font-size: 15px; font-weight: 600; line-height: 1.5; box-shadow: var(--sh); }
+    /* ── ① 헤더 바 — 오른쪽에 캐릭터 말풍선(행성 홈 문법) ── */
+    .hd { position: relative; flex: none; width: 100%; max-width: 1120px; display: flex; align-items: center; gap: 14px;
+      background: var(--th-static); border-radius: 30px; padding: 11px 96px 11px 26px; color: var(--n-000);
+      box-shadow: 0 8px 22px -12px rgba(6,12,30,.5); }
+    .hd__title { font-size: 19px; font-weight: 800; letter-spacing: -.03em; white-space: nowrap; }
+    .hd__chip { padding: 3px 11px; border-radius: 8px; background: rgba(255,255,255,.16);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.34); font-size: 13.5px; font-weight: 800; }
+    .greet { margin-left: auto; display: flex; align-items: center; min-width: 0; }
+    .gbubble { position: relative; max-width: 460px; background: var(--n-000); color: var(--n-650);
+      border-radius: 14px; padding: 9px 15px; font-size: 13.5px; font-weight: 600; line-height: 1.45;
+      box-shadow: 0 10px 24px -10px rgba(6,12,30,.5); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .gbubble b { color: var(--th-ink-accent); font-weight: 800; }
-    .gbubble::after { content: ""; position: absolute; right: -9px; top: 50%; transform: translateY(-50%);
-      border: 9px solid transparent; border-left-color: var(--n-000); border-right: 0;
-      filter: drop-shadow(1px 0 0 var(--line)); }
-    .gchar { width: 74px; height: 84px; object-fit: contain; flex: none; margin-left: 14px;
-      filter: drop-shadow(0 8px 10px rgba(15,35,80,.18)); }
+    .gbubble::after { content: ""; position: absolute; right: -8px; top: 50%; transform: translateY(-50%);
+      border: 8px solid transparent; border-left-color: var(--n-000); border-right: 0; }
+    .gchar { position: absolute; right: 16px; bottom: -4px; width: 62px; height: 72px; object-fit: contain; object-position: bottom;
+      filter: drop-shadow(0 8px 10px rgba(6,12,30,.45)); pointer-events: none; }
 
-    /* ── 목록 영역 — 스크롤은 여기서만 ── */
-    .inner { flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 26px;
-      padding: 2px 2px 44px; scrollbar-width: thin; scrollbar-color: var(--n-200) transparent; }
-    .inner::-webkit-scrollbar { width: 10px; }
-    .inner::-webkit-scrollbar-thumb { background: var(--n-200); border-radius: 999px; border: 2.5px solid transparent; background-clip: padding-box; }
-    .inner > section { flex: none; }
+    /* ── ② KPI 판독 스트립 — 정적 하드웨어(항상 네이비) · 성취 어휘 ── */
+    .kpi { flex: none; width: 100%; max-width: 1120px; display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 6px;
+      background: var(--n-650); border-radius: 20px; padding: 8px;
+      box-shadow: 0 3px 0 color-mix(in srgb, var(--n-650) 70%, var(--n-900)), 0 14px 30px -14px rgba(6,12,30,.55); }
+    .kpi__cell { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 18px; min-width: 0;
+      background: rgba(0,0,0,.22); box-shadow: inset 0 0 0 1px rgba(255,255,255,.09); border-radius: 6px; }
+    .kpi__cell:first-child { border-radius: 13px 6px 6px 13px; }
+    .kpi__cell:last-child { border-radius: 6px 13px 13px 6px; }
+    .kpi__b { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 0; }
+    .kpi__k { font-size: 12px; font-weight: 700; color: var(--n-300); white-space: nowrap; }
+    .kpi__v { font-family: var(--font-mono); font-size: 22px; font-weight: 700; letter-spacing: -.02em; color: var(--n-000); font-variant-numeric: tabular-nums; line-height: 1.1; }
+    .kpi__v small { font-family: var(--font-sans); font-size: 12px; font-weight: 700; color: var(--n-300); margin-left: 2px; }
+    .kpi__sub { font-size: 11.5px; font-weight: 700; color: var(--ok-on-dark); white-space: nowrap; }
+    .kpi__ico { width: 24px; height: 24px; flex: none; }
+    .kpi__ico svg { width: 100%; height: 100%; display: block; }
+    .kpi__ico--crown { color: var(--warn-solid); }
+
+    /* ── ③ 과제 보드 — 프레임(= solve.html의 .content 문법) ── */
+    .board { width: 100%; max-width: 1120px; flex: 1; min-height: 0;
+      background: var(--n-000); border: 6px solid var(--th-static); border-bottom: 0;
+      border-radius: 34px 34px 0 0; padding: 8px 8px 0;
+      box-shadow: 0 2px 6px rgba(6,12,30,.14), 0 30px 60px -26px rgba(6,12,30,.55); }
+    .screen { height: 100%; overflow-y: auto; background: var(--n-050); border-radius: 28px 28px 0 0;
+      scrollbar-gutter: stable; }
+    .screen::-webkit-scrollbar { width: 12px; }
+    .screen::-webkit-scrollbar-thumb { background: var(--n-200); border-radius: 999px; border: 3.5px solid var(--n-050); background-clip: padding-box; }
+    .screen { scrollbar-width: thin; scrollbar-color: var(--n-200) var(--n-050); }
+    .inner { padding: 26px 34px 40px; display: flex; flex-direction: column; gap: 26px; }
 
     /* ===== 공통: 섹션 머리 — 램프 없음(램프는 행 상태 신호 전용) ===== */
     .sec__head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
@@ -115,7 +137,7 @@
     .btn--do:active { transform: translateY(2px); box-shadow: 0 1px 0 color-mix(in srgb, var(--warn-solid) 55%, var(--n-900)); }
 
     /* ===== 과제 다 함 — 이 화면의 가장 행복한 순간 (보상 연출) ===== */
-    .clear { position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; gap: 8px;
+    .clear { position: relative; overflow: hidden; flex: none; display: flex; flex-direction: column; align-items: center; gap: 8px;
       background: var(--n-000); border: 1px solid var(--line); border-radius: 18px; padding: 40px 28px 36px; box-shadow: var(--sh); }
     .clear__crown { width: 74px; height: 74px; color: var(--warn-solid); animation: crownPop .5s cubic-bezier(.2,1.4,.4,1) both; }
     .clear__crown svg { width: 100%; height: 100%; display: block; filter: drop-shadow(0 10px 18px color-mix(in srgb, var(--warn-solid) 45%, transparent)); }
@@ -130,7 +152,7 @@
     @media (prefers-reduced-motion: reduce) { .clear__crown, .clear .spark { animation: none; } }
 
     /* ===== 첫 방문 — 아직 받은 과제 없음 ===== */
-    .fresh { display: flex; flex-direction: column; align-items: center; gap: 7px;
+    .fresh { flex: none; display: flex; flex-direction: column; align-items: center; gap: 7px;
       background: color-mix(in srgb, var(--n-000) 55%, var(--n-050)); border: 1px dashed var(--line-strong);
       border-radius: 18px; padding: 46px 28px; }
     .fresh__t { font-size: 18px; font-weight: 800; letter-spacing: -.02em; color: var(--n-500); }
@@ -138,17 +160,7 @@
 
     /* ===== 지난 과제 — 완료 + 종료됨 · 성취 언어(만점 왕관·90점 이상 별) ===== */
     .done .sec__count { background: color-mix(in srgb, var(--ok-solid) 18%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ok-solid) 42%, transparent); color: var(--ok-ink); }
-    /* 판독계 — 정적 하드웨어 네이비의 마지막 자리(액세서리 스케일) */
-    .gauge { margin-left: auto; display: flex; gap: 5px; background: var(--n-650); border-radius: 13px; padding: 5px;
-      box-shadow: 0 2px 0 color-mix(in srgb, var(--n-650) 70%, var(--n-900)); }
-    .gauge__cell { display: flex; flex-direction: column; align-items: center; gap: 1px; padding: 5px 14px 6px; min-width: 86px;
-      background: rgba(0,0,0,.22); box-shadow: inset 0 0 0 1px rgba(255,255,255,.09); border-radius: 5px; }
-    .gauge__cell:first-child { border-radius: 9px 5px 5px 9px; }
-    .gauge__cell:last-child { border-radius: 5px 9px 9px 5px; }
-    .gauge__k { font-size: 10.5px; font-weight: 700; color: var(--n-300); white-space: nowrap; }
-    .gauge__v { font-family: var(--font-mono); font-size: 16px; font-weight: 700; color: var(--n-000); font-variant-numeric: tabular-nums; line-height: 1.15; }
-    .gauge__v small { font-family: var(--font-sans); font-size: 10.5px; font-weight: 700; color: var(--n-300); margin-left: 1px; }
-    .done__all { flex: none; padding: 13px 20px; border-radius: 12px; background: var(--n-000); border: 1px solid var(--line);
+    .done__all { margin-left: auto; flex: none; padding: 13px 20px; border-radius: 12px; background: var(--n-000); border: 1px solid var(--line);
       color: var(--n-500); font-size: 13.5px; font-weight: 700; cursor: pointer; box-shadow: 0 2px 0 var(--n-100); font-family: inherit; }
     .done__all:hover { color: var(--n-650); border-color: var(--line-strong); }
     .done__all:active { transform: translateY(1px); box-shadow: 0 1px 0 var(--n-100); }
@@ -176,6 +188,7 @@
     .btn--result:active { transform: translateY(1px); box-shadow: 0 1px 0 var(--n-200); }
 
     /* ===== 빈 상태 전환 — 목업 전용 ===== */
+    .inner > section { flex: none; }
     .inner:not([data-state="nohero"]) .hero--empty { display: none; }
     .inner[data-state="nohero"] .hero--live { display: none; }
     .inner:not([data-state="alldone"]) .clear { display: none; }
@@ -192,19 +205,18 @@
 
     :focus-visible { outline: 2px solid var(--th-focus); outline-offset: 2px; }
     @media (max-width: 940px) {
-      .top { flex-wrap: wrap; }
-      .greet { margin-left: 0; }
+      .kpi { grid-template-columns: 1fr 1fr; }
+      .hd { padding-right: 26px; }
+      .greet, .gchar { display: none; }
       .hero__foot { flex-wrap: wrap; }
       .row { flex-wrap: wrap; }
-      .done .sec__head { flex-wrap: wrap; }
-      .gauge { margin-left: 0; }
     }
   </style>
 </head>
 <body>
   <div class="app">
-    <!-- ===== GNB — 밝은 스킨(시험 대비와 동일) ===== -->
-    <header class="gnb gnb--light">
+    <!-- ===== GNB ===== -->
+    <header class="gnb">
       <div class="gnb__info"><span class="gnb__logo"></span><span class="gnb__name">김학생</span></div>
       <nav class="gnb__modes">
         <button class="gnb__mode m-basic" data-go="nav/home.html">기본 모드</button>
@@ -220,21 +232,37 @@
       </div>
     </header>
 
-    <div class="wrap">
-      <!-- ── 헤더 존: 제목 / 캐릭터 말풍선 ── -->
-      <div class="top">
-        <div class="top__tb">
-          <div class="top__row"><span class="top__title">과제 센터</span><span class="top__chip">수학</span></div>
-          <span class="top__sub">선생님이 내주신 과제가 여기에 도착해요.</span>
-        </div>
+    <div class="stage">
+      <!-- ① 헤더 바 — 오른쪽 캐릭터 말풍선 -->
+      <div class="hd">
+        <span class="hd__title">과제 센터</span>
+        <span class="hd__chip">수학</span>
         <div class="greet">
           <div class="gbubble" id="gbubble">새로 온 <b>수학 과제</b>가 있어요. 오늘도 하나씩 풀어 보세요!</div>
-          <img class="gchar" src="assets/img/home/math-mid-3-1/character.webp" alt="" />
+        </div>
+        <img class="gchar" src="assets/img/home/math-mid-3-1/character.webp" alt="" />
+      </div>
+
+      <!-- ② KPI 판독 스트립 — 성취 어휘 -->
+      <div class="kpi">
+        <div class="kpi__cell"><div class="kpi__b">
+          <span class="kpi__k">평균 점수</span><span class="kpi__v">88<small>점</small></span><span class="kpi__sub">정답률 87%</span>
+        </div></div>
+        <div class="kpi__cell"><div class="kpi__b">
+          <span class="kpi__k">완료 과제</span><span class="kpi__v">10<small>개</small></span>
+        </div></div>
+        <div class="kpi__cell">
+          <span class="kpi__ico kpi__ico--crown"><svg viewBox="0 0 45 45" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M24.258 10.6303C24.9049 10.117 25.3127 9.32245 25.3127 8.43652C25.3127 6.88261 24.0541 5.62402 22.5002 5.62402C20.9463 5.62402 19.6877 6.88261 19.6877 8.43652C19.6877 9.32245 20.1025 10.117 20.7424 10.6303L15.933 18.1959C15.2299 19.2998 13.7322 19.574 12.6846 18.7865L8.50098 15.6576C8.81738 15.2076 9.0002 14.6521 9.0002 14.0615C9.0002 12.5076 7.7416 11.249 6.1877 11.249C4.63379 11.249 3.3752 12.5076 3.3752 14.0615C3.3752 15.5943 4.60567 16.8459 6.13145 16.874L8.42363 32.167C8.7541 34.3678 10.6455 35.999 12.8744 35.999H32.126C34.3549 35.999 36.2463 34.3678 36.5768 32.167L38.8689 16.874C40.3947 16.8459 41.6252 15.5943 41.6252 14.0615C41.6252 12.5076 40.3666 11.249 38.8127 11.249C37.2588 11.249 36.0002 12.5076 36.0002 14.0615C36.0002 14.6521 36.183 15.2076 36.4994 15.6576L32.3229 18.7935C31.2752 19.581 29.7775 19.3068 29.0744 18.2029L24.258 10.6303Z"/></svg></span>
+          <div class="kpi__b"><span class="kpi__k">왕관</span><span class="kpi__v">2<small>개</small></span></div>
+        </div>
+        <div class="kpi__cell">
+          <span class="kpi__ico"><svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.2363 2.50977C17.3941 2.6027 18.1874 3.36933 18.7549 4.11035C19.3594 4.89972 19.9909 6.04012 20.7266 7.35938L21.1201 8.06445V8.06543C21.3471 8.47267 21.4769 8.70347 21.5869 8.86914C21.6362 8.94339 21.6681 8.98211 21.6855 9.00195C21.7148 9.02672 21.7557 9.04732 21.8535 9.07812C22.0323 9.13441 22.2767 9.19004 22.7197 9.29004L23.4844 9.46387L24.5166 9.69922C25.5103 9.93016 26.3814 10.1534 27.0674 10.4238C28.0105 10.7956 28.9866 11.4021 29.3633 12.6113L29.3643 12.6123C29.7349 13.8055 29.2946 14.866 28.7529 15.7266C28.3542 16.3601 27.7805 17.0703 27.1074 17.8662L26.4033 18.6914L25.8828 19.2979C25.5831 19.6507 25.4134 19.8505 25.2969 20.0107C25.2448 20.0824 25.2186 20.1262 25.2051 20.1514C25.1714 20.2428 25.1526 20.3316 25.251 21.3467L25.3301 22.1592V22.1602C25.4772 23.6819 25.6072 24.9874 25.5625 25.9912C25.5177 26.9975 25.285 28.1451 24.2803 28.9072C23.2517 29.6874 22.0822 29.5627 21.1201 29.2871C20.1771 29.0169 19.016 28.4783 17.6826 27.8643V27.8633L16.9678 27.5361C16.5514 27.3433 16.3214 27.2388 16.1455 27.1748C15.9953 27.1202 15.9742 27.1299 16 27.1299C16.0258 27.1299 16.0047 27.1202 15.8545 27.1748C15.6786 27.2388 15.4486 27.3433 15.0352 27.5342L14.3174 27.8633C12.9845 28.4782 11.8236 29.0168 10.8809 29.2871C9.97982 29.5454 8.89548 29.6716 7.91602 29.0439L7.7207 28.9082C6.71618 28.1459 6.48256 26.9993 6.4375 25.9922C6.3926 24.988 6.5228 23.682 6.66992 22.1602V22.1592L6.74902 21.3477C6.79428 20.88 6.81924 20.6119 6.82324 20.4082C6.82504 20.3167 6.8218 20.2632 6.81836 20.2324C6.80765 20.1796 6.80435 20.1706 6.79297 20.1494C6.77983 20.1249 6.75385 20.0819 6.70215 20.0107C6.5864 19.8514 6.41784 19.652 6.11719 19.3008L5.5957 18.6904V18.6895C4.62211 17.5515 3.77867 16.5721 3.24707 15.7275C2.70514 14.8665 2.26561 13.8064 2.63574 12.6133L2.71387 12.3926C3.13443 11.3272 4.04846 10.7713 4.93262 10.4229C5.61906 10.1523 6.49046 9.92893 7.48438 9.69824L8.51758 9.46289L9.28027 9.29102L9.8125 9.16797C9.95086 9.13439 10.0563 9.10623 10.1455 9.07812C10.2239 9.05341 10.2648 9.03562 10.2842 9.02637C10.3091 9.01002 10.3441 8.97409 10.4131 8.87012C10.5231 8.70434 10.6523 8.47377 10.8799 8.06543V8.06445L11.2734 7.35938C12.0091 6.04012 12.6406 4.89972 13.2451 4.11035C13.8504 3.31995 14.7126 2.5 16 2.5L16.2363 2.50977Z" fill="#FFC800" stroke="white" stroke-width="3"/></svg></span>
+          <div class="kpi__b"><span class="kpi__k">별</span><span class="kpi__v">4<small>개</small></span></div>
         </div>
       </div>
 
-      <!-- ── 목록 영역 ── -->
-      <main class="inner" id="inner" data-state="default">
+      <!-- ③ 과제 보드 — 프레임 -->
+      <main class="board"><div class="screen"><div class="inner" id="inner" data-state="default">
 
         <!-- 풀던 과제 — 최근에 연 것 하나 -->
         <section class="now">
@@ -294,14 +322,10 @@
           </div>
         </section>
 
-        <!-- 지난 과제 — 완료 + 종료됨 · 오른쪽에 판독계(정적 하드웨어)와 전체 보기 -->
+        <!-- 지난 과제 — 완료 + 종료됨 -->
         <section class="done">
           <div class="sec__head">
             <span class="sec__title">지난 과제</span><span class="sec__count">11</span>
-            <div class="gauge">
-              <div class="gauge__cell"><span class="gauge__k">평균 점수</span><span class="gauge__v">88<small>점</small></span></div>
-              <div class="gauge__cell"><span class="gauge__k">정답률</span><span class="gauge__v">87<small>%</small></span></div>
-            </div>
             <button class="done__all">전체 보기</button>
           </div>
           <div class="list">
@@ -339,7 +363,7 @@
           </div>
         </section>
 
-      </main>
+      </div></div></main>
     </div>
   </div>
 
@@ -356,6 +380,14 @@
     (function () {
       var inner = document.getElementById('inner');
       var bubble = document.getElementById('gbubble');
+      var kpi = document.querySelector('.kpi');
+      var kpiVals = [];   // 첫 방문 = 기록 없음 → 판독계는 꺼진 값(–)
+      kpi.querySelectorAll('.kpi__v').forEach(function (v) { kpiVals.push(v.innerHTML); });
+      var kpiSub = kpi.querySelector('.kpi__sub');
+      function setKpiOff(off) {
+        kpi.querySelectorAll('.kpi__v').forEach(function (v, i) { v.innerHTML = off ? '–' : kpiVals[i]; });
+        kpiSub.style.visibility = off ? 'hidden' : '';
+      }
       var COPY = {
         default: '새로 온 <b>수학 과제</b>가 있어요. 오늘도 하나씩 풀어 보세요!',
         nohero:  '<b>남은 과제</b>에서 하나 골라 시작해 보세요!',
@@ -368,6 +400,7 @@
           b.classList.add('is-active');
           inner.setAttribute('data-state', b.dataset.st);
           bubble.innerHTML = COPY[b.dataset.st];
+          setKpiOff(b.dataset.st === 'first');
         });
       });
     })();
