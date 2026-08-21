@@ -125,20 +125,28 @@
     .worksheet { padding: clamp(18px, 2.3vw, 26px) clamp(20px, 2.6vw, 34px) clamp(20px, 2.4vw, 28px); }
     .worksheet__label { margin-bottom: 16px; }
 
-    /* ============ 끊어읽기 chunk ============ */
-    .chunk { display: block; font-family: var(--font-serif); color: var(--guide);
-      font-size: clamp(16px, 1.45vw, 18.5px); line-height: 2.15; letter-spacing: -0.01em;
-      transition: filter .35s ease, opacity .35s ease; }
-    .chunk + .chunk { margin-top: 10px; }
-    .chunk.is-hidden { filter: blur(4px); opacity: .28; pointer-events: none; user-select: none; }
-    .chunk.is-tappable { cursor: pointer; }
-    .chunk__go { display: none; align-items: center; vertical-align: middle; margin-left: 8px;
-      padding: 3px 11px; border-radius: 999px; background: rgba(124,58,237,.16); color: var(--th-accent-hi);
-      font-family: var(--font-sans); font-size: 12px; font-weight: 700; white-space: nowrap; animation: goPulse 1.4s ease-in-out infinite; }
-    :root[data-theme="light"] .chunk__go { background: rgba(124,58,237,.12); color: var(--th-accent-strong); }
-    .chunk.is-tappable .chunk__go { display: inline-flex; }
-    @keyframes goPulse { 0%,100%{transform:translateX(0)} 50%{transform:translateX(3px)} }
-    @media (prefers-reduced-motion: reduce) { .chunk__go { animation: none; } }
+    /* ============ 끊어읽기 구간(seg) — 문법은 개념 학습(concept/learn.html)과 한 벌 ============
+       구간은 인라인이다. 어디서 끊을지는 콘텐츠 등록 쪽 자유라 문장 블록으로 만들 수 없고,
+       문장 끝에 붙는 「계속」 같은 어포던스도 쓸 수 없다 — 지금 구간을 직접 눌러 나아간다. */
+    .sol, .asol { font-family: var(--font-serif); color: var(--guide);
+      font-size: clamp(16px, 1.45vw, 18.5px); line-height: 2.25; letter-spacing: -0.01em; }
+    .sline + .sline { margin-top: 6px; }
+    .seg { border-radius: 5px; box-decoration-break: clone; -webkit-box-decoration-break: clone;
+      transition: filter .22s ease, opacity .22s ease, background .15s ease; }
+    .seg:not(.blank) { padding: 1px 0; }
+    .seg.is-unread { filter: blur(4.5px); opacity: .3; user-select: none; }
+    /* 지금 구간 = 면 하나로만 표시(테두리 없음). 같은 색 3px 확장이 글자 주위 여백을 만든다 */
+    .seg.is-current:not(.blank), .seg.is-current:not(.blank):hover {
+      cursor: pointer; background: var(--th-tint-strong); box-shadow: 0 0 0 3px var(--th-tint-strong);
+      color: var(--th-ink-accent); font-weight: 600; }
+    :root[data-theme="dark"] .seg.is-current:not(.blank),
+    :root[data-theme="dark"] .seg.is-current:not(.blank):hover { color: var(--text); }
+    /* 빈칸이 통째로 한 구간일 때는 면을 얹지 않는다 — 빈칸 자체가 이미 상태를 말한다 */
+
+    /* ============ 순서 맞추기 줄 (슬롯이 있어 줄 단위 블록) ============ */
+    .aline { display: block; transition: filter .35s ease, opacity .35s ease; }
+    .aline + .aline { margin-top: 10px; }
+    .aline.is-unread { filter: blur(4px); opacity: .28; pointer-events: none; user-select: none; }
 
     /* 빈칸: 현재 채울 칸만 활성(주황 펄스) — 코어는 essay.css */
     /* 지금 채울 칸 = 주황 채움+테두리 하나로 충분. 바깥 펄스 링(글로우)은 제거 */
@@ -176,23 +184,22 @@
     /* ============ 문제 끊어읽기 — 프레임은 공용 monitor(잠금형·닫기 없음) ============ */
     /* 처음 문제 읽기 = 모달로 문장별 진행. 다 읽고 '문제 풀기 →' 누르면 풀이 시작. */
     .rmodal { --rm-card: var(--n-900);
-      --rm-panel: rgba(255,255,255,.045); --rm-panel-br: rgba(255,255,255,.08);
       --rm-read: rgba(249,249,249,.92); --rm-hl: rgba(124,58,237,.30); --rm-hl-fg: var(--n-000); --rm-hint: var(--text-muted);
       --mon-w: 760px; }
     :root[data-theme="light"] .rmodal { --rm-card: var(--n-000);
-      --rm-panel: var(--n-050); --rm-panel-br: var(--n-100);
       --rm-read: var(--n-700); --rm-hl: rgba(124,58,237,.14); --rm-hl-fg: var(--th-accent-strong); --rm-hint: var(--text-meta); }
     .rmodal .monitor__screen { background: var(--rm-card); padding: clamp(22px,2.8vw,34px);
       display: flex; flex-direction: column; gap: clamp(18px,2.4vw,26px); }
-    .rmodal__read { background: var(--rm-panel); border: 1px solid var(--rm-panel-br); border-radius: 16px;
-      padding: clamp(20px,2.6vw,30px) clamp(20px,2.8vw,32px); cursor: pointer; }
-    .rm-chunk { display: inline; font-family: var(--font-serif); color: var(--rm-read);
-      font-size: clamp(16px,1.5vw,19px); line-height: 2.1; letter-spacing: -0.01em;
-      border-radius: 6px; box-decoration-break: clone; -webkit-box-decoration-break: clone;
-      transition: filter .35s ease, opacity .35s ease, background .25s ease, color .25s ease; }
-    .rm-chunk.is-cur { background: var(--rm-hl); color: var(--rm-hl-fg); padding: 2px 4px; }
-    .rm-chunk.is-ahead { filter: blur(4px); opacity: .3; }
-    .rmodal__img { margin-top: 14px; border-radius: 12px; overflow: hidden; }
+    /* 읽기 패널은 상자가 아니다 — 본문이 스크린에 직접 올라온다 */
+    .rmodal__read { font-family: var(--font-serif); color: var(--rm-read);
+      font-size: clamp(16px,1.5vw,19px); line-height: 2.1; letter-spacing: -0.01em; }
+    .rline + .rline { margin-top: 4px; }
+    .rmodal .seg.is-current:not(.blank), .rmodal .seg.is-current:not(.blank):hover {
+      background: var(--rm-hl); box-shadow: 0 0 0 3px var(--rm-hl); color: var(--rm-hl-fg); }
+    /* 이미지도 다 읽기 전에는 가린다 — 뒤 구간의 답이 그림에 드러나는 경우가 있다 */
+    .rmodal__img { margin-top: 18px; border-radius: 12px; overflow: hidden;
+      transition: filter .35s ease, opacity .35s ease; }
+    .rmodal__img.is-unread { filter: blur(9px); opacity: .32; }
     .rmodal__img img { display: block; width: 100%; height: auto; }
     .rmodal__foot { display: flex; align-items: center; gap: 12px; }
     .rmodal__hint { margin-right: auto; font-family: var(--font-sans); font-size: 12.5px; font-weight: 600; color: var(--rm-hint); }
@@ -332,6 +339,6 @@
   <!-- 키패드 물리 키보드 입력 (공용) -->
   <script src="scripts/keypad.js?v=1"></script>
   <script src="scripts/keypad-input.js?v=3"></script>
-  <script src="scripts/essay-drill-v2.js?v=7"></script>
+  <script src="scripts/essay-drill-v2.js?v=8"></script>
 </body>
 </html>

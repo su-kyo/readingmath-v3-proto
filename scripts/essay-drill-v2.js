@@ -3,6 +3,9 @@
    기능은 essay-drill.js 와 동일. 차이 = ③ 순서 맞추기에서 블록 트레이(#tray)를
    화면 하단 고정 카드가 아니라 **현재 채워야 할 문장 바로 아래**로 이동시켜
    블록과 빈칸(슬롯)이 멀어지지 않게 함.
+   끊어읽기(seg) = 개념 학습(concept/learn.html)과 같은 문법.
+   구간은 인라인이고 끊는 위치는 콘텐츠 등록 쪽 자유다 — 문장 단위가 아니다.
+   데이터는 [문단[구간, 구간, …], …] 2단 배열. '{bN}' 하나만 든 구간 = 빈칸 구간.
    한 문제 = ① 문제 끊어읽기(상단 카드, 읽은 뒤 접힘·상주)
             → ② 빈칸 맞추기(해설 끊어읽기 + 즉시 채점)
             → ③ 순서 맞추기(여러 문장 끊어읽기: 읽기전용 문장 + 배치 문장[고정텍스트+슬롯])
@@ -15,17 +18,17 @@
   var PROBLEMS = [
     {
       statement: [
-        '학급 문고에 책이 178권이 있었습니다.',
-        '어제까지 29권의 책을 빌려갔고, 오늘은 어제까지 빌린 책 중 17권을 학급 문고에 반납하였습니다.',
-        '오후에 책장을 보니 오늘은 35권의 책을 빌려갔습니다.',
-        '지금 학급 문고에 남아 있는 책은 몇 권인지 구해 보세요.'
+        ['학급 문고에 책이', '178권이 있었습니다.'],
+        ['어제까지 29권의 책을 빌려갔고,', '오늘은 어제까지 빌린 책 중', '17권을 학급 문고에 반납하였습니다.'],
+        ['오후에 책장을 보니', '오늘은 35권의 책을 빌려갔습니다.'],
+        ['지금 학급 문고에 남아 있는 책은', '몇 권인지 구해 보세요.']
       ],
       image: null,
       chunks: [
-        '(남아 있는 책의 수) = (학급 문고의 책의 수) − (어제까지 빌려간 책의 수) + (오늘 반납한 책의 수) − (오늘 빌려간 책의 수) 입니다.',
-        '따라서 남아 있는 책의 수는 178 − {b1} + 17 − 35 =',
-        '149 + 17 − 35 = {b2} − 35 =',
-        '{b3} (권) 입니다.'
+        ['(남아 있는 책의 수) =', '(학급 문고의 책의 수) −', '(어제까지 빌려간 책의 수) +', '(오늘 반납한 책의 수) −', '(오늘 빌려간 책의 수) 입니다.'],
+        ['따라서 남아 있는 책의 수는', '178 −', '{b1}', '+ 17 − 35 ='],
+        ['149 + 17 − 35 =', '{b2}', '− 35 ='],
+        ['{b3}', '(권) 입니다.']
       ],
       blanks: {
         b1: { type: 'choice', ans: '29', choices: ['17', '29', '35', '12'] },
@@ -47,17 +50,17 @@
     },
     {
       statement: [
-        '과일 가게에 사과가 240개 있었습니다.',
-        '오전에 85개를 팔았고, 낮에는 상자로 60개를 새로 들여왔습니다.',
-        '오후에는 사과 47개를 더 팔았습니다.',
-        '지금 가게에 남아 있는 사과는 몇 개인지 구해 보세요.'
+        ['과일 가게에 사과가', '240개 있었습니다.'],
+        ['오전에 85개를 팔았고,', '낮에는 상자로', '60개를 새로 들여왔습니다.'],
+        ['오후에는', '사과 47개를 더 팔았습니다.'],
+        ['지금 가게에 남아 있는 사과는', '몇 개인지 구해 보세요.']
       ],
       image: null,
       chunks: [
-        '(남아 있는 사과 수) = (처음 사과 수) − (오전에 판 사과 수) + (새로 들여온 사과 수) − (오후에 판 사과 수) 입니다.',
-        '따라서 남아 있는 사과 수는 240 − {b1} + 60 − 47 =',
-        '155 + 60 − 47 = {b2} − 47 =',
-        '{b3} (개) 입니다.'
+        ['(남아 있는 사과 수) =', '(처음 사과 수) −', '(오전에 판 사과 수) +', '(새로 들여온 사과 수) −', '(오후에 판 사과 수) 입니다.'],
+        ['따라서 남아 있는 사과 수는', '240 −', '{b1}', '+ 60 − 47 ='],
+        ['155 + 60 − 47 =', '{b2}', '− 47 ='],
+        ['{b3}', '(개) 입니다.']
       ],
       blanks: {
         b1: { type: 'choice', ans: '85', choices: ['47', '60', '85', '95'] },
@@ -79,17 +82,17 @@
     },
     {
       statement: [
-        '주차장에 자동차가 156대 있었습니다.',
-        '오전에 48대가 빠져나갔고, 점심때 다시 23대가 들어왔습니다.',
-        '오후에는 37대가 더 빠져나갔습니다.',
-        '지금 주차장에 남아 있는 자동차는 몇 대인지 구해 보세요.'
+        ['주차장에 자동차가', '156대 있었습니다.'],
+        ['오전에 48대가 빠져나갔고,', '점심때 다시', '23대가 들어왔습니다.'],
+        ['오후에는', '37대가 더 빠져나갔습니다.'],
+        ['지금 주차장에 남아 있는 자동차는', '몇 대인지 구해 보세요.']
       ],
       image: null,
       chunks: [
-        '(남아 있는 자동차 수) = (처음 자동차 수) − (오전에 나간 자동차 수) + (점심때 들어온 자동차 수) − (오후에 나간 자동차 수) 입니다.',
-        '따라서 남아 있는 자동차 수는 156 − {b1} + 23 − 37 =',
-        '108 + 23 − 37 = {b2} − 37 =',
-        '{b3} (대) 입니다.'
+        ['(남아 있는 자동차 수) =', '(처음 자동차 수) −', '(오전에 나간 자동차 수) +', '(점심때 들어온 자동차 수) −', '(오후에 나간 자동차 수) 입니다.'],
+        ['따라서 남아 있는 자동차 수는', '156 −', '{b1}', '+ 23 − 37 ='],
+        ['108 + 23 − 37 =', '{b2}', '− 37 ='],
+        ['{b3}', '(대) 입니다.']
       ],
       blanks: {
         b1: { type: 'choice', ans: '48', choices: ['23', '37', '48', '52'] },
@@ -152,7 +155,7 @@
   }
 
   var pi = -1, phase = 'read', P = null;
-  var blankMap = {}, chunkEls = [], curChunk = 0;
+  var blankMap = {}, segEls = [], curSeg = 0;
 
   function shuffle(a) {
     a = a.slice();
@@ -164,13 +167,23 @@
     toast.textContent = msg; toast.classList.toggle('is-err', !!isErr); toast.classList.add('is-on');
     clearTimeout(toastT); toastT = setTimeout(function () { toast.classList.remove('is-on'); }, 1900);
   }
-  function blankHTML(id) {
-    return '<span class="blank" data-blank="' + id + '"><span class="blank__ans"></span><span class="blank__badge">' + id.replace('b', '') + '</span></span>';
+  function blankHTML(id, isSeg) {
+    return '<span class="' + (isSeg ? 'seg blank' : 'blank') + '" data-blank="' + id + '"><span class="blank__ans"></span><span class="blank__badge">' + id.replace('b', '') + '</span></span>';
   }
-  function chunkHTML(text) {
-    var t = text;
-    if (P.blanks) Object.keys(P.blanks).forEach(function (id) { t = t.replace('{' + id + '}', blankHTML(id)); });
-    return '<span class="chunk">' + t + '<span class="chunk__go">계속 ›</span></span>';
+  /* 구간 하나 → 인라인 span. '{bN}' 만 든 구간은 빈칸 자체가 구간이 된다(개념 학습의 .seg--blank와 같은 취급).
+     구간 안에 빈칸이 섞여 들어와도(예: '178 − {b1} 입니다') 그대로 살려 둔다 — 등록 쪽 자유. */
+  function segHTML(text) {
+    var solo = /^\s*\{(b\d+)\}\s*$/.exec(text);
+    if (solo) return blankHTML(solo[1], true);
+    var t = text.replace(/\{(b\d+)\}/g, function (_, id) { return blankHTML(id, false); });
+    return '<span class="seg">' + t + '</span>';
+  }
+  function lineHTML(segs) { return '<div class="sline">' + segs.map(segHTML).join(' ') + '</div>'; }
+  /* 현재 구간이 아직 답해야 할 빈칸을 품고 있으면 그 빈칸을 돌려준다 */
+  function pendingBlank(seg) {
+    if (!seg) return null;
+    if (seg.classList.contains('blank')) return seg.classList.contains('is-filled') ? null : seg;
+    return seg.querySelector('.blank:not(.is-filled)');
   }
 
   /* ===================== ① 문제 끊어읽기 (모달) ===================== */
@@ -181,7 +194,7 @@
     phase = 'read';
     // 상단 카드 = 다시보기용 전체 문제문(접힘 상태로 상주)
     problem.classList.add('is-collapsible', 'is-collapsed');
-    readBody.innerHTML = '<div class="problem__qtext">' + P.statement.map(function (s) { return '<p class="qfull">' + s + '</p>'; }).join('') + '</div>' +
+    readBody.innerHTML = '<div class="problem__qtext">' + P.statement.map(function (segs) { return '<p class="qfull">' + segs.join(' ') + '</p>'; }).join('') + '</div>' +
       (P.image ? '<div class="problem__img"><img src="' + P.image + '" alt="문제 이미지" /></div>' : '');
     worksheet.hidden = true; tray.hidden = true; fillView.hidden = false; arrangeView.hidden = true;
     openReadModal();
@@ -189,28 +202,36 @@
   function openReadModal() {
     readCur = 0;
     rmTitle.textContent = '문제 ' + (pi + 1);
-    rmRead.innerHTML = P.statement.map(function (s) { return '<span class="rm-chunk">' + s + ' </span>'; }).join('') +
-      (P.image ? '<div class="rmodal__img"><img src="' + P.image + '" alt="문제 이미지" /></div>' : '');
+    rmRead.innerHTML = P.statement.map(function (segs) {
+      return '<p class="rline">' + segs.map(function (t) { return '<span class="seg">' + t + '</span>'; }).join(' ') + '</p>';
+    }).join('') +
+      (P.image ? '<div class="rmodal__img is-unread"><img src="' + P.image + '" alt="문제 이미지" /></div>' : '');
     renderReadModal();
     rmodal.classList.add('is-open'); rmodal.setAttribute('aria-hidden', 'false');
   }
   function renderReadModal() {
-    var els = rmRead.querySelectorAll('.rm-chunk');
+    var els = rmRead.querySelectorAll('.seg');
     var last = els.length - 1;
     els.forEach(function (el, i) {
-      el.classList.toggle('is-cur', i === readCur);
-      el.classList.toggle('is-ahead', i > readCur);
+      el.classList.toggle('is-read', i < readCur);
+      el.classList.toggle('is-current', i === readCur);
+      el.classList.toggle('is-unread', i > readCur);
     });
-    rmHint.textContent = readCur < last ? '문장을 눌러 이어 읽어요' : '문제를 다 읽었어요';
+    // 이미지는 본문을 다 읽어야 선명해진다 (앞 구간을 풀 때 답이 그림에 보이는 일을 막는다)
+    var img = rmRead.querySelector('.rmodal__img');
+    if (img) img.classList.toggle('is-unread', readCur < last);
+    rmHint.textContent = readCur < last ? '구간을 눌러 이어 읽어요' : '문제를 다 읽었어요';
   }
-  rmRead.addEventListener('click', function () {
-    var els = rmRead.querySelectorAll('.rm-chunk');
+  rmRead.addEventListener('click', function (e) {
+    if (!e.target.closest('.seg.is-current')) return;   // 진행은 '지금 구간'을 눌러서만
+    var els = rmRead.querySelectorAll('.seg');
     if (readCur < els.length - 1) { readCur++; renderReadModal(); }
   });
   function closeReadModal() { rmodal.classList.remove('is-open'); rmodal.setAttribute('aria-hidden', 'true'); }
   rmGo.addEventListener('click', function () {
     // 남은 문장까지 모두 드러낸 뒤 풀이 시작
-    rmRead.querySelectorAll('.rm-chunk').forEach(function (el) { el.classList.remove('is-cur', 'is-ahead'); });
+    rmRead.querySelectorAll('.seg').forEach(function (el) { el.classList.remove('is-current', 'is-unread'); el.classList.add('is-read'); });
+    var rimg = rmRead.querySelector('.rmodal__img'); if (rimg) rimg.classList.remove('is-unread');
     closeReadModal();
     startFill();
   });
@@ -226,27 +247,31 @@
     fillView.hidden = false; arrangeView.hidden = true;
     wsLabel.textContent = '풀이';
     blankMap = P.blanks || {};
-    sol.innerHTML = P.chunks.map(chunkHTML).join('');
-    chunkEls = [].slice.call(sol.querySelectorAll('.chunk'));
-    curChunk = 0;
+    sol.innerHTML = P.chunks.map(lineHTML).join('');
+    segEls = [].slice.call(sol.querySelectorAll('.seg'));
+    curSeg = 0;
     hideAction();
     renderFill();
   }
   function renderFill() {
-    chunkEls.forEach(function (el, i) { el.classList.toggle('is-hidden', i > curChunk); el.classList.remove('is-tappable'); });
+    segEls.forEach(function (el, i) {
+      el.classList.toggle('is-read', i < curSeg);
+      el.classList.toggle('is-current', i === curSeg);
+      el.classList.toggle('is-unread', i > curSeg);
+    });
     sol.querySelectorAll('.blank.is-active').forEach(function (b) { b.classList.remove('is-active'); });
-    var active = chunkEls[curChunk];
-    var pending = active.querySelector('.blank:not(.is-filled)');
+    var pending = pendingBlank(segEls[curSeg]);
     if (pending) pending.classList.add('is-active');
-    else if (curChunk < chunkEls.length - 1) active.classList.add('is-tappable');
+  }
+  function advanceSeg() {
+    if (curSeg < segEls.length - 1) { curSeg++; renderFill(); }
+    else { curSeg = segEls.length; renderFill(); fillComplete(); }
   }
   function fillBlank(el, value) {
     el.querySelector('.blank__ans').textContent = value;
     el.classList.remove('is-active', 'is-sel'); el.classList.add('is-filled');
-    var active = chunkEls[curChunk];
-    if (active.querySelector('.blank:not(.is-filled)')) { renderFill(); return; }
-    if (curChunk < chunkEls.length - 1) { curChunk++; renderFill(); }
-    else fillComplete();
+    if (pendingBlank(segEls[curSeg])) { renderFill(); return; }   // 한 구간에 빈칸이 둘 이상일 때
+    advanceSeg();
   }
   function fillComplete() {
     pillFill.classList.remove('is-on'); pillFill.classList.add('is-done');
@@ -255,8 +280,8 @@
   }
   sol.addEventListener('click', function (e) {
     var bl = e.target.closest('.blank.is-active'); if (bl) { openPop(bl); return; }
-    var tap = e.target.closest('.chunk.is-tappable');
-    if (tap) { if (curChunk < chunkEls.length - 1) { curChunk++; renderFill(); } }
+    var seg = e.target.closest('.seg.is-current');   // 진행은 '지금 구간'을 눌러서만
+    if (seg && !pendingBlank(seg)) advanceSeg();
   });
 
   /* ── 입력 드롭다운 (즉시 채점) ── */
@@ -356,16 +381,17 @@
           if (typeof p === 'string') return p;
           return '<span class="slot is-empty" data-ac="' + ci + '" data-si="' + (si++) + '"></span>';
         }).join(' ');
-      } else inner = c.text;
-      return '<span class="chunk" data-ac="' + ci + '">' + inner + '<span class="chunk__go">계속 ›</span></span>';
+      } else inner = '<span class="seg">' + c.text + '</span>';
+      return '<div class="aline" data-ac="' + ci + '">' + inner + '</div>';
     }).join('');
     ac = 0;
     hideAction();
     enterArrangeChunk();
   }
   function enterArrangeChunk() {
-    var els = asol.querySelectorAll('.chunk');
-    els.forEach(function (el, i) { el.classList.toggle('is-hidden', i > ac); el.classList.remove('is-tappable'); });
+    var els = asol.querySelectorAll('.aline');
+    els.forEach(function (el, i) { el.classList.toggle('is-unread', i > ac); });
+    asol.querySelectorAll('.aline .seg').forEach(function (sg) { sg.classList.remove('is-current'); });
     if (ac >= aChunks.length) { tray.hidden = true; arrangeComplete(); return; }
     var c = aChunks[ac];
     if (c.parts) {
@@ -375,12 +401,13 @@
       aPool = shuffle(c.blocks);
       aChecking = false;
       // v2: 블록 트레이를 현재 채워야 할 문장 바로 아래로 이동 (블록↔슬롯 근접)
-      var chunkEl = asol.querySelector('.chunk[data-ac="' + ac + '"]');
-      if (chunkEl) chunkEl.insertAdjacentElement('afterend', tray);
+      var lineEl = asol.querySelector('.aline[data-ac="' + ac + '"]');
+      if (lineEl) lineEl.insertAdjacentElement('afterend', tray);
       renderArrangeChunk();
       tray.hidden = false;
     } else {
-      asol.querySelector('.chunk[data-ac="' + ac + '"]').classList.add('is-tappable');
+      var cur = asol.querySelector('.aline[data-ac="' + ac + '"] .seg');
+      if (cur) cur.classList.add('is-current');
       tray.hidden = true;
     }
   }
@@ -408,7 +435,7 @@
     if (aAllFilled()) { aChecking = true; setTimeout(aCheck, 460); }
   });
   asol.addEventListener('click', function (e) {
-    var tap = e.target.closest('.chunk.is-tappable');
+    var tap = e.target.closest('.aline .seg.is-current');
     if (tap) { ac++; enterArrangeChunk(); return; }
     if (aChecking) return;
     var s = e.target.closest('.slot.is-filled[data-si]');
@@ -468,12 +495,10 @@
     dbgSkipRead();
     if (phase !== 'fill') return;
     var guard = 0;
-    while (guard++ < 300) {
-      var active = chunkEls[curChunk];
-      var pending = active.querySelector('.blank:not(.is-filled)');
+    while (guard++ < 400 && curSeg < segEls.length) {
+      var pending = pendingBlank(segEls[curSeg]);
       if (pending) { closePop(); fillBlank(pending, blankMap[pending.dataset.blank].ans); }
-      else if (curChunk < chunkEls.length - 1) { curChunk++; renderFill(); }
-      else { fillComplete(); break; }
+      else advanceSeg();
     }
   }
   function dbgArrangeAll() {

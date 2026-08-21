@@ -50,7 +50,8 @@
       word-break: keep-all;
     }
     /* 구간(어절) — 간격 최소화: 좌우 패딩 0, 하이라이트는 box-shadow spread로 */
-    .seg { border-radius: 5px; padding: 1px 0; transition: filter .22s ease, opacity .22s ease, background .15s ease; }
+    .seg { border-radius: 5px; padding: 1px 0; box-decoration-break: clone; -webkit-box-decoration-break: clone;
+      transition: filter .22s ease, opacity .22s ease, background .15s ease; }
     .seg.is-unread { filter: blur(4.5px); opacity: .3; user-select: none; }
     .seg.is-current { cursor: pointer; background: var(--th-tint-strong); box-shadow: 0 0 0 3px var(--th-tint-strong); color: var(--th-ink-accent); font-weight: 600; }
     .seg.is-current:hover { background: var(--th-tint-strong); box-shadow: 0 0 0 3px var(--th-tint-strong); }
@@ -229,7 +230,8 @@
     .summary__box { background: transparent; border: 0; padding: 0; max-height: 42vh; overflow: auto; display: flex; flex-direction: column; gap: 10px; }
     /* 모달 내 끊어읽기 */
     .sline { font-size: clamp(16px, 1.5vw, 20px); line-height: 1.95; color: var(--sm-text); letter-spacing: -0.02em; }
-    .sseg { border-radius: 5px; padding: 1px 0; transition: filter .2s ease, opacity .2s ease, background .15s ease; }
+    .sseg { border-radius: 5px; padding: 1px 0; box-decoration-break: clone; -webkit-box-decoration-break: clone;
+      transition: filter .2s ease, opacity .2s ease, background .15s ease; }
     .sseg.is-unread { filter: blur(4.5px); opacity: .3; user-select: none; }
     .sseg.is-current:not(.sblank) { cursor: pointer; background: var(--sm-current); box-shadow: 0 0 0 3px var(--sm-current); }
     /* 모달도 동일: 이미지 용어 현재 구간 = 노란 마커(30%), 글자색은 일반 지문과 동일 */
