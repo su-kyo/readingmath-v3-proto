@@ -35,7 +35,7 @@
 **③ 이미지는 쓰임 기준으로 분류한다.**
 - 그림(webp) → `assets/img/` (bg·home·planets·strands·grade·misc)
 - 아이콘(svg) → `assets/icons/` — 색은 파일 복제가 아니라 코드로 바꾼다
-- PNG 등 원본은 프로젝트에 넣지 않는다. `~/Documents/Portfolio/_source/RM/`에 둔다
+- PNG 등 원본은 프로젝트에 넣지 않는다. `~/Documents/_source/RM/`에 둔다
   (깃 없음 — 삭제·덮어쓰기 전 반드시 사용자 확인)
 
 **④ 화면을 새로 만들면 `index.html` 목록에도 추가한다.**

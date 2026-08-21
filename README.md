@@ -83,7 +83,7 @@ RM/
 
 **이미지는 출처가 아니라 쓰임으로 분류합니다.** 예전에는 `assets/figma/`라는
 출처 기준 이름이었는데, 실제로는 대부분 생성 이미지라 이름이 거짓말을 하고 있었습니다.
-출처 구분은 원본 보관소(`_source/RM/`)의 몫입니다.
+출처 구분은 원본 보관소(`~/Documents/_source/RM/`)의 몫입니다.
 
 **그림(img)과 아이콘(icons)을 나눈 이유** — 성격이 다릅니다. 그림은 코드가 그대로
 띄우고, svg 아이콘은 코드가 색을 갈아입히는 재료입니다.
@@ -155,7 +155,7 @@ PNG는 프로젝트 안에 두지 않습니다 — `.gitignore`가 막습니다.
 **원본 PNG 96장은 여기 있습니다:**
 
 ```
-~/Documents/Portfolio/_source/RM/generated/
+~/Documents/_source/RM/generated/
 ```
 
 전부 생성한 이미지라 **다시 뽑아도 같은 그림이 안 나옵니다.** 지우면 안 됩니다.
@@ -171,7 +171,7 @@ cwebp -q 92 원본.png -o 결과.webp
 `_source`의 원본을 읽어 `assets/` 안에 webp로 넣습니다 (폴더 구조는 자동으로 맞춰집니다).
 
 ```bash
-cd ~/Documents/Portfolio/_source/RM/generated && find . -name "*.png" | while read f; do mkdir -p "$HOME/Documents/Portfolio/projects/RM/assets/$(dirname "$f")"; cwebp -q 92 -quiet "$f" -o "$HOME/Documents/Portfolio/projects/RM/assets/${f%.png}.webp"; done && echo "완료"
+cd ~/Documents/_source/RM/generated && find . -name "*.png" | while read f; do mkdir -p "$HOME/Documents/Portfolio/projects/RM/assets/$(dirname "$f")"; cwebp -q 92 -quiet "$f" -o "$HOME/Documents/Portfolio/projects/RM/assets/${f%.png}.webp"; done && echo "완료"
 ```
 
 `cwebp`가 없다고 나오면 먼저 설치합니다:
