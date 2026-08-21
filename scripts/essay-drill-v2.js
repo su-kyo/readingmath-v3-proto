@@ -5,7 +5,9 @@
    블록과 빈칸(슬롯)이 멀어지지 않게 함.
    끊어읽기(seg) = 개념 학습(concept/learn.html)과 같은 문법.
    구간은 인라인이고 끊는 위치는 콘텐츠 등록 쪽 자유다 — 문장 단위가 아니다.
-   데이터는 [문단[구간, 구간, …], …] 2단 배열. '{bN}' 하나만 든 구간 = 빈칸 구간.
+   데이터는 [문단[구간, 구간, …], …] 2단 배열. 빈칸은 보통 앞뒤 어구와 함께 한 구간에
+   들어간다('저는 / [ ]를 먹었습니다. / 맛있었고,' 처럼). 빈칸만 따로 끊어도 동작한다.
+   문제문의 { img } 문단 = 본문에 그냥 들어간 이미지 — 텍스트 구간과 똑같이 읽기 차례를 차지한다.
    한 문제 = ① 문제 끊어읽기(상단 카드, 읽은 뒤 접힘·상주)
             → ② 빈칸 맞추기(해설 끊어읽기 + 즉시 채점)
             → ③ 순서 맞추기(여러 문장 끊어읽기: 읽기전용 문장 + 배치 문장[고정텍스트+슬롯])
@@ -26,9 +28,9 @@
       image: null,
       chunks: [
         ['(남아 있는 책의 수) =', '(학급 문고의 책의 수) −', '(어제까지 빌려간 책의 수) +', '(오늘 반납한 책의 수) −', '(오늘 빌려간 책의 수) 입니다.'],
-        ['따라서 남아 있는 책의 수는', '178 −', '{b1}', '+ 17 − 35 ='],
-        ['149 + 17 − 35 =', '{b2}', '− 35 ='],
-        ['{b3}', '(권) 입니다.']
+        ['따라서 남아 있는 책의 수는', '178 − {b1} + 17 − 35 ='],
+        ['149 + 17 − 35 =', '{b2} − 35 ='],
+        ['{b3} (권) 입니다.']
       ],
       blanks: {
         b1: { type: 'choice', ans: '29', choices: ['17', '29', '35', '12'] },
@@ -53,14 +55,15 @@
         ['과일 가게에 사과가', '240개 있었습니다.'],
         ['오전에 85개를 팔았고,', '낮에는 상자로', '60개를 새로 들여왔습니다.'],
         ['오후에는', '사과 47개를 더 팔았습니다.'],
+        { img: null },
         ['지금 가게에 남아 있는 사과는', '몇 개인지 구해 보세요.']
       ],
       image: null,
       chunks: [
         ['(남아 있는 사과 수) =', '(처음 사과 수) −', '(오전에 판 사과 수) +', '(새로 들여온 사과 수) −', '(오후에 판 사과 수) 입니다.'],
-        ['따라서 남아 있는 사과 수는', '240 −', '{b1}', '+ 60 − 47 ='],
-        ['155 + 60 − 47 =', '{b2}', '− 47 ='],
-        ['{b3}', '(개) 입니다.']
+        ['따라서 남아 있는 사과 수는', '240 − {b1} + 60 − 47 ='],
+        ['155 + 60 − 47 =', '{b2} − 47 ='],
+        ['{b3} (개) 입니다.']
       ],
       blanks: {
         b1: { type: 'choice', ans: '85', choices: ['47', '60', '85', '95'] },
@@ -90,9 +93,9 @@
       image: null,
       chunks: [
         ['(남아 있는 자동차 수) =', '(처음 자동차 수) −', '(오전에 나간 자동차 수) +', '(점심때 들어온 자동차 수) −', '(오후에 나간 자동차 수) 입니다.'],
-        ['따라서 남아 있는 자동차 수는', '156 −', '{b1}', '+ 23 − 37 ='],
-        ['108 + 23 − 37 =', '{b2}', '− 37 ='],
-        ['{b3}', '(대) 입니다.']
+        ['따라서 남아 있는 자동차 수는', '156 − {b1} + 23 − 37 ='],
+        ['108 + 23 − 37 =', '{b2} − 37 ='],
+        ['{b3} (대) 입니다.']
       ],
       blanks: {
         b1: { type: 'choice', ans: '48', choices: ['23', '37', '48', '52'] },
@@ -170,8 +173,9 @@
   function blankHTML(id, isSeg) {
     return '<span class="' + (isSeg ? 'seg blank' : 'blank') + '" data-blank="' + id + '"><span class="blank__ans"></span><span class="blank__badge">' + id.replace('b', '') + '</span></span>';
   }
-  /* 구간 하나 → 인라인 span. '{bN}' 만 든 구간은 빈칸 자체가 구간이 된다(개념 학습의 .seg--blank와 같은 취급).
-     구간 안에 빈칸이 섞여 들어와도(예: '178 − {b1} 입니다') 그대로 살려 둔다 — 등록 쪽 자유. */
+  /* 구간 하나 → 인라인 span.
+     보통은 빈칸이 앞뒤 어구와 묶여 한 구간 안에 들어온다('{b1} (권) 입니다.').
+     빈칸만 따로 끊은 구간('{b1}')도 그대로 동작한다 — 어느 쪽이든 등록 쪽 자유. */
   function segHTML(text) {
     var solo = /^\s*\{(b\d+)\}\s*$/.exec(text);
     if (solo) return blankHTML(solo[1], true);
@@ -179,6 +183,17 @@
     return '<span class="seg">' + t + '</span>';
   }
   function lineHTML(segs) { return '<div class="sline">' + segs.map(segHTML).join(' ') + '</div>'; }
+  /* 문제문 한 문단 → 텍스트 줄 또는 이미지 줄.
+     본문 이미지는 '이미지 참조 구간'(눌러서 옆에 띄우는 것)이 아니라 본문에 그냥 놓인 그림이라
+     다른 텍스트 구간과 똑같이 읽기 차례를 차지한다. */
+  function statementLineHTML(para) {
+    if (para && para.img !== undefined) {
+      var body = para.img ? '<img src="' + para.img + '" alt="문제 이미지" />' : '<span class="dummy-img"></span>';
+      return '<div class="rline rline--img"><span class="seg seg--img">' + body + '</span></div>';
+    }
+    return '<p class="rline">' + para.map(function (t) { return '<span class="seg">' + t + '</span>'; }).join(' ') + '</p>';
+  }
+  function statementText(para) { return (para && para.img !== undefined) ? null : para.join(' '); }
   /* 현재 구간이 아직 답해야 할 빈칸을 품고 있으면 그 빈칸을 돌려준다 */
   function pendingBlank(seg) {
     if (!seg) return null;
@@ -194,18 +209,19 @@
     phase = 'read';
     // 상단 카드 = 다시보기용 전체 문제문(접힘 상태로 상주)
     problem.classList.add('is-collapsible', 'is-collapsed');
-    readBody.innerHTML = '<div class="problem__qtext">' + P.statement.map(function (segs) { return '<p class="qfull">' + segs.join(' ') + '</p>'; }).join('') + '</div>' +
-      (P.image ? '<div class="problem__img"><img src="' + P.image + '" alt="문제 이미지" /></div>' : '');
+    var texts = P.statement.map(statementText).filter(Boolean);
+    var imgs = P.statement.filter(function (x) { return x && x.img !== undefined; });
+    readBody.innerHTML = '<div class="problem__qtext">' + texts.map(function (t) { return '<p class="qfull">' + t + '</p>'; }).join('') + '</div>' +
+      (imgs.length ? '<div class="problem__img">' + imgs.map(function (x) {
+        return x.img ? '<img src="' + x.img + '" alt="문제 이미지" />' : '<span class="dummy-img"></span>';
+      }).join('') + '</div>' : '');
     worksheet.hidden = true; tray.hidden = true; fillView.hidden = false; arrangeView.hidden = true;
     openReadModal();
   }
   function openReadModal() {
     readCur = 0;
     rmTitle.textContent = '문제 ' + (pi + 1);
-    rmRead.innerHTML = P.statement.map(function (segs) {
-      return '<p class="rline">' + segs.map(function (t) { return '<span class="seg">' + t + '</span>'; }).join(' ') + '</p>';
-    }).join('') +
-      (P.image ? '<div class="rmodal__img is-unread"><img src="' + P.image + '" alt="문제 이미지" /></div>' : '');
+    rmRead.innerHTML = P.statement.map(statementLineHTML).join('');
     renderReadModal();
     rmodal.classList.add('is-open'); rmodal.setAttribute('aria-hidden', 'false');
   }
@@ -217,10 +233,28 @@
       el.classList.toggle('is-current', i === readCur);
       el.classList.toggle('is-unread', i > readCur);
     });
-    // 이미지는 본문을 다 읽어야 선명해진다 (앞 구간을 풀 때 답이 그림에 보이는 일을 막는다)
-    var img = rmRead.querySelector('.rmodal__img');
-    if (img) img.classList.toggle('is-unread', readCur < last);
     rmHint.textContent = readCur < last ? '구간을 눌러 이어 읽어요' : '문제를 다 읽었어요';
+    keepInView(els[readCur]);
+  }
+  /* 지금 구간이 화면 밖으로 밀리지 않게 (이미지 구간이 끼면 본문이 길어진다).
+     기준은 창이 아니라 그 구간을 담고 있는 스크롤 영역이다 — 모달 스크린과 풀이 스크롤이 서로 다르다. */
+  function scrollParent(el) {
+    var p = el.parentElement;
+    while (p && p !== document.body) {
+      var st = getComputedStyle(p);
+      if (/(auto|scroll)/.test(st.overflowY) && p.scrollHeight > p.clientHeight + 1) return p;
+      p = p.parentElement;
+    }
+    return null;
+  }
+  function keepInView(el) {
+    if (!el || !el.getBoundingClientRect) return;
+    var sp = scrollParent(el);
+    if (!sp) return;
+    var r = el.getBoundingClientRect(), b = sp.getBoundingClientRect(), pad = 40, d = 0;
+    if (r.bottom > b.bottom - pad) d = r.bottom - (b.bottom - pad);
+    else if (r.top < b.top + pad) d = r.top - (b.top + pad);
+    if (d) sp.scrollTop += d;   // 즉각 (부드러운 스크롤은 연속 진행에서 서로 끊긴다)
   }
   rmRead.addEventListener('click', function (e) {
     if (!e.target.closest('.seg.is-current')) return;   // 진행은 '지금 구간'을 눌러서만
@@ -231,7 +265,6 @@
   rmGo.addEventListener('click', function () {
     // 남은 문장까지 모두 드러낸 뒤 풀이 시작
     rmRead.querySelectorAll('.seg').forEach(function (el) { el.classList.remove('is-current', 'is-unread'); el.classList.add('is-read'); });
-    var rimg = rmRead.querySelector('.rmodal__img'); if (rimg) rimg.classList.remove('is-unread');
     closeReadModal();
     startFill();
   });
@@ -260,8 +293,10 @@
       el.classList.toggle('is-unread', i > curSeg);
     });
     sol.querySelectorAll('.blank.is-active').forEach(function (b) { b.classList.remove('is-active'); });
+    segEls.forEach(function (el) { el.classList.remove('is-answering'); });
     var pending = pendingBlank(segEls[curSeg]);
-    if (pending) pending.classList.add('is-active');
+    if (pending) { pending.classList.add('is-active'); segEls[curSeg].classList.add('is-answering'); }
+    keepInView(segEls[curSeg]);
   }
   function advanceSeg() {
     if (curSeg < segEls.length - 1) { curSeg++; renderFill(); }

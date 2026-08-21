@@ -135,13 +135,16 @@
       transition: filter .22s ease, opacity .22s ease, background .15s ease; }
     .seg:not(.blank) { padding: 1px 0; }
     .seg.is-unread { filter: blur(4.5px); opacity: .3; user-select: none; }
-    /* 지금 구간 = 면 하나로만 표시(테두리 없음). 같은 색 3px 확장이 글자 주위 여백을 만든다 */
-    .seg.is-current:not(.blank), .seg.is-current:not(.blank):hover {
+    /* 지금 구간 = 면 하나로만 표시(테두리 없음). 같은 색 3px 확장이 글자 주위 여백을 만든다.
+       단 아직 답할 빈칸이 남은 구간(.is-answering)에는 면을 얹지 않는다 —
+       주황 빈칸이 이미 '여기 답해'를 말하고 있어서 면까지 깔면 신호가 겹친다. */
+    .seg.is-current:not(.is-answering):not(.blank):not(.seg--img),
+    .seg.is-current:not(.is-answering):not(.blank):not(.seg--img):hover {
       cursor: pointer; background: var(--th-tint-strong); box-shadow: 0 0 0 3px var(--th-tint-strong);
       color: var(--th-ink-accent); font-weight: 600; }
-    :root[data-theme="dark"] .seg.is-current:not(.blank),
-    :root[data-theme="dark"] .seg.is-current:not(.blank):hover { color: var(--text); }
-    /* 빈칸이 통째로 한 구간일 때는 면을 얹지 않는다 — 빈칸 자체가 이미 상태를 말한다 */
+    :root[data-theme="dark"] .seg.is-current:not(.is-answering):not(.blank):not(.seg--img),
+    :root[data-theme="dark"] .seg.is-current:not(.is-answering):not(.blank):not(.seg--img):hover { color: var(--text); }
+    .seg.is-answering { cursor: default; }
 
     /* ============ 순서 맞추기 줄 (슬롯이 있어 줄 단위 블록) ============ */
     .aline { display: block; transition: filter .35s ease, opacity .35s ease; }
@@ -190,16 +193,26 @@
       --rm-read: var(--n-700); --rm-hl: rgba(124,58,237,.14); --rm-hl-fg: var(--th-accent-strong); --rm-hint: var(--text-meta); }
     .rmodal .monitor__screen { background: var(--rm-card); padding: clamp(22px,2.8vw,34px);
       display: flex; flex-direction: column; gap: clamp(18px,2.4vw,26px); }
-    /* 읽기 패널은 상자가 아니다 — 본문이 스크린에 직접 올라온다 */
-    .rmodal__read { font-family: var(--font-serif); color: var(--rm-read);
+    /* 읽기 패널은 상자가 아니다 — 본문이 스크린에 직접 올라온다.
+       길어지면 본문만 스크롤한다(스크린 전체가 스크롤되면 '문제 풀기'가 화면 밖으로 밀린다). */
+    .rmodal .monitor__screen { overflow: hidden; }
+    .rmodal__read { flex: 1 1 auto; min-height: 0; overflow-y: auto;
+      font-family: var(--font-serif); color: var(--rm-read);
       font-size: clamp(16px,1.5vw,19px); line-height: 2.1; letter-spacing: -0.01em; }
+    .rmodal__foot { flex: none; }
     .rline + .rline { margin-top: 4px; }
-    .rmodal .seg.is-current:not(.blank), .rmodal .seg.is-current:not(.blank):hover {
+    .rmodal .seg.is-current:not(.is-answering):not(.blank):not(.seg--img),
+    .rmodal .seg.is-current:not(.is-answering):not(.blank):not(.seg--img):hover {
       background: var(--rm-hl); box-shadow: 0 0 0 3px var(--rm-hl); color: var(--rm-hl-fg); }
-    /* 이미지도 다 읽기 전에는 가린다 — 뒤 구간의 답이 그림에 드러나는 경우가 있다 */
-    .rmodal__img { margin-top: 18px; border-radius: 12px; overflow: hidden;
-      transition: filter .35s ease, opacity .35s ease; }
-    .rmodal__img.is-unread { filter: blur(9px); opacity: .32; }
+    /* 본문 이미지 = 하나의 구간. 참조 구간(눌러서 옆에 띄우는 것)이 아니라
+       읽기 차례를 차지하는 그림이라, 텍스트 구간과 똑같이 흐렸다가 차례가 오면 선명해진다. */
+    .rline--img { margin-top: 16px; }
+    .seg--img { display: block; width: min(100%, 320px); padding: 0;
+      border-radius: 12px; overflow: hidden; }
+    .seg--img > img, .seg--img > .dummy-img { display: block; width: 100%; height: auto; }
+    .seg--img > .dummy-img { aspect-ratio: 16 / 9; border-radius: 12px; }
+    /* 그림에는 글자색이 없으니 '지금 차례'를 테두리 한 겹으로 말한다 (텍스트 구간의 면과 같은 자리) */
+    .seg--img.is-current { cursor: pointer; box-shadow: 0 0 0 3px var(--th-accent); }
     .rmodal__img img { display: block; width: 100%; height: auto; }
     .rmodal__foot { display: flex; align-items: center; gap: 12px; }
     .rmodal__hint { margin-right: auto; font-family: var(--font-sans); font-size: 12.5px; font-weight: 600; color: var(--rm-hint); }
@@ -339,6 +352,6 @@
   <!-- 키패드 물리 키보드 입력 (공용) -->
   <script src="scripts/keypad.js?v=1"></script>
   <script src="scripts/keypad-input.js?v=3"></script>
-  <script src="scripts/essay-drill-v2.js?v=8"></script>
+  <script src="scripts/essay-drill-v2.js?v=13"></script>
 </body>
 </html>
