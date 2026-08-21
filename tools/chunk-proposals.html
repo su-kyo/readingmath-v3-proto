@@ -47,8 +47,9 @@
     .dim-read .seg.is-read { color: color-mix(in srgb, var(--ink) 60%, transparent); }
 
     /* 빈칸 칩 (essay 문법 축약) */
-    .bk { display: inline-flex; align-items: center; justify-content: center; vertical-align: baseline;
-      min-width: 46px; height: 28px; margin: 0 3px; border-radius: 8px; font-family: var(--font-sans);
+    /* 빈 inline-flex는 baseline이 박스 아래끝이 되어 글줄 위로 뜬다 → 실제 화면(essay.css .blank)과 같이 middle */
+    .bk { display: inline-flex; align-items: center; justify-content: center; vertical-align: middle;
+      min-width: 46px; height: 26px; margin: 0 3px; border-radius: 8px; font-family: var(--font-sans);
       background: rgba(255,255,255,.06); box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.22); }
     .t-light .bk { background: var(--n-050); box-shadow: inset 0 0 0 1.5px var(--n-100); }
     .bk--on { background: color-mix(in srgb, var(--warn-solid) 30%, transparent);
