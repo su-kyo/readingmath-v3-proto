@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<!-- Phase 7 ③ 목업 — 과제센터 홈 「밝은 선실의 상황판」 (1안 · 배포 제외)
+     · 딤 제거: 풀이 화면과 같은 밝은 선실(bg-space-hw)이 그대로 보인다
+     · 패널 → 상황판: 풀이 화면(solve)의 파란 헤더 바 + 파란 6px 프레임 문법 이식
+     · 워딩은 현행 유지 (과제 센터 · 진행중/미시작/완료 과제 · 계속 풀기 · 과제 풀기 · 결과 보기)
+     · 신설 정보: 마감(기한)과 「기한 지남」 상태 — 지시서 ③의 핵심 상태 -->
+<html lang="ko" data-theme="light" data-section="assign">
+<head>
+  <base href="../">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>과제센터 상황판 목업 — 리딩수학과학 (tools)</title>
+  <link rel="stylesheet" href="styles/gnb.css?v=9" />
+  <script src="scripts/gnb-drawer.js?v=7"></script>
+  <link rel="stylesheet" href="styles/tokens.css?v=24" />
+  <style>
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body { font-family: var(--font-sans); background: var(--assign-body); color: var(--n-650); overflow: hidden; -webkit-font-smoothing: antialiased; }
+    .app { display: flex; flex-direction: column; height: 100dvh; }
+
+    /* ===== 스테이지: 밝은 선실 그대로 (딤 없음 — 풀이 화면과 같은 방) ===== */
+    .stage { position: relative; flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: center;
+      padding: clamp(16px,2.2vw,26px) clamp(20px,4vw,60px) 0; gap: 13px;
+      background: url("assets/img/bg/bg-space-hw.webp") center/cover no-repeat; }
+
+    /* ===== 상황판 헤더 바 — solve의 .hd 문법 (파란 알약) ===== */
+    .hd { flex: none; width: 100%; max-width: 1120px; display: flex; align-items: center; gap: 14px;
+      background: var(--th-static); border-radius: 30px; padding: 11px 22px 11px 26px; color: var(--n-000); }
+    .hd__title { font-size: 19px; font-weight: 800; letter-spacing: -.03em; white-space: nowrap; }
+    .hd__chip { padding: 3px 11px; border-radius: 8px; background: rgba(255,255,255,.16);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.34); font-size: 13.5px; font-weight: 800; }
+    .hd__sub { font-size: 13.5px; font-weight: 500; opacity: .88; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .hd__lamps { margin-left: auto; display: flex; gap: 7px; flex: none; }
+    .hd__lamps i { width: 9px; height: 9px; border-radius: 50%; background: rgba(0,0,0,.25); }
+    .hd__lamps i.on { background: var(--cyan-300); box-shadow: 0 0 8px color-mix(in srgb, var(--cyan-300) 60%, transparent); }
+
+    /* ===== 상황판 프레임 — solve의 .content 문법 (파란 6px · 바닥까지) ===== */
+    .board { width: 100%; max-width: 1120px; flex: 1; min-height: 0;
+      background: var(--n-000); border: 6px solid var(--th-static); border-bottom: 0;
+      border-radius: 34px 34px 0 0; padding: 8px 8px 0; }
+    .screen { height: 100%; overflow-y: auto; background: var(--surface-1); border-radius: 28px 28px 0 0;
+      scrollbar-gutter: stable; }
+    .screen::-webkit-scrollbar { width: 12px; }
+    .screen::-webkit-scrollbar-thumb { background: var(--n-200); border-radius: 999px; border: 3.5px solid var(--surface-1); background-clip: padding-box; }
+    .screen { scrollbar-width: thin; scrollbar-color: var(--n-200) var(--surface-1); }
+    .inner { padding: 30px 34px 40px; display: flex; flex-direction: column; gap: 28px; }
+
+    /* ===== 요약 — 계기 스트립 (한 개의 인셋 판 위 판독 4칸) ===== */
+    .gauges { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; align-items: stretch;
+      background: var(--n-050); border-radius: 18px; box-shadow: inset 0 0 0 1px var(--n-100), inset 0 2px 6px rgba(20,32,58,.05); }
+    .gcell { display: flex; align-items: center; gap: 16px; padding: 18px 22px; min-width: 0; }
+    .gcell + .gcell { border-left: 1px solid var(--n-100); }
+    .ring { position: relative; width: 74px; height: 74px; flex: none; }
+    .ring > svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+    .ring__c { position: absolute; inset: 0; display: grid; place-items: center; }
+    .ring__c b { font-family: var(--font-mono); font-size: 20px; font-weight: 700; color: var(--n-650); font-variant-numeric: tabular-nums; }
+    .gcell__b { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+    .gcell__k { font-size: 13px; font-weight: 700; color: var(--text-meta); }
+    .gcell__v { font-family: var(--font-mono); font-size: 26px; font-weight: 700; letter-spacing: -.02em; color: var(--n-650); font-variant-numeric: tabular-nums; line-height: 1.15; }
+    .gcell__v small { font-family: var(--font-sans); font-size: 13px; font-weight: 700; color: var(--text-meta); margin-left: 2px; }
+    .gcell__sub { display: inline-flex; align-items: center; gap: 5px; font-size: 12.5px; font-weight: 700; color: var(--ok-ink); }
+    .gcell__sub svg { width: 14px; height: 14px; }
+
+    /* ===== 기한 지남 알림 스트립 ===== */
+    .notice { display: flex; align-items: center; gap: 11px; padding: 12px 18px; border-radius: 14px;
+      background: var(--no-tint); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--no-solid) 38%, transparent); }
+    .notice__lamp { width: 11px; height: 11px; border-radius: 50%; flex: none; background: var(--no-solid);
+      box-shadow: 0 0 9px color-mix(in srgb, var(--no-solid) 55%, transparent); animation: blink 1.8s ease-in-out infinite; }
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
+    .notice b { font-size: 14.5px; font-weight: 800; color: var(--no-ink); }
+    .notice span { font-size: 13.5px; color: var(--n-500); }
+
+    /* ===== 섹션 — 램프 헤더 (워딩 현행 유지) ===== */
+    .sec { display: flex; flex-direction: column; gap: 13px; }
+    .sec__head { display: flex; align-items: center; gap: 10px; padding-bottom: 10px; border-bottom: 1px solid var(--n-100); }
+    .sec__lamp { width: 11px; height: 11px; border-radius: 50%; flex: none; }
+    .sec__title { font-size: 18px; font-weight: 800; letter-spacing: -.03em; color: var(--n-650); }
+    .sec__count { font-family: var(--font-mono); font-size: 12.5px; font-weight: 700; padding: 1px 9px; border-radius: 999px; font-variant-numeric: tabular-nums; }
+    .sec--blue .sec__lamp { background: var(--th-accent); box-shadow: 0 0 8px color-mix(in srgb, var(--th-accent) 45%, transparent); }
+    .sec--blue .sec__count { background: color-mix(in srgb, var(--info-solid) 18%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--info-solid) 42%, transparent); color: var(--th-ink-accent); }
+    .sec--amber .sec__lamp { background: var(--warn-solid); box-shadow: 0 0 8px color-mix(in srgb, var(--warn-solid) 50%, transparent); }
+    .sec--amber .sec__count { background: color-mix(in srgb, var(--warn-solid) 18%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--warn-solid) 42%, transparent); color: var(--warn-ink); }
+    .sec--green .sec__lamp { background: var(--ok-solid); box-shadow: 0 0 8px color-mix(in srgb, var(--ok-solid) 45%, transparent); }
+    .sec--green .sec__count { background: color-mix(in srgb, var(--ok-solid) 18%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ok-solid) 42%, transparent); color: var(--ok-ink); }
+    .list { display: flex; flex-direction: column; gap: 12px; }
+
+    /* ===== 과제 카드 — 흰 카드 + 상태 램프 ===== */
+    .card { display: flex; align-items: center; gap: 20px; background: var(--surface-1); border: 1px solid var(--n-100); border-radius: 16px; padding: 18px 22px;
+      box-shadow: 0 1px 2px rgba(20,32,58,.04), 0 6px 22px -16px rgba(20,32,58,.20); transition: box-shadow .16s, transform .16s; }
+    .card:hover { box-shadow: 0 2px 6px rgba(20,32,58,.06), 0 18px 34px -20px rgba(20,32,58,.30); transform: translateY(-2px); }
+    .card__lamp { width: 13px; height: 13px; border-radius: 50%; flex: none; }
+    .card--run .card__lamp { background: var(--th-accent); box-shadow: 0 0 9px color-mix(in srgb, var(--th-accent) 45%, transparent); }
+    .card--wait .card__lamp { background: var(--warn-solid); box-shadow: 0 0 9px color-mix(in srgb, var(--warn-solid) 50%, transparent); }
+    .card--done .card__lamp { background: var(--ok-solid); box-shadow: 0 0 9px color-mix(in srgb, var(--ok-solid) 45%, transparent); }
+    .card--late .card__lamp { background: var(--no-solid); box-shadow: 0 0 9px color-mix(in srgb, var(--no-solid) 55%, transparent); animation: blink 1.8s ease-in-out infinite; }
+    .card--late { border-color: color-mix(in srgb, var(--no-solid) 38%, transparent); background: color-mix(in srgb, var(--no-solid) 3%, var(--surface-1)); }
+    .card__main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 9px; }
+    .card__title { font-size: 17px; font-weight: 700; color: var(--n-650); letter-spacing: -.01em; line-height: 1.3; }
+    .metarow { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+    .unit { padding: 3px 9px; border-radius: 7px; background: var(--n-050); color: var(--n-500); font-size: 12px; font-weight: 700; }
+    .meta { display: inline-flex; align-items: center; gap: 5px; font-size: 12.5px; color: var(--text-meta); font-weight: 500; font-variant-numeric: tabular-nums; }
+    .meta svg { width: 13px; height: 13px; }
+    .meta b { color: var(--n-500); font-weight: 700; }
+    .sep { width: 3px; height: 3px; border-radius: 50%; background: var(--n-200); flex: none; }
+    .dday { font-family: var(--font-mono); font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 7px;
+      background: var(--th-tint); color: var(--th-ink-accent); }
+    .dday--late { background: var(--no-tint); color: var(--no-ink); font-family: var(--font-sans); }
+
+    /* 진행률 (워딩 현행: 풀이 진행률) */
+    .prog { flex: none; width: 210px; display: flex; flex-direction: column; gap: 8px; }
+    .prog__top { display: flex; align-items: baseline; justify-content: space-between; }
+    .prog__k { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: var(--text-meta); }
+    .prog__k svg { width: 13px; height: 13px; color: var(--th-ink-accent); }
+    .prog__v { font-family: var(--font-mono); font-size: 17px; font-weight: 700; color: var(--th-ink-accent); font-variant-numeric: tabular-nums; }
+    .prog__v small { color: var(--text-meta); font-size: 12px; margin-left: 2px; }
+    /* 트랙 → 칸(세그) — 계기 어휘의 라이트 버전 */
+    .track { display: flex; gap: 3px; }
+    .track i { flex: 1; height: 10px; border-radius: 3px; background: var(--n-100); }
+    .track i.on { background: var(--th-accent); }
+
+    /* 문항수 (미시작) */
+    .qcount { flex: none; display: inline-flex; align-items: center; gap: 7px; padding: 8px 14px; border-radius: 10px;
+      background: var(--n-050); box-shadow: inset 0 0 0 1px var(--n-100); }
+    .qcount svg { width: 15px; height: 15px; color: var(--warn-ink); }
+    .qcount span { font-size: 12px; color: var(--text-meta); font-weight: 600; }
+    .qcount b { font-family: var(--font-mono); font-size: 14px; color: var(--n-650); font-weight: 700; }
+
+    /* 완료 점수 블록 (워딩 현행: 제출완료 · 점 · 결과 보기) */
+    .scoreblk { flex: none; display: flex; align-items: center; gap: 18px; }
+    .scoreblk__col { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
+    .badge-done { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 999px; background: var(--ok-ink); color: var(--n-000); font-size: 11px; font-weight: 800; }
+    .badge-done svg { width: 11px; height: 11px; }
+    .scoreblk__num { font-family: var(--font-mono); font-size: 26px; font-weight: 700; color: var(--n-650); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+    .scoreblk__num small { font-family: var(--font-sans); font-size: 13px; color: var(--text-meta); font-weight: 700; margin-left: 1px; }
+
+    /* 버튼 — 물리 키 한 톨 (아래 받침 그림자) · 워딩 현행 유지 */
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; border: 0; cursor: pointer; font-family: inherit; font-weight: 700; white-space: nowrap; transition: filter .14s, transform .1s, box-shadow .14s; }
+    .btn svg { width: 17px; height: 17px; }
+    .btn--go { flex: none; padding: 12px 20px; border-radius: 12px; background: var(--th-ink-accent); color: var(--n-000); font-size: 15px;
+      box-shadow: 0 3px 0 var(--th-accent-strong); }
+    .btn--go:hover { filter: brightness(1.08); }
+    .btn--go:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--th-accent-strong); }
+    .btn--do { flex: none; padding: 11px 18px; border-radius: 11px; background: var(--warn-solid); color: var(--n-900); font-size: 14px;
+      box-shadow: 0 3px 0 color-mix(in srgb, var(--warn-solid) 55%, var(--n-900)); }   /* 앰버 채움 = 어두운 글자 (§3.3) */
+    .btn--do:hover { filter: brightness(1.05); }
+    .btn--do:active { transform: translateY(2px); box-shadow: 0 1px 0 color-mix(in srgb, var(--warn-solid) 55%, var(--n-900)); }
+    .btn--result { flex: none; padding: 10px 16px; border-radius: 10px; background: var(--surface-1); border: 1px solid var(--n-100); color: var(--n-500); font-size: 13px; }
+    .btn--result:hover { border-color: var(--ok-ink); color: var(--ok-ink); }
+    .more { align-self: center; padding: 10px 18px; border-radius: 999px; background: var(--n-050); border: 1px solid var(--n-100); color: var(--n-500); font-size: 13px; font-weight: 700; cursor: pointer; transition: .14s; }
+    .more:hover { border-color: var(--n-200); color: var(--n-650); }
+    :focus-visible { outline: 2px solid var(--th-focus); outline-offset: 2px; }
+
+    @media (max-width: 940px) {
+      .gauges { grid-template-columns: 1fr 1fr; }
+      .card { flex-wrap: wrap; }
+      .prog { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- ===== GNB (현행 그대로) ===== -->
+    <header class="gnb">
+      <div class="gnb__info"><span class="gnb__logo"></span><span class="gnb__name">김학생</span></div>
+      <nav class="gnb__modes">
+        <button class="gnb__mode m-basic" data-go="nav/home.html">기본 모드</button>
+        <button class="gnb__mode m-free" data-go="nav/freemode.html">자유 모드</button>
+        <button class="gnb__mode m-exam" data-go="exam/home.html">시험 대비</button>
+        <button class="gnb__mode m-assign is-active">과제 센터<span class="gnb__mode__dot"></span></button>
+      </nav>
+      <div class="gnb__icons">
+        <button class="gnb__ico" title="도움말"></button>
+        <button class="gnb__ico" title="긴급"></button>
+        <button class="gnb__ico" title="공지"><span class="gnb__dot"></span></button>
+        <button class="gnb__ico" id="menuBtn" title="메뉴"></button>
+      </div>
+    </header>
+
+    <!-- ===== 스테이지: 밝은 선실 + 상황판 ===== -->
+    <div class="stage">
+      <!-- 상황판 헤더 바 (solve의 파란 알약 문법 · 워딩 현행) -->
+      <div class="hd">
+        <span class="hd__title">과제 센터</span>
+        <span class="hd__chip">수학</span>
+        <span class="hd__sub">선생님이 내주신 수학 과제를 확인하고 풀이해 보세요.</span>
+        <span class="hd__lamps"><i class="on"></i><i></i><i></i></span>
+      </div>
+
+      <!-- 상황판 프레임 (solve의 파란 6px 프레임 문법) -->
+      <main class="board"><div class="screen"><div class="inner">
+
+        <!-- 요약: 계기 스트립 (워딩 현행: 평균 점수 · 완료 과제 · 제출 문항 · 정답 문항) -->
+        <section class="gauges">
+          <div class="gcell">
+            <div class="ring"><svg viewBox="0 0 80 80">
+              <circle cx="40" cy="40" r="34" fill="none" stroke="var(--n-100)" stroke-width="7"/>
+              <circle cx="40" cy="40" r="34" fill="none" stroke="var(--ok-solid)" stroke-width="7" stroke-linecap="round"
+                stroke-dasharray="213.6" stroke-dashoffset="25.6"/>
+            </svg><span class="ring__c"><b>88</b></span></div>
+            <div class="gcell__b">
+              <span class="gcell__k">평균 점수</span>
+              <span class="gcell__v">88<small>점</small></span>
+              <span class="gcell__sub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 7 13.5 15.5l-4-4L2 19M16 7h6v6"/></svg>정답률 87%</span>
+            </div>
+          </div>
+          <div class="gcell"><div class="gcell__b">
+            <span class="gcell__k">완료 과제</span><span class="gcell__v">10<small>개</small></span>
+          </div></div>
+          <div class="gcell"><div class="gcell__b">
+            <span class="gcell__k">제출 문항</span><span class="gcell__v">116<small>문항</small></span>
+          </div></div>
+          <div class="gcell"><div class="gcell__b">
+            <span class="gcell__k">정답 문항</span><span class="gcell__v">101<small>문항</small></span>
+          </div></div>
+        </section>
+
+        <!-- 기한 지남 알림 (신설 상태 · 워딩은 평어) -->
+        <div class="notice">
+          <i class="notice__lamp"></i>
+          <b>기한이 지난 과제가 1개 있어요.</b>
+          <span>「유리수의 소수 표현과 순환소수 심화 문제 풀이」 — 지금 풀어도 제출할 수 있어요.</span>
+        </div>
+
+        <!-- 진행중 과제 -->
+        <section class="sec sec--blue">
+          <div class="sec__head"><span class="sec__lamp"></span><span class="sec__title">진행중 과제</span><span class="sec__count">2</span></div>
+          <div class="list">
+            <article class="card card--run">
+              <span class="card__lamp"></span>
+              <div class="card__main">
+                <span class="card__title">일차부등식의 활용 실생활 문장제 극복 훈련</span>
+                <div class="metarow">
+                  <span class="unit">2단원 · 일차부등식과 연립방정식</span><span class="sep"></span>
+                  <span class="meta">출제 <b>2026.05.20 19:00</b></span><span class="sep"></span>
+                  <span class="meta">마감 <b>2026.05.22</b></span><span class="dday">D-1</span>
+                </div>
+              </div>
+              <div class="prog">
+                <div class="prog__top">
+                  <span class="prog__k"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>풀이 진행률</span>
+                  <span class="prog__v">40%<small>6/15</small></span>
+                </div>
+                <div class="track"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              </div>
+              <button class="btn btn--go">계속 풀기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+            </article>
+            <article class="card card--run">
+              <span class="card__lamp"></span>
+              <div class="card__main">
+                <span class="card__title">연립일차방정식의 풀이 — 가감법과 대입법 기본 연습</span>
+                <div class="metarow">
+                  <span class="unit">2단원 · 일차부등식과 연립방정식</span><span class="sep"></span>
+                  <span class="meta">출제 <b>2026.05.20 17:00</b></span><span class="sep"></span>
+                  <span class="meta">마감 <b>2026.05.24</b></span><span class="dday">D-3</span>
+                </div>
+              </div>
+              <div class="prog">
+                <div class="prog__top">
+                  <span class="prog__k"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>풀이 진행률</span>
+                  <span class="prog__v">75%<small>9/12</small></span>
+                </div>
+                <div class="track"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div>
+              </div>
+              <button class="btn btn--go">계속 풀기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+            </article>
+          </div>
+        </section>
+
+        <!-- 미시작 과제 (기한 지남 포함) -->
+        <section class="sec sec--amber">
+          <div class="sec__head"><span class="sec__lamp"></span><span class="sec__title">미시작 과제</span><span class="sec__count">2</span></div>
+          <div class="list">
+            <article class="card card--late">
+              <span class="card__lamp"></span>
+              <div class="card__main">
+                <span class="card__title">유리수의 소수 표현과 순환소수 심화 문제 풀이</span>
+                <div class="metarow">
+                  <span class="unit">1단원 · 유리수와 순환소수</span><span class="sep"></span>
+                  <span class="meta">출제 <b>2026.05.15 18:10</b></span><span class="sep"></span>
+                  <span class="meta">마감 <b>2026.05.18</b></span><span class="dday dday--late">기한 지남 · 3일</span>
+                </div>
+              </div>
+              <span class="qcount"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span>문항수</span><b>10문항</b></span>
+              <button class="btn btn--do">과제 풀기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+            </article>
+            <article class="card card--wait">
+              <span class="card__lamp"></span>
+              <div class="card__main">
+                <span class="card__title">함수의 그래프 기초 훈련</span>
+                <div class="metarow">
+                  <span class="unit">3단원 · 좌표평면과 그래프</span><span class="sep"></span>
+                  <span class="meta">출제 <b>2026.05.21 09:00</b></span><span class="sep"></span>
+                  <span class="meta">마감 <b>2026.05.23</b></span><span class="dday">D-2</span>
+                </div>
+              </div>
+              <span class="qcount"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span>문항수</span><b>8문항</b></span>
+              <button class="btn btn--do">과제 풀기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+            </article>
+          </div>
+        </section>
+
+        <!-- 완료 과제 -->
+        <section class="sec sec--green">
+          <div class="sec__head"><span class="sec__lamp"></span><span class="sec__title">완료 과제</span><span class="sec__count">10</span></div>
+          <div class="list">
+            <article class="card card--done">
+              <span class="card__lamp"></span>
+              <div class="card__main">
+                <span class="card__title">소인수분해 기본 개념 확인 평가</span>
+                <div class="metarow">
+                  <span class="unit">1단원 · 소인수분해</span><span class="sep"></span>
+                  <span class="meta">출제 <b>2026.05.19 18:00</b></span><span class="sep"></span>
+                  <span class="meta">제출 <b>2026.05.19 19:30</b></span>
+                  <span class="meta">· 정답 <b style="color:var(--ok-ink)">8</b>/10문항</span>
+                </div>
+              </div>
+              <div class="scoreblk">
+                <div class="scoreblk__col">
+                  <span class="badge-done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg>제출완료</span>
+                  <span class="scoreblk__num">80<small>점</small></span>
+                </div>
+                <button class="btn btn--result">결과 보기</button>
+              </div>
+            </article>
+            <article class="card card--done">
+              <span class="card__lamp"></span>
+              <div class="card__main">
+                <span class="card__title">최대공약수와 최소공배수의 활용 실전</span>
+                <div class="metarow">
+                  <span class="unit">1단원 · 소인수분해</span><span class="sep"></span>
+                  <span class="meta">출제 <b>2026.05.19 00:00</b></span><span class="sep"></span>
+                  <span class="meta">제출 <b>2026.05.19 01:20</b></span>
+                  <span class="meta">· 정답 <b style="color:var(--ok-ink)">7</b>/8문항</span>
+                </div>
+              </div>
+              <div class="scoreblk">
+                <div class="scoreblk__col">
+                  <span class="badge-done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg>제출완료</span>
+                  <span class="scoreblk__num">88<small>점</small></span>
+                </div>
+                <button class="btn btn--result">결과 보기</button>
+              </div>
+            </article>
+            <article class="card card--done">
+              <span class="card__lamp"></span>
+              <div class="card__main">
+                <span class="card__title">정수와 유리수의 사칙연산 타임어택</span>
+                <div class="metarow">
+                  <span class="unit">2단원 · 정수와 유리수</span><span class="sep"></span>
+                  <span class="meta">출제 <b>2026.05.17 19:00</b></span><span class="sep"></span>
+                  <span class="meta">제출 <b>2026.05.17 20:00</b></span>
+                  <span class="meta">· 정답 <b style="color:var(--ok-ink)">9</b>/10문항</span>
+                </div>
+              </div>
+              <div class="scoreblk">
+                <div class="scoreblk__col">
+                  <span class="badge-done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg>제출완료</span>
+                  <span class="scoreblk__num">90<small>점</small></span>
+                </div>
+                <button class="btn btn--result">결과 보기</button>
+              </div>
+            </article>
+            <button class="more">완료 과제 10개 전체 보기</button>
+          </div>
+        </section>
+
+      </div></div></main>
+    </div>
+  </div>
+</body>
+</html>
