@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<!-- Phase 7 ③ 목업 4차 — 과제센터 홈 (배포 제외)
-     시간 모델 교정: 이 서비스에 마감(데드라인)은 없다. 사건은 「도착」과 「종료」 둘뿐.
-     · 지금 할 일: 하던 것 먼저(진행중 중 먼저 받은 것 → 없으면 안 한 것 중 먼저 받은 것)
-     · 다음 할 일: 받은 순. 압박 신호는 경과(「받은 지 N일」)만 — 거짓 없는 유일한 신호
-     · 지난 과제: 완료 + 종료됨(선생님이 닫음 · 열람만 가능 · 꺼진 램프)
-     스킨은 합의분: 선실 딤 .20 · 파란 헤더 바 · 파란 6px 프레임 · 틴트 바탕 위 모듈. -->
+<!-- Phase 7 ③ 목업 5차 — 과제센터 홈 (배포 제외)
+     구도: 선실 스테이지 위에 떠 있는 세 덩어리 — 헤더 바 / KPI 판독 스트립(정적 하드웨어 네이비) / 과제 보드.
+     보드 안은 과제 목록만: 풀던 과제(최근에 연 것 하나) → 남은 과제(받은 순) → 지난 과제(완료+종료).
+     히어로 시선 흐름: 제목(진입) → 회색 메타 한 줄 → 진행률 → CTA(종점). 세로 CTA 기둥 폐기.
+     시간 모델: 마감 없음 — 신호는 경과(받은 지 N일)뿐. -->
 <html lang="ko" data-theme="light" data-section="assign">
 <head>
   <base href="../">
@@ -20,14 +19,15 @@
     body { font-family: var(--font-sans); background: var(--assign-body); color: var(--n-650); overflow: hidden; -webkit-font-smoothing: antialiased; }
     .app { display: flex; flex-direction: column; height: 100dvh; }
 
-    /* ===== 스테이지: 선실 + 옅은 딤(.20) ===== */
+    /* ===== 스테이지: 선실 + 옅은 딤(.20) · 떠 있는 세 덩어리 ===== */
     .stage { position: relative; flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: center;
-      padding: clamp(16px,2.2vw,26px) clamp(20px,4vw,60px) 0; gap: 13px;
+      padding: clamp(16px,2.2vw,24px) clamp(20px,4vw,60px) 0; gap: 14px;
       background: linear-gradient(rgba(9,12,40,.20), rgba(9,12,40,.20)), url("assets/img/bg/bg-space-hw.webp") center/cover no-repeat; }
 
-    /* ===== 상황판 헤더 바 ===== */
+    /* ── ① 헤더 바 ── */
     .hd { flex: none; width: 100%; max-width: 1120px; display: flex; align-items: center; gap: 14px;
-      background: var(--th-static); border-radius: 30px; padding: 11px 22px 11px 26px; color: var(--n-000); }
+      background: var(--th-static); border-radius: 30px; padding: 11px 22px 11px 26px; color: var(--n-000);
+      box-shadow: 0 8px 22px -12px rgba(6,12,30,.5); }
     .hd__title { font-size: 19px; font-weight: 800; letter-spacing: -.03em; white-space: nowrap; }
     .hd__chip { padding: 3px 11px; border-radius: 8px; background: rgba(255,255,255,.16);
       box-shadow: inset 0 0 0 1px rgba(255,255,255,.34); font-size: 13.5px; font-weight: 800; }
@@ -36,7 +36,21 @@
     .hd__lamps i { width: 9px; height: 9px; border-radius: 50%; background: rgba(0,0,0,.25); }
     .hd__lamps i.on { background: var(--cyan-300); box-shadow: 0 0 8px color-mix(in srgb, var(--cyan-300) 60%, transparent); }
 
-    /* ===== 상황판 프레임 ===== */
+    /* ── ② KPI 판독 스트립 — 키패드·콘솔바와 같은 정적 하드웨어 (항상 네이비) ── */
+    .kpi { flex: none; width: 100%; max-width: 1120px; display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 6px;
+      background: var(--n-650); border-radius: 20px; padding: 8px;
+      box-shadow: 0 3px 0 color-mix(in srgb, var(--n-650) 70%, var(--n-900)), 0 14px 30px -14px rgba(6,12,30,.55); }
+    .kpi__cell { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 18px; min-width: 0;
+      background: rgba(0,0,0,.22); box-shadow: inset 0 0 0 1px rgba(255,255,255,.09); border-radius: 6px; }
+    .kpi__cell:first-child { border-radius: 13px 6px 6px 13px; }
+    .kpi__cell:last-child { border-radius: 6px 13px 13px 6px; }
+    .kpi__b { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 0; }
+    .kpi__k { font-size: 12px; font-weight: 700; color: var(--n-300); white-space: nowrap; }
+    .kpi__v { font-family: var(--font-mono); font-size: 22px; font-weight: 700; letter-spacing: -.02em; color: var(--n-000); font-variant-numeric: tabular-nums; line-height: 1.1; }
+    .kpi__v small { font-family: var(--font-sans); font-size: 12px; font-weight: 700; color: var(--n-300); margin-left: 2px; }
+    .kpi__sub { font-size: 11.5px; font-weight: 700; color: var(--ok-on-dark); white-space: nowrap; }
+
+    /* ── ③ 과제 보드 — 목록만 ── */
     .board { width: 100%; max-width: 1120px; flex: 1; min-height: 0;
       background: var(--n-000); border: 6px solid var(--th-static); border-bottom: 0;
       border-radius: 34px 34px 0 0; padding: 8px 8px 0;
@@ -46,7 +60,7 @@
     .screen::-webkit-scrollbar { width: 12px; }
     .screen::-webkit-scrollbar-thumb { background: var(--n-200); border-radius: 999px; border: 3.5px solid var(--n-050); background-clip: padding-box; }
     .screen { scrollbar-width: thin; scrollbar-color: var(--n-200) var(--n-050); }
-    .inner { padding: 28px 34px 40px; display: flex; flex-direction: column; gap: 26px; }
+    .inner { padding: 26px 34px 40px; display: flex; flex-direction: column; gap: 26px; }
 
     /* ===== 공통: 섹션 머리 ===== */
     .sec__head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
@@ -55,65 +69,44 @@
     .sec__count { font-family: var(--font-mono); font-size: 12.5px; font-weight: 700; padding: 1px 9px; border-radius: 999px; font-variant-numeric: tabular-nums;
       background: color-mix(in srgb, var(--info-solid) 18%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--info-solid) 42%, transparent); color: var(--th-ink-accent); }
 
-    /* ===== ① 지금 할 일 — 히어로 모듈 (하던 것 먼저) ===== */
+    /* ===== 풀던 과제 — 히어로: 위→아래 한 줄기, CTA는 종점 ===== */
     .now .sec__lamp { background: var(--th-accent); box-shadow: 0 0 8px color-mix(in srgb, var(--th-accent) 45%, transparent); }
-    .hero { display: flex; align-items: stretch; gap: 26px; background: var(--n-000); border-radius: 20px; padding: 26px 30px;
+    .hero { display: flex; flex-direction: column; gap: 13px; background: var(--n-000); border-radius: 20px; padding: 24px 28px 22px;
       box-shadow: 0 4px 0 rgba(20,32,58,.10); }
-    .hero__main { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 12px; }
     .hero__title { font-size: 23px; font-weight: 800; letter-spacing: -.02em; line-height: 1.3; color: var(--n-650); }
-    .metarow { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
-    .unit { padding: 3px 9px; border-radius: 7px; background: var(--n-050); color: var(--n-500); font-size: 12.5px; font-weight: 700; }
-    .meta { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; color: var(--text-meta); font-weight: 500; font-variant-numeric: tabular-nums; }
-    .meta b { color: var(--n-500); font-weight: 700; }
-    .sep { width: 3px; height: 3px; border-radius: 50%; background: var(--n-200); flex: none; }
-    /* 경과 배지 — 마감 없는 세계의 유일한 압박 신호 */
-    .ago { font-size: 12.5px; font-weight: 700; padding: 2px 9px; border-radius: 999px;
-      background: color-mix(in srgb, var(--info-solid) 14%, transparent); color: var(--th-ink-accent); font-variant-numeric: tabular-nums; }
-    /* 진행률 (히어로) */
-    .prog { display: flex; align-items: center; gap: 12px; max-width: 460px; }
-    .track { display: flex; gap: 3px; flex: 1; }
+    /* 부가정보 — 한 가지 옷(회색 한 줄). 경과만 살짝 힘 */
+    .hmeta { font-size: 13px; color: var(--text-meta); font-weight: 500; font-variant-numeric: tabular-nums; }
+    .hmeta b { color: var(--n-500); font-weight: 700; }
+    .hmeta .dot { margin: 0 7px; color: var(--n-200); }
+    /* 진행 + CTA 한 줄 — 읽고 나서 행동으로 끝난다 */
+    .hero__foot { display: flex; align-items: center; gap: 16px; margin-top: 3px; }
+    .track { display: flex; gap: 3px; flex: 1; max-width: 520px; }
     .track i { flex: 1; height: 10px; border-radius: 3px; background: var(--n-100); }
     .track i.on { background: var(--th-accent); }
-    .prog__v { font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: var(--th-ink-accent); font-variant-numeric: tabular-nums; flex: none; }
-    .prog__v small { color: var(--text-meta); font-size: 12px; margin-left: 2px; }
-    .qmeta { font-size: 13px; color: var(--text-meta); font-weight: 600; }
-    .qmeta b { font-family: var(--font-mono); font-size: 14px; color: var(--n-650); font-weight: 700; }
-    /* 우측: 진행 판독창(정적 하드웨어 네이비) + 시작 키 */
-    .hero__side { flex: none; display: flex; flex-direction: column; align-items: stretch; justify-content: center; gap: 12px; width: 208px; }
-    .dwin { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 13px 16px 15px; border-radius: 14px;
-      background: var(--n-650); box-shadow: 0 3px 0 color-mix(in srgb, var(--n-650) 70%, var(--n-900)); }
-    .dwin__k { font-size: 12px; font-weight: 700; color: var(--n-300); }
-    .dwin__v { font-family: var(--font-mono); font-size: 30px; font-weight: 700; color: var(--n-000); line-height: 1.1; font-variant-numeric: tabular-nums; }
-    .dwin__d { font-size: 12px; font-weight: 600; color: var(--n-300); font-variant-numeric: tabular-nums; }
-    /* 버튼 — 물리 키 */
+    .hero__pv { flex: none; font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: var(--th-ink-accent); font-variant-numeric: tabular-nums; }
+    .hero__pv small { font-family: var(--font-sans); color: var(--text-meta); font-size: 12.5px; font-weight: 600; margin-left: 4px; }
     .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 0; cursor: pointer; font-family: inherit; font-weight: 800; white-space: nowrap; transition: filter .14s, transform .1s, box-shadow .14s; }
-    .btn svg { width: 18px; height: 18px; }
-    .btn--hero-go { padding: 15px 20px; border-radius: 14px; background: var(--th-ink-accent); color: var(--n-000); font-size: 19px;
-      box-shadow: 0 4px 0 var(--th-accent-strong); }
+    .btn svg { width: 17px; height: 17px; }
+    .btn--hero-go { margin-left: auto; padding: 13px 22px; border-radius: 13px; background: var(--th-ink-accent); color: var(--n-000); font-size: 16px;
+      box-shadow: 0 3px 0 var(--th-accent-strong); }
     .btn--hero-go:hover { filter: brightness(1.08); }
-    .btn--hero-go:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--th-accent-strong); }
+    .btn--hero-go:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--th-accent-strong); }
 
-    /* ===== ② 다음 할 일 — 받은 순 ===== */
+    /* ===== 남은 과제 — 받은 순 · 행 다이어트(램프·제목+메타·진행 숫자·버튼) ===== */
     .queue .sec__lamp { background: var(--th-accent); box-shadow: 0 0 8px color-mix(in srgb, var(--th-accent) 45%, transparent); }
     .list { display: flex; flex-direction: column; gap: 11px; }
-    .row { display: flex; align-items: center; gap: 18px; background: var(--n-000); border-radius: 16px; padding: 16px 22px;
+    .row { display: flex; align-items: center; gap: 18px; background: var(--n-000); border-radius: 16px; padding: 16px 24px;
       box-shadow: 0 3px 0 rgba(20,32,58,.10); transition: transform .12s, box-shadow .12s; }
     .row:hover { transform: translateY(-2px); box-shadow: 0 5px 0 rgba(20,32,58,.10); }
     .row__lamp { width: 13px; height: 13px; border-radius: 50%; flex: none; }
     .row--run .row__lamp { background: var(--th-accent); box-shadow: 0 0 9px color-mix(in srgb, var(--th-accent) 45%, transparent); }
     .row--new .row__lamp { background: var(--warn-solid); box-shadow: 0 0 9px color-mix(in srgb, var(--warn-solid) 50%, transparent); }
-    /* 경과 판독 (행 버전) — 받은 지 N일 */
-    .row__ago { flex: none; width: 74px; display: flex; flex-direction: column; align-items: center; gap: 1px;
-      padding: 8px 6px 9px; border-radius: 11px; background: var(--n-050); box-shadow: inset 0 0 0 1.5px var(--n-100); }
-    .row__ago b { font-family: var(--font-mono); font-size: 17px; font-weight: 700; color: var(--th-ink-accent); font-variant-numeric: tabular-nums; }
-    .row__ago span { font-size: 10.5px; font-weight: 600; color: var(--text-meta); }
-    .row__main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 7px; }
+    .row__main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
     .row__title { font-size: 16.5px; font-weight: 700; color: var(--n-650); letter-spacing: -.01em; line-height: 1.3; display: flex; align-items: center; gap: 8px; }
     .newchip { flex: none; padding: 2px 8px; border-radius: 999px; font-size: 11.5px; font-weight: 800;
       background: color-mix(in srgb, var(--warn-solid) 20%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--warn-solid) 45%, transparent); color: var(--warn-ink); }
-    .row__stat { flex: none; display: flex; align-items: center; gap: 12px; }
-    .row .track { width: 130px; flex: none; }
-    .row .track i { height: 9px; }
+    .row__pv { flex: none; font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: var(--th-ink-accent); font-variant-numeric: tabular-nums; }
+    .row__pv small { color: var(--text-meta); font-size: 12px; }
     .btn--go { flex: none; padding: 11px 18px; border-radius: 11px; background: var(--th-ink-accent); color: var(--n-000); font-size: 14.5px; font-weight: 700;
       box-shadow: 0 3px 0 var(--th-accent-strong); }
     .btn--go:hover { filter: brightness(1.08); }
@@ -123,10 +116,9 @@
     .btn--do:hover { filter: brightness(1.05); }
     .btn--do:active { transform: translateY(2px); box-shadow: 0 1px 0 color-mix(in srgb, var(--warn-solid) 55%, var(--n-900)); }
 
-    /* ===== ③ 지난 과제 — 완료 + 종료됨 ===== */
+    /* ===== 지난 과제 — 완료 + 종료됨 ===== */
     .done .sec__lamp { background: var(--ok-solid); box-shadow: 0 0 8px color-mix(in srgb, var(--ok-solid) 45%, transparent); }
-    .done .sec__sum { font-size: 13.5px; font-weight: 700; color: var(--text-meta); }
-    .done .sec__sum b { font-family: var(--font-mono); color: var(--ok-ink); font-weight: 700; }
+    .done .sec__count { background: color-mix(in srgb, var(--ok-solid) 18%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ok-solid) 42%, transparent); color: var(--ok-ink); }
     .done__all { margin-left: auto; padding: 8px 15px; border-radius: 999px; background: var(--n-000); border: 0; color: var(--n-500); font-size: 12.5px; font-weight: 700; cursor: pointer;
       box-shadow: 0 2px 0 var(--n-200); }
     .done__all:hover { color: var(--n-650); }
@@ -151,9 +143,8 @@
 
     :focus-visible { outline: 2px solid var(--th-focus); outline-offset: 2px; }
     @media (max-width: 940px) {
-      .hero { flex-direction: column; }
-      .hero__side { width: 100%; flex-direction: row; }
-      .hero__side .dwin { flex: 1; }
+      .kpi { grid-template-columns: 1fr 1fr; }
+      .hero__foot { flex-wrap: wrap; }
       .row { flex-wrap: wrap; }
     }
   </style>
@@ -178,6 +169,7 @@
     </header>
 
     <div class="stage">
+      <!-- ① 헤더 바 -->
       <div class="hd">
         <span class="hd__title">과제 센터</span>
         <span class="hd__chip">수학</span>
@@ -185,69 +177,67 @@
         <span class="hd__lamps"><i class="on"></i><i></i><i></i></span>
       </div>
 
+      <!-- ② KPI 판독 스트립 (별도 하드웨어) -->
+      <div class="kpi">
+        <div class="kpi__cell"><div class="kpi__b">
+          <span class="kpi__k">평균 점수</span><span class="kpi__v">88<small>점</small></span><span class="kpi__sub">정답률 87%</span>
+        </div></div>
+        <div class="kpi__cell"><div class="kpi__b">
+          <span class="kpi__k">완료 과제</span><span class="kpi__v">10<small>개</small></span>
+        </div></div>
+        <div class="kpi__cell"><div class="kpi__b">
+          <span class="kpi__k">제출 문항</span><span class="kpi__v">116<small>문항</small></span>
+        </div></div>
+        <div class="kpi__cell"><div class="kpi__b">
+          <span class="kpi__k">정답 문항</span><span class="kpi__v">101<small>문항</small></span>
+        </div></div>
+      </div>
+
+      <!-- ③ 과제 보드 — 목록만 -->
       <main class="board"><div class="screen"><div class="inner">
 
-        <!-- ===== ① 지금 할 일 — 하던 것 중 먼저 받은 것 ===== -->
+        <!-- 풀던 과제 — 최근에 연 것 하나 -->
         <section class="now">
-          <div class="sec__head"><span class="sec__lamp"></span><span class="sec__title">지금 할 일</span></div>
+          <div class="sec__head"><span class="sec__lamp"></span><span class="sec__title">풀던 과제</span></div>
           <div class="hero">
-            <div class="hero__main">
-              <span class="hero__title">연립일차방정식의 풀이 — 가감법과 대입법 기본 연습</span>
-              <div class="metarow">
-                <span class="unit">2단원 · 일차부등식과 연립방정식</span><span class="sep"></span>
-                <span class="meta">출제 <b>2026.05.20 17:00</b></span>
-                <span class="ago">받은 지 1일</span>
-              </div>
-              <div class="prog">
-                <div class="track"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div>
-                <span class="prog__v">75%<small>9/12</small></span>
-              </div>
-            </div>
-            <div class="hero__side">
-              <div class="dwin">
-                <span class="dwin__k">풀이 진행률</span>
-                <span class="dwin__v">9<span style="font-size:.6em">/12</span></span>
-                <span class="dwin__d">3문항 남음</span>
-              </div>
+            <span class="hero__title">연립일차방정식의 풀이 — 가감법과 대입법 기본 연습</span>
+            <span class="hmeta">2단원 · 일차부등식과 연립방정식<span class="dot">·</span>출제 2026.05.20<span class="dot">·</span><b>받은 지 1일</b></span>
+            <div class="hero__foot">
+              <div class="track"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div>
+              <span class="hero__pv">9/12<small>3문항 남음</small></span>
               <button class="btn btn--hero-go">계속 풀기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
             </div>
           </div>
         </section>
 
-        <!-- ===== ② 다음 할 일 — 받은 순 ===== -->
+        <!-- 남은 과제 — 받은 순 -->
         <section class="queue">
-          <div class="sec__head"><span class="sec__lamp"></span><span class="sec__title">다음 할 일</span><span class="sec__count">2</span></div>
+          <div class="sec__head"><span class="sec__lamp"></span><span class="sec__title">남은 과제</span><span class="sec__count">2</span></div>
           <div class="list">
             <article class="row row--run">
               <span class="row__lamp"></span>
-              <span class="row__ago"><b>1일</b><span>받은 지</span></span>
               <div class="row__main">
                 <span class="row__title">일차부등식의 활용 실생활 문장제 극복 훈련</span>
-                <div class="metarow"><span class="unit">2단원 · 일차부등식과 연립방정식</span><span class="sep"></span><span class="meta">출제 <b>2026.05.20 19:00</b></span></div>
+                <span class="hmeta">2단원 · 일차부등식과 연립방정식<span class="dot">·</span>출제 2026.05.20<span class="dot">·</span><b>받은 지 1일</b></span>
               </div>
-              <div class="row__stat">
-                <div class="track"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-                <span class="prog__v">6<small>/15</small></span>
-              </div>
+              <span class="row__pv">6<small>/15</small></span>
               <button class="btn btn--go">계속 풀기</button>
             </article>
             <article class="row row--new">
               <span class="row__lamp"></span>
-              <span class="row__ago"><b>오늘</b><span>받음</span></span>
               <div class="row__main">
                 <span class="row__title">함수의 그래프 기초 훈련<span class="newchip">새 과제</span></span>
-                <div class="metarow"><span class="unit">3단원 · 좌표평면과 그래프</span><span class="sep"></span><span class="meta">출제 <b>2026.05.21 09:00</b></span><span class="sep"></span><span class="qmeta">문항수 <b>8문항</b></span></div>
+                <span class="hmeta">3단원 · 좌표평면과 그래프<span class="dot">·</span>출제 2026.05.21<span class="dot">·</span><b>오늘 받음</b><span class="dot">·</span>8문항</span>
               </div>
               <button class="btn btn--do">과제 풀기</button>
             </article>
           </div>
         </section>
 
-        <!-- ===== ③ 지난 과제 — 완료 + 종료됨 ===== -->
+        <!-- 지난 과제 — 완료 + 종료됨 -->
         <section class="done">
           <div class="sec__head">
-            <span class="sec__lamp"></span><span class="sec__title">지난 과제</span>
-            <span class="sec__sum"><b>10개</b> 완료 · 평균 <b>88점</b></span>
+            <span class="sec__lamp"></span><span class="sec__title">지난 과제</span><span class="sec__count">11</span>
             <button class="done__all">전체 보기</button>
           </div>
           <div class="list">
