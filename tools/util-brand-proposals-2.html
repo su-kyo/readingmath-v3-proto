@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ko" data-section="util">
+<head>
+<base href="../">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>유틸 브랜드성 2차 — C안 4화면 적용 · 쿨톤 종이</title>
+<link rel="stylesheet" href="styles/tokens.css?v=25">
+<link rel="stylesheet" href="styles/base.css?v=10">
+<link rel="stylesheet" href="styles/gnb.css?v=9">
+<link rel="stylesheet" href="styles/util.css?v=9">
+<style>
+  body{ margin:0; padding:28px 20px 90px; background:var(--n-900);
+    font-family:var(--font-sans); color:var(--n-000); letter-spacing:normal; }
+  .page{ max-width:1060px; margin:0 auto; }
+  .page__ttl{ font-size:var(--fs-h1); font-weight:var(--fw-heavy); letter-spacing:-0.03em; margin:0; }
+  .page__sub{ font-size:var(--fs-sm); color:var(--n-300); margin:6px 0 18px; line-height:1.7; }
+  .ctl{ position:sticky; top:0; z-index:50; display:flex; align-items:center; gap:8px;
+    padding:10px 0; margin-bottom:8px; background:var(--n-900); }
+  .ctl__lab{ font-size:var(--fs-sm); font-weight:var(--fw-bold); color:var(--n-300); margin-right:4px; }
+  .ctl__btn{ height:38px; padding:0 16px; border-radius:var(--r-md);
+    border:1px solid var(--n-500); background:var(--n-700); color:var(--n-000);
+    font-family:var(--font-sans); font-size:var(--fs-sm); font-weight:var(--fw-bold);
+    cursor:pointer; transition:background var(--t-fast); }
+  .ctl__btn:hover{ background:var(--n-600); }
+  .ctl__btn.is-on{ background:var(--primary); border-color:var(--primary); }
+  .prop{ margin:38px 0 0; }
+  .prop__hd{ display:flex; align-items:baseline; gap:12px; margin-bottom:10px; flex-wrap:wrap; }
+  .prop__name{ font-size:var(--fs-h2); font-weight:var(--fw-heavy); letter-spacing:-0.02em; }
+  .prop__desc{ font-size:var(--fs-sm); color:var(--n-300); }
+
+  /* ── 무대 ── */
+  .ustage{ position:relative; border-radius:var(--r-xl); overflow:hidden;
+    display:flex; flex-direction:column; background:var(--paper); color:var(--ink); letter-spacing:-.02em; }
+  .ustage .gnb{ flex:none; position:relative; }
+  .ustage .u-main{ flex:1; min-height:0; }
+  .ustage .u-wrap{ max-width:940px; padding:28px 28px 44px; }
+  /* 쿨톤 강화: 종이만 파란 기 한 단계 올리고, 경계선을 같이 보정 */
+  .ustage.is-cool{ --paper:var(--n-100); --line:var(--n-200); --surface-2:var(--n-050); --surface-3:var(--n-050); }
+
+  /* ── C안 하드웨어 힌트 (1차와 동일 문법) ── */
+  .u-head__ico{ background:var(--n-650); color:var(--n-000); }
+  .u-card{ overflow:hidden; }
+  .u-strip{ display:flex; align-items:center; gap:6px; height:34px; padding:0 14px; background:var(--n-650); }
+  .u-strip i{ width:8px; height:8px; border-radius:var(--r-full); background:var(--n-500); }
+  .u-strip i.is-live{ background:var(--blue-300); }
+  .u-strip span{ margin-left:auto; width:52px; height:5px; border-radius:var(--r-full); background:var(--n-500); }
+
+  /* 결제 화면 요약 (원본 구조 축약 재현) */
+  .pay-feat{ padding:18px 22px; display:flex; flex-direction:column; gap:10px; }
+  .pay-feat div{ font-size:14px; font-weight:600; color:var(--ink); display:flex; gap:8px; align-items:flex-start; }
+  .pay-feat div::before{ content:"✓"; color:var(--ok); font-weight:800; }
+  .pay-opt{ display:flex; align-items:center; gap:12px; padding:16px 20px; border:1px solid var(--line);
+    border-radius:var(--radius-sm); background:var(--surface); margin-top:10px; font-size:15px; font-weight:700; }
+  .pay-opt small{ color:var(--ink-3); font-weight:600; }
+  .pay-opt b{ margin-left:auto; font-size:17px; }
+  .pay-opt.is-sel{ border-color:var(--brand-ink); box-shadow:0 0 0 3px var(--brand-tint); }
+  .pay-sum{ padding:20px 22px; }
+  .pay-sum__row{ display:flex; justify-content:space-between; font-size:14px; font-weight:600;
+    color:var(--ink-2); padding:9px 0; border-bottom:1px solid var(--line-2); }
+  .pay-sum__row b{ color:var(--ink); }
+  .pay-sum__total{ display:flex; justify-content:space-between; align-items:baseline; padding:16px 0 6px; }
+  .pay-sum__total .t{ font-size:14px; font-weight:700; }
+  .pay-sum__total .v{ font-size:26px; font-weight:800; color:var(--brand-ink); letter-spacing:-0.02em; }
+</style>
+</head>
+<body>
+<div class="page">
+  <h1 class="page__ttl">유틸 브랜드성 — 2차 (C안 확정 · 4화면 적용 + 쿨톤 종이)</h1>
+  <p class="page__sub">
+    C안(라이트 유지 + 하드웨어 힌트)을 유틸 4화면에 적용한 예시.
+    상단 토글로 종이색을 비교 — <b>현행</b>은 지금의 n-050(#F0F5FE), <b>쿨톤 강화</b>는 파란 기가 확실한 n-100(#E4ECFB).
+    둘 다 팔레트의 쿨 네이비 사다리 안에 있는 값이라 새 색을 만들지 않는다.
+    결제 화면만 하드웨어 힌트 없이 톤만 적용 (학부모용 현실 업무 화면 — 최소 권장).
+  </p>
+
+  <div class="ctl">
+    <span class="ctl__lab">종이색</span>
+    <button class="ctl__btn" data-tone="now">현행 (n-050)</button>
+    <button class="ctl__btn is-on" data-tone="cool">쿨톤 강화 (n-100)</button>
+  </div>
+
+  <section class="prop" id="sec-notice">
+    <div class="prop__hd"><span class="prop__name">공지사항 목록</span>
+      <span class="prop__desc">카드 상단 베젤 스트립 + 네이비 아이콘 칩</span></div>
+    <div class="ustage is-cool" style="aspect-ratio:1280/760">
+      <header class="gnb" data-gnb></header>
+      <main class="u-main"><div class="u-wrap">
+        <div class="u-head">
+          <div class="u-head__l">
+            <span class="u-head__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 9v6h3l7 4V5L7 9H4zM18 8a5 5 0 0 1 0 8"/></svg></span>
+            <div><div class="u-head__t">공지사항</div>
+              <div class="u-head__sub">리딩수학과학의 새 소식과 서비스 안내를 확인하세요.</div></div>
+          </div>
+          <div class="u-head__act"><div class="u-seg"><button class="is-on">전체</button><button>공지</button><button>이벤트</button></div></div>
+        </div>
+        <div class="u-card">
+          <div class="u-strip"><i class="is-live"></i><i></i><i></i><span></span></div>
+          <div class="u-tablewrap"><table class="u-table">
+            <thead><tr><th class="col-no is-center">번호</th><th>제목</th><th class="col-date is-right">등록일</th></tr></thead>
+            <tbody data-notice></tbody>
+          </table></div>
+        </div>
+        <div class="u-pager"><button disabled>‹</button><button class="is-on">1</button><button>2</button><button>›</button></div>
+      </div></main>
+    </div>
+  </section>
+
+  <section class="prop" id="sec-report">
+    <div class="prop__hd"><span class="prop__name">월간보고서</span>
+      <span class="prop__desc">같은 문법 — 스트립·칩만으로 「관제 기록」 인상</span></div>
+    <div class="ustage is-cool" style="aspect-ratio:1280/680">
+      <header class="gnb" data-gnb></header>
+      <main class="u-main"><div class="u-wrap">
+        <div class="u-head">
+          <div class="u-head__l">
+            <span class="u-head__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 16v-5M12.5 16V8M16 16v-3"/></svg></span>
+            <div><div class="u-head__t">월간보고서</div>
+              <div class="u-head__sub">매달 학습 현황과 성취를 정리한 리포트를 확인하세요. 리포트는 새 창에서 열립니다.</div></div>
+          </div>
+        </div>
+        <div class="u-card">
+          <div class="u-strip"><i class="is-live"></i><i></i><i></i><span></span></div>
+          <div class="u-tablewrap"><table class="u-table">
+            <thead><tr><th class="col-no is-center">번호</th><th>제목</th><th>학습 기간</th><th class="col-date is-right">등록일</th></tr></thead>
+            <tbody data-report></tbody>
+          </table></div>
+        </div>
+        <div class="u-pager"><button class="is-on">1</button></div>
+      </div></main>
+    </div>
+  </section>
+
+  <section class="prop" id="sec-detail">
+    <div class="prop__hd"><span class="prop__name">공지 상세</span>
+      <span class="prop__desc">본문 카드에도 같은 스트립 — 읽기 영역은 그대로</span></div>
+    <div class="ustage is-cool" style="aspect-ratio:1280/800">
+      <header class="gnb" data-gnb></header>
+      <main class="u-main"><div class="u-wrap u-wrap--narrow">
+        <div class="u-crumb"><a href="#">공지사항</a><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg><span>공지</span></div>
+        <div class="u-card">
+          <div class="u-strip"><i class="is-live"></i><i></i><i></i><span></span></div>
+          <div class="u-card__pad">
+            <div class="u-doc__meta">
+              <span class="u-tag u-tag--blue">공지</span>
+              <div class="u-doc__title">시험 대비(유형 도전) 기능 오픈 안내</div>
+              <div class="u-doc__date">2026-04-15</div>
+            </div>
+            <div class="u-doc__body">
+              <h3>📘 적용 범위 안내</h3>
+              <ul><li>적용 과목: 리딩수학 · 리딩과학</li><li>적용 학기: 중등 1-1학기, 2-1학기, 3-1학기</li><li>적용 단원: 각 학기 1~2단원</li></ul>
+              <h3>🚀 오픈 안내</h3>
+              <p>학생의 학습 상태에 맞춰 문제를 선택하고 연습할 수 있는 <b>시험 대비(유형 도전)</b> 기능이 새롭게 오픈되었어요. 필요한 유형을 선택해 반복 학습하며 시험을 효율적으로 준비할 수 있어요.</p>
+            </div>
+            <div class="u-doc__foot">
+              <button class="u-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg>목록으로</button>
+              <div style="display:flex;gap:8px"><button class="u-btn u-btn--sm">이전 글</button><button class="u-btn u-btn--sm" disabled>다음 글</button></div>
+            </div>
+          </div>
+        </div>
+      </div></main>
+    </div>
+  </section>
+
+  <section class="prop" id="sec-pay">
+    <div class="prop__hd"><span class="prop__name">이용권 결제</span>
+      <span class="prop__desc">하드웨어 힌트 없이 종이 톤만 — 학부모용 현실 업무 화면이라 최소 적용 권장</span></div>
+    <div class="ustage is-cool" style="aspect-ratio:1280/860">
+      <header class="gnb" data-gnb></header>
+      <main class="u-main"><div class="u-wrap">
+        <div class="u-head">
+          <div class="u-head__l">
+            <span class="u-head__ico" style="background:var(--brand-tint);color:var(--brand-ink)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg></span>
+            <div><div class="u-head__t">이용권 결제</div>
+              <div class="u-head__sub">과목과 이용 기간을 선택하고 결제를 진행하세요.</div></div>
+          </div>
+        </div>
+        <div class="u-cols">
+          <div>
+            <div class="u-card">
+              <div class="u-card__hd" style="padding:10px 10px 0;border:0">
+                <div class="u-seg" style="width:100%"><button class="is-on" style="flex:1">리딩수학</button><button style="flex:1">리딩과학</button><button style="flex:1">리딩수학+과학 통합</button></div>
+              </div>
+              <div class="pay-feat">
+                <div>초3부터 ~ 중1까지 개념·유형·서술형 균형 잡힌 <b>리딩수학 학습</b> 진행</div>
+                <div>복습과 정리를 위한 매주 <b>주간 학습 기록과 오답노트</b> 제공</div>
+                <div>매월 학습 현황을 파악할 수 있도록 매월 <b>월간보고서</b> 제공</div>
+              </div>
+            </div>
+            <div class="pay-opt is-sel"><b style="margin:0">1개월</b><small>(30일)</small><b>70,000원</b></div>
+            <div class="pay-opt"><b style="margin:0">3개월</b><small>(90일) ↓7%</small><b>195,000원</b></div>
+            <div class="pay-opt"><b style="margin:0">12개월</b><small>(365일) ↓29%</small><b>600,000원</b></div>
+          </div>
+          <div class="u-side">
+            <div class="u-card">
+              <div class="u-card__hd"><span class="u-card__ttl">주문 요약</span></div>
+              <div class="pay-sum">
+                <div class="pay-sum__row"><span>선택한 이용권</span><b>리딩수학</b></div>
+                <div class="pay-sum__row"><span>이용 기간</span><b>1개월 (30일)</b></div>
+                <div class="pay-sum__row"><span>결제 방법</span><b>신용카드 결제</b></div>
+                <div class="pay-sum__total"><span class="t">총 결제금액</span><span class="v">70,000원</span></div>
+                <button class="u-btn u-btn--cta u-btn--lg" style="width:100%;margin-top:10px">결제하기</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div></main>
+    </div>
+  </section>
+</div>
+
+<script>
+(function(){
+  var GNB='<div class="gnb__info"><span class="gnb__logo"></span><span class="gnb__name">김학생</span></div>'
+    +'<div class="gnb__icons">'
+    +'<button class="gnb__ico" title="도움말"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.8.4-1 .9-1 1.7" stroke-linecap="round"/><circle cx="12" cy="16.5" r="1" fill="currentColor" stroke="none"/></svg></button>'
+    +'<button class="gnb__ico" title="공지사항"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 9v6h3l7 4V5L7 9H4zM18 8a5 5 0 0 1 0 8"/></svg><span class="gnb__dot"></span></button>'
+    +'<button class="gnb__ico" title="메뉴"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div>';
+  document.querySelectorAll('[data-gnb]').forEach(function(h){ h.innerHTML=GNB; });
+
+  var NOTICE=[
+    [8,'공지','시험 대비(유형 도전) 기능 오픈 안내','2026-04-15',true],
+    [7,'이벤트','[공지] 2026 학습 후기 이벤트 결과 발표 🎉 축하드립니다!','2026-05-18',true],
+    [6,'공지','자유 모드 · 계통별 학습 업데이트 안내','2026-03-30',false],
+    [5,'공지','6월 정기 점검 안내 (6/12 새벽 2시~4시)','2026-06-05',false],
+    [4,'이벤트','갓생기록상 · 뇌근육 벌크업상 응모 안내','2026-05-02',false]
+  ];
+  document.querySelector('[data-notice]').innerHTML=NOTICE.map(function(r){
+    var tag=r[1]==='공지'?'<span class="u-tag u-tag--blue">공지</span>':'<span class="u-tag u-tag--amber">이벤트</span>';
+    return '<tr><td class="col-no is-center">'+r[0]+'</td><td>'+tag+' <span class="u-ttl">'+r[2]+'</span>'
+      +(r[4]?'<span class="u-new">N</span>':'')+'</td><td class="col-date is-right">'+r[3]+'</td></tr>';
+  }).join('');
+
+  var REPORT=[
+    [5,'2026년 06월 학습 리포트','2026.06.01 ~ 2026.06.30','2026.07.01',true],
+    [4,'2026년 05월 학습 리포트','2026.05.01 ~ 2026.05.31','2026.06.01',false],
+    [3,'2026년 04월 학습 리포트','2026.04.01 ~ 2026.04.30','2026.05.01',false],
+    [2,'2026년 03월 학습 리포트','2026.03.01 ~ 2026.03.31','2026.04.01',false]
+  ];
+  document.querySelector('[data-report]').innerHTML=REPORT.map(function(r){
+    return '<tr><td class="col-no is-center">'+r[0]+'</td><td><span class="u-ttl">'+r[1]+'</span>'
+      +(r[4]?'<span class="u-new">N</span>':'')+'</td><td style="color:var(--ink-2)">'+r[2]+'</td>'
+      +'<td class="col-date is-right">'+r[3]+'</td></tr>';
+  }).join('');
+
+  /* 종이색 토글 */
+  document.querySelectorAll('[data-tone]').forEach(function(b){
+    b.addEventListener('click', function(){
+      document.querySelectorAll('[data-tone]').forEach(function(x){ x.classList.toggle('is-on', x===b); });
+      document.querySelectorAll('.ustage').forEach(function(s){ s.classList.toggle('is-cool', b.dataset.tone==='cool'); });
+    });
+  });
+})();
+</script>
+</body>
+</html>
