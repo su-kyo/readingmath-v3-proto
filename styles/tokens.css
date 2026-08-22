@@ -428,10 +428,8 @@
   --yellow-500: var(--amber-300);
   --yellow-300: var(--amber-200);
   --yellow-050: var(--amber-050);
-  --green-050: var(--green-050);
-  --red-050: var(--red-050);
-  --teal-100: var(--teal-100);
-  --cyan-100: var(--cyan-100);
+  /* (버그 수정 2026-08-22) --green-050 등 자기참조 별칭 4줄 삭제 —
+     :root에서 자신을 다시 정의해 변수 순환으로 무효가 되던 것. 원본 프리미티브가 그대로 쓰인다. */
   /* 이 별칭들은 대개 다크 표면 위 '글자'로 쓰인다 — solid(500)는 4.1~4.3으로 미달이라
      밝힌 단계(on-dark)를 가리킨다. 칠면이 필요하면 --*-ink 또는 --th-solid를 쓴다. */
   --success: var(--ok-on-dark);
