@@ -84,20 +84,25 @@
 
     /* ---- 명판 — 올리거나 탭했을 때만, 오브젝트 위쪽 고정 ----------------
        「상자 아래」에 달면 그림이 상자를 얼마나 채우는지에 따라 자리가 제각각이 되고,
-       정중앙은 캐릭터와 부딪힌다. 위쪽은 여섯 개가 같은 규칙을 쓰면서도 안 겹친다. */
+       정중앙은 캐릭터와 부딪힌다. 위쪽은 여섯 개가 같은 규칙을 쓰면서도 안 겹친다.
+
+       명판은 오브젝트 「안」에 있지 않다. 오브젝트끼리는 앞뒤가 정해져 있는데
+       (뒤에 그린 것이 앞), 명판을 안에 넣으면 그 오브젝트를 통째로 올려야만
+       명판이 보인다 — 그러면 올린 오브젝트가 앞의 오브젝트를 뚫고 나온다.
+       그래서 명판만 모아 오브젝트 전부보다 위, 캐릭터보다 아래인 층(.plaques)에 둔다.
+       각 명판은 자기 오브젝트와 똑같은 자리·크기의 빈 상자(.pl)에 매달려 따라다닌다. */
+    .plaques{ position:absolute; inset:0; z-index:25; pointer-events:none; }
+    .pl{ position:absolute; transform:translate(-50%,-50%); aspect-ratio:1; }
     .plaque{ position:absolute; left:50%; top:5%; transform:translate(-50%,-7px) scale(.96);
       display:flex; align-items:center; gap:8px; width:max-content; max-width:min(42vw,250px);
       background:var(--n-000); color:var(--n-650); border-radius:var(--r-full);
       padding:6px 14px; font-size:13px; font-weight:700; line-height:1.35;
-      box-shadow:0 8px 20px -8px rgba(10,25,60,.5); z-index:20;
+      box-shadow:0 8px 20px -8px rgba(10,25,60,.5);
       opacity:0; pointer-events:none; transition:opacity .12s, transform .12s; }
     /* 단원명이 길면 이름만 말줄임한다 — 진행 세그먼트는 잘리지 않는다 */
     .plaque__name{ min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-    .obj.is-hot .plaque, .obj.is-peek .plaque,
+    .pl.is-hot .plaque, .pl.is-peek .plaque,
     .safe.is-allplaque .plaque{ opacity:1; transform:translate(-50%,0) scale(1); }
-    /* 명판은 .obj 안에 있고 .obj는 transform 때문에 각자 겹침 층을 이룬다 —
-       그래서 명판만 z-index를 올려선 옆 오브젝트에 가린다. .obj 자체를 올려야 한다. */
-    .obj.is-hot, .obj.is-peek, .safe.is-allplaque .obj{ z-index:15; }
     .safe.is-hit{ cursor:pointer; }
     /* 명판이 뜨는 동안 말풍선은 잠시 물러난다 — 중단 오브젝트의 명판 자리와 겹치는데,
        흰 알약 두 개가 포개지면 둘 다 못 읽힌다. 캐릭터는 그대로 남는다(항상 최상위). */
@@ -294,9 +299,15 @@
         return '<span class="plaque"><span class="plaque__name">' + label + '</span>' + inner + '</span>';
       }
 
+      /* 명판 층 — 오브젝트 전부보다 위, 캐릭터보다 아래 */
+      var plaques = document.createElement('div');
+      plaques.className = 'plaques';
+      safe.insertBefore(plaques, hero);
+
       function build(list){
         objs.forEach(function(el){ el.remove(); });
         objs = []; hot = null;
+        plaques.innerHTML = '';
         cfg.objects.forEach(function(o){
           var u = list[o.n - 1] || { name:null, subs:['todo'] };
           var src = dir + '/obj-' + o.n + '.webp';
@@ -306,13 +317,21 @@
           el.style.width = o.w + '%';
           el.style.setProperty('--m', 'url("' + src + '")');   // 그늘·빛줄기가 몸체 모양을 따라가게
           el.style.setProperty('--d', (o.n * 0.85).toFixed(2) + 's');   // 여섯이 한꺼번에 밝아지지 않게
-          el.style.setProperty('--seg', SEG);
           el.innerHTML = '<span class="obj__img" style="background-image:url(\'' + src + '\')"></span>'
-            + '<span class="obj__sweep"><i></i></span>'
-            + plaqueHTML(o.n, u);
-          safe.insertBefore(el, hero);   // 캐릭터보다 뒤(먼저 그려짐)
+            + '<span class="obj__sweep"><i></i></span>';
+          safe.insertBefore(el, plaques);   // 명판 층·캐릭터보다 뒤(먼저 그려짐)
           objs.push(el);
           loadAlpha(el, src);
+
+          /* 명판이 매달릴 빈 상자 — 오브젝트와 똑같은 자리·크기(뜬 것은 같이 뜬다) */
+          var pl = document.createElement('div');
+          pl.className = 'pl' + (o.float ? ' obj--float' : '');
+          pl.style.left = o.cx + '%'; pl.style.top = o.cy + '%';
+          pl.style.width = o.w + '%';
+          pl.style.setProperty('--seg', SEG);
+          pl.innerHTML = plaqueHTML(o.n, u);
+          plaques.appendChild(pl);
+          el._pl = pl;
         });
       }
 
@@ -365,12 +384,15 @@
       var hot = null, lastMove = 0;
       function syncBubble(){
         safe.classList.toggle('is-plaque',
-          safe.classList.contains('is-allplaque') || !!safe.querySelector('.obj.is-hot, .obj.is-peek'));
+          safe.classList.contains('is-allplaque') || !!plaques.querySelector('.pl.is-hot, .pl.is-peek'));
       }
+      /* 켜고 끄는 것은 오브젝트가 아니라 그 오브젝트의 명판이다 —
+         오브젝트끼리의 앞뒤는 절대 바뀌지 않는다. */
       function setHot(el){
         if(hot === el) return;
-        if(hot) hot.classList.remove('is-hot');
-        hot = el; if(hot) hot.classList.add('is-hot');
+        if(hot) hot._pl.classList.remove('is-hot');
+        hot = el;
+        if(hot) hot._pl.classList.add('is-hot');
         safe.classList.toggle('is-hit', !!hot);
         syncBubble();
       }
@@ -387,8 +409,8 @@
         var inSafe = e.target.closest && e.target.closest('.safe') && !e.target.closest('.hero');
         var el = inSafe ? hitTest(e.clientX, e.clientY) : null;
         var was = el && el.classList.contains('is-peek');
-        objs.forEach(function(x){ x.classList.remove('is-peek'); });
-        if(el && !was) el.classList.add('is-peek');
+        objs.forEach(function(x){ x.classList.remove('is-peek'); x._pl.classList.remove('is-peek'); });
+        if(el && !was){ el.classList.add('is-peek'); el._pl.classList.add('is-peek'); }
         syncBubble();
       });
 
