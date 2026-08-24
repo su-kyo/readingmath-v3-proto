@@ -25,7 +25,9 @@
   .ctl__btn.is-on{ background:var(--primary); border-color:var(--primary); }
   .ctl__sep{ width:1px; height:24px; background:var(--n-600); margin:0 6px; }
 
-  .tile{ margin:30px 0 0; }
+  /* 화면 밖 타일은 렌더를 통째로 건너뛴다. 이 페이지는 무대를 7개나 띄우는
+     검수용이라 이게 없으면 안 보이는 무대까지 계속 그린다(발열의 주범). */
+  .tile{ margin:30px 0 0; content-visibility:auto; contain-intrinsic-size:auto 640px; }
   .tile__hd{ display:flex; align-items:baseline; gap:10px; margin-bottom:8px; flex-wrap:wrap; }
   .tile__cat{ font-size:12px; font-weight:800; letter-spacing:.02em; padding:3px 9px;
     border-radius:var(--r-full); background:var(--n-600); color:var(--n-000); }
@@ -43,7 +45,8 @@
     0%,100%{ transform:translate(-50%,-50%) translateY(0); }
     50%    { transform:translate(-50%,-50%) translateY(-13px); }
   }
-  .hero{ position:absolute; left:50%; top:62.7%; width:31.25%; transform:translate(-50%,-50%); z-index:10; }
+  /* 행성 대표 캐릭터는 무엇보다 위에 있다 — 오브젝트도 명판도 캐릭터를 못 가린다 */
+  .hero{ position:absolute; left:50%; top:62.7%; width:31.25%; transform:translate(-50%,-50%); z-index:30; }
   .hero.is-nochar{ top:70%; width:auto; }
   .hero.is-nochar .char, .hero.is-nochar .shadow, .hero.is-nochar .bubble::after{ display:none; }
   .hero.is-nochar .bubble{ position:static; transform:none; margin:0; }
@@ -76,8 +79,8 @@
      한 점이 밝아지는 횟수가 7초에 한 번(0.14Hz)이라 깜빡임으로 안 읽힌다.
      경계도 부드러운 그라데이션이라 가장자리가 반짝이지 않는다. */
   @keyframes sweepUp{
-    0%      { background-position:0 145%; }
-    55%,100%{ background-position:0 -45%; }
+    0%      { transform:translateY(340%); }
+    55%,100%{ transform:translateY(-105%); }
   }
 
   /* 밝은 배경 보완 — screen 블렌드는 「더하기」라 어두운 색이 무효다.
@@ -95,38 +98,40 @@
      주황빛으로 빛난다. 학기별 색 지정이 0인데도 32배경 전부와 어울리는 이유.
      상태 구분은 색이 아니라 형태가 맡는다: 흰 윤곽선 + 스캔라인 + 글로우. */
   .m-white .obj:not(.is-done) .obj__img{
+    /* 그림자를 5겹에서 2겹으로 줄였다. drop-shadow는 한 겹마다 별도 연산이라
+       6개 오브젝트면 30번이 12번이 된다. 딱딱한 1.5px 윤곽선 대신 부드러운
+       2.5px 테두리 빛이라 선도 더 얇아 보인다. */
     filter:grayscale(1) brightness(1.5) contrast(.45)
-      drop-shadow(1.5px 0 0 rgba(255,255,255,.95)) drop-shadow(-1.5px 0 0 rgba(255,255,255,.95))
-      drop-shadow(0 1.5px 0 rgba(255,255,255,.95)) drop-shadow(0 -1.5px 0 rgba(255,255,255,.95))
-      drop-shadow(0 0 10px rgba(255,255,255,.55));
+      drop-shadow(0 0 2.5px rgba(255,255,255,.95))
+      drop-shadow(0 0 11px rgba(255,255,255,.5));
     mix-blend-mode:screen;
-    /* 빗금이 정지 상태라 대비를 낮출 이유가 없다 — 흐를 때만 눈이 아팠던 것이지
-       무늬 자체는 셀수록 홀로그램으로 읽힌다. 경계는 1px 그라데이션으로 눕혀
-       그림 가장자리에서 계단이 지지 않게 한다. */
+    /* 빗금 얇게 — 주기 5px, 선 굵기 약 1px. 멈춰 있으니 촘촘해도 눈이 아프지 않다 */
     -webkit-mask:repeating-linear-gradient(0deg,
-      rgba(0,0,0,.98) 0 3px, rgba(0,0,0,.34) 4px 5px, rgba(0,0,0,.98) 6px) 0 0/100% 72px;
+      rgba(0,0,0,.98) 0 3.6px, rgba(0,0,0,.36) 4.2px 4.8px, rgba(0,0,0,.98) 5px) 0 0/100% 70px;
     mask:repeating-linear-gradient(0deg,
-      rgba(0,0,0,.98) 0 3px, rgba(0,0,0,.34) 4px 5px, rgba(0,0,0,.98) 6px) 0 0/100% 72px;
+      rgba(0,0,0,.98) 0 3.6px, rgba(0,0,0,.36) 4.2px 4.8px, rgba(0,0,0,.98) 5px) 0 0/100% 70px;
   }
-  /* 빛 한 줄이 몸체를 훑고 지나간다 — 오브젝트마다 시작 시각을 어긋나게 해서
-     여섯이 한꺼번에 밝아지는 「화면 전체 맥박」을 없앤다 */
-  .m-white .obj:not(.is-done)::before{
-    content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
-    -webkit-mask:var(--m) center/contain no-repeat; mask:var(--m) center/contain no-repeat;
-    background:linear-gradient(0deg,
-      transparent 0%, rgba(255,255,255,.42) 42%, rgba(255,255,255,.46) 58%, transparent 100%);
-    background-size:100% 42%; background-repeat:no-repeat; background-position:0 145%;
-    mix-blend-mode:screen;
+  /* 빛 한 줄이 몸체를 훑는다.
+     background-position이 아니라 transform으로 움직인다 — 위치를 옮기면 매 프레임
+     다시 그려야 하지만 transform은 이미 그려 둔 것을 옮기기만 해서 훨씬 싸다.
+     흰빛이라 블렌드 없이 그냥 얹어도 밝아진다(블렌드 레이어를 절반으로 줄임). */
+  .obj__sweep{ position:absolute; inset:0; z-index:1; pointer-events:none; display:none;
+    -webkit-mask:var(--m) center/contain no-repeat; mask:var(--m) center/contain no-repeat; }
+  .obj__sweep i{ position:absolute; left:0; right:0; top:0; height:42%;
+    background:linear-gradient(0deg, transparent, rgba(255,255,255,.42) 45%,
+      rgba(255,255,255,.46) 55%, transparent);
+    will-change:transform;
     animation:sweepUp 7s cubic-bezier(.45,0,.55,1) infinite;
-    animation-delay:var(--d, 0s);
-  }
+    animation-delay:var(--d, 0s); }
+  .m-white .obj:not(.is-done) .obj__sweep{ display:block; }
+
   /* 눈 피로를 줄이도록 OS 「동작 줄이기」에서는 빛줄기도 멈춘다 (무늬는 그대로 남는다) */
   @media (prefers-reduced-motion: reduce){
-    .m-white .obj:not(.is-done)::before{ animation:none; background-position:0 55%; opacity:.5; }
+    .obj__sweep i{ animation:none; transform:translateY(120%); opacity:.5; }
   }
   /* 대조군 — 옛 빗금 루핑 (눈 피로 비교용) */
   .is-oldscan.m-white .obj:not(.is-done) .obj__img{ animation:scanUp 3.4s linear infinite; }
-  .is-oldscan.m-white .obj:not(.is-done)::before{ display:none; }
+  .is-oldscan.m-white .obj:not(.is-done) .obj__sweep{ display:none; }
 
   /* 비교용 A — 흰색을 「칠한」 경우 (블렌드 없음).
      난색 배경에서 회색 돌처럼 보이는 것을 확인하는 대조군. */
@@ -151,8 +156,10 @@
       rgba(0,0,0,1) 0 4px, rgba(0,0,0,.45) 4px 6px) 0 0/100% 72px;
     animation:scanUp 3.4s linear infinite;
   }
+  /* 보이지 않는 무대는 애니메이션까지 멈춘다 (IntersectionObserver가 붙인다) */
+  .stage.is-idle .obj__sweep i, .stage.is-idle .obj--float{ animation-play-state:paused; }
   .is-nomotion .obj__img{ animation:none !important; }
-  .is-nomotion .obj::before{ animation:none !important; background-position:0 55% !important; }
+  .is-nomotion .obj__sweep i{ animation:none !important; transform:translateY(120%) !important; }
   .is-nomotion .obj--float{ animation:none !important; }
 
   /* ══ 명판 — hover / 탭했을 때만 ═══════════════════════════ */
@@ -264,16 +271,17 @@
     var stage=document.createElement('div');
     stage.className='stage m-white';
     stage.style.aspectRatio=cfg.ratio;
-    stage.style.backgroundImage='url("'+dir+'/bg.webp")';
+    stage.dataset.dir=dir;   /* 실제 이미지는 화면에 가까워질 때 물린다 (아래 IntersectionObserver) */
 
     cfg.objects.forEach(function(o){
       var u=UNITS[o.n-1], d=PROG[u.no]||0, done=DONE.indexOf(u.no)>=0;
       var el=document.createElement('div');
       el.className='obj'+(o.float?' obj--float':'')+(done?' is-done':'');
       el.style.left=o.cx+'%'; el.style.top=o.cy+'%'; el.style.width=o.w+'%';
-      el.style.setProperty('--m', 'url("'+dir+'/obj-'+o.n+'.webp")');
+      el.dataset.src=dir+'/obj-'+o.n+'.webp';
       el.style.setProperty('--d', (o.n*0.85).toFixed(2)+'s');   /* 여섯이 한꺼번에 밝아지지 않게 */
-      el.innerHTML='<span class="obj__img" style="background-image:url(\''+dir+'/obj-'+o.n+'.webp\')"></span>'
+      el.innerHTML='<span class="obj__img"></span>'
+        +'<span class="obj__sweep"><i></i></span>'
         +'<span class="plaque">'+u.no+'단원'+(u.name?' · '+u.name:'')+segs(u,d)+'</span>';
       if(!done) el.addEventListener('click', function(e){
         e.stopPropagation();
@@ -292,6 +300,42 @@
 
     sec.appendChild(stage); host.appendChild(sec);
   });
+
+  /* 보이는 무대만 움직인다 — 7개를 동시에 돌리면 그만큼 GPU가 계속 일한다 */
+  function loadStage(st){
+    if(st.dataset.loaded) return; st.dataset.loaded='1';
+    st.style.backgroundImage='url("'+st.dataset.dir+'/bg.webp")';
+    st.querySelectorAll('.obj').forEach(function(el){
+      var u='url("'+el.dataset.src+'")';
+      el.querySelector('.obj__img').style.backgroundImage=u;
+      el.style.setProperty('--m', u);
+    });
+  }
+  if(window.IntersectionObserver){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting) loadStage(e.target);
+        e.target.classList.toggle('is-idle', !e.isIntersecting);
+      });
+    }, { rootMargin:'240px' });
+    document.querySelectorAll('.stage').forEach(function(s){ s.classList.add('is-idle'); io.observe(s); });
+  } else {
+    document.querySelectorAll('.stage').forEach(loadStage);
+  }
+
+  /* ?fps=1 — 실제 기기에서 프레임 수를 직접 확인할 수 있게 */
+  if(new URLSearchParams(location.search).get('fps')==='1'){
+    var box=document.createElement('div');
+    box.style.cssText='position:fixed;right:14px;bottom:14px;z-index:99;background:rgba(6,14,32,.88);'
+      +'color:#fff;font:700 12px/1.5 var(--font-sans);padding:8px 12px;border-radius:10px;'
+      +'border:1px solid rgba(255,255,255,.18);font-variant-numeric:tabular-nums';
+    document.body.appendChild(box);
+    var n=0,last=performance.now(),worst=0,t0=last;
+    (function tick(t){ n++; var dt=t-last; last=t; if(dt>worst&&n>5) worst=dt;
+      if(t-t0>=1000){ box.textContent='FPS '+Math.round(n/((t-t0)/1000))+' · 최악 '+worst.toFixed(0)+'ms';
+        n=0; worst=0; t0=t; }
+      requestAnimationFrame(tick); })(performance.now());
+  }
 
   document.addEventListener('click', function(){
     document.querySelectorAll('.is-peek').forEach(function(x){ x.classList.remove('is-peek'); });
