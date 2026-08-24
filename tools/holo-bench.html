@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ko" data-section="space">
+<head>
+<base href="../">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>홀로그램 성능 측정 — 자동</title>
+<link rel="stylesheet" href="styles/tokens.css?v=25">
+<link rel="stylesheet" href="styles/base.css?v=10">
+<style>
+  body{ margin:0; padding:20px; background:var(--n-900); color:var(--n-000);
+    font-family:var(--font-sans); }
+  .wrap{ max-width:1000px; margin:0 auto; }
+  h1{ font-size:22px; font-weight:800; letter-spacing:-.03em; margin:0 0 4px; }
+  .sub{ font-size:13px; color:var(--n-300); line-height:1.6; margin:0 0 14px; }
+  .go{ height:44px; padding:0 22px; border:0; border-radius:12px; background:var(--primary);
+    color:#fff; font:800 16px var(--font-sans); cursor:pointer; }
+  .go:disabled{ opacity:.5; cursor:default; }
+  .now{ margin:14px 0; font-size:15px; font-weight:700; color:var(--blue-200); min-height:22px; }
+  table{ border-collapse:collapse; width:100%; margin-top:12px; font-variant-numeric:tabular-nums; }
+  th,td{ padding:11px 12px; border-bottom:1px solid var(--n-600); text-align:right; font-size:15px; }
+  th{ color:var(--n-300); font-size:12.5px; font-weight:700; }
+  th:first-child, td:first-child{ text-align:left; font-weight:700; }
+  td.v{ font-weight:800; }
+  .ok{ color:var(--green-300); } .warn{ color:var(--amber-300); } .bad{ color:var(--red-300); }
+  .env{ margin-top:14px; font-size:12.5px; color:var(--n-300); line-height:1.7; }
+  .lab{ display:inline-block; min-width:74px; color:var(--n-400); }
+
+  /* ── 무대 ── */
+  #arena{ margin-top:18px; }
+  .stage{ position:relative; border-radius:14px; overflow:hidden; margin-bottom:10px;
+    background:var(--blue-300) center 46%/cover no-repeat; }
+  .obj{ position:absolute; transform:translate(-50%,-50%); aspect-ratio:1; }
+  .obj__img{ position:absolute; inset:0; background:center/contain no-repeat; }
+  .obj--float{ animation:rm-float 4.8s ease-in-out infinite; }
+  @keyframes rm-float{ 0%,100%{ transform:translate(-50%,-50%) translateY(0);} 50%{ transform:translate(-50%,-50%) translateY(-13px);} }
+  .obj:not(.is-done)::after{ content:""; position:absolute; inset:0; z-index:-1;
+    -webkit-mask:var(--m) center/contain no-repeat; mask:var(--m) center/contain no-repeat;
+    background:rgba(10,25,60,.22); filter:blur(7px); transform:translateY(7px); }
+
+  /* 현행(최적화) */
+  .m-new .obj:not(.is-done) .obj__img{
+    filter:grayscale(1) brightness(1.5) contrast(.45)
+      drop-shadow(0 0 2.5px rgba(255,255,255,.95)) drop-shadow(0 0 11px rgba(255,255,255,.5));
+    mix-blend-mode:screen;
+    -webkit-mask:repeating-linear-gradient(0deg, rgba(0,0,0,.98) 0 3.6px, rgba(0,0,0,.36) 4.2px 4.8px, rgba(0,0,0,.98) 5px) 0 0/100% 70px;
+    mask:repeating-linear-gradient(0deg, rgba(0,0,0,.98) 0 3.6px, rgba(0,0,0,.36) 4.2px 4.8px, rgba(0,0,0,.98) 5px) 0 0/100% 70px; }
+  .obj__sweep{ position:absolute; inset:0; z-index:1; display:none;
+    -webkit-mask:var(--m) center/contain no-repeat; mask:var(--m) center/contain no-repeat; }
+  .obj__sweep i{ position:absolute; left:0; right:0; top:0; height:42%;
+    background:linear-gradient(0deg, transparent, rgba(255,255,255,.42) 45%, rgba(255,255,255,.46) 55%, transparent);
+    will-change:transform; animation:sweepUp 7s cubic-bezier(.45,0,.55,1) infinite; animation-delay:var(--d,0s); }
+  .m-new .obj:not(.is-done) .obj__sweep{ display:block; }
+  @keyframes sweepUp{ 0%{ transform:translateY(340%);} 55%,100%{ transform:translateY(-105%);} }
+
+  /* 최적화 전 — 그림자 5겹 + 블렌드 2겹 + 빗금 루핑(background-position) */
+  .m-old .obj:not(.is-done) .obj__img{
+    filter:grayscale(1) brightness(1.5) contrast(.45)
+      drop-shadow(1.5px 0 0 rgba(255,255,255,.95)) drop-shadow(-1.5px 0 0 rgba(255,255,255,.95))
+      drop-shadow(0 1.5px 0 rgba(255,255,255,.95)) drop-shadow(0 -1.5px 0 rgba(255,255,255,.95))
+      drop-shadow(0 0 10px rgba(255,255,255,.6));
+    mix-blend-mode:screen;
+    -webkit-mask:repeating-linear-gradient(0deg, rgba(0,0,0,1) 0 3px, rgba(0,0,0,.28) 3px 6px) 0 0/100% 72px;
+    mask:repeating-linear-gradient(0deg, rgba(0,0,0,1) 0 3px, rgba(0,0,0,.28) 3px 6px) 0 0/100% 72px;
+    animation:scanUp 3.4s linear infinite; }
+  @keyframes scanUp{ from{ -webkit-mask-position:0 0; mask-position:0 0; } to{ -webkit-mask-position:0 -72px; mask-position:0 -72px; } }
+  .m-old .obj:not(.is-done)::before{ content:""; position:absolute; inset:0; z-index:1;
+    -webkit-mask:var(--m) center/contain no-repeat; mask:var(--m) center/contain no-repeat;
+    background:linear-gradient(0deg, transparent, rgba(255,255,255,.42) 42%, rgba(255,255,255,.46) 58%, transparent);
+    background-size:100% 42%; background-repeat:no-repeat; mix-blend-mode:screen;
+    animation:sweepOld 7s ease-in-out infinite; animation-delay:var(--d,0s); }
+  @keyframes sweepOld{ 0%{ background-position:0 145%; } 55%,100%{ background-position:0 -45%; } }
+
+  .m-still .obj *{ animation:none !important; }
+  .m-still .obj:not(.is-done) .obj__img{ filter:none; mix-blend-mode:normal; opacity:.55; }
+  .m-still .obj:not(.is-done)::after{ display:none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>홀로그램 성능 측정</h1>
+  <p class="sub">
+    아래 버튼을 누르면 네 가지 상태를 <b>각 5초씩 자동으로</b> 돌면서 프레임 수를 잽니다. 약 25초 걸립니다.<br>
+    측정 중에는 이 탭을 <b>화면에 보이는 채로</b> 두세요(다른 탭으로 넘어가면 브라우저가 애니메이션을 멈춥니다).
+  </p>
+  <button class="go" id="go">측정 시작</button>
+  <div class="now" id="now"></div>
+  <table id="tb"><thead><tr>
+    <th>상태</th><th>FPS</th><th>느린 프레임(상위 5%)</th><th>최악 프레임</th><th>판정</th>
+  </tr></thead><tbody></tbody></table>
+  <div class="env" id="env"></div>
+  <div id="arena"></div>
+</div>
+
+<script>
+(function(){
+  var LAYOUT = {
+    math:[{n:1,cx:50,cy:39.4,w:49.4},{n:2,cx:19.4,cy:48.4,w:35.8},{n:3,cx:83.3,cy:48.9,w:34.2},
+          {n:4,cx:17.7,cy:77.8,w:32.4},{n:5,cx:81.4,cy:78.1,w:31.5},{n:6,cx:76.4,cy:17.4,w:22.7,float:1}],
+    sci: [{n:1,cx:50,cy:40.8,w:32.1},{n:2,cx:26.6,cy:56.5,w:23.5},{n:3,cx:75,cy:54.3,w:23.4},
+          {n:4,cx:26.1,cy:78.1,w:25.1},{n:5,cx:73.5,cy:80.3,w:23.1},{n:6,cx:69.6,cy:17.4,w:14.9,float:1}]
+  };
+  var KEYS = ['math-elem-3-1','math-mid-1-2','sci-mid-1-1','math-mid-2-1','math-mid-2-2','sci-elem-4-2','math-elem-6-2'];
+
+  var arena=document.getElementById('arena');
+  KEYS.forEach(function(k){
+    var sc = k.indexOf('sci-')===0?'sci':'math';
+    var dir='assets/img/home/'+k;
+    var st=document.createElement('div'); st.className='stage';
+    st.style.aspectRatio = sc==='sci' ? '1280 / 670' : '960 / 670';
+    st.style.backgroundImage='url("'+dir+'/bg.webp")';
+    LAYOUT[sc].forEach(function(o){
+      var el=document.createElement('div');
+      el.className='obj'+(o.float?' obj--float':'')+(o.n===2?' is-done':'');
+      el.style.left=o.cx+'%'; el.style.top=o.cy+'%'; el.style.width=o.w+'%';
+      var u='url("'+dir+'/obj-'+o.n+'.webp")';
+      el.style.setProperty('--m',u); el.style.setProperty('--d',(o.n*0.85).toFixed(2)+'s');
+      /* style 속성에 url("...")을 문자열로 넣으면 따옴표가 겹쳐 깨진다 — 프로퍼티로 넣는다 */
+      el.innerHTML='<span class="obj__img"></span><span class="obj__sweep"><i></i></span>';
+      el.querySelector('.obj__img').style.backgroundImage=u;
+      st.appendChild(el);
+    });
+    arena.appendChild(st);
+  });
+  var stages=[].slice.call(arena.querySelectorAll('.stage'));
+
+  function setup(n, mode){
+    stages.forEach(function(s,i){
+      s.style.display = i<n ? '' : 'none';
+      s.className = 'stage m-'+mode;
+    });
+  }
+
+  var PHASES=[
+    { label:'① 애니메이션 없음 (기준)',        n:1, mode:'still' },
+    { label:'② 현행 · 무대 1개 (실제 홈)',     n:1, mode:'new'   },
+    { label:'③ 현행 · 무대 7개 (검수 페이지)', n:7, mode:'new'   },
+    { label:'④ 최적화 전 · 무대 7개',          n:7, mode:'old'   }
+  ];
+
+  function measure(ms){
+    return new Promise(function(res){
+      var frames=[], last=performance.now(), t0=last;
+      function tick(t){ frames.push(t-last); last=t;
+        if(t-t0<ms) requestAnimationFrame(tick);
+        else{
+          frames=frames.slice(3).sort(function(a,b){return a-b;});
+          var n=frames.length, sum=frames.reduce(function(a,b){return a+b;},0);
+          res({ fps:+(1000/(sum/n)).toFixed(1),
+                p95:+frames[Math.floor(n*0.95)].toFixed(1),
+                worst:+frames[n-1].toFixed(1) });
+        }
+      }
+      requestAnimationFrame(tick);
+    });
+  }
+
+  function verdict(fps,p95){
+    if(fps>=55 && p95<=22) return ['여유','ok'];
+    if(fps>=45 && p95<=34) return ['괜찮음','ok'];
+    if(fps>=30) return ['버거움','warn'];
+    return ['무리','bad'];
+  }
+
+  document.getElementById('go').addEventListener('click', async function(){
+    var btn=this; btn.disabled=true;
+    var tb=document.querySelector('#tb tbody'); tb.innerHTML='';
+    var now=document.getElementById('now');
+    for(var i=0;i<PHASES.length;i++){
+      var p=PHASES[i];
+      setup(p.n, p.mode);
+      now.textContent='측정 중… '+p.label+'  ('+(i+1)+'/'+PHASES.length+')';
+      await new Promise(function(r){ setTimeout(r,900); });   // 상태 안정화
+      var r=await measure(5000);
+      var v=verdict(r.fps,r.p95);
+      var tr=document.createElement('tr');
+      tr.innerHTML='<td>'+p.label+'</td><td class="v">'+r.fps+'</td><td>'+r.p95+' ms</td>'
+        +'<td>'+r.worst+' ms</td><td class="v '+v[1]+'">'+v[0]+'</td>';
+      tb.appendChild(tr);
+    }
+    now.textContent='측정 끝. ①과 ②의 차이가 홀로그램이 실제로 쓰는 몫입니다.';
+    setup(1,'new'); btn.disabled=false;
+  });
+
+  document.getElementById('env').innerHTML=
+     '<span class="lab">화면</span>'+innerWidth+' × '+innerHeight+' · 배율 '+devicePixelRatio+'배<br>'
+    +'<span class="lab">CPU 코어</span>'+(navigator.hardwareConcurrency||'?')+'개<br>'
+    +'<span class="lab">기준</span>60FPS가 최고치입니다. 「느린 프레임」이 16.7ms를 넘으면 눈에 끊김으로 보입니다.';
+})();
+</script>
+</body>
+</html>
