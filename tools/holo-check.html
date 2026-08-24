@@ -66,8 +66,19 @@
      빗금은 「덧그린 흰 줄」이 아니라 「몸체에 난 투명한 틈」이다.
      흰 몸체 위에 흰 줄을 그으면 안 보이기 때문 — 마스크로 알파를 깎는다.
      그래서 어떤 배경 위에서도 같은 방식으로 읽힌다. */
+  /* 옛 방식(대조군) — 빗금 전체가 위로 흐른다.
+     빗금 주기 6px를 3.4초에 72px 흘리면 한 점을 초당 3.5번 지나간다.
+     3~8Hz는 사람이 가장 불편해하는 깜빡임 대역이라 오래 보면 눈이 아프다. */
   @keyframes scanUp{ from{ -webkit-mask-position:0 0; mask-position:0 0; }
                      to  { -webkit-mask-position:0 -72px; mask-position:0 -72px; } }
+
+  /* 지금 방식 — 빗금은 「무늬」라 움직이지 않고, 빛 한 줄만 느리게 훑는다.
+     한 점이 밝아지는 횟수가 7초에 한 번(0.14Hz)이라 깜빡임으로 안 읽힌다.
+     경계도 부드러운 그라데이션이라 가장자리가 반짝이지 않는다. */
+  @keyframes sweepUp{
+    0%      { background-position:0 145%; }
+    55%,100%{ background-position:0 -45%; }
+  }
 
   /* 밝은 배경 보완 — screen 블렌드는 「더하기」라 어두운 색이 무효다.
      그래서 배경과 홀로그램 사이에 블렌드되지 않는 옅은 그늘을 한 겹 깐다.
@@ -87,14 +98,35 @@
     filter:grayscale(1) brightness(1.5) contrast(.45)
       drop-shadow(1.5px 0 0 rgba(255,255,255,.95)) drop-shadow(-1.5px 0 0 rgba(255,255,255,.95))
       drop-shadow(0 1.5px 0 rgba(255,255,255,.95)) drop-shadow(0 -1.5px 0 rgba(255,255,255,.95))
-      drop-shadow(0 0 10px rgba(255,255,255,.6));
+      drop-shadow(0 0 10px rgba(255,255,255,.55));
     mix-blend-mode:screen;
+    /* 빗금이 정지 상태라 대비를 낮출 이유가 없다 — 흐를 때만 눈이 아팠던 것이지
+       무늬 자체는 셀수록 홀로그램으로 읽힌다. 경계는 1px 그라데이션으로 눕혀
+       그림 가장자리에서 계단이 지지 않게 한다. */
     -webkit-mask:repeating-linear-gradient(0deg,
-      rgba(0,0,0,.9) 0 3px, rgba(0,0,0,.26) 3px 6px) 0 0/100% 72px;
+      rgba(0,0,0,.98) 0 3px, rgba(0,0,0,.34) 4px 5px, rgba(0,0,0,.98) 6px) 0 0/100% 72px;
     mask:repeating-linear-gradient(0deg,
-      rgba(0,0,0,.9) 0 3px, rgba(0,0,0,.26) 3px 6px) 0 0/100% 72px;
-    animation:scanUp 3.4s linear infinite;
+      rgba(0,0,0,.98) 0 3px, rgba(0,0,0,.34) 4px 5px, rgba(0,0,0,.98) 6px) 0 0/100% 72px;
   }
+  /* 빛 한 줄이 몸체를 훑고 지나간다 — 오브젝트마다 시작 시각을 어긋나게 해서
+     여섯이 한꺼번에 밝아지는 「화면 전체 맥박」을 없앤다 */
+  .m-white .obj:not(.is-done)::before{
+    content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
+    -webkit-mask:var(--m) center/contain no-repeat; mask:var(--m) center/contain no-repeat;
+    background:linear-gradient(0deg,
+      transparent 0%, rgba(255,255,255,.42) 42%, rgba(255,255,255,.46) 58%, transparent 100%);
+    background-size:100% 42%; background-repeat:no-repeat; background-position:0 145%;
+    mix-blend-mode:screen;
+    animation:sweepUp 7s cubic-bezier(.45,0,.55,1) infinite;
+    animation-delay:var(--d, 0s);
+  }
+  /* 눈 피로를 줄이도록 OS 「동작 줄이기」에서는 빛줄기도 멈춘다 (무늬는 그대로 남는다) */
+  @media (prefers-reduced-motion: reduce){
+    .m-white .obj:not(.is-done)::before{ animation:none; background-position:0 55%; opacity:.5; }
+  }
+  /* 대조군 — 옛 빗금 루핑 (눈 피로 비교용) */
+  .is-oldscan.m-white .obj:not(.is-done) .obj__img{ animation:scanUp 3.4s linear infinite; }
+  .is-oldscan.m-white .obj:not(.is-done)::before{ display:none; }
 
   /* 비교용 A — 흰색을 「칠한」 경우 (블렌드 없음).
      난색 배경에서 회색 돌처럼 보이는 것을 확인하는 대조군. */
@@ -120,17 +152,21 @@
     animation:scanUp 3.4s linear infinite;
   }
   .is-nomotion .obj__img{ animation:none !important; }
+  .is-nomotion .obj::before{ animation:none !important; background-position:0 55% !important; }
   .is-nomotion .obj--float{ animation:none !important; }
 
   /* ══ 명판 — hover / 탭했을 때만 ═══════════════════════════ */
-  .plaque{ position:absolute; left:50%; top:calc(100% + 2%); transform:translateX(-50%) translateY(3px);
+  /* 명판은 오브젝트 정중앙에 고정한다. 그림이 정사각 상자 안에 맞춰 들어가 있어
+     「상자 아래」에 달면 그림 크기에 따라 뜨는 자리가 제각각이 된다(중구난방의 원인).
+     홀로그램은 반투명이라 가운데에 얹어도 가려지는 느낌이 없다. */
+  .plaque{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%) scale(.94);
     display:flex; align-items:center; gap:7px; width:max-content; max-width:230px;
     background:var(--n-000); color:var(--n-650); border-radius:var(--r-full);
     padding:5px 12px; font-size:12px; font-weight:700; line-height:1.35;
     box-shadow:0 8px 20px -8px rgba(10,25,60,.5); white-space:nowrap; z-index:20;
     opacity:0; pointer-events:none; transition:opacity .12s, transform .12s; }
   .obj:not(.is-done):hover .plaque,
-  .obj:not(.is-done).is-peek .plaque{ opacity:1; transform:translateX(-50%) translateY(0); }
+  .obj:not(.is-done).is-peek .plaque{ opacity:1; transform:translate(-50%,-50%) scale(1); }
   .plaque__segs{ display:flex; gap:3px; }
   .plaque__segs i{ width:10px; height:5px; border-radius:var(--r-full); background:var(--n-200); }
   .plaque__segs i.on{ background:var(--blue-500); }
@@ -138,7 +174,8 @@
   /* 명판은 .obj 안에 있고 .obj는 transform 때문에 각자 겹침 층을 이룬다 —
      그래서 명판만 z-index를 올려선 옆 오브젝트에 가린다. .obj 자체를 올려야 한다. */
   .obj:not(.is-done):hover, .obj:not(.is-done).is-peek{ z-index:15; }
-  .is-allplaque .obj:not(.is-done) .plaque{ opacity:1; transform:translateX(-50%) translateY(0); }
+  .is-allplaque .obj:not(.is-done){ z-index:15; }
+  .is-allplaque .obj:not(.is-done) .plaque{ opacity:1; transform:translate(-50%,-50%) scale(1); }
 </style>
 </head>
 <body>
@@ -150,7 +187,10 @@
     1안은 흰색을 <b>칠하는</b> 것이 아니라 <b>빛을 더하는</b> 방식이라, 결과가 배경 색을 먹는다 —
     파란 학기에선 푸르게, 주황 학기에선 주황빛으로 빛난다. 학기별 색 지정은 여전히 0이다.
     「흰색 칠(대조군)」을 눌러 난색 배경에서 어떻게 달라지는지 비교할 수 있다.
-    <b>명판은 오브젝트에 올리거나 탭했을 때만</b> 뜬다.
+    빗금은 <b>움직이지 않는 무늬</b>이고, 대신 <b>빛 한 줄이 7초에 한 번</b> 몸체를 훑는다 —
+    깜빡임 대역(3~8Hz)을 피해 눈이 피로해지지 않게 한 처방이다.
+    「옛 빗금 루핑」을 눌러 이전 방식과 비교할 수 있다(오래 보지 말 것).
+    <b>명판은 오브젝트 정중앙</b>에, 올리거나 탭했을 때만 뜬다.
   </p>
 
   <div class="ctl">
@@ -161,6 +201,7 @@
     <span class="ctl__sep"></span>
     <span class="ctl__lab">검수</span>
     <button class="ctl__btn" data-tgl="allplaque">명판 전부 펴기</button>
+    <button class="ctl__btn" data-tgl="oldscan">옛 빗금 루핑 (눈 피로 비교)</button>
     <button class="ctl__btn" data-tgl="nomotion">모션 정지</button>
   </div>
 
@@ -172,12 +213,12 @@
   /* nav/home.html의 LAYOUT 그대로 — 과목당 한 벌 고정 */
   var LAYOUT = {
     math:{ ratio:'960 / 670', objects:[
-      { n:1, cx:50.0, cy:39.4, w:49.4, iLeft:10 }, { n:2, cx:19.4, cy:48.4, w:35.8 }, { n:3, cx:83.3, cy:48.9, w:34.2 },
-      { n:4, cx:17.7, cy:77.8, w:32.4, iTop:76 }, { n:5, cx:81.4, cy:78.1, w:31.5, iTop:76 }, { n:6, cx:76.4, cy:17.4, w:22.7, float:true }
+      { n:1, cx:50.0, cy:39.4, w:49.4 }, { n:2, cx:19.4, cy:48.4, w:35.8 }, { n:3, cx:83.3, cy:48.9, w:34.2 },
+      { n:4, cx:17.7, cy:77.8, w:32.4 }, { n:5, cx:81.4, cy:78.1, w:31.5 }, { n:6, cx:76.4, cy:17.4, w:22.7, float:true }
     ]},
     sci:{ ratio:'1280 / 670', objects:[
-      { n:1, cx:50.0, cy:40.8, w:32.1, iLeft:14 }, { n:2, cx:26.6, cy:56.5, w:23.5 }, { n:3, cx:75.0, cy:54.3, w:23.4 },
-      { n:4, cx:26.1, cy:78.1, w:25.1, iTop:74 }, { n:5, cx:73.5, cy:80.3, w:23.1, iTop:74 }, { n:6, cx:69.6, cy:17.4, w:14.9, float:true }
+      { n:1, cx:50.0, cy:40.8, w:32.1 }, { n:2, cx:26.6, cy:56.5, w:23.5 }, { n:3, cx:75.0, cy:54.3, w:23.4 },
+      { n:4, cx:26.1, cy:78.1, w:25.1 }, { n:5, cx:73.5, cy:80.3, w:23.1 }, { n:6, cx:69.6, cy:17.4, w:14.9, float:true }
     ]}
   };
   var HAS_CHAR = { 'math-elem-3-1':1,'math-mid-3-1':1,'math-mid-3-2':1,'sci-elem-3-1':1,'sci-mid-3-1':1,'sci-mid-3-2':1 };
@@ -231,9 +272,9 @@
       el.className='obj'+(o.float?' obj--float':'')+(done?' is-done':'');
       el.style.left=o.cx+'%'; el.style.top=o.cy+'%'; el.style.width=o.w+'%';
       el.style.setProperty('--m', 'url("'+dir+'/obj-'+o.n+'.webp")');
-      var info=''; if(o.iLeft!=null) info+='left:'+o.iLeft+'%;'; if(o.iTop!=null) info+='top:'+o.iTop+'%;';
+      el.style.setProperty('--d', (o.n*0.85).toFixed(2)+'s');   /* 여섯이 한꺼번에 밝아지지 않게 */
       el.innerHTML='<span class="obj__img" style="background-image:url(\''+dir+'/obj-'+o.n+'.webp\')"></span>'
-        +'<span class="plaque" style="'+info+'">'+u.no+'단원'+(u.name?' · '+u.name:'')+segs(u,d)+'</span>';
+        +'<span class="plaque">'+u.no+'단원'+(u.name?' · '+u.name:'')+segs(u,d)+'</span>';
       if(!done) el.addEventListener('click', function(e){
         e.stopPropagation();
         var was=el.classList.contains('is-peek');
