@@ -163,17 +163,17 @@
   .is-nomotion .obj--float{ animation:none !important; }
 
   /* ══ 명판 — hover / 탭했을 때만 ═══════════════════════════ */
-  /* 명판은 오브젝트 정중앙에 고정한다. 그림이 정사각 상자 안에 맞춰 들어가 있어
-     「상자 아래」에 달면 그림 크기에 따라 뜨는 자리가 제각각이 된다(중구난방의 원인).
-     홀로그램은 반투명이라 가운데에 얹어도 가려지는 느낌이 없다. */
-  .plaque{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%) scale(.94);
+  /* 명판은 오브젝트 위쪽에 고정한다. 「상자 아래」에 달면 그림이 상자를 얼마나
+     채우는지에 따라 자리가 제각각이 됐고(중구난방의 원인), 정중앙은 캐릭터와 부딪혔다.
+     위쪽은 여섯 개가 모두 같은 규칙을 쓰면서 캐릭터·말풍선과도 겹치지 않는다. */
+  .plaque{ position:absolute; left:50%; top:5%; transform:translate(-50%,-7px) scale(.96);
     display:flex; align-items:center; gap:7px; width:max-content; max-width:230px;
     background:var(--n-000); color:var(--n-650); border-radius:var(--r-full);
     padding:5px 12px; font-size:12px; font-weight:700; line-height:1.35;
     box-shadow:0 8px 20px -8px rgba(10,25,60,.5); white-space:nowrap; z-index:20;
     opacity:0; pointer-events:none; transition:opacity .12s, transform .12s; }
   .obj:not(.is-done):hover .plaque,
-  .obj:not(.is-done).is-peek .plaque{ opacity:1; transform:translate(-50%,-50%) scale(1); }
+  .obj:not(.is-done).is-peek .plaque{ opacity:1; transform:translate(-50%,0) scale(1); }
   .plaque__segs{ display:flex; gap:3px; }
   .plaque__segs i{ width:10px; height:5px; border-radius:var(--r-full); background:var(--n-200); }
   .plaque__segs i.on{ background:var(--blue-500); }
@@ -182,7 +182,7 @@
      그래서 명판만 z-index를 올려선 옆 오브젝트에 가린다. .obj 자체를 올려야 한다. */
   .obj:not(.is-done):hover, .obj:not(.is-done).is-peek{ z-index:15; }
   .is-allplaque .obj:not(.is-done){ z-index:15; }
-  .is-allplaque .obj:not(.is-done) .plaque{ opacity:1; transform:translate(-50%,-50%) scale(1); }
+  .is-allplaque .obj:not(.is-done) .plaque{ opacity:1; transform:translate(-50%,0) scale(1); }
 </style>
 </head>
 <body>
@@ -197,7 +197,7 @@
     빗금은 <b>움직이지 않는 무늬</b>이고, 대신 <b>빛 한 줄이 7초에 한 번</b> 몸체를 훑는다 —
     깜빡임 대역(3~8Hz)을 피해 눈이 피로해지지 않게 한 처방이다.
     「옛 빗금 루핑」을 눌러 이전 방식과 비교할 수 있다(오래 보지 말 것).
-    <b>명판은 오브젝트 정중앙</b>에, 올리거나 탭했을 때만 뜬다.
+    <b>명판은 오브젝트 위쪽</b>에, 올리거나 탭했을 때만 뜬다.
   </p>
 
   <div class="ctl">
