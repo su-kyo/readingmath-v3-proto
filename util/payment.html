@@ -5,10 +5,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>이용권 결제 — 리딩수학과학</title>
+  <script>
+    /* 테마 부트스트랩 — 다크가 기본. 학습 화면이 쓰는 rm-theme가 'light'일 때만 뒤집는다.
+       <head>에서 먼저 실행해 화면이 번쩍이지 않게 한다. */
+    try{ if(localStorage.getItem('rm-theme')==='light') document.documentElement.setAttribute('data-theme','light'); }catch(e){}
+  </script>
   <link rel="stylesheet" href="styles/tokens.css?v=25" />
   <link rel="stylesheet" href="styles/base.css?v=7" />
   <link rel="stylesheet" href="styles/gnb.css?v=9" />
-  <link rel="stylesheet" href="styles/util.css?v=10" />
+  <link rel="stylesheet" href="styles/util.css?v=11" />
   <style>
     *{ box-sizing:border-box; margin:0; padding:0; }
     html,body{ height:100%; }

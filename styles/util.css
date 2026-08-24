@@ -2,10 +2,11 @@
    util.css — 유틸리티/문서형 페이지 공용 시스템 (Phase 7-6 재작업본)
    -------------------------------------------------------------------------
    체계 세 줄
-     ① 면은 뉴트럴-쿨 램프(n-000 / n-050 / n-100) 하나로만 쌓는다.
+     ① 면은 뉴트럴-쿨 램프 하나로만 쌓는다(라이트 n-000/050/100 · 다크 n-900/800/700).
         파랑은 「면」이 아니라 점·선·글자로만 쓴다. 초록·앰버는 쓰지 않는다
         — hue가 멀어 화면이 얼룩진다("한 톤이 아니다"의 정체였다).
-     ② 「선택 = 먹색」이 단일 규칙. 필터·페이지네이션·과목·기간·결제수단이 같다.
+     ② 「선택 = 반전 칠」이 단일 규칙. 필터·페이지네이션·과목·기간·결제수단이 같다.
+        라이트는 먹색 면 + 흰 글자, 다크는 밝은 면 + 먹색 글자. 라디오 동그라미를 쓰지 않는다.
      ③ 목록은 테두리 안에 담긴 시트, 선택지는 나란히 비교되는 타일.
         떠 있는 블록과 그 사이 갭을 쓰지 않는다(호버 면이 맞닿거나 선이 떠 보인다).
 
@@ -13,34 +14,82 @@
    그림자 없음 — 깊이는 선과 여백이 만든다.
    색값은 전부 tokens.css 변수 참조. raw hex 없음.
 
-   ※ 라이트 전용 화면이다. data-theme을 붙이지 않는다 — GNB가 전역 다크 토큰
-     (--border-strong)을 쓰기 때문에 라이트로 뒤집으면 GNB 경계가 어긋난다.
+   ※ 다크가 기본이다(서비스 전체와 같다). 학습 화면이 쓰는 localStorage 'rm-theme'가
+     'light'일 때만 <html data-theme="light">가 붙어 라이트로 뒤집힌다.
+     화면마다 <head>의 부트스트랩 한 줄이 그 일을 한다.
    ========================================================================= */
+
+/* ── 기본 = 다크 ────────────────────────────────────────────────────────── */
 .u-body{
-  --paper:var(--n-000);        /* 종이 = 흰색 */
-  --rule:var(--n-100);         /* 헤어라인 · 시트 테두리 */
-  --rule-2:var(--n-200);       /* 강한 선 */
-  --inset:var(--n-050);        /* 옅은 면 (요약 패널 · 세그먼트 트랙) */
-  --wash:var(--n-050);         /* 호버 = 표면 사다리 한 칸 */
-  --ink:var(--n-650);          /* 본문 · 선택 칠면 (흰 배경 14.6) */
-  --ink-2:var(--n-500);        /* 보조 (9.3) */
-  --ink-3:var(--n-400);        /* 메타 (5.4) */
-  --brand:var(--blue-500);     /* 점·마커 */
-  --brand-ink:var(--blue-600); /* 작은 글자 — A부류 텍스트 칠면 (흰 배경 7.0) */
-  --brand-hi:var(--blue-300);  /* 먹색 칠면 위 글자 */
+  --paper:var(--n-900);        /* 바탕 */
+  --surface:var(--n-800);      /* 시트 · 타일 면 */
+  --inset:var(--n-800);        /* 요약 패널 · 세그먼트 트랙 */
+  --wash:var(--n-700);         /* 호버 = 사다리 한 칸 */
+  --rule:var(--border);        /* 헤어라인 · 시트 테두리 */
+  --rule-2:var(--border-strong);
+  --ink:var(--n-050);          /* 본문 */
+  --ink-2:var(--n-300);        /* 보조 (다크 8.4) */
+  --ink-3:var(--n-350);        /* 메타 (다크 4.9) */
+  --ph:var(--n-400);           /* 빈 값 자리(—) */
+  --icon-mute:var(--n-500);    /* 화살표 · 빈 상태 아이콘 */
+  --sk:var(--n-700);           /* 스켈레톤 바 */
+  --sb-thumb:var(--n-600);     /* 스크롤바 */
+
+  --sel-bg:var(--n-050);       /* 선택 칠 — 다크에서는 밝게 뒤집는다 */
+  --sel-fg:var(--n-900);
+
+  --brand:var(--blue-300);     /* 점 · 마커 (다크면에서 밝은 스텝) */
+  --brand-ink:var(--blue-300); /* 작은 글자 */
+  --brand-fg:var(--n-900);     /* 브랜드 칠 위 글자 (N 배지) */
+  --brand-on-sel:var(--blue-600); /* 선택(밝은) 칠면 위 브랜드색 */
+
   --cta:var(--primary);        /* 450 IDENTITY — 유일한 난색 */
-  --danger:var(--no-ink);      /* 빨강은 오류에만 */
+  --danger:var(--no-on-dark);  /* 빨강은 오류에만 (다크에서 읽히는 스텝) */
+  --dis-bg:var(--n-700);       /* CTA 비활성 */
+  --dis-fg:var(--n-350);
 
   background:var(--paper); color:var(--ink);
   font-family:var(--font-sans); letter-spacing:-.03em;
   -webkit-font-smoothing:antialiased;
 }
 
+/* ── 라이트 ─────────────────────────────────────────────────────────────── */
+:root[data-theme="light"] .u-body{
+  --paper:var(--n-000);
+  --surface:var(--n-000);
+  --inset:var(--n-050);
+  --wash:var(--n-050);
+  --rule:var(--n-100);
+  --rule-2:var(--n-200);
+  --ink:var(--n-650);          /* 흰 배경 14.6 */
+  --ink-2:var(--n-500);        /* 9.3 */
+  --ink-3:var(--n-400);        /* 5.4 */
+  --ph:var(--n-300);
+  --icon-mute:var(--n-200);
+  --sk:var(--n-100);
+  --sb-thumb:var(--n-200);
+
+  --sel-bg:var(--n-650);       /* 선택 칠 — 라이트에서는 먹색 */
+  --sel-fg:var(--n-000);
+
+  --brand:var(--blue-500);
+  --brand-ink:var(--blue-600); /* A부류 텍스트 칠면 · 흰 배경 7.0 */
+  --brand-fg:var(--n-000);
+  --brand-on-sel:var(--blue-300); /* 선택(먹색) 칠면 위 */
+
+  --danger:var(--no-ink);
+  --dis-bg:var(--n-100);
+  --dis-fg:var(--n-400);
+}
+
+/* GNB는 두 테마에서 모두 다크 하드웨어다 — 경계선을 테마에 맡기지 않는다 */
+:root[data-theme="light"] .u-body .gnb{ border-bottom-color:rgba(255,255,255,.16); }
+
 /* ---- 셸 ---- */
 .u-app{ height:100%; display:flex; flex-direction:column; }
 .u-main{ flex:1; min-height:0; overflow-y:auto; }
 .u-main::-webkit-scrollbar{ width:11px; }
-.u-main::-webkit-scrollbar-thumb{ background:var(--n-200); border-radius:99px; border:4px solid var(--paper); }
+.u-main::-webkit-scrollbar-thumb{ background:var(--sb-thumb); border-radius:99px; border:4px solid var(--paper); }
 .u-wrap{ max-width:860px; margin:0 auto; padding:56px 40px 96px; }   /* 읽는 화면 = 좁은 칼럼 */
 .u-wrap--wide{ max-width:1160px; }                                    /* 결제 = 2단 */
 
@@ -57,19 +106,19 @@
 .u-head__sub{ margin-top:12px; font-size:15px; font-weight:500; color:var(--ink-3);
   line-height:1.55; letter-spacing:-.025em; }
 
-/* ---- 필터 알약 (선택 = 먹색) ---- */
+/* ---- 필터 알약 (선택 = 반전 칠) ---- */
 .u-seg{ display:inline-flex; gap:6px; flex:none; padding-bottom:2px; }
 .u-seg button{ height:36px; padding:0 15px; border:0; border-radius:99px; cursor:pointer;
   background:transparent; color:var(--ink-3); font-family:inherit; font-size:14px; font-weight:700;
   letter-spacing:-.03em; transition:var(--t-fast); }
 .u-seg button:hover{ background:var(--wash); color:var(--ink); }
-.u-seg button.is-on{ background:var(--ink); color:var(--paper); }
+.u-seg button.is-on{ background:var(--sel-bg); color:var(--sel-fg); }
 .u-seg__n{ margin-left:6px; font-size:12.5px; font-weight:700; opacity:.6; font-variant-numeric:tabular-nums; }
 
 /* ---- 목록 = 테두리 안에 담긴 시트 ----
    호버는 시트 안에서 꽉 찬 면으로 칠해지고 라운드는 컨테이너가 잘라 준다.
    행에 margin·radius를 주지 않는다 — 갭도 맞닿는 모서리도 생기지 않는다. */
-.u-sheet{ border:1px solid var(--rule); border-radius:20px; overflow:hidden; background:var(--paper); }
+.u-sheet{ border:1px solid var(--rule); border-radius:20px; overflow:hidden; background:var(--surface); }
 .u-row{ display:flex; align-items:center; gap:20px; width:100%; text-align:left; cursor:pointer;
   background:transparent; border:0; font-family:inherit; color:inherit;
   padding:22px 24px; transition:background var(--t-fast); }
@@ -84,18 +133,18 @@
 .u-row:hover .u-row__ttl{ color:var(--brand-ink); }
 .u-row__meta{ margin-top:7px; display:flex; align-items:center; gap:9px; font-size:13px; font-weight:600;
   color:var(--ink-3); font-variant-numeric:tabular-nums; letter-spacing:-.02em; }
-.u-row__meta i{ width:3px; height:3px; border-radius:99px; background:var(--n-200); flex:none; }
+.u-row__meta i{ width:3px; height:3px; border-radius:99px; background:var(--icon-mute); flex:none; }
 
 /* 카테고리 — 공지(다수)는 무채, 이벤트(소수)만 파랑. 색은 하나만 쓴다 */
 .u-cat{ display:inline-flex; align-items:center; gap:6px; font-weight:700; color:var(--ink-3); flex:none; }
-.u-cat::before{ content:""; width:6px; height:6px; border-radius:99px; background:var(--n-200); }
+.u-cat::before{ content:""; width:6px; height:6px; border-radius:99px; background:var(--icon-mute); }
 .u-cat.is-event{ color:var(--brand-ink); }
 .u-cat.is-event::before{ background:var(--brand); }
 
 .u-new{ display:inline-flex; align-items:center; justify-content:center; margin-left:8px;
   height:20px; min-width:20px; padding:0 6px; border-radius:99px; background:var(--brand);
-  color:var(--n-000); font-size:10.5px; font-weight:800; letter-spacing:0; vertical-align:2px; }
-.u-row__chev{ width:20px; height:20px; flex:none; color:var(--n-200); transition:var(--t-fast); }
+  color:var(--brand-fg); font-size:10.5px; font-weight:800; letter-spacing:0; vertical-align:2px; }
+.u-row__chev{ width:20px; height:20px; flex:none; color:var(--icon-mute); transition:var(--t-fast); }
 .u-row:hover .u-row__chev{ color:var(--brand); transform:translateX(3px); }
 .u-row__ext{ display:flex; align-items:center; gap:7px; flex:none; font-size:13px; font-weight:700;
   color:var(--ink-3); transition:var(--t-fast); }
@@ -104,7 +153,7 @@
 
 /* ---- 부가 상태 (시트 안에서 처리) ---- */
 .u-state{ padding:104px 24px 96px; text-align:center; }
-.u-state__ico{ width:48px; height:48px; margin:0 auto 20px; color:var(--n-200); }
+.u-state__ico{ width:48px; height:48px; margin:0 auto 20px; color:var(--icon-mute); }
 .u-state__ico svg{ width:48px; height:48px; }
 .u-state__ico.is-warn{ color:var(--danger); }
 .u-state__t{ font-size:18px; font-weight:800; color:var(--ink); letter-spacing:-.045em; }
@@ -112,7 +161,7 @@
 .u-state .u-btn{ margin-top:22px; }
 
 @keyframes u-sk{ 0%,100%{ opacity:.45 } 50%{ opacity:1 } }
-.u-sk{ background:var(--n-100); border-radius:6px; animation:u-sk 1.25s ease-in-out infinite; }
+.u-sk{ background:var(--sk); border-radius:6px; animation:u-sk 1.25s ease-in-out infinite; }
 .u-skrow{ padding:22px 24px; }
 .u-skrow + .u-skrow{ border-top:1px solid var(--rule); }
 
@@ -122,7 +171,7 @@
   background:transparent; color:var(--ink-3); font-family:inherit; font-size:14px; font-weight:700;
   cursor:pointer; display:grid; place-items:center; transition:var(--t-fast); font-variant-numeric:tabular-nums; }
 .u-pager button:hover{ background:var(--wash); color:var(--ink); }
-.u-pager button.is-on{ background:var(--ink); color:var(--paper); }
+.u-pager button.is-on{ background:var(--sel-bg); color:var(--sel-fg); }
 .u-pager button:disabled{ opacity:.28; cursor:default; background:transparent; }
 .u-pager svg{ width:18px; height:18px; }
 
@@ -141,10 +190,10 @@
 /* CTA = 유일한 채움 난색. 정체성 칠면(450) · 라벨 19px w800 — §3.0b 하드 룰 */
 .u-btn--cta{ height:58px; width:100%; border-radius:16px; background:var(--cta); color:var(--n-000);
   box-shadow:none; font-size:19px; font-weight:800; letter-spacing:-.04em; }
-.u-btn--cta:hover{ background:var(--primary-hover); box-shadow:none; }
+.u-btn--cta:hover{ background:var(--primary-hover); color:var(--n-000); box-shadow:none; }
 .u-btn--cta:active{ background:var(--primary-pressed); }
-.u-btn--cta:disabled{ background:var(--n-100); color:var(--n-400); opacity:1; }
-.u-btn--cta:disabled:hover{ background:var(--n-100); }
+.u-btn--cta:disabled{ background:var(--dis-bg); color:var(--dis-fg); opacity:1; }
+.u-btn--cta:disabled:hover{ background:var(--dis-bg); }
 
 /* ---- 문서 상세 ---- */
 .u-crumb{ display:inline-flex; align-items:center; gap:7px; height:32px; padding:0 12px 0 8px;
@@ -154,7 +203,7 @@
 .u-crumb:hover{ background:var(--wash); color:var(--ink); }
 .u-crumb svg{ width:16px; height:16px; }
 .u-doc__cat{ display:inline-flex; align-items:center; gap:7px; font-size:13px; font-weight:700; color:var(--ink-3); }
-.u-doc__cat::before{ content:""; width:6px; height:6px; border-radius:99px; background:var(--n-200); }
+.u-doc__cat::before{ content:""; width:6px; height:6px; border-radius:99px; background:var(--icon-mute); }
 .u-doc__cat.is-event{ color:var(--brand-ink); }
 .u-doc__cat.is-event::before{ background:var(--brand); }
 .u-doc__ttl{ margin-top:15px; font-size:33px; font-weight:800; letter-spacing:-.055em;
@@ -199,12 +248,12 @@
 
 /* 과목 = 세그먼트. 고르기만 한다 */
 .u-seg3{ display:grid; grid-template-columns:repeat(3,1fr); gap:4px; padding:4px;
-  background:var(--inset); border-radius:16px; }
+  background:var(--inset); border:1px solid var(--rule); border-radius:16px; }
 .u-seg3 button{ height:50px; border:0; border-radius:12px; background:transparent; color:var(--ink-2);
   font-family:inherit; font-size:15.5px; font-weight:700; letter-spacing:-.04em; cursor:pointer;
   transition:var(--t-fast); }
-.u-seg3 button:hover{ background:var(--paper); color:var(--ink); }
-.u-seg3 button.is-on{ background:var(--ink); color:var(--paper); }
+.u-seg3 button:hover{ background:var(--wash); color:var(--ink); }
+.u-seg3 button.is-on{ background:var(--sel-bg); color:var(--sel-fg); }
 
 /* 포함 항목 — 화면에서 문장이 허용되는 유일한 자리(상품 내용) */
 .u-ben{ list-style:none; margin:20px 0 0; padding:0; }
@@ -213,47 +262,47 @@
 .u-ben li b{ color:var(--ink); font-weight:700; }
 .u-ben svg{ width:17px; height:17px; flex:none; margin-top:3px; color:var(--brand); }
 
-/* 타일 — 선택 = 먹색 (화면 전체 단일 규칙) */
+/* 타일 — 선택 = 반전 칠 (화면 전체 단일 규칙) */
 .u-tiles{ display:grid; gap:10px; }
 .u-tiles--4{ grid-template-columns:repeat(4,1fr); }
 .u-tiles--2{ grid-template-columns:repeat(2,1fr); }
 @media (max-width:1000px){ .u-tiles--4{ grid-template-columns:repeat(2,1fr); } }
-.u-tile{ position:relative; text-align:left; border:0; border-radius:16px; background:var(--paper);
+.u-tile{ position:relative; text-align:left; border:0; border-radius:16px; background:var(--surface);
   box-shadow:inset 0 0 0 1.5px var(--rule); font-family:inherit; color:inherit; cursor:pointer;
   transition:background var(--t-fast), box-shadow var(--t-fast); padding:18px 16px 17px; }
 .u-tile:hover{ background:var(--wash); box-shadow:inset 0 0 0 1.5px var(--rule-2); }
-.u-tile.is-on{ background:var(--ink); color:var(--paper); box-shadow:none; }
+.u-tile.is-on{ background:var(--sel-bg); color:var(--sel-fg); box-shadow:none; }
 .u-tile__nm{ font-size:15px; font-weight:800; letter-spacing:-.04em; }
 .u-tile__off{ position:absolute; top:17px; right:16px; font-size:12.5px; font-weight:800;
   color:var(--brand-ink); font-variant-numeric:tabular-nums; letter-spacing:-.03em; }
-.u-tile.is-on .u-tile__off{ color:var(--brand-hi); }
+.u-tile.is-on .u-tile__off{ color:var(--brand-on-sel); }
 .u-tile__mo{ display:block; margin-top:15px; font-size:22px; font-weight:800; letter-spacing:-.055em;
   font-variant-numeric:tabular-nums; line-height:1; }
 .u-tile__mo small{ font-size:12.5px; font-weight:700; color:var(--ink-3); margin-left:3px; letter-spacing:-.03em; }
-.u-tile.is-on .u-tile__mo small{ color:var(--n-300); }
+.u-tile.is-on .u-tile__mo small{ color:var(--sel-fg); opacity:.6; }
 .u-tile__tot{ display:block; margin-top:9px; font-size:12.5px; font-weight:600; color:var(--ink-3);
   font-variant-numeric:tabular-nums; letter-spacing:-.02em; }
-.u-tile.is-on .u-tile__tot{ color:var(--n-300); }
+.u-tile.is-on .u-tile__tot{ color:var(--sel-fg); opacity:.65; }
 /* 결제 방법 타일 */
 .u-tile--m{ display:flex; align-items:center; gap:13px; padding:19px 18px; }
 .u-tile--m svg{ width:22px; height:22px; flex:none; color:var(--ink-3); }
-.u-tile--m.is-on svg{ color:var(--paper); }
+.u-tile--m.is-on svg{ color:var(--sel-fg); }
 .u-tile--m .u-tile__nm{ font-size:16px; }
 
-/* ---- 주문 요약 = 화면에서 유일한 회색 면 ---- */
-.u-sum{ background:var(--inset); border-radius:22px; padding:24px 22px 22px; }
+/* ---- 주문 요약 = 화면에서 유일한 별도 면 ---- */
+.u-sum{ background:var(--inset); border:1px solid var(--rule); border-radius:22px; padding:24px 22px 22px; }
 .u-sum__hd{ font-size:12px; font-weight:800; color:var(--ink-3); letter-spacing:.12em; }
 .u-sum__what{ margin-top:12px; font-size:18px; font-weight:800; letter-spacing:-.05em;
   color:var(--ink); line-height:1.35; }
-.u-sum__what em{ font-style:normal; color:var(--n-300); }
+.u-sum__what em{ font-style:normal; color:var(--ph); }
 .u-sum__when{ margin-top:6px; font-size:12.5px; font-weight:600; color:var(--ink-3);
   font-variant-numeric:tabular-nums; letter-spacing:-.02em; min-height:16px; }
-.u-sum__rows{ margin-top:18px; padding-top:16px; border-top:1px solid var(--n-200); }
+.u-sum__rows{ margin-top:18px; padding-top:16px; border-top:1px solid var(--rule-2); }
 .u-sum__r{ display:flex; align-items:baseline; justify-content:space-between; gap:14px; padding:6px 0; }
 .u-sum__k{ font-size:13.5px; font-weight:600; color:var(--ink-3); flex:none; }
 .u-sum__v{ font-size:14px; font-weight:700; letter-spacing:-.035em; text-align:right;
   font-variant-numeric:tabular-nums; color:var(--ink-2); }
-.u-sum__v.is-ph{ color:var(--n-300); font-weight:600; }
+.u-sum__v.is-ph{ color:var(--ph); font-weight:600; }
 
 /* 쿠폰 — 기본 접힘 */
 .u-cpToggle{ display:inline-flex; align-items:center; gap:5px; margin-top:12px; padding:0; border:0;
@@ -278,7 +327,7 @@
 .u-cp__msg svg{ width:14px; height:14px; flex:none; margin-top:2px; }
 
 /* 총액 — 이 숫자 하나가 「이번에 빠져나가는 돈」 */
-.u-total{ margin-top:18px; padding-top:18px; border-top:1.5px solid var(--n-200); }
+.u-total{ margin-top:18px; padding-top:18px; border-top:1.5px solid var(--rule-2); }
 .u-total__k{ font-size:13.5px; font-weight:800; color:var(--ink-3); letter-spacing:-.03em; }
 .u-total__v{ display:block; margin-top:6px; font-size:34px; font-weight:800; letter-spacing:-.065em;
   color:var(--ink); font-variant-numeric:tabular-nums; line-height:1; }
@@ -292,21 +341,21 @@
 .u-agree{ display:flex; align-items:center; gap:11px; margin:18px 0 14px; cursor:pointer; user-select:none; }
 .u-agree input{ position:absolute; opacity:0; width:0; height:0; }
 .u-agree__box{ width:22px; height:22px; border-radius:7px; flex:none; display:grid; place-items:center;
-  box-shadow:inset 0 0 0 1.8px var(--n-200); background:var(--paper); transition:var(--t-fast); }
-.u-agree__box svg{ width:13px; height:13px; color:var(--paper); opacity:0; }
-.u-agree input:checked + .u-agree__box{ background:var(--ink); box-shadow:inset 0 0 0 1.8px var(--ink); }
+  box-shadow:inset 0 0 0 1.8px var(--rule-2); background:var(--paper); transition:var(--t-fast); }
+.u-agree__box svg{ width:13px; height:13px; color:var(--sel-fg); opacity:0; }
+.u-agree input:checked + .u-agree__box{ background:var(--sel-bg); box-shadow:inset 0 0 0 1.8px var(--sel-bg); }
 .u-agree input:checked + .u-agree__box svg{ opacity:1; }
 .u-agree__t{ flex:1; font-size:13.5px; font-weight:600; color:var(--ink-2); letter-spacing:-.03em; }
 .u-agree.is-bad .u-agree__box{ box-shadow:inset 0 0 0 2px var(--danger); }
 .u-agree.is-bad .u-agree__t{ color:var(--danger); font-weight:700; }
 .u-agree__more{ font-size:12.5px; font-weight:700; color:var(--ink-3); text-decoration:underline;
   text-underline-offset:3px; flex:none; }
-.u-fine{ margin-top:16px; padding-top:14px; border-top:1px solid var(--n-200);
+.u-fine{ margin-top:16px; padding-top:14px; border-top:1px solid var(--rule);
   font-size:11.5px; font-weight:500; color:var(--ink-3); line-height:1.8; letter-spacing:-.02em; }
 
 /* ---- 토스트 ---- */
 .u-toast{ position:fixed; left:50%; bottom:30px; transform:translateX(-50%) translateY(12px); z-index:60;
-  max-width:520px; background:var(--ink); color:var(--n-000); padding:14px 20px; border-radius:14px;
+  max-width:520px; background:var(--sel-bg); color:var(--sel-fg); padding:14px 20px; border-radius:14px;
   font-size:14px; font-weight:600; letter-spacing:-.025em; opacity:0; pointer-events:none;
   transition:var(--t-fast); }
 .u-toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
