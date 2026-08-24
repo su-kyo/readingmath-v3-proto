@@ -52,17 +52,20 @@ body{ margin:0; padding:0 0 70px; background:var(--n-950); color:var(--n-000);
   --paper:var(--n-000);      /* 종이 = 흰색. 면을 쌓지 않는다 */
   --rule:var(--n-100);       /* 유일한 구분 장치 — 헤어라인 */
   --rule-2:var(--n-200);     /* 강한 선 (입력·구획) */
-  --inset:var(--n-050);      /* 회색 면은 결제 요약 한 곳뿐 */
-  --wash:var(--blue-050);    /* 행 호버 */
+  /* 면은 뉴트럴-쿨 램프(n-*) 하나로만 쌓는다. 옅은 면이 두 종류(n-050·blue-050)면
+     같은 회색인데 서로 다르게 보인다 — 이것이 「한 톤이 아니다」의 정체였다. */
+  --inset:var(--n-050);      /* 회색 면 (요약 패널) */
+  --wash:var(--n-050);       /* 행 호버 = 사다리 한 칸 */
+  --sel:var(--n-100);        /* 행 선택 = 사다리 두 칸 (색이 아니라 깊이로 구분) */
   --ink:var(--n-650);        /* 본문 · 흰 배경 14.6 */
   --ink-2:var(--n-500);      /* 보조 · 9.3 */
   --ink-3:var(--n-400);      /* 메타 · 5.4 */
   --brand:var(--blue-500);
   --brand-ink:var(--blue-600);
-  --accent-ev:var(--amber-600);   /* 이벤트 — 앰버는 잉크로만 (흰 글자 불가) */
-  --dot-ev:var(--amber-300);
-  --cta:var(--primary);           /* 450 IDENTITY · 라벨 ≥19px w700 */
-  --ok:var(--ok-ink); --danger:var(--no-ink); --danger-tint:var(--no-tint);
+  /* 파랑 하나만 액센트. 초록·앰버는 쓰지 않는다 — 쿨 램프와 hue가 멀어 화면이 얼룩진다.
+     구분이 필요한 곳은 「색 vs 무채」로 가른다 (공지=무채 / 이벤트=파랑). */
+  --cta:var(--primary);           /* 450 IDENTITY · 라벨 ≥19px w700 — 화면의 유일한 난색 */
+  --danger:var(--no-ink);         /* 빨강은 오류에만 */
   background:var(--paper); color:var(--ink);
   font-family:var(--font-sans); letter-spacing:-.03em; -webkit-font-smoothing:antialiased;
 }
@@ -94,15 +97,17 @@ body{ margin:0; padding:0 0 70px; background:var(--n-950); color:var(--n-000);
 .u2-seg button.is-on{ background:var(--ink); color:var(--paper); }
 .u2-seg__n{ margin-left:6px; font-size:12.5px; font-weight:700; opacity:.6; font-variant-numeric:tabular-nums; }
 
-/* ---- 목록: 카드 없음. 선과 여백만 ---- */
-.u2-list{ margin:0; }
+/* ---- 목록: 카드 없음. 선과 여백만 ----
+   행 사이에 8px 갭을 두고 구분선을 갭 한가운데 놓는다. 갭이 없으면 호버 면이
+   위아래로 맞닿아 「덩어리」로 보인다. 선은 호버해도 그대로 둔다(깜빡임 방지). */
+.u2-list{ margin:0; display:flex; flex-direction:column; }
 .u2-row{ display:flex; align-items:center; gap:22px; width:100%; text-align:left; cursor:pointer;
   background:transparent; border:0; font-family:inherit; color:inherit; position:relative;
-  padding:24px 20px; margin:0 -20px; border-radius:16px; transition:background var(--t-fast); }
-.u2-row::before{ content:""; position:absolute; left:20px; right:20px; bottom:0; height:1px; background:var(--rule); }
-.u2-row:last-child::before{ background:var(--rule); }
+  padding:21px 20px; margin:0 -20px; border-radius:15px; transition:background var(--t-fast); }
+.u2-row + .u2-row{ margin-top:8px; }
+.u2-row + .u2-row::before{ content:""; position:absolute; left:20px; right:20px; top:-4.5px;
+  height:1px; background:var(--rule); }
 .u2-row:hover{ background:var(--wash); }
-.u2-row:hover::before{ background:transparent; }
 
 .u2-row__main{ flex:1; min-width:0; display:block; }
 .u2-row__ttl{ font-size:17.5px; font-weight:700; letter-spacing:-.04em; color:var(--ink); line-height:1.42;
@@ -113,11 +118,11 @@ body{ margin:0; padding:0 0 70px; background:var(--n-950); color:var(--n-000);
   font-size:13px; font-weight:600; color:var(--ink-3); font-variant-numeric:tabular-nums; letter-spacing:-.02em; }
 .u2-row__meta i{ width:3px; height:3px; border-radius:99px; background:var(--n-200); flex:none; }
 
-/* 카테고리 = 점 + 색 글자. 칩·틴트 없음 */
-.u2-cat{ display:inline-flex; align-items:center; gap:6px; font-weight:700; color:var(--brand-ink); flex:none; }
-.u2-cat::before{ content:""; width:6px; height:6px; border-radius:99px; background:var(--brand); }
-.u2-cat.is-event{ color:var(--accent-ev); }
-.u2-cat.is-event::before{ background:var(--dot-ev); }
+/* 카테고리 = 점 + 글자. 공지(다수)는 무채, 이벤트(소수)만 파랑 — 색은 하나만 쓴다 */
+.u2-cat{ display:inline-flex; align-items:center; gap:6px; font-weight:700; color:var(--ink-3); flex:none; }
+.u2-cat::before{ content:""; width:6px; height:6px; border-radius:99px; background:var(--n-200); }
+.u2-cat.is-event{ color:var(--brand-ink); }
+.u2-cat.is-event::before{ background:var(--brand); }
 
 .u2-new{ display:inline-flex; align-items:center; justify-content:center; margin-left:8px; height:20px; min-width:20px;
   padding:0 6px; border-radius:99px; background:var(--brand); color:var(--n-000);
@@ -140,8 +145,10 @@ body{ margin:0; padding:0 0 70px; background:var(--n-950); color:var(--n-000);
 
 @keyframes u2sk{ 0%,100%{ opacity:.45 } 50%{ opacity:1 } }
 .u2-sk{ background:var(--n-100); border-radius:6px; animation:u2sk 1.25s ease-in-out infinite; }
-.u2-skrow{ display:flex; align-items:center; gap:22px; padding:24px 20px; margin:0 -20px; position:relative; }
-.u2-skrow::before{ content:""; position:absolute; left:20px; right:20px; bottom:0; height:1px; background:var(--rule); }
+.u2-skrow{ display:flex; align-items:center; gap:22px; padding:21px 20px; margin:0 -20px; position:relative; }
+.u2-skrow + .u2-skrow{ margin-top:8px; }
+.u2-skrow + .u2-skrow::before{ content:""; position:absolute; left:20px; right:20px; top:-4.5px;
+  height:1px; background:var(--rule); }
 
 /* ---- 페이지네이션 ---- */
 .u2-pager{ display:flex; align-items:center; justify-content:center; gap:4px; margin-top:36px; }
@@ -179,9 +186,9 @@ body{ margin:0; padding:0 0 70px; background:var(--n-950); color:var(--n-000);
   letter-spacing:-.03em; cursor:pointer; border:0; font-family:inherit; transition:var(--t-fast); }
 .u2-crumb:hover{ background:var(--n-050); color:var(--brand-ink); }
 .u2-crumb svg{ width:16px; height:16px; }
-.u2-doc__cat{ display:inline-flex; align-items:center; gap:7px; font-size:13px; font-weight:700; color:var(--brand-ink); }
-.u2-doc__cat::before{ content:""; width:6px; height:6px; border-radius:99px; background:var(--brand); }
-.u2-doc__cat.is-event{ color:var(--accent-ev); } .u2-doc__cat.is-event::before{ background:var(--dot-ev); }
+.u2-doc__cat{ display:inline-flex; align-items:center; gap:7px; font-size:13px; font-weight:700; color:var(--ink-3); }
+.u2-doc__cat::before{ content:""; width:6px; height:6px; border-radius:99px; background:var(--n-200); }
+.u2-doc__cat.is-event{ color:var(--brand-ink); } .u2-doc__cat.is-event::before{ background:var(--brand); }
 .u2-doc__ttl{ margin-top:15px; font-size:33px; font-weight:800; letter-spacing:-.055em; line-height:1.24; color:var(--ink); }
 .u2-doc__date{ margin-top:14px; font-size:13.5px; font-weight:600; color:var(--ink-3); font-variant-numeric:tabular-nums; }
 .u2-doc__hr{ height:1.5px; background:var(--ink); margin:26px 0 34px; }
@@ -219,12 +226,13 @@ body{ margin:0; padding:0 0 70px; background:var(--n-950); color:var(--n-000);
 
 /* 선택 행 (과목·기간·결제수단 공용) */
 .u2-opt{ display:flex; align-items:center; gap:16px; width:100%; text-align:left;
-  padding:20px 16px; margin:0 -16px; border:0; background:transparent; font-family:inherit; color:inherit;
-  cursor:pointer; border-radius:14px; position:relative; transition:background var(--t-fast); }
-.u2-opt::before{ content:""; position:absolute; left:16px; right:16px; bottom:0; height:1px; background:var(--rule); }
-.u2-opt:hover{ background:var(--n-050); }
-.u2-opt.is-sel{ background:var(--wash); }
-.u2-opt:hover::before, .u2-opt.is-sel::before{ background:transparent; }
+  padding:18px 16px; margin:0 -16px; border:0; background:transparent; font-family:inherit; color:inherit;
+  cursor:pointer; border-radius:15px; position:relative; transition:background var(--t-fast); }
+.u2-opt + .u2-opt{ margin-top:8px; }
+.u2-opt + .u2-opt::before{ content:""; position:absolute; left:16px; right:16px; top:-4.5px;
+  height:1px; background:var(--rule); }
+.u2-opt:hover{ background:var(--wash); }
+.u2-opt.is-sel, .u2-opt.is-sel:hover{ background:var(--sel); }
 .u2-radio{ width:22px; height:22px; border-radius:99px; flex:none; display:grid; place-items:center;
   box-shadow:inset 0 0 0 1.8px var(--rule-2); transition:var(--t-fast); }
 .u2-opt.is-sel .u2-radio{ box-shadow:inset 0 0 0 7px var(--brand); }
@@ -234,10 +242,9 @@ body{ margin:0; padding:0 0 70px; background:var(--n-950); color:var(--n-000);
 .u2-opt__right{ display:block; text-align:right; flex:none; }
 .u2-opt > svg{ width:23px; height:23px; flex:none; color:var(--ink-3); }
 
-/* 할인율 = 숫자만 */
-.u2-off{ display:inline-flex; align-items:center; height:21px; padding:0 8px; border-radius:99px;
-  background:var(--ok-tint); color:var(--ok); font-size:12px; font-weight:800;
-  letter-spacing:-.02em; font-variant-numeric:tabular-nums; }
+/* 할인율 = 파란 숫자만. 면을 만들지 않는다 */
+.u2-off{ font-size:13px; font-weight:800; color:var(--brand-ink);
+  letter-spacing:-.03em; font-variant-numeric:tabular-nums; }
 
 /* 가격 — 월 환산이 주, 정가→판매가 취소선이 보조 (과목·기간 공통 문법) */
 .u2-mo{ display:block; font-size:21px; font-weight:800; letter-spacing:-.05em;
@@ -254,7 +261,7 @@ body{ margin:0; padding:0 0 70px; background:var(--n-950); color:var(--n-000);
 .u2-ben li{ display:flex; gap:11px; align-items:flex-start; padding:8px 0; font-size:14.5px; font-weight:500;
   color:var(--ink-2); line-height:1.6; letter-spacing:-.028em; }
 .u2-ben li b{ color:var(--ink); font-weight:700; }
-.u2-ben svg{ width:17px; height:17px; flex:none; margin-top:3px; color:var(--ok); }
+.u2-ben svg{ width:17px; height:17px; flex:none; margin-top:3px; color:var(--brand); }
 
 /* ── 오른쪽: 화면에서 유일한 회색 면 ── */
 .u2-sum{ background:var(--inset); border-radius:22px; padding:24px 22px 22px; }
@@ -287,7 +294,7 @@ body{ margin:0; padding:0 0 70px; background:var(--n-950); color:var(--n-000);
   font-weight:700; letter-spacing:-.035em; cursor:pointer; transition:var(--t-fast); }
 .u2-cp__btn:hover{ box-shadow:inset 0 0 0 1.5px var(--brand); color:var(--brand-ink); }
 .u2-cp__msg{ display:flex; align-items:flex-start; gap:6px; margin-top:9px; font-size:12.5px; font-weight:600; line-height:1.5; }
-.u2-cp__msg.is-bad{ color:var(--danger); } .u2-cp__msg.is-ok{ color:var(--ok); }
+.u2-cp__msg.is-bad{ color:var(--danger); } .u2-cp__msg.is-ok{ color:var(--brand-ink); }
 .u2-cp__msg svg{ width:14px; height:14px; flex:none; margin-top:2px; }
 
 /* 총액 */
@@ -296,8 +303,8 @@ body{ margin:0; padding:0 0 70px; background:var(--n-950); color:var(--n-000);
 .u2-total__k{ font-size:15px; font-weight:800; letter-spacing:-.04em; }
 .u2-total__v{ font-size:32px; font-weight:800; letter-spacing:-.065em; color:var(--ink);
   font-variant-numeric:tabular-nums; line-height:1; }
-.u2-total__save{ display:flex; justify-content:flex-end; margin-top:8px; font-size:12.5px;
-  font-weight:800; color:var(--ok); font-variant-numeric:tabular-nums; letter-spacing:-.03em; }
+.u2-total__save{ display:flex; justify-content:flex-end; margin-top:8px; font-size:13px;
+  font-weight:800; color:var(--brand-ink); font-variant-numeric:tabular-nums; letter-spacing:-.03em; }
 
 /* 동의 · CTA */
 .u2-agree{ display:flex; align-items:center; gap:11px; margin:18px 0 14px; cursor:pointer; user-select:none; }
