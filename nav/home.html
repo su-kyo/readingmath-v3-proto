@@ -116,7 +116,7 @@
     .plaque__done{ flex:none; color:var(--seg); font-size:12.5px; font-weight:800; }
 
     /* ---- 히어로(캐릭터+말풍선) — safe 안, 피그마 캐릭터 위치/크기 ---- */
-    /* 행성 대표 캐릭터는 무엇보다 위에 있다 — 오브젝트도 명판도 캐릭터를 못 가린다 */
+    /* 행성 대표 캐릭터는 오브젝트·명판보다 위에 있다 (CTA와 토스트만 캐릭터보다 위) */
     .hero{ position:absolute; left:50%; top:62.7%; width:31.25%; transform:translate(-50%,-50%); z-index:30; }
     /* 캐릭터 원본이 아직 없는 학기 — 말풍선만 바닥 가운데에 세운다 */
     .hero.is-nochar{ top:70%; width:auto; }
@@ -135,8 +135,10 @@
     .bubble::after{ content:""; position:absolute; left:50%; bottom:-10px; transform:translateX(-50%);
       border:11px solid transparent; border-top-color:var(--n-000); border-bottom:0; }
 
-    /* ---- CTA — 화면 하단 고정(스테이지) ---- */
-    .cta{ position:absolute; left:50%; bottom:5%; transform:translateX(-50%); z-index:14;
+    /* ---- CTA — 화면 하단 고정(스테이지) ----
+       이 화면에서 가장 위에 있는 것은 CTA다. 눌러야 하는 것이 무엇에도 가리면 안 된다.
+       층 순서: 오브젝트(auto) < 명판(25) < 캐릭터(30) < CTA(40) < 토스트(50) */
+    .cta{ position:absolute; left:50%; bottom:5%; transform:translateX(-50%); z-index:40;
       display:inline-flex; align-items:center; gap:9px; height:56px; padding:0 34px; border:0;
       border-radius:17px; background:var(--primary); color:var(--n-000); font-family:inherit; font-size:19px;
       font-weight:800; letter-spacing:-.02em; cursor:pointer;
@@ -146,7 +148,7 @@
       box-shadow:0 0 0 2px var(--primary-ring), 0 4px 0 var(--primary-deep), 0 18px 30px -12px rgba(3,6,15,.6), inset 0 1px 0 rgba(255,255,255,.3); }
     .cta svg{ width:20px; height:20px; }
 
-    .toast{ position:fixed; left:50%; bottom:30px; transform:translateX(-50%) translateY(16px); z-index:40;
+    .toast{ position:fixed; left:50%; bottom:30px; transform:translateX(-50%) translateY(16px); z-index:50;
       background:var(--surface-2); border:1px solid var(--border); color:var(--text); padding:11px 18px;
       border-radius:12px; font-size:13.5px; font-weight:600; opacity:0; pointer-events:none;
       transition:.2s; box-shadow:var(--shadow-2); font-family:var(--font-sans); }
