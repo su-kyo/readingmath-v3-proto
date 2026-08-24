@@ -1,13 +1,10 @@
 <!DOCTYPE html>
-<!-- [시안 · Phase 7-6] ④ 유틸 재출발 — 흰 바탕 확정안 (단일 방향).
-     앞선 「토스풍 3안 + 종이색 6후보」는 폐기됨. 사용자 결정: 흰 바탕에 깔끔하게.
-     확정 전제:
-       · 폭은 화면 성격별 — 목록·상세 860px 좁은 칼럼, 결제만 2단
-       · 라이트 전용 · 번호 열 제거(데이터는 남기고 화면에서만 숨김)
-     방향: 「흰 종이 · 선 하나 · 굵은 타이포」
-       · 카드·그림자 없음. 위계는 여백과 글자 크기 차이가 전부 담당
-       · 색은 적게 쓰되 나타날 땐 진하게 — 050 틴트 금지, 500/600 solid
-       · 회색 면은 결제 주문 요약 하나뿐 (돈이 걸린 자리를 유일한 면으로)
+<!-- [시안 · Phase 7-6] ④ 유틸 재출발 — 흰 바탕 확정안.
+     체계 세 줄:
+       1) 면은 뉴트럴-쿨 램프(n-000/050/100) 하나로만 쌓는다. 파랑은 점·선·글자로만.
+       2) 「선택 = 먹색」이 화면 전체의 단일 규칙 (필터·페이지네이션·과목·기간·결제수단).
+       3) 목록은 테두리 안에 담긴 시트, 선택지는 나란히 비교되는 타일. 떠 있는 블록·갭을 쓰지 않는다.
+     확정 전제: 폭은 화면 성격별(목록·상세 860 / 결제 2단) · 라이트 전용 · 번호 열 제거.
      확정되면 styles/util.css로 옮기고 이 파일은 지운다. -->
 <html lang="ko" data-section="util" data-theme="light">
 <head>
@@ -49,23 +46,19 @@ body{ margin:0; padding:0 0 70px; background:var(--n-950); color:var(--n-000);
    전부 tokens.css 변수만 참조. raw hex 없음.
    ===================================================================== */
 .ustage{
-  --paper:var(--n-000);      /* 종이 = 흰색. 면을 쌓지 않는다 */
-  --rule:var(--n-100);       /* 유일한 구분 장치 — 헤어라인 */
-  --rule-2:var(--n-200);     /* 강한 선 (입력·구획) */
-  /* 면은 뉴트럴-쿨 램프(n-*) 하나로만 쌓는다. 옅은 면이 두 종류(n-050·blue-050)면
-     같은 회색인데 서로 다르게 보인다 — 이것이 「한 톤이 아니다」의 정체였다. */
-  --inset:var(--n-050);      /* 회색 면 (요약 패널) */
-  --wash:var(--n-050);       /* 행 호버 = 사다리 한 칸 */
-  --sel:var(--n-100);        /* 행 선택 = 사다리 두 칸 (색이 아니라 깊이로 구분) */
-  --ink:var(--n-650);        /* 본문 · 흰 배경 14.6 */
+  --paper:var(--n-000);      /* 종이 = 흰색 */
+  --rule:var(--n-100);       /* 헤어라인 · 시트 테두리 */
+  --rule-2:var(--n-200);     /* 강한 선 */
+  --inset:var(--n-050);      /* 옅은 면 (요약 패널 · 세그먼트 트랙) */
+  --wash:var(--n-050);       /* 호버 = 사다리 한 칸 */
+  --ink:var(--n-650);        /* 본문 · 선택 칠면 · 흰 배경 14.6 */
   --ink-2:var(--n-500);      /* 보조 · 9.3 */
   --ink-3:var(--n-400);      /* 메타 · 5.4 */
-  --brand:var(--blue-500);
-  --brand-ink:var(--blue-600);
-  /* 파랑 하나만 액센트. 초록·앰버는 쓰지 않는다 — 쿨 램프와 hue가 멀어 화면이 얼룩진다.
-     구분이 필요한 곳은 「색 vs 무채」로 가른다 (공지=무채 / 이벤트=파랑). */
-  --cta:var(--primary);           /* 450 IDENTITY · 라벨 ≥19px w700 — 화면의 유일한 난색 */
-  --danger:var(--no-ink);         /* 빨강은 오류에만 */
+  --brand:var(--blue-500);     /* 점·마커 */
+  --brand-ink:var(--blue-600); /* 작은 글자 (A부류 · 흰 배경 7.0) */
+  --brand-hi:var(--blue-300);  /* 먹색 칠면 위 글자 */
+  --cta:var(--primary);      /* 450 IDENTITY · 라벨 ≥19px w700 — 유일한 난색 */
+  --danger:var(--no-ink);    /* 빨강은 오류에만 */
   background:var(--paper); color:var(--ink);
   font-family:var(--font-sans); letter-spacing:-.03em; -webkit-font-smoothing:antialiased;
 }
@@ -77,40 +70,35 @@ body{ margin:0; padding:0 0 70px; background:var(--n-950); color:var(--n-000);
 .u2-wrap{ max-width:860px; margin:0 auto; padding:56px 40px 96px; }
 .u2-wrap--wide{ max-width:1160px; }
 
-/* ---- 등장 모션: 로드 한 번, 계단식 ---- */
 @keyframes u2rise{ from{ opacity:0; transform:translateY(10px); } to{ opacity:1; transform:none; } }
 .u2-rise{ animation:u2rise .42s cubic-bezier(.2,.75,.3,1) both; }
 
 /* ---- 페이지 머리 ---- */
 .u2-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:28px;
-  padding-bottom:26px; margin-bottom:0; border-bottom:1.5px solid var(--ink); }
+  padding-bottom:24px; margin-bottom:24px; border-bottom:1.5px solid var(--ink); }
 .u2-head__l{ min-width:0; }
 .u2-head__t{ font-size:40px; font-weight:800; letter-spacing:-.06em; line-height:1.05; color:var(--ink); }
 .u2-head__sub{ margin-top:12px; font-size:15px; font-weight:500; color:var(--ink-3); line-height:1.55; letter-spacing:-.025em; }
 
-/* ---- 필터 (먹색 알약 — 흰 바탕의 유일한 어두운 컨트롤) ---- */
+/* ---- 필터 · 페이지 알약 (선택 = 먹색) ---- */
 .u2-seg{ display:inline-flex; gap:6px; flex:none; padding-bottom:2px; }
 .u2-seg button{ height:36px; padding:0 15px; border:0; border-radius:99px; cursor:pointer;
   background:transparent; color:var(--ink-3); font-family:inherit; font-size:14px; font-weight:700;
   letter-spacing:-.03em; transition:var(--t-fast); }
-.u2-seg button:hover{ background:var(--n-050); color:var(--ink); }
+.u2-seg button:hover{ background:var(--wash); color:var(--ink); }
 .u2-seg button.is-on{ background:var(--ink); color:var(--paper); }
 .u2-seg__n{ margin-left:6px; font-size:12.5px; font-weight:700; opacity:.6; font-variant-numeric:tabular-nums; }
 
-/* ---- 목록: 카드 없음. 선과 여백만 ----
-   행 사이에 8px 갭을 두고 구분선을 갭 한가운데 놓는다. 갭이 없으면 호버 면이
-   위아래로 맞닿아 「덩어리」로 보인다. 선은 호버해도 그대로 둔다(깜빡임 방지). */
-.u2-list{ margin:0; display:flex; flex-direction:column; }
-.u2-row{ display:flex; align-items:center; gap:22px; width:100%; text-align:left; cursor:pointer;
-  background:transparent; border:0; font-family:inherit; color:inherit; position:relative;
-  padding:21px 20px; margin:0 -20px; border-radius:15px; transition:background var(--t-fast); }
-.u2-row + .u2-row{ margin-top:8px; }
-.u2-row + .u2-row::before{ content:""; position:absolute; left:20px; right:20px; top:-4.5px;
-  height:1px; background:var(--rule); }
+/* ---- 목록 = 테두리 안에 담긴 시트 (떠 있는 블록·갭 없음) ---- */
+.u2-sheet{ border:1px solid var(--rule); border-radius:20px; overflow:hidden; background:var(--paper); }
+.u2-row{ display:flex; align-items:center; gap:20px; width:100%; text-align:left; cursor:pointer;
+  background:transparent; border:0; font-family:inherit; color:inherit;
+  padding:22px 24px; transition:background var(--t-fast); }
+.u2-row + .u2-row{ border-top:1px solid var(--rule); }
 .u2-row:hover{ background:var(--wash); }
 
 .u2-row__main{ flex:1; min-width:0; display:block; }
-.u2-row__ttl{ font-size:17.5px; font-weight:700; letter-spacing:-.04em; color:var(--ink); line-height:1.42;
+.u2-row__ttl{ font-size:17px; font-weight:700; letter-spacing:-.04em; color:var(--ink); line-height:1.42;
   display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
   transition:color var(--t-fast); }
 .u2-row:hover .u2-row__ttl{ color:var(--brand-ink); }
@@ -118,7 +106,7 @@ body{ margin:0; padding:0 0 70px; background:var(--n-950); color:var(--n-000);
   font-size:13px; font-weight:600; color:var(--ink-3); font-variant-numeric:tabular-nums; letter-spacing:-.02em; }
 .u2-row__meta i{ width:3px; height:3px; border-radius:99px; background:var(--n-200); flex:none; }
 
-/* 카테고리 = 점 + 글자. 공지(다수)는 무채, 이벤트(소수)만 파랑 — 색은 하나만 쓴다 */
+/* 카테고리 — 공지(다수)는 무채, 이벤트(소수)만 파랑. 색은 하나만 쓴다 */
 .u2-cat{ display:inline-flex; align-items:center; gap:6px; font-weight:700; color:var(--ink-3); flex:none; }
 .u2-cat::before{ content:""; width:6px; height:6px; border-radius:99px; background:var(--n-200); }
 .u2-cat.is-event{ color:var(--brand-ink); }
@@ -134,64 +122,62 @@ body{ margin:0; padding:0 0 70px; background:var(--n-950); color:var(--n-000);
 .u2-row__ext svg{ width:16px; height:16px; }
 .u2-row:hover .u2-row__ext{ color:var(--brand-ink); }
 
-/* ---- 부가 상태: 면 없이 여백으로 ---- */
-.u2-state{ padding:112px 20px 96px; text-align:center; }
-.u2-state__ico{ width:52px; height:52px; margin:0 auto 22px; color:var(--n-200); }
-.u2-state__ico svg{ width:52px; height:52px; }
+/* ---- 부가 상태 (시트 안) ---- */
+.u2-state{ padding:104px 24px 96px; text-align:center; }
+.u2-state__ico{ width:48px; height:48px; margin:0 auto 20px; color:var(--n-200); }
+.u2-state__ico svg{ width:48px; height:48px; }
 .u2-state__ico.is-warn{ color:var(--danger); }
-.u2-state__t{ font-size:19px; font-weight:800; color:var(--ink); letter-spacing:-.045em; }
+.u2-state__t{ font-size:18px; font-weight:800; color:var(--ink); letter-spacing:-.045em; }
 .u2-state__d{ margin-top:10px; font-size:14.5px; font-weight:500; color:var(--ink-3); line-height:1.7; }
-.u2-state .u2-btn{ margin-top:24px; }
+.u2-state .u2-btn{ margin-top:22px; }
 
 @keyframes u2sk{ 0%,100%{ opacity:.45 } 50%{ opacity:1 } }
 .u2-sk{ background:var(--n-100); border-radius:6px; animation:u2sk 1.25s ease-in-out infinite; }
-.u2-skrow{ display:flex; align-items:center; gap:22px; padding:21px 20px; margin:0 -20px; position:relative; }
-.u2-skrow + .u2-skrow{ margin-top:8px; }
-.u2-skrow + .u2-skrow::before{ content:""; position:absolute; left:20px; right:20px; top:-4.5px;
-  height:1px; background:var(--rule); }
+.u2-skrow{ padding:22px 24px; }
+.u2-skrow + .u2-skrow{ border-top:1px solid var(--rule); }
 
 /* ---- 페이지네이션 ---- */
-.u2-pager{ display:flex; align-items:center; justify-content:center; gap:4px; margin-top:36px; }
+.u2-pager{ display:flex; align-items:center; justify-content:center; gap:4px; margin-top:28px; }
 .u2-pager button{ min-width:36px; height:36px; padding:0 8px; border-radius:10px; border:0; background:transparent;
   color:var(--ink-3); font-family:inherit; font-size:14px; font-weight:700; cursor:pointer;
   display:grid; place-items:center; transition:var(--t-fast); font-variant-numeric:tabular-nums; }
-.u2-pager button:hover{ background:var(--n-050); color:var(--ink); }
+.u2-pager button:hover{ background:var(--wash); color:var(--ink); }
 .u2-pager button.is-on{ background:var(--ink); color:var(--paper); }
 .u2-pager button:disabled{ opacity:.28; cursor:default; background:transparent; }
 .u2-pager svg{ width:18px; height:18px; }
 
-/* ---- 버튼 (선 하나 · 채움 없음) ---- */
+/* ---- 버튼 ---- */
 .u2-btn{ display:inline-flex; align-items:center; justify-content:center; gap:8px; height:46px; padding:0 20px;
   border-radius:13px; border:0; background:transparent; color:var(--ink);
   box-shadow:inset 0 0 0 1.5px var(--rule-2); font-family:inherit; font-size:15px; font-weight:700;
   letter-spacing:-.035em; cursor:pointer; transition:var(--t-fast); white-space:nowrap; }
-.u2-btn:hover{ box-shadow:inset 0 0 0 1.5px var(--brand); color:var(--brand-ink); background:var(--wash); }
+.u2-btn:hover{ box-shadow:inset 0 0 0 1.5px var(--ink); }
 .u2-btn svg{ width:17px; height:17px; }
 .u2-btn--sm{ height:38px; padding:0 14px; font-size:13.5px; border-radius:11px; }
 .u2-btn--ghost{ box-shadow:none; color:var(--ink-2); }
-.u2-btn--ghost:hover{ box-shadow:none; }
+.u2-btn--ghost:hover{ box-shadow:none; background:var(--wash); color:var(--ink); }
 .u2-btn:disabled{ opacity:.35; cursor:not-allowed; }
-.u2-btn:disabled:hover{ box-shadow:inset 0 0 0 1.5px var(--rule-2); color:var(--ink); background:transparent; }
-/* CTA = 유일한 채움 버튼. 정체성 칠면(450) · 라벨 19px w800 */
-.u2-btn--cta{ height:60px; width:100%; border-radius:16px; background:var(--cta); color:var(--n-000);
+.u2-btn:disabled:hover{ box-shadow:none; background:transparent; }
+/* CTA = 유일한 채움 난색. 정체성 칠면(450) · 라벨 19px w800 */
+.u2-btn--cta{ height:58px; width:100%; border-radius:16px; background:var(--cta); color:var(--n-000);
   box-shadow:none; font-size:19px; font-weight:800; letter-spacing:-.04em; }
-.u2-btn--cta:hover{ background:var(--primary-hover); color:var(--n-000); box-shadow:none; }
+.u2-btn--cta:hover{ background:var(--primary-hover); box-shadow:none; }
 .u2-btn--cta:active{ background:var(--primary-pressed); }
 .u2-btn--cta:disabled{ background:var(--n-100); color:var(--n-400); opacity:1; }
-.u2-btn--cta:disabled:hover{ background:var(--n-100); color:var(--n-400); box-shadow:none; }
+.u2-btn--cta:disabled:hover{ background:var(--n-100); }
 
 /* ---- 상세 ---- */
 .u2-crumb{ display:inline-flex; align-items:center; gap:7px; height:32px; padding:0 12px 0 8px; margin-bottom:26px;
   border-radius:99px; background:transparent; color:var(--ink-3); font-size:13.5px; font-weight:700;
   letter-spacing:-.03em; cursor:pointer; border:0; font-family:inherit; transition:var(--t-fast); }
-.u2-crumb:hover{ background:var(--n-050); color:var(--brand-ink); }
+.u2-crumb:hover{ background:var(--wash); color:var(--ink); }
 .u2-crumb svg{ width:16px; height:16px; }
 .u2-doc__cat{ display:inline-flex; align-items:center; gap:7px; font-size:13px; font-weight:700; color:var(--ink-3); }
 .u2-doc__cat::before{ content:""; width:6px; height:6px; border-radius:99px; background:var(--n-200); }
 .u2-doc__cat.is-event{ color:var(--brand-ink); } .u2-doc__cat.is-event::before{ background:var(--brand); }
 .u2-doc__ttl{ margin-top:15px; font-size:33px; font-weight:800; letter-spacing:-.055em; line-height:1.24; color:var(--ink); }
 .u2-doc__date{ margin-top:14px; font-size:13.5px; font-weight:600; color:var(--ink-3); font-variant-numeric:tabular-nums; }
-.u2-doc__hr{ height:1.5px; background:var(--ink); margin:26px 0 34px; }
+.u2-doc__hr{ height:1.5px; background:var(--ink); margin:24px 0 34px; }
 .u2-doc__body{ font-size:16.5px; line-height:1.9; color:var(--ink-2); font-weight:500; letter-spacing:-.028em; }
 .u2-doc__body p{ margin:0 0 19px; } .u2-doc__body p:last-child{ margin-bottom:0; }
 .u2-doc__body b{ color:var(--ink); font-weight:700; }
@@ -200,70 +186,73 @@ body{ margin:0; padding:0 0 70px; background:var(--n-950); color:var(--n-000);
 .u2-doc__body li{ position:relative; margin:10px 0; padding-left:22px; }
 .u2-doc__body li::before{ content:""; position:absolute; left:4px; top:13px; width:5px; height:5px;
   border-radius:99px; background:var(--brand); }
-.u2-file{ display:flex; align-items:center; gap:14px; margin-top:40px; padding-top:22px; border-top:1px solid var(--rule); }
-.u2-file__ico{ width:38px; height:38px; flex:none; display:grid; place-items:center; color:var(--ink-3);
-  border-radius:11px; box-shadow:inset 0 0 0 1.5px var(--rule); }
-.u2-file__ico svg{ width:19px; height:19px; }
+.u2-file{ display:flex; align-items:center; gap:14px; margin-top:40px; padding:16px 20px;
+  border:1px solid var(--rule); border-radius:16px; }
+.u2-file__ico{ width:36px; height:36px; flex:none; display:grid; place-items:center; color:var(--ink-3); }
+.u2-file__ico svg{ width:20px; height:20px; }
 .u2-file__nm{ flex:1; min-width:0; display:block; font-size:14.5px; font-weight:700; color:var(--ink); letter-spacing:-.035em; }
 .u2-file__sz{ display:block; margin-top:3px; font-size:12.5px; font-weight:600; color:var(--ink-3); font-variant-numeric:tabular-nums; }
 .u2-docfoot{ display:flex; align-items:center; justify-content:space-between; gap:12px;
   margin-top:44px; padding-top:24px; border-top:1px solid var(--rule); }
 
-/* ---- 결제 — 말 대신 구조 ----------------------------------------------
-   설명 문장을 두지 않는다. 값어치는 「정가 → 판매가」 취소선 하나로 통일하고,
-   과목·기간·결제수단이 같은 행 문법을 쓴다. 빨강은 오류에만.
-   -------------------------------------------------------------------- */
-.u2-cols{ display:grid; grid-template-columns:1fr 364px; gap:60px; align-items:start; margin-top:40px; }
+/* =====================================================================
+   결제 — 행·갭 대신 「세그먼트 + 타일」. 나란히 놓아 눈으로 비교하게 한다.
+   과목은 선택만(가격 없음). 가격은 기간 타일에서 월 환산 + 총액을 함께 적고,
+   실제 청구액은 오른쪽 요약의 히어로 숫자 하나로 못 박는다.
+   ===================================================================== */
+.u2-cols{ display:grid; grid-template-columns:1fr 364px; gap:56px; align-items:start; margin-top:36px; }
 .u2-side{ position:sticky; top:0; }
 
-/* 단계 머리 — 번호 + 명사 하나 + 선 */
-.u2-step{ display:flex; align-items:baseline; gap:13px; margin:52px 0 4px; }
+.u2-step{ display:flex; align-items:baseline; gap:13px; margin:44px 0 14px; }
 .u2-step:first-child{ margin-top:0; }
 .u2-step__n{ font-size:12px; font-weight:800; color:var(--ink-3); letter-spacing:.14em;
   font-variant-numeric:tabular-nums; flex:none; }
-.u2-step__t{ font-size:21px; font-weight:800; letter-spacing:-.05em; color:var(--ink); flex:none; }
+.u2-step__t{ font-size:20px; font-weight:800; letter-spacing:-.05em; color:var(--ink); flex:none; }
 .u2-step__line{ flex:1; height:1px; background:var(--rule); }
 
-/* 선택 행 (과목·기간·결제수단 공용) */
-.u2-opt{ display:flex; align-items:center; gap:16px; width:100%; text-align:left;
-  padding:18px 16px; margin:0 -16px; border:0; background:transparent; font-family:inherit; color:inherit;
-  cursor:pointer; border-radius:15px; position:relative; transition:background var(--t-fast); }
-.u2-opt + .u2-opt{ margin-top:8px; }
-.u2-opt + .u2-opt::before{ content:""; position:absolute; left:16px; right:16px; top:-4.5px;
-  height:1px; background:var(--rule); }
-.u2-opt:hover{ background:var(--wash); }
-.u2-opt.is-sel, .u2-opt.is-sel:hover{ background:var(--sel); }
-.u2-radio{ width:22px; height:22px; border-radius:99px; flex:none; display:grid; place-items:center;
-  box-shadow:inset 0 0 0 1.8px var(--rule-2); transition:var(--t-fast); }
-.u2-opt.is-sel .u2-radio{ box-shadow:inset 0 0 0 7px var(--brand); }
-.u2-opt__main{ flex:1; min-width:0; display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
-.u2-opt__nm{ font-size:17px; font-weight:800; letter-spacing:-.045em; }
-.u2-opt__days{ font-size:13px; font-weight:600; color:var(--ink-3); font-variant-numeric:tabular-nums; }
-.u2-opt__right{ display:block; text-align:right; flex:none; }
-.u2-opt > svg{ width:23px; height:23px; flex:none; color:var(--ink-3); }
+/* 과목 = 세그먼트. 고르기만 한다 */
+.u2-seg3{ display:grid; grid-template-columns:repeat(3,1fr); gap:4px; padding:4px;
+  background:var(--inset); border-radius:16px; }
+.u2-seg3 button{ height:50px; border:0; border-radius:12px; background:transparent; color:var(--ink-2);
+  font-family:inherit; font-size:15.5px; font-weight:700; letter-spacing:-.04em; cursor:pointer;
+  transition:var(--t-fast); }
+.u2-seg3 button:hover{ background:var(--paper); color:var(--ink); }
+.u2-seg3 button.is-on{ background:var(--ink); color:var(--paper); }
 
-/* 할인율 = 파란 숫자만. 면을 만들지 않는다 */
-.u2-off{ font-size:13px; font-weight:800; color:var(--brand-ink);
-  letter-spacing:-.03em; font-variant-numeric:tabular-nums; }
-
-/* 가격 — 월 환산이 주, 정가→판매가 취소선이 보조 (과목·기간 공통 문법) */
-.u2-mo{ display:block; font-size:21px; font-weight:800; letter-spacing:-.05em;
-  font-variant-numeric:tabular-nums; line-height:1.1; }
-.u2-mo s{ font-size:14.5px; font-weight:700; color:var(--n-300); margin-right:7px;
-  text-decoration-thickness:1px; letter-spacing:-.04em; }
-.u2-mo small{ font-size:13px; font-weight:700; color:var(--ink-3); margin-left:2px; letter-spacing:-.03em; }
-.u2-sumline{ display:block; margin-top:5px; font-size:12.5px; font-weight:600; color:var(--ink-3);
-  font-variant-numeric:tabular-nums; }
-.u2-sumline s{ color:var(--n-300); text-decoration-thickness:1px; margin-right:4px; }
-
-/* 포함 항목 — 화면에서 유일하게 문장이 허용되는 자리(상품 내용) */
+/* 포함 항목 — 화면에서 문장이 허용되는 유일한 자리(상품 내용) */
 .u2-ben{ list-style:none; margin:20px 0 0; padding:0; }
 .u2-ben li{ display:flex; gap:11px; align-items:flex-start; padding:8px 0; font-size:14.5px; font-weight:500;
   color:var(--ink-2); line-height:1.6; letter-spacing:-.028em; }
 .u2-ben li b{ color:var(--ink); font-weight:700; }
 .u2-ben svg{ width:17px; height:17px; flex:none; margin-top:3px; color:var(--brand); }
 
-/* ── 오른쪽: 화면에서 유일한 회색 면 ── */
+/* 타일 — 선택 = 먹색 (화면 전체 단일 규칙) */
+.u2-tiles{ display:grid; gap:10px; }
+.u2-tiles--4{ grid-template-columns:repeat(4,1fr); }
+.u2-tiles--2{ grid-template-columns:repeat(2,1fr); }
+.u2-tile{ position:relative; text-align:left; border:0; border-radius:16px; background:var(--paper);
+  box-shadow:inset 0 0 0 1.5px var(--rule); font-family:inherit; color:inherit; cursor:pointer;
+  transition:background var(--t-fast), box-shadow var(--t-fast); padding:18px 16px 17px; }
+.u2-tile:hover{ background:var(--wash); box-shadow:inset 0 0 0 1.5px var(--rule-2); }
+.u2-tile.is-on{ background:var(--ink); color:var(--paper); box-shadow:none; }
+.u2-tile__nm{ font-size:15px; font-weight:800; letter-spacing:-.04em; }
+.u2-tile__off{ position:absolute; top:17px; right:16px; font-size:12.5px; font-weight:800;
+  color:var(--brand-ink); font-variant-numeric:tabular-nums; letter-spacing:-.03em; }
+.u2-tile.is-on .u2-tile__off{ color:var(--brand-hi); }
+.u2-tile__mo{ display:block; margin-top:15px; font-size:22px; font-weight:800; letter-spacing:-.055em;
+  font-variant-numeric:tabular-nums; line-height:1; }
+.u2-tile__mo small{ font-size:12.5px; font-weight:700; color:var(--ink-3); margin-left:3px; letter-spacing:-.03em; }
+.u2-tile.is-on .u2-tile__mo small{ color:var(--n-300); }
+.u2-tile__tot{ display:block; margin-top:9px; font-size:12.5px; font-weight:600; color:var(--ink-3);
+  font-variant-numeric:tabular-nums; letter-spacing:-.02em; }
+.u2-tile.is-on .u2-tile__tot{ color:var(--n-300); }
+/* 결제 방법 타일 */
+.u2-tile--m{ display:flex; align-items:center; gap:13px; padding:19px 18px; }
+.u2-tile--m svg{ width:22px; height:22px; flex:none; color:var(--ink-3); }
+.u2-tile--m.is-on svg{ color:var(--paper); }
+.u2-tile--m .u2-tile__nm{ font-size:16px; }
+
+/* ── 요약 = 화면에서 유일한 회색 면 ── */
 .u2-sum{ background:var(--inset); border-radius:22px; padding:24px 22px 22px; }
 .u2-sum__hd{ font-size:12px; font-weight:800; color:var(--ink-3); letter-spacing:.12em; }
 .u2-sum__what{ margin-top:12px; font-size:18px; font-weight:800; letter-spacing:-.05em; color:var(--ink); line-height:1.35; }
@@ -277,42 +266,41 @@ body{ margin:0; padding:0 0 70px; background:var(--n-950); color:var(--n-000);
   font-variant-numeric:tabular-nums; color:var(--ink-2); }
 .u2-sum__v.is-ph{ color:var(--n-300); font-weight:600; }
 
-/* 쿠폰 — 기본 접힘 */
 .u2-cpToggle{ display:inline-flex; align-items:center; gap:5px; margin-top:12px; padding:0; border:0;
   background:transparent; color:var(--brand-ink); font-family:inherit; font-size:13px; font-weight:700;
   letter-spacing:-.03em; cursor:pointer; }
 .u2-cpToggle svg{ width:14px; height:14px; }
 .u2-cp{ display:flex; gap:8px; margin-top:12px; }
 .u2-field{ flex:1; min-width:0; height:44px; padding:0 15px; border-radius:12px; border:0;
-  background:var(--paper); box-shadow:inset 0 0 0 1.5px var(--n-100); color:var(--ink);
+  background:var(--paper); box-shadow:inset 0 0 0 1.5px var(--rule); color:var(--ink);
   font-family:inherit; font-size:14px; font-weight:600; letter-spacing:-.03em; }
 .u2-field::placeholder{ color:var(--ink-3); font-weight:500; }
-.u2-field:focus{ outline:none; box-shadow:inset 0 0 0 2px var(--brand); }
+.u2-field:focus{ outline:none; box-shadow:inset 0 0 0 2px var(--ink); }
 .u2-field.is-bad{ box-shadow:inset 0 0 0 2px var(--danger); }
 .u2-cp__btn{ height:44px; flex:none; padding:0 16px; border:0; border-radius:12px; background:var(--paper);
-  box-shadow:inset 0 0 0 1.5px var(--n-100); color:var(--ink); font-family:inherit; font-size:14px;
+  box-shadow:inset 0 0 0 1.5px var(--rule); color:var(--ink); font-family:inherit; font-size:14px;
   font-weight:700; letter-spacing:-.035em; cursor:pointer; transition:var(--t-fast); }
-.u2-cp__btn:hover{ box-shadow:inset 0 0 0 1.5px var(--brand); color:var(--brand-ink); }
+.u2-cp__btn:hover{ box-shadow:inset 0 0 0 1.5px var(--ink); }
 .u2-cp__msg{ display:flex; align-items:flex-start; gap:6px; margin-top:9px; font-size:12.5px; font-weight:600; line-height:1.5; }
 .u2-cp__msg.is-bad{ color:var(--danger); } .u2-cp__msg.is-ok{ color:var(--brand-ink); }
 .u2-cp__msg svg{ width:14px; height:14px; flex:none; margin-top:2px; }
 
-/* 총액 */
+/* 총액 — 이 숫자 하나가 「이번에 빠져나가는 돈」 */
 .u2-total{ margin-top:18px; padding-top:18px; border-top:1.5px solid var(--n-200); }
-.u2-total__row{ display:flex; align-items:baseline; justify-content:space-between; gap:14px; }
-.u2-total__k{ font-size:15px; font-weight:800; letter-spacing:-.04em; }
-.u2-total__v{ font-size:32px; font-weight:800; letter-spacing:-.065em; color:var(--ink);
-  font-variant-numeric:tabular-nums; line-height:1; }
-.u2-total__save{ display:flex; justify-content:flex-end; margin-top:8px; font-size:13px;
-  font-weight:800; color:var(--brand-ink); font-variant-numeric:tabular-nums; letter-spacing:-.03em; }
+.u2-total__k{ font-size:13.5px; font-weight:800; color:var(--ink-3); letter-spacing:-.03em; }
+.u2-total__v{ display:block; margin-top:6px; font-size:34px; font-weight:800; letter-spacing:-.065em;
+  color:var(--ink); font-variant-numeric:tabular-nums; line-height:1; }
+.u2-total__sub{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-top:10px;
+  font-size:12.5px; font-weight:700; font-variant-numeric:tabular-nums; letter-spacing:-.03em; min-height:16px; }
+.u2-total__mo{ color:var(--ink-3); }
+.u2-total__save{ color:var(--brand-ink); }
 
-/* 동의 · CTA */
 .u2-agree{ display:flex; align-items:center; gap:11px; margin:18px 0 14px; cursor:pointer; user-select:none; }
 .u2-agree input{ position:absolute; opacity:0; width:0; height:0; }
 .u2-agree__box{ width:22px; height:22px; border-radius:7px; flex:none; display:grid; place-items:center;
   box-shadow:inset 0 0 0 1.8px var(--n-200); background:var(--paper); transition:var(--t-fast); }
-.u2-agree__box svg{ width:13px; height:13px; color:var(--n-000); opacity:0; }
-.u2-agree input:checked + .u2-agree__box{ background:var(--brand); box-shadow:inset 0 0 0 1.8px var(--brand); }
+.u2-agree__box svg{ width:13px; height:13px; color:var(--paper); opacity:0; }
+.u2-agree input:checked + .u2-agree__box{ background:var(--ink); box-shadow:inset 0 0 0 1.8px var(--ink); }
 .u2-agree input:checked + .u2-agree__box svg{ opacity:1; }
 .u2-agree__t{ flex:1; font-size:13.5px; font-weight:600; color:var(--ink-2); letter-spacing:-.03em; }
 .u2-agree.is-bad .u2-agree__box{ box-shadow:inset 0 0 0 2px var(--danger); }
@@ -328,9 +316,10 @@ body{ margin:0; padding:0 0 70px; background:var(--n-950); color:var(--n-000);
 <div class="pg">
   <h1 class="pg__ttl">④ 유틸 재출발 — 흰 바탕 확정안</h1>
   <p class="pg__sub">
-    <b>카드도 그림자도 없다.</b> 종이는 순백(n-000), 구분은 헤어라인 하나, 위계는 글자 크기와 여백이 전부 담당.<br>
-    색은 적게 쓰되 나타날 땐 진하게 — <b>050 틴트를 쓰지 않고</b> 카테고리 점·N 배지·CTA는 solid.
-    <b>회색 면은 결제 주문 요약 하나뿐</b>이라, 돈이 걸린 자리로 시선이 저절로 간다.
+    면은 <b>쿨 램프(n-000/050/100) 하나</b>로만 쌓고, 파랑은 점·선·글자로만 쓴다.
+    <b>「선택 = 먹색」</b>이 필터·페이지네이션·과목·기간·결제수단에 똑같이 적용된다.<br>
+    목록은 <b>테두리 안에 담긴 시트</b>, 선택지는 <b>나란히 비교되는 타일</b> — 떠 있는 블록과 갭을 쓰지 않는다.
+    난색은 CTA 하나, 빨강은 오류에만.
   </p>
 </div>
 
@@ -375,16 +364,12 @@ var I = {
   down:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></svg>',
   check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg>',
   bang:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5h.01"/></svg>',
+  plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
   empty:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M4 9v6h3l7 4V5L7 9H4z"/><path d="M18 8a5 5 0 0 1 0 8"/></svg>',
   chart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1"/><path d="M8 14v3M12 10v7M16 12v5"/></svg>',
   cloud:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4 4 0 0 1-.4-8 5.5 5.5 0 0 1 10.6 1A3.5 3.5 0 0 1 17 18z"/><path d="M12 10v4M12 16.5h.01"/></svg>',
   card:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2.5"/><path d="M3 10.5h18"/></svg>',
-  bank:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h16M4 10l8-6 8 6M6.5 10v8M10 10v8M14 10v8M17.5 10v8M3 21h18"/></svg>',
-  cal:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="16" rx="2.5"/><path d="M8 3v4M16 3v4M4 10h16"/></svg>',
-  info:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.8h.01"/></svg>',
-  arrowUp:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V5M6 11l6-6 6 6"/></svg>',
-  plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
-  shield:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.2-2.9 7.6-7 9-4.1-1.4-7-4.8-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>'
+  bank:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h16M4 10l8-6 8 6M6.5 10v8M10 10v8M14 10v8M17.5 10v8M3 21h18"/></svg>'
 };
 
 var NOTICE = [
@@ -414,14 +399,6 @@ var DOC = { cat:'공지', title:'시험 대비(유형 도전) 기능 오픈 안�
  +'<ul><li>시험대비 홈에서 학년·학기·교재 기준으로 문제 유형을 고를 수 있어요.</li><li>성취도 색상으로 유형을 구분해 필요한 수준의 문제를 선택할 수 있어요.</li><li>중요 유형만 모아 집중 학습할 수 있어요.</li></ul>' };
 
 var SUBJ = { math:'리딩수학', science:'리딩과학', both:'수학+과학 통합' };
-function pad(n){ return (n<10?'0':'')+n; }
-function fmt(d){ return d.getFullYear()+'.'+pad(d.getMonth()+1)+'.'+pad(d.getDate()); }
-function today(){ return fmt(new Date()); }
-function endDate(daysLabel){
-  var n = parseInt(daysLabel,10);
-  var d = new Date(); d.setDate(d.getDate()+n);
-  return fmt(d);
-}
 var BEN = {
   math:['초3 ~ 중1까지 개념·유형·서술형 균형 잡힌 <b>리딩수학 학습</b> 진행','복습과 정리를 위한 매주 <b>주간 학습 기록과 오답노트</b> 제공','매월 학습 현황을 확인하는 <b>월간보고서</b> 제공','사고력 기반 <b>수리 문해력 종합진단평가</b> 제공','월 1회 학습 매니저 상담으로 <b>성취도 및 진도 관리</b>'],
   science:['초3 ~ 중1까지 개념·탐구·서술형 <b>리딩과학 학습</b> 진행','실생활 현상 기반의 <b>과학 문해력</b> 훈련 제공','매주 <b>주간 학습 기록과 오답노트</b> 제공','매월 <b>월간보고서</b> 및 종합진단평가 제공','월 1회 학습 매니저 상담으로 <b>성취도 및 진도 관리</b>'],
@@ -434,6 +411,10 @@ var PLANS = {
   both:[ mk(1,'1개월','30일',119000,119000), mk(3,'3개월','90일',357000,330000), mk(6,'6개월','180일',714000,606000), mk(12,'12개월','365일',1428000,996000) ]
 };
 function won(n){ return n.toLocaleString('ko-KR')+'원'; }
+function pad(n){ return (n<10?'0':'')+n; }
+function fmt(d){ return d.getFullYear()+'.'+pad(d.getMonth()+1)+'.'+pad(d.getDate()); }
+function today(){ return fmt(new Date()); }
+function endDate(daysLabel){ var n=parseInt(daysLabel,10); var d=new Date(); d.setDate(d.getDate()+n); return fmt(d); }
 
 var STATES = {
   notice:[['base','기본'],['loading','로딩'],['empty','빈 목록'],['nofilter','필터 0건'],['error','불러오기 실패'],['long','긴 제목'],['many','많은 건수']],
@@ -442,49 +423,49 @@ var STATES = {
   pay:[['base','기본 (미선택)'],['picked','기간 선택함'],['couponbad','쿠폰 실패'],['couponok','쿠폰 적용'],['noagree','약관 미동의'],['paying','결제 진행중']]
 };
 var NOTES = {
-  notice:'<b>공지 목록.</b> 번호 열을 뺀 자리에 제목이 왼쪽 끝으로 붙었다. 카테고리는 <b>알약이 아니라 점 + 색 글자</b> — 흰 바탕에서 틴트 알약을 쓰면 그 자리만 회색으로 뜬다. 정렬은 등록일 최신순.',
-  detail:'<b>공지 상세.</b> 제목 33px. 본문은 16.5px / 행간 1.9로 읽기에 맞췄다. 첨부는 상자 대신 <b>선 위의 한 줄</b>.',
-  report:'<b>월간보고서.</b> 「학습 기간」·「등록일」 둘 다 유지. 「새 창에서 열기」는 상시 표시(태블릿에는 호버가 없다).',
-  pay:'<b>이용권 결제 — 설명 문장을 전부 걷어냈다.</b> 단계 머리는 번호+명사 하나, 선택 행은 이름과 숫자뿐. 값어치는 <b>「정가(취소선) → 판매가」 문법 하나</b>로 통일해 과목·기간이 같은 방식으로 읽힌다(통합권의 이득도 문장이 아니라 <s>97,000원</s>83,000원). 할인은 <b>−29%</b> 숫자만, 절약액도 <b>−70,000원</b>. 안내·안심 문구는 삭제하고 법적 고지만 최소 2줄로 남겼다.'
+  notice:'<b>공지 목록.</b> 떠 있는 블록을 없애고 <b>테두리 안에 담긴 시트</b>로 바꿨다 — 갭도 맞닿는 모서리도 생기지 않는다. 호버는 시트 안에서 꽉 찬 면으로 칠해지고 라운드는 컨테이너가 잘라 준다. 카테고리는 공지=무채 / 이벤트=파랑.',
+  detail:'<b>공지 상세.</b> 문서라서 시트에 담지 않는다 — 제목 33px, 본문 16.5px / 행간 1.9. 첨부만 테두리 한 겹.',
+  report:'<b>월간보고서.</b> 공지와 같은 시트. 학습 기간·등록일 둘 다 유지, 「새 창에서 열기」는 상시 표시.',
+  pay:'<b>이용권 결제.</b> <b>과목은 선택만</b>(가격 없음) — 세그먼트. 가격은 기간 타일에서 <b>월 환산가(큰 숫자) + 총 결제금액</b>을 함께 적어, 부담 적은 월 단위로 비교하되 실제 청구액을 놓치지 않게 했다. 오른쪽 요약의 히어로는 <b>총 결제금액</b> 하나이고 월 환산은 그 밑 보조로 붙는다. 선택은 전부 <b>먹색 칠</b> — 필터·페이지네이션과 같은 규칙.'
 };
 
 var S='notice', ST='base';
 var pay = { subj:'math', plan:null, method:'card', cpOpen:false };
 var screenEl = document.getElementById('screen');
 
-function rise(i){ return ' class="u2-rise" style="animation-delay:'+(40+i*32)+'ms"'; }
-
-function rowNotice(d,i){
+/* ---------- 목록 ---------- */
+function rowNotice(d){
   var ev = d.cat==='이벤트' ? ' is-event' : '';
-  return '<button class="u2-row u2-rise" style="animation-delay:'+(60+i*34)+'ms">'
+  return '<button class="u2-row">'
     +'<span class="u2-row__main">'
       +'<span class="u2-row__ttl">'+d.title+(d.isNew?'<span class="u2-new">N</span>':'')+'</span>'
       +'<span class="u2-row__meta"><span class="u2-cat'+ev+'">'+d.cat+'</span><i></i>'+d.date+'</span>'
     +'</span>'+I.chev+'</button>';
 }
-function rowReport(d,i){
+function rowReport(d){
   var y=d.term.slice(0,4), m=parseInt(d.term.slice(5,7),10);
-  return '<button class="u2-row u2-rise" style="animation-delay:'+(60+i*34)+'ms">'
+  return '<button class="u2-row">'
     +'<span class="u2-row__main">'
       +'<span class="u2-row__ttl">'+y+'년 '+m+'월 학습 리포트'+(d.isNew?'<span class="u2-new">N</span>':'')+'</span>'
       +'<span class="u2-row__meta">학습 기간 '+d.term+'<i></i>등록 '+d.reg+'</span>'
     +'</span><span class="u2-row__ext">'+I.ext+'새 창에서 열기</span></button>';
 }
+function sheet(inner){ return '<div class="u2-sheet u2-rise" style="animation-delay:80ms">'+inner+'</div>'; }
 function skeleton(n){
   var h=''; for(var i=0;i<n;i++){
-    h+='<div class="u2-skrow"><div style="flex:1">'
-      +'<div class="u2-sk" style="height:16px;width:'+(50+(i*11)%36)+'%"></div>'
-      +'<div class="u2-sk" style="height:11px;width:'+(22+(i*7)%16)+'%;margin-top:11px"></div></div></div>';
+    h+='<div class="u2-skrow">'
+      +'<div class="u2-sk" style="height:16px;width:'+(46+(i*11)%34)+'%"></div>'
+      +'<div class="u2-sk" style="height:11px;width:'+(20+(i*7)%14)+'%;margin-top:11px"></div></div>';
   }
-  return '<div class="u2-list">'+h+'</div>';
+  return sheet(h);
 }
 function stateBox(ico,t,d,btn,warn){
-  return '<div class="u2-state u2-rise"><div class="u2-state__ico'+(warn?' is-warn':'')+'">'+ico+'</div>'
+  return sheet('<div class="u2-state"><div class="u2-state__ico'+(warn?' is-warn':'')+'">'+ico+'</div>'
     +'<div class="u2-state__t">'+t+'</div><div class="u2-state__d">'+d+'</div>'
-    +(btn?'<button class="u2-btn">'+btn+'</button>':'')+'</div>';
+    +(btn?'<button class="u2-btn">'+btn+'</button>':'')+'</div>');
 }
 function pager(n,cur){
-  var h='<div class="u2-pager u2-rise" style="animation-delay:340ms"><button disabled>'+I.back+'</button>';
+  var h='<div class="u2-pager u2-rise" style="animation-delay:200ms"><button disabled>'+I.back+'</button>';
   for(var i=1;i<=n;i++) h+='<button class="'+(i===cur?'is-on':'')+'">'+i+'</button>';
   return h+'<button>'+I.next+'</button></div>';
 }
@@ -496,10 +477,10 @@ function screenNotice(){
   if(ST==='loading') body = skeleton(6);
   else if(ST==='empty') body = stateBox(I.empty,'아직 등록된 공지가 없어요.','새 소식이 올라오면 여기에서 바로 알려 드릴게요.');
   else if(ST==='nofilter') body = stateBox(I.empty,'이벤트 글이 없어요.','다른 분류를 골라 보세요.','전체 보기');
-  else if(ST==='error') body = stateBox(I.cloud,'공지를 불러오지 못했어요.','잠시 후 다시 시도해 주세요. 계속 안 되면 도움말로 문의해 주세요.','다시 시도',true);
+  else if(ST==='error') body = stateBox(I.cloud,'공지를 불러오지 못했어요.','잠시 후 다시 시도해 주세요.','다시 시도',true);
   else {
     var arr = ST==='long' ? [LONG].concat(all.slice(0,5)) : (ST==='many' ? all : all.slice(0,6));
-    body = '<div class="u2-list">'+arr.map(rowNotice).join('')+'</div>';
+    body = sheet(arr.map(rowNotice).join(''));
     pg = ST==='many' ? pager(7,1) : pager(2,1);
   }
   var seg = '<div class="u2-seg">'
@@ -511,7 +492,6 @@ function screenNotice(){
     +'<div class="u2-head__sub">리딩수학과학의 새 소식과 서비스 안내를 확인하세요.</div></div>'
     +seg+'</div>'+body+pg+'</div>';
 }
-
 function screenReport(){
   var body, pg='';
   if(ST==='loading') body = skeleton(5);
@@ -519,7 +499,7 @@ function screenReport(){
   else if(ST==='error') body = stateBox(I.cloud,'리포트를 불러오지 못했어요.','잠시 후 다시 시도해 주세요.','다시 시도',true);
   else {
     var arr = ST==='many' ? REPORT.concat(REPORT).concat(REPORT.slice(0,2)) : REPORT;
-    body = '<div class="u2-list">'+arr.map(rowReport).join('')+'</div>';
+    body = sheet(arr.map(rowReport).join(''));
     if(ST==='many') pg = pager(4,1);
   }
   return '<div class="u2-wrap"><div class="u2-head u2-rise"><div class="u2-head__l">'
@@ -527,7 +507,6 @@ function screenReport(){
     +'<div class="u2-head__sub">매달 학습 현황과 성취를 정리한 리포트예요. 리포트는 새 창에서 열립니다.</div></div></div>'
     +body+pg+'</div>';
 }
-
 function screenDetail(){
   var ev = DOC.cat==='이벤트'?' is-event':'';
   var file = (ST==='nofile') ? '' :
@@ -546,6 +525,7 @@ function screenDetail(){
     +'<button class="u2-btn u2-btn--ghost">다음 글'+I.next+'</button></div></div>';
 }
 
+/* ---------- 결제 ---------- */
 function screenPay(){
   var plans = PLANS[pay.subj];
   var forced = (ST==='picked'||ST==='couponbad'||ST==='couponok'||ST==='noagree'||ST==='paying');
@@ -554,42 +534,26 @@ function screenPay(){
   var coupon = (ST==='couponok') ? 10000 : 0;
   var agreed = (ST==='couponok'||ST==='paying');
   var cpOpen = pay.cpOpen || ST==='couponbad' || ST==='couponok';
-  var basis = picked===null ? 3 : picked;   // 통합 비교 기준 = 고른 기간(미선택이면 12개월)
 
-  /* ① 과목 — 이름 + 월 가격. 통합의 이득은 문장이 아니라
-        「따로 살 때 합계(취소선) → 통합가」로 보여 준다. 기간 행과 같은 문법. */
-  var subjRows = Object.keys(SUBJ).map(function(k){
-    var mo = PLANS[k][basis].mo;
-    var apart = PLANS.math[basis].mo + PLANS.science[basis].mo;
-    // 통합은 「따로 살 때 합계(취소선) → 통합가」를 같은 줄에. 둘 다 월 단위라 설명이 필요 없다
-    var cut = (k==='both') ? '<s>'+won(apart)+'</s>' : '';
-    return '<button class="u2-opt'+(pay.subj===k?' is-sel':'')+'" data-subj="'+k+'">'
-      +'<span class="u2-radio"></span>'
-      +'<span class="u2-opt__main"><span class="u2-opt__nm">'+SUBJ[k]+'</span></span>'
-      +'<span class="u2-opt__right"><span class="u2-mo">'+cut+won(mo)+'<small>/월</small></span></span></button>';
-  }).join('');
+  var subjBtns = Object.keys(SUBJ).map(function(k){
+    return '<button class="'+(pay.subj===k?'is-on':'')+'" data-subj="'+k+'">'+SUBJ[k]+'</button>'; }).join('');
   var ben = BEN[pay.subj].map(function(t){ return '<li>'+I.check+'<span>'+t+'</span></li>'; }).join('');
 
-  /* ② 기간 — 월 환산가가 주, 정가→판매가가 보조. 할인은 숫자만. */
-  var planHtml = plans.map(function(pl,i){
-    return '<button class="u2-opt'+(picked===i?' is-sel':'')+'" data-plan="'+i+'">'
-      +'<span class="u2-radio"></span>'
-      +'<span class="u2-opt__main"><span class="u2-opt__nm">'+pl.nm+'</span>'
-      +'<span class="u2-opt__days">'+pl.days+'</span>'
-      +(pl.off>0?'<span class="u2-off">−'+pl.off+'%</span>':'')+'</span>'
-      +'<span class="u2-opt__right"><span class="u2-mo">'+won(pl.mo)+'<small>/월</small></span>'
-      +'<span class="u2-sumline">'+(pl.off>0?'<s>'+won(pl.list)+'</s>':'')+won(pl.price)+'</span>'
-      +'</span></button>';
+  /* 기간 타일 — 월 환산가가 큰 숫자, 총 결제금액을 그 아래 함께 적는다 */
+  var planTiles = plans.map(function(pl,i){
+    return '<button class="u2-tile'+(picked===i?' is-on':'')+'" data-plan="'+i+'">'
+      +'<span class="u2-tile__nm">'+pl.nm+'</span>'
+      +(pl.off>0?'<span class="u2-tile__off">−'+pl.off+'%</span>':'')
+      +'<span class="u2-tile__mo">'+won(pl.mo)+'<small>/월</small></span>'
+      +'<span class="u2-tile__tot">총 '+won(pl.price)+' · '+pl.days+'</span></button>';
   }).join('');
 
-  /* ③ 결제 방법 — 이름과 아이콘뿐 */
-  var methodHtml =
-     '<button class="u2-opt'+(pay.method==='card'?' is-sel':'')+'" data-m="card"><span class="u2-radio"></span>'
-    +'<span class="u2-opt__main"><span class="u2-opt__nm">신용카드</span></span>'+I.card+'</button>'
-    +'<button class="u2-opt'+(pay.method==='vbank'?' is-sel':'')+'" data-m="vbank"><span class="u2-radio"></span>'
-    +'<span class="u2-opt__main"><span class="u2-opt__nm">가상계좌</span></span>'+I.bank+'</button>';
+  var methodTiles =
+     '<button class="u2-tile u2-tile--m'+(pay.method==='card'?' is-on':'')+'" data-m="card">'+I.card
+    +'<span class="u2-tile__nm">신용카드</span></button>'
+    +'<button class="u2-tile u2-tile--m'+(pay.method==='vbank'?' is-on':'')+'" data-m="vbank">'+I.bank
+    +'<span class="u2-tile__nm">가상계좌</span></button>';
 
-  /* 금액 */
   var planOff = p ? (p.list - p.price) : 0;
   var total = p ? Math.max(0, p.price - coupon) : 0;
   var saved = planOff + coupon;
@@ -608,21 +572,17 @@ function screenPay(){
 
   return '<div class="u2-wrap u2-wrap--wide">'
     +'<div class="u2-head u2-rise"><div class="u2-head__l"><div class="u2-head__t">이용권 결제</div></div></div>'
-
     +'<div class="u2-cols"><div class="u2-rise" style="animation-delay:70ms">'
 
-      +'<div class="u2-step"><span class="u2-step__n">01</span><span class="u2-step__t">과목</span>'
-      +'<span class="u2-step__line"></span></div>'
-      +'<div id="subjList">'+subjRows+'</div>'
+      +'<div class="u2-step"><span class="u2-step__n">01</span><span class="u2-step__t">과목</span><span class="u2-step__line"></span></div>'
+      +'<div class="u2-seg3" id="subjList">'+subjBtns+'</div>'
       +'<ul class="u2-ben">'+ben+'</ul>'
 
-      +'<div class="u2-step"><span class="u2-step__n">02</span><span class="u2-step__t">이용 기간</span>'
-      +'<span class="u2-step__line"></span></div>'
-      +'<div id="planList">'+planHtml+'</div>'
+      +'<div class="u2-step"><span class="u2-step__n">02</span><span class="u2-step__t">이용 기간</span><span class="u2-step__line"></span></div>'
+      +'<div class="u2-tiles u2-tiles--4" id="planList">'+planTiles+'</div>'
 
-      +'<div class="u2-step"><span class="u2-step__n">03</span><span class="u2-step__t">결제 방법</span>'
-      +'<span class="u2-step__line"></span></div>'
-      +'<div id="methodList">'+methodHtml+'</div>'
+      +'<div class="u2-step"><span class="u2-step__n">03</span><span class="u2-step__t">결제 방법</span><span class="u2-step__line"></span></div>'
+      +'<div class="u2-tiles u2-tiles--2" id="methodList">'+methodTiles+'</div>'
 
     +'</div>'
 
@@ -637,9 +597,10 @@ function screenPay(){
         +'<div class="u2-sum__r"><span class="u2-sum__k">결제 방법</span><span class="u2-sum__v">'+(pay.method==='card'?'신용카드':'가상계좌')+'</span></div>'
       +'</div>'
       +cpBlock
-      +'<div class="u2-total"><div class="u2-total__row"><span class="u2-total__k">총 결제금액</span>'
-      +'<span class="u2-total__v">'+won(total)+'</span></div>'
-      +(saved>0?'<div class="u2-total__save">−'+won(saved)+'</div>':'')+'</div>'
+      +'<div class="u2-total"><span class="u2-total__k">총 결제금액</span>'
+      +'<span class="u2-total__v">'+won(total)+'</span>'
+      +'<div class="u2-total__sub"><span class="u2-total__mo">'+(p?'월 '+won(p.mo)+' × '+p.nm:'')+'</span>'
+      +(saved>0?'<span class="u2-total__save">−'+won(saved)+'</span>':'')+'</div></div>'
       +'<label class="u2-agree'+(ST==='noagree'?' is-bad':'')+'"><input type="checkbox"'+(agreed?' checked':'')+'>'
       +'<span class="u2-agree__box">'+I.check+'</span>'
       +'<span class="u2-agree__t">결제·환불 규정 동의</span>'
