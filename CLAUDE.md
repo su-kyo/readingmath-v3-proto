@@ -125,7 +125,9 @@ Phase 6에서 키패드가 한 벌(`.keypad__key`)로 합쳐져 이 파일도 �
 **도구는 남긴다** — 반복해서 다시 쓰는 것.
 `palette-gen.py`(팔레트 생성기) · `cta-check.html`(CTA 32배경 판정) ·
 `palette-preview.html`(팔레트 눈 검증) · `home-contact.html`(홈 32화면 한눈보기) ·
-`holo-check.html`(홀로그램 톤 생존 검사) · `holo-bench.html`(홀로그램 성능 자동 측정)
+`holo-check.html`(홀로그램 톤 생존 검사) · `holo-bench.html`(홀로그램 성능 자동 측정) ·
+`planet-ref.py`(캐릭터 생성용 행성 자료 뽑기) · `char-on-bg.py`(캐릭터를 홈 배경에 올려
+대비 판정 — 몸 대비·자체 대비를 숫자로 찍는다)
 
 **시안은 결론이 나면 지운다.** 「어떤 안으로 갈까」를 비교하려고 만든 페이지는
 고르는 순간 역할이 끝난다. **남길 것은 파일이 아니라 판단**이고, 그건 옵시디언
