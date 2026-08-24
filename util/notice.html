@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="styles/tokens.css?v=25" />
   <link rel="stylesheet" href="styles/base.css?v=7" />
   <link rel="stylesheet" href="styles/gnb.css?v=9" />
-  <link rel="stylesheet" href="styles/util.css?v=9" />
+  <link rel="stylesheet" href="styles/util.css?v=10" />
   <style>
     *{ box-sizing:border-box; margin:0; padding:0; }
     html,body{ height:100%; }
@@ -28,85 +28,142 @@
 
     <main class="u-main">
       <div class="u-wrap">
-        <div class="u-head">
+        <div class="u-head u-rise">
           <div class="u-head__l">
-            <span class="u-head__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 9v6h3l7 4V5L7 9H4zM18 8a5 5 0 0 1 0 8"/></svg></span>
-            <div>
-              <div class="u-head__t">공지사항</div>
-              <div class="u-head__sub">리딩수학과학의 새 소식과 서비스 안내를 확인하세요.</div>
-            </div>
+            <div class="u-head__t">공지사항</div>
+            <div class="u-head__sub">리딩수학과학의 새 소식과 서비스 안내를 확인하세요.</div>
           </div>
-          <div class="u-head__act">
-            <div class="u-seg" id="filter">
-              <button class="is-on" data-f="all">전체</button>
-              <button data-f="공지">공지</button>
-              <button data-f="이벤트">이벤트</button>
-            </div>
+          <div class="u-seg" id="filter">
+            <button class="is-on" data-f="all">전체<span class="u-seg__n" data-c="all">0</span></button>
+            <button data-f="공지">공지<span class="u-seg__n" data-c="공지">0</span></button>
+            <button data-f="이벤트">이벤트<span class="u-seg__n" data-c="이벤트">0</span></button>
           </div>
         </div>
 
-        <div class="u-card">
-          <div class="u-tablewrap">
-            <table class="u-table">
-              <thead><tr>
-                <th class="col-no is-center">번호</th>
-                <th>제목</th>
-                <th class="col-date is-right">등록일</th>
-              </tr></thead>
-              <tbody id="rows"></tbody>
-            </table>
-          </div>
-        </div>
-        <div class="u-pager" id="pager"></div>
+        <div id="list"></div>
+        <div id="pager"></div>
       </div>
     </main>
   </div>
 
-  <div class="u-toast" id="toast"></div>
-
   <script>
   (function(){
+    /* 데이터는 원본 그대로. 「번호(id)」는 남기되 화면에는 노출하지 않는다
+       — 상세 이동 키로만 쓴다. 정렬은 등록일 최신순. */
     var DATA = [
-      { id:8, cat:'공지', title:'시험 대비(유형 도전) 기능 오픈 안내', date:'2026-04-15', isNew:true },
-      { id:7, cat:'이벤트', title:'[공지] 2026 학습 후기 이벤트 결과 발표 🎉 축하드립니다!', date:'2026-05-18', isNew:true },
-      { id:6, cat:'공지', title:'자유 모드 · 계통별 학습 업데이트 안내', date:'2026-03-30' },
-      { id:5, cat:'공지', title:'6월 정기 점검 안내 (6/12 새벽 2시~4시)', date:'2026-06-05' },
-      { id:4, cat:'이벤트', title:'갓생기록상 · 뇌근육 벌크업상 응모 안내', date:'2026-05-02' },
-      { id:3, cat:'공지', title:'월간보고서 리포트 개편 안내', date:'2026-04-01' },
-      { id:2, cat:'공지', title:'개인정보 처리방침 개정 안내', date:'2026-02-20' },
-      { id:1, cat:'이벤트', title:'신규 가입 웰컴 이벤트', date:'2026-02-01' }
-    ];
-    var CATCLASS = { '공지':'u-tag--blue', '이벤트':'u-tag--amber' };
-    var filter='all', page=1, PER=6;
+      { id:8, cat:'공지', title:'시험 대비(유형 도전) 기능 오픈 안내', date:'2026.04.15', isNew:true },
+      { id:7, cat:'이벤트', title:'[공지] 2026 학습 후기 이벤트 결과 발표 🎉 축하드립니다!', date:'2026.05.18', isNew:true },
+      { id:6, cat:'공지', title:'자유 모드 · 계통별 학습 업데이트 안내', date:'2026.03.30' },
+      { id:5, cat:'공지', title:'6월 정기 점검 안내 (6/12 새벽 2시~4시)', date:'2026.06.05' },
+      { id:4, cat:'이벤트', title:'갓생기록상 · 뇌근육 벌크업상 응모 안내', date:'2026.05.02' },
+      { id:3, cat:'공지', title:'월간보고서 리포트 개편 안내', date:'2026.04.01' },
+      { id:2, cat:'공지', title:'개인정보 처리방침 개정 안내', date:'2026.02.20' },
+      { id:1, cat:'이벤트', title:'신규 가입 웰컴 이벤트', date:'2026.02.01' }
+    ].sort(function(a,b){ return a.date < b.date ? 1 : -1; });
 
-    function list(){ return filter==='all'?DATA:DATA.filter(function(d){return d.cat===filter;}); }
+    var CHEV = '<svg class="u-row__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>';
+    var PREV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>';
+    var NEXT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>';
+    var EMPTY = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M4 9v6h3l7 4V5L7 9H4z"/><path d="M18 8a5 5 0 0 1 0 8"/></svg>';
+
+    var CLOUD='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4 4 0 0 1-.4-8 5.5 5.5 0 0 1 10.6 1A3.5 3.5 0 0 1 17 18z"/><path d="M12 10v4M12 16.5h.01"/></svg>';
+
+    var filter='all', page=1, PER=6;
+    var listEl=document.getElementById('list'), pagerEl=document.getElementById('pager');
+
+    /* 검수용 상태 파라미터 — ?state=loading|empty|error (배포본에서는 쓰이지 않는다).
+       실제 서비스에서는 통신 상태가 이 자리를 채운다. */
+    var FORCE=new URLSearchParams(location.search).get('state')||'';
+    function skeleton(n){
+      var h=''; for(var i=0;i<n;i++){
+        h+='<div class="u-skrow">'
+          +'<div class="u-sk" style="height:16px;width:'+(46+(i*11)%34)+'%"></div>'
+          +'<div class="u-sk" style="height:11px;width:'+(20+(i*7)%14)+'%;margin-top:11px"></div></div>';
+      }
+      return '<div class="u-sheet u-rise">'+h+'</div>';
+    }
+    function stateSheet(ico,t,d,btnId,btnTxt,warn){
+      return '<div class="u-sheet u-rise"><div class="u-state">'
+        +'<div class="u-state__ico'+(warn?' is-warn':'')+'">'+ico+'</div>'
+        +'<div class="u-state__t">'+t+'</div><div class="u-state__d">'+d+'</div>'
+        +(btnTxt?'<button class="u-btn" id="'+btnId+'">'+btnTxt+'</button>':'')+'</div></div>';
+    }
+
+    function list(){ return filter==='all' ? DATA : DATA.filter(function(d){ return d.cat===filter; }); }
+
     function render(){
-      var arr=list(); var start=(page-1)*PER; var slice=arr.slice(start,start+PER);
-      var tb=document.getElementById('rows'); tb.innerHTML='';
-      if(!slice.length){ tb.innerHTML='<tr><td colspan="3"><div class="u-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 9v6h3l7 4V5L7 9H4z" stroke-linejoin="round"/></svg><div class="u-empty__t">등록된 게시글이 없어요.</div></div></td></tr>'; renderPager(0); return; }
-      slice.forEach(function(d){
-        var tr=document.createElement('tr');
-        tr.innerHTML='<td class="col-no is-center">'+d.id+'</td>'
-          +'<td><span class="u-tag '+(CATCLASS[d.cat]||'')+'" style="margin-right:11px">'+d.cat+'</span>'
-          +'<span class="u-ttl">'+d.title+'</span>'+(d.isNew?'<span class="u-new">N</span>':'')+'</td>'
-          +'<td class="col-date is-right">'+d.date+'</td>';
-        tr.addEventListener('click', function(){ location.href='util/notice-detail.html?id='+d.id; });
-        tb.appendChild(tr);
-      });
+      if(FORCE==='loading'){ listEl.innerHTML=skeleton(6); pagerEl.innerHTML=''; return; }
+      if(FORCE==='error'){
+        listEl.innerHTML=stateSheet(CLOUD,'공지를 불러오지 못했어요.','잠시 후 다시 시도해 주세요.','retry','다시 시도',true);
+        pagerEl.innerHTML='';
+        document.getElementById('retry').addEventListener('click', function(){ FORCE=''; render(); });
+        return;
+      }
+      var arr = FORCE==='empty' ? [] : list();
+      var start=(page-1)*PER, slice=arr.slice(start,start+PER);
+      if(!slice.length){
+        var isAll = (filter==='all' || FORCE==='empty');
+        listEl.innerHTML = stateSheet(EMPTY,
+          isAll?'아직 등록된 공지가 없어요.':filter+' 글이 없어요.',
+          isAll?'새 소식이 올라오면 여기에서 바로 알려 드릴게요.':'다른 분류를 골라 보세요.',
+          'resetFilter', isAll?'':'전체 보기');
+        pagerEl.innerHTML='';
+        var rb=document.getElementById('resetFilter');
+        if(rb) rb.addEventListener('click', function(){ setFilter('all'); });
+        return;
+      }
+      listEl.innerHTML = '<div class="u-sheet u-rise">'+slice.map(function(d){
+        var ev = d.cat==='이벤트' ? ' is-event' : '';
+        return '<button class="u-row" data-id="'+d.id+'">'
+          +'<span class="u-row__main">'
+            +'<span class="u-row__ttl">'+d.title+(d.isNew?'<span class="u-new">N</span>':'')+'</span>'
+            +'<span class="u-row__meta"><span class="u-cat'+ev+'">'+d.cat+'</span><i></i>'+d.date+'</span>'
+          +'</span>'+CHEV+'</button>';
+      }).join('')+'</div>';
       renderPager(arr.length);
     }
-    function renderPager(total){
-      var pages=Math.max(1,Math.ceil(total/PER)); var p=document.getElementById('pager'); p.innerHTML='';
-      var prev=btn('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>', function(){ if(page>1){page--;render();} }); prev.disabled=page===1; p.appendChild(prev);
-      for(var i=1;i<=pages;i++){ (function(i){ var b=btn(String(i), function(){ page=i; render(); }); if(i===page) b.className+=' is-on'; p.appendChild(b); })(i); }
-      var next=btn('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>', function(){ if(page<pages){page++;render();} }); next.disabled=page===pages; p.appendChild(next);
-    }
-    function btn(html,fn){ var b=document.createElement('button'); b.innerHTML=html; b.addEventListener('click',fn); return b; }
 
-    document.getElementById('filter').addEventListener('click', function(e){
-      var b=e.target.closest('button'); if(!b) return; filter=b.dataset.f; page=1;
-      Array.prototype.forEach.call(this.children, function(c){ c.classList.toggle('is-on', c===b); }); render();
+    function renderPager(total){
+      var pages=Math.max(1,Math.ceil(total/PER));
+      if(pages<=1){ pagerEl.innerHTML=''; return; }
+      var h='<div class="u-pager"><button data-go="prev"'+(page===1?' disabled':'')+'>'+PREV+'</button>';
+      for(var i=1;i<=pages;i++) h+='<button data-go="'+i+'" class="'+(i===page?'is-on':'')+'">'+i+'</button>';
+      h+='<button data-go="next"'+(page===pages?' disabled':'')+'>'+NEXT+'</button></div>';
+      pagerEl.innerHTML=h;
+      pagerEl.__pages=pages;
+    }
+
+    function setFilter(f){
+      filter=f; page=1;
+      Array.prototype.forEach.call(document.getElementById('filter').children, function(c){
+        c.classList.toggle('is-on', c.dataset.f===f);
+      });
+      render();
+    }
+
+    listEl.addEventListener('click', function(e){
+      var r=e.target.closest('.u-row'); if(!r) return;
+      location.href='util/notice-detail.html?id='+r.dataset.id;
     });
+    pagerEl.addEventListener('click', function(e){
+      var b=e.target.closest('button'); if(!b||b.disabled) return;
+      var g=b.dataset.go, pages=pagerEl.__pages||1;
+      if(g==='prev') page=Math.max(1,page-1);
+      else if(g==='next') page=Math.min(pages,page+1);
+      else page=parseInt(g,10);
+      render(); document.querySelector('.u-main').scrollTop=0;
+    });
+    document.getElementById('filter').addEventListener('click', function(e){
+      var b=e.target.closest('button'); if(!b) return; setFilter(b.dataset.f);
+    });
+
+    /* 필터 알약의 건수 — 목록 길이의 요약이라 새 데이터가 아니다 */
+    var counts={ all:DATA.length, '공지':0, '이벤트':0 };
+    DATA.forEach(function(d){ counts[d.cat]++; });
+    Array.prototype.forEach.call(document.querySelectorAll('[data-c]'), function(el){
+      el.textContent = counts[el.dataset.c];
+    });
+
     render();
   })();
   </script>
