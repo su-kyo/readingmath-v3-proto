@@ -202,64 +202,87 @@ body{ margin:0; padding:0 0 70px; background:var(--n-950); color:var(--n-000);
 .u2-docfoot{ display:flex; align-items:center; justify-content:space-between; gap:12px;
   margin-top:44px; padding-top:24px; border-top:1px solid var(--rule); }
 
-/* ---- 결제 ---- */
-.u2-cols{ display:grid; grid-template-columns:1fr 356px; gap:56px; align-items:start; margin-top:36px; }
+/* ---- 결제 — UX 재구성판 ----------------------------------------------
+   결정 순서를 ① 무엇을 ② 얼마나 ③ 어떻게로 나누고, 각 단계가 끝나면
+   오른쪽 요약이 즉시 채워진다. 빨강은 「문제」에만 쓰고, 할인·절약은 초록.
+   -------------------------------------------------------------------- */
+.u2-cols{ display:grid; grid-template-columns:1fr 364px; gap:60px; align-items:start; margin-top:38px; }
 .u2-side{ position:sticky; top:0; }
-.u2-sec{ display:flex; align-items:baseline; gap:10px; font-size:13px; font-weight:800; letter-spacing:.02em;
-  color:var(--ink-3); text-transform:none; margin:44px 0 4px; }
-.u2-sec::after{ content:""; flex:1; height:1px; background:var(--rule); }
-.u2-sec:first-child{ margin-top:0; }
 
-/* 과목 선택 = 밑줄 탭 (면 없음) */
-.u2-subj{ display:flex; gap:4px; border-bottom:1.5px solid var(--rule); }
-.u2-subj button{ position:relative; height:52px; padding:0 20px; border:0; background:transparent; color:var(--ink-3);
-  font-family:inherit; font-size:16px; font-weight:700; letter-spacing:-.04em; cursor:pointer; transition:var(--t-fast); }
-.u2-subj button:hover{ color:var(--ink); }
-.u2-subj button.is-on{ color:var(--ink); }
-.u2-subj button.is-on::after{ content:""; position:absolute; left:0; right:0; bottom:-1.5px; height:2.5px;
-  background:var(--ink); border-radius:99px; }
+/* 단계 머리 */
+.u2-step{ display:flex; align-items:baseline; gap:13px; margin:52px 0 4px; }
+.u2-step:first-child{ margin-top:0; }
+.u2-step__n{ font-size:12px; font-weight:800; color:var(--ink-3); letter-spacing:.14em;
+  font-variant-numeric:tabular-nums; flex:none; }
+.u2-step__t{ font-size:21px; font-weight:800; letter-spacing:-.05em; color:var(--ink); flex:none; }
+.u2-step__line{ flex:1; height:1px; background:var(--rule); }
+.u2-step__hint{ font-size:13px; font-weight:600; color:var(--ink-3); flex:none; letter-spacing:-.02em; }
 
-.u2-ben{ list-style:none; margin:22px 0 0; padding:0; }
-.u2-ben li{ display:flex; gap:12px; align-items:flex-start; padding:10px 0; font-size:15px; font-weight:500;
-  color:var(--ink-2); line-height:1.65; letter-spacing:-.028em; }
-.u2-ben li b{ color:var(--ink); font-weight:700; }
-.u2-ben svg{ width:19px; height:19px; flex:none; margin-top:3px; color:var(--ok); }
-
-.u2-plans, .u2-methods{ display:flex; flex-direction:column; }
-.u2-plan, .u2-method{ display:flex; align-items:center; gap:16px; width:100%; text-align:left;
+/* 선택 행 (과목·기간·결제수단 공용) */
+.u2-opt{ display:flex; align-items:center; gap:16px; width:100%; text-align:left;
   padding:20px 16px; margin:0 -16px; border:0; background:transparent; font-family:inherit; color:inherit;
   cursor:pointer; border-radius:14px; position:relative; transition:background var(--t-fast); }
-.u2-plan::before, .u2-method::before{ content:""; position:absolute; left:16px; right:16px; bottom:0; height:1px; background:var(--rule); }
-.u2-plan:hover, .u2-method:hover{ background:var(--n-050); }
-.u2-plan.is-sel, .u2-method.is-sel{ background:var(--wash); }
-.u2-plan:hover::before, .u2-method:hover::before, .u2-plan.is-sel::before, .u2-method.is-sel::before{ background:transparent; }
+.u2-opt::before{ content:""; position:absolute; left:16px; right:16px; bottom:0; height:1px; background:var(--rule); }
+.u2-opt:hover{ background:var(--n-050); }
+.u2-opt.is-sel{ background:var(--wash); }
+.u2-opt:hover::before, .u2-opt.is-sel::before{ background:transparent; }
 .u2-radio{ width:22px; height:22px; border-radius:99px; flex:none; display:grid; place-items:center;
   box-shadow:inset 0 0 0 1.8px var(--rule-2); transition:var(--t-fast); }
-.u2-plan.is-sel .u2-radio, .u2-method.is-sel .u2-radio{ box-shadow:inset 0 0 0 7px var(--brand); }
-.u2-plan__main{ flex:1; min-width:0; display:block; }
-.u2-plan__top{ display:flex; align-items:center; gap:9px; }
-.u2-plan__nm{ font-size:17px; font-weight:800; letter-spacing:-.045em; }
-.u2-plan__days{ font-size:13px; font-weight:600; color:var(--ink-3); }
-.u2-plan__off{ font-size:12.5px; font-weight:800; color:var(--danger); letter-spacing:-.02em; }
-.u2-plan__price{ display:block; text-align:right; flex:none; }
-.u2-plan__list{ display:block; font-size:12.5px; font-weight:600; color:var(--ink-3);
-  text-decoration:line-through; font-variant-numeric:tabular-nums; }
-.u2-plan__now{ display:block; font-size:20px; font-weight:800; letter-spacing:-.05em; font-variant-numeric:tabular-nums; }
-.u2-plan__mo{ display:block; margin-top:2px; font-size:12.5px; font-weight:600; color:var(--ink-3); font-variant-numeric:tabular-nums; }
-.u2-method{ font-size:16px; font-weight:700; letter-spacing:-.04em; }
-.u2-method svg{ width:21px; height:21px; color:var(--ink-2); flex:none; }
-.u2-method .u2-radio{ margin-left:auto; }
+.u2-opt.is-sel .u2-radio{ box-shadow:inset 0 0 0 7px var(--brand); }
+.u2-opt__main{ flex:1; min-width:0; display:block; }
+.u2-opt__top{ display:flex; align-items:center; gap:9px; flex-wrap:wrap; }
+.u2-opt__nm{ font-size:17px; font-weight:800; letter-spacing:-.045em; }
+.u2-opt__sub{ display:block; margin-top:4px; font-size:13px; font-weight:600; color:var(--ink-3); letter-spacing:-.025em; }
+.u2-opt__right{ display:block; text-align:right; flex:none; }
+.u2-opt > svg{ width:23px; height:23px; flex:none; color:var(--ink-3); }
 
-/* 주문 요약 = 화면에서 유일한 회색 면 */
-.u2-sum{ background:var(--inset); border-radius:22px; padding:26px 24px 24px; }
-.u2-sum__hd{ font-size:13px; font-weight:800; color:var(--ink-3); letter-spacing:.02em; }
-.u2-sum__rows{ margin-top:16px; }
-.u2-sum__r{ display:flex; align-items:baseline; justify-content:space-between; gap:14px; padding:9px 0; }
-.u2-sum__k{ font-size:14px; font-weight:600; color:var(--ink-3); flex:none; }
-.u2-sum__v{ font-size:14.5px; font-weight:700; letter-spacing:-.035em; text-align:right; }
-.u2-sum__v.is-ph{ color:var(--ink-3); font-weight:600; }
-.u2-sum__v.is-off{ color:var(--danger); font-variant-numeric:tabular-nums; }
-.u2-cp{ display:flex; gap:8px; margin:12px 0 0; }
+/* 값어치 배지 — 초록(이득) / 먹(중립). 빨강은 쓰지 않는다 */
+.u2-badge{ display:inline-flex; align-items:center; height:21px; padding:0 8px; border-radius:99px;
+  font-size:11.5px; font-weight:800; letter-spacing:-.02em; flex:none;
+  background:var(--ok-tint); color:var(--ok); }
+.u2-badge--ink{ background:var(--n-050); color:var(--ink-2); }
+
+/* 기간 행 — 월 환산가를 주 가격으로 승격 */
+.u2-mo{ display:block; font-size:21px; font-weight:800; letter-spacing:-.05em; font-variant-numeric:tabular-nums; line-height:1.1; }
+.u2-mo small{ font-size:13px; font-weight:700; color:var(--ink-3); margin-left:2px; letter-spacing:-.03em; }
+.u2-sumline{ display:block; margin-top:5px; font-size:12.5px; font-weight:600; color:var(--ink-3); font-variant-numeric:tabular-nums; }
+.u2-sumline s{ color:var(--n-300); text-decoration-thickness:1px; }
+
+/* 선택 직후 펼쳐지는 확인 줄 */
+.u2-confirm{ display:flex; align-items:center; gap:8px; margin:0 -16px; padding:12px 16px 14px;
+  font-size:13px; font-weight:700; color:var(--brand-ink); letter-spacing:-.03em;
+  background:var(--wash); border-radius:0 0 14px 14px; margin-top:-14px; }
+.u2-confirm svg{ width:15px; height:15px; flex:none; }
+
+/* 포함 항목 */
+.u2-ben{ list-style:none; margin:20px 0 0; padding:0; }
+.u2-ben li{ display:flex; gap:11px; align-items:flex-start; padding:8px 0; font-size:14.5px; font-weight:500;
+  color:var(--ink-2); line-height:1.6; letter-spacing:-.028em; }
+.u2-ben li b{ color:var(--ink); font-weight:700; }
+.u2-ben svg{ width:17px; height:17px; flex:none; margin-top:3px; color:var(--ok); }
+
+/* 가상계좌 안내 */
+.u2-inline-note{ display:flex; gap:9px; margin:14px 0 0; padding:13px 15px; border-radius:12px;
+  background:var(--n-050); font-size:13px; font-weight:600; color:var(--ink-2); line-height:1.6; letter-spacing:-.028em; }
+.u2-inline-note svg{ width:16px; height:16px; flex:none; margin-top:1px; color:var(--ink-3); }
+
+/* ── 오른쪽: 화면에서 유일한 회색 면 ── */
+.u2-sum{ background:var(--inset); border-radius:22px; padding:24px 22px 22px; }
+.u2-sum__hd{ font-size:12px; font-weight:800; color:var(--ink-3); letter-spacing:.12em; }
+.u2-sum__what{ margin-top:12px; font-size:18px; font-weight:800; letter-spacing:-.05em; color:var(--ink); line-height:1.35; }
+.u2-sum__what.is-ph{ color:var(--ink-3); font-weight:600; font-size:15px; letter-spacing:-.03em; }
+.u2-sum__when{ margin-top:6px; font-size:12.5px; font-weight:600; color:var(--ink-3); font-variant-numeric:tabular-nums; letter-spacing:-.02em; }
+.u2-sum__rows{ margin-top:18px; padding-top:16px; border-top:1px solid var(--n-200); }
+.u2-sum__r{ display:flex; align-items:baseline; justify-content:space-between; gap:14px; padding:6px 0; }
+.u2-sum__k{ font-size:13.5px; font-weight:600; color:var(--ink-3); flex:none; }
+.u2-sum__v{ font-size:14px; font-weight:700; letter-spacing:-.035em; text-align:right; font-variant-numeric:tabular-nums; }
+.u2-sum__v.is-cut{ color:var(--ink-2); }
+
+/* 쿠폰 — 기본 접힘 */
+.u2-cpToggle{ display:inline-flex; align-items:center; gap:6px; margin-top:10px; padding:0; border:0;
+  background:transparent; color:var(--brand-ink); font-family:inherit; font-size:13px; font-weight:700;
+  letter-spacing:-.03em; cursor:pointer; text-decoration:underline; text-underline-offset:3px; }
+.u2-cp{ display:flex; gap:8px; margin-top:12px; }
 .u2-field{ flex:1; min-width:0; height:44px; padding:0 15px; border-radius:12px; border:0;
   background:var(--paper); box-shadow:inset 0 0 0 1.5px var(--n-100); color:var(--ink);
   font-family:inherit; font-size:14px; font-weight:600; letter-spacing:-.03em; }
@@ -273,11 +296,19 @@ body{ margin:0; padding:0 0 70px; background:var(--n-950); color:var(--n-000);
 .u2-cp__msg{ display:flex; align-items:flex-start; gap:6px; margin-top:9px; font-size:12.5px; font-weight:600; line-height:1.5; }
 .u2-cp__msg.is-bad{ color:var(--danger); } .u2-cp__msg.is-ok{ color:var(--ok); }
 .u2-cp__msg svg{ width:14px; height:14px; flex:none; margin-top:2px; }
-.u2-total{ display:flex; align-items:baseline; justify-content:space-between; gap:14px;
-  margin-top:20px; padding-top:20px; border-top:1.5px solid var(--n-200); }
+
+/* 총액 */
+.u2-total{ margin-top:18px; padding-top:18px; border-top:1.5px solid var(--n-200); }
+.u2-total__row{ display:flex; align-items:baseline; justify-content:space-between; gap:14px; }
 .u2-total__k{ font-size:15px; font-weight:800; letter-spacing:-.04em; }
-.u2-total__v{ font-size:32px; font-weight:800; letter-spacing:-.06em; color:var(--ink); font-variant-numeric:tabular-nums; line-height:1; }
-.u2-agree{ display:flex; align-items:flex-start; gap:11px; margin:20px 0 16px; cursor:pointer; user-select:none; }
+.u2-total__v{ font-size:32px; font-weight:800; letter-spacing:-.065em; color:var(--ink);
+  font-variant-numeric:tabular-nums; line-height:1; }
+@keyframes u2flash{ 0%{ color:var(--brand); transform:translateY(-2px); } 100%{ color:var(--ink); transform:none; } }
+.u2-total__v.is-changed{ animation:u2flash .45s ease-out; }
+.u2-total__save{ display:flex; justify-content:flex-end; margin-top:8px; }
+
+/* 동의 · CTA */
+.u2-agree{ display:flex; align-items:flex-start; gap:11px; margin:18px 0 14px; cursor:pointer; user-select:none; }
 .u2-agree input{ position:absolute; opacity:0; width:0; height:0; }
 .u2-agree__box{ width:22px; height:22px; border-radius:7px; flex:none; display:grid; place-items:center;
   box-shadow:inset 0 0 0 1.8px var(--n-200); background:var(--paper); transition:var(--t-fast); }
@@ -285,12 +316,19 @@ body{ margin:0; padding:0 0 70px; background:var(--n-950); color:var(--n-000);
 .u2-agree input:checked + .u2-agree__box{ background:var(--brand); box-shadow:inset 0 0 0 1.8px var(--brand); }
 .u2-agree input:checked + .u2-agree__box svg{ opacity:1; }
 .u2-agree.is-bad .u2-agree__box{ box-shadow:inset 0 0 0 2px var(--danger); }
-.u2-agree__t{ font-size:14px; font-weight:600; color:var(--ink-2); line-height:1.55; letter-spacing:-.03em; }
+.u2-agree__t{ font-size:13.5px; font-weight:600; color:var(--ink-2); line-height:1.55; letter-spacing:-.03em; }
 .u2-agree__t a{ color:var(--brand-ink); text-decoration:underline; text-underline-offset:2px; }
-.u2-hint{ display:flex; align-items:center; gap:6px; margin:-8px 0 14px; font-size:12.5px; font-weight:700; color:var(--danger); }
-.u2-hint svg{ width:14px; height:14px; }
-.u2-refund{ margin-top:18px; font-size:12px; font-weight:500; color:var(--ink-3); line-height:1.8; letter-spacing:-.02em; }
-.u2-refund b{ color:var(--ink-2); font-weight:700; }
+.u2-todo{ display:flex; align-items:center; justify-content:center; gap:6px; margin-bottom:10px;
+  font-size:12.5px; font-weight:700; letter-spacing:-.03em; color:var(--ink-3); }
+.u2-todo.is-bad{ color:var(--danger); }
+.u2-todo svg{ width:14px; height:14px; }
+/* 결제 후 무슨 일이 생기는지 — 각주가 아니라 안심 문구 */
+.u2-assure{ display:flex; align-items:flex-start; gap:9px; margin-top:16px; padding-top:16px;
+  border-top:1px solid var(--n-200); font-size:12.5px; font-weight:600; color:var(--ink-2);
+  line-height:1.6; letter-spacing:-.028em; }
+.u2-assure b{ color:var(--ink); font-weight:800; }
+.u2-assure svg{ width:16px; height:16px; flex:none; margin-top:1px; color:var(--ok); }
+.u2-refund{ margin-top:12px; font-size:11.5px; font-weight:500; color:var(--ink-3); line-height:1.75; letter-spacing:-.02em; }
 </style>
 </head>
 <body>
@@ -349,7 +387,11 @@ var I = {
   chart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1"/><path d="M8 14v3M12 10v7M16 12v5"/></svg>',
   cloud:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4 4 0 0 1-.4-8 5.5 5.5 0 0 1 10.6 1A3.5 3.5 0 0 1 17 18z"/><path d="M12 10v4M12 16.5h.01"/></svg>',
   card:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2.5"/><path d="M3 10.5h18"/></svg>',
-  bank:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h16M4 10l8-6 8 6M6.5 10v8M10 10v8M14 10v8M17.5 10v8M3 21h18"/></svg>'
+  bank:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h16M4 10l8-6 8 6M6.5 10v8M10 10v8M14 10v8M17.5 10v8M3 21h18"/></svg>',
+  cal:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="16" rx="2.5"/><path d="M8 3v4M16 3v4M4 10h16"/></svg>',
+  info:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.8h.01"/></svg>',
+  arrowUp:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V5M6 11l6-6 6 6"/></svg>',
+  shield:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.2-2.9 7.6-7 9-4.1-1.4-7-4.8-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>'
 };
 
 var NOTICE = [
@@ -379,6 +421,19 @@ var DOC = { cat:'공지', title:'시험 대비(유형 도전) 기능 오픈 안�
  +'<ul><li>시험대비 홈에서 학년·학기·교재 기준으로 문제 유형을 고를 수 있어요.</li><li>성취도 색상으로 유형을 구분해 필요한 수준의 문제를 선택할 수 있어요.</li><li>중요 유형만 모아 집중 학습할 수 있어요.</li></ul>' };
 
 var SUBJ = { math:'리딩수학', science:'리딩과학', both:'수학+과학 통합' };
+var SUBJ_DESC = {
+  math:'초3 ~ 중1 · 개념 · 유형 · 서술형',
+  science:'초3 ~ 중1 · 개념 · 탐구 · 서술형',
+  both:'두 과목을 하나의 이용권으로'
+};
+function pad(n){ return (n<10?'0':'')+n; }
+function fmt(d){ return d.getFullYear()+'.'+pad(d.getMonth()+1)+'.'+pad(d.getDate()); }
+function today(){ return fmt(new Date()); }
+function endDate(daysLabel){
+  var n = parseInt(daysLabel,10);
+  var d = new Date(); d.setDate(d.getDate()+n);
+  return fmt(d);
+}
 var BEN = {
   math:['초3 ~ 중1까지 개념·유형·서술형 균형 잡힌 <b>리딩수학 학습</b> 진행','복습과 정리를 위한 매주 <b>주간 학습 기록과 오답노트</b> 제공','매월 학습 현황을 확인하는 <b>월간보고서</b> 제공','사고력 기반 <b>수리 문해력 종합진단평가</b> 제공','월 1회 학습 매니저 상담으로 <b>성취도 및 진도 관리</b>'],
   science:['초3 ~ 중1까지 개념·탐구·서술형 <b>리딩과학 학습</b> 진행','실생활 현상 기반의 <b>과학 문해력</b> 훈련 제공','매주 <b>주간 학습 기록과 오답노트</b> 제공','매월 <b>월간보고서</b> 및 종합진단평가 제공','월 1회 학습 매니저 상담으로 <b>성취도 및 진도 관리</b>'],
@@ -402,11 +457,11 @@ var NOTES = {
   notice:'<b>공지 목록.</b> 번호 열을 뺀 자리에 제목이 왼쪽 끝으로 붙었다. 카테고리는 <b>알약이 아니라 점 + 색 글자</b> — 흰 바탕에서 틴트 알약을 쓰면 그 자리만 회색으로 뜬다. 정렬은 등록일 최신순.',
   detail:'<b>공지 상세.</b> 제목 33px. 본문은 16.5px / 행간 1.9로 읽기에 맞췄다. 첨부는 상자 대신 <b>선 위의 한 줄</b>.',
   report:'<b>월간보고서.</b> 「학습 기간」·「등록일」 둘 다 유지. 「새 창에서 열기」는 상시 표시(태블릿에는 호버가 없다).',
-  pay:'<b>이용권 결제.</b> 왼쪽은 전부 선과 여백만 쓰고, <b>오른쪽 주문 요약만 회색 면</b>으로 남겼다 — 화면에서 유일한 면이라 돈이 걸린 자리로 시선이 간다. CTA는 정체성 칠면 규칙대로 19px w800.'
+  pay:'<b>이용권 결제 — 원본 구조를 버리고 다시 짰다.</b> ① 무엇을 → ② 얼마나 → ③ 어떻게 세 단계로 나누고, 비교축을 <b>월 환산가</b>로 승격했다(총액은 보조). 통합권은 <b>따로 살 때보다 얼마나 아끼는지</b>를 숫자로 보여 준다. 기간을 고르면 <b>이용 종료일</b>이 바로 펼쳐지고, 쿠폰 입력은 기본으로 접혀 있다. <b>빨강은 오류에만</b> 쓰고 할인·절약은 초록. CTA에 금액을 얹어 「무엇을 얼마에 사는지」를 마지막까지 붙들어 둔다.'
 };
 
 var S='notice', ST='base';
-var pay = { subj:'math', plan:null, method:'card' };
+var pay = { subj:'math', plan:null, method:'card', cpOpen:false };
 var screenEl = document.getElementById('screen');
 
 function rise(i){ return ' class="u2-rise" style="animation-delay:'+(40+i*32)+'ms"'; }
@@ -510,56 +565,117 @@ function screenPay(){
   var p = picked!==null ? plans[picked] : null;
   var coupon = (ST==='couponok') ? 10000 : 0;
   var agreed = (ST==='couponok'||ST==='paying');
+  var cpOpen = pay.cpOpen || ST==='couponbad' || ST==='couponok';
+  var basis = picked===null ? 3 : picked;   // 통합 절약액 기준 = 고른 기간(미선택이면 12개월)
 
-  var subjBtns = Object.keys(SUBJ).map(function(k){
-    return '<button class="'+(pay.subj===k?'is-on':'')+'" data-subj="'+k+'">'+SUBJ[k]+'</button>'; }).join('');
-  var ben = BEN[pay.subj].map(function(t){ return '<li>'+I.check+'<span>'+t+'</span></li>'; }).join('');
-  var planHtml = plans.map(function(pl,i){
-    return '<button class="u2-plan'+(picked===i?' is-sel':'')+'" data-plan="'+i+'"><span class="u2-radio"></span>'
-      +'<span class="u2-plan__main"><span class="u2-plan__top"><span class="u2-plan__nm">'+pl.nm+'</span>'
-      +'<span class="u2-plan__days">'+pl.days+'</span>'
-      +(pl.off>0?'<span class="u2-plan__off">'+pl.off+'% 할인</span>':'')+'</span></span>'
-      +'<span class="u2-plan__price">'+(pl.off>0?'<span class="u2-plan__list">'+won(pl.list)+'</span>':'')
-      +'<span class="u2-plan__now">'+won(pl.price)+'</span>'
-      +'<span class="u2-plan__mo">월 '+won(pl.mo)+'</span></span></button>';
+  /* ── ① 과목 — 무엇을 배울까. 가격 하한과 통합 이득을 여기서 보여 준다 ── */
+  var subjRows = Object.keys(SUBJ).map(function(k){
+    var lo = PLANS[k][3].mo;                                   // 12개월 기준 월 최저가
+    // 같은 행에 보이는 월 가격끼리의 차액이라 근거가 눈앞에 있다 (50,000+47,000 vs 83,000)
+    var save = (PLANS.math[basis].mo + PLANS.science[basis].mo) - PLANS.both[basis].mo;
+    var badge = (k==='both')
+      ? '<span class="u2-badge">따로 살 때보다 월 '+won(save)+' 아낌</span>' : '';
+    return '<button class="u2-opt'+(pay.subj===k?' is-sel':'')+'" data-subj="'+k+'">'
+      +'<span class="u2-radio"></span>'
+      +'<span class="u2-opt__main"><span class="u2-opt__top"><span class="u2-opt__nm">'+SUBJ[k]+'</span>'+badge+'</span>'
+      +'<span class="u2-opt__sub">'+SUBJ_DESC[k]+'</span></span>'
+      +'<span class="u2-opt__right"><span class="u2-mo">'+won(lo)+'<small>/월~</small></span></span></button>';
   }).join('');
+  var ben = BEN[pay.subj].map(function(t){ return '<li>'+I.check+'<span>'+t+'</span></li>'; }).join('');
+
+  /* ── ② 기간 — 월 환산가를 주 가격으로, 총액·정가는 보조로 ── */
+  var maxOff = Math.max.apply(null, plans.map(function(x){ return x.off; }));
+  var planHtml = plans.map(function(pl,i){
+    var badges = '';
+    if(pl.off>0) badges += '<span class="u2-badge">'+pl.off+'% 아낌</span>';
+    if(pl.off===maxOff && pl.off>0) badges += '<span class="u2-badge--ink u2-badge">최대 할인</span>';
+    var confirm = (picked===i)
+      ? '<div class="u2-confirm">'+I.cal+'오늘 결제하면 <b style="margin:0 1px 0 3px">'+endDate(pl.days)+'</b>까지 이용해요</div>' : '';
+    return '<button class="u2-opt'+(picked===i?' is-sel':'')+'" data-plan="'+i+'">'
+      +'<span class="u2-radio"></span>'
+      +'<span class="u2-opt__main"><span class="u2-opt__top"><span class="u2-opt__nm">'+pl.nm+'</span>'+badges+'</span>'
+      +'<span class="u2-opt__sub">'+pl.days+' 이용</span></span>'
+      +'<span class="u2-opt__right"><span class="u2-mo">'+won(pl.mo)+'<small>/월</small></span>'
+      +'<span class="u2-sumline">'+(pl.off>0?'<s>'+won(pl.list)+'</s> → ':'')+'총 '+won(pl.price)+'</span>'
+      +'</span></button>'+confirm;
+  }).join('');
+
+  /* ── ③ 결제 방법 ── */
+  var vbankNote = pay.method==='vbank'
+    ? '<div class="u2-inline-note">'+I.info+'<span>결제하기를 누르면 <b>입금 전용 계좌</b>와 입금 기한을 안내드려요. 기한 안에 입금해야 이용권이 열립니다.</span></div>' : '';
+
+  /* ── 금액 ── */
+  var planOff = p ? (p.list - p.price) : 0;
+  var total = p ? Math.max(0, p.price - coupon) : 0;
+  var saved = planOff + coupon;
 
   var cpMsg = '';
   if(ST==='couponbad') cpMsg = '<div class="u2-cp__msg is-bad">'+I.bang+'사용할 수 없는 쿠폰이에요. 번호를 다시 확인해 주세요.</div>';
-  if(ST==='couponok')  cpMsg = '<div class="u2-cp__msg is-ok">'+I.check+'웰컴 쿠폰이 적용됐어요. (10,000원 할인)</div>';
+  if(ST==='couponok')  cpMsg = '<div class="u2-cp__msg is-ok">'+I.check+'웰컴 쿠폰이 적용됐어요.</div>';
+  var cpBlock = cpOpen
+    ? '<div class="u2-cp"><input class="u2-field'+(ST==='couponbad'?' is-bad':'')+'" placeholder="쿠폰 번호"'
+      +' value="'+(ST==='couponbad'?'WELCOME-2025':(ST==='couponok'?'WELCOME-2026':''))+'">'
+      +'<button class="u2-cp__btn">적용</button></div>'+cpMsg
+    : '<button class="u2-cpToggle" id="cpToggle">쿠폰이 있어요</button>';
 
-  var discount = p ? (p.list-p.price)+coupon : coupon;
-  var total = p ? Math.max(0, p.price-coupon) : 0;
-  var ctaLabel = ST==='paying' ? '결제창을 여는 중…' : '결제하기';
+  /* ── 남은 할 일 한 줄 (CTA 바로 위) ── */
+  var todo = '';
+  if(picked===null) todo = '<div class="u2-todo">'+I.arrowUp+'이용 기간을 골라 주세요</div>';
+  else if(ST==='noagree') todo = '<div class="u2-todo is-bad">'+I.bang+'결제 및 환불 규정에 동의해 주세요</div>';
+  var ctaLabel = ST==='paying' ? '결제창을 여는 중…' : (p ? won(total)+' 결제하기' : '결제하기');
   var ctaDis = (picked===null || ST==='noagree' || ST==='paying') ? ' disabled' : '';
 
   return '<div class="u2-wrap u2-wrap--wide">'
     +'<div class="u2-head u2-rise"><div class="u2-head__l"><div class="u2-head__t">이용권 결제</div>'
-    +'<div class="u2-head__sub">과목과 이용 기간을 고르면 결제 금액이 오른쪽에 바로 반영돼요.</div></div></div>'
+    +'<div class="u2-head__sub">과목과 기간을 고르면 오른쪽에서 금액이 바로 확정돼요.</div></div></div>'
+
     +'<div class="u2-cols"><div class="u2-rise" style="animation-delay:70ms">'
-      +'<div class="u2-subj" id="subjSeg">'+subjBtns+'</div>'
+
+      +'<div class="u2-step"><span class="u2-step__n">01</span><span class="u2-step__t">무엇을 배울까요</span>'
+      +'<span class="u2-step__line"></span><span class="u2-step__hint">언제든 바꿀 수 있어요</span></div>'
+      +'<div id="subjList">'+subjRows+'</div>'
       +'<ul class="u2-ben">'+ben+'</ul>'
-      +'<div class="u2-sec">이용 기간</div><div class="u2-plans" id="planList">'+planHtml+'</div>'
-      +'<div class="u2-sec">결제 방법</div><div class="u2-methods" id="methodList">'
-        +'<button class="u2-method'+(pay.method==='card'?' is-sel':'')+'" data-m="card">'+I.card+'신용카드 결제<span class="u2-radio"></span></button>'
-        +'<button class="u2-method'+(pay.method==='vbank'?' is-sel':'')+'" data-m="vbank">'+I.bank+'가상계좌 입금<span class="u2-radio"></span></button>'
-      +'</div></div>'
+
+      +'<div class="u2-step"><span class="u2-step__n">02</span><span class="u2-step__t">얼마나 이용할까요</span>'
+      +'<span class="u2-step__line"></span><span class="u2-step__hint">길수록 월 부담이 줄어요</span></div>'
+      +'<div id="planList">'+planHtml+'</div>'
+
+      +'<div class="u2-step"><span class="u2-step__n">03</span><span class="u2-step__t">어떻게 결제할까요</span>'
+      +'<span class="u2-step__line"></span></div>'
+      +'<div id="methodList">'
+        +'<button class="u2-opt'+(pay.method==='card'?' is-sel':'')+'" data-m="card"><span class="u2-radio"></span>'
+        +'<span class="u2-opt__main"><span class="u2-opt__top"><span class="u2-opt__nm" style="font-size:16px">신용카드</span></span>'
+        +'<span class="u2-opt__sub">결제 즉시 이용권이 열려요</span></span>'+I.card+'</button>'
+        +'<button class="u2-opt'+(pay.method==='vbank'?' is-sel':'')+'" data-m="vbank"><span class="u2-radio"></span>'
+        +'<span class="u2-opt__main"><span class="u2-opt__top"><span class="u2-opt__nm" style="font-size:16px">가상계좌 입금</span></span>'
+        +'<span class="u2-opt__sub">입금이 확인되면 이용권이 열려요</span></span>'+I.bank+'</button>'
+      +'</div>'+vbankNote
+
+    +'</div>'
+
     +'<aside class="u2-side u2-rise" style="animation-delay:140ms"><div class="u2-sum">'
       +'<div class="u2-sum__hd">주문 요약</div>'
+      +(p
+        ? '<div class="u2-sum__what">'+SUBJ[pay.subj]+' · '+p.nm+'</div>'
+          +'<div class="u2-sum__when">'+today()+' ~ '+endDate(p.days)+' ('+p.days+')</div>'
+        : '<div class="u2-sum__what is-ph">'+SUBJ[pay.subj]+' · 기간을 고르면 여기에 표시돼요</div>')
       +'<div class="u2-sum__rows">'
-        +'<div class="u2-sum__r"><span class="u2-sum__k">이용권</span><span class="u2-sum__v">'+SUBJ[pay.subj]+'</span></div>'
-        +'<div class="u2-sum__r"><span class="u2-sum__k">이용 기간</span><span class="u2-sum__v'+(p?'':' is-ph')+'">'+(p?p.nm+' · '+p.days:'기간을 골라 주세요')+'</span></div>'
+        +'<div class="u2-sum__r"><span class="u2-sum__k">정가</span><span class="u2-sum__v is-cut">'+(p?won(p.list):'—')+'</span></div>'
+        +'<div class="u2-sum__r"><span class="u2-sum__k">기간 할인</span><span class="u2-sum__v is-cut">'+(planOff>0?'-'+won(planOff):'—')+'</span></div>'
+        +'<div class="u2-sum__r"><span class="u2-sum__k">쿠폰 할인</span><span class="u2-sum__v is-cut">'+(coupon>0?'-'+won(coupon):'—')+'</span></div>'
         +'<div class="u2-sum__r"><span class="u2-sum__k">결제 방법</span><span class="u2-sum__v">'+(pay.method==='card'?'신용카드':'가상계좌')+'</span></div>'
-        +'<div class="u2-sum__r"><span class="u2-sum__k">할인</span><span class="u2-sum__v'+(discount>0?' is-off':' is-ph')+'">'+(discount>0?'-'+won(discount):'없음')+'</span></div>'
       +'</div>'
-      +'<div class="u2-cp"><input class="u2-field'+(ST==='couponbad'?' is-bad':'')+'" placeholder="쿠폰 번호" value="'+(ST==='couponbad'?'WELCOME-2025':(ST==='couponok'?'WELCOME-2026':''))+'"><button class="u2-cp__btn">적용</button></div>'
-      +cpMsg
-      +'<div class="u2-total"><span class="u2-total__k">총 결제금액</span><span class="u2-total__v">'+won(total)+'</span></div>'
-      +'<label class="u2-agree'+(ST==='noagree'?' is-bad':'')+'"><input type="checkbox"'+(agreed?' checked':'')+'><span class="u2-agree__box">'+I.check+'</span>'
+      +cpBlock
+      +'<div class="u2-total"><div class="u2-total__row"><span class="u2-total__k">총 결제금액</span>'
+      +'<span class="u2-total__v'+(p?' is-changed':'')+'">'+won(total)+'</span></div>'
+      +(saved>0?'<div class="u2-total__save"><span class="u2-badge">'+won(saved)+' 아꼈어요</span></div>':'')+'</div>'
+      +'<label class="u2-agree'+(ST==='noagree'?' is-bad':'')+'"><input type="checkbox"'+(agreed?' checked':'')+'>'
+      +'<span class="u2-agree__box">'+I.check+'</span>'
       +'<span class="u2-agree__t">결제 및 환불 규정에 동의합니다 <a href="#" onclick="return false">전문 보기</a></span></label>'
-      +(ST==='noagree'?'<div class="u2-hint">'+I.bang+'규정에 동의해야 결제할 수 있어요.</div>':'')
-      +'<button class="u2-btn--cta u2-btn"'+ctaDis+'>'+ctaLabel+'</button>'
-      +'<div class="u2-refund">· 결제 후 <b>3~5일 이내</b> 학습 매니저가 배정됩니다.<br>· 환불은 이용 이력에 따라 규정이 적용되며, 자세한 내용은 고객센터로 안내드려요.</div>'
+      +todo
+      +'<button class="u2-btn u2-btn--cta"'+ctaDis+'>'+ctaLabel+'</button>'
+      +'<div class="u2-assure">'+I.shield+'<span>결제 후 <b>3~5일 이내</b> 학습 매니저가 배정되고, 첫 상담 일정을 문자로 안내드려요.</span></div>'
+      +'<div class="u2-refund">환불은 이용 이력에 따라 규정이 적용됩니다. 자세한 내용은 고객센터로 안내드려요.</div>'
     +'</div></aside></div></div>';
 }
 
@@ -568,13 +684,15 @@ function render(){
   screenEl.scrollTop = 0;
   document.getElementById('note').innerHTML = NOTES[S];
   if(S==='pay'){
-    document.getElementById('subjSeg').addEventListener('click', function(e){
-      var b=e.target.closest('button'); if(!b) return; pay.subj=b.dataset.subj; pay.plan=null; ST='base'; syncStates(); render(); });
+    document.getElementById('subjList').addEventListener('click', function(e){
+      var b=e.target.closest('[data-subj]'); if(!b) return; pay.subj=b.dataset.subj; render(); });
     document.getElementById('planList').addEventListener('click', function(e){
-      var b=e.target.closest('.u2-plan'); if(!b) return; pay.plan=parseInt(b.dataset.plan,10);
+      var b=e.target.closest('[data-plan]'); if(!b) return; pay.plan=parseInt(b.dataset.plan,10);
       if(ST==='base') ST='picked'; syncStates(); render(); });
     document.getElementById('methodList').addEventListener('click', function(e){
-      var b=e.target.closest('.u2-method'); if(!b) return; pay.method=b.dataset.m; render(); });
+      var b=e.target.closest('[data-m]'); if(!b) return; pay.method=b.dataset.m; render(); });
+    var cp=document.getElementById('cpToggle');
+    if(cp) cp.addEventListener('click', function(){ pay.cpOpen=true; render(); });
   }
 }
 function syncStates(){
