@@ -51,7 +51,9 @@ LAYOUT = {
 }
 BGW, BGH = 2520, 1260          # 배경 원본 크기
 CW = 1440                      # 검사 이미지 폭
-HERO_W, HERO_CY = 0.3125, 0.627  # 캐릭터 칸: 폭 31.25% · 중심 y 62.7% (nav/home.html과 같음)
+# 캐릭터 칸 — 중심 y는 공통, 폭은 과목마다 다르다 (nav/home.html의 LAYOUT.hero와 같은 값).
+# 실외(수학)는 오브젝트가 크고 실내(과학)는 작아서, 같은 폭이면 과학에서 캐릭터만 커 보인다.
+HERO_W, HERO_CY = {'math': 0.3125, 'sci': 0.25}, 0.627
 
 
 def run(cmd):
@@ -123,7 +125,7 @@ def build(sem, subject, char, out):
     run(['ffmpeg', '-y', '-v', 'error'] + ins + ['-filter_complex', ';'.join(fc),
          '-map', '[%s]' % cur, '-frames:v', '1', bare])
 
-    box = round(HERO_W * CW)
+    box = round(HERO_W[subject] * CW)
     hx, hy = round(0.5 * CW - box / 2), round(HERO_CY * ch - box / 2)
     run(['ffmpeg', '-y', '-v', 'error', '-i', bare, '-i', char,
          '-filter_complex', '[1:v]scale=%d:%d,format=rgba[c];[0:v][c]overlay=%d:%d' % (box, box, hx, hy),

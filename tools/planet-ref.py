@@ -30,6 +30,9 @@ LAYOUT = {
                          (4, 26.1, 78.1, 25.1), (5, 73.5, 80.3, 23.1), (6, 69.6, 17.4, 14.9)]),
 }
 BGW, BGH, CW = 2520, 1260, 1440
+# 캐릭터 칸 폭 — 과목마다 다르다(nav/home.html의 LAYOUT.hero와 같은 값).
+# 실외(수학)는 오브젝트가 크고 실내(과학)는 작아서, 같은 폭이면 과학에서 캐릭터만 커 보인다.
+HERO_W = {'math': 0.3125, 'sci': 0.25}
 
 
 def run(c):
@@ -66,7 +69,7 @@ def screen(key, out, with_char=False):
         cp = os.path.join(d, 'character.webp')
         if not os.path.exists(cp):
             return False
-        box = round(0.3125 * CW)
+        box = round(HERO_W[subj] * CW)
         ins += ['-i', png('character')]
         fc.append('[%d:v]scale=%d:%d,format=rgba[c]' % (idx, box, box))
         fc.append('[%s][c]overlay=%d:%d[o]' % (cur, round(0.5 * CW - box / 2), round(0.627 * ch - box / 2)))

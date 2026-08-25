@@ -117,7 +117,10 @@
 
     /* ---- 히어로(캐릭터+말풍선) — safe 안, 피그마 캐릭터 위치/크기 ---- */
     /* 행성 대표 캐릭터는 오브젝트·명판보다 위에 있다 (CTA와 토스트만 캐릭터보다 위) */
-    .hero{ position:absolute; left:50%; top:62.7%; width:31.25%; transform:translate(-50%,-50%); z-index:30; }
+    /* 폭은 과목마다 다르다 — LAYOUT의 hero 값이 덮어쓴다(아래 --hero-w). 실외(수학)는
+       오브젝트가 크고 실내(과학)는 작아서, 같은 폭을 쓰면 과학에서 캐릭터만 커 보인다. */
+    .hero{ position:absolute; left:50%; top:62.7%; width:var(--hero-w, 31.25%);
+      transform:translate(-50%,-50%); z-index:30; }
     /* 캐릭터 원본이 아직 없는 학기 — 말풍선만 바닥 가운데에 세운다 */
     .hero.is-nochar{ top:70%; width:auto; }
     .hero.is-nochar .char, .hero.is-nochar .shadow, .hero.is-nochar .bubble::after{ display:none; }
@@ -215,11 +218,11 @@
          좌표 = safe 기준 % (cx/cy=중심, w=너비%). 원본의 자리 규칙은 32학기가 모두 같다:
          1=중앙 큰 것, 2·3=좌우 중단, 4·5=좌우 하단, 6=공중에 뜬 작은 것. */
       var LAYOUT = {
-        math: { ratio:'960 / 670', objects:[
+        math: { ratio:'960 / 670', hero:31.25, objects:[
           { n:1, cx:50.0, cy:39.4, w:49.4 }, { n:2, cx:19.4, cy:48.4, w:35.8 }, { n:3, cx:83.3, cy:48.9, w:34.2 },
           { n:4, cx:17.7, cy:77.8, w:32.4 }, { n:5, cx:81.4, cy:78.1, w:31.5 }, { n:6, cx:76.4, cy:17.4, w:22.7, float:true }
         ] },
-        sci:  { ratio:'1280 / 670', objects:[
+        sci:  { ratio:'1280 / 670', hero:25, objects:[
           { n:1, cx:50.0, cy:40.8, w:32.1 }, { n:2, cx:26.6, cy:56.5, w:23.5 }, { n:3, cx:75.0, cy:54.3, w:23.4 },
           { n:4, cx:26.1, cy:78.1, w:25.1 }, { n:5, cx:73.5, cy:80.3, w:23.1 }, { n:6, cx:69.6, cy:17.4, w:14.9, float:true }
         ] }
@@ -284,6 +287,7 @@
          옛 그림을 계속 써서 「바꿨는데 안 바뀐다」가 된다 — 교체할 때 이 숫자를 올린다. */
       var CHAR_V = 3;
       var hero = safe.querySelector('.hero');
+      hero.style.setProperty('--hero-w', cfg.hero + '%');
       if(HAS_CHAR[key]) document.getElementById('char').src = dir + '/character.webp?v=' + CHAR_V;
       else hero.classList.add('is-nochar');
 
