@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="ko" data-section="util">
+<head>
+  <base href="../">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>학습 기록 — 리딩수학과학</title>
+  <script>
+    /* 테마 부트스트랩 — 다크가 기본. 학습 화면이 쓰는 rm-theme가 'light'일 때만 뒤집는다.
+       <head>에서 먼저 실행해 화면이 번쩍이지 않게 한다. */
+    try{ if(localStorage.getItem('rm-theme')==='light') document.documentElement.setAttribute('data-theme','light'); }catch(e){}
+  </script>
+  <link rel="stylesheet" href="styles/tokens.css?v=25" />
+  <link rel="stylesheet" href="styles/base.css?v=7" />
+  <link rel="stylesheet" href="styles/gnb.css?v=9" />
+  <link rel="stylesheet" href="styles/util.css?v=11" />
+  <link rel="stylesheet" href="styles/history.css?v=9" />
+  <style>
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html,body{ height:100%; }
+  </style>
+</head>
+<body class="u-body">
+  <div class="u-app">
+    <header class="gnb">
+      <div class="gnb__info"><span class="gnb__logo"></span><span class="gnb__name">김학생</span></div>
+      <div class="gnb__icons">
+        <button class="gnb__ico" title="도움말"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.8.4-1 .9-1 1.7" stroke-linecap="round"/><circle cx="12" cy="16.5" r="1" fill="currentColor" stroke="none"/></svg></button>
+        <button class="gnb__ico" title="오류 신고"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17h.01"/></svg></button>
+        <button class="gnb__ico" id="noticeBtn" title="공지사항"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 9v6h3l7 4V5L7 9H4zM18 8a5 5 0 0 1 0 8"/></svg><span class="gnb__dot"></span></button>
+        <button class="gnb__ico" id="menuBtn" title="메뉴"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      </div>
+    </header>
+
+    <main class="u-main">
+      <div class="u-wrap u-wrap--wide">
+        <div class="u-head h-head u-rise">
+          <div class="u-head__l">
+            <div class="u-head__t">학습 기록</div>
+            <div class="u-head__sub" id="headSub">수학 · 훈련 기록과 라운드마다 나아진 만큼을 확인하세요.</div>
+          </div>
+          <div class="h-nav h-calwrap">
+            <button class="h-nav__arrow" id="prevWk" title="지난주"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+            <span class="h-nav__range" id="wkRange"></span>
+            <button class="h-nav__arrow" id="nextWk" title="다음 주"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+            <span class="h-nav__sep"></span>
+            <button class="h-nav__now" id="thisWk">이번 주</button>
+            <button class="h-nav__cal" id="calBtn" title="달력에서 고르기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v4M17 3v4M4 9h16M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1"/></svg></button>
+            <div class="h-cal" id="cal"></div>
+          </div>
+        </div>
+
+        <div id="hero"></div>
+        <div id="bar"></div>
+        <div id="list"></div>
+      </div>
+    </main>
+  </div>
+
+  <div class="h-modal" id="modal"></div>
+  <div class="u-toast" id="toast"></div>
+
+  <script>
+  (function(){
+  'use strict';
+
+  /* ═══════════════════════════════════════════════════════════════════════
+     ① 데이터
+     -----------------------------------------------------------------------
+     훈련 기록 1건 = 두 목록(내용별·날짜별)이 공유하는 단위 (brief §6).
+     { subj, sem, unit, sub, kind, round, at, min, done, acts:[{n,c,t}] }
+     정답수·문제수·정답률·등급은 저장하지 않고 acts에서 계산한다.
+
+     ※ 세부활동(acts) 구성의 출처 — brief §6 지시대로 남긴다.
+       · 개념 훈련 「개념 학습 + 기초 연산」 2스텝 = 2026-08-24 현안 탐방 실측(수학 기준).
+         (2) (대분수)÷(자연수) R1·R2의 값도 실측 그대로다.
+       · 유형 훈련 「유형 다지기 + 유형 도전」, 서술형 훈련 「기초 다지기 + 서술형 풀이」는
+         ★가정★이다. 현안의 유형·서술형 결과 모달은 Phase 9-2·9-3 탐방에서 확인 예정 —
+         확인되면 여기 acts 이름·개수만 고치면 화면 전체가 따라온다.
+     ═══════════════════════════════════════════════════════════════════════ */
+
+  /* 정적 데모라 「오늘」을 못 박는다. 실제 서비스에서는 서버 시각을 쓴다. */
+  var TODAY = '2026-08-25';   // 화요일 · 이번 주 = 8.24(월) ~ 8.30(일)
+
+  var U1 = '1단원 분수의 나눗셈';
+  var U2 = '2단원 각기둥과 각뿔';
+
+  var RECORDS = [
+    /* ── 이번 주 (8.24 월 ~ 8.30 일) : 현안 실측 재현 ─────────────────── */
+    { subj:'math', sem:'초등 6-1', unit:U1, sub:'(2) (대분수)÷(자연수)',
+      kind:'개념', round:1, at:'2026-08-24 23:58', min:21, done:true,
+      acts:[ {n:'개념 학습', c:2, t:4}, {n:'기초 연산', c:13, t:14} ] },          /* 15/18 = 83 */
+    { subj:'math', sem:'초등 6-1', unit:U1, sub:'(2) (대분수)÷(자연수)',
+      kind:'개념', round:2, at:'2026-08-25 18:43', min:14, done:true,
+      acts:[ {n:'개념 학습', c:3, t:4}, {n:'기초 연산', c:12, t:14} ] },          /* 15/18 = 83 — 총점은 같은데
+                                                                                     개념 학습이 50→75로 올랐다.
+                                                                                     이 페이지가 존재하는 이유 */
+    { subj:'math', sem:'초등 6-1', unit:U1, sub:'(2) (대분수)÷(자연수)',
+      kind:'유형', round:1, at:'2026-08-25 19:26', min:7, done:false,
+      acts:[ {n:'유형 다지기', c:4, t:5} ] },                                     /* 진행 중도 요약에 집계 (brief §7) */
+
+    /* ── 지난주 (8.17 ~ 8.23) ──────────────────────────────────────────── */
+    { subj:'math', sem:'초등 6-1', unit:U1, sub:'(1) (분수)÷(자연수)',
+      kind:'개념', round:1, at:'2026-08-19 20:04', min:18, done:true,
+      acts:[ {n:'개념 학습', c:3, t:4}, {n:'기초 연산', c:8, t:10} ] },           /* 11/14 = 79 */
+    { subj:'math', sem:'초등 6-1', unit:U1, sub:'(1) (분수)÷(자연수)',
+      kind:'유형', round:1, at:'2026-08-21 19:37', min:16, done:true,
+      acts:[ {n:'유형 다지기', c:7, t:9}, {n:'유형 도전', c:7, t:9} ] },          /* 14/18 = 78 → 주간 25/32 = 78 */
+
+    /* ── 2주 전 (8.10 ~ 8.16) ──────────────────────────────────────────── */
+    { subj:'math', sem:'초등 6-1', unit:U2, sub:'(1) 각기둥을 알아볼까요',
+      kind:'개념', round:1, at:'2026-08-12 17:41', min:22, done:true,
+      acts:[ {n:'개념 학습', c:4, t:5}, {n:'기초 연산', c:9, t:12} ] }            /* 13/17 = 76 */
+
+    /* 3주 전 (8.3 ~ 8.9) : 기록 없음 — 빈 주 상태가 실제 이동으로 확인된다 */
+    ,
+    /* ── 과학 (GNB 과목 모드를 바꾸면 이쪽만 보인다 · brief §4) ────────── */
+    { subj:'science', sem:'초등 6-1', unit:'2단원 지구와 달의 운동', sub:'(1) 하루 동안 태양의 위치 변화',
+      kind:'개념', round:1, at:'2026-08-24 18:10', min:19, done:true,
+      acts:[ {n:'개념 학습', c:4, t:5}, {n:'기초 연산', c:8, t:11} ] },
+    { subj:'science', sem:'초등 6-1', unit:'2단원 지구와 달의 운동', sub:'(1) 하루 동안 태양의 위치 변화',
+      kind:'유형', round:1, at:'2026-08-25 17:02', min:12, done:false,
+      acts:[ {n:'유형 다지기', c:5, t:6} ] }
+  ];
+
+  /* 맥스 케이스 (?state=max) — 긴 소단원명 · 소단원 3개 · 3라운드 완주 ·
+     소단원 결과 열림 · 하루 5회 타임라인 (brief §7) */
+  var UL = '5단원 여러 가지 사각형과 다각형의 둘레와 넓이 구하기';
+  var SL = '(4) 사다리꼴과 평행사변형의 넓이를 여러 가지 방법으로 구하기';
+  var MAX_RECORDS = [
+    { subj:'math', sem:'초등 6-1', unit:UL, sub:SL, kind:'개념', round:1, at:'2026-08-24 16:20', min:24, done:true,
+      acts:[ {n:'개념 학습', c:3, t:5}, {n:'기초 연산', c:10, t:13} ] },          /* 13/18 = 72 */
+    { subj:'math', sem:'초등 6-1', unit:UL, sub:SL, kind:'개념', round:2, at:'2026-08-24 17:05', min:17, done:true,
+      acts:[ {n:'개념 학습', c:4, t:5}, {n:'기초 연산', c:12, t:13} ] },          /* 16/18 = 89 */
+    { subj:'math', sem:'초등 6-1', unit:UL, sub:SL, kind:'개념', round:3, at:'2026-08-25 09:12', min:12, done:true,
+      acts:[ {n:'개념 학습', c:5, t:5}, {n:'기초 연산', c:12, t:13} ] },          /* 17/18 = 94 */
+    { subj:'math', sem:'초등 6-1', unit:UL, sub:SL, kind:'유형', round:1, at:'2026-08-25 10:02', min:19, done:true,
+      acts:[ {n:'유형 다지기', c:8, t:9}, {n:'유형 도전', c:7, t:8} ] },          /* 15/17 = 88 */
+    { subj:'math', sem:'초등 6-1', unit:UL, sub:SL, kind:'서술형', round:1, at:'2026-08-25 11:15', min:26, done:true,
+      acts:[ {n:'기초 다지기', c:6, t:7}, {n:'서술형 풀이', c:5, t:7} ] },        /* 11/14 = 79 → R1 세 훈련 완료 */
+    { subj:'math', sem:'초등 6-1', unit:UL, sub:'(3) 다각형의 둘레 구하기', kind:'개념', round:1, at:'2026-08-25 13:40', min:20, done:true,
+      acts:[ {n:'개념 학습', c:3, t:5}, {n:'기초 연산', c:9, t:13} ] },           /* 12/18 = 67 */
+    { subj:'math', sem:'초등 6-1', unit:UL, sub:'(3) 다각형의 둘레 구하기', kind:'유형', round:1, at:'2026-08-25 14:22', min:9, done:false,
+      acts:[ {n:'유형 다지기', c:5, t:7} ] },
+    { subj:'math', sem:'초등 6-1', unit:U2, sub:'(2) 각뿔을 알아볼까요', kind:'개념', round:1, at:'2026-08-24 20:31', min:15, done:true,
+      acts:[ {n:'개념 학습', c:5, t:5}, {n:'기초 연산', c:11, t:12} ] }           /* 16/17 = 94 */
+  ];
+
+  /* 훈련 종류 → 이어서 할 화면. 확정 진입 화면만 연결한다 */
+  var ENTRY = { '개념':'concept/learn.html', '유형':'type/quiz.html', '서술형':'essay/basics-v2.html' };
+  var KINDS = ['개념','유형','서술형'];
+
+  /* ═══════════════════════════════════════════════════════════════════════
+     ② 날짜 · 파생값 계산
+     ═══════════════════════════════════════════════════════════════════════ */
+  function d(s){ var p=s.slice(0,10).split('-'); return new Date(+p[0], +p[1]-1, +p[2]); }
+  function iso(dt){ var m=dt.getMonth()+1, y=dt.getDate();
+    return dt.getFullYear()+'-'+(m<10?'0':'')+m+'-'+(y<10?'0':'')+y; }
+  function monday(dt){ var x=new Date(dt.getTime()); var w=(x.getDay()+6)%7; x.setDate(x.getDate()-w); return x; }
+  function addD(dt,n){ var x=new Date(dt.getTime()); x.setDate(x.getDate()+n); return x; }
+  function md(dt){ return (dt.getMonth()+1)+'.'+dt.getDate(); }
+  var DOW = ['일','월','화','수','목','금','토'];
+  function rangeLabel(mon){ var sun=addD(mon,6);
+    return md(mon)+' (월) – '+md(sun)+' (일)'; }
+  function wkOf(rec){ return iso(monday(d(rec.at))); }
+
+  function sum(rec){ var c=0,t=0; rec.acts.forEach(function(a){ c+=a.c; t+=a.t; }); return {c:c,t:t}; }
+  function pct(c,t){ return t ? Math.round(c/t*100) : 0; }
+  /* 등급 컷 — 현안에서 확인된 사실은 「83 = B」 하나뿐이라 그 위아래로 잡았다 */
+  function grade(p){ return p>=95?{g:'S',w:'Excellent!'} : p>=85?{g:'A',w:'Great!'}
+                        : p>=70?{g:'B',w:'Good!'} : {g:'C',w:'Nice Try!'}; }
+
+  /* ═══════════════════════════════════════════════════════════════════════
+     ③ 상태 — ?state=empty|first|max (brief §7 · 정적 데모라 학습 엔진이 없다)
+     ═══════════════════════════════════════════════════════════════════════ */
+  var FORCE = new URLSearchParams(location.search).get('state') || '';
+  /* 기록 범위 = 현재 과목만(GNB 과목 모드를 따라감). 학기는 전체 — brief §4 */
+  var SUBJ = 'math';
+  try{ SUBJ = localStorage.getItem('rm-subject')==='science' ? 'science' : 'math'; }catch(e){}
+  var SUBJ_KO = SUBJ==='science' ? '과학' : '수학';
+  function ofSubj(a){ return a.filter(function(r){ return r.subj===SUBJ; }); }
+  var DATA = FORCE==='first' ? [] : ofSubj(FORCE==='max' ? MAX_RECORDS : RECORDS);
+
+  var TODAY_D  = d(TODAY);
+  var THIS_MON = monday(TODAY_D);
+  var week = FORCE==='empty' ? addD(THIS_MON,-21) : THIS_MON;   /* 빈 주 = 3주 전(기록 없는 주) */
+  var view = 'sub';                                             /* sub | date */
+  var calMonth = new Date(week.getFullYear(), week.getMonth(), 1);
+
+  function isThisWeek(){ return iso(week)===iso(THIS_MON); }
+  function wkWord(){ return isThisWeek() ? '이번 주' : '이 주'; }
+  function inWeek(rec, mon){ var k=iso(mon); return wkOf(rec)===k; }
+  function weekRecs(mon){ return DATA.filter(function(r){ return inWeek(r,mon); }); }
+  /* 빈 주에서 되돌아갈 자리 = 기록이 있는 가장 최근 주. 지금 보는 주보다 앞이든 뒤든
+     「최근 기록」이 기준이다 — 학생이 찾는 건 방향이 아니라 마지막으로 한 주다 */
+  function latestRecordedWeek(){
+    var ks = DATA.map(wkOf).sort();
+    return ks.length ? d(ks[ks.length-1]) : null;
+  }
+  /* 뒤로 갈 수 있는 끝 = 가장 오래된 기록의 한 주 전. 그보다 앞은 빈 주만 끝없이
+     이어지니 화살표를 닫는다(실제 서비스라면 가입일이 그 자리다) */
+  function oldestBrowsable(){
+    var ks = DATA.map(wkOf).sort();
+    return ks.length ? addD(d(ks[0]),-7) : THIS_MON;
+  }
+  function weeksBetween(a,b){ return Math.round((a-b)/604800000); }
+
+  /* ═══════════════════════════════════════════════════════════════════════
+     ④ 조각 그리기
+     ═══════════════════════════════════════════════════════════════════════ */
+  var CHEV='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>';
+
+  /* 증감 한 조각. 색이 아니라 기호·굵기로 구분한다(history.css 머리 주석) */
+  function deltaHtml(diff, unit){
+    if(diff===null || diff===undefined) return '';
+    if(diff>0)  return '<span class="h-d--up">▲ '+diff+unit+'</span>';
+    if(diff<0)  return '<span class="h-d--dn">▼ '+(-diff)+unit+'</span>';
+    return '<span class="h-d--eq">그대로</span>';
+  }
+
+  /* ---- 주 페이저 ---- */
+  function renderNav(){
+    document.getElementById('wkRange').textContent = rangeLabel(week);
+    document.getElementById('prevWk').disabled = iso(week) <= iso(oldestBrowsable());
+    document.getElementById('nextWk').disabled = iso(week) >= iso(THIS_MON);   /* 미래 주 비활성 */
+    document.getElementById('thisWk').classList.toggle('is-on', iso(week)===iso(THIS_MON));
+  }
+
+  /* ---- 히어로 ---- */
+  function renderHero(){
+    var host = document.getElementById('hero');
+    var recs = weekRecs(week);
+
+    /* 빈 주 · 첫 사용 — 요약 자리를 비우지 않는다. 문구와 손잡이가 그 자리에 들어간다 */
+    if(!recs.length){ host.innerHTML = emptyHero(); return; }
+
+    var c=0,t=0,min=0,days={};
+    recs.forEach(function(r){ var s=sum(r); c+=s.c; t+=s.t; min+=r.min; days[r.at.slice(0,10)]=1; });
+    var p = pct(c,t);
+
+    /* 지난주 대비 — 없으면 「N주 만의 학습」, 그것도 없으면 「첫 기록」 */
+    var prev = weekRecs(addD(week,-7)), line;
+    if(prev.length){
+      var pc=0,pt=0; prev.forEach(function(r){ var s=sum(r); pc+=s.c; pt+=s.t; });
+      var dp = p - pct(pc,pt);
+      line = dp>0 ? '지난주보다 <span class="h-d--up">▲ '+dp+'%p</span> 올랐어요'
+           : dp<0 ? '지난주보다 <span class="h-d--dn">▼ '+(-dp)+'%p</span>예요'
+                  : '지난주와 <span class="h-d--eq">같아요</span>';
+    } else {
+      var before = DATA.map(wkOf).filter(function(k){ return k < iso(week); }).sort();
+      line = before.length ? weeksBetween(week, d(before[before.length-1]))+'주 만의 학습이에요'
+                           : '첫 기록이에요';
+    }
+
+    host.innerHTML =
+      '<div class="h-hero u-rise">'
+      + '<div class="h-hero__l">'
+      +   '<div class="h-hero__k">'+wkWord()+' 정답률</div>'
+      +   '<div class="h-hero__big">'+p+'<small>%</small></div>'
+      +   '<div class="h-hero__delta">'+line+'</div>'
+      +   '<div class="h-hero__sub">'
+      +     '<span>훈련<b>'+recs.length+'회</b></span><i></i>'
+      +     '<span>학습 시간<b>'+min+'분</b></span><i></i>'
+      +     '<span>맞힌 문제<b>'+c+'/'+t+'</b></span><i></i>'
+      +     '<span>학습한 날<b>'+Object.keys(days).length+'일</b></span>'
+      +   '</div>'
+      + '</div>'
+      + sparkHtml()
+      + '</div>';
+  }
+
+  /* 4주 스파크 — 표는 없앴다. 학습 없는 주는 0%가 아니라 「학습 없음」 */
+  function sparkHtml(){
+    var bars='';
+    for(var i=3;i>=0;i--){
+      var m=addD(week,-7*i), rs=weekRecs(m), cur=(i===0);
+      if(rs.length){
+        var bc=0,bt=0; rs.forEach(function(r){ var s=sum(r); bc+=s.c; bt+=s.t; });
+        var bp=pct(bc,bt);
+        bars+='<div class="h-sb'+(cur?' is-cur':'')+'">'
+            + '<span class="h-sb__v">'+bp+'%</span>'
+            + '<span class="h-sb__slot"><span class="h-sb__bar" style="height:'+Math.max(bp,4)+'%"></span></span>'
+            + '<span class="h-sb__wk">'+(cur&&isThisWeek()?'이번':md(m))+'</span></div>';
+      } else {
+        bars+='<div class="h-sb'+(cur?' is-cur':'')+'">'
+            + '<span class="h-sb__v is-none">없음</span>'
+            + '<span class="h-sb__slot"><span class="h-sb__none"></span></span>'
+            + '<span class="h-sb__wk">'+(cur&&isThisWeek()?'이번':md(m))+'</span></div>';
+      }
+    }
+
+    return '<div class="h-spark"><div class="h-spark__k">최근 4주</div>'
+         + '<div class="h-spark__bars">'+bars+'</div></div>';
+  }
+
+  /* 빈 주 / 첫 사용의 요약 자리 (brief §7) */
+  function emptyHero(){
+    if(!DATA.length){
+      /* 첫 사용 — 비교할 4주가 아직 없으니 스파크는 그리지 않는다 */
+      return '<div class="h-hero h-hero--empty u-rise"><div class="h-hero__l">'
+        + '<div class="h-hero__big is-none">아직 학습 기록이 없어요</div>'
+        + '<div class="h-hero__delta">첫 훈련을 마치면 여기에 기록이 쌓여요</div>'
+        + '<div class="h-hero__act"><button class="u-btn" id="goHome">행성 홈으로</button></div>'
+        + '</div></div>';
+    }
+    var last = latestRecordedWeek();
+    return '<div class="h-hero u-rise"><div class="h-hero__l">'
+      + '<div class="h-hero__big is-none">'+wkWord()+'에는 학습 기록이 없어요</div>'
+      + '<div class="h-hero__delta">가장 최근 기록은 '+rangeLabel(last)+' 주에 있어요</div>'
+      + '<div class="h-hero__act"><button class="u-btn" id="goLast" data-w="'+iso(last)+'">기록이 있는 주로 가기</button></div>'
+      + '</div>'
+      + sparkHtml()
+      + '</div>';
+  }
+
+  /* ---- 토글 줄 ---- */
+  function renderBar(){
+    var host=document.getElementById('bar'), recs=weekRecs(week);
+    var subs={}; recs.forEach(function(r){ subs[r.sub]=1; });
+    var note = view==='sub'
+      ? wkWord()+'에 학습한 소단원 '+Object.keys(subs).length+'개'
+      : '훈련 '+recs.length+'회';
+    host.innerHTML =
+      '<div class="h-bar u-rise">'
+      + '<div class="u-seg" id="viewSeg">'
+      +   '<button data-v="sub"'+(view==='sub'?' class="is-on"':'')+'>학습한 내용</button>'
+      +   '<button data-v="date"'+(view==='date'?' class="is-on"':'')+'>날짜별</button>'
+      + '</div>'
+      + '<span class="h-bar__note">'+note+'</span>'
+      + '</div>';
+  }
+
+  /* ---- 목록 자리의 빈 문구 ----
+     요약 자리(emptyHero)가 이미 이유와 손잡이를 말했다. 여기서는 목록의 틀만 남기고
+     한 줄로 끝낸다 — 같은 말을 두 번 크게 하지 않는다 */
+  function emptySheet(){
+    return '<div class="u-sheet u-rise"><div class="h-nolist">'
+      + (DATA.length ? '이 주에 한 훈련이 없어요.' : '아직 훈련 기록이 없어요.')
+      + '</div></div>';
+  }
+
+  /* ---- 내용별 : 소단원 카드 (P2 훈련 우선) ----
+     카드 안의 진행 상태는 「누적」이다(그 소단원의 현재 상태). 이번 주에 한 활동에만
+     태그를 얹는다 — "이번 주에 뭘 했나"와 "이 단원 어디까지 왔나"를 한 카드가 답한다. */
+  function subCards(){
+    var recs = weekRecs(week);
+    var order=[], seen={};
+    recs.slice().sort(function(a,b){ return a.at<b.at?1:-1; })
+        .forEach(function(r){ if(!seen[r.sub]){ seen[r.sub]=1; order.push(r); } });
+
+    return '<div class="u-sheet u-rise">' + order.map(function(head){
+      var all = DATA.filter(function(r){ return r.sub===head.sub; });
+
+      /* 소단원 결과(라운드 단위) — 그 라운드의 세 훈련이 모두 완료돼야 열린다 */
+      var openR=0, showR=1, doneN=0;
+      for(var r=1;r<=3;r++){
+        var n=0; KINDS.forEach(function(k){
+          if(all.some(function(x){ return x.kind===k && x.round===r && x.done; })) n++; });
+        if(n===3) openR=r; else { showR=r; doneN=n; break; }
+      }
+      var res = openR
+        ? '<button class="h-res h-res--open" data-res="'+openR+'"><b>소단원 결과 보기 ›</b>R'+openR+' 세 훈련 완료</button>'
+        : '<div class="h-res"><b>소단원 결과 잠김</b>R'+showR+' 세 훈련 중 '+doneN+'/3 완료</div>';
+
+      var cols = KINDS.map(function(kind){
+        var mine = all.filter(function(x){ return x.kind===kind; })
+                      .sort(function(a,b){ return a.round-b.round; });
+        var chips='';
+        if(!mine.length){
+          chips = '<button class="h-chip h-chip--go" data-go="'+kind+'">'
+                + '<span class="h-chip__t"><span class="h-chip__st">아직 시작 전</span>'
+                + '<span class="h-chip__go">시작하기 ›</span></span></button>';
+        } else {
+          mine.forEach(function(rec,i){
+            var wk = inWeek(rec, week) ? '<span class="h-chip__wk">'+wkWord()+'</span>' : '';
+            if(!rec.done){
+              chips += '<button class="h-chip h-chip--go'+(wk?' h-chip--wk':'')+'" data-go="'+kind+'">'
+                    +  '<span class="h-chip__t"><span class="h-chip__r">R'+rec.round+'</span>'
+                    +  '<span class="h-chip__st">진행 중</span>'+wk
+                    +  '<span class="h-chip__go">이어하기 ›</span></span></button>';
+              return;
+            }
+            var s=sum(rec), p=pct(s.c,s.t), dl='';
+            var prevRec = mine[i-1];
+            if(prevRec && prevRec.done){
+              /* 직전 라운드 대비 가장 크게 변한 세부활동 한 줄. 전체 점수는 같아도
+                 안에서 움직인 것이 있다 — 그게 이 화면의 요점이다 */
+              var best=null;
+              rec.acts.forEach(function(a){
+                var b=prevRec.acts.filter(function(x){ return x.n===a.n; })[0]; if(!b) return;
+                var diff = pct(a.c,a.t) - pct(b.c,b.t);
+                if(!best || Math.abs(diff)>Math.abs(best.diff)) best={n:a.n, diff:diff};
+              });
+              if(best) dl = '<span class="h-chip__d">'+best.n+' '+deltaHtml(best.diff,'%p')+'</span>';
+            }
+            chips += '<button class="h-chip h-chip--done'+(wk?' h-chip--wk':'')+'" data-rec="'+rec.at+'">'
+                  +  '<span class="h-chip__t"><span class="h-chip__r">R'+rec.round+'</span>'
+                  +  '<span class="h-chip__sc">'+p+'<small>점</small></span>'+wk+'</span>'+dl+'</button>';
+          });
+          /* 꼬리 칩 — 다음 라운드를 열 수 있으면 CTA, 아니면 잠긴 이유를 그 자리에 쓴다 */
+          var last = mine[mine.length-1];
+          if(last.done && last.round<3){
+            chips += '<button class="h-chip h-chip--go" data-go="'+kind+'">'
+                  +  '<span class="h-chip__t"><span class="h-chip__r">R'+(last.round+1)+'</span>'
+                  +  '<span class="h-chip__go">다시 하기 ›</span></span></button>';
+          } else if(!last.done && last.round<3){
+            chips += '<div class="h-chip h-chip--lock">'
+                  +  '<span class="h-chip__t"><span class="h-chip__r">R'+(last.round+1)+'</span>'
+                  +  '<span class="h-chip__st">R'+last.round+'을 마치면 열려요</span></span></div>';
+          }
+        }
+        return '<div class="h-col"><div class="h-col__k">'+kind+' 훈련</div>'
+             + '<div class="h-chips">'+chips+'</div></div>';
+      }).join('');
+
+      return '<div class="h-sub">'
+        + '<div class="h-sub__hd"><div>'
+        +   '<div class="h-sub__path">'+SUBJ_KO+' · '+head.sem+' › '+head.unit+'</div>'
+        +   '<div class="h-sub__nm">'+head.sub+'</div>'
+        + '</div>'+res+'</div>'
+        + '<div class="h-cols">'+cols+'</div>'
+        + '</div>';
+    }).join('') + '</div>';
+  }
+
+  /* ---- 날짜별 : 타임라인 ---- */
+  function timeline(){
+    var recs = weekRecs(week).slice().sort(function(a,b){ return a.at<b.at?1:-1; });
+    var days=[], byDay={};
+    recs.forEach(function(r){ var k=r.at.slice(0,10);
+      if(!byDay[k]){ byDay[k]=[]; days.push(k); } byDay[k].push(r); });
+
+    return '<div class="u-sheet u-rise">' + days.map(function(k){
+      var dt=d(k), items=byDay[k];
+      var min=0; items.forEach(function(r){ min+=r.min; });
+      var rows = items.map(function(rec){
+        /* 타임라인은 「지금 보는 주」만 담으니 주 표시는 뜻이 없다. 대신 아직 손에 잡히는
+           것(진행 중)만 점을 밝힌다 */
+        var wk = rec.done ? '' : ' h-ti--ing';
+        var right, tag;
+        if(!rec.done){
+          right = '<span class="h-ti__min">'+rec.min+'분</span><span class="h-ti__ing">이어하기 ›</span>';
+          tag = '<button class="h-ti__bx" data-go="'+rec.kind+'">';
+        } else {
+          var s=sum(rec), p=pct(s.c,s.t);
+          /* 같은 소단원·훈련의 직전 라운드 전체 점수와 비교 */
+          var prevRec = DATA.filter(function(x){ return x.sub===rec.sub && x.kind===rec.kind
+                          && x.round===rec.round-1 && x.done; })[0];
+          var dl='';
+          if(prevRec){ var ps=sum(prevRec);
+            dl = '<span class="h-ti__d">'+deltaHtml(p-pct(ps.c,ps.t),'%p')+'</span>'; }
+          right = '<span class="h-ti__min">'+rec.min+'분</span>'
+                + '<span class="h-ti__sc">'+p+'<small>점</small></span>'+dl;
+          tag = '<button class="h-ti__bx" data-rec="'+rec.at+'">';
+        }
+        return '<div class="h-ti'+wk+'">'
+          + '<span class="h-ti__tm">'+rec.at.slice(11,16)+'</span>'
+          + '<span class="h-ti__rail"><span class="h-ti__dot"></span></span>'
+          + tag
+          +   '<span class="h-ti__m"><span class="h-ti__what">'+rec.kind+' 훈련 · R'+rec.round+'</span>'
+          +   '<span class="h-ti__where">'+rec.sub+'</span></span>'
+          +   '<span class="h-ti__r">'+right+'</span>'
+          + '</button>'
+          + '</div>';
+      }).join('');
+      return '<div class="h-day"><div class="h-day__d">'+(dt.getMonth()+1)+'월 '+dt.getDate()+'일'
+        + '<small>'+DOW[dt.getDay()]+'요일</small><em>'+items.length+'회 · '+min+'분</em></div>'
+        + '<div class="h-ties">'+rows+'</div></div>';
+    }).join('') + '</div>';
+  }
+
+  /* ---- 결과 모달 ---- */
+  function openModal(at){
+    var rec = DATA.filter(function(r){ return r.at===at; })[0]; if(!rec) return;
+    var prevRec = DATA.filter(function(x){ return x.sub===rec.sub && x.kind===rec.kind
+                    && x.round===rec.round-1 && x.done; })[0];
+    var s=sum(rec), p=pct(s.c,s.t), gr=grade(p);
+
+    var rows = rec.acts.map(function(a){
+      var ap=pct(a.c,a.t), cell='<td></td>';
+      if(prevRec){
+        var b=prevRec.acts.filter(function(x){ return x.n===a.n; })[0];
+        cell = '<td>'+(b?deltaHtml(ap-pct(b.c,b.t),'%p'):'<span class="h-d--eq">—</span>')+'</td>';
+      }
+      return '<tr><td>'+a.n+'</td><td>'+a.c+'/'+a.t+'</td><td>'+ap+'%</td>'+(prevRec?cell:'')+'</tr>';
+    }).join('');
+    var totCell='';
+    if(prevRec){ var ps=sum(prevRec);
+      totCell = '<td>'+deltaHtml(p-pct(ps.c,ps.t),'%p')+'</td>'; }
+
+    var when = rec.at.slice(0,4)+'.'+rec.at.slice(5,7)+'.'+rec.at.slice(8,10)+' '+rec.at.slice(11,16);
+    var next = rec.round<3 ? 'R'+(rec.round+1)+' 다시 하기' : '복습하기';
+
+    document.getElementById('modal').innerHTML =
+      '<div class="h-modal__box" role="dialog" aria-modal="true">'
+      + '<div class="h-modal__top"><div>'
+      +   '<div class="h-modal__t">'+rec.kind+' 훈련 결과 · R'+rec.round+'</div>'
+      +   '<div class="h-modal__s">'+rec.sub+'<br>'+when+' 완료 · '+rec.min+'분</div>'
+      + '</div><div class="h-grade"><div class="h-grade__g">'+gr.g+'</div>'
+      +   '<div class="h-grade__w">'+gr.w+'</div></div></div>'
+      + '<table class="h-tb"><tr><th>활동</th><th>맞힌 문제</th><th>정답률</th>'
+      +   (prevRec?'<th>지난 라운드보다</th>':'')+'</tr>'
+      +   rows
+      +   '<tr class="is-sum"><td>전체</td><td>'+s.c+'/'+s.t+'</td><td>'+p+'%</td>'+totCell+'</tr>'
+      + '</table>'
+      + '<div class="h-modal__act">'
+      +   '<button class="h-mbtn" data-mclose>닫기</button>'
+      +   '<button class="h-mbtn h-mbtn--p" data-mgo="'+rec.kind+'">'+next+'</button>'
+      + '</div></div>';
+    document.getElementById('modal').classList.add('is-open');
+  }
+  function closeModal(){ var m=document.getElementById('modal');
+    m.classList.remove('is-open'); m.innerHTML=''; }
+
+  /* ---- 달력 점프 (보조) — 행 하나가 한 주다 ---- */
+  function renderCal(){
+    var host=document.getElementById('cal');
+    var first=new Date(calMonth.getFullYear(), calMonth.getMonth(), 1);
+    var start=monday(first), recDays={};
+    DATA.forEach(function(r){ recDays[r.at.slice(0,10)]=1; });
+
+    var rows='';
+    for(var w=0; w<6; w++){
+      var mon=addD(start, w*7);
+      if(w>0 && mon.getMonth()!==calMonth.getMonth() && mon>first) break;
+      var cells='';
+      for(var i=0;i<7;i++){
+        var day=addD(mon,i), k=iso(day);
+        cells += '<span class="h-cal__d'+(day.getMonth()!==calMonth.getMonth()?' is-out':'')
+              +  (recDays[k]?' has-rec':'')+'">'+day.getDate()+'</span>';
+      }
+      /* 버튼 자식에는 grid가 먹지 않는 브라우저가 있다 — 안쪽에 한 겹 둔다 */
+      rows += '<button class="h-cal__wk'+(iso(mon)===iso(week)?' is-on':'')+'" data-w="'+iso(mon)+'"'
+           +  (iso(mon)>iso(THIS_MON)?' disabled':'')+'><span class="h-cal__row">'+cells+'</span></button>';
+    }
+    var prevOk=true, nextOk = new Date(calMonth.getFullYear(), calMonth.getMonth()+1, 1) <= THIS_MON;
+    host.innerHTML =
+      '<div class="h-cal__hd">'
+      + '<button class="h-cal__nav" data-m="-1"'+(prevOk?'':' disabled')+'><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>'
+      + '<span class="h-cal__mo">'+calMonth.getFullYear()+'년 '+(calMonth.getMonth()+1)+'월</span>'
+      + '<button class="h-cal__nav" data-m="1"'+(nextOk?'':' disabled')+'><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>'
+      + '</div>'
+      + '<div class="h-cal__dow"><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span><span>일</span></div>'
+      + rows
+      + '<div class="h-cal__foot">한 줄이 한 주예요 · 점이 있는 날에 기록이 있어요</div>';
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════
+     ⑤ 그리기 · 이벤트
+     ═══════════════════════════════════════════════════════════════════════ */
+  function render(){
+    renderNav(); renderHero(); renderBar();
+    var host=document.getElementById('list');
+    host.innerHTML = weekRecs(week).length ? (view==='sub' ? subCards() : timeline()) : emptySheet();
+    if(document.getElementById('cal').classList.contains('is-open')) renderCal();
+  }
+
+  var toastEl=document.getElementById('toast'), tt;
+  function toast(m){ toastEl.textContent=m; toastEl.classList.add('show'); clearTimeout(tt);
+    tt=setTimeout(function(){ toastEl.classList.remove('show'); },1900); }
+
+  function goWeek(mon){ week=mon; calMonth=new Date(mon.getFullYear(), mon.getMonth(), 1); render(); }
+
+  document.getElementById('prevWk').addEventListener('click', function(){ goWeek(addD(week,-7)); });
+  document.getElementById('nextWk').addEventListener('click', function(){ goWeek(addD(week,7)); });
+  document.getElementById('thisWk').addEventListener('click', function(){ goWeek(THIS_MON); });
+
+  var calEl=document.getElementById('cal'), calBtn=document.getElementById('calBtn');
+  calBtn.addEventListener('click', function(e){ e.stopPropagation();
+    var on=calEl.classList.toggle('is-open'); calBtn.classList.toggle('is-on',on); if(on) renderCal(); });
+  calEl.addEventListener('click', function(e){
+    e.stopPropagation();
+    var m=e.target.closest('[data-m]');
+    if(m){ calMonth=new Date(calMonth.getFullYear(), calMonth.getMonth()+parseInt(m.dataset.m,10), 1);
+      renderCal(); return; }
+    var w=e.target.closest('[data-w]');
+    if(w && !w.disabled){ week=d(w.dataset.w); calEl.classList.remove('is-open');
+      calBtn.classList.remove('is-on'); render(); }
+  });
+  document.addEventListener('click', function(){
+    calEl.classList.remove('is-open'); calBtn.classList.remove('is-on'); });
+
+  document.getElementById('bar').addEventListener('click', function(e){
+    var b=e.target.closest('[data-v]'); if(!b) return;
+    view=b.dataset.v; render();
+  });
+
+  document.getElementById('list').addEventListener('click', function(e){
+    var rec=e.target.closest('[data-rec]');
+    if(rec){ openModal(rec.dataset.rec); return; }
+    var go=e.target.closest('[data-go]');
+    if(go){ location.href=ENTRY[go.dataset.go]; return; }
+    var res=e.target.closest('[data-res]');
+    if(res){ toast('소단원 종합 결과 화면은 준비 중입니다.'); return; }
+  });
+
+  document.getElementById('hero').addEventListener('click', function(e){
+    var last=e.target.closest('#goLast');
+    if(last){ goWeek(d(last.dataset.w)); return; }
+    if(e.target.closest('#goHome')) location.href='nav/home.html';
+  });
+
+  document.getElementById('modal').addEventListener('click', function(e){
+    if(e.target===this || e.target.closest('[data-mclose]')) return closeModal();
+    var g=e.target.closest('[data-mgo]'); if(g) location.href=ENTRY[g.dataset.mgo];
+  });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
+
+  document.getElementById('headSub').textContent =
+    SUBJ_KO+' · 훈련 기록과 라운드마다 나아진 만큼을 확인하세요.';
+
+  render();
+  })();
+  </script>
+  <script src="scripts/gnb-drawer.js?v=8"></script>
+</body>
+</html>
