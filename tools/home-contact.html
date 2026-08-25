@@ -57,8 +57,8 @@
       ['mid-1-1','중등 1-1'],['mid-1-2','중등 1-2'],['mid-2-1','중등 2-1'],['mid-2-2','중등 2-2'],
       ['mid-3-1','중등 3-1'],['mid-3-2','중등 3-2'],['high-1-1','고등 1-1'],['high-1-2','고등 1-2']
     ];
-    var HAS_CHAR = { 'math-elem-3-1':1,'math-mid-3-1':1,'math-mid-3-2':1,
-                     'sci-elem-3-1':1,'sci-mid-3-1':1,'sci-mid-3-2':1 };
+    var HAS_CHAR = {};
+    SEMS.forEach(function(s){ HAS_CHAR['math-' + s[0]] = HAS_CHAR['sci-' + s[0]] = 1; });
     var host = document.getElementById('host');
 
     [{ q:'math', name:'수학', pre:'math' }, { q:'science', name:'과학', pre:'sci' }].forEach(function(subj){

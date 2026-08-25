@@ -259,11 +259,13 @@
         'sci-mid-3-1'  :'<b>(1) 화학 반응의 규칙</b>의 <b>유형 훈련</b>을 시작해보세요!',
         'sci-mid-3-2'  :'<b>(1) 역학적 에너지</b>의 <b>개념 훈련</b>을 시작해보세요!'
       };
-      /* 캐릭터 원본이 있는 학기 — 나머지는 말풍선만 세운다.
+      /* 캐릭터가 있는 학기 — 2026-08-25에 16학기 전부 채워졌다(교체될 수 있음).
          학기당 한 명이고 수학·과학이 같은 그림이라 키가 항상 두 개씩 늘어난다.
-         2등신 확정본: elem-3-1. 나머지(mid-3-1·mid-3-2)는 옛 3등신이라 교체 대상. */
-      var HAS_CHAR = { 'math-elem-3-1':1, 'math-mid-3-1':1, 'math-mid-3-2':1,
-                       'sci-elem-3-1':1, 'sci-mid-3-1':1, 'sci-mid-3-2':1 };
+         비어 있는 학기가 생기면 여기서 키를 빼면 말풍선만 서는 화면으로 돌아간다. */
+      var HAS_CHAR = {};
+      ['elem-3-1','elem-3-2','elem-4-1','elem-4-2','elem-5-1','elem-5-2','elem-6-1','elem-6-2',
+       'mid-1-1','mid-1-2','mid-2-1','mid-2-2','mid-3-1','mid-3-2','high-1-1','high-1-2']
+        .forEach(function(s){ HAS_CHAR['math-' + s] = HAS_CHAR['sci-' + s] = 1; });
 
       var LVL = { elem:'초등', mid:'중등', high:'고등' };
       function semLabel(s){
@@ -280,7 +282,7 @@
 
       /* 캐릭터 파일은 앞으로 학기별로 계속 교체된다. 파일명이 그대로면 브라우저가
          옛 그림을 계속 써서 「바꿨는데 안 바뀐다」가 된다 — 교체할 때 이 숫자를 올린다. */
-      var CHAR_V = 2;
+      var CHAR_V = 3;
       var hero = safe.querySelector('.hero');
       if(HAS_CHAR[key]) document.getElementById('char').src = dir + '/character.webp?v=' + CHAR_V;
       else hero.classList.add('is-nochar');
@@ -452,6 +454,6 @@
       // 메뉴 → 공용 사이드 드로어 (gnb-drawer.js가 #menuBtn에 자동 바인딩)
     })();
   </script>
-  <script src="scripts/gnb-drawer.js?v=7"></script>
+  <script src="scripts/gnb-drawer.js?v=8"></script>
 </body>
 </html>
