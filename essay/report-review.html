@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="styles/tokens.css?v=25" />
   <link rel="stylesheet" href="styles/base.css?v=7" />
   <link rel="stylesheet" href="styles/components.css?v=10" />
-  <link rel="stylesheet" href="styles/learn-shell.css?v=8" />
+  <link rel="stylesheet" href="styles/learn-shell.css?v=20260828" />
   <link rel="stylesheet" href="styles/essay.css?v=11" />
   <link rel="stylesheet" href="styles/monitor.css?v=3" />
   <style>
@@ -70,7 +70,7 @@
        오답을 눌러 정답으로 치환한 칸은 정답 스타일이되 뱃지 없음(원래 맞힌 칸과 구분) */
     .rblank.is-correct::after, .rblank.is-wrong::after {
       position: absolute; top: -7px; right: -7px; width: 17px; height: 17px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 10px; color: #fff;
+      display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 10px; color: var(--static-on);
       box-shadow: 0 1px 3px rgba(0,0,0,.3); }
     .rblank.is-correct::after { content: '✓'; background: var(--ok-solid); }
     .rblank.is-wrong::after { content: '✕'; background: var(--no-solid); }
@@ -182,7 +182,7 @@
   <div class="ptoast" id="ptoast"></div>
 
   <!-- 연습장 캔버스 (공용) -->
-  <script src="scripts/scratchpad.js?v=13"></script>
+  <script src="scripts/scratchpad.js?v=20260828"></script>
   <script src="scripts/essay-report-review.js?v=1"></script>
 </body>
 </html>

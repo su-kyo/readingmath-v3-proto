@@ -77,7 +77,7 @@
 .keypad__key--ok{
   grid-column: span 2;
   background: var(--th-vivid);
-  color: var(--th-on-accent, #fff);
+  color: var(--th-on-accent);
   font-family: var(--font-sans);
   font-size: 19px; font-weight: var(--fw-heavy);
   box-shadow: none;

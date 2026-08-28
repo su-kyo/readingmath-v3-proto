@@ -8,8 +8,8 @@
   <link rel="stylesheet" href="styles/tokens.css?v=25" />
   <link rel="stylesheet" href="styles/base.css?v=7" />
   <link rel="stylesheet" href="styles/components.css?v=10" />
-  <link rel="stylesheet" href="styles/learn-shell.css?v=8" />
-  <link rel="stylesheet" href="styles/keypad.css?v=2" />
+  <link rel="stylesheet" href="styles/learn-shell.css?v=20260828" />
+  <link rel="stylesheet" href="styles/keypad.css?v=20260828" />
   <link rel="stylesheet" href="scripts/vendor/katex/katex.min.css" />
   <style>
     /* 콘텐츠 패널을 세로 3분할: [상단 프로그레스 고정] [문제 스크롤] [채점 버튼 고정] */
@@ -57,7 +57,7 @@
     .qtab { min-width: 28px; height: 28px; padding: 0 7px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center;
       font-family: var(--font-sans); font-weight: 800; font-size: 13px; background: rgba(255,255,255,.10); color: rgba(255,255,255,.5); transition: background .16s, color .16s, box-shadow .16s; }
     .qtab svg { width: 15px; height: 15px; }
-    .qtab.is-done { background: color-mix(in srgb, var(--th-accent) 48%, transparent); color: #fff; }
+    .qtab.is-done { background: color-mix(in srgb, var(--th-accent) 48%, transparent); color: var(--static-on); }
     /* 현재 문제 = 흰 링으로 대비 강화 (색맹 대비: border 형태로 구분) */
     .qtab.is-active { background: var(--th-solid); color: var(--n-000); box-shadow: 0 0 0 2px var(--n-000), 0 2px 8px rgba(0,0,0,.32); }
     /* 정/오답 = 색 + 아이콘(색맹 접근성).
@@ -190,7 +190,7 @@
        오답을 눌러 정답으로 치환한 칸은 정답 스타일이되 뱃지 없음(원래 맞힌 칸과 구분) */
     .dblank.is-correct::after, .dblank.is-wrong::after {
       position: absolute; top: -8px; right: -8px; width: 17px; height: 17px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 10px; color: #fff;
+      display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 10px; color: var(--static-on);
       text-decoration: none; box-shadow: 0 1px 3px rgba(0,0,0,.3); }
     .dblank.is-correct::after { content: '✓'; background: var(--ok-solid); }
     .dblank.is-wrong::after { content: '✕'; background: var(--no-solid); }
@@ -273,7 +273,7 @@
 
   <!-- 검수용 디버그 패널 (?debug=1 일 때만 보임) -->
   <!-- 연습장 캔버스 (공용) -->
-  <script src="scripts/scratchpad.js?v=13"></script>
+  <script src="scripts/scratchpad.js?v=20260828"></script>
   <script src="scripts/debug-panel.js?v=3"></script>
   <!-- 키패드 물리 키보드 입력 (공용) -->
   <script src="scripts/vendor/katex/katex.min.js"></script>

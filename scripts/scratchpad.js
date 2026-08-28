@@ -285,7 +285,7 @@
       var p = pos(e);
       var dpr = window.devicePixelRatio || 1;
       ctx.globalCompositeOperation = tool === 'eraser' ? 'destination-out' : 'source-over';
-      ctx.strokeStyle = getComputedStyle(root).getPropertyValue('--scratch-ink-' + ink).trim() || '#1F2B49';
+      ctx.strokeStyle = getComputedStyle(root).getPropertyValue('--scratch-ink-' + ink).trim() || '#1F2B49'; /* 방어값 = --n-600 */
       ctx.lineWidth = (tool === 'eraser' ? 26 : 3) * dpr;
       ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x, p.y); ctx.stroke();
     });

@@ -14,14 +14,14 @@ body.learn-body { background: var(--asset-console-concept-body); overflow: hidde
 /* ===== 헤더 ===== */
 .lheader { display: flex; align-items: center; justify-content: space-between; gap: 16px; background: var(--th-static); border-radius: var(--r-pill); padding: 8px 12px 8px 32px; color: var(--th-on-accent); flex: none; }
 .breadcrumb { display: flex; align-items: center; gap: 8px; font-size: clamp(13px, 1.1vw, 15px); min-width: 0; overflow: hidden; }
-.breadcrumb .sep { opacity: .45; flex: none; color: #fff; }
+.breadcrumb .sep { opacity: .45; flex: none; color: var(--static-on); }
 .breadcrumb .crumb { opacity: .72; font-weight: 500; white-space: nowrap; }
 .breadcrumb .crumb--strong { opacity: 1; font-weight: 700; }
 .breadcrumb .crumb--clip { overflow: hidden; text-overflow: ellipsis; }
 .lheader__actions { display: flex; align-items: center; gap: 8px; flex: none; }
 
 /* 헤더 타이머 (유형·서술형 공통) — 스텝 결과에선 .is-paused 로 정지 표시 */
-.lheader__timer { display: inline-flex; align-items: center; gap: 6px; background: rgba(0,0,0,.26); border-radius: 999px; padding: 6px 14px; margin-right: 4px; flex: none; color: #fff; }
+.lheader__timer { display: inline-flex; align-items: center; gap: 6px; background: rgba(0,0,0,.26); border-radius: 999px; padding: 6px 14px; margin-right: 4px; flex: none; color: var(--static-on); }
 .lheader__timer img { width: 18px; height: 18px; }
 .lheader__timer span { font-family: var(--font-mono); font-weight: 700; font-size: 16px; letter-spacing: .02em; }
 .lheader__timer.is-paused { opacity: .62; }
@@ -100,14 +100,14 @@ body.learn-body { background: var(--asset-console-concept-body); overflow: hidde
 .smodal__btn { flex: 1; height: 52px; border-radius: 15px; font-family: var(--font-sans); font-weight: 800; font-size: 16px; cursor: pointer; transition: filter .12s, background .12s, transform .08s; }
 .smodal__btn--ghost { background: var(--surface-2); color: var(--text); }
 .smodal__btn--ghost:hover { background: var(--surface-3); }
-.smodal__btn--go { background: var(--primary); color: #fff; box-shadow: 0 4px 0 var(--primary-pressed); }
+.smodal__btn--go { background: var(--primary); color: var(--static-on); box-shadow: 0 4px 0 var(--primary-pressed); }
 .smodal__btn--go:hover { background: var(--primary-hover); }
 .smodal__btn--go:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--primary-pressed); }
 
 /* ===== 공용 토스트 (step-progress가 주입) ===== */
 .smtoast { position: fixed; left: 50%; bottom: 118px; transform: translateX(-50%) translateY(10px); z-index: 400;
   padding: 11px 20px; border-radius: 999px; font-family: var(--font-sans); font-size: 14px; font-weight: 600;
-  background: rgba(18,22,40,.94); color: #fff; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
+  background: rgba(18,22,40,.94); color: var(--static-on); opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
 .smtoast.is-on { opacity: 1; transform: translateX(-50%) translateY(0); }
 
 /* ===== 반응형 (공통) ===== */

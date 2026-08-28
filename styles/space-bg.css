@@ -15,7 +15,7 @@
     radial-gradient(1100px 740px at 80% -8%, rgba(64,92,178,.40), transparent 62%),
     radial-gradient(920px 700px at 10% 110%, rgba(84,60,164,.32), transparent 58%),
     radial-gradient(760px 560px at 52% 44%, rgba(26,48,112,.30), transparent 72%),
-    linear-gradient(180deg, #050b26 0%, #070f31 46%, #04091f 100%);
+    linear-gradient(180deg, var(--art-space-top) 0%, var(--art-space-mid) 46%, var(--art-space-bottom) 100%);
 }
 
 .spacebg__stars { position: absolute; inset: 0; pointer-events: none; }
@@ -23,7 +23,7 @@
 .spacebg .star {
   position: absolute;
   border-radius: 50%;
-  background: #fff;
+  background: var(--n-000);
   color: var(--art-star);                 /* cross sparkle 색 */
   opacity: var(--o, .6);
   animation: rm-twinkle var(--d, 3.4s) ease-in-out var(--delay, 0s) infinite;

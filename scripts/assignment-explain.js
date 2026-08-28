@@ -14,17 +14,17 @@
     var ax = 40, ay = 20, w = 250, h = 160, step = 46, dots = '', grid = '';
     pts.forEach(function (p) {
       var cx = ax + p[0] * step * 0.86, cy = ay + h - p[1] * step * 0.62;
-      dots += '<circle cx="' + cx.toFixed(0) + '" cy="' + cy.toFixed(0) + '" r="4" fill="#1E1E1E"/>';
+      dots += '<circle cx="' + cx.toFixed(0) + '" cy="' + cy.toFixed(0) + '" r="4" style="fill:var(--n-650)"/>';
     });
     for (var i = 1; i <= 5; i++) {
-      var gx = ax + i * step * 0.86; grid += '<line x1="' + gx + '" y1="' + ay + '" x2="' + gx + '" y2="' + (ay + h) + '" stroke="#E6E6E6"/>';
-      var gy = ay + h - i * step * 0.62; grid += '<line x1="' + ax + '" y1="' + gy + '" x2="' + (ax + w) + '" y2="' + gy + '" stroke="#E6E6E6"/>';
+      var gx = ax + i * step * 0.86; grid += '<line x1="' + gx + '" y1="' + ay + '" x2="' + gx + '" y2="' + (ay + h) + '" style="stroke:var(--n-100)"/>';
+      var gy = ay + h - i * step * 0.62; grid += '<line x1="' + ax + '" y1="' + gy + '" x2="' + (ax + w) + '" y2="' + gy + '" style="stroke:var(--n-100)"/>';
     }
     return '<svg viewBox="0 0 320 214" xmlns="http://www.w3.org/2000/svg">' + grid +
-      '<line x1="' + ax + '" y1="' + ay + '" x2="' + ax + '" y2="' + (ay + h) + '" stroke="#1E1E1E" stroke-width="2"/>' +
-      '<line x1="' + ax + '" y1="' + (ay + h) + '" x2="' + (ax + w) + '" y2="' + (ay + h) + '" stroke="#1E1E1E" stroke-width="2"/>' + dots +
-      '<text x="' + (ax + w) + '" y="' + (ay + h + 16) + '" font-size="11" text-anchor="end" fill="#1E1E1E">음악(점)</text>' +
-      '<text x="' + (ax - 6) + '" y="' + (ay - 6) + '" font-size="11" fill="#1E1E1E">미술(점)</text></svg>';
+      '<line x1="' + ax + '" y1="' + ay + '" x2="' + ax + '" y2="' + (ay + h) + '" stroke-width="2" style="stroke:var(--n-650)"/>' +
+      '<line x1="' + ax + '" y1="' + (ay + h) + '" x2="' + (ax + w) + '" y2="' + (ay + h) + '" stroke-width="2" style="stroke:var(--n-650)"/>' + dots +
+      '<text x="' + (ax + w) + '" y="' + (ay + h + 16) + '" font-size="11" text-anchor="end" style="fill:var(--n-650)">음악(점)</text>' +
+      '<text x="' + (ax - 6) + '" y="' + (ay - 6) + '" font-size="11" style="fill:var(--n-650)">미술(점)</text></svg>';
   }
 
   // 15문항: answer=정답, user=학생답(null=미입력). Q4·Q7·Q10 오답.

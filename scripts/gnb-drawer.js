@@ -19,56 +19,77 @@
   function subject(){ return localStorage.getItem('rm-subject') || 'math'; }
   function semKey(){ return localStorage.getItem('rm-sem') || 'elem-3-1'; }
 
+  /* 색은 토큰만 쓴다 (CLAUDE.md ②).
+     서랍은 GNB에 딸린 면이고 GNB는 항상 다크다(gnb.css) — 그래서 테마에 따라 뒤집히는
+     시맨틱(--surface-*·--text·--border)이 아니라, 뒤집히지 않는 램프(--n-*)를 직접 쓴다.
+     호버·경계의 흰 알파도 팔레트 색이 아니라 덧대는 막이라 gnb.css와 같은 방식으로 남긴다. */
   var CSS = ''
-    + '.rmd-scrim{position:fixed;inset:0;z-index:80;background:rgba(3,7,18,.6);opacity:0;pointer-events:none;transition:.24s;}'
+    + '.rmd,.rmd-modal,.rmd-toast{'
+    +   '--rmd-face:var(--n-800);'                  /* 서랍·모달 면 (GNB n-900 위 한 단계) */
+    +   '--rmd-raised:var(--n-700);'                /* 카드·탭·타일·토스트 */
+    +   '--rmd-ink:var(--n-050);'                   /* 본문 글자 */
+    +   '--rmd-ink-2:var(--n-200);'                 /* 메뉴·고스트 글자 */
+    +   '--rmd-ink-3:var(--n-300);'                 /* 닫기 버튼 */
+    +   '--rmd-meta:var(--n-350);'                  /* 보조 글자·아이콘 (다크 4.9) */
+    +   '--rmd-line:rgba(255,255,255,.08);'
+    +   '--rmd-line-2:rgba(255,255,255,.16);'
+    +   '--rmd-hover:rgba(255,255,255,.06);'
+    +   '--rmd-fill:rgba(255,255,255,.08);'
+    +   '--rmd-fill-hover:rgba(255,255,255,.16);'
+    + '}'
+    + '.rmd-scrim{position:fixed;inset:0;z-index:80;background:var(--scrim);opacity:0;pointer-events:none;transition:.24s;}'
     + '.rmd-scrim.is-open{opacity:1;pointer-events:auto;}'
-    + '.rmd{position:fixed;top:0;right:0;bottom:0;width:384px;max-width:90vw;z-index:81;background:#0B1428;'
-    + 'border-left:1px solid rgba(255,255,255,.08);transform:translateX(102%);transition:transform .3s cubic-bezier(.3,.7,.3,1);'
-    + 'display:flex;flex-direction:column;font-family:\'Pretendard\',\'Noto Sans KR\',sans-serif;color:#EAF0FF;letter-spacing:-.02em;box-shadow:-24px 0 60px -20px #000;}'
+    + '.rmd{position:fixed;top:0;right:0;bottom:0;width:384px;max-width:90vw;z-index:81;background:var(--rmd-face);'
+    + 'border-left:1px solid var(--rmd-line);transform:translateX(102%);transition:transform .3s cubic-bezier(.3,.7,.3,1);'
+    + 'display:flex;flex-direction:column;font-family:var(--font-sans);color:var(--rmd-ink);letter-spacing:-.02em;box-shadow:-24px 0 60px -20px var(--n-950);}'
     + '.rmd.is-open{transform:none;}'
     + '.rmd__head{display:flex;align-items:center;justify-content:space-between;padding:20px 22px 14px;}'
-    + '.rmd__x{width:34px;height:34px;border:0;background:transparent;color:#9DA9C6;cursor:pointer;display:grid;place-items:center;border-radius:9px;}'
-    + '.rmd__x:hover{background:rgba(255,255,255,.06);color:#fff;}'
+    + '.rmd__x{width:34px;height:34px;border:0;background:transparent;color:var(--rmd-ink-3);cursor:pointer;display:grid;place-items:center;border-radius:9px;}'
+    + '.rmd__x:hover{background:var(--rmd-hover);color:var(--n-000);}'
     + '.rmd__prof{padding:2px 22px 16px;}'
     + '.rmd__nm{font-size:19px;font-weight:800;}'
-    + '.rmd__exp{font-size:12.5px;color:#8493B5;font-weight:600;margin-top:3px;}'
+    + '.rmd__exp{font-size:12.5px;color:var(--rmd-meta);font-weight:600;margin-top:3px;}'
     + '.rmd__cards{padding:4px 22px 8px;display:flex;flex-direction:column;gap:9px;}'
-    + '.rmd-card{display:flex;align-items:center;gap:11px;padding:13px 15px;border-radius:14px;background:#111E39;border:1px solid rgba(255,255,255,.05);}'
-    + '.rmd-card__i{width:34px;height:34px;border-radius:10px;flex:none;display:grid;place-items:center;background:rgba(76,134,255,.16);color:#7FB0FF;}'
+    + '.rmd-card{display:flex;align-items:center;gap:11px;padding:13px 15px;border-radius:14px;background:var(--rmd-raised);border:1px solid var(--rmd-line);}'
+    + '.rmd-card__i{width:34px;height:34px;border-radius:10px;flex:none;display:grid;place-items:center;background:color-mix(in srgb,var(--blue-450) 16%,transparent);color:var(--blue-300);}'
     + '.rmd-card__i svg{width:18px;height:18px;}'
     + '.rmd-card__m{flex:1;min-width:0;}'
-    + '.rmd-card__k{font-size:11.5px;color:#8493B5;font-weight:700;}'
+    + '.rmd-card__k{font-size:11.5px;color:var(--rmd-meta);font-weight:700;}'
     + '.rmd-card__v{font-size:15px;font-weight:800;margin-top:1px;}'
-    + '.rmd-card__b{border:0;background:rgba(255,255,255,.08);color:#EAF0FF;font-family:inherit;font-size:12.5px;font-weight:700;padding:7px 13px;border-radius:9px;cursor:pointer;transition:.15s;}'
-    + '.rmd-card__b:hover{background:rgba(255,255,255,.16);}'
-    + '.rmd__menu{flex:1;overflow-y:auto;padding:12px 12px 8px;margin-top:4px;border-top:1px solid rgba(255,255,255,.06);}'
-    + '.rmd-mi{display:flex;align-items:center;gap:12px;width:100%;padding:12px 12px;border:0;background:transparent;color:#D6DEF2;font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;border-radius:11px;text-align:left;}'
-    + '.rmd-mi:hover{background:rgba(255,255,255,.05);}'
-    + '.rmd-mi svg{width:19px;height:19px;color:#8493B5;flex:none;}'
-    + '.rmd__foot{padding:12px 16px 18px;border-top:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column;gap:8px;}'
-    + '.rmd-add{display:flex;align-items:center;justify-content:center;gap:8px;height:44px;border-radius:12px;border:1px solid rgba(255,255,255,.16);background:transparent;color:#EAF0FF;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;}'
-    + '.rmd-add:hover{background:rgba(255,255,255,.05);}'
-    + '.rmd-out{display:flex;align-items:center;justify-content:center;gap:8px;height:44px;border-radius:12px;border:0;background:rgba(255,64,76,.14);color:#FF7F87;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;}'
-    + '.rmd-out:hover{background:rgba(255,64,76,.22);}'
+    + '.rmd-card__b{border:0;background:var(--rmd-fill);color:var(--rmd-ink);font-family:inherit;font-size:12.5px;font-weight:700;padding:7px 13px;border-radius:9px;cursor:pointer;transition:.15s;}'
+    + '.rmd-card__b:hover{background:var(--rmd-fill-hover);}'
+    + '.rmd__menu{flex:1;overflow-y:auto;padding:12px 12px 8px;margin-top:4px;border-top:1px solid var(--rmd-line);}'
+    + '.rmd-mi{display:flex;align-items:center;gap:12px;width:100%;padding:12px 12px;border:0;background:transparent;color:var(--rmd-ink-2);font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;border-radius:11px;text-align:left;}'
+    + '.rmd-mi:hover{background:var(--rmd-hover);}'
+    + '.rmd-mi svg{width:19px;height:19px;color:var(--rmd-meta);flex:none;}'
+    + '.rmd__foot{padding:12px 16px 18px;border-top:1px solid var(--rmd-line);display:flex;flex-direction:column;gap:8px;}'
+    + '.rmd-add{display:flex;align-items:center;justify-content:center;gap:8px;height:44px;border-radius:12px;border:1px solid var(--rmd-line-2);background:transparent;color:var(--rmd-ink);font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;}'
+    + '.rmd-add:hover{background:var(--rmd-hover);}'
+    /* 로그아웃 = 위험 행동. 틴트+밝은 글자(--no-on-dark)로 다크면에서 대비를 잡는다. */
+    + '.rmd-out{display:flex;align-items:center;justify-content:center;gap:8px;height:44px;border-radius:12px;border:0;background:color-mix(in srgb,var(--no-solid) 14%,transparent);color:var(--no-on-dark);font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;}'
+    + '.rmd-out:hover{background:color-mix(in srgb,var(--no-solid) 22%,transparent);}'
     + '.rmd-add svg,.rmd-out svg{width:17px;height:17px;}'
     // 학기변경 모달
-    + '.rmd-modal{position:fixed;inset:0;z-index:90;display:none;place-items:center;background:rgba(3,7,18,.74);font-family:\'Pretendard\',\'Noto Sans KR\',sans-serif;}'
+    + '.rmd-modal{position:fixed;inset:0;z-index:90;display:none;place-items:center;background:var(--scrim);font-family:var(--font-sans);}'
     + '.rmd-modal.is-open{display:grid;}'
-    + '.rmd-modal__box{width:540px;max-width:92vw;background:#0B1428;border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:26px;color:#EAF0FF;letter-spacing:-.02em;}'
+    + '.rmd-modal__box{width:540px;max-width:92vw;background:var(--rmd-face);border:1px solid var(--rmd-line);border-radius:22px;padding:26px;color:var(--rmd-ink);letter-spacing:-.02em;}'
     + '.rmd-modal__t{font-size:21px;font-weight:800;}'
-    + '.rmd-modal__s{font-size:13.5px;color:#8493B5;font-weight:600;margin:4px 0 18px;}'
-    + '.rmd-tabs{display:flex;gap:6px;background:#111E39;padding:4px;border-radius:13px;margin-bottom:16px;}'
-    + '.rmd-tab{flex:1;padding:10px;border:0;border-radius:10px;background:transparent;color:#8493B5;font-family:inherit;font-size:14.5px;font-weight:800;cursor:pointer;transition:.15s;}'
-    + '.rmd-tab.is-on{background:#008CFF;color:#fff;}'
+    + '.rmd-modal__s{font-size:13.5px;color:var(--rmd-meta);font-weight:600;margin:4px 0 18px;}'
+    + '.rmd-tabs{display:flex;gap:6px;background:var(--rmd-raised);padding:4px;border-radius:13px;margin-bottom:16px;}'
+    + '.rmd-tab{flex:1;padding:10px;border:0;border-radius:10px;background:transparent;color:var(--rmd-meta);font-family:inherit;font-size:14.5px;font-weight:800;cursor:pointer;transition:.15s;}'
+    /* 활성 탭 라벨은 14.5px — 작은 글자라 정체성 450이 아니라 텍스트 칠면 600이다 (v1.6 §3.0b).
+       blue-500은 흰 글자 4.1로 미달, blue-600이 6.7. 드로어는 섹션 무관 공용 크롬이라
+       --th-solid(섹션 슬롯)가 아니라 램프를 직접 쓴다 — 시험대비에서 보라로 변하면 안 된다. */
+    + '.rmd-tab.is-on{background:var(--blue-600);color:var(--n-000);}'
     + '.rmd-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:20px;}'
-    + '.rmd-sem{padding:13px 6px;border-radius:12px;border:1.5px solid rgba(255,255,255,.08);background:#111E39;color:#D6DEF2;font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer;transition:.15s;}'
-    + '.rmd-sem:hover{border-color:rgba(127,176,255,.5);}'
-    + '.rmd-sem.is-sel{border-color:#4C86FF;background:rgba(76,134,255,.18);color:#fff;}'
+    + '.rmd-sem{padding:13px 6px;border-radius:12px;border:1.5px solid var(--rmd-line);background:var(--rmd-raised);color:var(--rmd-ink-2);font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer;transition:.15s;}'
+    + '.rmd-sem:hover{border-color:color-mix(in srgb,var(--blue-300) 50%,transparent);}'
+    + '.rmd-sem.is-sel{border-color:var(--blue-450);background:color-mix(in srgb,var(--blue-450) 18%,transparent);color:var(--n-000);}'
     + '.rmd-modal__foot{display:flex;gap:10px;justify-content:flex-end;}'
-    + '.rmd-modal__ghost{height:48px;padding:0 20px;border-radius:13px;border:1px solid rgba(255,255,255,.16);background:transparent;color:#C4CEE4;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;}'
-    + '.rmd-modal__go{height:48px;padding:0 26px;border-radius:13px;border:0;background:#FF7F00;color:#fff;font-family:inherit;font-size:16px;font-weight:800;cursor:pointer;}'
-    + '.rmd-modal__go:hover{background:#FF9124;}'
-    + '.rmd-toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(16px);z-index:95;background:#0E1A38;border:1px solid rgba(255,255,255,.1);color:#EAF0FF;padding:11px 18px;border-radius:12px;font-size:13.5px;font-weight:600;opacity:0;pointer-events:none;transition:.2s;font-family:\'Pretendard\',sans-serif;}'
+    + '.rmd-modal__ghost{height:48px;padding:0 20px;border-radius:13px;border:1px solid var(--rmd-line-2);background:transparent;color:var(--rmd-ink-2);font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;}'
+    + '.rmd-modal__go{height:48px;padding:0 26px;border-radius:13px;border:0;background:var(--primary);color:var(--n-000);font-family:inherit;font-size:16px;font-weight:800;cursor:pointer;}'
+    + '.rmd-modal__go:hover{background:var(--primary-hover);}'
+    + '.rmd-toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(16px);z-index:95;background:var(--rmd-raised);border:1px solid var(--rmd-line);color:var(--rmd-ink);padding:11px 18px;border-radius:12px;font-size:13.5px;font-weight:600;opacity:0;pointer-events:none;transition:.2s;font-family:var(--font-sans);}'
     + '.rmd-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}';
 
   // [라벨, 아이콘path, (선택)이동URL]
