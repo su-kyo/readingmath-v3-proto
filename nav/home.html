@@ -125,7 +125,19 @@
     .hero.is-nochar{ top:70%; width:auto; }
     .hero.is-nochar .char, .hero.is-nochar .shadow, .hero.is-nochar .bubble::after{ display:none; }
     .hero.is-nochar .bubble{ position:static; transform:none; margin:0; }
-    .hero .char{ width:100%; display:block; filter:drop-shadow(0 16px 18px rgba(15,35,80,.4)); }
+    /* 캐릭터 idle — 발은 바닥에 붙인 채 몸만 숨쉬듯 늘었다 줄었다 한다(스쿼시·스트레치).
+       머리·팔을 떼어 움직이는 방식도 검토했으나(16종 × 4파트 = 64장) 통짜 한 장으로
+       간다 — 그림이 늘어나지 않고, 다리 없는 캐릭터가 와도 그대로 산다.
+       위아래로 띄우지 않는다: 발이 바닥에서 떨어지면 그림자까지 같이 움직여야 하는데
+       숨쉬기는 그럴 필요가 없다. 그래서 회전 기준점이 발밑(50% 100%)이다.
+       가로를 줄이면서 세로를 늘려 부피를 지킨다 — 안 그러면 그냥 커졌다 작아진다. */
+    .hero .char{ width:100%; display:block; filter:drop-shadow(0 16px 18px rgba(15,35,80,.4));
+      transform-origin:50% 100%; will-change:transform;
+      animation:rm-breathe 3.4s ease-in-out infinite; }
+    @keyframes rm-breathe{
+      0%,100%{ transform:scale(1.006,.994); }
+      50%    { transform:scale(.99,1.012); }
+    }
     .hero .shadow{ position:absolute; left:50%; bottom:-4%; transform:translateX(-50%);
       width:74%; height:8%; border-radius:50%; z-index:-1;
       background:radial-gradient(50% 50% at 50% 50%, rgba(20,40,90,.34), transparent 70%); }
