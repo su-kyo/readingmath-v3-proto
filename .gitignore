@@ -24,7 +24,7 @@ node_modules/
 .vercel/
 
 # ── 원본 자산 차단 ──────────────────────────────────────────
-# 원본은 프로젝트 안에 들어오지 않는다. ~/Documents/Portfolio/_source/RM/ 에 둔다.
+# 원본은 프로젝트 안에 들어오지 않는다. ~/Documents/_source/RM/ 에 둔다.
 # 화면이 부르는 것은 경량본뿐이다 — 사진·일러스트=webp, 아이콘·로고=svg, 영상=mp4.
 # 자세한 규칙: ../../CLAUDE.md
 *.png
