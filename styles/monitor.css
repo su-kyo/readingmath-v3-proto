@@ -32,7 +32,7 @@
    ============================================================ */
 
 .monitor{
-  position: fixed; inset: 0; z-index: 300;
+  position: fixed; inset: 0; z-index: var(--z-overlay);
   display: none;
 }
 .monitor.is-open{ display: flex; flex-direction: column; align-items: center; justify-content: center; }
@@ -70,16 +70,16 @@
   width: 100%;
   background: var(--n-650);
   border-radius: var(--r-frame);
-  padding: 10px 10px 14px;
+  padding: var(--sp-8) var(--sp-8) var(--sp-12);
   box-shadow: var(--shadow-2);
 }
 
 .monitor__hd{
   flex: none;
-  display: flex; align-items: center; gap: 8px;
-  padding: 4px 6px 12px 12px;
+  display: flex; align-items: center; gap: var(--sp-8);
+  padding: var(--sp-4) var(--sp-6) var(--sp-12) var(--sp-12);
 }
-.monitor__lamps{ display: flex; gap: 6px; margin-right: 6px; }
+.monitor__lamps{ display: flex; gap: var(--sp-6); margin-right: 6px; }
 .monitor__lamps i{
   width: 9px; height: 9px; border-radius: var(--r-full);
   background: var(--n-500);
@@ -88,7 +88,7 @@
 .monitor__ttl{
   color: var(--n-000);
   font-family: var(--font-sans);
-  font-size: var(--fs-title); font-weight: var(--fw-bold);
+  font-size: var(--fs-19); font-weight: var(--fw-bold);
   letter-spacing: -0.02em;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
@@ -98,23 +98,23 @@
 .monitor__tool{
   border: none; cursor: pointer;
   background: var(--n-500); color: var(--n-000);
-  border-radius: var(--r-md);
-  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-  font-family: var(--font-sans); font-size: var(--fs-sm); font-weight: var(--fw-bold);
+  border-radius: var(--r-12);
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-6);
+  font-family: var(--font-sans); font-size: var(--fs-14); font-weight: var(--fw-bold);
   transition: background var(--t-fast);
 }
 .monitor__x:hover,
 .monitor__tool:hover{ background: var(--n-400); }
 .monitor__x{ margin-left: auto; width: 40px; height: 36px; flex: none; }
-.monitor__tool{ height: 36px; padding: 0 14px; flex: none; }
-.monitor__tools{ display: flex; gap: 8px; margin-left: auto; }
+.monitor__tool{ height: 36px; padding: 0 var(--sp-12); flex: none; }
+.monitor__tools{ display: flex; gap: var(--sp-8); margin-left: auto; }
 .monitor__tools + .monitor__x{ margin-left: 0; }
 
 /* ── 화면부 — 여기만 테마를 탄다 ── */
 .monitor__screen{
   min-height: 0; flex: 1 1 auto;
   background: var(--surface-1);
-  border-radius: var(--r-xl);
+  border-radius: var(--r-22);
   overflow-y: auto;
   overscroll-behavior: contain;
 }
@@ -123,7 +123,7 @@
 .monitor__chin{
   flex: none;
   display: flex; align-items: center; justify-content: center;
-  padding-top: 12px;
+  padding-top: var(--sp-12);
 }
 .monitor__slit{
   width: 64px; height: 6px; border-radius: var(--r-full);
@@ -139,7 +139,7 @@
 }
 
 /* ── 변형: 우측 도킹 (답안표 드로어) ── */
-.monitor--side{ z-index: 200; }
+.monitor--side{ z-index: var(--z-float); }
 .monitor--side.is-open{ flex-direction: row; justify-content: flex-end; align-items: stretch; }
 .monitor--side .monitor__rig{
   flex-direction: row; align-items: center;
@@ -155,11 +155,11 @@
   width: var(--mon-w, 600px); max-width: calc(94vw - 40px);
   height: 100%;
   border-radius: var(--r-frame) 0 0 var(--r-frame);
-  padding: 10px 0 14px 10px;
+  padding: var(--sp-8) 0 var(--sp-12) var(--sp-8);
 }
-.monitor--side .monitor__hd{ padding-right: 16px; }
-.monitor--side .monitor__screen{ border-radius: var(--r-xl) 0 0 var(--r-xl); }
-.monitor--side .monitor__chin{ padding-right: 10px; }
+.monitor--side .monitor__hd{ padding-right: var(--sp-16); }
+.monitor--side .monitor__screen{ border-radius: var(--r-22) 0 0 var(--r-22); }
+.monitor--side .monitor__chin{ padding-right: var(--sp-8); }
 
 /* ── 변형: 잠금(닫기 없음 — 끊어읽기 등 흐름 강제) ── */
 .monitor--lock .monitor__x{ display: none; }

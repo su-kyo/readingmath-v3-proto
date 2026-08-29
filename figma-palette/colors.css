@@ -140,6 +140,11 @@
   --n-200: var(--gray-200); --n-300: var(--gray-300); --n-400: var(--gray-400);
   --n-500: var(--gray-500); --n-600: var(--coolgray-300); --n-650: var(--gray-700);
   --n-700: var(--coolgray-500); --n-800: var(--coolgray-600); --n-900: var(--coolgray-700);
+  /* [ADDED 2026-08-28] 공용 gnb-drawer.js 가 참조하는 네 자리. 이 스냅샷은 옛 팔레트를
+     그대로 보여 주는 것이 목적이므로, 새 팔레트 값을 들여오지 않고 가장 가까운
+     옛 단계에 별칭으로 붙인다. */
+  --n-350: var(--gray-400); --n-950: var(--coolgray-700);
+  --blue-450: var(--blue-500); --blue-600: var(--blue-500);
   /* gnb 모드 탭 */
   --mode-basic: var(--blue-500); --mode-exam: var(--navy-500);
   --mode-assign: var(--blue-500); --mode-free: var(--purple-500);

@@ -5,13 +5,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>서술형 훈련 · 기본 다지기 (레이아웃 v2) — 리딩수학과학</title>
-  <link rel="stylesheet" href="styles/tokens.css?v=25" />
-  <link rel="stylesheet" href="styles/base.css?v=7" />
-  <link rel="stylesheet" href="styles/components.css?v=10" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20260828" />
+  <link rel="stylesheet" href="styles/base.css?v=20260828" />
+  <link rel="stylesheet" href="styles/components.css?v=20260828" />
   <link rel="stylesheet" href="styles/learn-shell.css?v=20260828" />
-  <link rel="stylesheet" href="styles/essay.css?v=11" />
+  <link rel="stylesheet" href="styles/essay.css?v=20260828" />
   <link rel="stylesheet" href="styles/keypad.css?v=20260828" />
-  <link rel="stylesheet" href="styles/monitor.css?v=3" />
+  <link rel="stylesheet" href="styles/monitor.css?v=20260828" />
   <style>
     /* ============ 서술형 훈련 = 퍼플 테마 (공통은 essay.css) ============ */
     /* 레이아웃 v2 : 기존 세로 단일 스크롤 유지 + 문제 카드 상단 스티키 추가 */
@@ -40,11 +40,11 @@
 
     /* ============ 진행 표시 = 단계 스테퍼 (헤더 안, 번호탭과 한 행) ============ */
     .stepbar { display: inline-flex; align-items: center; gap: 0; }
-    .stepbar__i { display: inline-flex; align-items: center; gap: 7px; padding: 4px 4px;
-      font-family: var(--font-sans); font-size: 13.5px; font-weight: 700; color: var(--step-fg); transition: color .2s; }
+    .stepbar__i { display: inline-flex; align-items: center; gap: var(--sp-6); padding: var(--sp-4) var(--sp-4);
+      font-family: var(--font-sans); font-size: var(--fs-13); font-weight: var(--fw-bold); color: var(--step-fg); transition: color .2s; }
     .stepbar__dot { position: relative; box-sizing: border-box; flex: none; width: 18px; height: 18px; border-radius: 50%;
       border: 2px solid currentColor; opacity: .5; transition: opacity .2s, background .2s, box-shadow .2s; }
-    .stepbar__track { width: 28px; height: 2px; border-radius: 2px; background: var(--step-fg); opacity: .3; transition: background .25s, opacity .25s; }
+    .stepbar__track { width: 28px; height: 2px; border-radius: var(--r-4); background: var(--step-fg); opacity: .3; transition: background .25s, opacity .25s; }
     /* 진행중 */
     .stepbar__i.is-on { color: var(--th-ink-accent); }
     :root[data-theme="dark"] .stepbar__i.is-on { color: var(--th-accent-hi); }
@@ -63,14 +63,14 @@
     /* padding-top = 0 : 스티키 카드가 스크롤포트 상단에 밀착돼 위로 내용이 비치지 않게 */
     .stage-scroll { flex: 1; min-height: 0; overflow-y: auto; padding: 0 clamp(10px, 2vw, 22px) 96px; }
     .stage-scroll::-webkit-scrollbar { width: 10px; }
-    .stage-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,.2); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
+    .stage-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,.2); border-radius: var(--r-full); border: 2px solid transparent; background-clip: padding-box; }
     :root[data-theme="light"] .stage-scroll::-webkit-scrollbar-thumb { background: rgba(108,99,201,.28); background-clip: padding-box; }
 
     /* ============ 카드 공용 ============ */
-    .card { max-width: 760px; margin: 0 auto; background: var(--card); border: 1px solid var(--card-br); border-radius: 20px; box-shadow: var(--card-sh); }
+    .card { max-width: 760px; margin: 0 auto; background: var(--card); border: 1px solid var(--card-br); border-radius: var(--r-22); box-shadow: var(--card-sh); }
     .card + .card { margin-top: 14px; }
-    .sec-label { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 999px;
-      font-family: var(--font-sans); font-size: 12.5px; font-weight: 800; letter-spacing: .01em; }
+    .sec-label { display: inline-flex; align-items: center; gap: var(--sp-6); padding: var(--sp-4) var(--sp-12); border-radius: var(--r-full);
+      font-family: var(--font-sans); font-size: var(--fs-12); font-weight: var(--fw-heavy); letter-spacing: .01em; }
     .sec-label--problem { background: var(--th-solid); color: var(--n-000); }
     .sec-label--sol { background: rgba(124,58,237,.15); color: var(--th-accent-hi); }
     :root[data-theme="light"] .sec-label--sol { background: rgba(124,58,237,.1); color: var(--th-accent-strong); }
@@ -79,32 +79,32 @@
     /* 패널 = 프레임 테두리색(th-static)과 같은 면 · 상단 프레임에 붙음(플러시) · 라이트/다크 동일.
        헤더 한 행 = [문제 번호탭 1·2·3] [빈칸/순서 단계] … [접기 셰브론]. 열면 문제문(+이미지 옆). */
     .problem { position: sticky; top: 0; z-index: 20; overflow: hidden;
-      background: var(--pc-bg); border: 0; border-radius: 0 0 18px 18px; margin: 0 auto; box-shadow: 0 10px 24px rgba(8,5,22,.28); }
-    .problem__head { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px;
-      padding: 10px 16px; background: transparent; border: 0; text-align: left; }
+      background: var(--pc-bg); border: 0; border-radius: 0 0 var(--r-16) var(--r-16); margin: 0 auto; box-shadow: 0 10px 24px rgba(8,5,22,.28); }
+    .problem__head { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--sp-12);
+      padding: var(--sp-8) var(--sp-16); background: transparent; border: 0; text-align: left; }
     .problem.is-collapsible .problem__head { cursor: pointer; }
-    .phead__lead { display: inline-flex; align-items: center; gap: 13px; flex-wrap: wrap; min-width: 0; }
+    .phead__lead { display: inline-flex; align-items: center; gap: var(--sp-12); flex-wrap: wrap; min-width: 0; }
     .phead__div { width: 1px; height: 22px; background: rgba(255,255,255,.18); flex: none; }
-    .qtabs { display: inline-flex; align-items: center; gap: 8px; }
-    .qtab { min-width: 28px; height: 28px; padding: 0 7px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center;
-      font-family: var(--font-sans); font-weight: 800; font-size: 13px; background: var(--qtab-bg); color: var(--qtab-fg); transition: background .16s, color .16s, box-shadow .16s; }
+    .qtabs { display: inline-flex; align-items: center; gap: var(--sp-8); }
+    .qtab { min-width: 28px; height: 28px; padding: 0 var(--sp-6); border-radius: var(--r-8); display: inline-flex; align-items: center; justify-content: center;
+      font-family: var(--font-sans); font-weight: var(--fw-heavy); font-size: var(--fs-13); background: var(--qtab-bg); color: var(--qtab-fg); transition: background .16s, color .16s, box-shadow .16s; }
     .qtab.is-done { background: var(--qtab-done-bg); color: var(--qtab-done-fg); }
     /* 현재 문제 = 흰 링으로 대비 강화 */
     .qtab.is-active { background: var(--th-solid); color: var(--static-on); box-shadow: 0 0 0 2px var(--static-on), 0 2px 8px rgba(0,0,0,.32); }
     .problem__chev { width: 22px; height: 22px; color: var(--pc-chev); transition: transform .25s; flex: none; transform: rotate(180deg); }
     .problem.is-collapsed .problem__chev { transform: rotate(0); }
     /* 헤더 안 단계 스텝바(빈칸/순서) = 어두운 패널 위 밝은 톤 */
-    .problem__head .stepbar__i { color: var(--pstep-fg); font-size: 13px; }
+    .problem__head .stepbar__i { color: var(--pstep-fg); font-size: var(--fs-13); }
     .problem__head .stepbar__i.is-on, .problem__head .stepbar__i.is-done { color: var(--th-accent-hi); }
     .problem__head .stepbar__track { background: var(--pstep-track); opacity: 1; }
     .problem__head .stepbar__i.is-done + .stepbar__track { background: var(--th-accent-hi); }
     .problem__head .stepbar__i.is-done .stepbar__dot::after { border-color: var(--th-static); }
     /* 본문 = 문제문(좌) + 이미지(우) 한 행 */
-    .problem__body { padding: 6px 18px 18px; overflow: hidden; max-height: 1600px; color: var(--pc-text);
-      display: flex; gap: 20px; align-items: flex-start; transition: max-height .32s ease, opacity .25s ease, padding .32s ease; }
+    .problem__body { padding: var(--sp-6) var(--sp-16) var(--sp-16); overflow: hidden; max-height: 1600px; color: var(--pc-text);
+      display: flex; gap: var(--sp-20); align-items: flex-start; transition: max-height .32s ease, opacity .25s ease, padding .32s ease; }
     .problem.is-collapsed .problem__body { max-height: 0; opacity: 0; padding-top: 0; padding-bottom: 0; }
     .problem__qtext { flex: 1 1 auto; min-width: 0; }
-    .problem__img { flex: none; width: clamp(180px, 30%, 260px); border-radius: 12px; overflow: hidden; }
+    .problem__img { flex: none; width: clamp(180px, 30%, 260px); border-radius: var(--r-12); overflow: hidden; }
     .problem__img img { display: block; width: 100%; height: auto; }
     /* 상단 카드 = 다시보기용 전체 문제문(끊어읽기 아님, 모달에서 읽음) */
     .qfull { font-family: var(--font-serif); color: var(--pc-text); font-size: clamp(15px, 1.4vw, 17.5px); line-height: 1.95; letter-spacing: -0.01em; }
@@ -114,9 +114,9 @@
     .stage-action.is-ready { display: block; animation: saIn .28s ease; }
     @keyframes saIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
     @media (prefers-reduced-motion: reduce) { .stage-action.is-ready { animation: none; } }
-    .stage-action__btn { width: 100%; height: 54px; border-radius: 14px; border: 0; cursor: pointer;
-      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-      background: var(--primary); color: var(--n-000); font-family: var(--font-sans); font-size: 19px; font-weight: 800;
+    .stage-action__btn { width: 100%; height: 54px; border-radius: var(--r-12); border: 0; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-8);
+      background: var(--primary); color: var(--n-000); font-family: var(--font-sans); font-size: var(--fs-19); font-weight: var(--fw-heavy);
       box-shadow: inset 0 1px 0 rgba(255,255,255,.25); transition: background .15s; }
     .stage-action__btn:hover { background: var(--primary-hover); }
     .stage-action__btn svg { width: 19px; height: 19px; }
@@ -131,7 +131,7 @@
     .sol, .asol { font-family: var(--font-serif); color: var(--guide);
       font-size: clamp(16px, 1.45vw, 18.5px); line-height: 2.25; letter-spacing: -0.01em; }
     .sline + .sline { margin-top: 6px; }
-    .seg { border-radius: 5px; box-decoration-break: clone; -webkit-box-decoration-break: clone;
+    .seg { border-radius: var(--r-4); box-decoration-break: clone; -webkit-box-decoration-break: clone;
       transition: filter .22s ease, opacity .22s ease, background .15s ease; }
     .seg:not(.blank) { padding: 1px 0; }
     .seg.is-unread { filter: blur(4.5px); opacity: .3; user-select: none; }
@@ -141,7 +141,7 @@
     .seg.is-current:not(.is-answering):not(.blank):not(.seg--img),
     .seg.is-current:not(.is-answering):not(.blank):not(.seg--img):hover {
       cursor: pointer; background: var(--th-tint-strong); box-shadow: 0 0 0 3px var(--th-tint-strong);
-      color: var(--th-ink-accent); font-weight: 600; }
+      color: var(--th-ink-accent); font-weight: var(--fw-semibold); }
     :root[data-theme="dark"] .seg.is-current:not(.is-answering):not(.blank):not(.seg--img),
     :root[data-theme="dark"] .seg.is-current:not(.is-answering):not(.blank):not(.seg--img):hover { color: var(--text); }
     .seg.is-answering { cursor: default; }
@@ -158,25 +158,25 @@
 
     /* ============ 순서 맞추기 인라인 슬롯 ============ */
     .slot { display: inline-flex; align-items: center; justify-content: center; vertical-align: middle;
-      min-width: 128px; min-height: 34px; margin: 3px 2px; padding: 5px 14px; border-radius: 10px;
-      font-family: var(--font-serif); font-size: 16px; font-weight: 700; text-align: center; transition: box-shadow .14s, background .14s; }
+      min-width: 128px; min-height: 34px; margin: 3px 2px; padding: var(--sp-4) var(--sp-12); border-radius: var(--r-8);
+      font-family: var(--font-serif); font-size: var(--fs-16); font-weight: var(--fw-bold); text-align: center; transition: box-shadow .14s, background .14s; }
     .slot.is-empty { border: 1.5px dashed var(--bl-line); }
     .slot.is-filled { background: var(--bl-fill); color: var(--bl-ans); border: 1.5px solid transparent; cursor: pointer; }
     .slot.is-filled:hover { box-shadow: inset 0 0 0 1.5px var(--bl-selline); }
     .slot.is-wrong { border: 1.5px solid var(--no-solid); background: rgba(229,88,95,.14); color: var(--no-on-dark); animation: qShake .35s; }
     .slot.is-locked { background: var(--lock-bg); color: var(--bl-ans); border: 1.5px solid var(--lock-br); animation: lockPop .4s; }
     :root[data-theme="light"] .slot.is-locked { color: var(--ok-ink); }
-    .slot__ck { margin-left: 7px; color: var(--lock-ck); font-weight: 900; }
+    .slot__ck { margin-left: 7px; color: var(--lock-ck); font-weight: var(--fw-heavy); }
     @keyframes lockPop { 0%{transform:scale(1)} 40%{transform:scale(1.06)} 100%{transform:scale(1)} }
     @media (prefers-reduced-motion: reduce) { .slot.is-wrong, .slot.is-locked { animation: none; } }
 
     /* 블록 서랍(트레이) — v2: JS가 현재 문장 바로 아래로 이동, 별도 카드 아닌 인셋 패널 */
-    .tray.card { max-width: none; margin: 8px 0 6px; padding: 12px 14px 14px; background: var(--step-bg); border: 0; border-radius: 14px; box-shadow: none; }
-    .tray__label { display: block; font-family: var(--font-sans); font-size: 12.5px; font-weight: 700; color: var(--step-fg); margin-bottom: 10px; }
-    .pool { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; min-height: 44px; }
-    .pool:empty::after { content: '블록을 모두 배치했어요'; color: var(--step-fg); font-family: var(--font-sans); font-size: 13px; opacity: .7; }
-    .block { padding: 11px 17px; border-radius: 12px; background: var(--chip-bg); box-shadow: inset 0 0 0 1px var(--chip-br);
-      color: var(--guide); font-family: var(--font-serif); font-size: 16px; font-weight: 700; cursor: pointer; transition: transform .1s, box-shadow .14s, background .14s; }
+    .tray.card { max-width: none; margin: 8px 0 6px; padding: var(--sp-12) var(--sp-12) var(--sp-12); background: var(--step-bg); border: 0; border-radius: var(--r-12); box-shadow: none; }
+    .tray__label { display: block; font-family: var(--font-sans); font-size: var(--fs-12); font-weight: var(--fw-bold); color: var(--step-fg); margin-bottom: 10px; }
+    .pool { display: flex; flex-wrap: wrap; gap: var(--sp-8); justify-content: center; min-height: 44px; }
+    .pool:empty::after { content: '블록을 모두 배치했어요'; color: var(--step-fg); font-family: var(--font-sans); font-size: var(--fs-13); opacity: .7; }
+    .block { padding: var(--sp-12) var(--sp-16); border-radius: var(--r-12); background: var(--chip-bg); box-shadow: inset 0 0 0 1px var(--chip-br);
+      color: var(--guide); font-family: var(--font-serif); font-size: var(--fs-16); font-weight: var(--fw-bold); cursor: pointer; transition: transform .1s, box-shadow .14s, background .14s; }
     .block:hover { background: var(--chip-hover); box-shadow: inset 0 0 0 1.5px var(--bl-selline); transform: translateY(-1px); }
     .block.is-in { animation: blockIn .22s ease; }
     @keyframes blockIn { from { opacity: .2; transform: scale(.85); } to { opacity: 1; transform: none; } }
@@ -208,24 +208,24 @@
        읽기 차례를 차지하는 그림이라, 텍스트 구간과 똑같이 흐렸다가 차례가 오면 선명해진다. */
     .rline--img { margin-top: 16px; }
     .seg--img { display: block; width: min(100%, 320px); padding: 0;
-      border-radius: 12px; overflow: hidden; }
+      border-radius: var(--r-12); overflow: hidden; }
     .seg--img > img, .seg--img > .dummy-img { display: block; width: 100%; height: auto; }
-    .seg--img > .dummy-img { aspect-ratio: 16 / 9; border-radius: 12px; }
+    .seg--img > .dummy-img { aspect-ratio: 16 / 9; border-radius: var(--r-12); }
     /* 그림에는 글자색이 없으니 '지금 차례'를 테두리 한 겹으로 말한다 (텍스트 구간의 면과 같은 자리) */
     .seg--img.is-current { cursor: pointer; box-shadow: 0 0 0 3px var(--th-accent); }
     .rmodal__img img { display: block; width: 100%; height: auto; }
-    .rmodal__foot { display: flex; align-items: center; gap: 12px; }
-    .rmodal__hint { margin-right: auto; font-family: var(--font-sans); font-size: 12.5px; font-weight: 600; color: var(--rm-hint); }
-    .rmodal__go { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 13px; border: 0; cursor: pointer;
-      background: var(--primary); color: var(--n-000); font-family: var(--font-sans); font-size: 19px; font-weight: 800;
+    .rmodal__foot { display: flex; align-items: center; gap: var(--sp-12); }
+    .rmodal__hint { margin-right: auto; font-family: var(--font-sans); font-size: var(--fs-12); font-weight: var(--fw-semibold); color: var(--rm-hint); }
+    .rmodal__go { display: inline-flex; align-items: center; gap: var(--sp-8); padding: var(--sp-12) var(--sp-20); border-radius: var(--r-12); border: 0; cursor: pointer;
+      background: var(--primary); color: var(--n-000); font-family: var(--font-sans); font-size: var(--fs-19); font-weight: var(--fw-heavy);
       box-shadow: 0 4px 0 color-mix(in srgb, var(--primary) 62%, #000); transition: transform .12s, box-shadow .12s, background .15s; }
     .rmodal__go:hover { background: var(--primary-hover); }
     .rmodal__go:active { transform: translateY(3px); box-shadow: 0 1px 0 color-mix(in srgb, var(--primary) 62%, #000); }
     .rmodal__go svg { width: 18px; height: 18px; }
 
     /* 토스트 */
-    .dtoast { position: fixed; left: 50%; bottom: 118px; transform: translateX(-50%) translateY(10px); z-index: 400;
-      padding: 10px 18px; border-radius: 999px; font-family: var(--font-sans); font-size: 14px; font-weight: 700;
+    .dtoast { position: fixed; left: 50%; bottom: 118px; transform: translateX(-50%) translateY(10px); z-index: var(--z-toast);
+      padding: var(--sp-8) var(--sp-16); border-radius: var(--r-full); font-family: var(--font-sans); font-size: var(--fs-14); font-weight: var(--fw-bold);
       background: rgba(20,14,44,.94); color: var(--n-000); opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
     .dtoast.is-err { background: var(--no-ink); }
     .dtoast.is-on { opacity: 1; transform: translateX(-50%) translateY(0); }
@@ -348,10 +348,10 @@
   <!-- 검수용 디버그 패널 (?debug=1 일 때만 보임) -->
   <!-- 연습장 캔버스 (공용) -->
   <script src="scripts/scratchpad.js?v=20260828"></script>
-  <script src="scripts/debug-panel.js?v=3"></script>
+  <script src="scripts/debug-panel.js?v=20260828"></script>
   <!-- 키패드 물리 키보드 입력 (공용) -->
-  <script src="scripts/keypad.js?v=1"></script>
-  <script src="scripts/keypad-input.js?v=3"></script>
-  <script src="scripts/essay-drill-v2.js?v=13"></script>
+  <script src="scripts/keypad.js?v=20260828"></script>
+  <script src="scripts/keypad-input.js?v=20260828"></script>
+  <script src="scripts/essay-drill-v2.js?v=20260828"></script>
 </body>
 </html>

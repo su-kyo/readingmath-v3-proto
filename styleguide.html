@@ -4,29 +4,29 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>리딩수학과학 · 디자인 시스템</title>
-  <link rel="stylesheet" href="styles/tokens.css?v=25" />
-  <link rel="stylesheet" href="styles/base.css?v=7" />
-  <link rel="stylesheet" href="styles/components.css?v=10" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20260828" />
+  <link rel="stylesheet" href="styles/base.css?v=20260828" />
+  <link rel="stylesheet" href="styles/components.css?v=20260828" />
   <style>
     /* 이 스타일가이드 페이지 전용 레이아웃 */
-    .wrap { max-width: 1120px; margin: 0 auto; padding: var(--space-8) var(--space-6) 120px; }
-    .sg-top { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-6); margin-bottom: var(--space-8); }
-    .sg-section { margin-top: var(--space-12); }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: var(--sp-32) var(--sp-24) 120px; }
+    .sg-top { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--sp-24); margin-bottom: var(--sp-32); }
+    .sg-section { margin-top: var(--sp-40); }
     .sg-section > h2 {
-      font-size: var(--fs-h2); padding-bottom: var(--space-3);
-      border-bottom: 1px solid var(--border); margin-bottom: var(--space-6);
-      display: flex; align-items: baseline; gap: var(--space-3); flex-wrap: wrap;
+      font-size: var(--fs-22); padding-bottom: var(--sp-12);
+      border-bottom: 1px solid var(--border); margin-bottom: var(--sp-24);
+      display: flex; align-items: baseline; gap: var(--sp-12); flex-wrap: wrap;
     }
-    .sg-section > h2 small { font-size: var(--fs-sm); color: var(--text-dim); font-weight: 400; }
-    .sg-sub { color: var(--text-muted); font-size: var(--fs-sm); margin: calc(var(--space-6) * -1 + var(--space-2)) 0 var(--space-5); max-width: 76ch; }
-    .row { display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; }
-    .grid { display: grid; gap: var(--space-4); }
-    .card-demo { background: var(--surface-1); border-radius: var(--r-lg); padding: var(--space-5); }
-    .label { font-size: var(--fs-xs); color: var(--text-dim); margin-bottom: var(--space-2); font-weight: var(--fw-semibold); letter-spacing: .02em; }
+    .sg-section > h2 small { font-size: var(--fs-14); color: var(--text-dim); font-weight: var(--fw-regular); }
+    .sg-sub { color: var(--text-muted); font-size: var(--fs-14); margin: calc(var(--sp-24) * -1 + var(--sp-8)) 0 var(--sp-20); max-width: 76ch; }
+    .row { display: flex; flex-wrap: wrap; gap: var(--sp-16); align-items: center; }
+    .grid { display: grid; gap: var(--sp-16); }
+    .card-demo { background: var(--surface-1); border-radius: var(--r-16); padding: var(--sp-20); }
+    .label { font-size: var(--fs-12); color: var(--text-dim); margin-bottom: var(--sp-8); font-weight: var(--fw-semibold); letter-spacing: .02em; }
 
     /* 상태 태그 (실사용/라이브러리) */
-    .use { display: inline-flex; align-items: center; gap: 5px; padding: 2px 9px; border-radius: var(--r-full);
-      font-size: 11px; font-weight: var(--fw-bold); letter-spacing: .01em; }
+    .use { display: inline-flex; align-items: center; gap: var(--sp-4); padding: var(--sp-4) var(--sp-8); border-radius: var(--r-full);
+      font-size: var(--fs-11); font-weight: var(--fw-bold); letter-spacing: .01em; }
     .use::before { content: ""; width: 7px; height: 7px; border-radius: 50%; }
     .use--live { background: color-mix(in srgb, var(--success) 18%, var(--surface-2)); color: var(--success); }
     .use--live::before { background: var(--success); }
@@ -34,47 +34,47 @@
     .use--lib::before { background: var(--text-dim); }
 
     /* 색 스와치 */
-    .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px,1fr)); gap: var(--space-3); }
-    .swatch { border-radius: var(--r-md); overflow: hidden; background: var(--surface-1); }
+    .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px,1fr)); gap: var(--sp-12); }
+    .swatch { border-radius: var(--r-12); overflow: hidden; background: var(--surface-1); }
     .swatch__chip { height: 64px; }
-    .swatch__meta { padding: var(--space-3); }
-    .swatch__name { font-size: var(--fs-sm); font-weight: 600; }
-    .swatch__hex { font-size: var(--fs-xs); color: var(--text-dim); font-family: var(--font-mono); }
+    .swatch__meta { padding: var(--sp-12); }
+    .swatch__name { font-size: var(--fs-14); font-weight: var(--fw-semibold); }
+    .swatch__hex { font-size: var(--fs-12); color: var(--text-dim); font-family: var(--font-mono); }
 
-    .type-spec { display: flex; align-items: baseline; gap: var(--space-4); padding: var(--space-3) 0; border-bottom: 1px solid var(--border); }
-    .type-spec small { color: var(--text-dim); font-family: var(--font-mono); font-size: var(--fs-xs); white-space: nowrap; }
+    .type-spec { display: flex; align-items: baseline; gap: var(--sp-16); padding: var(--sp-12) 0; border-bottom: 1px solid var(--border); }
+    .type-spec small { color: var(--text-dim); font-family: var(--font-mono); font-size: var(--fs-12); white-space: nowrap; }
 
-    .ramp { display:flex; border-radius:var(--r-md); overflow:hidden; margin-bottom:var(--space-3); }
-    .ramp > span { flex:1; height:44px; display:flex; align-items:flex-end; justify-content:center; padding-bottom:3px; font-size:10px; font-weight:700; font-family:var(--font-mono);
+    .ramp { display:flex; border-radius:var(--r-12); overflow:hidden; margin-bottom:var(--sp-12); }
+    .ramp > span { flex:1; height:44px; display:flex; align-items:flex-end; justify-content:center; padding-bottom:var(--sp-4); font-size:var(--fs-11); font-weight:var(--fw-bold); font-family:var(--font-mono);
       /* 견본 칩 라벨: 칩 색 위에서 읽히도록 흰/검을 자동 선택 (라벨은 읽혀야 견본 구실을 한다) */
       color:var(--static-on); mix-blend-mode:difference; }
-    .ramp-label { font-size:var(--fs-xs); color:var(--text-dim); margin-bottom:4px; }
+    .ramp-label { font-size:var(--fs-12); color:var(--text-dim); margin-bottom:4px; }
 
     /* 토큰 표(간격·반경) */
-    .tok { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px,1fr)); gap: var(--space-3); }
-    .tok__item { background: var(--surface-1); border-radius: var(--r-md); padding: var(--space-3); }
-    .tok__bar { height: 12px; background: var(--primary); border-radius: 3px; }
+    .tok { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px,1fr)); gap: var(--sp-12); }
+    .tok__item { background: var(--surface-1); border-radius: var(--r-12); padding: var(--sp-12); }
+    .tok__bar { height: 12px; background: var(--primary); border-radius: var(--r-4); }
     .tok__box { height: 48px; background: var(--surface-3); box-shadow: inset 0 0 0 1.5px var(--border-strong); }
-    .tok__name { font-size: var(--fs-xs); font-family: var(--font-mono); color: var(--text-muted); margin-top: 6px; }
+    .tok__name { font-size: var(--fs-12); font-family: var(--font-mono); color: var(--text-muted); margin-top: 6px; }
 
     /* 셸/패턴 레퍼런스 카드 */
-    .ref { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: var(--space-4); }
-    .ref__card { background: var(--surface-1); border-radius: var(--r-lg); padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-3); }
-    .ref__demo { border-radius: var(--r-md); overflow: hidden; }
-    .ref__name { font-weight: var(--fw-bold); font-size: var(--fs-sm); }
-    .ref__desc { font-size: var(--fs-xs); color: var(--text-muted); line-height: 1.6; }
-    .ref__cls { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); word-break: break-all; }
-    .ref__file { font-size: 11px; color: var(--accent-blue); font-weight: var(--fw-semibold); }
+    .ref { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: var(--sp-16); }
+    .ref__card { background: var(--surface-1); border-radius: var(--r-16); padding: var(--sp-20); display: flex; flex-direction: column; gap: var(--sp-12); }
+    .ref__demo { border-radius: var(--r-12); overflow: hidden; }
+    .ref__name { font-weight: var(--fw-bold); font-size: var(--fs-14); }
+    .ref__desc { font-size: var(--fs-12); color: var(--text-muted); line-height: 1.6; }
+    .ref__cls { font-family: var(--font-mono); font-size: var(--fs-11); color: var(--text-dim); word-break: break-all; }
+    .ref__file { font-size: var(--fs-11); color: var(--accent-blue); font-weight: var(--fw-semibold); }
 
     /* 미니 데모용 */
-    .m-header { padding: 10px 18px; border-radius: var(--r-pill); color: var(--static-on); font-weight: var(--fw-bold); font-size: 13px; }
-    .m-toolbtn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; border-radius: var(--r-lg);
-      background: var(--primary); color: var(--static-on); font-weight: var(--fw-bold); font-size: 13px; box-shadow: 0 4px 0 var(--primary-pressed); }
-    .m-seg { font-family: var(--font-serif); font-size: 15px; line-height: 1.9; color: var(--text); }
-    .m-seg .on { background: var(--blue-050); box-shadow: 0 0 0 3px var(--blue-050); border-radius: 4px; color: var(--n-650); }
+    .m-header { padding: var(--sp-8) var(--sp-16); border-radius: var(--r-30); color: var(--static-on); font-weight: var(--fw-bold); font-size: var(--fs-13); }
+    .m-toolbtn { display: inline-flex; align-items: center; gap: var(--sp-6); padding: var(--sp-8) var(--sp-16); border-radius: var(--r-16);
+      background: var(--primary); color: var(--static-on); font-weight: var(--fw-bold); font-size: var(--fs-13); box-shadow: 0 4px 0 var(--primary-pressed); }
+    .m-seg { font-family: var(--font-serif); font-size: var(--fs-15); line-height: 1.9; color: var(--text); }
+    .m-seg .on { background: var(--blue-050); box-shadow: 0 0 0 3px var(--blue-050); border-radius: var(--r-4); color: var(--n-650); }
     .m-seg .off { filter: blur(3.5px); opacity: .32; }
-    .m-rblank { display: inline-flex; align-items: center; gap: 5px; padding: 2px 10px; border-radius: 8px;
-      font-family: var(--font-serif); font-weight: 700; font-size: 14px; }
+    .m-rblank { display: inline-flex; align-items: center; gap: var(--sp-4); padding: var(--sp-4) var(--sp-8); border-radius: var(--r-8);
+      font-family: var(--font-serif); font-weight: var(--fw-bold); font-size: var(--fs-14); }
     .m-rblank--ok { background: color-mix(in srgb, var(--success) 14%, transparent); color: var(--success); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--success) 55%, transparent); }
     .m-rblank--no { background: color-mix(in srgb, var(--danger) 14%, transparent); color: var(--danger); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--danger) 55%, transparent); }   /* 취소선 금지 — 오답도 읽어야 할 정보다 */
   </style>
@@ -136,14 +136,14 @@
         <span style="background:var(--yellow-050);color:#000">y050</span><span style="background:var(--yellow-300);color:#000">y300</span><span style="background:var(--yellow-500);color:#000">y500</span>
         <span style="background:var(--cyan-100);color:#000">c100</span><span style="background:var(--cyan-400);color:#000">c400</span><span style="background:var(--cyan-500)">c500</span>
       </div>
-      <p class="sg-sub" style="margin-top:var(--space-4)">★ <strong>골드·브론즈(별/등급 PNG), 콘솔 트레이색</strong>은 일러스트 에셋과 톤이 박제된 <em>에셋연동</em> 예외라 시트 56색과 별개로 관리합니다.</p>
+      <p class="sg-sub" style="margin-top:var(--sp-16)">★ <strong>골드·브론즈(별/등급 PNG), 콘솔 트레이색</strong>은 일러스트 에셋과 톤이 박제된 <em>에셋연동</em> 예외라 시트 56색과 별개로 관리합니다.</p>
     </section>
 
     <section class="sg-section">
       <h2>2. 색 — 역할 (semantic) <small>화면 CSS는 이것만 사용 · 위 계단을 가리킴</small></h2>
 
       <p class="label">과목 정체성 — 헤더·프레임 = static 딥톤 (다크·라이트 불변)</p>
-      <div class="swatches" style="margin-bottom:var(--space-4);">
+      <div class="swatches" style="margin-bottom:var(--sp-16);">
         <div class="swatch"><div class="swatch__chip" style="background:var(--static-concept)"></div><div class="swatch__meta"><div class="swatch__name">개념 훈련</div><div class="swatch__hex">--static-concept · #0A3D8E</div></div></div>
         <div class="swatch"><div class="swatch__chip" style="background:var(--static-type)"></div><div class="swatch__meta"><div class="swatch__name">유형 훈련</div><div class="swatch__hex">--static-type · #005752</div></div></div>
         <div class="swatch"><div class="swatch__chip" style="background:var(--static-essay)"></div><div class="swatch__meta"><div class="swatch__name">서술형 훈련</div><div class="swatch__hex">--static-essay · #4C1D95</div></div></div>
@@ -153,21 +153,21 @@
       </div>
 
       <p class="label">과목 포인트 — content 내부 강조(배지·게이지·보기버튼) 1색</p>
-      <div class="swatches" style="margin-bottom:var(--space-6);">
+      <div class="swatches" style="margin-bottom:var(--sp-24);">
         <div class="swatch"><div class="swatch__chip" style="background:var(--concept-fill)"></div><div class="swatch__meta"><div class="swatch__name">개념 = 블루</div><div class="swatch__hex">--concept-fill · #008CFF</div></div></div>
         <div class="swatch"><div class="swatch__chip" style="background:var(--type-accent)"></div><div class="swatch__meta"><div class="swatch__name">유형 = 틸</div><div class="swatch__hex">--type-accent · #00A99A</div></div></div>
         <div class="swatch"><div class="swatch__chip" style="background:var(--essay-accent)"></div><div class="swatch__meta"><div class="swatch__name">서술형 = 퍼플</div><div class="swatch__hex">--essay-accent · #7777FF</div></div></div>
       </div>
 
       <p class="label">CTA · 액센트</p>
-      <div class="swatches" style="margin-bottom:var(--space-6);">
+      <div class="swatches" style="margin-bottom:var(--sp-24);">
         <div class="swatch"><div class="swatch__chip" style="background:var(--primary)"></div><div class="swatch__meta"><div class="swatch__name">Primary 오렌지</div><div class="swatch__hex">--primary · orange-450</div></div></div>
         <div class="swatch"><div class="swatch__chip" style="background:var(--accent-cyan);color:#000"></div><div class="swatch__meta"><div class="swatch__name">액센트 시안</div><div class="swatch__hex">--accent-cyan · #3AE4FA</div></div></div>
         <div class="swatch"><div class="swatch__chip" style="background:var(--accent-blue)"></div><div class="swatch__meta"><div class="swatch__name">액센트 블루</div><div class="swatch__hex">--accent-blue · #05C5EC</div></div></div>
       </div>
 
       <p class="label">의미색 — 정답(라임) / 오답(레드) / 주의(옐로) · 상태색은 액센트와 분리 · 3영역 공통</p>
-      <div class="swatches" style="margin-bottom:var(--space-6);">
+      <div class="swatches" style="margin-bottom:var(--sp-24);">
         <div class="swatch"><div class="swatch__chip" style="background:var(--green-500)"></div><div class="swatch__meta"><div class="swatch__name">정답 success</div><div class="swatch__hex">--success · #58CC02</div></div></div>
         <div class="swatch"><div class="swatch__chip" style="background:var(--red-500)"></div><div class="swatch__meta"><div class="swatch__name">오답 danger</div><div class="swatch__hex">--danger · #FF404C</div></div></div>
         <div class="swatch"><div class="swatch__chip" style="background:var(--yellow-500);color:#000"></div><div class="swatch__meta"><div class="swatch__name">주의 warning</div><div class="swatch__hex">--warning · #FFC148</div></div></div>
@@ -183,9 +183,9 @@
         <div class="swatch"><div class="swatch__chip" style="background:var(--surface-3)"></div><div class="swatch__meta"><div class="swatch__name">--surface-3</div><div class="swatch__hex">강조 표면</div></div></div>
       </div>
 
-      <div class="card-demo" style="margin-top:var(--space-8); background:var(--surface-1); border-left:3px solid var(--primary); border-radius:var(--r-md);">
+      <div class="card-demo" style="margin-top:var(--sp-32); background:var(--surface-1); border-left:3px solid var(--primary); border-radius:var(--r-12);">
         <p class="label" style="color:var(--orange-300)">구조 규칙 — content 공통 + 포인트 1색</p>
-        <ul style="margin:8px 0 0; padding-left:18px; font-size:var(--fs-sm); line-height:1.9; color:var(--text-muted);">
+        <ul style="margin:8px 0 0; padding-left:18px; font-size:var(--fs-14); line-height:1.9; color:var(--text-muted);">
           <li><strong>헤더 = 프레임 = static 딥톤</strong> — 화면 최외곽 테두리는 그 화면 헤더색과 같고, 다크·라이트 토글해도 값이 안 바뀝니다. (과목 정체성 앵커)</li>
           <li><strong>content 내부는 3영역 공통</strong> — 표면·글자·테두리·정오답은 전부 뉴트럴+상태색(위 시트). 과목마다 다르게 주는 건 헤더·프레임·포인트뿐.</li>
           <li><strong>포인트만 1색</strong> — 배지·게이지·보기버튼 같은 강조는 과목 포인트색 하나로 통일.</li>
@@ -212,7 +212,7 @@
     <section class="sg-section">
       <h2>4. 간격 · 반경 <small>4px 배수 스페이싱 · 반경 스케일</small></h2>
       <p class="label">간격 (--space-*)</p>
-      <div class="tok" style="margin-bottom:var(--space-6)">
+      <div class="tok" style="margin-bottom:var(--sp-24)">
         <div class="tok__item"><div class="tok__bar" style="width:4px"></div><div class="tok__name">space-1 · 4</div></div>
         <div class="tok__item"><div class="tok__bar" style="width:8px"></div><div class="tok__name">space-2 · 8</div></div>
         <div class="tok__item"><div class="tok__bar" style="width:12px"></div><div class="tok__name">space-3 · 12</div></div>
@@ -246,7 +246,7 @@
     <section class="sg-section">
       <h2>6. 등급 배지 & 별 <span class="use use--live">실사용</span> <small>스텝 등급 S~C(육각 PNG) · Round 별(SVG) · 결과 화면</small></h2>
       <p class="label">스텝 등급 (정답률 S≥95 · A≥80 · B≥70 · else C)</p>
-      <div class="row" style="margin-bottom:var(--space-6)">
+      <div class="row" style="margin-bottom:var(--sp-24)">
         <span class="grade grade--s"></span>
         <span class="grade grade--a"></span>
         <span class="grade grade--b"></span>
@@ -265,7 +265,7 @@
 
     <section class="sg-section">
       <h2>7. 배지 · 진행바 <span class="use use--live">실사용</span> <small>index/결과 배지 · 학습 진행바</small></h2>
-      <div class="row" style="margin-bottom:var(--space-5)">
+      <div class="row" style="margin-bottom:var(--sp-20)">
         <span class="badge badge--round">Round 2</span>
         <span class="badge badge--correct">완료</span>
         <span class="badge badge--new">NEW</span>
@@ -353,14 +353,14 @@
       <p class="sg-sub">Phase 0에서 정의한 컴포넌트들입니다. 홈·커리큘럼·자유모드(A층) 화면은 이미 만들어졌지만 <strong>각자 인라인 마크업</strong>으로 구현돼서, 아래 클래스들은 아직 실제 화면에 쓰이지 않습니다. 앞으로 이 화면들을 정리할 때 공용 컴포넌트로 흡수할 후보예요.</p>
 
       <p class="label">스텝 CTA · 학습하기 → 학습중 → 완료</p>
-      <div class="row" style="margin-bottom:var(--space-6)">
+      <div class="row" style="margin-bottom:var(--sp-24)">
         <button class="cta-step cta-step--todo">학습하기</button>
         <button class="cta-step cta-step--doing">학습중</button>
         <button class="cta-step cta-step--done">학습 완료</button>
       </div>
 
       <p class="label">과목 헤더 pill</p>
-      <div class="grid" style="gap:var(--space-3); margin-bottom:var(--space-6)">
+      <div class="grid" style="gap:var(--sp-12); margin-bottom:var(--sp-24)">
         <div class="subject-header subject-header--concept">
           <span class="subject-header__title">개념훈련 · 소수와 합성수</span>
           <span class="subject-header__meta">Round 1 · 개념 학습</span>
@@ -372,7 +372,7 @@
       </div>
 
       <p class="label">유형칩 6상태 (시험대비 · 최신 풀이 이력으로 판정)</p>
-      <div class="row" style="margin-bottom:var(--space-6)">
+      <div class="row" style="margin-bottom:var(--sp-24)">
         <div class="type-chip type-chip--none"><span class="type-chip__id">유형 01</span><span class="type-chip__label">미진행</span></div>
         <div class="type-chip type-chip--pending"><span class="type-chip__id">유형 02</span><span class="type-chip__label">미판정</span></div>
         <div class="type-chip type-chip--relearn"><span class="type-chip__id">유형 03</span><span class="type-chip__label">재학습</span></div>
@@ -382,7 +382,7 @@
       </div>
 
       <p class="label">난이도 블록 · 아코디언(커리큘럼)</p>
-      <div class="row" style="margin-bottom:var(--space-5)">
+      <div class="row" style="margin-bottom:var(--sp-20)">
         <span class="block block--basic">기본</span>
         <span class="block block--skill">실력</span>
         <span class="block block--deep">심화</span>
@@ -411,7 +411,7 @@
 
   </div>
 
-  <script src="scripts/theme.js"></script>
-  <script src="scripts/components.js"></script>
+  <script src="scripts/theme.js?v=20260828"></script>
+  <script src="scripts/components.js?v=20260828"></script>
 </body>
 </html>

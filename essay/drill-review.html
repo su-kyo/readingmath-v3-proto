@@ -5,11 +5,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>서술형 훈련 · 기본 다지기 해설 — 리딩수학과학</title>
-  <link rel="stylesheet" href="styles/tokens.css?v=25" />
-  <link rel="stylesheet" href="styles/base.css?v=7" />
-  <link rel="stylesheet" href="styles/components.css?v=10" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20260828" />
+  <link rel="stylesheet" href="styles/base.css?v=20260828" />
+  <link rel="stylesheet" href="styles/components.css?v=20260828" />
   <link rel="stylesheet" href="styles/learn-shell.css?v=20260828" />
-  <link rel="stylesheet" href="styles/essay.css?v=11" />
+  <link rel="stylesheet" href="styles/essay.css?v=20260828" />
   <style>
     /* ============ 서술형 = 퍼플 (essay-drill 셸 재사용) ============ */
     .content {
@@ -31,11 +31,11 @@
 
     /* ============ 진행 표시 = 단계 스테퍼 (세로 확정안 drill-v2와 동일) ============ */
     .stepbar { display: inline-flex; align-items: center; gap: 0; }
-    .stepbar__i { display: inline-flex; align-items: center; gap: 7px; padding: 4px 4px;
-      font-family: var(--font-sans); font-size: 13.5px; font-weight: 700; color: var(--step-fg); transition: color .2s; }
+    .stepbar__i { display: inline-flex; align-items: center; gap: var(--sp-6); padding: var(--sp-4) var(--sp-4);
+      font-family: var(--font-sans); font-size: var(--fs-13); font-weight: var(--fw-bold); color: var(--step-fg); transition: color .2s; }
     .stepbar__dot { position: relative; box-sizing: border-box; flex: none; width: 18px; height: 18px; border-radius: 50%;
       border: 2px solid currentColor; opacity: .5; transition: opacity .2s, background .2s; }
-    .stepbar__track { width: 28px; height: 2px; border-radius: 2px; background: var(--step-fg); opacity: .3; transition: background .25s, opacity .25s; }
+    .stepbar__track { width: 28px; height: 2px; border-radius: var(--r-4); background: var(--step-fg); opacity: .3; transition: background .25s, opacity .25s; }
     .stepbar__i.is-on { color: var(--th-ink-accent); }
     :root[data-theme="dark"] .stepbar__i.is-on { color: var(--th-accent-hi); }
     .stepbar__i.is-on .stepbar__dot { opacity: 1; background: currentColor; }
@@ -47,15 +47,15 @@
     .stepbar__i.is-done + .stepbar__track { background: var(--th-accent); opacity: 1; }
 
     /* 문제 카드 헤더 안 = 어두운 패널 위 밝은 톤 */
-    .phead__lead { display: inline-flex; align-items: center; gap: 13px; flex-wrap: wrap; min-width: 0; }
+    .phead__lead { display: inline-flex; align-items: center; gap: var(--sp-12); flex-wrap: wrap; min-width: 0; }
     .phead__div { width: 1px; height: 22px; background: rgba(255,255,255,.18); flex: none; }
-    .qtabs { display: inline-flex; align-items: center; gap: 8px; }
-    .qtab { min-width: 28px; height: 28px; padding: 0 7px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center;
-      font-family: var(--font-sans); font-weight: 800; font-size: 13px; cursor: pointer;
+    .qtabs { display: inline-flex; align-items: center; gap: var(--sp-8); }
+    .qtab { min-width: 28px; height: 28px; padding: 0 var(--sp-6); border-radius: var(--r-8); display: inline-flex; align-items: center; justify-content: center;
+      font-family: var(--font-sans); font-weight: var(--fw-heavy); font-size: var(--fs-13); cursor: pointer;
       background: rgba(255,255,255,.10); color: rgba(255,255,255,.5); transition: background .16s, color .16s, box-shadow .16s; }
     .qtab.is-done { background: color-mix(in srgb, var(--th-accent) 52%, transparent); color: var(--n-000); }
     .qtab.is-active { background: var(--th-solid); color: var(--n-000); box-shadow: 0 0 0 2px var(--n-000), 0 2px 8px rgba(0,0,0,.32); }
-    .problem__head .stepbar__i { color: rgba(255,255,255,.45); font-size: 13px; }
+    .problem__head .stepbar__i { color: rgba(255,255,255,.45); font-size: var(--fs-13); }
     .problem__head .stepbar__i.is-on, .problem__head .stepbar__i.is-done { color: var(--th-accent-hi); }
     .problem__head .stepbar__track { background: rgba(255,255,255,.22); opacity: 1; }
     .problem__head .stepbar__i.is-done + .stepbar__track { background: var(--th-accent-hi); }
@@ -64,35 +64,35 @@
     /* padding-top 0 = 스티키 문제 카드가 스크롤포트 상단에 밀착 (drill-v2와 동일) */
     .stage-scroll { flex: 1; min-height: 0; overflow-y: auto; padding: 0 clamp(10px, 2vw, 22px) 96px; }
     .stage-scroll::-webkit-scrollbar { width: 10px; }
-    .stage-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,.2); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
+    .stage-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,.2); border-radius: var(--r-full); border: 2px solid transparent; background-clip: padding-box; }
     :root[data-theme="light"] .stage-scroll::-webkit-scrollbar-thumb { background: rgba(108,99,201,.28); background-clip: padding-box; }
 
     /* ============ 카드 ============ */
-    .card { max-width: 760px; margin: 0 auto; background: var(--card); border: 1px solid var(--card-br); border-radius: 20px; box-shadow: var(--card-sh); }
+    .card { max-width: 760px; margin: 0 auto; background: var(--card); border: 1px solid var(--card-br); border-radius: var(--r-22); box-shadow: var(--card-sh); }
     .card + .card { margin-top: 14px; }
-    .sec-label { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 999px;
-      font-family: var(--font-sans); font-size: 12.5px; font-weight: 800; letter-spacing: .01em; }
+    .sec-label { display: inline-flex; align-items: center; gap: var(--sp-6); padding: var(--sp-4) var(--sp-12); border-radius: var(--r-full);
+      font-family: var(--font-sans); font-size: var(--fs-12); font-weight: var(--fw-heavy); letter-spacing: .01em; }
     .sec-label--problem { background: var(--th-solid); color: var(--n-000); }
     .sec-label--sol { background: rgba(124,58,237,.15); color: var(--th-accent-hi); }
     :root[data-theme="light"] .sec-label--sol { background: rgba(124,58,237,.1); color: var(--th-accent-strong); }
 
     /* 문제 카드 (읽기전용, 접기) = 세로 확정안 drill-v2와 같은 스티키 패널 */
     .problem { position: sticky; top: 0; z-index: 20; overflow: hidden; max-width: none; margin: 0 auto;
-      background: var(--th-static); border: 0; border-radius: 0 0 18px 18px; box-shadow: 0 10px 24px rgba(8,5,22,.28); }
-    .problem__head { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px;
-      padding: 10px 16px; background: transparent; border: 0; text-align: left; cursor: pointer; }
+      background: var(--th-static); border: 0; border-radius: 0 0 var(--r-16) var(--r-16); box-shadow: 0 10px 24px rgba(8,5,22,.28); }
+    .problem__head { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--sp-12);
+      padding: var(--sp-8) var(--sp-16); background: transparent; border: 0; text-align: left; cursor: pointer; }
     .problem__chev { width: 22px; height: 22px; color: rgba(255,255,255,.62); transition: transform .25s; flex: none; transform: rotate(180deg); }
     .problem.is-collapsed .problem__chev { transform: rotate(0); }
-    .problem__body { padding: 6px 18px 18px; overflow: hidden; max-height: 1600px; color: rgba(249,249,249,.92);
+    .problem__body { padding: var(--sp-6) var(--sp-16) var(--sp-16); overflow: hidden; max-height: 1600px; color: rgba(249,249,249,.92);
       transition: max-height .32s ease, opacity .25s ease, padding .32s ease; }
     .problem.is-collapsed .problem__body { max-height: 0; opacity: 0; padding-top: 0; padding-bottom: 0; }
     .problem__body .rline { color: rgba(249,249,249,.92); }
 
     /* ============ 다음 단계 진입 버튼 (drill-v2와 동일 · 콘텐츠 하단) ============ */
     .stage-action { max-width: 760px; margin: 16px auto 0; }
-    .stage-action__btn { width: 100%; height: 54px; border-radius: 14px; border: 0; cursor: pointer;
-      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-      background: var(--primary); color: var(--n-000); font-family: var(--font-sans); font-size: 19px; font-weight: 800;
+    .stage-action__btn { width: 100%; height: 54px; border-radius: var(--r-12); border: 0; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-8);
+      background: var(--primary); color: var(--n-000); font-family: var(--font-sans); font-size: var(--fs-19); font-weight: var(--fw-heavy);
       box-shadow: inset 0 1px 0 rgba(255,255,255,.25); transition: background .15s; }
     .stage-action__btn:hover { background: var(--primary-hover); }
     .stage-action__btn svg { width: 19px; height: 19px; }
@@ -102,9 +102,9 @@
     .worksheet__label { margin-bottom: 16px; }
 
     /* 안내문 (오답 있을 때) */
-    .review-hint { display: flex; align-items: center; gap: 9px; max-width: 760px; margin: 0 auto 14px;
-      padding: 11px 16px; border-radius: 13px; background: var(--no-bg); box-shadow: inset 0 0 0 1px var(--no-br);
-      font-family: var(--font-sans); font-size: 13.5px; font-weight: 700; color: var(--no-fg); }
+    .review-hint { display: flex; align-items: center; gap: var(--sp-8); max-width: 760px; margin: 0 auto 14px;
+      padding: var(--sp-12) var(--sp-16); border-radius: var(--r-12); background: var(--no-bg); box-shadow: inset 0 0 0 1px var(--no-br);
+      font-family: var(--font-sans); font-size: var(--fs-13); font-weight: var(--fw-bold); color: var(--no-fg); }
     .review-hint svg { width: 17px; height: 17px; flex: none; }
 
     /* 지문 라인 */
@@ -115,10 +115,10 @@
     .rline--muted { color: var(--step-fg); }
 
     /* ============ 채점 빈칸/슬롯 ============ */
-    .rblank, .rslot { position: relative; display: inline-flex; align-items: center; gap: 6px; vertical-align: middle;
-      font-family: var(--font-serif); font-weight: 700; }
-    .rblank { padding: 2px 11px; margin: 0 2px; border-radius: 9px; min-height: 32px; font-size: 17px; }
-    .rslot { padding: 4px 14px; margin: 3px 2px; border-radius: 10px; min-width: 120px; justify-content: center; font-size: 16px; }
+    .rblank, .rslot { position: relative; display: inline-flex; align-items: center; gap: var(--sp-6); vertical-align: middle;
+      font-family: var(--font-serif); font-weight: var(--fw-bold); }
+    .rblank { padding: var(--sp-4) var(--sp-12); margin: 0 2px; border-radius: var(--r-8); min-height: 32px; font-size: var(--fs-16); }
+    .rslot { padding: var(--sp-4) var(--sp-12); margin: 3px 2px; border-radius: var(--r-8); min-width: 120px; justify-content: center; font-size: var(--fs-16); }
     .rblank__val, .rslot__val { line-height: 1.2; }
 
     /* 정답 */
@@ -137,7 +137,7 @@
     .rblank.is-correct::after, .rslot.is-correct::after,
     .rblank.is-wrong::after, .rslot.is-wrong::after {
       position: absolute; top: -7px; right: -7px; width: 17px; height: 17px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center; font-family: var(--font-sans); font-weight: 900; font-size: 10px; color: var(--static-on);
+      display: flex; align-items: center; justify-content: center; font-family: var(--font-sans); font-weight: var(--fw-heavy); font-size: var(--fs-11); color: var(--static-on);
       box-shadow: 0 1px 3px rgba(0,0,0,.3); }
     .rblank.is-correct::after, .rslot.is-correct::after { content: '✓'; background: var(--ok-solid); }
     .rblank.is-wrong::after, .rslot.is-wrong::after { content: '✕'; background: var(--no-solid); }
@@ -232,7 +232,7 @@
   <!-- 검수용 디버그 패널 (?debug=1 일 때만 보임) -->
   <!-- 연습장 캔버스 (공용) -->
   <script src="scripts/scratchpad.js?v=20260828"></script>
-  <script src="scripts/debug-panel.js?v=3"></script>
-  <script src="scripts/essay-drill-review.js?v=3"></script>
+  <script src="scripts/debug-panel.js?v=20260828"></script>
+  <script src="scripts/essay-drill-review.js?v=20260828"></script>
 </body>
 </html>

@@ -5,11 +5,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>서술형 훈련 · 실력 키우기 — 리딩수학과학</title>
-  <link rel="stylesheet" href="styles/tokens.css?v=25" />
-  <link rel="stylesheet" href="styles/base.css?v=7" />
-  <link rel="stylesheet" href="styles/components.css?v=10" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20260828" />
+  <link rel="stylesheet" href="styles/base.css?v=20260828" />
+  <link rel="stylesheet" href="styles/components.css?v=20260828" />
   <link rel="stylesheet" href="styles/learn-shell.css?v=20260828" />
-  <link rel="stylesheet" href="styles/essay.css?v=11" />
+  <link rel="stylesheet" href="styles/essay.css?v=20260828" />
   <link rel="stylesheet" href="styles/keypad.css?v=20260828" />
   <style>
     /* ============ 서술형 훈련 = 퍼플 테마 (공통은 essay.css) ============ */
@@ -39,43 +39,43 @@
     /* ============ 단일 스크롤 영역 ============ */
     .stage-scroll { flex: 1; min-height: 0; overflow-y: auto; padding: 0 clamp(10px, 2vw, 22px) 96px; }
     .stage-scroll::-webkit-scrollbar { width: 10px; }
-    .stage-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,.2); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
+    .stage-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,.2); border-radius: var(--r-full); border: 2px solid transparent; background-clip: padding-box; }
     :root[data-theme="light"] .stage-scroll::-webkit-scrollbar-thumb { background: rgba(108,99,201,.28); background-clip: padding-box; }
 
     /* ============ 카드 공용 ============ */
-    .card { max-width: 760px; margin: 0 auto; background: var(--card); border: 1px solid var(--card-br); border-radius: 20px; box-shadow: var(--card-sh); }
+    .card { max-width: 760px; margin: 0 auto; background: var(--card); border: 1px solid var(--card-br); border-radius: var(--r-22); box-shadow: var(--card-sh); }
     .card + .card { margin-top: 14px; }
-    .sec-label { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 999px;
-      font-family: var(--font-sans); font-size: 12.5px; font-weight: 800; letter-spacing: .01em; }
+    .sec-label { display: inline-flex; align-items: center; gap: var(--sp-6); padding: var(--sp-4) var(--sp-12); border-radius: var(--r-full);
+      font-family: var(--font-sans); font-size: var(--fs-12); font-weight: var(--fw-heavy); letter-spacing: .01em; }
     .sec-label--problem { background: var(--th-solid); color: var(--n-000); }
     .sec-label--sol { background: rgba(124,58,237,.15); color: var(--th-accent-hi); }
     :root[data-theme="light"] .sec-label--sol { background: rgba(124,58,237,.1); color: var(--th-accent-strong); }
 
     /* ============ 문제 카드 (헤더 + 접이식 · 프레임에 붙음) ============ */
     .problem { position: sticky; top: 0; z-index: 20; overflow: hidden;
-      background: var(--pc-bg); border: 0; border-radius: 0 0 18px 18px; margin: 0 auto; box-shadow: 0 10px 24px rgba(8,5,22,.28); }
-    .problem__head { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 10px;
-      padding: 10px 16px; background: transparent; border: 0; text-align: left; }
+      background: var(--pc-bg); border: 0; border-radius: 0 0 var(--r-16) var(--r-16); margin: 0 auto; box-shadow: 0 10px 24px rgba(8,5,22,.28); }
+    .problem__head { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--sp-8);
+      padding: var(--sp-8) var(--sp-16); background: transparent; border: 0; text-align: left; }
     .problem.is-collapsible .problem__head { cursor: pointer; }
     .problem__label { color: var(--static-on); }
     .problem__chev { width: 22px; height: 22px; color: var(--pc-chev); transition: transform .25s; flex: none; transform: rotate(180deg); }
     .problem.is-collapsed .problem__chev { transform: rotate(0); }
     /* 본문 = 문제문(좌) + 참고자료(우) 한 행 · 스티키라 상한+내부 스크롤 */
-    .problem__body { padding: 6px 18px 18px; overflow-y: auto; max-height: 34vh; color: var(--pc-text);
-      display: flex; gap: 20px; align-items: flex-start; transition: max-height .32s ease, opacity .25s ease, padding .32s ease; }
+    .problem__body { padding: var(--sp-6) var(--sp-16) var(--sp-16); overflow-y: auto; max-height: 34vh; color: var(--pc-text);
+      display: flex; gap: var(--sp-20); align-items: flex-start; transition: max-height .32s ease, opacity .25s ease, padding .32s ease; }
     .problem__qtext { flex: 1 1 auto; min-width: 0; }
     .problem.is-collapsed .problem__body { max-height: 0; opacity: 0; overflow: hidden; padding-top: 0; padding-bottom: 0; }
     .problem__body::-webkit-scrollbar { width: 8px; }
-    .problem__body::-webkit-scrollbar-thumb { background: rgba(255,255,255,.2); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
+    .problem__body::-webkit-scrollbar-thumb { background: rgba(255,255,255,.2); border-radius: var(--r-full); border: 2px solid transparent; background-clip: padding-box; }
     :root[data-theme="light"] .problem__body::-webkit-scrollbar-thumb { background: rgba(108,99,201,.28); background-clip: padding-box; }
 
     /* 문제 본문 (텍스트 좌 + 참고자료 우) */
     .qtext { flex: 1 1 auto; min-width: 0; color: var(--pc-text); font-size: clamp(15px, 1.35vw, 17.5px); line-height: 1.75; }
-    .qref { flex: none; width: clamp(190px, 33%, 290px); margin-top: 0; background: rgba(255,255,255,.06); border-radius: 16px; padding: 10px; display: flex; flex-direction: column; gap: 8px; }
-    .qref__img { width: 100%; aspect-ratio: 4 / 3; border-radius: 10px;
+    .qref { flex: none; width: clamp(190px, 33%, 290px); margin-top: 0; background: rgba(255,255,255,.06); border-radius: var(--r-16); padding: var(--sp-8); display: flex; flex-direction: column; gap: var(--sp-8); }
+    .qref__img { width: 100%; aspect-ratio: 4 / 3; border-radius: var(--r-8);
       background: linear-gradient(110deg, rgba(255,255,255,.12) 25%, rgba(255,255,255,.2) 40%, rgba(255,255,255,.12) 55%); background-size: 220% 100%;
       animation: shimmer 1.8s ease-in-out infinite; display: flex; align-items: center; justify-content: center; }
-    .qref__img span { color: rgba(255,255,255,.6); font-weight: 700; font-size: 13px; }
+    .qref__img span { color: rgba(255,255,255,.6); font-weight: var(--fw-bold); font-size: var(--fs-13); }
     @keyframes shimmer { from { background-position: 180% 0; } to { background-position: -40% 0; } }
     .qref__words { color: rgba(255,255,255,.78); font-size: clamp(13px, 1.15vw, 15px); line-height: 1.7; white-space: pre-line; }
     @media (prefers-reduced-motion: reduce) { .qref__img { animation: none; } }
@@ -84,14 +84,14 @@
     .worksheet { padding: clamp(16px, 2.2vw, 26px) clamp(14px, 2.4vw, 30px) clamp(20px, 2.4vw, 28px); }
     .worksheet__label { display: inline-flex; margin-bottom: 8px; }
     .expl { display: flex; flex-direction: column; align-items: center; font-family: var(--font-serif); color: var(--guide); }
-    .expl__doc { width: 100%; max-width: 760px; display: flex; flex-direction: column; gap: clamp(24px, 2.8vw, 38px); padding-top: 6px; }
-    .para { display: flex; flex-direction: column; gap: 10px; }
+    .expl__doc { width: 100%; max-width: 760px; display: flex; flex-direction: column; gap: clamp(24px, 2.8vw, 38px); padding-top: var(--sp-6); }
+    .para { display: flex; flex-direction: column; gap: var(--sp-8); }
     .line { font-size: clamp(15px, 1.4vw, 18px); line-height: 2.0; letter-spacing: -0.02em; }
-    .para__head { font-weight: 700; }
-    .box { background: var(--box-bg); border: 1px solid var(--box-br); border-radius: 16px;
-      padding: clamp(16px, 2vw, 28px); display: flex; flex-direction: column; gap: 14px; }
-    .box__row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 2px 6px;
-      font-family: var(--font-sans); font-size: clamp(16px, 1.55vw, 19px); font-weight: 500; }
+    .para__head { font-weight: var(--fw-bold); }
+    .box { background: var(--box-bg); border: 1px solid var(--box-br); border-radius: var(--r-16);
+      padding: clamp(16px, 2vw, 28px); display: flex; flex-direction: column; gap: var(--sp-12); }
+    .box__row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--sp-4) var(--sp-6);
+      font-family: var(--font-sans); font-size: clamp(16px, 1.55vw, 19px); font-weight: var(--fw-semibold); }
 
     /* 빈칸: 항상 클릭 가능(재편집) + 예시(given) 변형 — 코어는 essay.css */
     .blank { cursor: pointer; }
@@ -184,8 +184,8 @@
   <!-- 키패드 물리 키보드 입력 (공용) -->
   <!-- 연습장 캔버스 (공용) -->
   <script src="scripts/scratchpad.js?v=20260828"></script>
-  <script src="scripts/keypad.js?v=1"></script>
-  <script src="scripts/keypad-input.js?v=3"></script>
-  <script src="scripts/essay-advanced.js?v=3"></script>
+  <script src="scripts/keypad.js?v=20260828"></script>
+  <script src="scripts/keypad-input.js?v=20260828"></script>
+  <script src="scripts/essay-advanced.js?v=20260828"></script>
 </body>
 </html>

@@ -5,10 +5,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>자유 모드 — 리딩수학과학</title>
-  <link rel="stylesheet" href="styles/tokens.css?v=25" />
-  <link rel="stylesheet" href="styles/base.css?v=7" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20260828" />
+  <link rel="stylesheet" href="styles/base.css?v=20260828" />
   <link rel="stylesheet" href="styles/space-bg.css?v=20260828" />
-  <link rel="stylesheet" href="styles/gnb.css?v=9" />
+  <link rel="stylesheet" href="styles/gnb.css?v=20260828" />
   <style>
     :root{
       --ink:var(--text); --muted:var(--text-muted); --blue:var(--info-ink); --green:var(--ok-on-dark); --green2:var(--ok-solid);
@@ -22,27 +22,27 @@
     .fm{ position:relative; flex:1; min-height:0; overflow:hidden; }
 
     /* ---- 상단 토글 ---- */
-    .fm__top{ position:absolute; top:16px; right:16px; z-index:6; display:flex; align-items:center; gap:16px; }
-    .seg{ display:flex; padding:4px; background:var(--n-000); border-radius:20px; }
-    .seg button{ padding:8px 16px; border:0; border-radius:16px; background:transparent; color:var(--n-500);
-      font-family:inherit; font-size:15px; font-weight:800; cursor:pointer; letter-spacing:-.03em; transition:.15s; }
+    .fm__top{ position:absolute; top:16px; right:16px; z-index:6; display:flex; align-items:center; gap:var(--sp-16); }
+    .seg{ display:flex; padding:var(--sp-4); background:var(--n-000); border-radius:var(--r-22); }
+    .seg button{ padding:var(--sp-8) var(--sp-16); border:0; border-radius:var(--r-16); background:transparent; color:var(--n-500);
+      font-family:inherit; font-size:var(--fs-15); font-weight:var(--fw-heavy); cursor:pointer; letter-spacing:-.03em; transition:.15s; }
     .seg button.is-on{ background:var(--blue); color:var(--n-000); }
-    .switch{ display:flex; align-items:center; gap:9px; }
-    .switch__l{ font-size:15px; font-weight:800; }
-    .switch__t{ width:56px; height:30px; border-radius:27px; background:rgba(255,255,255,.4); padding:4px;
+    .switch{ display:flex; align-items:center; gap:var(--sp-8); }
+    .switch__l{ font-size:var(--fs-15); font-weight:var(--fw-heavy); }
+    .switch__t{ width:56px; height:30px; border-radius:27px; background:rgba(255,255,255,.4); padding:var(--sp-4);
       cursor:pointer; transition:.2s; display:flex; }
     .switch__t.is-on{ background:var(--green2); justify-content:flex-end; }
     .switch__k{ width:22px; height:22px; border-radius:50%; background:var(--n-000); transition:.2s; }
 
     /* ---- 우주 전환 ---- */
-    .fm__univ{ position:absolute; right:24px; bottom:24px; z-index:6; display:inline-flex; align-items:center; gap:9px;
-      height:50px; padding:0 22px; border-radius:15px; border:1px solid var(--border-strong);
-      background:var(--surface-1); color:var(--ink); font-family:inherit; font-size:15px; font-weight:700;
+    .fm__univ{ position:absolute; right:24px; bottom:24px; z-index:6; display:inline-flex; align-items:center; gap:var(--sp-8);
+      height:50px; padding:0 var(--sp-20); border-radius:var(--r-16); border:1px solid var(--border-strong);
+      background:var(--surface-1); color:var(--ink); font-family:inherit; font-size:var(--fs-15); font-weight:var(--fw-bold);
       cursor:pointer; transition:.16s; backdrop-filter:blur(4px); }
     .fm__univ:hover{ border-color:var(--border-strong); background:var(--surface-2); }
     .fm__univ svg{ width:18px; height:18px; }
     .fm__label{ position:absolute; left:0; right:0; top:26px; text-align:center; z-index:5;
-      font-size:14px; font-weight:700; color:var(--muted); }
+      font-size:var(--fs-14); font-weight:var(--fw-bold); color:var(--muted); }
     .fm__label b{ color:var(--n-000); }
 
     /* ---- 캐러셀 ---- */
@@ -58,22 +58,22 @@
     .viewport{ position:absolute; inset:0; overflow:hidden; cursor:grab; touch-action:pan-y; }
     .viewport.is-drag{ cursor:grabbing; }
     .track{ position:absolute; top:50%; left:0; display:flex; align-items:flex-start; gap:70px;
-      transform:translateY(-50%); transition:transform .45s cubic-bezier(.3,.7,.3,1); padding-top:10px; }
-    .planet{ position:relative; flex:none; width:186px; display:flex; flex-direction:column; align-items:center; gap:14px;
+      transform:translateY(-50%); transition:transform .45s cubic-bezier(.3,.7,.3,1); padding-top:var(--sp-8); }
+    .planet{ position:relative; flex:none; width:186px; display:flex; flex-direction:column; align-items:center; gap:var(--sp-12);
       opacity:.32; transform:scale(.86); transition:opacity .4s, transform .4s; cursor:pointer; }
     .planet.is-center{ opacity:1; transform:scale(1.18); }
     .planet__img{ width:186px; height:186px; object-fit:contain; pointer-events:none;
       filter:drop-shadow(0 18px 30px rgba(0,0,0,.5)); }
-    .planet__label{ font-size:22px; font-weight:800; letter-spacing:-.04em; text-align:center; white-space:nowrap; }
+    .planet__label{ font-size:var(--fs-22); font-weight:var(--fw-heavy); letter-spacing:-.04em; text-align:center; white-space:nowrap; }
     .planet__prog{ width:200px; opacity:0; height:0; overflow:hidden; transition:opacity .3s; text-align:center; }
     .planet.is-center .planet__prog{ opacity:1; height:auto; }
-    .planet__pct{ font-size:14px; font-weight:700; color:var(--n-000); margin-bottom:8px; }
+    .planet__pct{ font-size:var(--fs-14); font-weight:var(--fw-bold); color:var(--n-000); margin-bottom:8px; }
     .bar{ width:200px; height:14px; border-radius:36px; background:var(--border); overflow:hidden; margin:0 auto; }
     .bar__f{ height:100%; border-radius:27px; background:var(--green2); transition:width .5s; }
     /* 중앙 행성 '목록 보기' 힌트 (한 번 더 누르면 상세) */
-    .planet__hint{ position:absolute; top:150px; left:50%; z-index:3; display:none; align-items:center; gap:6px;
-      height:34px; padding:0 13px 0 11px; border-radius:18px; border:0; background:var(--blue); color:var(--n-000);
-      font-family:inherit; font-size:13px; font-weight:800; cursor:pointer; white-space:nowrap;
+    .planet__hint{ position:absolute; top:150px; left:50%; z-index:3; display:none; align-items:center; gap:var(--sp-6);
+      height:34px; padding:0 var(--sp-12) 0 var(--sp-12); border-radius:var(--r-16); border:0; background:var(--blue); color:var(--n-000);
+      font-family:inherit; font-size:var(--fs-13); font-weight:var(--fw-heavy); cursor:pointer; white-space:nowrap;
       box-shadow:0 10px 22px -6px rgba(0,140,255,.75); animation:hintPulse 1.7s ease-in-out infinite; }
     .planet.is-center .planet__hint{ display:inline-flex; }
     .fm.is-detail .planet.is-center .planet__hint{ display:none; }  /* 상세 열리면 목록보기 숨김 */
@@ -81,57 +81,57 @@
     @keyframes hintPulse{ 0%,100%{ transform:translate(-50%,0);} 50%{ transform:translate(-50%,-5px);} }
 
     /* ---- 모두 보기 ---- */
-    .allview{ position:absolute; inset:64px 0 0; overflow-y:auto; padding:22px 40px 48px; display:none; }
+    .allview{ position:absolute; inset:64px 0 0; overflow-y:auto; padding:var(--sp-20) var(--sp-40) 48px; display:none; }
     .allview.is-on{ display:block; }
     /* 학기 모두보기: 한 학년 = 한 열 (1·2학기 세로 스택) */
-    .allcols{ display:flex; gap:24px; justify-content:center; align-items:flex-start; flex-wrap:wrap;
+    .allcols{ display:flex; gap:var(--sp-24); justify-content:center; align-items:flex-start; flex-wrap:wrap;
       max-width:1220px; margin:0 auto; }
-    .allcol{ display:flex; flex-direction:column; gap:34px; width:272px; }
+    .allcol{ display:flex; flex-direction:column; gap:var(--sp-32); width:272px; }
     /* 계통 모두보기: 계통별 블록 + 4열 그리드 */
     .strandblk{ max-width:1220px; margin:0 auto 40px; }
-    .strandblk__hd{ display:flex; align-items:center; gap:12px; margin-bottom:16px; }
+    .strandblk__hd{ display:flex; align-items:center; gap:var(--sp-12); margin-bottom:16px; }
     .strandblk__img{ width:46px; height:46px; object-fit:contain; }
-    .strandblk__t{ font-size:24px; font-weight:800; letter-spacing:-.03em; }
-    .strandgrid{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:26px 24px; }
+    .strandblk__t{ font-size:var(--fs-22); font-weight:var(--fw-heavy); letter-spacing:-.03em; }
+    .strandgrid{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:var(--sp-24) var(--sp-24); }
     @media (max-width:1080px){ .strandgrid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
     /* unit-box (행성이 카드 위에 얹힘) */
     .ucard{ display:flex; flex-direction:column; align-items:center; }
     .ucard__img{ width:92px; height:92px; object-fit:contain; margin-bottom:-22px; position:relative; z-index:1;
       filter:drop-shadow(0 8px 14px rgba(0,0,0,.45)); }
-    .ucard__body{ width:100%; background:var(--rail); border-radius:22px; padding:30px 15px 15px; }
-    .ucard__nm{ text-align:center; font-size:16.5px; font-weight:800; margin-bottom:12px; letter-spacing:-.03em; }
-    .ubtn{ display:flex; align-items:center; gap:8px; width:100%; padding:11px 13px; margin-bottom:7px; border:0;
-      border-radius:13px; background:var(--surface-2); color:var(--text); font-family:inherit; font-size:13.5px; font-weight:700;
+    .ucard__body{ width:100%; background:var(--rail); border-radius:var(--r-22); padding:var(--sp-32) var(--sp-16) var(--sp-16); }
+    .ucard__nm{ text-align:center; font-size:var(--fs-16); font-weight:var(--fw-heavy); margin-bottom:12px; letter-spacing:-.03em; }
+    .ubtn{ display:flex; align-items:center; gap:var(--sp-8); width:100%; padding:var(--sp-12) var(--sp-12); margin-bottom:7px; border:0;
+      border-radius:var(--r-12); background:var(--surface-2); color:var(--text); font-family:inherit; font-size:var(--fs-13); font-weight:var(--fw-bold);
       cursor:pointer; text-align:left; transition:background .14s, transform .14s; }
     .ubtn:last-child{ margin-bottom:0; }
     .ubtn:hover{ background:var(--surface-hover); transform:translateY(-1px); }
-    .ubtn__no{ color:var(--th-accent-hi); font-weight:800; flex:none; font-size:12.5px; }
+    .ubtn__no{ color:var(--th-accent-hi); font-weight:var(--fw-heavy); flex:none; font-size:var(--fs-12); }
     .ubtn__t{ flex:1; min-width:0; }
-    .ubtn__done{ font-size:11.5px; font-weight:800; color:var(--green); flex:none; }
+    .ubtn__done{ font-size:var(--fs-11); font-weight:var(--fw-heavy); color:var(--green); flex:none; }
 
     /* ---- 대단원 모달 ---- */
-    .umodal{ position:fixed; inset:0; z-index:70; display:none; place-items:center; background:var(--scrim); }
+    .umodal{ position:fixed; inset:0; z-index:var(--z-overlay); display:none; place-items:center; background:var(--scrim); }
     .umodal.is-open{ display:grid; }
     .umodal__box{ width:560px; max-width:92vw; max-height:82vh; overflow-y:auto; background:var(--surface-1);
-      border:2px solid var(--n-650); border-radius:24px; }
-    .umodal__head{ display:flex; align-items:center; justify-content:space-between; padding:16px 22px;
+      border:2px solid var(--n-650); border-radius:var(--r-22); }
+    .umodal__head{ display:flex; align-items:center; justify-content:space-between; padding:var(--sp-16) var(--sp-20);
       border-bottom:1px solid var(--n-650); position:sticky; top:0; background:var(--surface-1); z-index:1; }
-    .umodal__ttl{ font-size:18px; font-weight:800; letter-spacing:-.03em; }
+    .umodal__ttl{ font-size:var(--fs-19); font-weight:var(--fw-heavy); letter-spacing:-.03em; }
     .umodal__x{ width:32px; height:32px; border:0; background:transparent; color:var(--text-muted); cursor:pointer;
-      display:grid; place-items:center; border-radius:8px; }
+      display:grid; place-items:center; border-radius:var(--r-8); }
     .umodal__x:hover{ background:var(--border); color:var(--n-000); }
 
     /* ---- 슬라이드인 커리큘럼 ---- */
     .detail{ position:absolute; top:0; right:0; bottom:0; width:456px; max-width:92vw; background:var(--surface-1);
-      border-left:1px solid var(--border); transform:translateX(101%); z-index:8;
+      border-left:1px solid var(--border); transform:translateX(101%); z-index:calc(var(--z-overlay) + 1);
       transition:transform .34s cubic-bezier(.3,.7,.3,1); display:flex; flex-direction:column;
       box-shadow:var(--shadow-2); }
     .detail.is-open{ transform:none; }
     .fm.is-detail .carousel{ transform:translateX(-228px); transition:transform .34s cubic-bezier(.3,.7,.3,1); }
     .fm.is-detail .fm__univ, .fm.is-detail .fm__top, .fm.is-detail .fm__label{ opacity:.2; pointer-events:none; }
-    .detail__head{ display:flex; align-items:center; justify-content:space-between; padding:17px 20px; border-bottom:1px solid var(--n-650); }
-    .detail__ttl{ font-size:20px; font-weight:800; letter-spacing:-.03em; }
-    .detail__x{ width:32px; height:32px; border:0; background:transparent; color:var(--text-muted); cursor:pointer; display:grid; place-items:center; border-radius:8px; }
+    .detail__head{ display:flex; align-items:center; justify-content:space-between; padding:var(--sp-16) var(--sp-20); border-bottom:1px solid var(--n-650); }
+    .detail__ttl{ font-size:var(--fs-19); font-weight:var(--fw-heavy); letter-spacing:-.03em; }
+    .detail__x{ width:32px; height:32px; border:0; background:transparent; color:var(--text-muted); cursor:pointer; display:grid; place-items:center; border-radius:var(--r-8); }
     .detail__x:hover{ background:var(--border); color:var(--n-000); }
     .detail__list{ flex:1; overflow-y:auto; }
     /* 행성 전환 시 목록 내용 교체 페이드(opacity) — 바뀐 걸 인지시키기 위함 */
@@ -140,45 +140,45 @@
     .detail__list::-webkit-scrollbar{ width:8px; } .detail__list::-webkit-scrollbar-thumb{ background:var(--surface-3); border-radius:50px; }
 
     /* 계통 상세: 학기 구분 헤더 */
-    .semhd{ display:flex; align-items:center; gap:10px; padding:18px 20px 2px; }
+    .semhd{ display:flex; align-items:center; gap:var(--sp-8); padding:var(--sp-16) var(--sp-20) var(--sp-4); }
     .semhd__img{ width:32px; height:32px; object-fit:contain; flex:none; }
-    .semhd__t{ font-size:15.5px; font-weight:800; color:var(--th-accent-hi); letter-spacing:-.03em; }
+    .semhd__t{ font-size:var(--fs-15); font-weight:var(--fw-heavy); color:var(--th-accent-hi); letter-spacing:-.03em; }
 
     /* unit / 소단원 */
-    .unit{ padding:12px 20px; border-top:2px solid var(--n-650); } .unit:first-child{ border-top:0; }
+    .unit{ padding:var(--sp-12) var(--sp-20); border-top:2px solid var(--n-650); } .unit:first-child{ border-top:0; }
     .semhd + .unit{ border-top:0; }
-    .unit__ttl{ display:flex; align-items:center; gap:9px; font-size:16px; font-weight:800; margin-bottom:9px; }
-    .tag{ font-size:12px; font-weight:700; padding:2px 7px; border-radius:6px; white-space:nowrap; }
-    .sub{ border-radius:14px; background:var(--surface-2); margin-bottom:8px; overflow:hidden; }
-    .sub__head{ display:flex; align-items:center; gap:8px; padding:11px 13px; cursor:pointer; }
-    .sub__no{ font-size:14px; font-weight:800; color:var(--th-accent-hi); flex:none; }
-    .sub__title{ flex:1; min-width:0; font-size:14px; font-weight:700; color:var(--text); letter-spacing:-.03em; }
+    .unit__ttl{ display:flex; align-items:center; gap:var(--sp-8); font-size:var(--fs-16); font-weight:var(--fw-heavy); margin-bottom:9px; }
+    .tag{ font-size:var(--fs-12); font-weight:var(--fw-bold); padding:var(--sp-4) var(--sp-6); border-radius:var(--r-4); white-space:nowrap; }
+    .sub{ border-radius:var(--r-12); background:var(--surface-2); margin-bottom:8px; overflow:hidden; }
+    .sub__head{ display:flex; align-items:center; gap:var(--sp-8); padding:var(--sp-12) var(--sp-12); cursor:pointer; }
+    .sub__no{ font-size:var(--fs-14); font-weight:var(--fw-heavy); color:var(--th-accent-hi); flex:none; }
+    .sub__title{ flex:1; min-width:0; font-size:var(--fs-14); font-weight:var(--fw-bold); color:var(--text); letter-spacing:-.03em; }
     .sub__chev{ width:20px; height:20px; color:var(--th-accent-hi); display:grid; place-items:center; transition:transform .2s; flex:none; }
     .sub.is-open .sub__chev{ transform:rotate(180deg); } .sub__chev svg{ width:13px; height:13px; }
-    .sub__body{ display:none; padding:2px 12px 12px; } .sub.is-open .sub__body{ display:block; }
+    .sub__body{ display:none; padding:var(--sp-4) var(--sp-12) var(--sp-12); } .sub.is-open .sub__body{ display:block; }
 
     /* 접힘 요약: 통통·둥근 아이콘 별 (색=등급: A금 B은 C동 S프리즘) */
-    .sub__mini{ display:flex; gap:2px; flex:none; align-items:center; margin-right:2px; }
+    .sub__mini{ display:flex; gap:var(--sp-4); flex:none; align-items:center; margin-right:2px; }
     .sub__mini svg{ display:block; }
-    .sub__done2{ display:inline-flex; align-items:center; gap:3px; padding:2px 8px; border-radius:13px;
-      background:color-mix(in srgb, var(--ok-on-dark) 22%, transparent); color:var(--ok-on-dark); font-size:11px; font-weight:800; flex:none; }
+    .sub__done2{ display:inline-flex; align-items:center; gap:var(--sp-4); padding:var(--sp-4) var(--sp-8); border-radius:var(--r-12);
+      background:color-mix(in srgb, var(--ok-on-dark) 22%, transparent); color:var(--ok-on-dark); font-size:var(--fs-11); font-weight:var(--fw-heavy); flex:none; }
     /* 펼침: C 하이브리드 (등급 별 + 3라운드 미니바) */
-    .hyb{ display:flex; gap:8px; }
-    .hyc{ flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; padding:11px 4px; border-radius:12px;
+    .hyb{ display:flex; gap:var(--sp-8); }
+    .hyc{ flex:1; display:flex; flex-direction:column; align-items:center; gap:var(--sp-6); padding:var(--sp-12) var(--sp-4); border-radius:var(--r-12);
       background:var(--surface-2); cursor:pointer; transition:background .14s; }
     .hyc:hover{ background:var(--surface-3); }
-    .hyc__lab{ font-size:11.5px; font-weight:800; color:var(--th-accent-hi); }
+    .hyc__lab{ font-size:var(--fs-11); font-weight:var(--fw-heavy); color:var(--th-accent-hi); }
     .hyc__star{ width:34px; height:34px; display:grid; place-items:center; }
     .hyc__star img{ width:34px; height:34px; object-fit:contain; display:block; }
     .hyc__star img.x{ filter:grayscale(1) brightness(1.4) opacity(.4); }
-    .rbar{ display:flex; gap:3px; }
-    .rbar i{ width:11px; height:6px; border-radius:2px; background:var(--border); }
+    .rbar{ display:flex; gap:var(--sp-4); }
+    .rbar i{ width:11px; height:6px; border-radius:var(--r-4); background:var(--border); }
     .rbar i.done{ background:var(--ok-on-dark); }
     .rbar i.cur{ background:var(--th-accent); }
 
-    .toast{ position:fixed; left:50%; bottom:30px; transform:translateX(-50%) translateY(16px); z-index:60;
-      background:var(--surface-2); border:1px solid var(--border); color:var(--ink); padding:11px 18px;
-      border-radius:12px; font-size:13.5px; font-weight:600; opacity:0; pointer-events:none; transition:.2s; }
+    .toast{ position:fixed; left:50%; bottom:30px; transform:translateX(-50%) translateY(16px); z-index:var(--z-toast);
+      background:var(--surface-2); border:1px solid var(--border); color:var(--ink); padding:var(--sp-12) var(--sp-16);
+      border-radius:var(--r-12); font-size:var(--fs-13); font-weight:var(--fw-semibold); opacity:0; pointer-events:none; transition:.2s; }
     .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
   </style>
 </head>
@@ -246,7 +246,7 @@
 
   <div class="toast" id="toast"></div>
 
-  <script src="scripts/space-bg.js?v=1"></script>
+  <script src="scripts/space-bg.js?v=20260828"></script>
   <script>
   (function(){
     /* ============ 데이터 ============ */

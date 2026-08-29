@@ -12,8 +12,8 @@
    ============================================================ */
 
 .keypad{
-  width: 244px; padding: 12px;
-  border-radius: 22px;
+  width: 244px; padding: var(--sp-12);
+  border-radius: var(--r-22);
   background: var(--th-chip);
   border: 1.5px solid var(--border-strong);
   box-shadow: inset 0 0 0 3.5px var(--n-050);   /* 안쪽 링(베젤) */
@@ -21,14 +21,14 @@
 
 .keypad__display{
   height: 50px;
-  border-radius: var(--r-md);
+  border-radius: var(--r-12);
   background: var(--n-700);
   color: var(--th-accent-hi);
   font-family: var(--font-mono);
-  font-size: 24px; font-weight: var(--fw-bold);
+  font-size: var(--fs-22); font-weight: var(--fw-bold);
   font-variant-numeric: tabular-nums;
   display: flex; align-items: center; justify-content: flex-end;
-  padding: 0 14px;
+  padding: 0 var(--sp-12);
   margin-bottom: 10px;
   overflow: hidden;
 }
@@ -44,17 +44,17 @@
 .keypad__grid{
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
+  gap: var(--sp-8);
 }
 
 .keypad__key{
   height: 46px;
   border: 0; cursor: pointer;
-  border-radius: var(--r-md);
+  border-radius: var(--r-12);
   background: var(--n-000);
   color: var(--n-650);
   font-family: var(--font-mono);
-  font-size: 19px; font-weight: var(--fw-bold);
+  font-size: var(--fs-19); font-weight: var(--fw-bold);
   font-variant-numeric: tabular-nums;
   display: inline-flex; align-items: center; justify-content: center;
   box-shadow: 0 2px 3px rgba(20, 40, 90, 0.1);
@@ -69,7 +69,7 @@
   background: color-mix(in srgb, var(--th-accent) 8%, var(--n-000));
   color: var(--th-ink-accent);
   font-family: var(--font-sans);
-  font-size: 18px;
+  font-size: var(--fs-19);
 }
 .keypad__key--fn:hover{ background: color-mix(in srgb, var(--th-accent) 15%, var(--n-000)); }
 
@@ -79,7 +79,7 @@
   background: var(--th-vivid);
   color: var(--th-on-accent);
   font-family: var(--font-sans);
-  font-size: 19px; font-weight: var(--fw-heavy);
+  font-size: var(--fs-19); font-weight: var(--fw-heavy);
   box-shadow: none;
 }
 /* 배경을 다시 적어 준다 — .keypad__key:hover(0,2,0)가 --ok(0,1,0)를 이겨
@@ -88,7 +88,7 @@
 
 /* ── 떠 있는 자리 (개념·유형 — 빈칸 옆) ── */
 .keypad--float{
-  position: fixed; z-index: 400;
+  position: fixed; z-index: var(--z-toast);
   box-shadow: 0 24px 55px rgba(9, 19, 40, 0.4), inset 0 0 0 3.5px var(--n-050);
   opacity: 0; visibility: hidden; translate: 0 6px;
   transition: opacity .14s ease, translate .14s ease, visibility .14s;

@@ -9,7 +9,7 @@
 .spacebg {
   position: fixed;
   inset: 0;
-  z-index: 0;
+  z-index: var(--z-bg);
   overflow: hidden;
   background:
     radial-gradient(1100px 740px at 80% -8%, rgba(64,92,178,.40), transparent 62%),
@@ -58,4 +58,4 @@
    (OS 애니메이션 효과 끔/웨일 등에서도 항상 보이게) */
 
 /* 콘텐츠는 배경 위로 */
-.spacebg ~ * { position: relative; z-index: 1; }
+.spacebg ~ * { position: relative; z-index: var(--z-content); }

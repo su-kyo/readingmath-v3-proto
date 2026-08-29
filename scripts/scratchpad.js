@@ -46,7 +46,7 @@
       '.bar.scratch-away{ transform: translateY(112%); }',
 
       /* 오버레이 뼈대 — 콘텐츠 → 딤(둘레만) → 캔버스 → 도구 바 */
-      '.scratch{ position:fixed; inset:0; z-index:400; display:none; }',
+      '.scratch{ position:fixed; inset:0; z-index:calc(var(--z-overlay) + 50); display:none; }',
       '.scratch.is-open{ display:block; }',
 
       /* 딤 — 문제 영역에 구멍을 뚫은 스포트라이트. 화면 끝까지 깔고,
@@ -72,7 +72,7 @@
       /* 도구 바 속 — 램프 + 타이틀 + 물리 버튼 (보조 모니터 하드웨어 언어) */
       /* 도구 바 속 버튼은 화면이 이미 쓰는 .toolbtn 그대로 —
          같은 콘솔 패널의 다른 상태로 읽히게 한다. 여기선 연습장 전용 상태만 얹는다. */
-      '.scratch__tools{ display:flex; align-items:center; gap:10px; }',
+      '.scratch__tools{ display:flex; align-items:center; gap:var(--sp-8); }',
       '.scratch__sep{ width:1px; height:24px; background:rgba(255,255,255,.18); margin:0 2px; }',
       '.scratch__done svg, .scratch__tool svg{ width:18px; height:18px; flex:none; }',
       '.scratch__tool.is-on{ background:var(--n-000); color:var(--n-650); }',  /* 고른 도구 = 눌린 키 */
