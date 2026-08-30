@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<title>dark-shot — 다크 모드 화면을 헤드리스로 찍기 위한 껍데기</title>
+<!-- =========================================================================
+     dark-shot.html — 화면 하나를 다크(또는 라이트)로 고정해 액자에 끼운다
+
+     왜 필요한가
+       screen-shot.sh 는 헤드리스로 화면을 찍지만, 학습 화면의 테마는 화면 안
+       토글 버튼으로만 바뀌고 저장되지 않는다. 그래서 헤드리스는 언제나 라이트만
+       찍힌다 — 다크에서만 나는 문제(배경 딤 · 면 대비)를 못 잡는다.
+       이 페이지가 화면을 iframe 에 넣고 data-theme 을 직접 박아 준다.
+
+     쓰는 법
+       http://localhost:8020/tools/dark-shot.html?p=type/quiz&t=dark
+       p = 확장자 뺀 화면 경로 · t = dark(기본) 또는 light
+
+       크롬 헤드리스로 한 장:
+         "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+           --headless=new --disable-gpu --hide-scrollbars \
+           --window-size=1280,800 --virtual-time-budget=12000 \
+           --screenshot=/tmp/x.png \
+           "http://localhost:8020/tools/dark-shot.html?p=type/quiz&t=dark"
+
+     주의
+       처음부터 열려 있는 모니터·라이트박스는 배경을 가려서 닫고 찍는다.
+       배포에서 빠지는 폴더다.
+     ========================================================================= -->
+<style>html,body{margin:0;height:100%;overflow:hidden;background:#000}
+iframe{border:0;width:1280px;height:800px;display:block}</style>
+</head>
+<body><iframe id="f"></iframe><script>
+var p = new URLSearchParams(location.search);
+var f = document.getElementById('f');
+f.src = '/' + p.get('p') + '.html';
+f.onload = function () {
+  var d = f.contentDocument;
+  d.documentElement.setAttribute('data-theme', p.get('t') || 'dark');
+  d.querySelectorAll('.monitor.is-open, .lightbox.is-open').forEach(function (el) {
+    el.classList.remove('is-open');
+  });
+};
+</script></body></html>

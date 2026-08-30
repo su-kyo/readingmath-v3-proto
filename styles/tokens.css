@@ -212,6 +212,9 @@
   --asset-bar-rim:    var(--asset-console-concept-rim);
   --asset-bar-tray:   var(--asset-console-concept-tray);
   --art-screen-bg:    url("../assets/img/bg/bg-spaceship-light.webp");
+  /* 다크에서 배경 사진 위에 덮는 막. 사진 밝기가 계열마다 달라 세기를 섹션이 정한다
+     (덮은 뒤 밝기가 어느 계열에서나 100 언저리가 되도록 맞춘 값). */
+  --art-screen-veil:  color-mix(in srgb, var(--n-900) 45%, transparent);
 
   /* =======================================================================
      타이포 · 간격 · 반경 · 모션 (색과 무관)
@@ -338,6 +341,7 @@
   --asset-bar-rim:  var(--asset-console-concept-rim);   /* 하단 콘솔 바 — 립 */
   --asset-bar-tray: var(--asset-console-concept-tray);
   --art-screen-bg:  url("../assets/img/bg/bg-spaceship-light.webp");   /* 학습 화면 배경 사진 */
+  --art-screen-veil: color-mix(in srgb, var(--n-900) 45%, transparent);   /* 다크에서 배경 사진을 덮는 막 */
 }
 
 /* 유형 (teal) — static 700 */
@@ -354,6 +358,7 @@
   --asset-bar-rim:  var(--amber-050);   /* 하단 콘솔 바 — 립 */
   --asset-bar-tray: var(--asset-console-type-tray);
   --art-screen-bg:  url("../assets/img/bg/bg-spaceship-teal.webp");   /* 학습 화면 배경 사진 */
+  --art-screen-veil: color-mix(in srgb, var(--n-900) 55%, transparent);   /* 다크에서 배경 사진을 덮는 막 */
 }
 
 /* 서술형 (violet) — static 800 (가장 깊은 프레임) */
@@ -370,6 +375,7 @@
   --asset-bar-rim:  var(--asset-console-essay-rim);   /* 하단 콘솔 바 — 립 */
   --asset-bar-tray: var(--asset-console-essay-tray);
   --art-screen-bg:  url("../assets/img/bg/bg-spaceship-essay.webp");   /* 학습 화면 배경 사진 */
+  --art-screen-veil: color-mix(in srgb, var(--n-900) 25%, transparent);   /* 다크에서 배경 사진을 덮는 막 */
 }
 
 /* 시험대비 (violet) — static 700 */
@@ -386,6 +392,7 @@
   --asset-bar-rim:  var(--n-100);   /* 하단 콘솔 바 — 립 */
   --asset-bar-tray: var(--n-100);
   --art-screen-bg:  url("../assets/img/bg/bg-spaceship-task.webp");   /* 학습 화면 배경 사진 */
+  --art-screen-veil: color-mix(in srgb, var(--n-900) 65%, transparent);   /* 다크에서 배경 사진을 덮는 막 */
 }
 
 /* 과제센터 (blue) — static 600 */
@@ -402,6 +409,7 @@
   --asset-bar-rim:  var(--asset-console-task-rim);   /* 하단 콘솔 바 — 립 */
   --asset-bar-tray: var(--asset-console-task-tray);
   --art-screen-bg:  url("../assets/img/bg/bg-spaceship-task.webp");   /* 학습 화면 배경 사진 */
+  --art-screen-veil: color-mix(in srgb, var(--n-900) 65%, transparent);   /* 다크에서 배경 사진을 덮는 막 */
 }
 
 /* 유틸 (blue) — static n-900 */
@@ -418,6 +426,7 @@
   --asset-bar-rim:  var(--n-100);   /* 하단 콘솔 바 — 립 */
   --asset-bar-tray: var(--n-100);
   --art-screen-bg:  url("../assets/img/bg/bg-spaceship-light.webp");   /* 학습 화면 배경 사진 */
+  --art-screen-veil: color-mix(in srgb, var(--n-900) 45%, transparent);   /* 다크에서 배경 사진을 덮는 막 */
 }
 
 /* A층 우주 (항상 다크·토글 없음) — 액센트 = 기본모드 blue-400 */
@@ -434,6 +443,7 @@
   --asset-bar-rim:  var(--n-100);   /* 하단 콘솔 바 — 립 */
   --asset-bar-tray: var(--n-100);
   --art-screen-bg:  url("../assets/img/bg/bg-spaceship-light.webp");   /* 학습 화면 배경 사진 */
+  --art-screen-veil: color-mix(in srgb, var(--n-900) 45%, transparent);   /* 다크에서 배경 사진을 덮는 막 */
 }
 
 /* =========================================================================
