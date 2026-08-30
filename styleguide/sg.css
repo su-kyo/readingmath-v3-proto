@@ -1,0 +1,126 @@
+/* =========================================================================
+   세미 스토리북 공용 레이아웃 (Phase 10-④)
+   네 장(foundations · components · shells · patterns)이 이 한 벌을 공유한다.
+   네 벌로 복사하면 Phase 10 이 진단한 문제를 스토리북이 그대로 반복한다.
+
+   여기 있는 것은 「문서를 담는 그릇」뿐이다. 부품 자체의 스타일은 절대 여기
+   적지 않는다 — 부품은 styles/ 의 진짜 CSS 를 iframe 안에서 그대로 불러 쓴다.
+   그래야 문서가 화면과 어긋날 수 없다.
+   ========================================================================= */
+
+/* ===== 골격 ===== */
+.sg { display: grid; grid-template-columns: 248px minmax(0, 1fr); min-height: 100vh; }
+
+/* ===== 좌측 목록 (sg.js 가 그린다) ===== */
+.sg-nav {
+  position: sticky; top: 0; align-self: start; height: 100vh; overflow-y: auto;
+  background: var(--surface-1); border-right: 1px solid var(--border);
+  padding: var(--sp-24) var(--sp-16) var(--sp-40); display: flex; flex-direction: column; gap: var(--sp-24);
+}
+.sg-nav__brand { display: block; font-weight: var(--fw-heavy); font-size: var(--fs-16); letter-spacing: -.01em; color: var(--text); }
+.sg-nav__brand small { display: block; margin-top: 2px; font-size: var(--fs-11); font-weight: var(--fw-regular); color: var(--text-dim); letter-spacing: 0; }
+.sg-nav__group { display: flex; flex-direction: column; gap: 2px; }
+.sg-nav__label { font-size: var(--fs-11); font-weight: var(--fw-bold); color: var(--text-dim); letter-spacing: .06em; text-transform: uppercase; margin-bottom: var(--sp-8); }
+.sg-nav a {
+  display: flex; align-items: baseline; gap: var(--sp-8); padding: var(--sp-6) var(--sp-8);
+  border-radius: var(--r-8); font-size: var(--fs-13); color: var(--text-muted); text-decoration: none;
+}
+.sg-nav a:hover { background: var(--surface-2); color: var(--text); }
+.sg-nav a.is-current { background: var(--th-tint-strong); color: var(--th-ink-accent); font-weight: var(--fw-bold); }
+.sg-nav__toc a { font-size: var(--fs-12); padding-left: var(--sp-12); }
+.sg-nav__toc a.is-seen { color: var(--th-ink-accent); }
+.sg-nav__foot { margin-top: auto; font-size: var(--fs-11); color: var(--text-dim); line-height: 1.7; }
+.sg-nav__foot a { display: inline; padding: 0; color: var(--th-ink-accent); text-decoration: underline; }
+
+/* ===== 본문 ===== */
+.sg-main { padding: var(--sp-32) var(--sp-32) 120px; max-width: 1180px; }
+.sg-head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--sp-24); margin-bottom: var(--sp-40); }
+.sg-head h1 { font-size: var(--fs-32); letter-spacing: -.02em; }
+.sg-head p { margin-top: var(--sp-8); max-width: 68ch; color: var(--text-muted); font-size: var(--fs-14); line-height: 1.75; }
+
+.sg-sec { margin-top: var(--sp-40); scroll-margin-top: var(--sp-24); }
+.sg-sec > h2 {
+  font-size: var(--fs-22); letter-spacing: -.01em; padding-bottom: var(--sp-12);
+  border-bottom: 1px solid var(--border); margin-bottom: var(--sp-20);
+  display: flex; align-items: baseline; gap: var(--sp-12); flex-wrap: wrap;
+}
+.sg-sec > h2 small { font-size: var(--fs-13); color: var(--text-dim); font-weight: var(--fw-regular); }
+.sg-lead { color: var(--text-muted); font-size: var(--fs-14); line-height: 1.8; max-width: 74ch; margin-bottom: var(--sp-24); }
+.sg-lead + .sg-lead { margin-top: calc(var(--sp-16) * -1); }
+.sg-lead code, .sg-note code, .sg-main p code, li code { font-family: var(--font-mono); font-size: .92em; background: var(--surface-2); padding: 1px 5px; border-radius: var(--r-4); }
+
+/* ===== 부품 카드 ===== */
+.sg-item { border: 1px solid var(--border); border-radius: var(--r-16); background: var(--surface-1); margin-bottom: var(--sp-20); overflow: hidden; }
+.sg-item__hd { display: flex; align-items: baseline; gap: var(--sp-12); flex-wrap: wrap; padding: var(--sp-16) var(--sp-20); }
+.sg-item__hd h3 { font-size: var(--fs-16); letter-spacing: -.01em; }
+.sg-item__cls { font-family: var(--font-mono); font-size: var(--fs-12); color: var(--text-dim); }
+.sg-item__file { font-size: var(--fs-11); font-weight: var(--fw-bold); color: var(--th-ink-accent); background: var(--th-tint-strong); padding: 2px var(--sp-8); border-radius: var(--r-full); }
+.sg-note { padding: 0 var(--sp-20) var(--sp-16); font-size: var(--fs-13); color: var(--text-muted); line-height: 1.75; max-width: 76ch; }
+.sg-note strong { color: var(--text); }
+
+/* 쓰는 화면 배지 — usage.json 이 센 숫자다 (tools/usage-scan.py) */
+.sg-uses { margin-left: auto; display: flex; align-items: center; gap: var(--sp-8); }
+.sg-uses__btn {
+  border: 1px solid var(--border); background: var(--surface-2); color: var(--text-muted);
+  font-size: var(--fs-11); font-weight: var(--fw-bold); padding: 3px var(--sp-8); border-radius: var(--r-full); cursor: pointer;
+}
+.sg-uses__btn:hover { border-color: var(--border-strong); color: var(--text); }
+.sg-uses__btn[data-n="0"] { opacity: .5; cursor: default; }
+.sg-uses__list { display: none; padding: 0 var(--sp-20) var(--sp-16); }
+.sg-uses__list.is-open { display: block; }
+.sg-uses__list ul { display: flex; flex-wrap: wrap; gap: var(--sp-6); list-style: none; }
+.sg-uses__list li { font-family: var(--font-mono); font-size: var(--fs-11); color: var(--text-muted); background: var(--surface-2); padding: 2px var(--sp-6); border-radius: var(--r-4); }
+.sg-uses__list li[data-how="js"]::after { content: " JS"; color: var(--th-ink-accent); font-weight: var(--fw-bold); }
+
+/* ===== 라이트/다크 무대 =====
+   토글로 왔다갔다 하면 어긋난 면을 못 본다. 늘 둘을 나란히 세운다. */
+.sg-stage { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border-top: 1px solid var(--border); }
+.sg-stage--one { grid-template-columns: 1fr; }
+.sg-pane { background: var(--surface-2); display: flex; flex-direction: column; min-width: 0; }
+.sg-pane__lb { font-size: var(--fs-11); font-weight: var(--fw-bold); letter-spacing: .06em; color: var(--text-dim); padding: var(--sp-8) var(--sp-12); }
+.sg-pane iframe { width: 100%; border: 0; display: block; background: transparent; }
+@media (max-width: 900px) { .sg-stage { grid-template-columns: 1fr; } .sg { grid-template-columns: 1fr; } .sg-nav { position: static; height: auto; } }
+
+/* 마크업 보기 */
+.sg-code { border-top: 1px solid var(--border); }
+.sg-code summary { cursor: pointer; padding: var(--sp-8) var(--sp-20); font-size: var(--fs-12); color: var(--text-dim); font-weight: var(--fw-semibold); }
+.sg-code summary:hover { color: var(--text); }
+.sg-code pre { margin: 0; padding: 0 var(--sp-20) var(--sp-16); overflow-x: auto; }
+.sg-code code { font-family: var(--font-mono); font-size: var(--fs-12); line-height: 1.7; color: var(--text-muted); white-space: pre; }
+
+/* ===== 표 · 목록 ===== */
+.sg-table { width: 100%; border-collapse: collapse; font-size: var(--fs-13); margin-bottom: var(--sp-24); }
+.sg-table th, .sg-table td { text-align: left; padding: var(--sp-8) var(--sp-12); border-bottom: 1px solid var(--border); vertical-align: top; }
+.sg-table th { font-size: var(--fs-11); letter-spacing: .05em; text-transform: uppercase; color: var(--text-dim); }
+.sg-table td code { font-family: var(--font-mono); font-size: var(--fs-12); }
+.sg-table tbody tr:hover { background: var(--surface-1); }
+
+.sg-rule { display: flex; gap: var(--sp-12); padding: var(--sp-16) var(--sp-20); border-radius: var(--r-12); margin-bottom: var(--sp-16); font-size: var(--fs-13); line-height: 1.75; }
+.sg-rule::before { font-weight: var(--fw-heavy); flex: none; }
+.sg-rule--do { background: color-mix(in srgb, var(--success) 12%, var(--surface-1)); color: var(--text); }
+.sg-rule--do::before { content: "지킨다"; color: var(--success); }
+.sg-rule--dont { background: color-mix(in srgb, var(--danger) 12%, var(--surface-1)); color: var(--text); }
+.sg-rule--dont::before { content: "안 한다"; color: var(--danger); }
+.sg-rule--why { background: var(--surface-1); border: 1px solid var(--border); }
+.sg-rule--why::before { content: "왜"; color: var(--text-dim); }
+
+/* ===== 색·눈금 견본 (foundations 전용이지만 여기 둔다 — 네 장이 공유하는 그릇이다) ===== */
+.sg-ramp { display: flex; border-radius: var(--r-12); overflow: hidden; margin-bottom: var(--sp-8); }
+/* 칩 라벨은 어느 색 위에서도 읽혀야 견본 구실을 한다. mix-blend-mode:difference 를 쓰면
+   중간 밝기 칩에서 보색이 튀어나와 오히려 안 읽힌다(파랑 칩에 주황 글자) — 그래서
+   JS 가 칩 밝기를 재서 검정/흰색을 골라 준다. */
+.sg-ramp > span { flex: 1; height: 52px; display: flex; align-items: flex-end; justify-content: center;
+  padding-bottom: var(--sp-4); }
+.sg-ramp > span > b { font-size: var(--fs-11); font-weight: var(--fw-bold); font-family: var(--font-mono); }
+.sg-ramp__lb { font-size: var(--fs-12); color: var(--text-dim); margin-bottom: var(--sp-4); }
+.sg-ramp + .sg-ramp__lb { margin-top: var(--sp-16); }
+
+.sg-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: var(--sp-12); margin-bottom: var(--sp-24); }
+.sg-tile { background: var(--surface-1); border: 1px solid var(--border); border-radius: var(--r-12); padding: var(--sp-12); }
+.sg-tile__name { font-family: var(--font-mono); font-size: var(--fs-11); color: var(--text-muted); margin-top: var(--sp-8); }
+.sg-tile__bar { height: 12px; background: var(--th-vivid); border-radius: var(--r-4); }
+.sg-tile__box { height: 52px; background: var(--surface-3); box-shadow: inset 0 0 0 1.5px var(--border-strong); }
+
+.sg-type { display: flex; align-items: baseline; gap: var(--sp-16); padding: var(--sp-12) 0; border-bottom: 1px solid var(--border); }
+.sg-type small { color: var(--text-dim); font-family: var(--font-mono); font-size: var(--fs-12); white-space: nowrap; flex: none; width: 230px; }
+.sg-type span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
