@@ -95,8 +95,10 @@
 .sg-table td code { font-family: var(--font-mono); font-size: var(--fs-12); }
 .sg-table tbody tr:hover { background: var(--surface-1); }
 
-.sg-rule { display: flex; gap: var(--sp-12); padding: var(--sp-16) var(--sp-20); border-radius: var(--r-12); margin-bottom: var(--sp-16); font-size: var(--fs-13); line-height: 1.75; }
-.sg-rule::before { font-weight: var(--fw-heavy); flex: none; }
+/* 딱지 + 문장. flex 로 두면 안의 <code>·<strong> 이 저마다 flex 아이템이 되어
+   문장이 여러 칸으로 쪼개진다 — 실제로 그렇게 그려진 적이 있다. 그래서 block 이다. */
+.sg-rule { display: block; padding: var(--sp-16) var(--sp-20); border-radius: var(--r-12); margin-bottom: var(--sp-16); font-size: var(--fs-13); line-height: 1.9; }
+.sg-rule::before { display: inline-block; margin-right: var(--sp-12); font-weight: var(--fw-heavy); }
 .sg-rule--do { background: color-mix(in srgb, var(--success) 12%, var(--surface-1)); color: var(--text); }
 .sg-rule--do::before { content: "지킨다"; color: var(--success); }
 .sg-rule--dont { background: color-mix(in srgb, var(--danger) 12%, var(--surface-1)); color: var(--text); }

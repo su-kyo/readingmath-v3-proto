@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light" data-section="concept">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>셸 — 리딩수학과학 디자인 시스템</title>
+  <base href="../" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20260830" />
+  <link rel="stylesheet" href="styles/base.css?v=20260830" />
+  <link rel="stylesheet" href="styles/components.css?v=20260830" />
+  <link rel="stylesheet" href="styleguide/sg.css?v=20260830" />
+</head>
+<body data-sg-css="tokens,base,components,learn-shell">
+<div class="sg">
+  <aside class="sg-nav"></aside>
+  <main class="sg-main">
+
+    <header class="sg-head">
+      <div>
+        <h1>셸</h1>
+        <p>화면을 감싸는 것들 — 상단 GNB와 서랍, 학습 헤더, 하단 콘솔바, 그 위에 뜨는 보조 모니터와 키패드,
+           그리고 화면 전체를 덮는 연습장. <strong>이것들이 계열을 갈아입는 방식이 이 프로젝트의 뼈대</strong>입니다:
+           변형 클래스를 만들지 않고 <code>data-section</code>이 토큰만 교체합니다.</p>
+      </div>
+    </header>
+
+    <!-- ===================================================== 세계관 -->
+    <section class="sg-sec" id="world">
+      <h2>먼저 — 왜 우주선인가 <small>모달이 아니라 「사물」이다</small></h2>
+      <p class="sg-lead">이 서비스의 화면은 <strong>우주선 조종석</strong>입니다. 그래서 셸은 웹 UI 관습이 아니라
+        <strong>하드웨어의 규칙</strong>을 따릅니다 — 아래에서 뜨는 알림 대신 <strong>위에서 내려오는 보조 모니터</strong>,
+        입력 필드 대신 <strong>트레이에 놓인 계산기</strong>, 툴바 대신 <strong>물리 버튼이 박힌 콘솔</strong>.</p>
+      <div class="sg-rule sg-rule--why"><strong>하드웨어는 테마를 안 따릅니다.</strong>
+        콘솔바와 키패드는 라이트·다크에서 같은 모습이에요. 우주선의 물건은 조명이 바뀐다고 색이 변하지 않으니까요.
+        바뀌는 것은 <strong>화면(패널) 안쪽</strong>입니다.</div>
+    </section>
+
+    <!-- ===================================================== GNB -->
+    <section class="sg-sec" id="gnb">
+      <h2>상단 GNB <small>gnb.css · 항상 다크 (시험대비만 라이트 스킨)</small></h2>
+
+      <div class="sg-item" data-uses="gnb, gnb__mode" data-pad="0"
+           data-css="tokens,base,components,gnb" data-themes="light">
+        <div class="sg-item__hd"><h3>모드 탭</h3>
+          <span class="sg-item__cls">.gnb · .gnb__mode.m-basic/m-free/m-exam/m-assign · .is-active</span>
+          <span class="sg-item__file">gnb.css</span></div>
+        <p class="sg-note"><strong>활성 탭이 정체성 칠면</strong>입니다 — 각 모드의 450 스텝으로 칠하고
+          흰 굵은 라벨 19px w700을 얹습니다(3:1 · 다크 GNB와 면 대비 6.3).
+          600으로 낮췄더니 「칙칙하다」는 판정이 나와 폐기했어요.
+          <strong>GNB는 테마 토글이 없습니다</strong> — 늘 다크라 액자도 하나입니다.
+          과제 센터의 빨간 점은 <strong>안 읽은 과제</strong>가 있다는 뜻이고, 활성일 때는 흰 점으로 바뀝니다.</p>
+        <template class="sg-src">
+          <header class="gnb">
+            <div class="gnb__info"><span class="gnb__logo"></span><span class="gnb__name">김학생</span></div>
+            <nav class="gnb__modes">
+              <button class="gnb__mode m-basic is-active">기본 모드</button>
+              <button class="gnb__mode m-free">자유 모드</button>
+              <button class="gnb__mode m-exam">시험 대비</button>
+              <button class="gnb__mode m-assign">과제 센터<span class="gnb__mode__dot"></span></button>
+            </nav>
+            <div class="gnb__icons">
+              <button class="gnb__ico" title="도움말">?</button>
+              <button class="gnb__ico" title="메뉴">☰</button>
+            </div>
+          </header>
+          <header class="gnb" style="margin-top:12px">
+            <div class="gnb__info"><span class="gnb__logo"></span><span class="gnb__name">아주아주긴이름을가진학생</span></div>
+            <nav class="gnb__modes">
+              <button class="gnb__mode m-basic">기본 모드</button>
+              <button class="gnb__mode m-free">자유 모드</button>
+              <button class="gnb__mode m-exam">시험 대비</button>
+              <button class="gnb__mode m-assign is-active">과제 센터<span class="gnb__mode__dot"></span></button>
+            </nav>
+            <div class="gnb__icons">
+              <button class="gnb__ico" title="도움말">?</button>
+              <button class="gnb__ico" title="메뉴">☰</button>
+            </div>
+          </header>
+        </template>
+      </div>
+
+      <div class="sg-item" data-uses="rmd, rmd-modal" data-pad="0" data-themes="light" data-bg="var(--n-900)">
+        <div class="sg-item__hd"><h3>우측 서랍</h3>
+          <span class="sg-item__cls">.rmd · --rmd-face/raised/ink/line/fill</span>
+          <span class="sg-item__file">scripts/gnb-drawer.js</span></div>
+        <p class="sg-note">서랍은 <strong>스타일을 JS 안에서 만들어 넣습니다</strong> — 10화면이 함께 쓰는데
+          CSS 파일이 없어요. Phase 10-①에서 그 안의 색 36개를 토큰으로 바꿨습니다.
+          <strong>서랍은 항상 다크입니다</strong>: 서랍이 달린 GNB가 애초에 다크라 어두운 서랍이 어두운 GNB에서
+          미끄러져 나오는 것이 맞아요. 그래서 테마로 뒤집히는 <code>--surface-*</code>가 아니라
+          <strong>뒤집히지 않는 램프 <code>--n-*</code>를 직접 참조</strong>합니다.</p>
+        <template class="sg-src">
+          <div style="height:60px;display:flex;align-items:center;padding:0 16px;color:#fff;font-size:13px">
+            서랍은 이 문서에서 열 수 없습니다 — GNB가 있는 화면에서 <strong>메뉴(☰)</strong>를 누르면 나옵니다.
+          </div>
+        </template>
+      </div>
+      <div class="sg-rule sg-rule--why">서랍이 v1.6 팔레트 <strong>이전에서 멈춰 있었습니다.</strong>
+        CTA가 옛 주황(<code>#FF7F00</code>)이라 다른 화면의 <code>--primary</code>와 달랐고,
+        학기 탭은 흰 글자 대비가 4.1로 미달이었어요. 눈에 잘 안 띄는 종류의 어긋남이라 오래 남아 있었습니다 —
+        <strong>스타일이 CSS 밖(JS 문자열)에 있으면 이런 일이 생깁니다.</strong></div>
+    </section>
+
+    <!-- ===================================================== 학습 셸 -->
+    <section class="sg-sec" id="learn">
+      <h2>학습 화면 셸 <small>learn-shell.css · 19화면 공유</small></h2>
+      <p class="sg-lead">배경 → 헤더 → 콘텐츠 패널 → 콘솔바 순으로 쌓입니다.
+        <strong>다섯 화면이 이 셸 전체를 각자 복사해 갖고 있었고</strong>, Phase 10-③에서 링크로 바꿨어요.</p>
+
+      <div class="sg-item" data-uses="lheader, breadcrumb, nav-ico, theme-toggle" data-pad="16px"
+           data-bg="var(--n-200)">
+        <div class="sg-item__hd"><h3>학습 헤더</h3>
+          <span class="sg-item__cls">.lheader · .breadcrumb · .lheader__timer · .nav-ico · .theme-toggle</span>
+          <span class="sg-item__file">learn-shell.css</span></div>
+        <p class="sg-note">면색이 <code>--th-static</code>입니다 — <strong>계열의 가장 깊은 톤</strong>이고
+          라이트·다크에서 값이 안 바뀝니다(과목 정체성 앵커). 그래서 액자 둘의 헤더 색이 같아요.
+          경로가 길면 <strong>마지막 조각만 말줄임</strong>합니다(<code>.crumb--clip</code>) —
+          앞쪽 학년·단원이 먼저 잘리면 어디 있는지 알 수 없으니까요.
+          타이머는 <code>.is-paused</code>에서 <strong>흐려지고 앞에 정지 표시</strong>가 붙습니다.</p>
+        <template class="sg-src">
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div class="lheader">
+              <div class="breadcrumb">
+                <span class="crumb">수학 초등 4-1</span><span class="sep">›</span>
+                <span class="crumb">3단원 곱셈과 나눗셈</span><span class="sep">›</span>
+                <span class="crumb crumb--strong crumb--clip">개념 다지기</span>
+              </div>
+              <div class="lheader__actions">
+                <span class="lheader__timer"><span>08:32</span></span>
+                <span class="theme-toggle"><span class="theme-toggle__knob"></span></span>
+                <button class="nav-ico">!</button><button class="nav-ico">☰</button>
+              </div>
+            </div>
+            <div class="lheader">
+              <div class="breadcrumb">
+                <span class="crumb">과학 중등 1-1</span><span class="sep">›</span>
+                <span class="crumb">2단원 생물의 구성과 다양성</span><span class="sep">›</span>
+                <span class="crumb crumb--strong crumb--clip">아주 긴 소단원 이름이 들어오면 여기서 잘립니다 실제로도 이렇게 깁니다</span>
+              </div>
+              <div class="lheader__actions">
+                <span class="lheader__timer is-paused"><span>00:00</span></span>
+                <span class="theme-toggle"><span class="theme-toggle__knob"></span></span>
+                <button class="nav-ico">☰</button>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+
+      <div class="sg-item" data-uses="bar, bar__tray, bar__deco" data-pad="0" data-themes="light" data-bg="var(--n-200)">
+        <div class="sg-item__hd"><h3>하단 콘솔바</h3>
+          <span class="sg-item__cls">.bar · .bar__deco--l/r · .bar__mid · .bar__tray · .bar__group</span>
+          <span class="sg-item__file">learn-shell.css</span></div>
+        <p class="sg-note">양끝 262px는 <strong>계열별 일러스트(SVG)</strong>이고 가운데만 늘어납니다.
+          트레이·립 면색은 <strong>에셋 연동색</strong>이라 그림의 실제 면색과 맞춰 박제돼 있어요
+          (<code>--asset-bar-rim</code> · <code>--asset-bar-tray</code>).
+          <strong>계열을 바꾸면 색과 그림이 함께 따라옵니다</strong> — 아래 넷은 마크업이 완전히 같고
+          <code>data-section</code>만 다릅니다.
+          <strong>콘솔바는 라이트·다크가 같은 모습</strong>이라(우주선의 하드웨어) 액자를 하나만 세웁니다.</p>
+        <template class="sg-src">
+          <div style="position:relative;height:100px;overflow:hidden">
+            <div class="bar">
+              <img class="bar__deco bar__deco--l" src="assets/icons/console/console-right.svg" alt="">
+              <div class="bar__mid"><div class="bar__tray">
+                <div class="bar__group"><button class="toolbtn">연습장</button><button class="toolbtn">글자</button></div>
+                <div class="bar__group"><button class="toolbtn toolbtn--primary">채점하기</button></div>
+              </div></div>
+              <img class="bar__deco bar__deco--r" src="assets/icons/console/console-left.svg" alt="">
+            </div>
+          </div>
+        </template>
+      </div>
+
+      <div class="sg-item" data-uses="bar" data-pad="0" data-themes="light" data-bg="var(--n-200)">
+        <div class="sg-item__hd"><h3>콘솔바 — 계열 넷</h3>
+          <span class="sg-item__cls">data-section="concept | type | essay | assign"</span></div>
+        <p class="sg-note">같은 마크업, 다른 <code>data-section</code>. <strong>변형 클래스가 없습니다.</strong>
+          단 하나 예외가 좌우 일러스트예요 — 아래 주의 참고.</p>
+        <template class="sg-src" id="barsTpl"></template>
+      </div>
+
+      <div class="sg-rule sg-rule--why"><strong>화면이 900px보다 좁아지면 좌우 일러스트가 사라집니다</strong>
+        (<code>.bar__deco { display: none }</code>). 대신 가운데 립이 22px 라운드를 얻어
+        <strong>혼자서도 콘솔로 보이게</strong> 마감돼요. 좁은 화면에서 262px짜리 장식 둘을 붙들고 있으면
+        정작 버튼 자리가 없어집니다. 680px에서는 경로의 중간 조각이, 520px에서는 도구 버튼의 글자가 빠집니다.</div>
+
+      <div class="sg-rule sg-rule--why"><strong>콘솔바에서 토큰이 아닌 곳은 좌우 일러스트 하나뿐입니다.</strong>
+        면색은 <code>data-section</code>이 정하는데, 그림은 각 화면 마크업의
+        <code>&lt;img src&gt;</code>가 고릅니다(<code>console-right.svg</code> ·
+        <code>console-type-right.svg</code> · <code>console-essay-*</code> · <code>console-task-*</code>).
+        <strong>이름도 좌우가 뒤바뀌어 있습니다</strong> — 왼쪽 자리에 <code>-right</code>가 들어가요.
+        계열을 늘리면 이 8개 파일과 화면 마크업을 함께 챙겨야 합니다.</div>
+
+      <div class="sg-item" data-uses="content" data-pad="0" data-bg="var(--n-200)">
+        <div class="sg-item__hd"><h3>콘텐츠 패널 — 변형 둘</h3>
+          <span class="sg-item__cls">.content · .content--frame</span>
+          <span class="sg-item__file">learn-shell.css</span></div>
+        <p class="sg-note">학습 패널은 <strong>8px 베젤 · 40px 라운드</strong>, 과제·시험 프레임은
+          <strong>6px 베젤 · 34px 라운드</strong>입니다. 비슷해 보이지만 Phase 7에서 따로 정한 규격이라
+          <strong>합치지 않고 변형으로 나눴습니다.</strong> 다크에서 학습 패널은 어두워지지만
+          프레임 변형은 화면이 <code>--content</code>로 직접 정합니다.</p>
+        <template class="sg-src">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;height:170px">
+            <div class="content" style="border-radius:40px 40px 0 0">
+              <div style="padding:0 24px;font-size:13px;color:var(--text)">.content — 학습 8px · 40px</div>
+            </div>
+            <div class="content content--frame" style="--content:var(--n-000)">
+              <div style="padding:0 16px;font-size:13px;color:var(--n-650)">.content--frame — 과제·시험 6px · 34px</div>
+            </div>
+          </div>
+        </template>
+      </div>
+    </section>
+
+    <!-- ===================================================== 보조 모니터 -->
+    <section class="sg-sec" id="monitor">
+      <h2>보조 모니터 <small>monitor.css · 화면 위에 뜨는 모든 것의 한 벌</small></h2>
+      <p class="sg-lead">요약 · 영상 · 확대 · 끊어읽기 · 보고서 미리보기 · 답안표가 <strong>전부 이 틀</strong>을 씁니다.
+        웹 모달이 아니라 <strong>위에서 내려오는 보조 모니터</strong>예요 — 마운트 암 · 베젤 · 상태등 · 물리 버튼.
+        <strong>안의 내용은 화면 것을 그대로 넣습니다. 틀만 공용입니다.</strong></p>
+
+      <div class="sg-item" data-uses="monitor" data-pad="0" data-css="tokens,base,components,learn-shell,monitor">
+        <div class="sg-item__hd"><h3>보조 모니터</h3>
+          <span class="sg-item__cls">.monitor > __rig > __frame > (__hd · __screen · __chin) · .is-open</span>
+          <span class="sg-item__file">monitor.css</span></div>
+        <p class="sg-note">크기는 페이지가 <code>--mon-w</code> 하나로 정합니다.
+          변형은 둘뿐이에요 — <code>--side</code>(오른쪽 도킹 · 답안표)와
+          <code>--lock</code>(닫기 없음 · 끊어읽기처럼 흐름을 강제할 때).
+          하드웨어는 <strong>전 계열 공통 네이비</strong>이고 <strong>계열 색은 상태등에만</strong> 들어갑니다.</p>
+        <template class="sg-src">
+          <div style="position:relative;height:340px;overflow:hidden">
+            <div class="monitor is-open" style="--mon-w:420px;position:absolute">
+              <div class="monitor__dim"></div>
+              <div class="monitor__rig">
+                <div class="monitor__mount"><i></i><i></i></div>
+                <div class="monitor__frame">
+                  <div class="monitor__hd">
+                    <span class="monitor__lamps"><i class="is-live"></i><i></i><i></i></span>
+                    <span class="monitor__ttl">개념 요약</span>
+                    <button class="monitor__x" aria-label="닫기">✕</button>
+                  </div>
+                  <div class="monitor__screen" style="padding:20px;font-size:13px;line-height:1.9">
+                    안쪽은 화면이 정합니다. 이 틀은 모양만 맡아요.
+                  </div>
+                  <div class="monitor__chin"><span class="monitor__slit"></span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+    </section>
+
+    <!-- ===================================================== 키패드 -->
+    <section class="sg-sec" id="keypad">
+      <h2>키패드 <small>keypad.css + keypad.js · 마크업까지 한 벌</small></h2>
+      <p class="sg-lead">키 구성은 <strong>한 벌로 고정</strong>입니다 — 7~0 · ⌫ · C · − · . · 확인.
+        마크업은 <code>RMKeypad.html()</code>이 만들고 값 편집은 <code>RMKeypad.apply()</code>가 합니다.
+        <strong>「확인」이 무엇을 하는지는 화면이 정합니다</strong> — 개념·유형은 닫기, 서술형은 채점,
+        과제 좌측은 다음 문제, 답안표는 접기, 시험은 제출.</p>
+
+      <div class="sg-item" data-uses="keypad__key" data-pad="20px"
+           data-css="tokens,base,components,keypad" data-bg="var(--bg)">
+        <div class="sg-item__hd"><h3>숫자 키패드</h3>
+          <span class="sg-item__cls">.keypad · __display · __grid · __key · --fn · --ok</span>
+          <span class="sg-item__file">keypad.css · keypad.js</span></div>
+        <p class="sg-note"><strong>계산기는 우주선의 물건이라 라이트·다크에서 같은 모습입니다.</strong>
+          아래 액자 둘을 견줘 보세요 — 트레이와 키가 똑같습니다. 계열 차이는
+          <code>--th-*</code> 슬롯 교체만으로 나요(트레이 틴트 · LCD 글자색).
+          <strong>물리 키보드도 됩니다</strong>: <code>keypad-input.js</code>가 누른 키에 해당하는
+          화면 버튼을 대신 클릭합니다 — 입력 로직을 두 벌 만들지 않기 위해서예요.</p>
+        <template class="sg-src">
+          <div class="keypad" id="kp"></div>
+          <script src="scripts/keypad.js?v=20260830"></script>
+          <script>
+            /* 키 구성의 정본은 keypad.js 의 KEYS 배열 하나뿐이다.
+               문서가 그걸 옮겨 적으면 키가 바뀔 때 문서만 옛것이 된다. */
+            document.getElementById('kp').innerHTML = RMKeypad.html();
+          </script>
+        </template>
+      </div>
+
+      <div class="sg-item" data-uses="keypad__key" data-pad="20px" data-section="type"
+           data-css="tokens,base,components,keypad">
+        <div class="sg-item__hd"><h3>같은 키패드, 계열만 유형</h3>
+          <span class="sg-item__cls">data-section="type"</span></div>
+        <p class="sg-note">마크업도 CSS도 위와 <strong>완전히 같습니다.</strong> 액자의
+          <code>data-section</code>만 <code>type</code>으로 바꿨어요 —
+          트레이 틴트와 LCD 글자색이 틸로 따라옵니다.</p>
+        <template class="sg-src">
+          <div class="keypad" id="kp2"></div>
+          <script src="scripts/keypad.js?v=20260830"></script>
+          <script>document.getElementById('kp2').innerHTML = RMKeypad.html();</script>
+        </template>
+      </div>
+      <div class="sg-rule sg-rule--why"><code>data-section</code>은 <code>:root</code>에만 걸립니다 —
+        한 화면 안에서 계열을 섞을 수 없어요. <strong>계열은 화면 단위로 정해지는 값</strong>입니다.
+        그래서 위 두 견본이 한 액자가 아니라 두 액자입니다.</div>
+    </section>
+
+    <!-- ===================================================== 연습장 -->
+    <section class="sg-sec" id="scratch">
+      <h2>연습장 <small>scratchpad.js · 22화면 · 이 문서에서는 못 세운다</small></h2>
+      <p class="sg-lead">한 줄만 부르면 그 화면의 「연습장」 버튼에 알아서 붙습니다.
+        <strong>화면 위를 덮는 투명 캔버스</strong>에 바로 필기하고, 딤은 <strong>필기 뒤에 깔립니다</strong> —
+        그려 놓은 선이 딤에 묻히면 안 되니까요. 문제 영역과 콘솔바는 딤에서 빠집니다.</p>
+      <div class="sg-rule sg-rule--why">도구 바는 <strong>그 화면의 <code>.bar</code>를 복제해 네이비로 다시 칠한 것</strong>입니다.
+        그래서 트레이 형태와 좌우 일러스트가 자동으로 따라와요 —
+        <strong>콘솔바 구조를 바꾸면 연습장을 반드시 함께 확인</strong>합니다.
+        검수는 주소 끝에 <code>?scratch=1</code>.</div>
+      <table class="sg-table">
+        <thead><tr><th style="width:180px">클래스</th><th>무엇</th></tr></thead>
+        <tbody>
+          <tr><td><code>.scratch__canvas</code></td><td>필기하는 투명 판. 화면 전체를 덮는다</td></tr>
+          <tr><td><code>.scratch__dim</code></td><td>딤. <strong>캔버스보다 아래</strong>에 깔린다</td></tr>
+          <tr><td><code>.scratch-away</code></td><td>딤에서 빠지는 것 — 문제 영역 · 콘솔바</td></tr>
+          <tr><td><code>.scratch__tools</code> · <code>__tool</code> · <code>__swatch</code></td><td>복제한 콘솔바 위의 도구들</td></tr>
+          <tr><td><code>.scratch-anim</code></td><td>콘솔바가 네이비로 넘어가는 전환</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+</div>
+<script>
+/* 콘솔바 계열 넷 — data-section 은 <html> 에만 걸리므로 액자 하나에 넷을 담을 수 없다.
+   그래서 계열마다 토큰값(트레이·립 면색, 일러스트)을 꺼내 인라인으로 심는다. */
+(function () {
+  var root = document.documentElement, keep = root.getAttribute('data-section');
+  // 좌우 일러스트만은 토큰이 아니라 각 화면의 <img src> 로 골라져 있다 (아래 주의 참고).
+  var SECS = [['concept','개념',''],['type','유형','type-'],['essay','서술형','essay-'],['assign','과제','task-']];
+  var ICO = 'assets/icons/console/console-';
+  document.getElementById('barsTpl').innerHTML = SECS.map(function (s) {
+    root.setAttribute('data-section', s[0]);
+    var p = getComputedStyle(root);
+    return '<div style="position:relative;height:100px;overflow:hidden;' +
+           '--asset-bar-rim:' + p.getPropertyValue('--asset-bar-rim').trim() + ';' +
+           '--asset-bar-tray:' + p.getPropertyValue('--asset-bar-tray').trim() + '">' +
+           '<div class="bar">' +
+           '<img class="bar__deco bar__deco--l" alt="" src="' + ICO + s[2] + 'right.svg">' +
+           '<div class="bar__mid"><div class="bar__tray">' +
+             '<div class="bar__group"><button class="toolbtn">연습장</button></div>' +
+             '<div class="bar__group"><span style="font-size:12px;font-weight:700;color:var(--n-650)">' +
+                s[1] + '</span></div>' +
+           '</div></div>' +
+           '<img class="bar__deco bar__deco--r" alt="" src="' + ICO + s[2] + 'left.svg">' +
+           '</div></div>';
+  }).join('');
+  root.setAttribute('data-section', keep);
+})();
+</script>
+<script src="styleguide/sg.js?v=20260830"></script>
+</body>
+</html>

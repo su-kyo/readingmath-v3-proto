@@ -27,7 +27,14 @@ SKIP_DIRS = ('tools', 'figma-palette', 'video', 'styleguide', '.git', 'docs')
 OUT = os.path.join(ROOT, 'styleguide', 'usage.json')
 
 CLASS_ATTR = re.compile(r'class\s*=\s*"([^"]*)"')
-CLASS_IN_JS = re.compile(r'''class\s*=\s*\\?["']([^"'\\]*)|classList\.(?:add|toggle|remove)\(\s*['"]([^'"]+)''')
+# JS 가 클래스를 붙이는 방법 넷을 전부 본다. 하나라도 빠지면 그 부품이 「쓰는 화면 0」 으로
+# 찍힌다 — 실제로 .className = 'smodal' 을 놓쳐 모달이 아무 데도 안 쓰이는 것처럼 보였다.
+CLASS_IN_JS = re.compile(
+    r'''class\s*=\s*\\?["']([^"'\\]*)'''                    # 문자열로 만드는 마크업
+    r'''|classList\.(?:add|toggle|remove)\(\s*['"]([^'"]+)'''   # classList.add('x')
+    r'''|\.className\s*=\s*['"]([^'"]+)'''                     # el.className = 'x y'
+    r'''|setAttribute\(\s*['"]class['"]\s*,\s*['"]([^'"]+)'''  # setAttribute('class','x')
+)
 
 
 def screens():
