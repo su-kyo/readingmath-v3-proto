@@ -8,7 +8,13 @@ html, body { height: 100%; }
 body.learn-body { background: var(--asset-console-concept-body); overflow: hidden; }
 
 .screen { position: relative; width: 100%; height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
-.screen__bg { position: absolute; inset: 0; background: url("../assets/img/bg/bg-spaceship-light.webp") center/cover no-repeat; }
+/* 배경 사진도 data-section 이 정한다 (tokens.css). 화면마다 url 을 적지 않는다. */
+.screen__bg { position: absolute; inset: 0; z-index: var(--z-bg); background: var(--art-screen-bg) center/cover no-repeat; }
+/* 다크에서 배경을 한 겹 덮는 규칙은 지금 과제 계열에만 있다. 범위를 그대로 지켰다 —
+   전 화면으로 넓힐지는 디자인 판단이다 (Phase 10 지시서 §4-3). */
+:root[data-theme="dark"][data-section="assign"] .screen__bg::after,
+:root[data-theme="dark"][data-section="exam"] .screen__bg::after {
+  content: ""; position: absolute; inset: 0; background: rgba(4,10,30,.45); }
 .screen__container { position: relative; z-index: var(--z-content); flex: 1; min-height: 0; display: flex; flex-direction: column; padding: clamp(16px, 2.5vw, 32px) clamp(20px, 6vw, 80px) 0; gap: var(--sp-16); }
 
 /* ===== 헤더 ===== */
