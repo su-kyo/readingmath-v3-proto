@@ -137,6 +137,30 @@ Phase 6에서 키패드가 한 벌(`.keypad__key`)로 합쳐져 이 파일도 �
 실제 입력 빈칸을 만든다(`trust` 콜백 필요). 본보기는 개념 다지기 6번 문제.
 슬래시 분수(`a/b`)로 적지 않는다 — `\dfrac`을 쓴다.
 
+## 세미 스토리북 (Phase 10-④ 신설 · 배포 포함)
+
+`styleguide/` 4장이 디자인 시스템 문서다. **`index.html`에서 바로 갈 수 있다.**
+
+```
+styleguide/foundations.html   색 3단 · 칠면 셋 · 글자/간격/모서리/층 눈금
+styleguide/components.html    버튼 · 배지 · 유형칩 · 빈칸 · 계기판 · 토스트
+styleguide/shells.html        GNB/서랍 · 학습 헤더 · 콘솔바 · 보조 모니터 · 키패드 · 연습장
+styleguide/patterns.html      목록 네 상태 · 유틸 예외 체계 · JS가 넣는 변수 · 검수 스위치
+styleguide/sg.css · sg.js     네 장이 공유하는 뼈대 (목록 · 액자 · 배지)
+styleguide/usage.json         tools/usage-scan.py 가 만든 사용 집계
+```
+
+**부품 스타일을 이 문서에 옮겨 적지 않는다.** 데모는 `<template>` 마크업을
+iframe 두 개(`srcdoc`)에 넣고 `styles/`의 **진짜 CSS**를 불러 그린다 —
+그래서 화면이 바뀌면 문서가 따라온다. 색·눈금 견본도 `tokens.css`에서
+계산된 값을 읽는다. **옮겨 적는 순간 둘이 어긋나기 시작한다.**
+
+부품을 추가할 때는 `.sg-item`에 `data-uses="클래스"`만 적으면 「쓰는 화면 N」이
+자동으로 붙는다. 쓸 수 있는 속성: `data-section` · `data-css`(액자가 부를 스타일시트) ·
+`data-themes`(기본 `light,dark`) · `data-pad` · `data-bg`.
+
+**부품·공용 CSS를 고쳤으면 `tools/usage-scan.py`를 다시 돌린다.**
+
 ## tools/ 정리 규칙 (2026-08-22 신설)
 
 `tools/`는 **배포에서 빠지는 검수용 폴더**다. 두 종류가 섞이는데, 성격이 다르다.
@@ -146,7 +170,9 @@ Phase 6에서 키패드가 한 벌(`.keypad__key`)로 합쳐져 이 파일도 �
 `palette-preview.html`(팔레트 눈 검증) · `home-contact.html`(홈 32화면 한눈보기) ·
 `holo-check.html`(홀로그램 톤 생존 검사) · `holo-bench.html`(홀로그램 성능 자동 측정) ·
 `planet-ref.py`(캐릭터 생성용 행성 자료 뽑기) · `char-on-bg.py`(캐릭터를 홈 배경에 올려
-대비 판정 — 몸 대비·자체 대비를 숫자로 찍는다)
+대비 판정 — 몸 대비·자체 대비를 숫자로 찍는다) ·
+`usage-scan.py`(부품별 쓰는 화면 집계 → 스토리북) ·
+`dark-shot.html`(다크 모드 화면을 헤드리스로 찍는 액자 — `screen-shot.sh`는 라이트만 찍힌다)
 
 **스타일 정리 3종 (Phase 10 신설)** — 공용 CSS·부품을 건드릴 때 세트로 쓴다.
 `screen-shot.sh`(배포 대상 37화면 헤드리스 촬영) ·
