@@ -36,7 +36,6 @@
 
     /* 헤더 */
     .hd { flex: none; display: flex; align-items: center; justify-content: space-between; gap: var(--sp-16); background: var(--hd); border-radius: var(--r-30); padding: var(--sp-8) var(--sp-12) var(--sp-8) 28px; color: var(--n-000); }
-    .breadcrumb { display: flex; align-items: center; gap: var(--sp-8); min-width: 0; font-size: var(--fs-14); }
     .breadcrumb__strong { font-weight: var(--fw-heavy); letter-spacing: -.02em; white-space: nowrap; }
     .breadcrumb__title { opacity: .92; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .breadcrumb__sep { opacity: .5; flex: none; }
@@ -44,9 +43,6 @@
     .toggle { width: 62px; height: 32px; border-radius: var(--r-full); background: rgba(0,0,0,.28); border: 0; position: relative; cursor: pointer; padding: 0; }
     .toggle__k { position: absolute; top: 2px; left: 2px; width: 28px; height: 28px; border-radius: 50%; background: center/contain no-repeat url("assets/icons/ico-sun.svg"); transition: left .2s ease; }
     :root[data-theme="dark"] .toggle__k { left: 32px; background-image: url("assets/icons/ico-moon.svg"); }
-    .nav-ico { width: 34px; height: 34px; border: 0; border-radius: var(--r-12); background: rgba(255,255,255,.14); color: var(--n-000); display: grid; place-items: center; cursor: pointer; transition: .14s; }
-    .nav-ico:hover { background: rgba(255,255,255,.26); }
-    .nav-ico svg, .nav-ico img { width: 19px; height: 19px; }
 
     /* 콘텐츠 (2단) */
     /* 프레임 테두리 = 헤더색(정적) · 다크·라이트 불변 */

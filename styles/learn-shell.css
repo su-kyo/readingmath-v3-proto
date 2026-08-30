@@ -40,8 +40,9 @@ body.learn-body { background: var(--asset-console-concept-body); overflow: hidde
 .theme-toggle { width: 64px; height: 34px; border-radius: var(--r-full); background: rgba(0,0,0,.3); position: relative; flex: none; }
 .theme-toggle__knob { position: absolute; top: 2px; left: 2px; width: 30px; height: 30px; background: center / contain no-repeat url("../assets/icons/ico-sun.svg"); transition: left .2s ease; }
 :root[data-theme="dark"] .theme-toggle__knob { left: 32px; background-image: url("../assets/icons/ico-moon.svg"); }
-.nav-ico { width: 32px; height: 32px; border-radius: var(--r-12); background: rgba(255,255,255,.14); display: inline-flex; align-items: center; justify-content: center; }
-.nav-ico img { width: 20px; height: 20px; }
+/* 헤더 오른쪽 아이콘 버튼. <a>·<button> 둘 다로 쓰이고, 아이콘도 img·svg 둘 다 온다. */
+.nav-ico { width: 32px; height: 32px; border: 0; border-radius: var(--r-12); background: rgba(255,255,255,.14); color: var(--n-000); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: background .14s; }
+.nav-ico img, .nav-ico svg { width: 20px; height: 20px; }
 .nav-ico:hover { background: rgba(255,255,255,.26); }
 
 /* ===== 콘텐츠 패널 (다크 시 이 패널 안만 어두워짐) ===== */

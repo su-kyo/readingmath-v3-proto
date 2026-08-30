@@ -19,21 +19,10 @@
     body.learn-body { background: var(--bg); overflow: hidden; }
 
 
-    /* ===== 헤더 ===== */
-    .lheader { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-16); background: var(--th-static); border-radius: var(--r-30); padding: var(--sp-8) var(--sp-12) var(--sp-8) var(--sp-32); color: var(--n-000); flex: none; }
-    .breadcrumb { display: flex; align-items: center; gap: var(--sp-8); font-size: clamp(13px, 1.1vw, 15px); min-width: 0; overflow: hidden; }
-    .breadcrumb .sep { opacity: .45; flex: none; color: var(--n-000); }
-    .breadcrumb .crumb { opacity: .72; font-weight: var(--fw-semibold); white-space: nowrap; }
-    .breadcrumb .crumb--strong { opacity: 1; font-weight: var(--fw-bold); }
-    .breadcrumb .crumb--clip { overflow: hidden; text-overflow: ellipsis; }
-    .lheader__actions { display: flex; align-items: center; gap: var(--sp-8); flex: none; }
     /* 라이트/다크 토글 — 해/달 illust 자체가 노브. 라이트=해(좌), 다크=달(우) */
     .theme-toggle { width: 64px; height: 34px; border-radius: var(--r-full); background: rgba(0,0,0,.3); position: relative; flex: none; }
     .theme-toggle__knob { position: absolute; top: 2px; left: 2px; width: 30px; height: 30px; background: center / contain no-repeat url("assets/icons/ico-sun.svg"); transition: left .2s ease; }
     :root[data-theme="dark"] .theme-toggle__knob { left: 32px; background-image: url("assets/icons/ico-moon.svg"); }
-    .nav-ico { width: 32px; height: 32px; border-radius: var(--r-12); background: rgba(255,255,255,.14); display: inline-flex; align-items: center; justify-content: center; }
-    .nav-ico img { width: 20px; height: 20px; }
-    .nav-ico:hover { background: rgba(255,255,255,.26); }
 
     /* ===== 콘텐츠 패널 ===== */
     .content { flex: 1; min-height: 0; background: var(--th-panel); border: 8px solid var(--th-static); border-bottom: none; border-radius: 40px 40px 0 0; padding: clamp(20px, 3vw, 40px) 0 0; display: flex; overflow: hidden; }
