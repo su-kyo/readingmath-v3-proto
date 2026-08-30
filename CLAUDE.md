@@ -8,7 +8,7 @@
 
 **① 하위 폴더 화면에는 `<base href="../">` 한 줄.**
 `<head>` 바로 아래에 넣는다. 이 덕분에 모든 경로(styles·scripts·assets·화면 링크)를
-최상위 기준으로 쓴다. 루트의 `index.html`·`styleguide.html`에는 넣지 않는다.
+최상위 기준으로 쓴다. 루트의 `index.html`에는 넣지 않는다 (`styleguide/` 4장은 하위 폴더라 붙인다).
 
 **② 색은 `styles/tokens.css`의 변수로만 쓴다.**
 화면 CSS에 hex를 직접 쓰지 않는다. 색값의 현행 기준은 tokens.css이고,

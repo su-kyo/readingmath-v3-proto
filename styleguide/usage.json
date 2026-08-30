@@ -1,7 +1,7 @@
 {
  "_읽는 법": "class 이름 → {화면 경로: markup|js}. markup 은 HTML 에 직접, js 는 스크립트가 붙인다.",
  "_만든 도구": "tools/usage-scan.py",
- "_화면 수": 37,
+ "_화면 수": 36,
  "usage": {
   "'": {
    "nav/home.html": "markup"
@@ -57,18 +57,6 @@
   "?": {
    "nav/home.html": "markup"
   },
-  "accordion": {
-   "styleguide.html": "markup"
-  },
-  "accordion__body": {
-   "styleguide.html": "markup"
-  },
-  "accordion__chevron": {
-   "styleguide.html": "markup"
-  },
-  "accordion__header": {
-   "styleguide.html": "markup"
-  },
   "aline": {
    "essay/drill-v2.html": "js"
   },
@@ -104,23 +92,16 @@
    "nav/bridge.html": "markup"
   },
   "badge": {
-   "index.html": "markup",
-   "styleguide.html": "markup"
+   "index.html": "markup"
   },
   "badge--correct": {
-   "index.html": "markup",
-   "styleguide.html": "markup"
+   "index.html": "markup"
   },
   "badge--new": {
-   "index.html": "markup",
-   "styleguide.html": "markup"
+   "index.html": "markup"
   },
   "badge--round": {
-   "index.html": "markup",
-   "styleguide.html": "markup"
-  },
-  "badge--wrong": {
-   "styleguide.html": "markup"
+   "index.html": "markup"
   },
   "badge-done": {
    "assignment/home.html": "js"
@@ -357,17 +338,7 @@
   },
   "block": {
    "essay/drill-v2.html": "js",
-   "essay/drill.html": "js",
-   "styleguide.html": "markup"
-  },
-  "block--basic": {
-   "styleguide.html": "markup"
-  },
-  "block--deep": {
-   "styleguide.html": "markup"
-  },
-  "block--skill": {
-   "styleguide.html": "markup"
+   "essay/drill.html": "js"
   },
   "box": {
    "essay/advanced.html": "js",
@@ -482,9 +453,6 @@
   },
   "card--sci": {
    "nav/bridge.html": "markup"
-  },
-  "card-demo": {
-   "styleguide.html": "markup"
   },
   "card__arrow": {
    "nav/bridge.html": "markup"
@@ -715,18 +683,6 @@
   },
   "cta": {
    "nav/home.html": "markup"
-  },
-  "cta-step": {
-   "styleguide.html": "markup"
-  },
-  "cta-step--doing": {
-   "styleguide.html": "markup"
-  },
-  "cta-step--done": {
-   "styleguide.html": "markup"
-  },
-  "cta-step--todo": {
-   "styleguide.html": "markup"
   },
   "cur": {
    "exam/solve.html": "markup"
@@ -963,23 +919,19 @@
   "frac": {
    "concept/basic-ops.html": "js",
    "concept/drill.html": "js",
-   "styleguide.html": "markup",
    "type/review.html": "js"
   },
   "frac--sm": {
-   "styleguide.html": "markup",
    "type/review.html": "js"
   },
   "frac__d": {
    "concept/basic-ops.html": "js",
    "concept/drill.html": "js",
-   "styleguide.html": "markup",
    "type/review.html": "js"
   },
   "frac__n": {
    "concept/basic-ops.html": "js",
    "concept/drill.html": "js",
-   "styleguide.html": "markup",
    "type/review.html": "js"
   },
   "frow": {
@@ -1094,23 +1046,10 @@
    "util/report.html": "markup"
   },
   "grade": {
-   "assignment/result.html": "js",
-   "styleguide.html": "markup"
-  },
-  "grade--a": {
-   "styleguide.html": "markup"
-  },
-  "grade--b": {
-   "styleguide.html": "markup"
-  },
-  "grade--c": {
-   "styleguide.html": "markup"
+   "assignment/result.html": "js"
   },
   "grade--o": {
    "assignment/result.html": "js"
-  },
-  "grade--s": {
-   "styleguide.html": "markup"
   },
   "grade--x": {
    "assignment/result.html": "js"
@@ -1119,8 +1058,7 @@
    "assignment/result.html": "js"
   },
   "grid": {
-   "exam/home.html": "js",
-   "styleguide.html": "markup"
+   "exam/home.html": "js"
   },
   "h-bar": {
    "util/history.html": "markup"
@@ -1553,8 +1491,7 @@
    "index.html": "js",
    "nav/curriculum.html": "markup",
    "nav/freemode.html": "markup",
-   "nav/home.html": "markup",
-   "styleguide.html": "js"
+   "nav/home.html": "markup"
   },
   "is-active-input": {
    "concept/basic-ops.html": "js",
@@ -1623,7 +1560,6 @@
    "essay/drill.html": "js",
    "essay/step-result.html": "js",
    "shared/step-result.html": "markup",
-   "styleguide.html": "js",
    "type/result.html": "markup"
   },
   "is-empty": {
@@ -1740,7 +1676,6 @@
    "nav/home.html": "js",
    "shared/step-result.html": "js",
    "shared/training-result.html": "js",
-   "styleguide.html": "js",
    "type/quiz.html": "js",
    "type/result.html": "js",
    "type/review.html": "js",
@@ -1780,7 +1715,6 @@
    "nav/home.html": "js",
    "shared/step-result.html": "markup",
    "shared/training-result.html": "js",
-   "styleguide.html": "markup",
    "type/quiz.html": "js",
    "type/result.html": "markup",
    "type/review.html": "js",
@@ -1928,9 +1862,6 @@
   },
   "kpi__v": {
    "assignment/home.html": "js"
-  },
-  "label": {
-   "styleguide.html": "markup"
   },
   "lamp2": {
    "essay/step-result.html": "js",
@@ -2080,24 +2011,6 @@
    "nav/freemode.html": "markup",
    "nav/home.html": "markup"
   },
-  "m-header": {
-   "styleguide.html": "markup"
-  },
-  "m-rblank": {
-   "styleguide.html": "markup"
-  },
-  "m-rblank--no": {
-   "styleguide.html": "markup"
-  },
-  "m-rblank--ok": {
-   "styleguide.html": "markup"
-  },
-  "m-seg": {
-   "styleguide.html": "markup"
-  },
-  "m-toolbtn": {
-   "styleguide.html": "markup"
-  },
   "mact": {
    "essay/training-result.html": "js",
    "shared/training-result.html": "js"
@@ -2119,12 +2032,6 @@
   },
   "metarow": {
    "assignment/home.html": "js"
-  },
-  "mode-toggle": {
-   "styleguide.html": "markup"
-  },
-  "mode-toggle__opt": {
-   "styleguide.html": "markup"
   },
   "monitor": {
    "assignment/solve.html": "markup",
@@ -2280,8 +2187,7 @@
    "type/training-result.html": "markup"
   },
   "mono": {
-   "concept/learn.html": "markup",
-   "styleguide.html": "markup"
+   "concept/learn.html": "markup"
   },
   "mord": {
    "concept/drill.html": "js"
@@ -2424,9 +2330,6 @@
   "obj__sweep": {
    "nav/home.html": "markup"
   },
-  "off": {
-   "styleguide.html": "markup"
-  },
   "ok": {
    "type/result.html": "js",
    "type/training-result.html": "js"
@@ -2456,7 +2359,6 @@
    "essay/training-result.html": "js",
    "shared/step-result.html": "markup",
    "shared/training-result.html": "js",
-   "styleguide.html": "markup",
    "type/result.html": "markup",
    "type/training-result.html": "js"
   },
@@ -2681,16 +2583,10 @@
   "prog__v": {
    "assignment/home.html": "js"
   },
-  "progress": {
-   "styleguide.html": "markup"
-  },
   "progress-cap": {
    "concept/basic-ops.html": "markup",
    "type/quiz.html": "markup",
    "type/review.html": "markup"
-  },
-  "progress__fill": {
-   "styleguide.html": "markup"
   },
   "ptoast": {
    "essay/report-review.html": "markup",
@@ -2881,12 +2777,6 @@
   "qtitle": {
    "exam/solve.html": "js"
   },
-  "ramp": {
-   "styleguide.html": "markup"
-  },
-  "ramp-label": {
-   "styleguide.html": "markup"
-  },
   "rbar": {
    "nav/curriculum.html": "markup",
    "nav/freemode.html": "markup"
@@ -2913,27 +2803,6 @@
   },
   "rdate__tag": {
    "assignment/result.html": "markup"
-  },
-  "ref": {
-   "styleguide.html": "markup"
-  },
-  "ref__card": {
-   "styleguide.html": "markup"
-  },
-  "ref__cls": {
-   "styleguide.html": "markup"
-  },
-  "ref__demo": {
-   "styleguide.html": "markup"
-  },
-  "ref__desc": {
-   "styleguide.html": "markup"
-  },
-  "ref__file": {
-   "styleguide.html": "markup"
-  },
-  "ref__name": {
-   "styleguide.html": "markup"
   },
   "refbox": {
    "exam/solve.html": "js"
@@ -3557,9 +3426,6 @@
   },
   "rmodal__read": {
    "essay/drill-v2.html": "markup"
-  },
-  "row": {
-   "styleguide.html": "markup"
   },
   "rp-cell": {
    "essay/report-review.html": "js",
@@ -4205,15 +4071,6 @@
   "sfoot__hint": {
    "exam/solve.html": "markup"
   },
-  "sg-section": {
-   "styleguide.html": "markup"
-  },
-  "sg-sub": {
-   "styleguide.html": "markup"
-  },
-  "sg-top": {
-   "styleguide.html": "markup"
-  },
   "shadow": {
    "nav/home.html": "markup"
   },
@@ -4328,73 +4185,61 @@
   "smodal": {
    "essay/step-result.html": "js",
    "shared/step-result.html": "js",
-   "styleguide.html": "js",
    "type/result.html": "js"
   },
   "smodal__btn": {
    "essay/step-result.html": "js",
    "shared/step-result.html": "js",
-   "styleguide.html": "js",
    "type/result.html": "js"
   },
   "smodal__btn--ghost": {
    "essay/step-result.html": "js",
    "shared/step-result.html": "js",
-   "styleguide.html": "js",
    "type/result.html": "js"
   },
   "smodal__btn--go": {
    "essay/step-result.html": "js",
    "shared/step-result.html": "js",
-   "styleguide.html": "js",
    "type/result.html": "js"
   },
   "smodal__btns": {
    "essay/step-result.html": "js",
    "shared/step-result.html": "js",
-   "styleguide.html": "js",
    "type/result.html": "js"
   },
   "smodal__card": {
    "essay/step-result.html": "js",
    "shared/step-result.html": "js",
-   "styleguide.html": "js",
    "type/result.html": "js"
   },
   "smodal__desc": {
    "essay/step-result.html": "js",
    "shared/step-result.html": "js",
-   "styleguide.html": "js",
    "type/result.html": "js"
   },
   "smodal__dim": {
    "essay/step-result.html": "js",
    "shared/step-result.html": "js",
-   "styleguide.html": "js",
    "type/result.html": "js"
   },
   "smodal__icon": {
    "essay/step-result.html": "js",
    "shared/step-result.html": "js",
-   "styleguide.html": "js",
    "type/result.html": "js"
   },
   "smodal__title": {
    "essay/step-result.html": "js",
    "shared/step-result.html": "js",
-   "styleguide.html": "js",
    "type/result.html": "js"
   },
   "smodal__x": {
    "essay/step-result.html": "js",
    "shared/step-result.html": "js",
-   "styleguide.html": "js",
    "type/result.html": "js"
   },
   "smtoast": {
    "essay/step-result.html": "js",
    "shared/step-result.html": "js",
-   "styleguide.html": "js",
    "type/result.html": "js"
   },
   "sol": {
@@ -4456,8 +4301,7 @@
   "star": {
    "nav/bridge.html": "js",
    "nav/curriculum.html": "js",
-   "nav/freemode.html": "js",
-   "styleguide.html": "markup"
+   "nav/freemode.html": "js"
   },
   "star--big": {
    "nav/bridge.html": "js",
@@ -4469,31 +4313,10 @@
    "nav/curriculum.html": "js",
    "nav/freemode.html": "js"
   },
-  "star--bronze": {
-   "styleguide.html": "markup"
-  },
   "star--cross": {
    "nav/bridge.html": "js",
    "nav/curriculum.html": "js",
    "nav/freemode.html": "js"
-  },
-  "star--empty": {
-   "styleguide.html": "markup"
-  },
-  "star--gold": {
-   "styleguide.html": "markup"
-  },
-  "star--platinum": {
-   "styleguide.html": "markup"
-  },
-  "star--silver": {
-   "styleguide.html": "markup"
-  },
-  "star--sm": {
-   "styleguide.html": "markup"
-  },
-  "star-row": {
-   "styleguide.html": "markup"
   },
   "stat": {
    "assignment/result.html": "markup"
@@ -4526,7 +4349,6 @@
   "step-card__grade": {
    "essay/step-result.html": "js",
    "shared/step-result.html": "markup",
-   "styleguide.html": "js",
    "type/result.html": "markup"
   },
   "step-card__id": {
@@ -4621,21 +4443,6 @@
    "nav/curriculum.html": "markup",
    "nav/freemode.html": "markup"
   },
-  "subject-header": {
-   "styleguide.html": "markup"
-  },
-  "subject-header--concept": {
-   "styleguide.html": "markup"
-  },
-  "subject-header--essay": {
-   "styleguide.html": "markup"
-  },
-  "subject-header__meta": {
-   "styleguide.html": "markup"
-  },
-  "subject-header__title": {
-   "styleguide.html": "markup"
-  },
   "subunit": {
    "exam/home.html": "js"
   },
@@ -4672,24 +4479,6 @@
   "svideo__play": {
    "exam/home.html": "markup",
    "exam/solve.html": "markup"
-  },
-  "swatch": {
-   "styleguide.html": "markup"
-  },
-  "swatch__chip": {
-   "styleguide.html": "markup"
-  },
-  "swatch__hex": {
-   "styleguide.html": "markup"
-  },
-  "swatch__meta": {
-   "styleguide.html": "markup"
-  },
-  "swatch__name": {
-   "styleguide.html": "markup"
-  },
-  "swatches": {
-   "styleguide.html": "markup"
   },
   "switch": {
    "nav/freemode.html": "markup"
@@ -4737,27 +4526,8 @@
    "shared/training-result.html": "markup",
    "type/training-result.html": "markup"
   },
-  "text-body": {
-   "styleguide.html": "markup"
-  },
   "text-display": {
-   "index.html": "markup",
-   "styleguide.html": "markup"
-  },
-  "text-h1": {
-   "styleguide.html": "markup"
-  },
-  "text-h2": {
-   "styleguide.html": "markup"
-  },
-  "text-sm": {
-   "styleguide.html": "markup"
-  },
-  "text-title": {
-   "styleguide.html": "markup"
-  },
-  "text-xs": {
-   "styleguide.html": "markup"
+   "index.html": "markup"
   },
   "tgrade": {
    "essay/training-result.html": "js",
@@ -4844,21 +4614,6 @@
    "assignment/explain.html": "markup",
    "assignment/result.html": "markup",
    "assignment/solve.html": "markup"
-  },
-  "tok": {
-   "styleguide.html": "markup"
-  },
-  "tok__bar": {
-   "styleguide.html": "markup"
-  },
-  "tok__box": {
-   "styleguide.html": "markup"
-  },
-  "tok__item": {
-   "styleguide.html": "markup"
-  },
-  "tok__name": {
-   "styleguide.html": "markup"
   },
   "toolbtn": {
    "assignment/explain.html": "markup",
@@ -4991,36 +4746,6 @@
    "shared/training-result.html": "js",
    "type/training-result.html": "js"
   },
-  "type-chip": {
-   "styleguide.html": "markup"
-  },
-  "type-chip--master": {
-   "styleguide.html": "markup"
-  },
-  "type-chip--none": {
-   "styleguide.html": "markup"
-  },
-  "type-chip--pending": {
-   "styleguide.html": "markup"
-  },
-  "type-chip--relearn": {
-   "styleguide.html": "markup"
-  },
-  "type-chip--supplement": {
-   "styleguide.html": "markup"
-  },
-  "type-chip--understand": {
-   "styleguide.html": "markup"
-  },
-  "type-chip__id": {
-   "styleguide.html": "markup"
-  },
-  "type-chip__label": {
-   "styleguide.html": "markup"
-  },
-  "type-spec": {
-   "styleguide.html": "markup"
-  },
   "u-agree": {
    "util/payment.html": "markup"
   },
@@ -5087,9 +4812,6 @@
   "u-crumb": {
    "util/notice-detail.html": "markup"
   },
-  "u-dim": {
-   "styleguide.html": "markup"
-  },
   "u-doc__body": {
    "util/notice-detail.html": "markup"
   },
@@ -5155,9 +4877,6 @@
    "util/notice.html": "markup",
    "util/payment.html": "markup",
    "util/report.html": "markup"
-  },
-  "u-muted": {
-   "styleguide.html": "markup"
   },
   "u-new": {
    "util/notice.html": "markup",
@@ -5391,15 +5110,6 @@
   "unit__title": {
    "exam/home.html": "js"
   },
-  "use": {
-   "styleguide.html": "markup"
-  },
-  "use--lib": {
-   "styleguide.html": "markup"
-  },
-  "use--live": {
-   "styleguide.html": "markup"
-  },
   "videobox": {
    "concept/learn.html": "markup"
   },
@@ -5482,8 +5192,7 @@
    "assignment/explain.html": "markup",
    "assignment/result.html": "markup",
    "assignment/solve.html": "markup",
-   "nav/bridge.html": "markup",
-   "styleguide.html": "markup"
+   "nav/bridge.html": "markup"
   },
   "x": {
    "nav/home.html": "markup"

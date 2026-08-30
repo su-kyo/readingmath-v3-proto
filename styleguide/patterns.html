@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light" data-section="util">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>패턴 — 리딩수학과학 디자인 시스템</title>
+  <base href="../" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20260830" />
+  <link rel="stylesheet" href="styles/base.css?v=20260830" />
+  <link rel="stylesheet" href="styles/components.css?v=20260830" />
+  <link rel="stylesheet" href="styleguide/sg.css?v=20260830" />
+</head>
+<body data-sg-css="tokens,base,components,util" data-sg-section="util">
+<div class="sg">
+  <aside class="sg-nav"></aside>
+  <main class="sg-main">
+
+    <header class="sg-head">
+      <div>
+        <h1>패턴</h1>
+        <p>부품 하나가 아니라 <strong>화면이 반복하는 짜임</strong>입니다 —
+           목록의 네 가지 상태, 유틸 화면의 별도 색 체계, JS가 심는 변수, 검수 스위치.
+           <strong>여기 적힌 것 중 절반은 「하지 않기로 한 것」</strong>이에요. 그게 더 오래 갑니다.</p>
+      </div>
+    </header>
+
+    <!-- ===================================================== 목록 상태 -->
+    <section class="sg-sec" id="state">
+      <h2>목록의 네 상태 <small>정상 · 로딩 · 빈 목록 · 실패</small></h2>
+      <p class="sg-lead">시안에서 가장 잘 빠지는 자리입니다. <strong>정상만 그리면 개발자가 나머지 셋을 상상해서 만듭니다.</strong>
+        정적 데모라 통신이 없어서 이 상태들이 저절로 나오지 않아요 — 그래서 주소 끝에
+        <code>?state=loading|empty|error</code>를 붙이면 바로 볼 수 있게 스위치를 달아 뒀습니다.</p>
+
+      <div class="sg-item" data-uses="u-sheet, u-row" data-pad="0">
+        <div class="sg-item__hd"><h3>① 정상</h3>
+          <span class="sg-item__cls">.u-sheet · .u-row · .u-cat · .u-new</span>
+          <span class="sg-item__file">util.css</span></div>
+        <p class="sg-note">목록은 <strong>테두리 안에 담긴 시트</strong>입니다 — 카드가 떠 있고 사이에 갭이 있는 형태를
+          쓰지 않아요. 갭을 두면 호버 면이 맞닿거나 선이 떠 보입니다. 행 사이는 <strong>헤어라인 하나</strong>뿐입니다.
+          제목은 <strong>두 줄까지 보이고 그 뒤로 잘립니다</strong> — 한 줄로 자르면 공지 제목이 대부분 잘리고,
+          제한이 없으면 행 높이가 들쭉날쭉해집니다.</p>
+        <template class="sg-src">
+          <div class="u-body" style="padding:20px;background:var(--paper)">
+            <div class="u-sheet">
+              <button class="u-row"><span class="u-row__main">
+                <span class="u-row__ttl">여름방학 특별 학습 이벤트 안내<span class="u-new">N</span></span>
+                <span class="u-row__meta"><span class="u-cat is-event">이벤트</span><i></i>2026. 08. 28.</span>
+              </span><span class="u-row__chev">›</span></button>
+              <button class="u-row"><span class="u-row__main">
+                <span class="u-row__ttl">서비스 점검 안내 (8월 30일 02:00~04:00)</span>
+                <span class="u-row__meta"><span class="u-cat">공지</span><i></i>2026. 08. 25.</span>
+              </span><span class="u-row__chev">›</span></button>
+              <button class="u-row"><span class="u-row__main">
+                <span class="u-row__ttl">아주 긴 제목이 들어오면 두 줄까지 보이고 그 뒤는 잘립니다 실제 공지 제목은 이보다 훨씬 길어질 수 있어요 세 번째 줄은 나오지 않습니다 여기까지</span>
+                <span class="u-row__meta"><span class="u-cat">공지</span><i></i>2026. 08. 20.</span>
+              </span><span class="u-row__chev">›</span></button>
+            </div>
+          </div>
+        </template>
+      </div>
+
+      <div class="sg-item" data-uses="u-sk, u-skrow" data-pad="0">
+        <div class="sg-item__hd"><h3>② 로딩</h3>
+          <span class="sg-item__cls">.u-sk · .u-skrow</span>
+          <span class="sg-item__file">util.css · <code>?state=loading</code></span></div>
+        <p class="sg-note">스켈레톤은 <strong>정상 목록과 같은 골격</strong>을 씁니다 — 같은 시트, 같은 행 높이, 같은 헤어라인.
+          그래야 데이터가 들어올 때 화면이 튀지 않아요. 깜빡임은 불투명도만 오갑니다(1.25초).</p>
+        <template class="sg-src">
+          <div class="u-body" style="padding:20px;background:var(--paper)">
+            <div class="u-sheet">
+              <div class="u-skrow"><div class="u-sk" style="height:17px;width:62%"></div>
+                <div class="u-sk" style="height:13px;width:30%;margin-top:11px"></div></div>
+              <div class="u-skrow"><div class="u-sk" style="height:17px;width:48%"></div>
+                <div class="u-sk" style="height:13px;width:26%;margin-top:11px"></div></div>
+              <div class="u-skrow"><div class="u-sk" style="height:17px;width:71%"></div>
+                <div class="u-sk" style="height:13px;width:33%;margin-top:11px"></div></div>
+            </div>
+          </div>
+        </template>
+      </div>
+
+      <div class="sg-item" data-uses="u-state" data-pad="0">
+        <div class="sg-item__hd"><h3>③ 빈 목록 · ④ 실패</h3>
+          <span class="sg-item__cls">.u-state · __ico · __ico.is-warn · __t · __d</span>
+          <span class="sg-item__file">util.css · <code>?state=empty|error</code></span></div>
+        <p class="sg-note">둘은 <strong>틀이 같고 두 가지만 다릅니다</strong> — 아이콘 색(실패만 빨강)과
+          <strong>다시 시도 버튼의 유무</strong>. 빈 목록은 잘못된 상태가 아니라서 빨강을 쓰지 않고,
+          할 수 있는 일도 없으니 버튼을 두지 않습니다. 실패는 반대예요.</p>
+        <template class="sg-src">
+          <div class="u-body" style="padding:20px;background:var(--paper);display:grid;grid-template-columns:1fr;gap:16px">
+            <div class="u-sheet"><div class="u-state" style="padding:56px 24px 52px">
+              <div class="u-state__ico">☐</div>
+              <div class="u-state__t">등록된 공지가 없어요.</div>
+              <div class="u-state__d">새 소식이 올라오면 여기에 표시됩니다.</div>
+            </div></div>
+            <div class="u-sheet"><div class="u-state" style="padding:56px 24px 52px">
+              <div class="u-state__ico is-warn">⚠</div>
+              <div class="u-state__t">공지를 불러오지 못했어요.</div>
+              <div class="u-state__d">잠시 후 다시 시도해 주세요.</div>
+              <button class="u-btn">다시 시도</button>
+            </div></div>
+          </div>
+        </template>
+      </div>
+      <div class="sg-rule sg-rule--do">새 목록 화면을 만들면 <strong>네 상태를 같이 만듭니다.</strong>
+        정상만 그려 놓고 나중에 붙이면, 붙일 때쯤엔 시트 골격이 이미 달라져 있습니다.</div>
+    </section>
+
+    <!-- ===================================================== 유틸 예외 -->
+    <section class="sg-sec" id="util">
+      <h2>유틸 화면의 별도 색 체계 <small>의도된 예외 — 통합하지 않는다</small></h2>
+      <p class="sg-lead">공지 · 공지상세 · 월간보고서 · 결제 네 화면(그리고 학습 기록)은
+        <strong>학습 화면과 다른 색 체계</strong>를 씁니다. 실수가 아니라 Phase 7-6에서 <strong>한 번 갈아엎고 정한 것</strong>이에요.
+        이유는 간단합니다 — 이 화면들은 우주선이 아니라 <strong>문서</strong>입니다.</p>
+
+      <table class="sg-table">
+        <thead><tr><th style="width:150px">축</th><th style="width:280px">학습 화면</th><th>유틸 4화면</th></tr></thead>
+        <tbody>
+          <tr><td><strong>면</strong></td><td>계열색 프레임 + 패널</td>
+              <td><strong>뉴트럴-쿨 램프 하나로만</strong>(000/050/100). 파랑은 점·선·글자로만</td></tr>
+          <tr><td><strong>안 쓰는 색</strong></td><td>—</td>
+              <td><strong>초록·앰버를 안 씁니다.</strong> hue가 멀어 화면이 얼룩집니다</td></tr>
+          <tr><td><strong>선택 표현</strong></td><td>테두리 · 틴트 등 자리마다</td>
+              <td><strong>「선택 = 반전 칠」 한 규칙</strong>. 필터·페이지·과목·기간·결제수단이 전부 같습니다.
+                  라디오 동그라미를 쓰지 않아요</td></tr>
+          <tr><td><strong>목록</strong></td><td>카드 · 타일</td>
+              <td>목록은 <strong>테두리 시트</strong>, 선택지는 <strong>타일</strong>. 떠 있는 블록과 갭을 안 씁니다</td></tr>
+          <tr><td><strong>그림자</strong></td><td>물리 버튼의 두께감</td><td><strong>없음.</strong> 깊이는 선과 여백이 만듭니다</td></tr>
+          <tr><td><strong>기본 테마</strong></td><td>라이트(토글 있음)</td>
+              <td><strong>다크가 기본</strong>. 토글 버튼이 없고, 학습 화면에서 고른 테마를 따라옵니다</td></tr>
+        </tbody>
+      </table>
+
+      <div class="sg-item" data-uses="u-seg, u-pager" data-pad="20px">
+        <div class="sg-item__hd"><h3>「선택 = 반전 칠」 한 규칙</h3>
+          <span class="sg-item__cls">.u-seg button.is-on · .u-pager button.is-on · --sel-bg / --sel-fg</span>
+          <span class="sg-item__file">util.css</span></div>
+        <p class="sg-note"><strong>라이트에서는 먹색 면에 흰 글자, 다크에서는 밝은 면에 먹색 글자</strong>로 뒤집힙니다.
+          두 액자를 나란히 보면 같은 규칙이 반대 방향으로 도는 게 보여요. 필터든 페이지네이션이든
+          과목 고르기든 <strong>전부 이 하나</strong>입니다 — 고르는 자리마다 다른 표현을 만들지 않습니다.</p>
+        <template class="sg-src">
+          <div class="u-body" style="background:var(--paper);padding:20px">
+            <div class="u-seg" style="margin-bottom:20px">
+              <button class="is-on">전체<span class="u-seg__n">12</span></button>
+              <button>공지<span class="u-seg__n">8</span></button>
+              <button>이벤트<span class="u-seg__n">4</span></button>
+            </div>
+            <div class="u-pager" style="margin:0;justify-content:flex-start">
+              <button disabled>‹</button><button class="is-on">1</button>
+              <button>2</button><button>3</button><button>›</button>
+            </div>
+          </div>
+        </template>
+      </div>
+
+      <div class="sg-rule sg-rule--dont">유틸 4화면의 색 체계를 학습 화면과 <strong>통합하지 않습니다.</strong>
+        의도된 분리이고 이유가 <code>docs/phase7-brief.md</code>에 있습니다.</div>
+      <div class="sg-rule sg-rule--why">테마 부트스트랩이 <strong>각 화면 <code>&lt;head&gt;</code>에 인라인으로</strong> 들어 있습니다.
+        <code>localStorage['rm-theme']</code>를 읽어 <code>'light'</code>일 때만 <code>data-theme</code>를 붙여요.
+        <strong>외부 파일로 빼면 화면이 한 번 깜빡입니다</strong>(다크로 그렸다가 라이트로 뒤집힘) —
+        그래서 15화면에 같은 코드가 복사돼 있고, 그걸 알고 두었습니다.</div>
+    </section>
+
+    <!-- ===================================================== JS 변수 -->
+    <section class="sg-sec" id="jsvars">
+      <h2>JS가 넣는 변수 <small>정의 없이 <code>var()</code>로만 불리는 것들</small></h2>
+      <p class="sg-lead"><code>tokens.css</code>를 아무리 뒤져도 이 이름들의 정의는 없습니다.
+        <strong>버그가 아니라 JS가 인라인 스타일로 심는 값</strong>이에요 — 진행률 · 좌표 · 지연시간 같은,
+        「그때그때 계산되는 수」입니다. <strong>지우면 안 됩니다.</strong></p>
+      <table class="sg-table">
+        <thead><tr><th style="width:130px">변수</th><th style="width:230px">누가 심나</th><th>무엇</th></tr></thead>
+        <tbody>
+          <tr><td><code>--pct</code></td><td>결과 화면 엔진</td><td>정답률 0~100. 게이지 각도와 바늘이 이걸 읽는다</td></tr>
+          <tr><td><code>--hero-w</code></td><td>행성 홈</td><td>캐릭터 칸 폭. 수학 31.25% · 과학 25%로 과목마다 다르다</td></tr>
+          <tr><td><code>--caret-x</code></td><td>입력 자리 표시</td><td>커서 x 좌표</td></tr>
+          <tr><td><code>--seg</code></td><td>끊어읽기 · 분절</td><td>지금 구간 번호</td></tr>
+          <tr><td><code>--hl</code></td><td>형광펜</td><td>강조 구간</td></tr>
+          <tr><td><code>--delay</code> · <code>--d</code></td><td>등장 애니메이션</td><td>순차 등장 지연. 항목마다 다르게 심는다</td></tr>
+          <tr><td><code>--m</code> · <code>--o</code></td><td>행성 배치</td><td>여백 · 불투명도</td></tr>
+        </tbody>
+      </table>
+      <div class="sg-rule sg-rule--why">이 목록이 없으면 「아무도 정의하지 않은 변수」로 보여서
+        <strong>정리하다가 지우게 됩니다.</strong> 그래서 문서에 남겨 둡니다.</div>
+    </section>
+
+    <!-- ===================================================== 검수 스위치 -->
+    <section class="sg-sec" id="debug">
+      <h2>검수 스위치 <small>주소 끝에 붙이는 것들 · 배포본에서는 안 보인다</small></h2>
+      <p class="sg-lead">정적 프로토타입이라 <strong>문제를 실제로 풀어야 도달하는 상태</strong>가 많습니다.
+        그걸 매번 손으로 만들면 검수가 안 돼요. 그래서 주소로 건너뜁니다.</p>
+      <table class="sg-table">
+        <thead><tr><th style="width:180px">주소</th><th style="width:220px">어디에</th><th>무엇</th></tr></thead>
+        <tbody>
+          <tr><td><code>?debug=1</code></td><td>학습·과제·시험·결과 화면</td>
+              <td>왼쪽 아래 작은 패널. <strong>문제를 안 풀고</strong> 정답·오답·완료 상태를 버튼으로 오간다.
+                  결과 화면에서는 시간 초과 ↔ 제한 시간 내</td></tr>
+          <tr><td><code>?state=loading</code><br><code>?state=empty</code><br><code>?state=error</code></td>
+              <td>공지 목록 · 월간보고서</td><td>위의 네 상태를 바로 띄운다</td></tr>
+          <tr><td><code>?scratch=1</code></td><td>연습장이 붙은 22화면</td><td>연습장을 열어 둔 채로 시작</td></tr>
+        </tbody>
+      </table>
+      <p class="sg-lead">새 학습 화면을 만들면 <code>scripts/debug-panel.js</code>를 부르고 엔진에서
+        <code>window.RMDebug.register({title, actions})</code>로 자기 훅만 등록하면 됩니다.</p>
+    </section>
+
+    <!-- ===================================================== 화면 껍데기 -->
+    <section class="sg-sec" id="shell">
+      <h2>화면 껍데기 규칙 <small>새 화면을 만들 때 지키는 것</small></h2>
+      <table class="sg-table">
+        <thead><tr><th style="width:230px">규칙</th><th>왜</th></tr></thead>
+        <tbody>
+          <tr><td><strong>하위 폴더 화면에는<br><code>&lt;base href="../"&gt;</code> 한 줄</strong></td>
+              <td><code>&lt;head&gt;</code> 바로 아래. 이 덕분에 모든 경로(스타일·스크립트·이미지·화면 링크)를
+                  <strong>최상위 기준 한 가지로</strong> 쓴다. 루트의 <code>index.html</code>에는 넣지 않는다</td></tr>
+          <tr><td><strong>계열 폴더와 index 그룹은<br>같은 단위</strong></td>
+              <td>nav · concept · type · essay · assignment · exam · util · shared.
+                  <strong>화면을 만들면 <code>index.html</code> 목록에도 넣는다</strong> — 둘이 어긋나면 화면이 미아가 된다</td></tr>
+          <tr><td><strong>CSS·JS를 고쳤으면<br><code>?v=</code>를 그날 날짜로</strong></td>
+              <td>안 올리면 브라우저가 옛 파일을 계속 써서 「고쳤는데 화면이 안 바뀐다」가 된다.
+                  <strong>파일별로 세지 않는다</strong> — 세는 순간 또 어긋난다. 전 화면이 같은 값을 쓴다</td></tr>
+          <tr><td><strong>링크로 이어진 화면은<br>폴더로 쪼개지 않는다</strong></td>
+              <td>하나만 놓쳐도 죽은 링크가 되는데 <strong>화면은 멀쩡해 보인다.</strong> 여기서 배운 규칙이다</td></tr>
+        </tbody>
+      </table>
+      <div class="sg-rule sg-rule--dont"><strong>조립식 경로를 문자열 검색만으로 옮기지 않습니다.</strong>
+        이미지·화면 경로가 <code>'star-' + g</code>처럼 코드에서 조립되는 곳이 많아요.
+        경로를 옮겼으면 서버를 띄워 <strong>전 화면 404 검사</strong>로 확인합니다.</div>
+    </section>
+
+    <!-- ===================================================== 검사 장치 -->
+    <section class="sg-sec" id="guard">
+      <h2>이 문서를 지키는 장치 <small>사람이 지키는 규칙을 기계가 지키는 규칙으로</small></h2>
+      <p class="sg-lead">스타일 정리는 한 번으로 끝나지 않습니다. 화면이 늘 때마다 같은 방식으로 다시 샙니다.
+        그래서 <strong>정리보다 검사 장치가 진짜 산출물</strong>이에요.</p>
+      <table class="sg-table">
+        <thead><tr><th style="width:210px">도구</th><th>무엇을 하나</th></tr></thead>
+        <tbody>
+          <tr><td><code>tools/usage-scan.py</code></td>
+              <td>37화면 마크업을 훑어 <strong>부품별 쓰는 화면 수</strong>를 센다.
+                  이 문서의 배지가 그 결과다 — 손으로 안 센다</td></tr>
+          <tr><td><code>tools/screen-shot.sh</code><br><code>tools/screen-diff.py</code></td>
+              <td>고치기 전·후를 헤드리스로 찍어 <strong>화소 단위로 대조</strong>한다.
+                  <strong>부품을 옮겼는데 0.00%가 나오면 성공</strong>이다</td></tr>
+          <tr><td><code>tools/dark-shot.html</code></td>
+              <td>헤드리스는 라이트만 찍힌다(테마가 화면 안 버튼으로만 바뀌므로).
+                  화면을 액자에 끼워 <strong>다크로 고정해</strong> 찍는다</td></tr>
+          <tr><td><code>tools/rule-compare.py</code></td>
+              <td>같은 클래스가 <strong>어느 화면에 어떻게 정의됐는지</strong> 비교한다.
+                  「합칠 것인가 가를 것인가」를 여기서 판단했다</td></tr>
+          <tr><td><code>tools/palette-gen.py</code><br><code>tools/cta-check.html</code></td>
+              <td>팔레트를 <strong>생성</strong>하고(450은 대비로 풀어 낸다),
+                  CTA가 홈 32배경에서 버티는지 판정한다</td></tr>
+        </tbody>
+      </table>
+      <div class="sg-rule sg-rule--why"><strong>화소 대조가 실수를 두 번 잡았습니다.</strong>
+        여러 줄 규칙을 한 줄만 지워 과제 화면이 백지가 된 것, 잘린 출력을 보고 옮겨 적어
+        다섯 화면의 라벨 글자가 12→13px로 커진 것. <strong>둘 다 코드만 봐서는 안 보였습니다.</strong></div>
+    </section>
+
+  </main>
+</div>
+<script src="styleguide/sg.js?v=20260830"></script>
+</body>
+</html>

@@ -59,8 +59,8 @@
     }
 
     html += '<p class="sg-nav__foot">토큰 <code>styles/tokens.css</code><br>' +
-            '쓰는 화면 수는 <a href="index.html">37화면</a>을 훑어 자동으로 셉니다' +
-            ' — <code>tools/usage-scan.py</code></p>';
+            '쓰는 화면 수는 <a href="index.html"><span id="sgScreens">전 화면</span></a>을 훑어' +
+            ' 자동으로 셉니다 — <code>tools/usage-scan.py</code></p>';
     nav.innerHTML = html;
 
     // 스크롤에 따라 지금 보는 절을 목차에 표시
@@ -177,6 +177,9 @@
      ③ 쓰는 화면 수
      ------------------------------------------------------------------ */
   function attachUsage(data) {
+    var n = document.getElementById('sgScreens');
+    if (n && data['_화면 수']) n.textContent = data['_화면 수'] + '화면';
+
     document.querySelectorAll('.sg-item[data-uses]').forEach(function (item) {
       var names = item.dataset.uses.split(/\s*,\s*/).filter(Boolean);
       var merged = {};

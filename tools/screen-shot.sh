@@ -33,8 +33,11 @@ curl -sf -o /dev/null "http://localhost:$PORT/index.html" || {
 mkdir -p "$OUT"
 
 # 배포 대상 화면만 (tools · figma-palette · video 제외). 화면이 늘면 자동으로 따라온다.
+# styleguide/ 는 배포에 포함되지만 여기서는 뺀다 — 이 촬영은 「서비스 화면이 안 바뀌었나」를
+# 보는 대조이고, 문서가 섞이면 앞 회차와 장 수가 달라져 비교가 흐려진다.
 PAGES=$(cd "$ROOT" && find . -name "*.html" \
           -not -path "./tools/*" -not -path "./figma-palette/*" -not -path "./video/*" \
+          -not -path "./styleguide/*" \
           | sed 's|^\./||; s|\.html$||' | sort)
 
 n=0
