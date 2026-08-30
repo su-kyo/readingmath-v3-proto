@@ -6,10 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>과제 결과 — 리딩수학과학</title>
   <script>try{if(localStorage.getItem('rm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
-  <link rel="stylesheet" href="styles/tokens.css?v=20260828" />
-  <link rel="stylesheet" href="styles/base.css?v=20260828" />
-  <link rel="stylesheet" href="styles/components.css?v=20260828" />
-  <link rel="stylesheet" href="styles/learn-shell.css?v=20260828" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20260828-3" />
+  <link rel="stylesheet" href="styles/base.css?v=20260828-3" />
+  <link rel="stylesheet" href="styles/components.css?v=20260828-3" />
+  <link rel="stylesheet" href="styles/learn-shell.css?v=20260828-3" />
   <style>
     /* =========================================================================
        과제 센터 · 결과 화면 (assignment-result) — 우주 셸 (풀이 화면과 동일)
@@ -102,8 +102,6 @@
     /* 이 화면만 트레이가 가운데 정렬 (버튼 3개를 가운데 모은다) */
     .bar__tray { justify-content: center; gap: var(--sp-16); }
 
-    .toast { position: fixed; left: 50%; bottom: 120px; transform: translateX(-50%) translateY(10px); z-index: var(--z-toast); background: var(--n-650); color: var(--n-000); font-size: var(--fs-14); font-weight: var(--fw-semibold); padding: var(--sp-12) var(--sp-20); border-radius: var(--r-12); box-shadow: 0 10px 30px -10px rgba(0,0,0,.5); opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
-    .toast.is-on { opacity: 1; transform: translateX(-50%) translateY(0); }
 
     .rpanel::-webkit-scrollbar { width: 10px; }
     .rpanel::-webkit-scrollbar-thumb { background: var(--n-200); border-radius: var(--r-full); border: 3px solid var(--panel); background-clip: padding-box; }
@@ -116,6 +114,8 @@
       .trow { grid-template-columns: 44px 1fr 72px 96px; }
       .tc-text { display: none; }
     }
+    /* 토스트 면색만 이 화면 것 */
+    .toast, .rtoast, .dtoast, .ptoast { --toast-bg: var(--n-650); }
   </style>
 </head>
 <body>
@@ -176,6 +176,6 @@
     <div class="toast" id="toast"></div>
   </div>
 
-  <script src="scripts/assignment-result.js?v=20260828"></script>
+  <script src="scripts/assignment-result.js?v=20260828-3"></script>
 </body>
 </html>

@@ -6,12 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>과제 풀이 — 리딩수학과학</title>
   <script>try{if(localStorage.getItem('rm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
-  <link rel="stylesheet" href="styles/tokens.css?v=20260828" />
-  <link rel="stylesheet" href="styles/base.css?v=20260828" />
-  <link rel="stylesheet" href="styles/components.css?v=20260828" />
-  <link rel="stylesheet" href="styles/learn-shell.css?v=20260828" />
-  <link rel="stylesheet" href="styles/monitor.css?v=20260828" />
-  <link rel="stylesheet" href="styles/keypad.css?v=20260828" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20260828-3" />
+  <link rel="stylesheet" href="styles/base.css?v=20260828-3" />
+  <link rel="stylesheet" href="styles/components.css?v=20260828-3" />
+  <link rel="stylesheet" href="styles/learn-shell.css?v=20260828-3" />
+  <link rel="stylesheet" href="styles/monitor.css?v=20260828-3" />
+  <link rel="stylesheet" href="styles/keypad.css?v=20260828-3" />
   <style>
     /* =========================================================================
        과제 센터 · 풀이 화면 (assignment-solve) — 우주 셸
@@ -147,9 +147,6 @@
     /* 하단 콘솔 = 일러스트(좌우 console-task SVG와 이어지는 고정색, 토큰/테마 무관).
        #eef0f6 = 콘솔 상단 립, #e0e6ef = 콘솔 본체 밴드 (SVG 실측 seam 색) */
 
-    /* 토스트 */
-    .toast { position: fixed; left: 50%; bottom: 120px; transform: translateX(-50%) translateY(10px); z-index: var(--z-toast); background: var(--n-650); color: var(--n-000); font-size: var(--fs-14); font-weight: var(--fw-semibold); padding: var(--sp-12) var(--sp-20); border-radius: var(--r-12); box-shadow: 0 10px 30px -10px rgba(0,0,0,.5); opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
-    .toast.is-on { opacity: 1; transform: translateX(-50%) translateY(0); }
 
     /* 스크롤바 */
     .qpanel::-webkit-scrollbar { width: 10px; }
@@ -161,6 +158,8 @@
       .content { flex-direction: column; }
       .omr { width: auto; }
     }
+    /* 토스트 면색만 이 화면 것 */
+    .toast, .rtoast, .dtoast, .ptoast { --toast-bg: var(--n-650); }
   </style>
 </head>
 <body>
@@ -245,11 +244,11 @@
 
   <!-- 검수용 디버그 패널 (?debug=1 일 때만 보임) -->
   <!-- 연습장 캔버스 (공용) -->
-  <script src="scripts/scratchpad.js?v=20260828"></script>
-  <script src="scripts/debug-panel.js?v=20260828"></script>
+  <script src="scripts/scratchpad.js?v=20260828-3"></script>
+  <script src="scripts/debug-panel.js?v=20260828-3"></script>
   <!-- 키패드 물리 키보드 입력 (공용) -->
-  <script src="scripts/keypad.js?v=20260828"></script>
-  <script src="scripts/keypad-input.js?v=20260828"></script>
-  <script src="scripts/assignment-solve.js?v=20260828"></script>
+  <script src="scripts/keypad.js?v=20260828-3"></script>
+  <script src="scripts/keypad-input.js?v=20260828-3"></script>
+  <script src="scripts/assignment-solve.js?v=20260828-3"></script>
 </body>
 </html>

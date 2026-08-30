@@ -482,3 +482,28 @@
 }
 /* .ex__skel 은 자체 설명글이 있으므로 라벨을 위에 얹고 세로로 쌓는다 */
 .ex__skel { flex-direction: column; gap: var(--sp-8); }
+
+
+/* =========================================================================
+   토스트 (Phase 10-③)
+   -------------------------------------------------------------------------
+   화면 아래에서 잠깐 떠오르는 알림. 여섯 화면이 각자 복사해 갖고 있었고,
+   이름도 .toast / .smtoast / .rtoast / .dtoast / .ptoast 다섯 가지로 갈렸다.
+   **이름을 합치려면 각 화면의 JS(토스트를 만들고 .is-on 을 붙이는 쪽)도 함께
+   고쳐야 해서, 지금은 모양만 한 벌로 모으고 이름은 그대로 뒀다.**
+   이름 통합은 다음 회차 항목이다 (지시서 §4-3).
+
+   면색만 화면이 정한다 — 학습 계열은 짙은 네이비, 과제는 --n-650.
+   ========================================================================= */
+.toast, .smtoast, .rtoast, .dtoast, .ptoast {
+  position: fixed; left: 50%; bottom: 118px; transform: translateX(-50%) translateY(10px);
+  z-index: var(--z-toast);
+  padding: var(--sp-12) var(--sp-20); border-radius: var(--r-full);
+  font-family: var(--font-sans); font-size: var(--fs-14); font-weight: var(--fw-semibold);
+  background: var(--toast-bg, rgba(18,22,40,.94)); color: var(--static-on);
+  opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s;
+}
+.toast.is-on, .smtoast.is-on, .rtoast.is-on, .dtoast.is-on, .ptoast.is-on,
+.toast.show, .smtoast.show {
+  opacity: 1; transform: translateX(-50%) translateY(0);
+}

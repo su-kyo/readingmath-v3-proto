@@ -5,12 +5,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>서술형 훈련 · 기본 다지기 — 리딩수학과학</title>
-  <link rel="stylesheet" href="styles/tokens.css?v=20260828" />
-  <link rel="stylesheet" href="styles/base.css?v=20260828" />
-  <link rel="stylesheet" href="styles/components.css?v=20260828" />
-  <link rel="stylesheet" href="styles/learn-shell.css?v=20260828" />
-  <link rel="stylesheet" href="styles/essay.css?v=20260828" />
-  <link rel="stylesheet" href="styles/keypad.css?v=20260828" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20260828-3" />
+  <link rel="stylesheet" href="styles/base.css?v=20260828-3" />
+  <link rel="stylesheet" href="styles/components.css?v=20260828-3" />
+  <link rel="stylesheet" href="styles/learn-shell.css?v=20260828-3" />
+  <link rel="stylesheet" href="styles/essay.css?v=20260828-3" />
+  <link rel="stylesheet" href="styles/keypad.css?v=20260828-3" />
   <style>
     /* ============ 서술형 훈련 = 퍼플 테마 (공통은 essay.css) ============ */
     /* 페이지 고유 토큰만 (--bl-* 코어 / .blank / .qpop / 하단바 / .htimer = essay.css) */
@@ -135,13 +135,8 @@
     @media (prefers-reduced-motion: reduce) { .block.is-in { animation: none; } }
 
     /* 입력 드롭다운(즉시 채점)·키패드·객관식 세로보기 = essay.css */
-
-    /* 토스트 */
-    .dtoast { position: fixed; left: 50%; bottom: 118px; transform: translateX(-50%) translateY(10px); z-index: var(--z-toast);
-      padding: var(--sp-8) var(--sp-16); border-radius: var(--r-full); font-family: var(--font-sans); font-size: var(--fs-14); font-weight: var(--fw-bold);
-      background: rgba(20,14,44,.94); color: var(--n-000); opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
-    .dtoast.is-err { background: var(--no-ink); }
-    .dtoast.is-on { opacity: 1; transform: translateX(-50%) translateY(0); }
+    /* 토스트 면색만 이 화면 것 */
+    .toast, .rtoast, .dtoast, .ptoast { --toast-bg: rgba(20,14,44,.94); }
   </style>
 </head>
 <body class="learn-body">
@@ -237,9 +232,9 @@
 
   <!-- 키패드 물리 키보드 입력 (공용) -->
   <!-- 연습장 캔버스 (공용) -->
-  <script src="scripts/scratchpad.js?v=20260828"></script>
-  <script src="scripts/keypad.js?v=20260828"></script>
-  <script src="scripts/keypad-input.js?v=20260828"></script>
-  <script src="scripts/essay-drill.js?v=20260828"></script>
+  <script src="scripts/scratchpad.js?v=20260828-3"></script>
+  <script src="scripts/keypad.js?v=20260828-3"></script>
+  <script src="scripts/keypad-input.js?v=20260828-3"></script>
+  <script src="scripts/essay-drill.js?v=20260828-3"></script>
 </body>
 </html>

@@ -6,12 +6,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>서술형 훈련 · 스텝 결과 — 리딩수학과학</title>
-  <link rel="stylesheet" href="styles/tokens.css?v=20260828" />
-  <link rel="stylesheet" href="styles/base.css?v=20260828" />
-  <link rel="stylesheet" href="styles/components.css?v=20260828" />
-  <link rel="stylesheet" href="styles/learn-shell.css?v=20260828" />
-  <link rel="stylesheet" href="styles/result.css?v=20260828" />
-  <link rel="stylesheet" href="styles/essay.css?v=20260828" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20260828-3" />
+  <link rel="stylesheet" href="styles/base.css?v=20260828-3" />
+  <link rel="stylesheet" href="styles/components.css?v=20260828-3" />
+  <link rel="stylesheet" href="styles/learn-shell.css?v=20260828-3" />
+  <link rel="stylesheet" href="styles/result.css?v=20260828-3" />
+  <link rel="stylesheet" href="styles/essay.css?v=20260828-3" />
   <style>
     /* ===================================================================
        서술형 스텝 결과 — Phase 7 ① 계기판 어휘 (개념 shared/step-result와 같은 골격,
@@ -115,9 +115,6 @@
       50% { box-shadow: 0 5px 0 color-mix(in srgb, var(--primary) 55%, var(--n-900)), 0 0 26px color-mix(in srgb, var(--accent) 40%, transparent); }
     }
 
-    /* 토스트 */
-    .rtoast { position: fixed; left: 50%; bottom: 118px; transform: translateX(-50%) translateY(10px); z-index: var(--z-toast); padding: var(--sp-8) var(--sp-16); border-radius: var(--r-full); font-family: var(--font-sans); font-size: var(--fs-14); font-weight: var(--fw-semibold); background: rgba(20,14,44,.94); color: var(--n-000); opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
-    .rtoast.is-on { opacity: 1; transform: translateX(-50%) translateY(0); }
 
     @media (max-width: 940px) {
       .rframe { flex-direction: column; }
@@ -206,8 +203,8 @@
   <div class="rtoast" id="toast"></div>
 
   <!-- 연습장 캔버스 (공용) -->
-  <script src="scripts/scratchpad.js?v=20260828"></script>
-  <script src="scripts/essay-step-result.js?v=20260828"></script>
-  <script src="scripts/step-progress.js?v=20260828"></script>
+  <script src="scripts/scratchpad.js?v=20260828-3"></script>
+  <script src="scripts/essay-step-result.js?v=20260828-3"></script>
+  <script src="scripts/step-progress.js?v=20260828-3"></script>
 </body>
 </html>

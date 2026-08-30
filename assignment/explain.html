@@ -6,10 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>과제 해설 — 리딩수학과학</title>
   <script>try{if(localStorage.getItem('rm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
-  <link rel="stylesheet" href="styles/tokens.css?v=20260828" />
-  <link rel="stylesheet" href="styles/base.css?v=20260828" />
-  <link rel="stylesheet" href="styles/components.css?v=20260828" />
-  <link rel="stylesheet" href="styles/learn-shell.css?v=20260828" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20260828-3" />
+  <link rel="stylesheet" href="styles/base.css?v=20260828-3" />
+  <link rel="stylesheet" href="styles/components.css?v=20260828-3" />
+  <link rel="stylesheet" href="styles/learn-shell.css?v=20260828-3" />
   <style>
     /* =========================================================================
        과제 센터 · 해설 화면 (assignment-explain) — 풀이 화면의 리뷰(정답 공개) 버전
@@ -117,8 +117,6 @@
 
     /* 하단 콘솔 바 */
 
-    .toast { position: fixed; left: 50%; bottom: 120px; transform: translateX(-50%) translateY(10px); z-index: var(--z-toast); background: var(--n-650); color: var(--n-000); font-size: var(--fs-14); font-weight: var(--fw-semibold); padding: var(--sp-12) var(--sp-20); border-radius: var(--r-12); box-shadow: 0 10px 30px -10px rgba(0,0,0,.5); opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
-    .toast.is-on { opacity: 1; transform: translateX(-50%) translateY(0); }
 
     .qpanel::-webkit-scrollbar { width: 10px; }
     .qpanel::-webkit-scrollbar-thumb { background: var(--n-200); border-radius: var(--r-full); border: 3px solid var(--qpanel); background-clip: padding-box; }
@@ -129,6 +127,8 @@
       .content { flex-direction: column; }
       .omr { width: auto; }
     }
+    /* 토스트 면색만 이 화면 것 */
+    .toast, .rtoast, .dtoast, .ptoast { --toast-bg: var(--n-650); }
   </style>
 </head>
 <body>
@@ -183,7 +183,7 @@
   </div>
 
   <!-- 연습장 캔버스 (공용) -->
-  <script src="scripts/scratchpad.js?v=20260828"></script>
-  <script src="scripts/assignment-explain.js?v=20260828"></script>
+  <script src="scripts/scratchpad.js?v=20260828-3"></script>
+  <script src="scripts/assignment-explain.js?v=20260828-3"></script>
 </body>
 </html>
