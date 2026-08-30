@@ -44,18 +44,11 @@
     .stepbar__i.is-done { color: var(--lock-ck); }
     .stepbar__i.is-done::before { content: '✓'; font-weight: var(--fw-heavy); }
 
-    .stage-scroll { flex: 1; min-height: 0; overflow-y: auto; padding: clamp(6px, 1.2vw, 12px) clamp(10px, 2vw, 22px) 96px; }
-    .stage-scroll::-webkit-scrollbar { width: 10px; }
-    .stage-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,.2); border-radius: var(--r-full); border: 2px solid transparent; background-clip: padding-box; }
     :root[data-theme="light"] .stage-scroll::-webkit-scrollbar-thumb { background: rgba(108,99,201,.28); background-clip: padding-box; }
 
     /* ============ 카드 공용 ============ */
     .card { max-width: 760px; margin: 0 auto; background: var(--card); border: 1px solid var(--card-br); border-radius: var(--r-22); box-shadow: var(--card-sh); }
     .card + .card { margin-top: 14px; }
-    .sec-label { display: inline-flex; align-items: center; gap: var(--sp-6); padding: var(--sp-4) var(--sp-12); border-radius: var(--r-full);
-      font-family: var(--font-sans); font-size: var(--fs-12); font-weight: var(--fw-heavy); letter-spacing: .01em; }
-    .sec-label--problem { background: var(--th-solid); color: var(--n-000); }
-    .sec-label--sol { background: rgba(124,58,237,.15); color: var(--th-accent-hi); }
     :root[data-theme="light"] .sec-label--sol { background: rgba(124,58,237,.1); color: var(--th-accent-strong); }
 
     /* ============ 문제 카드 (읽은 뒤 접힘·상주) ============ */
@@ -85,9 +78,6 @@
     .stage-action__btn:hover { background: var(--primary-hover); }
     .stage-action__btn svg { width: 19px; height: 19px; }
 
-    /* ============ 풀이 카드 (워크시트) ============ */
-    .worksheet { padding: clamp(18px, 2.3vw, 26px) clamp(20px, 2.6vw, 34px) clamp(20px, 2.4vw, 28px); }
-    .worksheet__label { margin-bottom: 16px; }
 
     /* ============ 끊어읽기 chunk ============ */
     .chunk { display: block; font-family: var(--font-serif); color: var(--guide);
@@ -137,6 +127,8 @@
     /* 입력 드롭다운(즉시 채점)·키패드·객관식 세로보기 = essay.css */
     /* 토스트 면색만 이 화면 것 */
     .toast, .rtoast, .dtoast, .ptoast { --toast-bg: rgba(20,14,44,.94); }
+    /* 가로 안(킵) — 스크롤 영역 위에 여백이 있다 */
+    .stage-scroll { padding-top: clamp(6px, 1.2vw, 12px); }
   </style>
 </head>
 <body class="learn-body">

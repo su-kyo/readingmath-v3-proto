@@ -60,19 +60,11 @@
     .stepbar__i.is-done + .stepbar__track { background: var(--th-accent); opacity: 1; }
     :root[data-theme="dark"] .stepbar__i.is-done + .stepbar__track { background: var(--th-accent-hi); }
 
-    /* padding-top = 0 : 스티키 카드가 스크롤포트 상단에 밀착돼 위로 내용이 비치지 않게 */
-    .stage-scroll { flex: 1; min-height: 0; overflow-y: auto; padding: 0 clamp(10px, 2vw, 22px) 96px; }
-    .stage-scroll::-webkit-scrollbar { width: 10px; }
-    .stage-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,.2); border-radius: var(--r-full); border: 2px solid transparent; background-clip: padding-box; }
     :root[data-theme="light"] .stage-scroll::-webkit-scrollbar-thumb { background: rgba(108,99,201,.28); background-clip: padding-box; }
 
     /* ============ 카드 공용 ============ */
     .card { max-width: 760px; margin: 0 auto; background: var(--card); border: 1px solid var(--card-br); border-radius: var(--r-22); box-shadow: var(--card-sh); }
     .card + .card { margin-top: 14px; }
-    .sec-label { display: inline-flex; align-items: center; gap: var(--sp-6); padding: var(--sp-4) var(--sp-12); border-radius: var(--r-full);
-      font-family: var(--font-sans); font-size: var(--fs-12); font-weight: var(--fw-heavy); letter-spacing: .01em; }
-    .sec-label--problem { background: var(--th-solid); color: var(--n-000); }
-    .sec-label--sol { background: rgba(124,58,237,.15); color: var(--th-accent-hi); }
     :root[data-theme="light"] .sec-label--sol { background: rgba(124,58,237,.1); color: var(--th-accent-strong); }
 
     /* ============ 문제 카드 (번호탭+단계 헤더 + 접이식 · ref 655-27959/29414) ============ */
@@ -121,9 +113,6 @@
     .stage-action__btn:hover { background: var(--primary-hover); }
     .stage-action__btn svg { width: 19px; height: 19px; }
 
-    /* ============ 풀이 카드 (워크시트) ============ */
-    .worksheet { padding: clamp(18px, 2.3vw, 26px) clamp(20px, 2.6vw, 34px) clamp(20px, 2.4vw, 28px); }
-    .worksheet__label { margin-bottom: 16px; }
 
     /* ============ 끊어읽기 구간(seg) — 문법은 개념 학습(concept/learn.html)과 한 벌 ============
        구간은 인라인이다. 어디서 끊을지는 콘텐츠 등록 쪽 자유라 문장 블록으로 만들 수 없고,

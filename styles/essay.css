@@ -92,3 +92,23 @@
    셸은 한 톤으로 묶이고, 오렌지 CTA·활성 빈칸만 도드라짐. */
 .toolbtn:not(.toolbtn--primary) { background: var(--th-accent-strong); box-shadow: 0 4px 0 var(--n-500); }
 .toolbtn:not(.toolbtn--primary):active { box-shadow: 0 2px 0 var(--n-500); }
+
+/* =========================================================================
+   서술형 본문 공용 (Phase 10-③) — 다섯 화면이 각자 복사해 갖고 있던 것
+   advanced · basics-v2 · drill-v2 · drill-review · drill
+   ========================================================================= */
+
+/* 구간 라벨 — 다섯 화면에서 글자 하나 안 틀리고 같았다 */
+.sec-label { display: inline-flex; align-items: center; gap: var(--sp-6); padding: var(--sp-4) var(--sp-12); border-radius: var(--r-full);
+  font-family: var(--font-sans); font-size: var(--fs-12); font-weight: var(--fw-heavy); letter-spacing: .01em; }
+.sec-label--problem { background: var(--th-solid); color: var(--n-000); }
+.sec-label--sol { background: rgba(124,58,237,.15); color: var(--th-accent-hi); }
+
+/* 단일 스크롤 영역 — padding-top 0 이라 스티키 문제 카드가 스크롤포트 상단에 밀착한다 */
+.stage-scroll { flex: 1; min-height: 0; overflow-y: auto; padding: 0 clamp(10px, 2vw, 22px) 96px; }
+.stage-scroll::-webkit-scrollbar { width: 10px; }
+.stage-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,.2); border-radius: var(--r-full); border: 2px solid transparent; background-clip: padding-box; }
+
+/* 풀이 카드(워크시트) */
+.worksheet { padding: clamp(18px, 2.3vw, 26px) clamp(20px, 2.6vw, 34px) clamp(20px, 2.4vw, 28px); }
+.worksheet__label { margin-bottom: 16px; }
