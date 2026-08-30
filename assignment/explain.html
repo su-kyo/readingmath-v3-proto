@@ -46,7 +46,8 @@
 
     /* 콘텐츠 (2단) */
     /* 프레임 테두리 = 헤더색(정적) · 다크·라이트 불변 */
-    .content { flex: 1; min-height: 0; display: flex; gap: var(--sp-12); background: var(--content); border: 6px solid var(--th-static); border-bottom: 0; border-radius: var(--r-frame) var(--r-frame) 0 0; padding: var(--sp-8) var(--sp-8) 0; }
+    /* 프레임은 공용 .content--frame. 이 화면 고유분만 남긴다 */
+    .content { gap: var(--sp-12); }
     .qpanel { background: var(--qpanel); border-radius: var(--r-30) var(--r-30) 0 0; }
     .omr { background: var(--panel); border-radius: var(--r-30) var(--r-30) 0 0; }
     .qpanel { flex: 1; min-width: 0; overflow-y: auto; padding: var(--sp-24) var(--sp-32) 120px; display: flex; flex-direction: column; gap: var(--sp-16); }
@@ -150,7 +151,7 @@
         </div>
       </header>
 
-      <main class="content">
+      <main class="content content--frame">
         <section class="qpanel" id="qpanel"></section>
         <aside class="omr">
           <div class="omr__prog">

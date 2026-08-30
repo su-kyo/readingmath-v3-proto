@@ -21,8 +21,8 @@
     :root[data-theme="dark"] .theme-toggle__knob { left: 32px; background-image: url("assets/icons/ico-moon.svg"); }
 
     /* 콘텐츠 패널 (다크 시 이 패널 안만 어두워짐) */
-    .content { flex: 1; min-height: 0; background: var(--th-panel); border: 8px solid var(--th-static); border-bottom: none; border-radius: 40px 40px 0 0; padding: clamp(16px, 2.4vw, 26px) 0 0; display: flex; flex-direction: column; overflow: hidden; }
-    :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
+    /* 이 화면만 패널 안쪽 여백이 좁고 세로로 쌓는다 */
+    .content { padding: clamp(16px, 2.4vw, 26px) 0 0; flex-direction: column; }
 
     /* ===== 지문 진행 표식 (슬림 · 도트+라벨) ===== */
     .pstep { display: flex; align-items: center; justify-content: center; gap: var(--sp-8); flex: none; font-family: var(--font-sans);

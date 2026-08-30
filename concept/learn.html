@@ -25,7 +25,6 @@
     :root[data-theme="dark"] .theme-toggle__knob { left: 32px; background-image: url("assets/icons/ico-moon.svg"); }
 
     /* ===== 콘텐츠 패널 ===== */
-    .content { flex: 1; min-height: 0; background: var(--th-panel); border: 8px solid var(--th-static); border-bottom: none; border-radius: 40px 40px 0 0; padding: clamp(20px, 3vw, 40px) 0 0; display: flex; overflow: hidden; }
     .content__inner { flex: 1; display: flex; justify-content: center; gap: clamp(24px, 4vw, 48px); padding: 0 clamp(24px, 5vw, 64px); min-height: 0; }
 
     /* ===== 지문 (끊어읽기) ===== */
@@ -134,7 +133,6 @@
     /* =========================================================================
        다크 모드 — 메인 콘텐츠 패널 안만 어둡게. 배경(우주선)·하단 콘솔바는 라이트와 동일.
        ========================================================================= */
-    :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
     :root[data-theme="dark"] .article { color: var(--text); }
     :root[data-theme="dark"] .article .hl-underline { color: var(--th-accent-hi); }
     :root[data-theme="dark"] .article .hl-mark { background: var(--art-mark-bg); color: var(--art-mark-fg); }

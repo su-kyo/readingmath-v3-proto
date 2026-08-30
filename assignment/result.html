@@ -45,7 +45,6 @@
 
     /* 콘텐츠 (단일 패널) */
     /* 프레임 테두리 = 헤더색(정적) · 다크·라이트 불변 */
-    .content { flex: 1; min-height: 0; display: flex; background: var(--content); border: 6px solid var(--th-static); border-bottom: 0; border-radius: var(--r-frame) var(--r-frame) 0 0; padding: var(--sp-8) var(--sp-8) 0; }
     .rpanel { flex: 1; min-width: 0; overflow-y: auto; background: var(--panel); border-radius: var(--r-30) var(--r-30) 0 0; padding: var(--sp-32) var(--sp-32) 120px; display: flex; flex-direction: column; gap: var(--sp-32); }
 
     /* 결과 헤더 블록 */
@@ -137,7 +136,7 @@
         </div>
       </header>
 
-      <main class="content">
+      <main class="content content--frame">
         <section class="rpanel">
           <div class="rhead">
             <span class="rhead__t">과제 결과</span>

@@ -48,7 +48,14 @@ body.learn-body { background: var(--asset-console-concept-body); overflow: hidde
 /* ===== 콘텐츠 패널 (다크 시 이 패널 안만 어두워짐) ===== */
 /* 학습 콘텐츠 패널 = 라이트에서 쿨톤 near-white(스터디 페이퍼). 옵션/보기는 이 위에 카드로 분리. 다크는 아래 오버라이드. */
 .content { flex: 1; min-height: 0; background: var(--th-panel); border: 8px solid var(--th-static); border-bottom: none; border-radius: 40px 40px 0 0; padding: clamp(20px, 3vw, 40px) 0 0; display: flex; overflow: hidden; }
-:root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
+:root[data-theme="dark"] .content:not(.content--frame) { background: var(--surface-1); border-color: var(--th-static); }
+
+/* 과제·시험 계열 프레임 — 6px 베젤 + 34px 라운드. Phase 7에서 정한 규격이고
+   풀이 화면과 목록이 같은 문법을 공유한다. 위의 학습 패널(8px·40px)과는 다른 물건이라
+   합치지 않고 변형으로 나눈다.
+   면색은 화면이 --content 로 정한다 (라이트·다크 한 쌍). 그래서 위 다크 규칙에서 뺐다. */
+.content--frame { border-width: 6px; border-radius: var(--r-frame) var(--r-frame) 0 0;
+  background: var(--content, var(--n-000)); padding: var(--sp-8) var(--sp-8) 0; }
 
 /* ===== 하단 콘솔 바 (다크에서도 라이트와 동일) ===== */
 .bar { position: absolute; left: 0; right: 0; bottom: 0; z-index: var(--z-bar); display: flex; align-items: flex-end; height: 99px; }
