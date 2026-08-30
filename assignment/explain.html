@@ -7,6 +7,9 @@
   <title>과제 해설 — 리딩수학과학</title>
   <script>try{if(localStorage.getItem('rm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
   <link rel="stylesheet" href="styles/tokens.css?v=20260828" />
+  <link rel="stylesheet" href="styles/base.css?v=20260828" />
+  <link rel="stylesheet" href="styles/components.css?v=20260828" />
+  <link rel="stylesheet" href="styles/learn-shell.css?v=20260828" />
   <style>
     /* =========================================================================
        과제 센터 · 해설 화면 (assignment-explain) — 풀이 화면의 리뷰(정답 공개) 버전
@@ -120,19 +123,6 @@
     .cell--wrong .cell__mark { color: var(--bad); }
 
     /* 하단 콘솔 바 */
-    .bar { position: absolute; left: 0; right: 0; bottom: 0; z-index: var(--z-bar); display: flex; align-items: flex-end; height: 99px; pointer-events: none; }
-    .bar__deco { width: 262px; height: 99px; flex: none; }
-    .bar__deco--l { margin-right: -1px; } .bar__deco--r { margin-left: -1px; }
-    .bar__mid { flex: 1; height: 75px; background: var(--n-100); padding-top: var(--sp-12); align-self: flex-end; pointer-events: auto; }
-    .bar__tray { height: 64px; background: var(--n-100); display: flex; align-items: center; justify-content: space-between; gap: var(--sp-12); padding: 0 clamp(16px,3vw,30px); }
-    .bar__group { display: flex; gap: var(--sp-12); align-items: center; }
-    .toolbtn { display: inline-flex; align-items: center; gap: var(--sp-6); white-space: nowrap; padding: var(--sp-8) var(--sp-16); border: 0; border-radius: var(--r-16); background: var(--n-500); color: var(--n-000); font-family: inherit; font-weight: var(--fw-bold); font-size: var(--fs-15); cursor: pointer; box-shadow: 0 4px 0 var(--n-650); transition: filter .12s, transform .06s, box-shadow .06s; }
-    .toolbtn:hover { filter: brightness(1.1); }
-    .toolbtn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--n-650); }
-    .toolbtn svg { width: 18px; height: 18px; }
-    .toolbtn:disabled { opacity: .38; cursor: not-allowed; filter: none; transform: none; box-shadow: 0 4px 0 var(--n-650); }
-    .toolbtn--primary { background: var(--primary); box-shadow: 0 4px 0 var(--primary-pressed); }
-    .toolbtn--primary:hover { background: var(--primary-hover); }
 
     .toast { position: fixed; left: 50%; bottom: 120px; transform: translateX(-50%) translateY(10px); z-index: var(--z-toast); background: var(--n-650); color: var(--n-000); font-size: var(--fs-14); font-weight: var(--fw-semibold); padding: var(--sp-12) var(--sp-20); border-radius: var(--r-12); box-shadow: 0 10px 30px -10px rgba(0,0,0,.5); opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
     .toast.is-on { opacity: 1; transform: translateX(-50%) translateY(0); }
@@ -143,7 +133,6 @@
     :focus-visible { outline: 3px solid var(--yellow); outline-offset: 2px; }
 
     @media (max-width: 900px) {
-      .bar__deco { display: none; }
       .content { flex-direction: column; }
       .omr { width: auto; }
     }
@@ -180,7 +169,7 @@
       </main>
     </div>
 
-    <div class="bar">
+    <div class="bar bar--overlay bar--flat">
       <img class="bar__deco bar__deco--l" src="assets/icons/console/console-task-right.svg" alt="" />
       <div class="bar__mid">
         <div class="bar__tray">

@@ -209,6 +209,8 @@
   --th-chip:          var(--blue-050);
   --th-panel:         var(--n-100);
   --th-focus:         var(--th-accent);
+  --asset-bar-rim:    var(--asset-console-concept-rim);
+  --asset-bar-tray:   var(--asset-console-concept-tray);
 
   /* =======================================================================
      타이포 · 간격 · 반경 · 모션 (색과 무관)
@@ -332,6 +334,8 @@
   --th-vivid: var(--blue-450);   /* 정체성 버튼(≥19px w700 흰 라벨) */
   --th-chip: var(--blue-050);
   --th-panel: var(--n-000);   /* 콘텐츠 패널 = 라이트에서 흰색 (다크는 .content 규칙이 surface-1로 덮음) */
+  --asset-bar-rim:  var(--asset-console-concept-rim);   /* 하단 콘솔 바 — 립 */
+  --asset-bar-tray: var(--asset-console-concept-tray);
 }
 
 /* 유형 (teal) — static 700 */
@@ -345,6 +349,8 @@
   --th-vivid: var(--teal-450);   /* 정체성 버튼(≥19px w700 흰 라벨) */
   --th-chip: var(--teal-050);
   --th-panel: var(--n-000);   /* 콘텐츠 패널 = 라이트에서 흰색 */
+  --asset-bar-rim:  var(--amber-050);   /* 하단 콘솔 바 — 립 */
+  --asset-bar-tray: var(--asset-console-type-tray);
 }
 
 /* 서술형 (violet) — static 800 (가장 깊은 프레임) */
@@ -358,6 +364,8 @@
   --th-vivid: var(--violet-450);   /* 정체성 버튼(≥19px w700 흰 라벨) */
   --th-chip: var(--violet-050);
   --th-panel: var(--n-000);   /* 콘텐츠 패널 = 라이트에서 흰색 */
+  --asset-bar-rim:  var(--asset-console-essay-rim);   /* 하단 콘솔 바 — 립 */
+  --asset-bar-tray: var(--asset-console-essay-tray);
 }
 
 /* 시험대비 (violet) — static 700 */
@@ -371,6 +379,8 @@
   --th-vivid: var(--violet-450);   /* 정체성 버튼(≥19px w700 흰 라벨) */
   --th-chip: var(--violet-050);
   --th-panel: var(--n-050);
+  --asset-bar-rim:  var(--n-100);   /* 하단 콘솔 바 — 립 */
+  --asset-bar-tray: var(--n-100);
 }
 
 /* 과제센터 (blue) — static 600 */
@@ -384,6 +394,8 @@
   --th-vivid: var(--blue-450);   /* 정체성 버튼(≥19px w700 흰 라벨) */
   --th-chip: var(--blue-050);
   --th-panel: var(--n-100);
+  --asset-bar-rim:  var(--asset-console-task-rim);   /* 하단 콘솔 바 — 립 */
+  --asset-bar-tray: var(--asset-console-task-tray);
 }
 
 /* 유틸 (blue) — static n-900 */
@@ -397,6 +409,8 @@
   --th-vivid: var(--blue-450);   /* 정체성 버튼(≥19px w700 흰 라벨) */
   --th-chip: var(--blue-050);
   --th-panel: var(--n-100);
+  --asset-bar-rim:  var(--n-100);   /* 하단 콘솔 바 — 립 */
+  --asset-bar-tray: var(--n-100);
 }
 
 /* A층 우주 (항상 다크·토글 없음) — 액센트 = 기본모드 blue-400 */
@@ -410,6 +424,8 @@
   --th-vivid: var(--blue-450);   /* A층 정체성(기본모드 블루) */
   --th-chip: var(--n-800);
   --th-panel: var(--surface-1);
+  --asset-bar-rim:  var(--n-100);   /* 하단 콘솔 바 — 립 */
+  --asset-bar-tray: var(--n-100);
 }
 
 /* =========================================================================

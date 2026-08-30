@@ -99,8 +99,6 @@
     .btn-move:hover:not(:disabled) { filter: brightness(1.08); } .btn-move:disabled { background: var(--n-500); color: var(--text-muted); box-shadow: none; cursor: not-allowed; }
 
     /* 하단바 = 유형 footer */
-    .bar__mid { background: var(--amber-050); } .bar__tray { background: var(--asset-console-type-tray); }  /* §3.5 console-type 트레이 에셋색 */
-    .toolbtn:disabled { opacity: .5; filter: grayscale(.5); cursor: not-allowed; }
 
     /* 좁은 폭에서도 화살표 유지(사라지지 않음) — 크기만 축소 */
     @media (max-width: 900px) { .opts-row .opt { min-width: 44%; } .nav-arrow { width: 40px; height: 40px; font-size: var(--fs-19); } .nav-arrow--prev { left: 4px; } .nav-arrow--next { right: 4px; } .ops { padding-left: clamp(48px, 7vw, 96px); padding-right: clamp(48px, 7vw, 96px); } }

@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>개념 정리하기 · 개념 훈련 — 리딩수학과학</title>
   <link rel="stylesheet" href="styles/tokens.css?v=20260828" />
+  <link rel="stylesheet" href="styles/learn-shell.css?v=20260828" />
   <link rel="stylesheet" href="styles/base.css?v=20260828" />
   <link rel="stylesheet" href="styles/components.css?v=20260828" />
   <style>
@@ -111,26 +112,12 @@
     :root[data-theme="dark"] .lightbox__img { background: var(--surface-1); color: var(--text-muted); }
 
     /* 하단 콘솔 바 */
-    .bar { position: absolute; left: 0; right: 0; bottom: 0; z-index: var(--z-bar); display: flex; align-items: flex-end; height: 99px; }
-    .bar__deco { width: 262px; height: 99px; flex: none; }
-    .bar__deco--l { margin-right: -1px; } .bar__deco--r { margin-left: -1px; }
-    .bar__mid { flex: 1; height: 75px; background: var(--asset-console-concept-rim); padding-top: var(--sp-12); align-self: flex-end; }   /* console-right/left SVG 상단 밴드와 세트 (seamless) */
-    .bar__tray { height: 64px; background: var(--asset-console-concept-tray); display: flex; align-items: center; justify-content: space-between; gap: var(--sp-12); padding: 0 clamp(16px, 3vw, 32px); }   /* SVG 트레이 면색과 세트 */
-    .bar__group { display: flex; gap: var(--sp-12); align-items: center; }
-    .toolbtn { display: inline-flex; align-items: center; gap: var(--sp-6); white-space: nowrap; padding: var(--sp-8) var(--sp-16); border-radius: var(--r-16); background: var(--n-500); color: var(--n-000); font-weight: var(--fw-bold); font-size: clamp(13px, 1.1vw, 16px); box-shadow: 0 4px 0 var(--n-650); }
-    .toolbtn:hover { filter: brightness(1.12); }
-    .toolbtn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--n-650); }
-    .toolbtn img { width: 20px; height: 20px; }
-    .toolbtn:disabled { opacity: .5; filter: grayscale(.5); cursor: not-allowed; }
-    .toolbtn--primary { background: var(--primary); box-shadow: 0 4px 0 var(--primary-pressed); }
-    .toolbtn--primary:hover:not(:disabled) { background: var(--primary-hover); }
 
     /* 반응형 */
     @media (max-width: 900px) {
       .content__inner { flex-direction: column; overflow: auto; }
       .article { overflow: visible; }
       .note { width: auto; align-self: auto; }
-      .bar__deco { display: none; } .bar__mid { border-radius: var(--r-22) var(--r-22) 0 0; }
     }
     @media (max-width: 680px) { .breadcrumb .crumb--hide { display: none; } }
     @media (max-width: 520px) { .toolbtn span { display: none; } .toolbtn { padding: var(--sp-8) var(--sp-12); } }
