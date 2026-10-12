@@ -233,4 +233,4 @@ tools/screen-diff.py /tmp/rm-before /tmp/rm-after
 - 서버: `.claude/launch.json`의 **rm-static** (8020). Bash로 서버 띄우지 않는다.
   Portfolio 폴더에서 세션을 열면 공통 설정의 **rm-static**(8040)을 쓴다(8020은 회사 MT와 겹친다).
   `screen-shot.sh`에 포트를 넘긴다: `tools/screen-shot.sh /tmp/x 8040`.
-- 배포: 푸시하면 Vercel 자동 배포. `figma-palette`·`tools`·`video`는 배포 제외.
+- 배포: 푸시하면 Vercel 자동 배포. `figma-palette`·`tools`·`video`·`docs`·`generated`·`CLAUDE.md`는 배포 제외(`.vercelignore`).

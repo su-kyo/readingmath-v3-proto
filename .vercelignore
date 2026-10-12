@@ -8,3 +8,9 @@ tools
 
 # 영상 제작 도구
 video
+
+# 작업 문서 · 세션 규칙 · 검수 산출물 — 포폴 링크를 받은 사람에게 보일 필요 없음 (2026-10-12)
+docs
+CLAUDE.md
+generated
+.claude
