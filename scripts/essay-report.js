@@ -217,7 +217,7 @@
   pmodal.querySelectorAll('[data-pclose]').forEach(function (el) { el.addEventListener('click', closePreview); });
 
   // 인쇄/저장 = 데모(버튼만) — 토스트로 안내
-  var toast = document.getElementById('ptoast'), toastT = null;
+  var toast = document.getElementById('toast'), toastT = null;
   function showToast(msg) {
     toast.textContent = msg; toast.classList.add('is-on');
     clearTimeout(toastT); toastT = setTimeout(function () { toast.classList.remove('is-on'); }, 2000);

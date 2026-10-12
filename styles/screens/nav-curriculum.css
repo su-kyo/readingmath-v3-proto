@@ -134,7 +134,7 @@ body{ font-family:var(--font-sans); background:var(--bg); color:var(--ink); over
 .toast{ position:fixed; left:50%; bottom:30px; transform:translateX(-50%) translateY(16px); z-index:var(--z-toast);
   background:var(--surface-2); border:1px solid var(--border); color:var(--ink); padding:var(--sp-12) var(--sp-16);
   border-radius:var(--r-12); font-size:var(--fs-13); font-weight:var(--fw-semibold); opacity:0; pointer-events:none; transition:.2s; }
-.toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+.toast.is-on{ opacity:1; transform:translateX(-50%) translateY(0); }
 
 .curr__list::-webkit-scrollbar, .train__body::-webkit-scrollbar, .modal__box::-webkit-scrollbar{ width:8px; }
 .curr__list::-webkit-scrollbar-thumb, .train__body::-webkit-scrollbar-thumb, .modal__box::-webkit-scrollbar-thumb{

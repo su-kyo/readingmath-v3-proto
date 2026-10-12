@@ -50,12 +50,12 @@
     for (var i = 0; i < a.total; i++) seg += '<i data-on="' + (i < a.correct ? 1 : 0) + '"></i>';
     row.innerHTML =
       '<div class="rrow__name">' + DOC + '<span>' + a.name + '</span></div>' +
-      '<span class="seg">' + seg + '</span>' +
+      '<span class="led">' + seg + '</span>' +
       '<div class="rrow__stat"><span>정답</span><b>' + a.correct + '/' + a.total + '</b></div>' +
       '<div class="rrow__stat"><span>정답률</span><b>' + pr + '%</b></div>';
     rows.appendChild(row);
   });
-  var cells = rows.querySelectorAll('.seg i[data-on="1"]');
+  var cells = rows.querySelectorAll('.led i[data-on="1"]');
   [].forEach.call(cells, function (c, i) {
     if (SNAP) c.classList.add('on');
     else setTimeout(function () { c.classList.add('on'); }, 200 + i * 45);

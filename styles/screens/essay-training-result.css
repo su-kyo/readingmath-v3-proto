@@ -67,8 +67,8 @@
 .mact__name { display: flex; align-items: center; gap: var(--sp-8); flex: none; min-width: 118px;
   font-weight: var(--fw-heavy); font-size: var(--fs-15); color: var(--n-050); }
 .mact__name svg { width: 18px; height: 18px; color: var(--th-accent-hi); flex: none; }
-.mact .seg { flex: 1; gap: var(--sp-4); }
-.mact .seg i { height: 13px; border-radius: var(--r-4); }
+.mact .led { flex: 1; gap: var(--sp-4); }
+.mact .led i { height: 13px; border-radius: var(--r-4); }
 
 .mact__stat > b { font-family: var(--font-mono); font-weight: var(--fw-bold); font-size: var(--fs-16); color: var(--th-accent-hi); }
 
@@ -77,4 +77,4 @@
   .trow { grid-template-columns: minmax(110px,1fr) 44px minmax(90px,1.2fr) 72px 54px 64px; }
 }
 /* 훈련 결과는 띠가 행 전체를 채우고 조금 얇다 */
-.seg { width: 100%; flex: none; }  .seg i { height: 12px; }
+.led { width: 100%; flex: none; }  .led i { height: 12px; }

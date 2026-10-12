@@ -69,12 +69,12 @@ body { font-family: var(--font-sans); background: var(--assign-body); overflow: 
 /* 키패드 = 공용 styles/keypad.css (마크업·키 구성은 scripts/keypad.js) */
 
 /* ===== OMR 사이드바 ===== */
-.seg { flex: none; display: flex; gap: var(--sp-4); padding: var(--sp-4); background: var(--n-200); border-radius: var(--r-full); }
-:root[data-theme="dark"] .seg { background: var(--n-500); }
-.seg__btn { flex: 1; padding: var(--sp-8) var(--sp-8); border: 0; background: transparent; border-radius: var(--r-full); font-family: inherit; font-size: var(--fs-15); font-weight: var(--fw-bold); color: var(--n-050); cursor: pointer; transition: .14s; }
+.segmented { flex: none; display: flex; gap: var(--sp-4); padding: var(--sp-4); background: var(--n-200); border-radius: var(--r-full); }
+:root[data-theme="dark"] .segmented { background: var(--n-500); }
+.segmented__btn { flex: 1; padding: var(--sp-8) var(--sp-8); border: 0; background: transparent; border-radius: var(--r-full); font-family: inherit; font-size: var(--fs-15); font-weight: var(--fw-bold); color: var(--n-050); cursor: pointer; transition: .14s; }
 /* is-active는 accent 배경 위 흰 글자로 고정(라이트·다크 공통). 다크 규칙이 active까지 덮지 않게 :not */
-:root[data-theme="dark"] .seg__btn:not(.is-active) { color: var(--n-050); }
-.seg__btn.is-active { background: var(--th-solid); color: var(--n-000); }
+:root[data-theme="dark"] .segmented__btn:not(.is-active) { color: var(--n-050); }
+.segmented__btn.is-active { background: var(--th-solid); color: var(--n-000); }
 
 .omr__ptop span { font-family: var(--font-mono); font-size: var(--fs-16); font-weight: var(--fw-bold); color: var(--ink); font-variant-numeric: tabular-nums; }
 
@@ -135,4 +135,4 @@ body { font-family: var(--font-sans); background: var(--assign-body); overflow: 
   .omr { width: auto; }
 }
 /* 토스트 면색만 이 화면 것 */
-.toast, .rtoast, .dtoast, .ptoast { --toast-bg: var(--n-650); }
+.toast { --toast-bg: var(--n-650); }

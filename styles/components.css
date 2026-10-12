@@ -485,17 +485,16 @@
 
 
 /* =========================================================================
-   토스트 (Phase 10-③)
+   토스트 (Phase 10-③ · 이름 통합은 마감 회차 2026-10-12)
    -------------------------------------------------------------------------
-   화면 아래에서 잠깐 떠오르는 알림. 여섯 화면이 각자 복사해 갖고 있었고,
-   이름도 .toast / .smtoast / .rtoast / .dtoast / .ptoast 다섯 가지로 갈렸다.
-   **이름을 합치려면 각 화면의 JS(토스트를 만들고 .is-on 을 붙이는 쪽)도 함께
-   고쳐야 해서, 지금은 모양만 한 벌로 모으고 이름은 그대로 뒀다.**
-   이름 통합은 다음 회차 항목이다 (지시서 §4-3).
+   화면 아래에서 잠깐 떠오르는 알림. 이름은 .toast 하나, 켜는 상태는 .is-on 하나다.
+   (예전엔 .smtoast / .rtoast / .dtoast / .ptoast 다섯 이름에 .show 까지 섞여 있었다.)
 
-   면색만 화면이 정한다 — 학습 계열은 짙은 네이비, 과제는 --n-650.
+   학습 계열은 콘솔바 위(아래에서 118px)에 뜨고, 면색만 화면이 --toast-bg 로 정한다.
+   행성 탐색(A층)·유틸 화면은 콘솔바가 없어 화면 바닥 근처에 뜬다 — 그 자리는
+   각 계열 파일(screens/nav-* · util.css)에 있다. 이 파일을 안 부르므로 겹치지 않는다.
    ========================================================================= */
-.toast, .smtoast, .rtoast, .dtoast, .ptoast {
+.toast {
   position: fixed; left: 50%; bottom: 118px; transform: translateX(-50%) translateY(10px);
   z-index: var(--z-toast);
   padding: var(--sp-12) var(--sp-20); border-radius: var(--r-full);
@@ -503,8 +502,7 @@
   background: var(--toast-bg, rgba(18,22,40,.94)); color: var(--static-on);
   opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s;
 }
-.toast.is-on, .smtoast.is-on, .rtoast.is-on, .dtoast.is-on, .ptoast.is-on,
-.toast.show, .smtoast.show {
+.toast.is-on {
   opacity: 1; transform: translateX(-50%) translateY(0);
 }
 

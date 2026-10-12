@@ -77,6 +77,6 @@
   .trow { grid-template-columns: minmax(110px,1fr) 44px minmax(90px,1.2fr) 72px 54px 64px; }
 }
 /* 토스트 면색만 이 화면 것 */
-.toast, .rtoast, .dtoast, .ptoast { --toast-bg: rgba(6,34,29,.94); }
+.toast { --toast-bg: rgba(6,34,29,.94); }
 /* 훈련 결과는 띠가 행 전체를 채우고 조금 얇다 */
-.seg { width: 100%; flex: none; }  .seg i { height: 12px; }
+.led { width: 100%; flex: none; }  .led i { height: 12px; }

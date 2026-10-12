@@ -3,7 +3,7 @@
    기능은 essay-drill.js 와 동일. 차이 = ③ 순서 맞추기에서 블록 트레이(#tray)를
    화면 하단 고정 카드가 아니라 **현재 채워야 할 문장 바로 아래**로 이동시켜
    블록과 빈칸(슬롯)이 멀어지지 않게 함.
-   끊어읽기(seg) = 개념 학습(concept/learn.html)과 같은 문법.
+   끊어읽기(.chunk) = 개념 학습(concept/learn.html)과 같은 문법.
    구간은 인라인이고 끊는 위치는 콘텐츠 등록 쪽 자유다 — 문장 단위가 아니다.
    데이터는 [문단[구간, 구간, …], …] 2단 배열. 빈칸은 보통 앞뒤 어구와 함께 한 구간에
    들어간다('저는 / [ ]를 먹었습니다. / 맛있었고,' 처럼). 빈칸만 따로 끊어도 동작한다.
@@ -165,13 +165,13 @@
     for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
     return a;
   }
-  var toast = document.getElementById('dtoast'), toastT = null;
+  var toast = document.getElementById('toast'), toastT = null;
   function showToast(msg, isErr) {
     toast.textContent = msg; toast.classList.toggle('is-err', !!isErr); toast.classList.add('is-on');
     clearTimeout(toastT); toastT = setTimeout(function () { toast.classList.remove('is-on'); }, 1900);
   }
   function blankHTML(id, isSeg) {
-    return '<span class="' + (isSeg ? 'seg blank' : 'blank') + '" data-blank="' + id + '"><span class="blank__ans"></span><span class="blank__badge">' + id.replace('b', '') + '</span></span>';
+    return '<span class="' + (isSeg ? 'chunk blank' : 'blank') + '" data-blank="' + id + '"><span class="blank__ans"></span><span class="blank__badge">' + id.replace('b', '') + '</span></span>';
   }
   /* 구간 하나 → 인라인 span.
      보통은 빈칸이 앞뒤 어구와 묶여 한 구간 안에 들어온다('{b1} (권) 입니다.').
@@ -180,7 +180,7 @@
     var solo = /^\s*\{(b\d+)\}\s*$/.exec(text);
     if (solo) return blankHTML(solo[1], true);
     var t = text.replace(/\{(b\d+)\}/g, function (_, id) { return blankHTML(id, false); });
-    return '<span class="seg">' + t + '</span>';
+    return '<span class="chunk">' + t + '</span>';
   }
   function lineHTML(segs) { return '<div class="sline">' + segs.map(segHTML).join(' ') + '</div>'; }
   /* 문제문 한 문단 → 텍스트 줄 또는 이미지 줄.
@@ -189,9 +189,9 @@
   function statementLineHTML(para) {
     if (para && para.img !== undefined) {
       var body = para.img ? '<img src="' + para.img + '" alt="문제 이미지" />' : '<span class="dummy-img"></span>';
-      return '<div class="rline rline--img"><span class="seg seg--img">' + body + '</span></div>';
+      return '<div class="rline rline--img"><span class="chunk chunk--img">' + body + '</span></div>';
     }
-    return '<p class="rline">' + para.map(function (t) { return '<span class="seg">' + t + '</span>'; }).join(' ') + '</p>';
+    return '<p class="rline">' + para.map(function (t) { return '<span class="chunk">' + t + '</span>'; }).join(' ') + '</p>';
   }
   function statementText(para) { return (para && para.img !== undefined) ? null : para.join(' '); }
   /* 현재 구간이 아직 답해야 할 빈칸을 품고 있으면 그 빈칸을 돌려준다 */
@@ -226,7 +226,7 @@
     rmodal.classList.add('is-open'); rmodal.setAttribute('aria-hidden', 'false');
   }
   function renderReadModal() {
-    var els = rmRead.querySelectorAll('.seg');
+    var els = rmRead.querySelectorAll('.chunk');
     var last = els.length - 1;
     els.forEach(function (el, i) {
       el.classList.toggle('is-read', i < readCur);
@@ -257,14 +257,14 @@
     if (d) sp.scrollTop += d;   // 즉각 (부드러운 스크롤은 연속 진행에서 서로 끊긴다)
   }
   rmRead.addEventListener('click', function (e) {
-    if (!e.target.closest('.seg.is-current')) return;   // 진행은 '지금 구간'을 눌러서만
-    var els = rmRead.querySelectorAll('.seg');
+    if (!e.target.closest('.chunk.is-current')) return;   // 진행은 '지금 구간'을 눌러서만
+    var els = rmRead.querySelectorAll('.chunk');
     if (readCur < els.length - 1) { readCur++; renderReadModal(); }
   });
   function closeReadModal() { rmodal.classList.remove('is-open'); rmodal.setAttribute('aria-hidden', 'true'); }
   rmGo.addEventListener('click', function () {
     // 남은 문장까지 모두 드러낸 뒤 풀이 시작
-    rmRead.querySelectorAll('.seg').forEach(function (el) { el.classList.remove('is-current', 'is-unread'); el.classList.add('is-read'); });
+    rmRead.querySelectorAll('.chunk').forEach(function (el) { el.classList.remove('is-current', 'is-unread'); el.classList.add('is-read'); });
     closeReadModal();
     startFill();
   });
@@ -281,7 +281,7 @@
     wsLabel.textContent = '풀이';
     blankMap = P.blanks || {};
     sol.innerHTML = P.chunks.map(lineHTML).join('');
-    segEls = [].slice.call(sol.querySelectorAll('.seg'));
+    segEls = [].slice.call(sol.querySelectorAll('.chunk'));
     curSeg = 0;
     hideAction();
     renderFill();
@@ -315,7 +315,7 @@
   }
   sol.addEventListener('click', function (e) {
     var bl = e.target.closest('.blank.is-active'); if (bl) { openPop(bl); return; }
-    var seg = e.target.closest('.seg.is-current');   // 진행은 '지금 구간'을 눌러서만
+    var seg = e.target.closest('.chunk.is-current');   // 진행은 '지금 구간'을 눌러서만
     if (seg && !pendingBlank(seg)) advanceSeg();
   });
 
@@ -416,7 +416,7 @@
           if (typeof p === 'string') return p;
           return '<span class="slot is-empty" data-ac="' + ci + '" data-si="' + (si++) + '"></span>';
         }).join(' ');
-      } else inner = '<span class="seg">' + c.text + '</span>';
+      } else inner = '<span class="chunk">' + c.text + '</span>';
       return '<div class="aline" data-ac="' + ci + '">' + inner + '</div>';
     }).join('');
     ac = 0;
@@ -426,7 +426,7 @@
   function enterArrangeChunk() {
     var els = asol.querySelectorAll('.aline');
     els.forEach(function (el, i) { el.classList.toggle('is-unread', i > ac); });
-    asol.querySelectorAll('.aline .seg').forEach(function (sg) { sg.classList.remove('is-current'); });
+    asol.querySelectorAll('.aline .chunk').forEach(function (sg) { sg.classList.remove('is-current'); });
     if (ac >= aChunks.length) { tray.hidden = true; arrangeComplete(); return; }
     var c = aChunks[ac];
     if (c.parts) {
@@ -441,7 +441,7 @@
       renderArrangeChunk();
       tray.hidden = false;
     } else {
-      var cur = asol.querySelector('.aline[data-ac="' + ac + '"] .seg');
+      var cur = asol.querySelector('.aline[data-ac="' + ac + '"] .chunk');
       if (cur) cur.classList.add('is-current');
       tray.hidden = true;
     }
@@ -470,7 +470,7 @@
     if (aAllFilled()) { aChecking = true; setTimeout(aCheck, 460); }
   });
   asol.addEventListener('click', function (e) {
-    var tap = e.target.closest('.aline .seg.is-current');
+    var tap = e.target.closest('.aline .chunk.is-current');
     if (tap) { ac++; enterArrangeChunk(); return; }
     if (aChecking) return;
     var s = e.target.closest('.slot.is-filled[data-si]');

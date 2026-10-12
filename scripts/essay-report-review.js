@@ -106,7 +106,7 @@
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && pmodal.classList.contains('is-open')) closeRecommend(); });
 
   // 인쇄/저장 데모 토스트
-  var toast = document.getElementById('ptoast'), toastT = null;
+  var toast = document.getElementById('toast'), toastT = null;
   function showToast(msg) { toast.textContent = msg; toast.classList.add('is-on'); clearTimeout(toastT); toastT = setTimeout(function () { toast.classList.remove('is-on'); }, 2000); }
   var printBtn = document.getElementById('printBtn'); if (printBtn) printBtn.addEventListener('click', function () { showToast('인쇄 기능은 준비 중이에요.'); });
   var dlBtn = document.getElementById('dlBtn'); if (dlBtn) dlBtn.addEventListener('click', function () { showToast('저장(다운로드) 기능은 준비 중이에요.'); });

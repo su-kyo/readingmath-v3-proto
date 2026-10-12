@@ -97,4 +97,4 @@ body { font-family: var(--font-sans); background: var(--assign-body); overflow: 
   .tc-text { display: none; }
 }
 /* 토스트 면색만 이 화면 것 */
-.toast, .rtoast, .dtoast, .ptoast { --toast-bg: var(--n-650); }
+.toast { --toast-bg: var(--n-650); }

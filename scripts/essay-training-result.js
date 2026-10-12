@@ -60,7 +60,7 @@
   function segHTML(correct, total) {
     var s = '';
     for (var i = 0; i < total; i++) s += '<i data-on="' + (i < correct ? 1 : 0) + '"></i>';
-    return '<span class="seg">' + s + '</span>';
+    return '<span class="led">' + s + '</span>';
   }
   var rows = document.getElementById('rows');
   var sumCorrect = 0, sumTotal = 0;
@@ -89,7 +89,7 @@
     '<div class="tcell"></div>';
 
   /* 빈칸 LED 순차 점등 */
-  var cells = document.querySelectorAll('.tbl .seg i[data-on="1"]');
+  var cells = document.querySelectorAll('.tbl .led i[data-on="1"]');
   [].forEach.call(cells, function (c, i) {
     if (SNAP) c.classList.add('on');
     else setTimeout(function () { c.classList.add('on'); }, 180 + i * 14);
@@ -130,7 +130,7 @@
         stepDial.style.setProperty('--pct', stage.rate);
       }); });
     }
-    [].forEach.call(stepActs.querySelectorAll('.seg i[data-on="1"]'), function (c, i) {
+    [].forEach.call(stepActs.querySelectorAll('.led i[data-on="1"]'), function (c, i) {
       if (SNAP) c.classList.add('on');
       else setTimeout(function () { c.classList.add('on'); }, 220 + i * 34);
     });

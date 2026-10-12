@@ -140,7 +140,7 @@
     for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
     return a;
   }
-  var toast = document.getElementById('dtoast'), toastT = null;
+  var toast = document.getElementById('toast'), toastT = null;
   function showToast(msg, isErr) {
     toast.textContent = msg; toast.classList.toggle('is-err', !!isErr); toast.classList.add('is-on');
     clearTimeout(toastT); toastT = setTimeout(function () { toast.classList.remove('is-on'); }, 1900);

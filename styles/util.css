@@ -359,8 +359,8 @@ html,body{ height:100%; }
   font-size:var(--fs-11); font-weight:var(--fw-semibold); color:var(--ink-3); line-height:1.8; letter-spacing:-.02em; }
 
 /* ---- 토스트 ---- */
-.u-toast{ position:fixed; left:50%; bottom:30px; transform:translateX(-50%) translateY(12px); z-index:var(--z-toast);
+.toast{ position:fixed; left:50%; bottom:30px; transform:translateX(-50%) translateY(12px); z-index:var(--z-toast);
   max-width:520px; background:var(--sel-bg); color:var(--sel-fg); padding:var(--sp-12) var(--sp-20); border-radius:var(--r-12);
   font-size:var(--fs-14); font-weight:var(--fw-semibold); letter-spacing:-.025em; opacity:0; pointer-events:none;
   transition:var(--t-fast); }
-.u-toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+.toast.is-on{ opacity:1; transform:translateX(-50%) translateY(0); }

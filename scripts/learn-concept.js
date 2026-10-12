@@ -8,16 +8,16 @@
    ========================================================================= */
 (function () {
   var article = document.querySelector('.article');
-  var segs = [].slice.call(document.querySelectorAll('.seg'));
+  var segs = [].slice.call(document.querySelectorAll('.chunk'));
   var pop = document.querySelector('.answer-pop');
-  var blank = document.querySelector('.seg--blank');
+  var blank = document.querySelector('.chunk--blank');
   var viewer = document.querySelector('.viewer');
   var vLabel = viewer.querySelector('.viewer__label');
   var vPager = viewer.querySelector('.viewer__pager__num');
   var lightbox = document.querySelector('.lightbox');
   var lbLabel = lightbox.querySelector('.lightbox__img');
 
-  var imgTerms = [].slice.call(document.querySelectorAll('.seg--img'))
+  var imgTerms = [].slice.call(document.querySelectorAll('.chunk--img'))
     .sort(function (a, b) { return (+a.dataset.img) - (+b.dataset.img); });
   var cursor = 0;
 
@@ -35,7 +35,7 @@
   }
 
   /* ---- 이미지 뷰어 ---- */
-  function activeImg() { return document.querySelector('.seg--img.is-active'); }
+  function activeImg() { return document.querySelector('.chunk--img.is-active'); }
   function setActiveImg(el) {
     imgTerms.forEach(function (x) { x.classList.toggle('is-active', x === el); });
     updateViewer();
@@ -97,15 +97,15 @@
     s.addEventListener('click', function () {
       if (i > cursor) return;                 // 아직 못 읽는 앞 구간
       if (i === cursor) {                      // 현재 구간 → 전진
-        if (s.classList.contains('seg--blank')) { togglePop(); return; }  // 빈칸은 답해야 전진
-        if (s.classList.contains('seg--img')) { setActiveImg(s); }
+        if (s.classList.contains('chunk--blank')) { togglePop(); return; }  // 빈칸은 답해야 전진
+        if (s.classList.contains('chunk--img')) { setActiveImg(s); }
         cursor++; render();
         return;
       }
       // 이미 읽은 구간
-      if (s.classList.contains('seg--img')) {
+      if (s.classList.contains('chunk--img')) {
         s.classList.contains('is-active') ? clearImg() : setActiveImg(s);
-      } else if (s.classList.contains('seg--blank')) {
+      } else if (s.classList.contains('chunk--blank')) {
         togglePop();
       }
     });
@@ -131,7 +131,7 @@
       // 정답
       pop.querySelectorAll('.answer-opt').forEach(function (x) { x.classList.remove('is-selected', 'is-wrong', 'is-correct'); });
       o.classList.add('is-selected', 'is-correct');
-      blank.querySelector('.seg--blank__text').textContent = o.dataset.value;
+      blank.querySelector('.chunk--blank__text').textContent = o.dataset.value;
       blank.classList.remove('is-wrong');
       blank.classList.add('is-filled', 'is-just-correct');
       advancing = true;
@@ -183,7 +183,7 @@
   function dbgReadAll() {
     var o = pop.querySelector('.answer-opt[data-correct]');
     if (o && !blank.classList.contains('is-filled')) {
-      blank.querySelector('.seg--blank__text').textContent = o.dataset.value;
+      blank.querySelector('.chunk--blank__text').textContent = o.dataset.value;
       blank.classList.add('is-filled');
     }
     closePop();

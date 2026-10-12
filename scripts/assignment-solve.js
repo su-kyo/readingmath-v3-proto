@@ -141,7 +141,7 @@
   });
 
   // ── 답안표 입력 오버레이 (풀이 현황판 / 답안표 토글) ──
-  var seg = document.getElementById('seg');
+  var seg = document.getElementById('segmented');
   var sheet = document.getElementById('sheet');
   var sheetBackdrop = document.getElementById('sheetBackdrop');
   var sheetList = document.getElementById('sheetList');
@@ -183,7 +183,7 @@
   function closeSheet() { sheet.classList.remove('is-open'); sheetBackdrop.classList.remove('is-open'); sheet.setAttribute('aria-hidden', 'true'); setSeg('board'); }
 
   seg.addEventListener('click', function (e) {
-    var b = e.target.closest('.seg__btn'); if (!b) return;
+    var b = e.target.closest('.segmented__btn'); if (!b) return;
     if (b.dataset.seg === 'sheet') openSheet(); else closeSheet();
   });
   sheetBackdrop.addEventListener('click', closeSheet);

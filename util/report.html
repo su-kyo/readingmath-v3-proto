@@ -10,10 +10,10 @@
        <head>에서 먼저 실행해 화면이 번쩍이지 않게 한다. */
     try{ if(localStorage.getItem('rm-theme')==='light') document.documentElement.setAttribute('data-theme','light'); }catch(e){}
   </script>
-  <link rel="stylesheet" href="styles/tokens.css?v=20260830" />
-  <link rel="stylesheet" href="styles/base.css?v=20260830" />
-  <link rel="stylesheet" href="styles/gnb.css?v=20260830" />
-  <link rel="stylesheet" href="styles/util.css?v=20260830" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261012" />
+  <link rel="stylesheet" href="styles/base.css?v=20261012" />
+  <link rel="stylesheet" href="styles/gnb.css?v=20261012" />
+  <link rel="stylesheet" href="styles/util.css?v=20261012" />
 </head>
 <body class="u-body">
   <div class="u-app">
@@ -40,7 +40,7 @@
     </main>
   </div>
 
-  <div class="u-toast" id="toast"></div>
+  <div class="toast" id="toast"></div>
 
   <script>
   (function(){
@@ -95,14 +95,14 @@
     }
 
     var toastEl=document.getElementById('toast'), tt;
-    function toast(m){ toastEl.textContent=m; toastEl.classList.add('show'); clearTimeout(tt);
-      tt=setTimeout(function(){ toastEl.classList.remove('show'); },1900); }
+    function toast(m){ toastEl.textContent=m; toastEl.classList.add('is-on'); clearTimeout(tt);
+      tt=setTimeout(function(){ toastEl.classList.remove('is-on'); },1900); }
     listEl.addEventListener('click', function(e){
       if(!e.target.closest('.u-row')) return;
       toast('월간보고서는 새 창에서 열립니다. (리포트 연동 예정)');
     });
   })();
   </script>
-  <script src="scripts/gnb-drawer.js?v=20260830"></script>
+  <script src="scripts/gnb-drawer.js?v=20261012"></script>
 </body>
 </html>

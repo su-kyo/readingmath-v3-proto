@@ -118,6 +118,6 @@
 
 /* 입력 드롭다운(즉시 채점)·키패드·객관식 세로보기 = essay.css */
 /* 토스트 면색만 이 화면 것 */
-.toast, .rtoast, .dtoast, .ptoast { --toast-bg: rgba(20,14,44,.94); }
+.toast { --toast-bg: rgba(20,14,44,.94); }
 /* 가로 안(킵) — 스크롤 영역 위에 여백이 있다 */
 .stage-scroll { padding-top: clamp(6px, 1.2vw, 12px); }

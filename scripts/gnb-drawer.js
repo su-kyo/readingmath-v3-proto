@@ -90,7 +90,7 @@
     + '.rmd-modal__go{height:48px;padding:0 var(--sp-24);border-radius:var(--r-12);border:0;background:var(--primary);color:var(--n-000);font-family:inherit;font-size:var(--fs-19);font-weight:var(--fw-heavy);cursor:pointer;}'
     + '.rmd-modal__go:hover{background:var(--primary-hover);}'
     + '.rmd-toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(16px);z-index:var(--z-toast);background:var(--rmd-raised);border:1px solid var(--rmd-line);color:var(--rmd-ink);padding:var(--sp-12) var(--sp-16);border-radius:var(--r-12);font-size:var(--fs-13);font-weight:var(--fw-semibold);opacity:0;pointer-events:none;transition:.2s;font-family:var(--font-sans);}'
-    + '.rmd-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}';
+    + '.rmd-toast.is-on{opacity:1;transform:translateX(-50%) translateY(0);}';
 
   // [라벨, 아이콘path, (선택)이동URL]
   var MENU = [
@@ -187,7 +187,7 @@
     renderGrid(); modal.classList.add('is-open'); }
   function closeModal(){ if(modal) modal.classList.remove('is-open'); }
   function toast(m){ toast_(m); }
-  function toast_(m){ build(); toastEl.textContent=m; toastEl.classList.add('show'); clearTimeout(tt); tt=setTimeout(function(){toastEl.classList.remove('show');},1900); }
+  function toast_(m){ build(); toastEl.textContent=m; toastEl.classList.add('is-on'); clearTimeout(tt); tt=setTimeout(function(){toastEl.classList.remove('is-on');},1900); }
 
   // ---- 실제 피그마 GNB 로고/아이콘 주입 (currentColor → 다크/라이트 공용) ----
   var GNB_LOGO = '<svg viewBox="0 0 32 32" fill="none"><path d="M26.03 9.7V7.31c-5.01 0-7.86 3.26-10.2 6.6-2.35-3.34-5.2-6.6-10.21-6.6V9.7c4.19 0 6.48 2.98 8.76 6.31-2.28 3.33-4.57 6.31-8.76 6.31v2.38c5.01 0 7.86-3.26 10.2-6.59 2.35 3.33 5.2 6.59 10.21 6.59v-2.38c-4.19 0-6.48-2.98-8.76-6.31 2.28-3.33 4.57-6.31 8.76-6.31Z" fill="#3C7BE0"/><path d="M27.67 16.88v-1.75h-5.73v1.75h5.73Z" fill="#F7417A"/><path d="M18.69 5.99h-1.99V4h-1.75v1.99h-1.99v1.75h1.99v1.99h1.75V7.74h1.99V5.99Z" fill="#4BC8DC"/><path d="M18.53 25.84v-1.56h-5.41v1.56h5.41ZM16.6 28V26.44h-1.56V28h1.56ZM16.6 23.68v-1.57h-1.56v1.57h1.56Z" fill="#64C947"/><path d="M9.62 14.6 8.39 13.36l-1.41 1.41-1.41-1.41-1.24 1.24 1.41 1.41-1.41 1.41 1.24 1.24 1.41-1.41 1.41 1.41 1.23-1.24-1.41-1.41 1.41-1.41Z" fill="#FF9B4E"/></svg>';

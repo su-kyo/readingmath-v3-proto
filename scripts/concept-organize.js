@@ -65,7 +65,7 @@
       para.className = 'para';
       p.segs.forEach(function (s) {
         var el = document.createElement('span');
-        el.className = 'seg' + (s.key ? ' seg--key' : '') + (s.img ? ' seg--img' : '');
+        el.className = 'chunk' + (s.key ? ' chunk--key' : '') + (s.img ? ' chunk--img' : '');
         el.textContent = s.t;
         para.appendChild(el);
         para.appendChild(document.createTextNode(' '));

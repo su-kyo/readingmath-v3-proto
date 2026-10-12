@@ -60,7 +60,7 @@
 
   /* ---------- 토스트 (없으면 주입) ---------- */
   var toast = document.getElementById('smToast');
-  if (!toast) { toast = document.createElement('div'); toast.className = 'smtoast'; toast.id = 'smToast'; document.body.appendChild(toast); }
+  if (!toast) { toast = document.createElement('div'); toast.className = 'toast'; toast.id = 'smToast'; document.body.appendChild(toast); }
   var tt;
   function showToast(msg) { toast.textContent = msg; toast.classList.add('is-on'); clearTimeout(tt); tt = setTimeout(function () { toast.classList.remove('is-on'); }, 1900); }
 

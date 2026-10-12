@@ -160,4 +160,4 @@ body{ font-family:var(--font-sans); background:var(--bg); overflow:hidden; -webk
   background:var(--surface-2); border:1px solid var(--border); color:var(--text); padding:var(--sp-12) var(--sp-16);
   border-radius:var(--r-12); font-size:var(--fs-13); font-weight:var(--fw-semibold); opacity:0; pointer-events:none;
   transition:.2s; box-shadow:var(--shadow-2); font-family:var(--font-sans); }
-.toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+.toast.is-on{ opacity:1; transform:translateX(-50%) translateY(0); }

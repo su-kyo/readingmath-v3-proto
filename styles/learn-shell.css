@@ -134,11 +134,7 @@ body.learn-body { background: var(--asset-console-concept-body); overflow: hidde
 .smodal__btn--go:hover { background: var(--primary-hover); }
 .smodal__btn--go:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--primary-pressed); }
 
-/* ===== 공용 토스트 (step-progress가 주입) ===== */
-.smtoast { position: fixed; left: 50%; bottom: 118px; transform: translateX(-50%) translateY(10px); z-index: var(--z-toast);
-  padding: var(--sp-12) var(--sp-20); border-radius: var(--r-full); font-family: var(--font-sans); font-size: var(--fs-14); font-weight: var(--fw-semibold);
-  background: rgba(18,22,40,.94); color: var(--static-on); opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
-.smtoast.is-on { opacity: 1; transform: translateX(-50%) translateY(0); }
+/* 공용 토스트(step-progress 가 주입) → components.css 의 .toast */
 
 /* ===== 반응형 (공통) ===== */
 @media (max-width: 900px) {
