@@ -2370,18 +2370,14 @@
    "assignment/solve.html": "js",
    "exam/solve.html": "js"
   },
-  "opt__n": {
-   "assignment/explain.html": "js",
-   "assignment/solve.html": "js"
-  },
   "opt__num": {
+   "assignment/explain.html": "js",
+   "assignment/solve.html": "js",
    "exam/solve.html": "js"
   },
-  "opt__t": {
-   "assignment/explain.html": "js",
-   "assignment/solve.html": "js"
-  },
   "opt__txt": {
+   "assignment/explain.html": "js",
+   "assignment/solve.html": "js",
    "exam/solve.html": "js"
   },
   "opts": {

@@ -6,10 +6,10 @@
   <title>부품 — 리딩수학과학 디자인 시스템</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
   <base href="../" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261012-5" />
-  <link rel="stylesheet" href="styles/base.css?v=20261012-5" />
-  <link rel="stylesheet" href="styles/components.css?v=20261012-5" />
-  <link rel="stylesheet" href="styleguide/sg.css?v=20261012-5" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261012-6" />
+  <link rel="stylesheet" href="styles/base.css?v=20261012-6" />
+  <link rel="stylesheet" href="styles/components.css?v=20261012-6" />
+  <link rel="stylesheet" href="styleguide/sg.css?v=20261012-6" />
 </head>
 <body data-sg-css="tokens,base,components,learn-shell">
 <div class="sg">
@@ -19,7 +19,7 @@
     <header class="sg-head">
       <div>
         <h1>부품</h1>
-        <p>버튼 · 배지 · 칩 · 빈칸 · 계기판 · 토스트. <strong>기본 상태만 놓지 않습니다</strong> —
+        <p>버튼 · 상태 타일 · 빈칸 · 선택지 · 계기판 · 토스트. <strong>화면이 실제로 쓰는 부품만</strong> 싣습니다. <strong>기본 상태만 놓지 않습니다</strong> —
            호버 · 눌림 · 비활성 · 선택, 그리고 <strong>빈 값 · 긴 이름 · 0건 · 많은 개수</strong>까지 세웁니다.
            시안에서 가장 잘 빠지는 자리예요.</p>
       </div>
@@ -27,7 +27,7 @@
 
     <!-- ===================================================== 버튼 -->
     <section class="sg-sec" id="btn">
-      <h2>버튼 <small>콘솔 도구 버튼 · 범용 버튼 · 모달 버튼</small></h2>
+      <h2>버튼 <small>콘솔 도구 버튼 · 채점 버튼 · 모달 버튼</small></h2>
 
       <div class="sg-item" data-uses="toolbtn, toolbtn--primary" data-pad="20px">
         <div class="sg-item__hd"><h3>콘솔 도구 버튼</h3>
@@ -57,25 +57,18 @@
         </template>
       </div>
 
-      <div class="sg-item" data-uses="btn" data-pad="20px">
-        <div class="sg-item__hd"><h3>범용 버튼</h3>
-          <span class="sg-item__cls">.btn · --orange · --navy · --ghost · --lg · --sm</span>
+      <div class="sg-item" data-uses="btn-grade" data-pad="20px">
+        <div class="sg-item__hd"><h3>채점 버튼</h3>
+          <span class="sg-item__cls">.btn-grade · [hidden]</span>
           <span class="sg-item__file">components.css</span></div>
-        <p class="sg-note">라이브러리 부품입니다. 지금은 두 화면만 쓰고 있어요 —
-          학습 화면은 위의 <code>.toolbtn</code>을, 모달은 <code>.smodal__btn</code>을 씁니다.
-          <strong>세 벌이 공존하는 것이 지금 상태</strong>이고, 합칠지는 다음 회차 판단입니다.</p>
+        <p class="sg-note">개념 기초 연산·다지기에서 문제 아래에 앉는 「채점하기」입니다. 칠은 과목의
+          <strong>정체성 칠면(<code>--th-vivid</code>)</strong>이라 라벨이 <strong>19px w800</strong>이에요.
+          아래 4px 두께는 한 단계 짙은 <code>--th-accent-strong</code>입니다.
+          채점이 끝나면 <code>hidden</code>으로 감춥니다 — 비활성 상태가 따로 없습니다.</p>
         <template class="sg-src">
-          <div class="sg-col">
-            <div class="sg-row">
-              <button class="btn btn--orange">주요</button>
-              <button class="btn btn--navy">보조</button>
-              <button class="btn btn--ghost">고스트</button>
-              <button class="btn btn--orange" disabled>비활성</button>
-            </div>
-            <div class="sg-row">
-              <button class="btn btn--orange btn--lg">큰 버튼 19px</button>
-              <button class="btn btn--navy btn--sm">작은 버튼 14px</button>
-            </div>
+          <div class="sg-row">
+            <button class="btn-grade">채점하기</button>
+            <button class="btn-grade" hidden>감춘 상태 — 보이지 않는다</button>
           </div>
         </template>
       </div>
@@ -107,92 +100,58 @@
       </div>
     </section>
 
-    <!-- ===================================================== 배지·칩 -->
+    <!-- ===================================================== 상태 표시 -->
     <section class="sg-sec" id="badge">
-      <h2>배지 · 칩 <small>상태를 한 조각으로 압축한 것</small></h2>
+      <h2>상태 표시 <small>상태를 한 조각으로 압축한 것</small></h2>
 
-      <div class="sg-item" data-uses="badge, block" data-pad="20px">
-        <div class="sg-item__hd"><h3>배지 · 난이도 블록</h3>
-          <span class="sg-item__cls">.badge · .block</span>
-          <span class="sg-item__file">components.css</span></div>
-        <p class="sg-note">배경은 <strong>상태색을 표면에 섞은 틴트</strong>이고 글자가 그 상태색입니다.
-          솔리드로 칠하지 않는 이유는 목록 안에서 여러 개가 나란히 설 때 화면이 얼룩지기 때문이에요.</p>
-        <template class="sg-src">
-          <div class="sg-col">
-            <div class="sg-row">
-              <span class="badge">기본</span>
-              <span class="badge badge--round">ROUND 3</span>
-              <span class="badge badge--correct">정답</span>
-              <span class="badge badge--wrong">오답</span>
-              <span class="badge badge--new">NEW</span>
-            </div>
-            <div class="sg-row">
-              <span class="block block--skill">실력</span>
-              <span class="block block--deep">심화</span>
-            </div>
-          </div>
-        </template>
-      </div>
-
-      <div class="sg-item" data-uses="type-chip" data-pad="20px">
-        <div class="sg-item__hd"><h3>유형 칩 — 6단계</h3>
-          <span class="sg-item__cls">.type-chip--none/pending/relearn/supplement/understand/master</span>
-          <span class="sg-item__file">components.css</span></div>
+      <div class="sg-item" data-uses="tile" data-pad="24px" data-section="exam"
+           data-css="tokens,base,exam,screens/exam-home" data-bg="var(--surface)">
+        <div class="sg-item__hd"><h3>유형 타일 — 성취 6단계</h3>
+          <span class="sg-item__cls">.tile--u/j/r/b/e/m · .tile__star</span>
+          <span class="sg-item__file">screens/exam-home.css · exam-tile.js</span></div>
         <p class="sg-note"><strong>이력이 판정을 만듭니다.</strong> 미진행(이력 0) → 미판정(이력 1) →
           최신 연속 2오답이면 재학습, 정답1·오답1이면 보충, 연속 2정답이면 이해,
-          연속 3정답 이상이면 정복입니다. <strong>정복만 솔리드 금색</strong>이에요 —
-          여섯 중 하나만 튀어야 목록에서 읽힙니다.</p>
+          연속 3정답 이상이면 정복입니다. 칸에는 <strong>글자가 없고 모양과 색만</strong> 있어요 —
+          아직 판정 전인 둘은 물음표에 점선/실선, 판정된 넷은 칠한 면입니다.
+          중요 유형에는 오른쪽 위에 별이 붙습니다.
+          타일은 <code>scripts/exam-tile.js</code>가 그립니다 — 시험대비 홈과 이 액자가 같은 파일을 불러요.</p>
         <template class="sg-src">
           <div class="sg-col">
-            <div class="sg-row">
-              <span class="type-chip type-chip--none"><span class="type-chip__id">유형 1</span><span class="type-chip__label">미진행</span></span>
-              <span class="type-chip type-chip--pending"><span class="type-chip__id">유형 2</span><span class="type-chip__label">미판정</span></span>
-              <span class="type-chip type-chip--relearn"><span class="type-chip__id">유형 3</span><span class="type-chip__label">재학습</span></span>
-              <span class="type-chip type-chip--supplement"><span class="type-chip__id">유형 4</span><span class="type-chip__label">보충</span></span>
-              <span class="type-chip type-chip--understand"><span class="type-chip__id">유형 5</span><span class="type-chip__label">이해</span></span>
-              <span class="type-chip type-chip--master"><span class="type-chip__id">유형 6</span><span class="type-chip__label">정복</span></span>
-            </div>
-            <span class="sg-cap">많은 개수 — 칸 폭이 고정이라 줄바꿈으로 흐른다</span>
-            <div class="sg-row" style="gap:8px">
-              <span class="type-chip type-chip--master"><span class="type-chip__id">유형 1</span><span class="type-chip__label">정복</span></span>
-              <span class="type-chip type-chip--understand"><span class="type-chip__id">유형 2</span><span class="type-chip__label">이해</span></span>
-              <span class="type-chip type-chip--relearn"><span class="type-chip__id">유형 3</span><span class="type-chip__label">재학습</span></span>
-              <span class="type-chip type-chip--none"><span class="type-chip__id">유형 4</span><span class="type-chip__label">미진행</span></span>
-              <span class="type-chip type-chip--none"><span class="type-chip__id">유형 5</span><span class="type-chip__label">미진행</span></span>
-              <span class="type-chip type-chip--supplement"><span class="type-chip__id">유형 6</span><span class="type-chip__label">보충</span></span>
-              <span class="type-chip type-chip--pending"><span class="type-chip__id">유형 7</span><span class="type-chip__label">미판정</span></span>
-              <span class="type-chip type-chip--none"><span class="type-chip__id">유형 8</span><span class="type-chip__label">미진행</span></span>
-            </div>
+            <div class="sg-row" style="gap:20px" data-tiles="u:미진행 j:미판정 r:재학습 b:보충 e:이해 m:정복"></div>
+            <span class="sg-cap">중요 유형 — 별이 붙는다</span>
+            <div class="sg-row" style="gap:20px" data-tiles="u*:미진행 r*:재학습 e*:이해 m*:정복"></div>
+            <span class="sg-cap">많은 개수 — 한 단원 18칸, 줄바꿈으로 흐른다</span>
+            <div class="grid" style="max-width:420px" data-tiles="m e e* r b e m j u r* e b m e u u j e"></div>
           </div>
+          <script src="scripts/exam-tile.js?v=20261012-6"></script>
+          <script>
+            document.querySelectorAll('[data-tiles]').forEach(function (box) {
+              box.innerHTML = box.dataset.tiles.split(' ').map(function (t) {
+                var p = t.split(':'), tile = RMExamTile.html(p[0]);
+                return p[1] ? '<span class="sg-col" style="align-items:center;gap:8px">' + tile +
+                  '<span class="sg-cap" style="margin:0">' + p[1] + '</span></span>' : tile;
+              }).join('');
+            });
+          </script>
         </template>
       </div>
 
-      <div class="sg-item" data-uses="grade, star" data-pad="20px">
-        <div class="sg-item__hd"><h3>등급 배지 · 별</h3>
-          <span class="sg-item__cls">.grade--s~c · .star--platinum/gold/silver/bronze/empty</span>
+      <div class="sg-item" data-uses="badge" data-pad="20px" data-themes="light" data-section="util">
+        <div class="sg-item__hd"><h3>목차 배지</h3>
+          <span class="sg-item__cls">.badge · --round · --correct · --new</span>
           <span class="sg-item__file">components.css</span></div>
-        <p class="sg-note">둘 다 <strong>그림 에셋</strong>입니다(육각 webp · 별 SVG).
-          코드로 색을 바꾸지 않고 파일을 갈아끼워요 — 그래서 <a href="styleguide/foundations.html#asset">에셋 연동색</a>
-          예외에 속합니다. 글자는 스크린리더용으로 남기고 숨깁니다.</p>
+        <p class="sg-note">학습 화면이 아니라 <strong>목차(<code>index.html</code>)에서만</strong> 씁니다 —
+          화면마다 「확정 · 킵 · 해설 · 예정」을 붙이는 꼬리표예요.
+          배경은 <strong>상태색을 표면에 섞은 틴트</strong>이고 글자가 그 상태색입니다.
+          목차는 라이트 한 벌이라 액자도 하나예요. <strong>글자색이 다크용 스텝(<code>--ok-on-dark</code> 등)이라 라이트에서 대비가 낮습니다</strong> —
+          제품 화면이 아니어서 남겨 뒀고, 고칠 때는 <code>--*-ink</code>로 바꾸면 됩니다.</p>
         <template class="sg-src">
-          <div class="sg-col">
-            <div class="sg-row">
-              <span class="grade grade--s">S</span><span class="grade grade--a">A</span>
-              <span class="grade grade--b">B</span><span class="grade grade--c">C</span>
-              <span class="grade grade--s grade--lg">S</span><span class="grade grade--c grade--sm">C</span>
-            </div>
-            <div class="sg-row">
-              <span class="star-row">
-                <i class="star star--platinum"></i><i class="star star--gold"></i>
-                <i class="star star--silver"></i><i class="star star--bronze"></i>
-                <i class="star star--empty"></i>
-              </span>
-              <span class="star-row">
-                <i class="star star--gold star--sm"></i><i class="star star--empty star--sm"></i>
-                <i class="star star--empty star--sm"></i>
-              </span>
-              <i class="star star--platinum star--lg"></i>
-            </div>
+          <div class="sg-row">
+            <span class="badge badge--round">RE·DESIGN PROTOTYPE</span>
+            <span class="badge badge--correct">확정</span>
+            <span class="badge badge--new">해설</span>
+            <span class="badge">킵</span>
+            <span class="badge">예정</span>
           </div>
         </template>
       </div>
@@ -200,71 +159,88 @@
 
     <!-- ===================================================== 입력 -->
     <section class="sg-sec" id="input">
-      <h2>답 입력 <small>빈칸 · 선택지 · 진행바 · 타이머</small></h2>
+      <h2>답 입력 <small>서술형 빈칸 · 목록형 선택지 · 타일형 선택지</small></h2>
 
-      <div class="sg-item" data-uses="blank" data-pad="20px">
-        <div class="sg-item__hd"><h3>빈칸</h3>
-          <span class="sg-item__cls">.blank · .is-empty · .is-active · .is-filled · .is-wrong</span>
-          <span class="sg-item__file">components.css</span></div>
-        <p class="sg-note">상태 넷입니다. <strong>지금 입력 중인 칸(<code>.is-active</code>)만 테두리가 2px</strong>이고
-          나머지는 1.5px이에요 — 여러 칸이 늘어선 문장에서 「어디를 채우는 중인지」가 유일한 굵은 선입니다.
-          오답에 <strong>취소선을 긋지 않습니다</strong>.</p>
+      <div class="sg-item" data-uses="blank" data-pad="0" data-section="essay"
+           data-css="tokens,base,learn-shell,essay,screens/essay-basics-v2">
+        <div class="sg-item__hd"><h3>서술형 빈칸</h3>
+          <span class="sg-item__cls">.blank · .is-sel · .is-filled · .blank--given · __badge · __ans</span>
+          <span class="sg-item__file">essay.css</span></div>
+        <p class="sg-note">문장 속에 앉는 32px 칸입니다. 비어 있을 때는 <strong>번호만 아주 연하게</strong> 보여요 —
+          번호가 같으면 답도 같다는 힌트입니다. 고르면(<code>.is-sel</code>) 주황 테두리, 채우면(<code>.is-filled</code>)
+          테두리가 빠지고 세리프 답이 들어옵니다. 처음부터 주어진 칸(<code>.blank--given</code>)은 채운 칸과 같은 모양이고 누를 수 없어요.
+          색은 <code>.content</code>에 실린 <code>--bl-*</code> 토큰이 테마마다 정합니다.</p>
         <template class="sg-src">
-          <div class="sg-col">
-            <div class="sg-row">
-              <span class="blank is-empty"><span class="blank__num">1</span>&nbsp;&nbsp;&nbsp;</span>
-              <span class="blank is-active"><span class="blank__num">2</span>12</span>
-              <span class="blank is-filled"><span class="blank__num">3</span>34</span>
-              <span class="blank is-wrong"><span class="blank__num">4</span>56</span>
+          <div class="content" style="border:0;border-radius:0;padding:20px">
+            <div class="sg-col">
+              <div class="sg-row">
+                <span class="blank"><span class="blank__ans"></span><span class="blank__badge">1</span></span>
+                <span class="blank is-sel"><span class="blank__ans"></span><span class="blank__badge">2</span></span>
+                <span class="blank is-filled"><span class="blank__ans">240</span><span class="blank__badge">3</span></span>
+                <span class="blank blank--given"><span class="blank__ans">752</span></span>
+              </div>
+              <span class="sg-cap">문장 안에서 — 주어진 칸 · 채운 칸 · 고른 칸 · 빈 칸이 섞인 실제 모양</span>
+              <p style="font-family:var(--font-serif);font-size:var(--fs-read);line-height:2.4;margin:0;color:var(--text)">
+                <span class="blank blank--given"><span class="blank__ans">752</span></span>를 어림하면 750, 238은
+                <span class="blank is-filled"><span class="blank__ans">240</span><span class="blank__badge">1</span></span>이므로 두 수의 차는 약
+                <span class="blank is-sel"><span class="blank__ans"></span><span class="blank__badge">2</span></span>이고, 실제로 계산하면
+                <span class="blank"><span class="blank__ans"></span><span class="blank__badge">3</span></span>입니다.
+              </p>
             </div>
-            <span class="sg-cap">문장 안에서 — 채워진 칸과 빈 칸이 섞인 실제 모양</span>
-            <p style="font-family:var(--font-serif);font-size:var(--fs-read);line-height:2.4;margin:0">
-              752 − 238을 어림하면 752는 750, 238은
-              <span class="blank is-filled">240</span> 이므로 두 수의 차는 약
-              <span class="blank is-active">51</span> 이고, 실제로 계산하면
-              <span class="blank is-empty">&nbsp;&nbsp;&nbsp;&nbsp;</span> 입니다.
-            </p>
           </div>
         </template>
       </div>
 
-      <div class="sg-item" data-uses="answer" data-pad="20px">
-        <div class="sg-item__hd"><h3>선택지 <small style="font-weight:400">라이브러리 — 화면은 각자 것을 쓴다</small></h3>
-          <span class="sg-item__cls">.answer · .is-selected · .is-correct · .is-wrong · .is-disabled</span>
-          <span class="sg-item__file">components.css</span></div>
-        <p class="sg-note"><strong>어느 화면도 이걸 안 씁니다.</strong> 실제 화면은 <code>.opt</code>(과제·시험 — 목록형)와
-          <code>.qopt</code>(개념·유형 — 타일형)를 각자 갖고 있어요 — 아래 「갈라낸 이름」 참고.
-          여기 남겨 둔 이유는 <strong>선택지의 상태 넷이 무엇인지</strong>가 이 부품에 가장 또렷하게 적혀 있기 때문입니다.</p>
+      <div class="sg-item" data-uses="opt" data-pad="20px" data-section="exam"
+           data-css="tokens,base,exam,screens/exam-solve" data-bg="var(--surface)">
+        <div class="sg-item__hd"><h3>목록형 선택지</h3>
+          <span class="sg-item__cls">.opt · __num · __txt · .is-selected · .is-correct · .is-wrong</span>
+          <span class="sg-item__file">screens/exam-solve.css · assign.css</span></div>
+        <p class="sg-note">과제 풀이·해설과 시험 풀이가 씁니다. 번호 원 + 보기 글이 한 줄이고, 고르면 테두리와 번호 원이
+          강조색으로 바뀝니다. 채점 뒤에는 <strong>정답은 초록, 고른 오답은 빨강</strong>이고 번호 대신 ✓ · ✕가 들어가요.
+          <strong>틀이 같고 색 토큰만 계열마다 다릅니다</strong> — 아래는 시험 풀이 것입니다.
+          (과제 쪽은 예전에 <code>__n</code> · <code>__t</code> · <code>.is-sel</code>로 이름이 달랐는데 마감 회차에 시험 쪽에 맞췄어요.)</p>
         <template class="sg-src">
-          <div class="sg-col" style="width:100%;align-items:stretch">
-            <div class="answer"><span class="answer__num">1</span>기본 상태</div>
-            <div class="answer is-selected"><span class="answer__num">2</span>고른 것</div>
-            <div class="answer is-correct"><span class="answer__num">3</span>정답</div>
-            <div class="answer is-wrong"><span class="answer__num">4</span>오답</div>
-            <div class="answer is-disabled"><span class="answer__num">5</span>고를 수 없음</div>
+          <div class="sg-col" style="width:100%;max-width:520px;align-items:stretch;gap:10px">
+            <button class="opt"><span class="opt__num">1</span><span class="opt__txt">기본 상태</span></button>
+            <button class="opt is-selected"><span class="opt__num">2</span><span class="opt__txt">고른 것</span></button>
+            <button class="opt is-correct"><span class="opt__num">✓</span><span class="opt__txt">정답</span></button>
+            <button class="opt is-wrong"><span class="opt__num">✕</span><span class="opt__txt">고른 오답</span></button>
+            <span class="sg-cap" style="margin:6px 0 0">긴 보기 — 글이 여러 줄로 흐른다</span>
+            <button class="opt"><span class="opt__num">5</span><span class="opt__txt">어떤 수에 3을 곱한 뒤 12를 더했더니 처음 수의 다섯 배보다 4만큼 작았습니다. 처음 수는 얼마인지 구하세요.</span></button>
           </div>
         </template>
       </div>
 
-      <div class="sg-item" data-uses="progress, timer, mode-toggle" data-pad="20px">
-        <div class="sg-item__hd"><h3>진행바 · 타이머 · 모드 토글</h3>
-          <span class="sg-item__cls">.progress · .timer · .mode-toggle</span>
-          <span class="sg-item__file">components.css</span></div>
-        <p class="sg-note">진행바 채움 너비는 <strong>JS가 인라인으로 심습니다</strong>
-          (<a href="styleguide/patterns.html#jsvars">JS가 넣는 변수</a> 참고). 0%와 100%를 함께 세워 두는 이유는
-          <strong>0%에서 채움이 사라져 트랙만 남는지</strong>가 늘 빠지는 확인이기 때문이에요.</p>
+      <div class="sg-item" data-uses="qopt" data-pad="0" data-section="concept"
+           data-css="tokens,base,components,learn-shell,screens/concept-basic-ops">
+        <div class="sg-item__hd"><h3>타일형 선택지</h3>
+          <span class="sg-item__cls">.qopt · --num · --text · --img · __num · __img · .is-selected · .is-correct · .is-wrong</span>
+          <span class="sg-item__file">screens/concept-basic-ops.css 외 3</span></div>
+        <p class="sg-note">개념 기초 연산·다지기, 유형 문제·해설이 씁니다. 높이 60px 타일이 가로로 늘어서고
+          <strong>고르면 면 전체가 칠해집니다</strong>(목록형은 테두리만). 채점 뒤에는 정답·오답 색을 면에 섞어요.
+          그림 보기(<code>--img</code>)는 면을 칠하지 않고 <strong>3px 테두리</strong>로만 표시합니다 — 그림 색을 덮지 않으려고요.
+          색은 <code>.ops</code>에 실린 <code>--opt-*</code> 토큰이 정합니다.</p>
         <template class="sg-src">
-          <div class="sg-col" style="width:100%;align-items:stretch">
-            <div><span class="sg-cap">0% — 채움이 없어도 트랙이 보여야 한다</span>
-              <div class="progress"><div class="progress__fill" style="width:0%"></div></div></div>
-            <div><span class="sg-cap">45%</span>
-              <div class="progress"><div class="progress__fill" style="width:45%"></div></div></div>
-            <div><span class="sg-cap">100%</span>
-              <div class="progress"><div class="progress__fill" style="width:100%"></div></div></div>
-            <div class="sg-row">
-              <span class="timer">08 : 32</span>
-              <span class="timer is-timeover">00 : 00</span>
-              <span class="mode-toggle"><span class="mode-toggle__opt is-active">☀</span><span class="mode-toggle__opt">☾</span></span>
+          <div class="ops" style="position:static;padding:20px">
+            <div class="sg-col" style="width:100%;align-items:stretch">
+              <div class="qopts-row">
+                <button class="qopt qopt--num"><span class="qopt__num">1</span></button>
+                <button class="qopt qopt--num is-selected"><span class="qopt__num">2</span></button>
+                <button class="qopt qopt--num is-correct"><span class="qopt__num">3</span></button>
+                <button class="qopt qopt--num is-wrong is-selected"><span class="qopt__num">4</span></button>
+              </div>
+              <div class="qopts-row">
+                <button class="qopt qopt--text"><span class="qopt__num">1</span><span>3과 4 사이</span></button>
+                <button class="qopt qopt--text is-selected"><span class="qopt__num">2</span><span>고른 것</span></button>
+              </div>
+              <span class="sg-cap" style="margin:0">그림 보기 — 기본 · 고른 것 · 정답 · 오답</span>
+              <div class="qopts-grid" style="grid-template-columns:repeat(4,1fr)">
+                <button class="qopt qopt--img"><span class="qopt__img"></span><span class="qopt__num">1</span></button>
+                <button class="qopt qopt--img is-selected"><span class="qopt__img"></span><span class="qopt__num">2</span></button>
+                <button class="qopt qopt--img is-correct"><span class="qopt__img"></span><span class="qopt__num">3</span></button>
+                <button class="qopt qopt--img is-wrong"><span class="qopt__img"></span><span class="qopt__num">4</span></button>
+              </div>
             </div>
           </div>
         </template>
@@ -359,11 +335,11 @@
 
     <!-- ===================================================== 자잘한 것 -->
     <section class="sg-sec" id="misc">
-      <h2>그 밖에 <small>수식 · 더미 이미지 자리 · 아코디언 · 스텝 카드</small></h2>
+      <h2>그 밖에 <small>수식 · 더미 이미지 자리</small></h2>
 
-      <div class="sg-item" data-uses="frac, mvar, mroot" data-pad="20px">
+      <div class="sg-item" data-uses="frac" data-pad="20px">
         <div class="sg-item__hd"><h3>수식 표기</h3>
-          <span class="sg-item__cls">.frac · .mvar · .mroot</span>
+          <span class="sg-item__cls">.frac · --sm · __n · __d</span>
           <span class="sg-item__file">components.css</span></div>
         <p class="sg-note">간단한 수식은 이 CSS로, 복잡한 것은 <strong>KaTeX</strong>로 씁니다
           (<code>scripts/vendor/katex/</code> 동봉 · CDN을 안 씁니다).
@@ -372,15 +348,13 @@
           <p style="font-family:var(--font-serif);font-size:var(--fs-read);line-height:2.6;margin:0">
             <span class="frac"><span class="frac__n">3</span><span class="frac__d">4</span></span>은 전체를 4로 나눈 것 중 3,
             약분하면 <span class="frac frac--sm"><span class="frac__n">1</span><span class="frac__d">2</span></span>입니다.
-            <span class="mvar">x</span>가 자연수일 때
-            <span class="mroot"><span class="mroot__r">16</span></span> = 4입니다.
           </p>
         </template>
       </div>
 
       <div class="sg-item" data-uses="dummy-img" data-pad="20px">
         <div class="sg-item__hd"><h3>더미 이미지 자리</h3>
-          <span class="sg-item__cls">.dummy-img · .opt__img · .ex__skel · .sopt__img · .sblank__thumb</span>
+          <span class="sg-item__cls">.dummy-img · .qopt__img · .ex__skel · .sopt__img · .sblank__thumb</span>
           <span class="sg-item__file">components.css</span></div>
         <p class="sg-note">사진이 들어올 자리를 메우는 가짜 그림입니다. <strong>빗금 + 「이미지 예시」 라벨</strong>이
           한 벌이고 위 이름들이 모두 같은 규칙을 받아요. 새 자리를 만들면 <code>.dummy-img</code>를 붙입니다.
@@ -390,33 +364,6 @@
             <div class="dummy-img" style="width:220px;height:130px;border-radius:12px"></div>
             <div class="dummy-img" style="width:90px;height:90px;border-radius:8px"></div>
             <div class="dummy-img" style="width:320px;height:60px;border-radius:8px"></div>
-          </div>
-        </template>
-      </div>
-
-      <div class="sg-item" data-uses="accordion, panel, cta-step" data-pad="20px">
-        <div class="sg-item__hd"><h3>아코디언 · 패널 · 스텝 CTA</h3>
-          <span class="sg-item__cls">.accordion · .panel · .cta-step</span>
-          <span class="sg-item__file">components.css</span></div>
-        <p class="sg-note">스텝 CTA는 <strong>할 일 / 하는 중 / 끝남</strong> 셋입니다.
-          「하는 중」에만 점이 깜빡이고 「끝남」은 체크로 바뀌어요.</p>
-        <template class="sg-src">
-          <div class="sg-col" style="width:100%;align-items:stretch">
-            <div class="accordion is-open">
-              <div class="accordion__header"><strong>펼친 아코디언</strong><span class="accordion__chevron">⌄</span></div>
-              <div class="accordion__body">안쪽 내용입니다.</div>
-            </div>
-            <div class="accordion">
-              <div class="accordion__header"><strong>접힌 아코디언</strong><span class="accordion__chevron">⌄</span></div>
-              <div class="accordion__body">안 보입니다.</div>
-            </div>
-            <div class="sg-row">
-              <span class="cta-step cta-step--todo">할 일</span>
-              <span class="cta-step cta-step--doing">하는 중</span>
-              <span class="cta-step cta-step--done">끝남</span>
-            </div>
-            <div class="panel">기본 패널</div>
-            <div class="panel panel--raised">떠 있는 패널</div>
           </div>
         </template>
       </div>
@@ -438,8 +385,14 @@
           <tr><td><code>.seg</code></td><td><code>.segmented</code></td><td>분절 토글 — 과제 풀이(풀이 현황판/답안표), 자유 모드</td></tr>
           <tr><td><code>.seg</code></td><td><code>.scrumb__item</code></td><td>상단 경로의 단계 이름 — 시험 풀이</td></tr>
           <tr><td>토스트 다섯 이름</td><td><code>.toast</code></td><td>위 「토스트」 참고</td></tr>
+          <tr><td><code>.opt__n</code> · <code>__t</code> · <code>.is-sel</code> · <code>--correct</code></td><td><code>__num</code> · <code>__txt</code> · <code>.is-selected</code> · <code>.is-correct</code></td><td>과제의 목록형 선택지 — 시험 쪽 이름에 맞췄다 (같은 부품인데 안쪽 이름만 달랐다)</td></tr>
         </tbody>
       </table>
+      <div class="sg-rule sg-rule--why"><strong>걷어낸 부품 (마감 회차 2026-10-12).</strong> 예전 이 장에는 범용 버튼 · 패널 · 선택지 칩(<code>.answer</code>) ·
+        유형 칩 · 진행바 · 타이머 · 모드 토글 · 아코디언 · 스텝 CTA · 등급 배지 · 별 · 난이도 블록 · 빈칸 · 미지수·루트 표기가 있었습니다.
+        「언젠가 쓸 라이브러리」로 만들어 뒀지만 <strong>어느 화면도 쓰지 않았고</strong>, 실제 화면은 각자 자기 부품을 갖고 있었어요 —
+        그래서 그 자리에 <strong>화면이 실제로 쓰는 것</strong>(유형 타일 · 서술형 빈칸 · 목록형/타일형 선택지)을 올렸습니다.
+        그중 빈칸 · 난이도 블록 · 등급은 <strong>이름이 같은 화면 부품에 속성이 새어 들고</strong> 있어서, 걷어낸 뒤 전 화면을 다시 찍어 대조했어요.</div>
       <div class="sg-rule sg-rule--dont"><code>.card</code>·<code>.qtab</code>·<code>.problem</code>은 아직 화면마다 모양이 다른데 이름이 같습니다.
         서로 같은 공용 파일을 부르지 않아서 충돌은 없지만, 다음에 이 부품을 공용으로 올릴 때는 <strong>먼저 이름부터 가릅니다.</strong></div>
       <div class="sg-rule sg-rule--why">화면 간 「글자 하나 안 틀리고 같은」 규칙은 Phase 10의 570개에서 지금 405개로 줄었습니다
@@ -449,6 +402,6 @@
 
   </main>
 </div>
-<script src="styleguide/sg.js?v=20261012-5"></script>
+<script src="styleguide/sg.js?v=20261012-6"></script>
 </body>
 </html>

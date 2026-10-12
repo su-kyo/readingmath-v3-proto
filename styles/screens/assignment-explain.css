@@ -51,12 +51,12 @@ body { font-family: var(--font-sans); background: var(--asset-console-task-body)
 .opts--col { grid-template-columns: 1fr; }
 .opt { display: flex; align-items: center; gap: var(--sp-12); padding: var(--sp-12) var(--sp-16); border: 1.5px solid var(--line); border-radius: var(--r-12); background: var(--opt); text-align: left; }
 
-.opt__n svg { width: 13px; height: 13px; }
+.opt__num svg { width: 13px; height: 13px; }
 
-.opt--correct { border-color: var(--good); background: var(--ok-tint); }
-.opt--correct .opt__n { border-color: var(--good); background: var(--ok-ink); color: var(--n-000); }
-.opt--wrong { border-color: var(--bad); background: var(--no-tint); }
-.opt--wrong .opt__n { border-color: var(--bad); background: var(--bad); color: var(--n-000); }
+.opt.is-correct { border-color: var(--good); background: var(--ok-tint); }
+.opt.is-correct .opt__num { border-color: var(--good); background: var(--ok-ink); color: var(--n-000); }
+.opt.is-wrong { border-color: var(--bad); background: var(--no-tint); }
+.opt.is-wrong .opt__num { border-color: var(--bad); background: var(--bad); color: var(--n-000); }
 
 /* 주관식 (리뷰) */
 .short { display: flex; flex-direction: column; gap: var(--sp-12); align-items: center; }

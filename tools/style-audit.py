@@ -163,7 +163,7 @@ for f in CSS + JS + HTML:
     uses |= set(re.findall(r'var\(\s*(--[\w-]+)', open(f, encoding='utf-8').read()))
 unused = [d for d in dict.fromkeys(re.findall(r'(--[\w-]+)\s*:', tok))
           if d not in uses and d not in KEEP and not re.match(r'--' + PALETTE + r'$', d) and not d.startswith(('--white-a', '--black-a'))]
-row('지켜볼 것', '안 쓰는 토큰(램프 제외)', len(unused), ' '.join(unused[:6]))
+row('지켜볼 것', '안 쓰는 토큰(램프 제외)', len(unused), ' '.join(unused))
 
 # ── 출력 ────────────────────────────────────────────────────────────────
 w = max(len(r[1]) for r in rows)

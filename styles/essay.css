@@ -1,9 +1,8 @@
 /* =====================================================================
    essay.css — 서술형 훈련(퍼플 테마) 공용 시트
-   essay-basics / essay-drill / essay-report 3개 페이지가 공유.
-   ⚠️ 링크 순서: tokens → base → components → learn-shell → essay → (페이지 인라인)
-   페이지 고유 레이아웃/토큰(--card, --qa-*, --rt-*, .slot, .pmodal 등)은
-   각 HTML 인라인 <style>에 그대로 둔다. 인라인이 소스 순서상 뒤라 필요 시 덮어쓴다.
+   서술형 화면(기초 · 다지기 · 심화 · 보고서 · 해설 · 결과)이 같이 쓴다.
+   링크 순서: tokens → base → components → learn-shell → essay → screens/essay-*.css
+   화면에만 있는 레이아웃과 토큰(--card, --qa-* 등)은 styles/screens/essay-*.css 에 있다.
    ===================================================================== */
 
 /* ============ 퍼플 셸 (헤더 · 배경) ============ */
@@ -16,7 +15,7 @@
 .htimer span { font-family: var(--font-mono); font-weight: var(--fw-bold); font-size: var(--fs-14); color: var(--n-000); }
 
 /* ============ 빈칸 상태 토큰 (테마별) ============
-   .content 에 실린다. 페이지 고유 토큰(--guide 등)은 인라인에서 별도로 선언.  */
+   .content 에 실린다. 화면 고유 토큰(--guide 등)은 styles/screens/essay-*.css 에서 선언.  */
 .content {
   --bl-bg: var(--white-a06); --bl-line: color-mix(in srgb, var(--n-200) 42%, transparent);
   --bl-bgh: var(--white-a12); --bl-lineh: color-mix(in srgb, var(--n-200) 72%, transparent);

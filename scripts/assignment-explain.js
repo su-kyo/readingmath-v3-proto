@@ -96,10 +96,10 @@
       html += '<div class="opts' + (many ? ' opts--col' : '') + '">' +
         q.opts.map(function (o, i) {
           var cls = '', badge = (i + 1);
-          if (i === q.answer) { cls = ' opt--correct'; badge = ICO.check; }
-          else if (i === q.user) { cls = ' opt--wrong'; badge = ICO.x; }
-          return '<div class="opt' + cls + '"><span class="opt__n">' + badge + '</span>' +
-            '<span class="opt__t">' + o + '</span></div>';
+          if (i === q.answer) { cls = ' is-correct'; badge = ICO.check; }
+          else if (i === q.user) { cls = ' is-wrong'; badge = ICO.x; }
+          return '<div class="opt' + cls + '"><span class="opt__num">' + badge + '</span>' +
+            '<span class="opt__txt">' + o + '</span></div>';
         }).join('') + '</div>';
     }
 

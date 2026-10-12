@@ -1,8 +1,8 @@
 /* =====================================================================
    type.css — 유형 훈련(틸 테마) 공용 셸 크롬
    type-quiz / type-review / type-result / type-training-result 공유.
-   ⚠️ 링크 순서: tokens → base → components → learn-shell → type → (페이지 인라인)
-   페이지 인라인(.bar__mid 등, 특이도 0,1,0)보다 강하게 덮으려고
+   ⚠️ 링크 순서: tokens → base → components → learn-shell → type → screens/type-*.css
+   화면 파일(.bar__mid 등, 특이도 0,1,0)보다 강하게 덮으려고
    .learn-body 접두(0,2,0)를 씀. 각 페이지의 크림 하단바를 틸로 통일.
 
    ── 단일 틸 램프 (어두움 → 밝음) ─────────────────────────────────────

@@ -58,7 +58,9 @@ body { font-family: var(--font-sans); background: var(--asset-console-task-body)
 /* 채점표 */
 .rtable { display: flex; flex-direction: column; }
 .trow { display: grid; grid-template-columns: 56px minmax(180px, 300px) 84px 1fr 108px; align-items: center; gap: var(--sp-12); padding: var(--sp-12) var(--sp-8); border-bottom: 1px solid var(--line-2); }
-.trow[data-q] { cursor: pointer; transition: background .12s; }
+/* 문항 행은 높이를 고정한다 — 발문이 한 줄이든 두 줄이든 행이 같은 높이로 선다.
+   (예전엔 components.css 의 옛 .grade 가 56px 상자로 새어 들어 우연히 이 높이를 만들었다 · 마감 회차에 명시) */
+.trow[data-q] { min-height: 81px; cursor: pointer; transition: background .12s; }
 .trow[data-q]:hover { background: var(--th-tint); }
 :root[data-theme="dark"] .trow[data-q]:hover { background: var(--th-tint-strong); }
 .trow--head { border-bottom: 1px solid var(--line); }

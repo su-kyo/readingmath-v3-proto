@@ -30,9 +30,9 @@
 
 .lvl { padding: var(--sp-4) var(--sp-8); border-radius: var(--r-full); font-size: var(--fs-12); font-weight: var(--fw-heavy); margin-left: auto; }
 
-.opt__n { width: 26px; height: 26px; flex: none; border-radius: 50%; border: 1.6px solid var(--dash); color: var(--sub); display: grid; place-items: center; font-size: var(--fs-13); font-weight: var(--fw-heavy); font-variant-numeric: tabular-nums; }
+.opt__num { width: 26px; height: 26px; flex: none; border-radius: 50%; border: 1.6px solid var(--dash); color: var(--sub); display: grid; place-items: center; font-size: var(--fs-13); font-weight: var(--fw-heavy); font-variant-numeric: tabular-nums; }
 
-.opt__t { font-size: var(--fs-16); font-weight: var(--fw-semibold); color: var(--ink); }
+.opt__txt { font-size: var(--fs-16); font-weight: var(--fw-semibold); color: var(--ink); }
 
 .omr__prog { display: flex; flex-direction: column; gap: var(--sp-8); }
 

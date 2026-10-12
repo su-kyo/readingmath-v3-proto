@@ -159,7 +159,6 @@
   --border:        var(--white-a08);
   --border-strong: var(--white-a16);
   --scrim:  rgba(6, 10, 22, 0.82);   /* Phase 7: 딤은 항상 진하게 (사용자 결정) */
-  --shadow-1: 0 2px 8px rgba(0, 0, 0, 0.28);
   --shadow-2: 0 8px 24px rgba(0, 0, 0, 0.36);
 
   /* 상태색 매트릭스 (전 섹션 공용 · 4역할 × 5변형)
@@ -195,14 +194,6 @@
 
   /* 브랜드 파랑 — 유틸 화면의 점·선·링크 (면이 아니라 강조에만) */
   --brand: var(--blue-500);
-
-  /* 계열 대표색 — 여러 계열이 한 화면에 같이 놓일 때(과목 헤더·난이도 블록).
-     한 화면 안에서 계열 옷을 갈아입는 일은 3단 --th-* 가 한다. */
-  --subject-concept: var(--blue-700);
-  --subject-type:    var(--teal-700);
-  --subject-essay:   var(--violet-800);
-  --subject-concept-soft: var(--blue-400);
-  --subject-essay-soft:   var(--violet-300);
 
   /* 학습 계통색 — 과목 태그 배지. 채도 있는 400 스텝으로 통일해 페이지가 한 톤(네이비)으로
      죽지 않게 계통마다 포인트를 준다. */
@@ -307,8 +298,6 @@
   --z-toast:   400;  /* 항상 맨 위 — 토스트 · 키패드 */
   --z-debug:   900;  /* 검수 패널. 배포본에는 없다 */
 
-  --btn-drop: 0 4px 0;
-
   --t-fast:  140ms ease;
 
 }
@@ -333,7 +322,6 @@
   --border-strong: rgba(20, 32, 58, 0.20);
   --scrim: rgba(20, 28, 48, 0.60);   /* Phase 7: 딤은 항상 진하게 (사용자 결정) */
 
-  --shadow-1: 0 2px 8px rgba(24, 40, 80, 0.10);
   --shadow-2: 0 10px 28px rgba(24, 40, 80, 0.14);
 
   --th-focus: var(--th-accent);

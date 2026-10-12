@@ -107,9 +107,9 @@
       var many = q.opts.some(function (o) { return o.length > 8; });
       html += '<div class="opts' + (many ? ' opts--col' : '') + '" id="opts">' +
         q.opts.map(function (o, i) {
-          var sel = answers[cur] === i ? ' is-sel' : '';
-          return '<button class="opt' + sel + '" data-i="' + i + '"><span class="opt__n">' + (i + 1) + '</span>' +
-            '<span class="opt__t">' + o + '</span></button>';
+          var sel = answers[cur] === i ? ' is-selected' : '';
+          return '<button class="opt' + sel + '" data-i="' + i + '"><span class="opt__num">' + (i + 1) + '</span>' +
+            '<span class="opt__txt">' + o + '</span></button>';
         }).join('') + '</div>';
     }
 

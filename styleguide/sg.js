@@ -27,7 +27,7 @@
   // 그래서 여기 경로도 최상위 기준으로 적는다 — 'components.html' 로 적으면 루트를 가리킨다.
   var PAGES = [
     ['foundations.html', '기초',   '색 · 글자 · 간격 · 층'],
-    ['components.html',  '부품',   '버튼 · 배지 · 문제 블록 · 계기판'],
+    ['components.html',  '부품',   '버튼 · 상태 타일 · 선택지 · 계기판'],
     ['shells.html',      '셸',     '콘솔바 · 헤더 · 모니터 · 키패드'],
     ['patterns.html',    '패턴',   '화면 껍데기 · 목록 상태 · 예외']
   ];
@@ -101,7 +101,7 @@
 
   function frameDoc(markup, theme, section, css, pad, bg) {
     var links = css.split(',').map(function (n) {
-      return '<link rel="stylesheet" href="styles/' + n.trim() + '.css?v=20261012-5">';
+      return '<link rel="stylesheet" href="styles/' + n.trim() + '.css?v=20261012-6">';
     }).join('');
     return '<!doctype html><html lang="ko" data-theme="' + theme + '" data-section="' + section + '">' +
       '<head><meta charset="utf-8"><base href="' + ROOT + '">' + links +

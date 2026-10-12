@@ -85,10 +85,12 @@ index의 그룹 분류는 같은 단위다 — 둘이 어긋나게 두지 않는
   옮길 때는 **같은 요소에 붙는 클래스(BEM 변형·다중 클래스)의 순서**를 지킨다 —
   변형만 먼저 옮겨 훈련 결과표가 깨진 적이 있다.
 - **이름은 뜻 하나에 하나.** 토스트 `.toast` + 상태 `.is-on`(서랍만 `.rmd-toast`) ·
-  선택지는 목록형 `.opt`(과제·시험) / 타일형 `.qopt`(개념·유형) ·
+  선택지는 목록형 `.opt`(과제·시험 — 안쪽은 `__num`·`__txt`, 상태는 `.is-selected`·`.is-correct`·`.is-wrong`) / 타일형 `.qopt`(개념·유형) ·
   옛 `.seg`는 `.led`(결과 LED) · `.chunk`(끊어읽기) · `.segmented`(분절 토글) · `.scrumb__item`(시험 경로).
 - **변수에 그림 주소를 넣으면 절대 주소로.** `url()`이 든 변수는 그 변수를 쓰는 CSS 파일 기준으로 풀린다
   (`scripts/nav-home.js`의 `--m` — `new URL(src, document.baseURI)`).
+- **`components.css`에는 화면이 실제로 쓰는 것만 둔다.** 「언젠가 쓸」 라이브러리 부품은 만들지 않는다 —
+  마감 회차에 그런 부품 17종을 걷어냈고, 그중 셋(`.blank`·`.block`·`.grade`)은 이름이 같은 화면 부품에 속성이 새고 있었다.
 - 고치고 나면: `python3 tools/style-audit.py`(지킬 것 6개 전부 ✓) → `tools/usage-scan.py` → `?v=` 올리기.
 
 ## 조심할 것
@@ -123,7 +125,7 @@ index의 그룹 분류는 같은 단위다 — 둘이 어긋나게 두지 않는
 Phase 6에서 키패드가 한 벌(`.keypad__key`)로 합쳐져 이 파일도 한 벌만 본다.
 
 **더미 이미지 자리** — `styles/components.css`의 `.dummy-img` (빗금 + '이미지 예시' 라벨).
-`.opt__img`·`.ex__skel`·`.sopt__img`·`.sblank__thumb`도 같은 규칙을 받는다.
+`.qopt__img`·`.ex__skel`·`.sopt__img`·`.sblank__thumb`도 같은 규칙을 받는다.
 새 자리를 만들면 `.dummy-img`를 붙인다. 화면 CSS에서 그 자리에 `background`를 다시
 지정하면 빗금이 지워지니 주의.
 
@@ -162,7 +164,7 @@ Phase 6에서 키패드가 한 벌(`.keypad__key`)로 합쳐져 이 파일도 �
 
 ```
 styleguide/foundations.html   색 3단 · 칠면 셋 · 글자/간격/모서리/층 눈금
-styleguide/components.html    버튼 · 배지 · 유형칩 · 빈칸 · 계기판 · 토스트
+styleguide/components.html    버튼 · 상태 타일 · 빈칸 · 선택지 · 계기판 · 토스트 (화면이 쓰는 것만)
 styleguide/shells.html        GNB/서랍 · 학습 헤더 · 콘솔바 · 보조 모니터 · 키패드 · 연습장
 styleguide/patterns.html      목록 네 상태 · 유틸 예외 체계 · JS가 넣는 변수 · 검수 스위치
 styleguide/sg.css · sg.js     네 장이 공유하는 뼈대 (목록 · 액자 · 배지)
