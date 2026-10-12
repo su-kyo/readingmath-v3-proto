@@ -11,11 +11,12 @@
 - `styleguide/` — 세미 스토리북 4장(기초 · 부품 · 셸 · 패턴). 부품마다 라이트/다크를
   나란히 세우고 「쓰는 화면 수」를 자동으로 센다. 배포에 포함된다
 
-> 오른쪽 위 ☀ / ☾ 버튼으로 라이트/다크 전환이 됩니다.
+> 학습 화면은 라이트로 시작하고 오른쪽 위 ☀ / ☾ 버튼으로 다크로 바꿉니다(고른 테마는 기억됩니다).
+> 행성 홈 · 결과 화면은 항상 다크(우주선), 유틸 화면은 다크가 기본입니다.
 
 **홈 화면만은 주소로 과목·학기를 바꿉니다.**
 `nav/home.html?subject=science&sem=mid-3-1` 처럼 붙이면 됩니다.
-`subject`는 `math` / `science`, `sem`은 `elem-3-1` / `mid-3-1` / `mid-3-2` 여섯 조합이 있습니다.
+`subject`는 `math` / `science`, `sem`은 `elem-3-1` ~ `high-1-2` 16학기라 모두 32조합입니다.
 
 ## 폴더 구조
 
@@ -45,8 +46,13 @@ RM/
 │  ├─ step-result.html     스텝 결과
 │  └─ training-result.html 학습 결과
 │
-├─ styles/               tokens.css(색·글자 변수) · base · components · 화면별 CSS
-├─ scripts/              화면별 동작 JS + 공용 스크립트
+├─ styles/               CSS — HTML 안에는 CSS 를 쓰지 않는다
+│  ├─ tokens.css          디자인 토큰 (색 램프 · 알파 램프 · 역할 · 계열 슬롯 · 눈금)
+│  ├─ base.css · components.css       전역 바탕 · 여러 계열이 쓰는 부품
+│  ├─ learn-shell · monitor · keypad · gnb · space-bg   공용 셸
+│  ├─ result · essay · type · assign · exam · nav · util · history   계열 공용
+│  └─ screens/            화면 하나에만 있는 스타일 (<계열>-<화면>.css)
+├─ scripts/              화면별 동작 JS(<계열>-<화면>.js) + 공용 스크립트
 │  ├─ theme.js            라이트/다크
 │  ├─ space-bg.js         우주 배경
 │  ├─ debug-panel.js      검수 패널 (?debug=1 일 때만 — 아래 「검수 도구」 참고)
@@ -66,18 +72,20 @@ RM/
 │  └─ fonts/             Kode Mono (직접 넣어둠, 인터넷 없이도 뜸)
 │
 ├─ docs/                 깊은 문서 (아래 「문서 세 개」 참고)
-│  ├─ design-system.md     디자인 원칙과 토큰 구조
-│  ├─ design-tokens.json   토큰 스냅샷 (2026-07-14 시점)
-│  ├─ plan-2026-07.md      7월 작업 계획 (보관용)
-│  └─ phase6-brief.md      다음 회차 착수 지시서 (끝나면 삭제)
+│  ├─ design-system.md     안내 한 장 — 정본은 styleguide/ (옛 v1.0 본문은 깃 기록에)
+│  ├─ phase7~10-brief.md   회차별 지시서와 진행 기록
+│  └─ plan-2026-07.md      7월 작업 계획 (보관용)
 │
 ├─ figma-palette/        기존 팔레트 유지 스냅샷 (내부 비교용, 배포 제외)
 ├─ tools/                로컬 전용 검수 도구 (배포 제외)
 │  ├─ palette-preview.html 팔레트 미리보기
 │  ├─ cta-check.html       CTA가 홈 32배경에서 버티는지 자동 판정
-│  └─ home-contact.html    행성 홈 32화면 한눈에 보기 (비율 4:3·16:9·21:9 전환)
+│  ├─ home-contact.html    행성 홈 32화면 한눈에 보기 (비율 4:3·16:9·21:9 전환)
+│  ├─ style-audit.py       스타일 규칙 검사 — 먼저 이것 (아래 「색을 바꾸고 싶다면」)
+│  └─ screen-shot.sh · screen-diff.py   고치기 전후 전 화면 화소 대조
 ├─ video/                소개 영상 제작 폴더 (깃·배포 모두 제외, 아래 참고)
 │
+├─ vercel.json           옛 주소 /styleguide.html → 새 스토리북으로 넘겨주기
 ├─ CLAUDE.md             에이전트용 작업 규칙
 └─ README.md             이 문서
 ```
@@ -135,14 +143,18 @@ concept/drill.html?debug=1&theme=dark&do=오답 처리
 
 ## 색을 바꾸고 싶다면
 
-`styles/tokens.css` 맨 위의 값만 고치면 모든 화면에 반영됩니다.
-개별 화면 CSS에는 색을 직접 쓰지 않는 것이 원칙입니다(자세한 이유는 `docs/design-system.md`).
+`styles/tokens.css`의 값만 고치면 모든 화면에 반영됩니다. 화면 CSS·JS에는 색값을 직접 쓰지 않습니다
+(지금 0곳). 원칙과 예외는 스토리북 `styleguide/`에 있고, 지켜졌는지는 기계가 잽니다.
+
+```bash
+python3 tools/style-audit.py
+```
 
 ## 기준
 
 - 기준 화면 크기: **1280 × 720 (태블릿 가로, 16:9)**
-- 기본 테마: **다크(우주)**
-- 스타일 원칙: 외곽선 없는 flat, 그라데이션·과밀 금지, 표면 톤·여백·타이포로 구조 만들기
+- 테마: 학습 화면은 라이트 시작(다크 선택), 행성 홈·결과는 항상 다크, 유틸은 다크 기본
+- 스타일 원칙: 학습 셸과 결과는 **우주선의 사물**(콘솔 · 계기판 · 보조 모니터), 내용 면은 표면 톤 · 여백 · 타이포로 구조를 만든다
 
 ---
 
@@ -197,17 +209,11 @@ brew install webp
 아직 어느 화면도 부르지 않습니다. **자유 모드에 과학 계통이 붙으면 쓸 것**이라
 webp로 바꿔 그대로 남겨뒀습니다.
 
-### 문서 세 개가 서로 조금 다릅니다 — 기준은 이렇습니다
+### 기준은 하나입니다
 
-| 무엇 | 지위 |
-| --- | --- |
-| `styles/tokens.css` | **실제 색값의 현행 기준.** 화면이 이 값을 씁니다 |
-| `docs/design-system.md` | **원칙과 구조의 기준.** 3단 토큰·금지 규칙·슬롯 계약은 유효합니다 |
-| `docs/design-tokens.json` | 2026-07-14 시점 스냅샷. **색값이 낡았습니다** |
-
-`design-system.md`는 스스로를 "단일 정본"이라 적어 두었지만, 실제로는 그 뒤에
-`tokens.css`가 더 갱신됐습니다. **색값이 서로 다르면 `tokens.css`가 맞습니다.**
-맞추는 작업은 아직 하지 않았습니다.
+예전에는 `tokens.css` · `design-system.md` · `design-tokens.json` 셋이 서로 조금씩 달랐습니다.
+마감 회차(2026-10-12)에 **값은 `styles/tokens.css`, 설명은 스토리북 `styleguide/`** 하나씩으로 모았습니다.
+스토리북은 토큰의 계산값을 읽어 그리므로 둘이 어긋날 수 없고, 낡은 스냅샷(json)은 지웠습니다.
 
 ### video 폴더는 깃에 없습니다
 
@@ -222,5 +228,5 @@ npm install
 
 ### 배포
 
-Vercel에 올라가 있습니다. `figma-palette` · `tools` · `video`는 배포에서 빠집니다
-(`.vercelignore`).
+Vercel에 올라가 있습니다. 푸시하면 자동 배포됩니다. `figma-palette` · `tools` · `video`는 배포에서 빠집니다
+(`.vercelignore`). 옛 스타일가이드 주소(`/styleguide.html`)는 `vercel.json`이 새 스토리북으로 넘겨줍니다.

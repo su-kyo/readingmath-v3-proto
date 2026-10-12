@@ -101,6 +101,10 @@ for f in CSS + JS:
         if n: leaks[f] += n
     for m in re.finditer(r'(?:fill|stroke|stop-color)=\\?["\'](#[0-9a-fA-F]{3,8})', t):
         leaks[f] += 1
+for f in HTML:   # HTML 의 style="" 속성 안 색도 센다 (데모 틀 포함 — 문서도 규칙을 지킨다)
+    for m in re.finditer(r'style="([^"]*)"', open(f, encoding='utf-8').read()):
+        n = len(COLOR.findall(m.group(1)))
+        if n: leaks[f] += n
 row('지킬 것', '토큰 밖 색', sum(leaks.values()), ', '.join('%s %d' % (k, v) for k, v in leaks.most_common(4)))
 
 # ── 정의 없는 변수 ───────────────────────────────────────────────────────

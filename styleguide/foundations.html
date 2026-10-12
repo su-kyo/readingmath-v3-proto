@@ -6,10 +6,10 @@
   <title>기초 — 리딩수학과학 디자인 시스템</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
   <base href="../" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261012-3" />
-  <link rel="stylesheet" href="styles/base.css?v=20261012-3" />
-  <link rel="stylesheet" href="styles/components.css?v=20261012-3" />
-  <link rel="stylesheet" href="styleguide/sg.css?v=20261012-3" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261012-4" />
+  <link rel="stylesheet" href="styles/base.css?v=20261012-4" />
+  <link rel="stylesheet" href="styles/components.css?v=20261012-4" />
+  <link rel="stylesheet" href="styleguide/sg.css?v=20261012-4" />
 </head>
 <body data-sg-css="tokens,base,components">
 <div class="sg">
@@ -27,20 +27,25 @@
 
     <!-- ===================================================== 읽는 법 -->
     <section class="sg-sec" id="how">
-      <h2>읽는 법 <small>3단 구조 · 화면은 1단을 직접 쓰지 않는다</small></h2>
+      <h2>읽는 법 <small>3단 구조 · 화면은 2단부터 찾는다 · RMDS v2.0</small></h2>
       <table class="sg-table">
         <thead><tr><th style="width:150px">층</th><th style="width:210px">이름 모양</th><th>무엇</th></tr></thead>
         <tbody>
           <tr><td><strong>1단 원시</strong></td><td><code>--blue-450</code> <code>--n-800</code></td>
-              <td>실제 hex가 있는 유일한 곳. <code>tools/palette-gen.py</code>가 만든다. <strong>손으로 안 고친다.</strong></td></tr>
+              <td>실제 색값이 있는 유일한 곳 — 색 램프 · 알파 램프 · 에셋 연동색. 램프는 <code>tools/palette-gen.py</code>가 만든다. <strong>손으로 안 고친다.</strong></td></tr>
           <tr><td><strong>2단 역할</strong></td><td><code>--text</code> <code>--surface-1</code> <code>--ok-solid</code></td>
               <td>뜻으로 부르는 이름. <strong>라이트/다크가 뒤집히는 층은 여기뿐이다.</strong></td></tr>
           <tr><td><strong>3단 섹션</strong></td><td><code>--th-static</code> <code>--th-vivid</code></td>
               <td>계열이 갈아끼우는 칸. <code>data-section</code> 하나로 개념·유형·서술형·과제·시험이 바뀐다.</td></tr>
         </tbody>
       </table>
-      <div class="sg-rule sg-rule--dont">화면 CSS에 hex를 적지 않는다. 눈금에 없는 px도 적지 않는다.
-        필요한 값이 없으면 그 화면이 특별한 게 아니라 눈금이 틀린 것은 아닌지 먼저 본다.</div>
+      <div class="sg-rule sg-rule--dont">화면 CSS·JS에 색값(hex · rgb)을 적지 않는다. 눈금에 없는 px도 적지 않는다.
+        필요한 값이 없으면 그 화면이 특별한 게 아니라 눈금이 틀린 것은 아닌지 먼저 본다.
+        지금 토큰 밖 색은 <strong>0곳</strong>입니다 — <code>tools/style-audit.py</code>가 잽니다.</div>
+      <div class="sg-rule sg-rule--why"><strong>지금 상태를 그대로 적습니다.</strong> 화면 CSS가 1단 램프를 직접 부르는 곳이 약 800곳 남아 있어요.
+        절반쯤은 화면 안의 지역 역할 변수로 받아 쓰는 길(<code>--ink: var(--n-050)</code>)이고, 나머지는 속성에 바로 씁니다.
+        테마가 뒤집히는 색은 2단을, 테마와 무관한 고정 면(계기판 · 콘솔 같은 「우주선의 물건」)은 1단을 쓰는 것이
+        원칙인데, 둘을 아직 다 가르지 못했습니다. <strong>다음 회차 과제</strong>로 남겨 두고 숫자로 지켜봅니다.</div>
     </section>
 
     <!-- ===================================================== 색 램프 -->
@@ -49,6 +54,19 @@
       <p class="sg-lead">스텝 번호는 <strong>밝기 순서</strong>입니다. 050이 가장 밝고 900이 가장 깊습니다.
         중간의 <strong>450</strong>은 다른 램프에 없는 특별한 칸이에요 — 아래 「칠면 셋」에서 설명합니다.</p>
       <div id="ramps"></div>
+    </section>
+
+    <!-- ===================================================== 알파 램프 -->
+    <section class="sg-sec" id="alpha">
+      <h2>색 — 알파 램프 <small>1단 · 흰 16단 · 검정 8단 · 마감 회차 신설</small></h2>
+      <p class="sg-lead">반투명 칠의 단계입니다. 다크 면 위 덧칠(호버 · 트랙 · 헤어라인)은 <strong>흰</strong>,
+        그림자와 딤은 <strong>검정</strong>을 씁니다. 치수처럼 <strong>값으로 이름합니다</strong> — <code>--white-a10</code>은 10%예요.
+        예전엔 화면마다 0.05 · 0.055 · 0.06 · 0.07처럼 반 걸음씩 다른 값이 32가지 쓰이고 있었고, 가장 가까운 단계로 모았습니다(차이 최대 5%p).</p>
+      <div id="alphas"></div>
+      <div class="sg-rule sg-rule--do">색이 섞인 반투명은 램프를 늘리지 않고
+        <code>color-mix(in srgb, var(--violet-600) 12%, transparent)</code>처럼 <strong>가족 스텝 + 투명도</strong>로 씁니다.
+        팔레트 밖 색(옛 보라 <code>#6C63C9</code>, 옛 초록 <code>#12A150</code> 등)은 가장 가까운 가족 스텝으로 옮겼어요.</div>
+      <div class="sg-rule sg-rule--dont">마스크(<code>mask</code>)의 흑백은 색이 아니라 <strong>모양을 뚫는 도구</strong>라 토큰으로 바꾸지 않습니다.</div>
     </section>
 
     <!-- ===================================================== 칠면 셋 -->
@@ -298,7 +316,7 @@
   </main>
 </div>
 
-<script src="styleguide/foundations.js?v=20261012-3"></script>
-<script src="styleguide/sg.js?v=20261012-3"></script>
+<script src="styleguide/foundations.js?v=20261012-4"></script>
+<script src="styleguide/sg.js?v=20261012-4"></script>
 </body>
 </html>

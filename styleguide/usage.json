@@ -3,62 +3,14 @@
  "_만든 도구": "tools/usage-scan.py",
  "_화면 수": 36,
  "usage": {
-  "'": {
-   "nav/home.html": "markup"
-  },
-  "'')": {
-   "nav/home.html": "markup"
-  },
-  "'+(g?'':'x')+'": {
-   "nav/curriculum.html": "markup",
-   "nav/freemode.html": "markup"
-  },
-  "'+(i===page?'is-on':'')+'": {
-   "util/notice.html": "markup"
-  },
-  "'+(st==='todo'?'':st)+'": {
-   "nav/curriculum.html": "markup",
-   "nav/freemode.html": "markup"
-  },
-  "'+(state.subj===k?'is-on':'')+'": {
-   "util/payment.html": "markup"
-  },
-  "'+stat[0]+'": {
-   "nav/curriculum.html": "markup"
-  },
-  "'doing'": {
-   "nav/home.html": "markup"
-  },
-  "'done'": {
-   "nav/home.html": "markup"
-  },
-  "'half'": {
-   "nav/home.html": "markup"
-  },
-  "'on'": {
-   "nav/home.html": "markup"
-  },
-  "(recDays[k]?'": {
-   "util/history.html": "markup"
-  },
-  "(x": {
-   "nav/home.html": "markup"
-  },
-  "+": {
-   "nav/home.html": "markup",
-   "util/history.html": "markup"
-  },
-  ":": {
-   "nav/home.html": "markup"
-  },
-  "===": {
-   "nav/home.html": "markup"
-  },
-  "?": {
-   "nav/home.html": "markup"
-  },
   "aline": {
    "essay/drill-v2.html": "js"
+  },
+  "allcol": {
+   "nav/freemode.html": "js"
+  },
+  "allcols": {
+   "nav/freemode.html": "js"
   },
   "allview": {
    "nav/freemode.html": "markup"
@@ -136,7 +88,7 @@
    "essay/report.html": "markup",
    "essay/step-result.html": "markup",
    "essay/training-result.html": "markup",
-   "nav/freemode.html": "markup",
+   "nav/freemode.html": "js",
    "shared/step-result.html": "markup",
    "shared/training-result.html": "markup",
    "type/quiz.html": "markup",
@@ -229,7 +181,7 @@
    "type/training-result.html": "markup"
   },
   "bar__f": {
-   "nav/freemode.html": "markup"
+   "nav/freemode.html": "js"
   },
   "bar__group": {
    "assignment/explain.html": "markup",
@@ -546,7 +498,20 @@
    "nav/bridge.html": "markup"
   },
   "chunk": {
+   "concept/learn.html": "markup",
+   "concept/organize.html": "js",
+   "essay/drill-v2.html": "js",
    "essay/drill.html": "js"
+  },
+  "chunk--blank": {
+   "concept/learn.html": "markup"
+  },
+  "chunk--blank__text": {
+   "concept/learn.html": "markup"
+  },
+  "chunk--img": {
+   "concept/learn.html": "markup",
+   "essay/drill-v2.html": "js"
   },
   "chunk__go": {
    "essay/drill.html": "js"
@@ -591,7 +556,7 @@
    "concept/organize.html": "markup"
   },
   "cr": {
-   "nav/curriculum.html": "markup"
+   "nav/curriculum.html": "js"
   },
   "crumb": {
    "concept/basic-ops.html": "markup",
@@ -823,10 +788,6 @@
   },
   "dot": {
    "exam/solve.html": "markup"
-  },
-  "dtoast": {
-   "essay/drill-v2.html": "markup",
-   "essay/drill.html": "markup"
   },
   "dummy-img": {
    "essay/drill-v2.html": "js"
@@ -1061,166 +1022,160 @@
    "exam/home.html": "js"
   },
   "h-bar": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-bar__note": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-cal": {
    "util/history.html": "markup"
   },
-  "h-cal__d'+(day.getMonth()!==calMonth.getMonth()?'": {
-   "util/history.html": "markup"
+  "h-cal__d": {
+   "util/history.html": "js"
   },
   "h-cal__dow": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-cal__foot": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-cal__hd": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-cal__mo": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-cal__nav": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-cal__row": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
-  "h-cal__wk'+(iso(mon)===iso(week)?'": {
-   "util/history.html": "markup"
+  "h-cal__wk": {
+   "util/history.html": "js"
   },
   "h-calwrap": {
    "util/history.html": "markup"
   },
   "h-chip": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
-  "h-chip--done'+(wk?'": {
-   "util/history.html": "markup"
+  "h-chip--done": {
+   "util/history.html": "js"
   },
   "h-chip--go": {
-   "util/history.html": "markup"
-  },
-  "h-chip--go'+(wk?'": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-chip--lock": {
-   "util/history.html": "markup"
-  },
-  "h-chip--wk':'')+'": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-chip__d": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-chip__go": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-chip__r": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-chip__sc": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-chip__st": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-chip__t": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-chip__wk": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-chips": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-col": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-col__k": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-cols": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-d--dn": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-d--eq": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-d--up": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-day": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-day__d": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-grade": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-grade__g": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-grade__w": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-head": {
    "util/history.html": "markup"
   },
   "h-hero": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-hero--empty": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-hero__act": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-hero__big": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-hero__delta": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-hero__k": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-hero__l": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-hero__sub": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-mbtn": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-mbtn--p": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-modal": {
    "util/history.html": "markup"
   },
   "h-modal__act": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-modal__box": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-modal__s": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-modal__t": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-modal__top": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-nav": {
    "util/history.html": "markup"
@@ -1241,97 +1196,97 @@
    "util/history.html": "markup"
   },
   "h-nolist": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-res": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-res--open": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
-  "h-sb'+(cur?'": {
-   "util/history.html": "markup"
+  "h-sb": {
+   "util/history.html": "js"
   },
   "h-sb__bar": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-sb__none": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-sb__slot": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-sb__v": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-sb__wk": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-spark": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-spark__bars": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-spark__k": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-sub": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-sub__hd": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-sub__nm": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-sub__path": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-tb": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
-  "h-ti'+wk+'": {
-   "util/history.html": "markup"
+  "h-ti": {
+   "util/history.html": "js"
   },
   "h-ti__bx": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-ti__d": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-ti__dot": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-ti__ing": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-ti__m": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-ti__min": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-ti__r": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-ti__rail": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-ti__sc": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-ti__tm": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-ti__what": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-ti__where": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "h-ties": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "has-more": {
    "concept/basic-ops.html": "js",
@@ -1344,9 +1299,6 @@
    "concept/drill.html": "js",
    "type/quiz.html": "js",
    "type/review.html": "js"
-  },
-  "has-rec':'')+'": {
-   "util/history.html": "markup"
   },
   "hd": {
    "assignment/explain.html": "markup",
@@ -1454,13 +1406,21 @@
    "shared/training-result.html": "markup",
    "type/training-result.html": "markup"
   },
+  "hyb": {
+   "nav/curriculum.html": "js",
+   "nav/freemode.html": "js"
+  },
+  "hyc": {
+   "nav/curriculum.html": "js",
+   "nav/freemode.html": "js"
+  },
   "hyc__lab": {
-   "nav/curriculum.html": "markup",
-   "nav/freemode.html": "markup"
+   "nav/curriculum.html": "js",
+   "nav/freemode.html": "js"
   },
   "hyc__star": {
-   "nav/curriculum.html": "markup",
-   "nav/freemode.html": "markup"
+   "nav/curriculum.html": "js",
+   "nav/freemode.html": "js"
   },
   "ico": {
    "concept/organize.html": "markup"
@@ -1498,17 +1458,20 @@
    "concept/drill.html": "js",
    "type/quiz.html": "js"
   },
+  "is-allplaque": {
+   "nav/home.html": "js"
+  },
   "is-answering": {
    "essay/drill-v2.html": "js"
   },
   "is-bad": {
-   "util/payment.html": "markup"
-  },
-  "is-bad':'')+'": {
-   "util/payment.html": "markup"
+   "util/payment.html": "js"
   },
   "is-breathing": {
    "exam/home.html": "js"
+  },
+  "is-center": {
+   "nav/freemode.html": "js"
   },
   "is-collapsed": {
    "concept/drill.html": "js",
@@ -1539,9 +1502,6 @@
    "assignment/explain.html": "js",
    "assignment/solve.html": "js"
   },
-  "is-cur':'')+'": {
-   "util/history.html": "markup"
-  },
   "is-current": {
    "concept/basic-ops.html": "js",
    "concept/learn.html": "js",
@@ -1550,6 +1510,9 @@
    "type/quiz.html": "js",
    "type/result.html": "markup",
    "type/review.html": "js"
+  },
+  "is-detail": {
+   "nav/freemode.html": "js"
   },
   "is-done": {
    "assignment/solve.html": "js",
@@ -1561,6 +1524,9 @@
    "essay/step-result.html": "js",
    "shared/step-result.html": "markup",
    "type/result.html": "markup"
+  },
+  "is-drag": {
+   "nav/freemode.html": "js"
   },
   "is-empty": {
    "essay/drill-v2.html": "js",
@@ -1592,6 +1558,12 @@
   },
   "is-hiding": {
    "exam/home.html": "js"
+  },
+  "is-hit": {
+   "nav/home.html": "js"
+  },
+  "is-hot": {
+   "nav/home.html": "js"
   },
   "is-in": {
    "assignment/explain.html": "js",
@@ -1642,14 +1614,17 @@
   "is-match": {
    "exam/home.html": "js"
   },
+  "is-nochar": {
+   "nav/home.html": "js"
+  },
   "is-none": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
   },
   "is-off": {
    "concept/organize.html": "js"
   },
   "is-ok": {
-   "util/payment.html": "markup"
+   "util/payment.html": "js"
   },
   "is-on": {
    "assignment/explain.html": "js",
@@ -1671,6 +1646,7 @@
    "essay/step-result.html": "js",
    "essay/training-result.html": "js",
    "exam/home.html": "js",
+   "nav/bridge.html": "js",
    "nav/curriculum.html": "js",
    "nav/freemode.html": "markup",
    "nav/home.html": "js",
@@ -1680,15 +1656,11 @@
    "type/result.html": "js",
    "type/review.html": "js",
    "type/training-result.html": "js",
-   "util/history.html": "markup",
+   "util/history.html": "js",
    "util/notice-detail.html": "js",
    "util/notice.html": "markup",
    "util/payment.html": "js",
    "util/report.html": "js"
-  },
-  "is-on':'')+'": {
-   "util/history.html": "markup",
-   "util/payment.html": "markup"
   },
   "is-open": {
    "assignment/explain.html": "js",
@@ -1725,16 +1697,19 @@
    "util/payment.html": "js",
    "util/report.html": "js"
   },
-  "is-out':'')": {
-   "util/history.html": "markup"
-  },
   "is-paused": {
    "essay/step-result.html": "markup",
    "type/result.html": "markup",
    "type/review.html": "markup"
   },
+  "is-peek": {
+   "nav/home.html": "js"
+  },
   "is-ph": {
    "util/payment.html": "markup"
+  },
+  "is-plaque": {
+   "nav/home.html": "js"
   },
   "is-read": {
    "concept/learn.html": "js",
@@ -1766,7 +1741,10 @@
    "exam/home.html": "js"
   },
   "is-sum": {
-   "util/history.html": "markup"
+   "util/history.html": "js"
+  },
+  "is-swap": {
+   "nav/freemode.html": "js"
   },
   "is-tappable": {
    "essay/drill.html": "js"
@@ -1776,10 +1754,7 @@
    "essay/drill-v2.html": "js"
   },
   "is-warn": {
-   "util/report.html": "markup"
-  },
-  "is-warn':'')+'": {
-   "util/notice.html": "markup"
+   "util/report.html": "js"
   },
   "is-wrong": {
    "concept/basic-ops.html": "js",
@@ -1889,6 +1864,13 @@
    "type/result.html": "markup",
    "type/review.html": "markup",
    "type/training-result.html": "markup"
+  },
+  "led": {
+   "essay/step-result.html": "js",
+   "essay/training-result.html": "js",
+   "shared/step-result.html": "js",
+   "shared/training-result.html": "js",
+   "type/training-result.html": "js"
   },
   "lheader": {
    "concept/basic-ops.html": "markup",
@@ -2324,11 +2306,14 @@
   "note__title": {
    "concept/organize.html": "markup"
   },
+  "obj": {
+   "nav/home.html": "js"
+  },
   "obj__img": {
-   "nav/home.html": "markup"
+   "nav/home.html": "js"
   },
   "obj__sweep": {
-   "nav/home.html": "markup"
+   "nav/home.html": "js"
   },
   "ok": {
    "type/result.html": "js",
@@ -2384,24 +2369,6 @@
    "assignment/explain.html": "js",
    "assignment/solve.html": "js",
    "exam/solve.html": "js"
-  },
-  "opt--img": {
-   "concept/basic-ops.html": "js",
-   "concept/drill.html": "js",
-   "type/quiz.html": "js",
-   "type/review.html": "js"
-  },
-  "opt--num": {
-   "concept/basic-ops.html": "js",
-   "concept/drill.html": "js",
-   "type/quiz.html": "js",
-   "type/review.html": "js"
-  },
-  "opt--text": {
-   "concept/basic-ops.html": "js",
-   "concept/drill.html": "js",
-   "type/quiz.html": "js",
-   "type/review.html": "js"
   },
   "opt__n": {
    "assignment/explain.html": "js",
@@ -2479,32 +2446,41 @@
   "phead__title": {
    "assignment/home.html": "markup"
   },
+  "pl": {
+   "nav/home.html": "js"
+  },
+  "planet": {
+   "nav/freemode.html": "js"
+  },
   "planet__hint": {
-   "nav/freemode.html": "markup"
+   "nav/freemode.html": "js"
   },
   "planet__img": {
-   "nav/freemode.html": "markup"
+   "nav/freemode.html": "js"
   },
   "planet__label": {
-   "nav/freemode.html": "markup"
+   "nav/freemode.html": "js"
   },
   "planet__pct": {
-   "nav/freemode.html": "markup"
+   "nav/freemode.html": "js"
   },
   "planet__prog": {
-   "nav/freemode.html": "markup"
+   "nav/freemode.html": "js"
   },
   "plaque": {
-   "nav/home.html": "markup"
+   "nav/home.html": "js"
   },
   "plaque__done": {
-   "nav/home.html": "markup"
+   "nav/home.html": "js"
   },
   "plaque__name": {
-   "nav/home.html": "markup"
+   "nav/home.html": "js"
   },
   "plaque__segs": {
-   "nav/home.html": "markup"
+   "nav/home.html": "js"
+  },
+  "plaques": {
+   "nav/home.html": "js"
   },
   "pmodal": {
    "essay/report-review.html": "markup",
@@ -2588,10 +2564,6 @@
    "type/quiz.html": "markup",
    "type/review.html": "markup"
   },
-  "ptoast": {
-   "essay/report-review.html": "markup",
-   "essay/report.html": "markup"
-  },
   "q": {
    "concept/basic-ops.html": "markup",
    "concept/drill.html": "markup",
@@ -2648,6 +2620,24 @@
   "qmeta__type": {
    "assignment/explain.html": "js",
    "assignment/solve.html": "js"
+  },
+  "qopt--img": {
+   "concept/basic-ops.html": "js",
+   "concept/drill.html": "js",
+   "type/quiz.html": "js",
+   "type/review.html": "js"
+  },
+  "qopt--num": {
+   "concept/basic-ops.html": "js",
+   "concept/drill.html": "js",
+   "type/quiz.html": "js",
+   "type/review.html": "js"
+  },
+  "qopt--text": {
+   "concept/basic-ops.html": "js",
+   "concept/drill.html": "js",
+   "type/quiz.html": "js",
+   "type/review.html": "js"
   },
   "qpanel": {
    "assignment/explain.html": "markup",
@@ -2778,8 +2768,8 @@
    "exam/solve.html": "js"
   },
   "rbar": {
-   "nav/curriculum.html": "markup",
-   "nav/freemode.html": "markup"
+   "nav/curriculum.html": "js",
+   "nav/freemode.html": "js"
   },
   "rblank": {
    "essay/drill-review.html": "js",
@@ -2789,11 +2779,23 @@
    "essay/drill-review.html": "js",
    "essay/report-review.html": "js"
   },
+  "rcard": {
+   "nav/curriculum.html": "js"
+  },
   "rcard__bar": {
-   "nav/curriculum.html": "markup"
+   "nav/curriculum.html": "js"
+  },
+  "rcard__grade": {
+   "nav/curriculum.html": "js"
+  },
+  "rcard__lockmsg": {
+   "nav/curriculum.html": "js"
   },
   "rcard__name": {
-   "nav/curriculum.html": "markup"
+   "nav/curriculum.html": "js"
+  },
+  "rcard__top": {
+   "nav/curriculum.html": "js"
   },
   "rdate": {
    "assignment/result.html": "markup"
@@ -3529,12 +3531,6 @@
    "shared/step-result.html": "markup",
    "type/result.html": "markup"
   },
-  "rtoast": {
-   "essay/step-result.html": "markup",
-   "essay/training-result.html": "markup",
-   "shared/training-result.html": "markup",
-   "type/training-result.html": "markup"
-  },
   "runit": {
    "essay/step-result.html": "markup",
    "shared/step-result.html": "markup",
@@ -3965,6 +3961,9 @@
   "scrumb": {
    "exam/solve.html": "markup"
   },
+  "scrumb__item": {
+   "exam/solve.html": "markup"
+  },
   "sec": {
    "assignment/home.html": "markup"
   },
@@ -4007,37 +4006,21 @@
   "sec__title": {
    "assignment/home.html": "markup"
   },
-  "seg": {
+  "segmented": {
    "assignment/solve.html": "markup",
-   "concept/learn.html": "markup",
-   "concept/organize.html": "js",
-   "essay/drill-v2.html": "js",
-   "essay/step-result.html": "js",
-   "essay/training-result.html": "js",
-   "exam/solve.html": "markup",
-   "nav/freemode.html": "markup",
-   "shared/step-result.html": "js",
-   "shared/training-result.html": "js",
-   "type/training-result.html": "js"
+   "nav/freemode.html": "markup"
   },
-  "seg--blank": {
-   "concept/learn.html": "markup"
-  },
-  "seg--blank__text": {
-   "concept/learn.html": "markup"
-  },
-  "seg--img": {
-   "concept/learn.html": "markup",
-   "essay/drill-v2.html": "js"
-  },
-  "seg__btn": {
+  "segmented__btn": {
    "assignment/solve.html": "markup"
   },
+  "semhd": {
+   "nav/freemode.html": "js"
+  },
   "semhd__img": {
-   "nav/freemode.html": "markup"
+   "nav/freemode.html": "js"
   },
   "semhd__t": {
-   "nav/freemode.html": "markup"
+   "nav/freemode.html": "js"
   },
   "sep": {
    "assignment/home.html": "js",
@@ -4133,19 +4116,9 @@
    "assignment/solve.html": "js"
   },
   "show": {
-   "assignment/home.html": "js",
    "concept/basic-ops.html": "js",
    "concept/drill.html": "js",
-   "exam/home.html": "js",
-   "exam/solve.html": "js",
-   "nav/curriculum.html": "js",
-   "nav/freemode.html": "js",
-   "nav/home.html": "js",
-   "util/history.html": "js",
-   "util/notice-detail.html": "js",
-   "util/notice.html": "js",
-   "util/payment.html": "js",
-   "util/report.html": "js"
+   "exam/solve.html": "js"
   },
   "show-ans": {
    "concept/drill.html": "js",
@@ -4233,11 +4206,6 @@
    "type/result.html": "js"
   },
   "smodal__x": {
-   "essay/step-result.html": "js",
-   "shared/step-result.html": "js",
-   "type/result.html": "js"
-  },
-  "smtoast": {
    "essay/step-result.html": "js",
    "shared/step-result.html": "js",
    "type/result.html": "js"
@@ -4342,6 +4310,9 @@
   "stats": {
    "assignment/result.html": "markup"
   },
+  "step": {
+   "nav/curriculum.html": "js"
+  },
   "step-card": {
    "shared/step-result.html": "markup",
    "type/result.html": "markup"
@@ -4367,22 +4338,22 @@
    "type/result.html": "markup"
   },
   "step__go": {
-   "nav/curriculum.html": "markup"
+   "nav/curriculum.html": "js"
   },
   "step__grade": {
-   "nav/curriculum.html": "markup"
+   "nav/curriculum.html": "js"
   },
   "step__i": {
-   "nav/curriculum.html": "markup"
+   "nav/curriculum.html": "js"
   },
   "step__k": {
-   "nav/curriculum.html": "markup"
+   "nav/curriculum.html": "js"
   },
   "step__n": {
-   "nav/curriculum.html": "markup"
+   "nav/curriculum.html": "js"
   },
   "step__s": {
-   "nav/curriculum.html": "markup"
+   "nav/curriculum.html": "js"
   },
   "stepbar": {
    "essay/drill-review.html": "markup",
@@ -4406,42 +4377,61 @@
    "essay/drill-v2.html": "markup"
   },
   "steps": {
-   "essay/drill.html": "markup"
+   "essay/drill.html": "markup",
+   "nav/curriculum.html": "js"
   },
   "steps__q": {
    "essay/drill.html": "markup"
   },
+  "strandblk": {
+   "nav/freemode.html": "js"
+  },
   "strandblk__hd": {
-   "nav/freemode.html": "markup"
+   "nav/freemode.html": "js"
   },
   "strandblk__img": {
-   "nav/freemode.html": "markup"
+   "nav/freemode.html": "js"
   },
   "strandblk__t": {
-   "nav/freemode.html": "markup"
+   "nav/freemode.html": "js"
+  },
+  "strandgrid": {
+   "nav/freemode.html": "js"
   },
   "stype": {
    "exam/solve.html": "markup"
   },
+  "sub": {
+   "nav/curriculum.html": "js",
+   "nav/freemode.html": "js"
+  },
+  "sub__body": {
+   "nav/curriculum.html": "js",
+   "nav/freemode.html": "js"
+  },
   "sub__chev": {
-   "nav/curriculum.html": "markup",
-   "nav/freemode.html": "markup"
+   "nav/curriculum.html": "js",
+   "nav/freemode.html": "js"
   },
   "sub__done2": {
-   "nav/curriculum.html": "markup",
-   "nav/freemode.html": "markup"
+   "nav/curriculum.html": "js",
+   "nav/freemode.html": "js"
+  },
+  "sub__head": {
+   "nav/curriculum.html": "js",
+   "nav/freemode.html": "js"
   },
   "sub__mini": {
-   "nav/curriculum.html": "markup",
-   "nav/freemode.html": "markup"
+   "nav/curriculum.html": "js",
+   "nav/freemode.html": "js"
   },
   "sub__no": {
-   "nav/curriculum.html": "markup",
-   "nav/freemode.html": "markup"
+   "nav/curriculum.html": "js",
+   "nav/freemode.html": "js"
   },
   "sub__title": {
-   "nav/curriculum.html": "markup",
-   "nav/freemode.html": "markup"
+   "nav/curriculum.html": "js",
+   "nav/freemode.html": "js"
   },
   "subunit": {
    "exam/home.html": "js"
@@ -4496,8 +4486,8 @@
    "assignment/home.html": "js"
   },
   "tag": {
-   "nav/curriculum.html": "markup",
-   "nav/freemode.html": "markup"
+   "nav/curriculum.html": "js",
+   "nav/freemode.html": "js"
   },
   "tbl": {
    "essay/training-result.html": "markup",
@@ -4600,10 +4590,23 @@
    "assignment/explain.html": "markup",
    "assignment/result.html": "markup",
    "assignment/solve.html": "markup",
+   "essay/drill-v2.html": "markup",
+   "essay/drill.html": "markup",
+   "essay/report-review.html": "markup",
+   "essay/report.html": "markup",
+   "essay/step-result.html": "markup",
+   "essay/training-result.html": "markup",
    "nav/bridge.html": "markup",
    "nav/curriculum.html": "markup",
    "nav/freemode.html": "markup",
-   "nav/home.html": "markup"
+   "nav/home.html": "markup",
+   "shared/step-result.html": "js",
+   "shared/training-result.html": "markup",
+   "type/result.html": "js",
+   "type/training-result.html": "markup",
+   "util/history.html": "markup",
+   "util/payment.html": "markup",
+   "util/report.html": "markup"
   },
   "toggle": {
    "assignment/explain.html": "markup",
@@ -4776,11 +4779,11 @@
    "util/report.html": "markup"
   },
   "u-btn": {
-   "util/history.html": "markup",
+   "util/history.html": "js",
    "util/notice-detail.html": "markup",
-   "util/notice.html": "markup",
+   "util/notice.html": "js",
    "util/payment.html": "markup",
-   "util/report.html": "markup"
+   "util/report.html": "js"
   },
   "u-btn--cta": {
    "util/payment.html": "markup"
@@ -4791,23 +4794,23 @@
   "u-btn--sm": {
    "util/notice-detail.html": "markup"
   },
-  "u-cat'+ev+'": {
-   "util/notice.html": "markup"
+  "u-cat": {
+   "util/notice.html": "js"
   },
   "u-cols": {
    "util/payment.html": "markup"
   },
   "u-cp": {
-   "util/payment.html": "markup"
+   "util/payment.html": "js"
   },
   "u-cpToggle": {
-   "util/payment.html": "markup"
+   "util/payment.html": "js"
   },
   "u-cp__btn": {
-   "util/payment.html": "markup"
+   "util/payment.html": "js"
   },
   "u-cp__msg": {
-   "util/payment.html": "markup"
+   "util/payment.html": "js"
   },
   "u-crumb": {
    "util/notice-detail.html": "markup"
@@ -4830,8 +4833,8 @@
   "u-docfoot": {
    "util/notice-detail.html": "markup"
   },
-  "u-field'+(state.cpMsg==='bad'?'": {
-   "util/payment.html": "markup"
+  "u-field": {
+   "util/payment.html": "js"
   },
   "u-file": {
    "util/notice-detail.html": "markup"
@@ -4879,11 +4882,11 @@
    "util/report.html": "markup"
   },
   "u-new": {
-   "util/notice.html": "markup",
-   "util/report.html": "markup"
+   "util/notice.html": "js",
+   "util/report.html": "js"
   },
   "u-pager": {
-   "util/notice.html": "markup"
+   "util/notice.html": "js"
   },
   "u-rise": {
    "util/history.html": "markup",
@@ -4893,29 +4896,29 @@
    "util/report.html": "markup"
   },
   "u-row": {
-   "util/notice.html": "markup",
-   "util/report.html": "markup"
+   "util/notice.html": "js",
+   "util/report.html": "js"
   },
   "u-row__chev": {
-   "util/notice.html": "markup"
+   "util/notice.html": "js"
   },
   "u-row__ext": {
-   "util/report.html": "markup"
+   "util/report.html": "js"
   },
   "u-row__main": {
-   "util/notice.html": "markup",
-   "util/report.html": "markup"
+   "util/notice.html": "js",
+   "util/report.html": "js"
   },
   "u-row__meta": {
-   "util/notice.html": "markup",
-   "util/report.html": "markup"
+   "util/notice.html": "js",
+   "util/report.html": "js"
   },
   "u-row__ttl": {
-   "util/notice.html": "markup",
-   "util/report.html": "markup"
+   "util/notice.html": "js",
+   "util/report.html": "js"
   },
   "u-seg": {
-   "util/history.html": "markup",
+   "util/history.html": "js",
    "util/notice.html": "markup"
   },
   "u-seg3": {
@@ -4925,38 +4928,36 @@
    "util/notice.html": "markup"
   },
   "u-sheet": {
-   "util/history.html": "markup",
-   "util/notice.html": "markup",
-   "util/report.html": "markup"
+   "util/history.html": "js",
+   "util/notice.html": "js",
+   "util/report.html": "js"
   },
   "u-side": {
    "util/payment.html": "markup"
   },
   "u-sk": {
-   "util/notice.html": "markup",
-   "util/report.html": "markup"
+   "util/notice.html": "js",
+   "util/report.html": "js"
   },
   "u-skrow": {
-   "util/notice.html": "markup",
-   "util/report.html": "markup"
+   "util/notice.html": "js",
+   "util/report.html": "js"
   },
   "u-state": {
-   "util/notice.html": "markup",
-   "util/report.html": "markup"
+   "util/notice.html": "js",
+   "util/report.html": "js"
   },
   "u-state__d": {
-   "util/notice.html": "markup",
-   "util/report.html": "markup"
+   "util/notice.html": "js",
+   "util/report.html": "js"
   },
   "u-state__ico": {
-   "util/report.html": "markup"
-  },
-  "u-state__ico'+(warn?'": {
-   "util/notice.html": "markup"
+   "util/notice.html": "js",
+   "util/report.html": "js"
   },
   "u-state__t": {
-   "util/notice.html": "markup",
-   "util/report.html": "markup"
+   "util/notice.html": "js",
+   "util/report.html": "js"
   },
   "u-step": {
    "util/payment.html": "markup"
@@ -4995,28 +4996,22 @@
    "util/payment.html": "markup"
   },
   "u-tile": {
-   "util/payment.html": "markup"
+   "util/payment.html": "js"
   },
-  "u-tile'+(state.plan===i?'": {
-   "util/payment.html": "markup"
-  },
-  "u-tile--m'+(state.method==='card'?'": {
-   "util/payment.html": "markup"
-  },
-  "u-tile--m'+(state.method==='vbank'?'": {
-   "util/payment.html": "markup"
+  "u-tile--m": {
+   "util/payment.html": "js"
   },
   "u-tile__mo": {
-   "util/payment.html": "markup"
+   "util/payment.html": "js"
   },
   "u-tile__nm": {
-   "util/payment.html": "markup"
+   "util/payment.html": "js"
   },
   "u-tile__off": {
-   "util/payment.html": "markup"
+   "util/payment.html": "js"
   },
   "u-tile__tot": {
-   "util/payment.html": "markup"
+   "util/payment.html": "js"
   },
   "u-tiles": {
    "util/payment.html": "markup"
@@ -5026,11 +5021,6 @@
   },
   "u-tiles--4": {
    "util/payment.html": "markup"
-  },
-  "u-toast": {
-   "util/history.html": "markup",
-   "util/payment.html": "markup",
-   "util/report.html": "markup"
   },
   "u-total": {
    "util/payment.html": "markup"
@@ -5061,17 +5051,29 @@
    "util/history.html": "markup",
    "util/payment.html": "markup"
   },
+  "ubtn": {
+   "nav/freemode.html": "js"
+  },
   "ubtn__done": {
-   "nav/freemode.html": "markup"
+   "nav/freemode.html": "js"
   },
   "ubtn__no": {
-   "nav/freemode.html": "markup"
+   "nav/freemode.html": "js"
   },
   "ubtn__t": {
-   "nav/freemode.html": "markup"
+   "nav/freemode.html": "js"
+  },
+  "ucard": {
+   "nav/freemode.html": "js"
+  },
+  "ucard__body": {
+   "nav/freemode.html": "js"
+  },
+  "ucard__img": {
+   "nav/freemode.html": "js"
   },
   "ucard__nm": {
-   "nav/freemode.html": "markup"
+   "nav/freemode.html": "js"
   },
   "umodal": {
    "nav/freemode.html": "markup"
@@ -5093,7 +5095,9 @@
   },
   "unit": {
    "assignment/home.html": "js",
-   "exam/home.html": "js"
+   "exam/home.html": "js",
+   "nav/curriculum.html": "js",
+   "nav/freemode.html": "js"
   },
   "unit-badge": {
    "exam/home.html": "js"
@@ -5109,6 +5113,10 @@
   },
   "unit__title": {
    "exam/home.html": "js"
+  },
+  "unit__ttl": {
+   "nav/curriculum.html": "js",
+   "nav/freemode.html": "js"
   },
   "videobox": {
    "concept/learn.html": "markup"
@@ -5193,9 +5201,6 @@
    "assignment/result.html": "markup",
    "assignment/solve.html": "markup",
    "nav/bridge.html": "markup"
-  },
-  "x": {
-   "nav/home.html": "markup"
   },
   "xbody": {
    "exam/home.html": "markup"

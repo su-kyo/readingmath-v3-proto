@@ -40,6 +40,20 @@
       }).join('') + '</div>';
   }).join('');
 
+  /* ---- 알파 램프 ---- 흰 램프는 다크 면 위에, 검정 램프는 밝은 면 위에 세운다.
+     번호 글자는 칸이 절반보다 진해지는 지점(50)에서 흰↔먹을 바꾼다 */
+  function alphaRow(prefix, steps, bg, lb) {
+    return '<p class="sg-ramp__lb"><strong>' + lb + '</strong></p>' +
+      '<div class="sg-ramp" style="background:' + bg + ';padding:6px;border-radius:12px;gap:6px">' + steps.map(function (s) {
+        var name = '--' + prefix + '-a' + s;
+        return '<span title="' + name + ' · ' + v(name) + '" style="background:var(' + name + ');border-radius:6px">' +
+               '<b style="color:' + ((prefix === 'white') === (+s < 50) ? 'var(--n-000)' : 'var(--n-900)') + '">' + s + '</b></span>';
+      }).join('') + '</div>';
+  }
+  document.getElementById('alphas').innerHTML =
+    alphaRow('white', ['04','06','08','10','12','14','16','20','24','30','40','50','60','80','90','95'], 'var(--n-900)', '흰 — 다크 면 위 덧칠 · 트랙 · 헤어라인') +
+    alphaRow('black', ['10','20','25','30','40','50','60','70'], 'var(--n-000)', '검정 — 그림자 · 딤 · 눌림');
+
   /* ---- 계열 슬롯 ---- */
   var SECTIONS = [
     ['concept', '개념', '파랑 700'], ['type', '유형', '틸 700'],
@@ -128,14 +142,16 @@
     ['--asset-console-concept-body','개념 콘솔 바탕'], ['--asset-console-concept-rim','개념 콘솔 립'],
     ['--asset-console-concept-tray','개념 콘솔 트레이'], ['--asset-console-type-tray','유형 트레이'],
     ['--asset-console-essay-rim','서술형 립'], ['--asset-console-essay-tray','서술형 트레이'],
-    ['--asset-console-task-rim','과제 립'], ['--asset-console-task-tray','과제 트레이'],
+    ['--asset-console-task-body','과제 콘솔 바탕'], ['--asset-console-task-rim','과제 립'], ['--asset-console-task-tray','과제 트레이'],
     ['--art-star','별'], ['--art-star-bright','밝은 별'],
+    ['--art-star-halo','별빛'], ['--art-star-halo-big','큰 별빛'], ['--art-star-flare','별 섬광'],
+    ['--art-space-glow-1','성운 1'], ['--art-space-glow-2','성운 2'], ['--art-space-glow-3','성운 3'],
     ['--art-grade-s','등급 S 칩'], ['--art-grade-a','등급 A 칩'],
     ['--art-grade-b','등급 B 칩'], ['--art-grade-c','등급 C 칩'],
     ['--art-planet-1','행성 링 1'], ['--art-planet-2','행성 링 2'],
     ['--art-planet-3','행성 링 3'], ['--art-planet-4','행성 링 4'],
     ['--art-mark-bg','형광펜 면 (다크)'], ['--art-mark-fg','형광펜 글자 (다크)'],
-    ['--gold-500','별·등급 PNG 금색'], ['--bronze-500','동색']
+    ['--gold-500','별·등급 PNG 금색']
   ];
   document.getElementById('assets').innerHTML = '<div class="sg-tiles">' + ASSETS.map(function (a) {
     return '<div class="sg-tile"><div style="height:44px;border-radius:8px;background:' + v(a[0]) + '"></div>' +

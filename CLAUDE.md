@@ -1,7 +1,8 @@
 # RM (리딩수학과학 리디자인) 작업 규칙
 
 수학·과학 태블릿 학습 서비스의 리디자인 프로토타입. 프레임워크 없는 HTML·CSS·JS.
-폴더 구조와 화면 목록은 `README.md`, 디자인 원칙은 `docs/design-system.md`를 본다.
+폴더 구조와 화면 목록은 `README.md`, 디자인 시스템(원칙·부품·예외)은 **스토리북 `styleguide/`** 를 본다.
+(`docs/design-system.md`는 2026-10-12부터 안내 한 장이다 — 옛 v1.0 본문은 낡았다.)
 상위 공통 규칙(`../../CLAUDE.md` — 이미지 경량본·_source 원본 보관)이 함께 적용된다.
 
 ## 반드시 지킬 것
@@ -11,10 +12,12 @@
 최상위 기준으로 쓴다. 루트의 `index.html`에는 넣지 않는다 (`styleguide/` 4장은 하위 폴더라 붙인다).
 
 **② 색은 `styles/tokens.css`의 변수로만 쓴다.**
-화면 CSS에 hex를 직접 쓰지 않는다. 색값의 현행 기준은 tokens.css이고,
-원칙·구조의 기준은 `docs/design-system.md`다 (둘이 다르면 색값은 tokens.css가 맞다).
+화면 CSS·JS에 색값(hex·rgb)을 직접 쓰지 않는다(지금 0곳 — `tools/style-audit.py`가 잰다).
+반투명은 알파 램프(`--white-a10` · `--black-a30`), 색이 섞인 반투명은
+`color-mix(in srgb, var(--가족-스텝) N%, transparent)`로 쓴다. 마스크의 흑백은 색이 아니라 예외다.
+예외 목록은 스토리북 「패턴 › 남긴 예외」와 `style-audit.py`의 `EXCEPT`가 같다.
 
-**②-1 대비 잣대는 하나가 아니다 (v1.6 · `design-system.md` §3.0b).**
+**②-1 대비 잣대는 하나가 아니다 (v1.6 · 스토리북 「기초 › 칠면 셋」).**
 "모든 칠면에 흰 글자 4.5"를 일률 적용해 화면 전체가 칙칙해진 적이 있다. 칠면은 셋이다:
 
 - **텍스트 칠면** (작은 글자) → 4.5:1 · 600 스텝(`--th-solid`) 또는 틴트+잉크
@@ -51,7 +54,7 @@
 계열 폴더(nav·concept·type·essay·assignment·exam·util·shared)와
 index의 그룹 분류는 같은 단위다 — 둘이 어긋나게 두지 않는다.
 
-**⑤ 행성 홈(`nav/home.html`)은 좌표 고정 · 그림 교체 방식이다.**
+**⑤ 행성 홈(`nav/home.html`)은 좌표 고정 · 그림 교체 방식이다.** 배치표 `LAYOUT`·`HAS_CHAR`·`CHAR_V`는 `scripts/nav-home.js`에 있다.
 학기 16종 × 과목 2종 = 32화면이지만 배치는 `LAYOUT`의 **과목당 한 벌**뿐이다.
 학기를 늘려도 좌표를 새로 잡지 않는다 — `assets/img/home/<과목>-<학기>/`에
 같은 이름으로 그림만 넣으면 된다. 원본 32세트가 모두 지키는 자리 규칙:
@@ -73,6 +76,21 @@ index의 그룹 분류는 같은 단위다 — 둘이 어긋나게 두지 않는
 고정이라 안 올리면 브라우저가 옛 그림을 계속 쓴다. 제작 규칙은 `docs/character-brief.md`.
 32화면을 한눈에 보려면 `tools/home-contact.html` (배포 제외).
 
+**⑥ 화면 파일 규칙 (마감 회차 2026-10-12 · RMDS v2.0).**
+- **HTML 안에 `<style>`·`<script>`를 쓰지 않는다.** 화면 CSS는 `styles/screens/<계열>-<화면>.css`,
+  화면 JS는 `scripts/<계열>-<화면>.js`. 예외는 `<head>`의 테마 초기화 한 줄(빼면 첫 화면이 깜빡인다)과
+  스토리북의 데모 틀(`<template>`) 안뿐이다.
+- **계열이 같이 쓰는 규칙은 계열 파일로.** result · essay · type · assign · exam · nav · util(+history).
+  여러 계열이면 components. 화면 파일에는 그 화면에만 있는 것만 남긴다.
+  옮길 때는 **같은 요소에 붙는 클래스(BEM 변형·다중 클래스)의 순서**를 지킨다 —
+  변형만 먼저 옮겨 훈련 결과표가 깨진 적이 있다.
+- **이름은 뜻 하나에 하나.** 토스트 `.toast` + 상태 `.is-on`(서랍만 `.rmd-toast`) ·
+  선택지는 목록형 `.opt`(과제·시험) / 타일형 `.qopt`(개념·유형) ·
+  옛 `.seg`는 `.led`(결과 LED) · `.chunk`(끊어읽기) · `.segmented`(분절 토글) · `.scrumb__item`(시험 경로).
+- **변수에 그림 주소를 넣으면 절대 주소로.** `url()`이 든 변수는 그 변수를 쓰는 CSS 파일 기준으로 풀린다
+  (`scripts/nav-home.js`의 `--m` — `new URL(src, document.baseURI)`).
+- 고치고 나면: `python3 tools/style-audit.py`(지킬 것 6개 전부 ✓) → `tools/usage-scan.py` → `?v=` 올리기.
+
 ## 조심할 것
 
 - **조립식 경로**: 이미지·화면 경로가 `'star-'+g` 처럼 코드에서 조립되는 곳이 많다.
@@ -81,8 +99,9 @@ index의 그룹 분류는 같은 단위다 — 둘이 어긋나게 두지 않는
 - `essay/basics·drill`의 **가로 안(basics.html·drill.html)은 '킵'** — 확정안은 v2(세로)다.
   index에서 킵 그룹으로 분리해 뒀다. 어느 쪽도 지우지 않는다.
 - `shared/`의 결과 화면 2장은 개념·유형·서술형이 모두 부른다.
-- **CSS·JS를 고쳤으면 HTML의 `?v=` 숫자를 올린다.** 안 올리면 브라우저가 옛 파일을
-  계속 써서 "고쳤는데 화면이 안 바뀐다"가 된다 (Phase 5에서 두 번 겪었다).
+- **CSS·JS를 고쳤으면 HTML의 `?v=`를 그날 날짜로 올린다**(전 화면 같은 값). 같은 날 또 고치면 회차를 붙인다
+  (`20261012-3`). 안 올리면 브라우저가 옛 파일을 계속 써서 "고쳤는데 화면이 안 바뀐다"가 된다
+  (Phase 5에서 두 번, 마감 회차에서도 한 번 — 옛 스크립트가 바뀐 HTML과 짝이 안 맞아 오류가 났다).
 
 ## 검수 도구 (Phase 5 신설)
 
@@ -172,6 +191,7 @@ iframe 두 개(`srcdoc`)에 넣고 `styles/`의 **진짜 CSS**를 불러 그린�
 `planet-ref.py`(캐릭터 생성용 행성 자료 뽑기) · `char-on-bg.py`(캐릭터를 홈 배경에 올려
 대비 판정 — 몸 대비·자체 대비를 숫자로 찍는다) ·
 `usage-scan.py`(부품별 쓰는 화면 집계 → 스토리북) ·
+`style-audit.py`(스타일 규칙 검사 — 지킬 것 6 · 지켜볼 것 4, `--strict`면 실패 시 종료 코드 1) ·
 `dark-shot.html`(다크 모드 화면을 헤드리스로 찍는 액자 — `screen-shot.sh`는 라이트만 찍힌다)
 
 **스타일 정리 3종 (Phase 10 신설)** — 공용 CSS·부품을 건드릴 때 세트로 쓴다.
@@ -184,6 +204,10 @@ tools/screen-shot.sh /tmp/rm-before   # 고치기 전
 tools/screen-shot.sh /tmp/rm-after    # 고친 뒤
 tools/screen-diff.py /tmp/rm-before /tmp/rm-after
 ```
+
+**잡음을 먼저 알 것** — `dark-shot.html`은 화면을 연 뒤 테마를 바꾸므로 전환 애니메이션 도중에 찍히는 일이
+있다(선택지가 하얗게 남거나 토글이 미끄러지는 중). 무한 반복 애니메이션(행성 홈 숨쉬기 · 결과 LED 깜빡임)은
+위상이 달라진다. 튀는 화면은 같은 코드로 두 번 다시 찍어 0.00%가 나오는지 본다.
 
 **부품을 옮겼는데 0.00%가 나오면 성공이다.** 이 대조가 Phase 10에서 실수를 두 번
 잡았다 — 여러 줄 규칙을 한 줄만 지워 화면이 백지가 된 것, 잘린 출력을 보고 옮겨 적어
@@ -205,4 +229,6 @@ tools/screen-diff.py /tmp/rm-before /tmp/rm-after
 ## 미리보기 · 배포
 
 - 서버: `.claude/launch.json`의 **rm-static** (8020). Bash로 서버 띄우지 않는다.
+  Portfolio 폴더에서 세션을 열면 공통 설정의 **rm-static**(8040)을 쓴다(8020은 회사 MT와 겹친다).
+  `screen-shot.sh`에 포트를 넘긴다: `tools/screen-shot.sh /tmp/x 8040`.
 - 배포: 푸시하면 Vercel 자동 배포. `figma-palette`·`tools`·`video`는 배포 제외.

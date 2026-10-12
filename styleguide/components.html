@@ -6,10 +6,10 @@
   <title>부품 — 리딩수학과학 디자인 시스템</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
   <base href="../" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261012-3" />
-  <link rel="stylesheet" href="styles/base.css?v=20261012-3" />
-  <link rel="stylesheet" href="styles/components.css?v=20261012-3" />
-  <link rel="stylesheet" href="styleguide/sg.css?v=20261012-3" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261012-4" />
+  <link rel="stylesheet" href="styles/base.css?v=20261012-4" />
+  <link rel="stylesheet" href="styles/components.css?v=20261012-4" />
+  <link rel="stylesheet" href="styleguide/sg.css?v=20261012-4" />
 </head>
 <body data-sg-css="tokens,base,components,learn-shell">
 <div class="sg">
@@ -232,8 +232,8 @@
         <div class="sg-item__hd"><h3>선택지 <small style="font-weight:400">라이브러리 — 화면은 각자 것을 쓴다</small></h3>
           <span class="sg-item__cls">.answer · .is-selected · .is-correct · .is-wrong · .is-disabled</span>
           <span class="sg-item__file">components.css</span></div>
-        <p class="sg-note"><strong>어느 화면도 이걸 안 씁니다.</strong> 실제 화면은 <code>.opt</code>(과제·시험)과
-          <code>.qopt</code> 성격의 것(유형)을 각자 갖고 있어요 — 아래 「아직 갈라져 있는 이름」 참고.
+        <p class="sg-note"><strong>어느 화면도 이걸 안 씁니다.</strong> 실제 화면은 <code>.opt</code>(과제·시험 — 목록형)와
+          <code>.qopt</code>(개념·유형 — 타일형)를 각자 갖고 있어요 — 아래 「갈라낸 이름」 참고.
           여기 남겨 둔 이유는 <strong>선택지의 상태 넷이 무엇인지</strong>가 이 부품에 가장 또렷하게 적혀 있기 때문입니다.</p>
         <template class="sg-src">
           <div class="sg-col" style="width:100%;align-items:stretch">
@@ -277,10 +277,10 @@
       <p class="sg-lead">결과 화면은 <strong>테마 토글이 없습니다</strong> — 우주선 계기판이라 늘 어둡습니다.
         그래서 이 절만 액자가 하나예요. 학습 화면으로 돌아가면 저장해 둔 사용자 테마가 그대로 적용됩니다.</p>
 
-      <div class="sg-item" data-uses="dial, win, seg" data-pad="24px" data-themes="dark"
+      <div class="sg-item" data-uses="dial, win, led" data-pad="24px" data-themes="dark"
            data-css="tokens,base,components,result" data-bg="var(--n-900)">
         <div class="sg-item__hd"><h3>원형 게이지 · 판독계 · 문항 LED 띠</h3>
-          <span class="sg-item__cls">.dial · .win · .seg</span>
+          <span class="sg-item__cls">.dial · .win · .led</span>
           <span class="sg-item__file">result.css</span></div>
         <p class="sg-note">각도는 <code>--pct</code>(0~100)가 정합니다 — <strong>JS가 심는 값</strong>이고
           CSS 트랜지션이 1초에 걸쳐 돌립니다. 눈금은 <strong>두 겹</strong>이에요:
@@ -311,11 +311,11 @@
           </div>
           <div style="margin-top:24px">
             <span class="sg-cap">문항 LED 띠 — 10문항 · 30문항</span>
-            <div class="seg" style="margin-bottom:12px">
+            <div class="led" style="margin-bottom:12px">
               <i class="on"></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i>
               <i class="on"></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i>
             </div>
-            <div class="seg">
+            <div class="led">
               <i class="on"></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i>
               <i class="on"></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i>
               <i></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i>
@@ -325,27 +325,28 @@
           </div>
         </template>
       </div>
-      <div class="sg-rule sg-rule--why"><code>.seg</code>라는 이름을 다섯 화면이 <strong>서로 다른 것</strong>에 쓰고 있습니다 —
-        여기 LED 띠 말고도 끊어읽기 구간(개념 학습) · 분절 토글(과제 풀이 · 자유모드) · 라벨(시험 풀이).
-        지금은 <code>result.css</code>를 부르는 결과 화면 6장에만 닿아서 충돌하지 않지만,
-        <strong>이름을 갈라야 할 목록</strong>에 올려 뒀습니다.</div>
+      <div class="sg-rule sg-rule--why">LED 띠는 예전에 <code>.seg</code>였습니다. 같은 이름을 끊어읽기 구간 · 분절 토글 ·
+        경로 라벨이 각자 쓰고 있어서 <strong>마감 회차(2026-10-12)에 뜻마다 이름을 갈랐어요</strong> —
+        아래 「갈라낸 이름」 참고.</div>
     </section>
 
     <!-- ===================================================== 토스트 -->
     <section class="sg-sec" id="toast">
-      <h2>토스트 <small>이름이 다섯인 한 부품</small></h2>
-      <p class="sg-lead">화면 아래에서 잠깐 떠오르는 알림입니다. 여섯 화면이 각자 복사해 갖고 있었고
-        이름도 <code>.toast</code> / <code>.smtoast</code> / <code>.rtoast</code> / <code>.dtoast</code> /
-        <code>.ptoast</code> 다섯으로 갈렸어요. Phase 10-③에서 <strong>모양만 한 벌로 모으고 이름은 그대로 뒀습니다</strong> —
-        이름을 합치려면 토스트를 만들고 <code>.is-on</code>을 붙이는 <strong>각 화면의 JS도 함께</strong> 고쳐야 합니다.</p>
+      <h2>토스트 <small>이름 하나 · 켜는 상태 하나</small></h2>
+      <p class="sg-lead">화면 아래에서 잠깐 떠오르는 알림입니다. 예전엔 여섯 화면이 각자 복사해 갖고 있었고
+        이름도 <code>.smtoast</code> · <code>.rtoast</code> · <code>.dtoast</code> · <code>.ptoast</code> · <code>.u-toast</code>로,
+        켜는 상태도 <code>.is-on</code> · <code>.show</code> 둘로 갈려 있었어요.
+        Phase 10-③에서 모양을 한 벌로 모았고, <strong>마감 회차에 이름은 <code>.toast</code>, 상태는 <code>.is-on</code> 하나로</strong> 맞췄습니다.</p>
 
-      <div class="sg-item" data-uses="toast, smtoast, rtoast, dtoast, ptoast" data-pad="0">
+      <div class="sg-item" data-uses="toast" data-pad="0">
         <div class="sg-item__hd"><h3>토스트</h3>
           <span class="sg-item__cls">.toast · .is-on · --toast-bg</span>
           <span class="sg-item__file">components.css</span></div>
         <p class="sg-note">평소엔 투명하고 10px 아래에 있다가 <code>.is-on</code>이 붙으면 떠오릅니다.
           <strong>화면에서는 콘솔바 위(아래에서 118px)에 뜹니다.</strong> 면색만 화면이 정해요 —
-          학습 계열은 짙은 네이비, 과제는 한 단계 밝은 값입니다.</p>
+          학습 계열은 짙은 네이비, 과제는 한 단계 밝은 값입니다.
+          행성 탐색(A층)·유틸 화면은 콘솔바가 없어서 화면 바닥 근처(30px)에 뜨고, 그 자리는 각 계열 파일이 정합니다.
+          오른쪽 서랍의 <code>.rmd-toast</code>는 남의 화면에 끼워 넣는 부품이라 이름 충돌을 피하려고 접두어를 유지합니다.</p>
         <template class="sg-src">
           <div style="position:relative;height:150px">
             <div class="toast is-on" style="bottom:96px">답을 먼저 골라 주세요</div>
@@ -423,35 +424,31 @@
 
     <!-- ===================================================== 갈라진 이름 -->
     <section class="sg-sec" id="split">
-      <h2>아직 갈라져 있는 이름 <small>합칠 것이 아니라 「가를 것」이다</small></h2>
+      <h2>갈라낸 이름 <small>합칠 것이 아니라 「가를 것」이었다</small></h2>
       <p class="sg-lead">Phase 10-③에서 부품을 하나씩 뜯어 보니 <strong>같은 이름이 붙어 있다고 같은 물건이 아니었습니다.</strong>
-        규칙 단위로 「글자 하나 안 틀리고 같은 것」과 「그 화면에만 있는 것」을 세어 보면 성격이 둘로 갈립니다.</p>
+        합치면 화면이 바뀌므로, 마감 회차(2026-10-12)에 <strong>뜻마다 이름을 갈랐습니다.</strong>
+        CSS만이 아니라 마크업과 JS를 함께 고쳤고, 바꾼 뒤 화면을 눌러 동작까지 확인했어요.</p>
       <table class="sg-table">
-        <thead><tr><th style="width:130px">이름</th><th style="width:70px">화면</th><th style="width:80px">총 규칙</th>
-          <th style="width:90px">완전 동일</th><th style="width:90px">화면 고유</th><th>성격</th></tr></thead>
+        <thead><tr><th style="width:150px">예전 이름</th><th style="width:170px">지금 이름</th><th>무엇 · 어디</th></tr></thead>
         <tbody>
-          <tr><td><code>.blank</code></td><td>6</td><td>21</td><td>21</td><td>0</td><td>순수 복붙</td></tr>
-          <tr><td><code>.sec-label</code></td><td>5</td><td>15</td><td>15</td><td>0</td><td>순수 복붙 — 끌어올림 ✅</td></tr>
-          <tr><td><code>.stage-scroll</code></td><td>5</td><td>15</td><td>14</td><td>1</td><td>순수 복붙 — 끌어올림 ✅</td></tr>
-          <tr><td><code>.worksheet</code></td><td>5</td><td>10</td><td>9</td><td>1</td><td>순수 복붙 — 끌어올림 ✅</td></tr>
-          <tr><td><code>.problem</code></td><td>6</td><td>72</td><td>42</td><td>30</td><td>절반은 진짜 변형</td></tr>
-          <tr><td><code>.opt</code></td><td>7</td><td>116</td><td>72</td><td>44</td><td><strong>두 가지 디자인</strong></td></tr>
-          <tr><td><code>.chip</code></td><td>5</td><td>32</td><td>18</td><td>14</td><td>섞여 있음</td></tr>
-          <tr><td><code>.card</code></td><td>8</td><td>31</td><td>10</td><td>21</td><td><strong>대부분 다른 물건</strong></td></tr>
-          <tr><td><code>.qtab</code></td><td>5</td><td>23</td><td>8</td><td>15</td><td><strong>대부분 다른 물건</strong></td></tr>
+          <tr><td><code>.opt</code></td><td><code>.opt</code></td><td>목록형 선택지 — 과제 풀이·해설, 시험 풀이 (1.5px 테두리 · 좁은 여백)</td></tr>
+          <tr><td><code>.opt</code></td><td><code>.qopt</code></td><td>타일형 선택지 — 개념 기초 연산·다지기, 유형 문제·해설 (60px 높이 · 상태 표현이 다르다)</td></tr>
+          <tr><td><code>.seg</code></td><td><code>.led</code></td><td>문항 LED 띠 — 결과 화면 6장</td></tr>
+          <tr><td><code>.seg</code></td><td><code>.chunk</code></td><td>끊어읽기 구간 — 개념 학습·정리, 서술형 다지기</td></tr>
+          <tr><td><code>.seg</code></td><td><code>.segmented</code></td><td>분절 토글 — 과제 풀이(풀이 현황판/답안표), 자유 모드</td></tr>
+          <tr><td><code>.seg</code></td><td><code>.scrumb__item</code></td><td>상단 경로의 단계 이름 — 시험 풀이</td></tr>
+          <tr><td>토스트 다섯 이름</td><td><code>.toast</code></td><td>위 「토스트」 참고</td></tr>
         </tbody>
       </table>
-      <div class="sg-rule sg-rule--dont"><code>.opt</code>·<code>.card</code>·<code>.qtab</code>을 하나로 합치지 않습니다.
-        과제의 선택지는 1.5px 테두리에 좁은 여백이고 유형은 60px 높이에 상태 표현이 다릅니다 —
-        <strong>실제로 다른 디자인</strong>이에요. 합치면 화면이 바뀝니다.</div>
-      <div class="sg-rule sg-rule--do">남은 일은 <strong>이름 가르기</strong>입니다 —
-        <code>.opt</code> → <code>.opt</code>(과제) / <code>.qopt</code>(유형),
-        <code>.seg</code> → 넷으로, 토스트 다섯 이름 → 하나.
-        <strong>CSS만이 아니라 마크업과 JS를 함께 고치는 일</strong>이라 별도 회차로 잡았습니다.</div>
+      <div class="sg-rule sg-rule--dont"><code>.card</code>·<code>.qtab</code>·<code>.problem</code>은 아직 화면마다 모양이 다른데 이름이 같습니다.
+        서로 같은 공용 파일을 부르지 않아서 충돌은 없지만, 다음에 이 부품을 공용으로 올릴 때는 <strong>먼저 이름부터 가릅니다.</strong></div>
+      <div class="sg-rule sg-rule--why">화면 간 「글자 하나 안 틀리고 같은」 규칙은 Phase 10의 570개에서 지금 405개로 줄었습니다
+        (<code>tools/style-audit.py</code>). 남은 것은 대부분 서술형의 가로 안(킵)과 세로 안처럼
+        <strong>비교하려고 일부러 복제한 화면 쌍</strong>이거나, 앞 규칙과 순서가 얽혀 옮기면 우선순위가 뒤집히는 것입니다.</div>
     </section>
 
   </main>
 </div>
-<script src="styleguide/sg.js?v=20261012-3"></script>
+<script src="styleguide/sg.js?v=20261012-4"></script>
 </body>
 </html>

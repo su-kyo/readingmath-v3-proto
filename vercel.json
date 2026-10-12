@@ -1,0 +1,7 @@
+{
+  "redirects": [
+    { "source": "/styleguide.html", "destination": "/styleguide/foundations.html", "permanent": true },
+    { "source": "/styleguide", "destination": "/styleguide/foundations.html", "permanent": true },
+    { "source": "/styleguide/", "destination": "/styleguide/foundations.html", "permanent": true }
+  ]
+}

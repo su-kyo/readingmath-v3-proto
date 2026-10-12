@@ -6,10 +6,10 @@
   <title>패턴 — 리딩수학과학 디자인 시스템</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
   <base href="../" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261012-3" />
-  <link rel="stylesheet" href="styles/base.css?v=20261012-3" />
-  <link rel="stylesheet" href="styles/components.css?v=20261012-3" />
-  <link rel="stylesheet" href="styleguide/sg.css?v=20261012-3" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261012-4" />
+  <link rel="stylesheet" href="styles/base.css?v=20261012-4" />
+  <link rel="stylesheet" href="styles/components.css?v=20261012-4" />
+  <link rel="stylesheet" href="styleguide/sg.css?v=20261012-4" />
 </head>
 <body data-sg-css="tokens,base,components,util" data-sg-section="util">
 <div class="sg">
@@ -173,15 +173,19 @@
         <tbody>
           <tr><td><code>--pct</code></td><td>결과 화면 엔진</td><td>정답률 0~100. 게이지 각도와 바늘이 이걸 읽는다</td></tr>
           <tr><td><code>--hero-w</code></td><td>행성 홈</td><td>캐릭터 칸 폭. 수학 31.25% · 과학 25%로 과목마다 다르다</td></tr>
-          <tr><td><code>--caret-x</code></td><td>입력 자리 표시</td><td>커서 x 좌표</td></tr>
-          <tr><td><code>--seg</code></td><td>끊어읽기 · 분절</td><td>지금 구간 번호</td></tr>
-          <tr><td><code>--hl</code></td><td>형광펜</td><td>강조 구간</td></tr>
-          <tr><td><code>--delay</code> · <code>--d</code></td><td>등장 애니메이션</td><td>순차 등장 지연. 항목마다 다르게 심는다</td></tr>
-          <tr><td><code>--m</code> · <code>--o</code></td><td>행성 배치</td><td>여백 · 불투명도</td></tr>
+          <tr><td><code>--caret-x</code></td><td>개념 학습 (<code>learn-concept.js</code>)</td><td>빈칸 팝오버의 꼬리 위치</td></tr>
+          <tr><td><code>--seg</code> · <code>--hl</code></td><td>행성 홈 (<code>nav-home.js</code>)</td><td>명판 진행칸 색 · 말풍선 강조색 — 과목(수학 파랑 · 과학 틸)이 정한다</td></tr>
+          <tr><td><code>--m</code></td><td>행성 홈</td><td>소품의 그늘·빛줄기가 몸체 모양을 따라가게 하는 <strong>마스크 그림 주소</strong></td></tr>
+          <tr><td><code>--d</code> · <code>--o</code> · <code>--delay</code></td><td>우주 배경 (<code>space-bg.js</code>) · 행성 홈</td><td>별의 반짝임 주기 · 불투명도 · 시작 지연, 소품 홀로그램의 시차</td></tr>
         </tbody>
       </table>
       <div class="sg-rule sg-rule--why">이 목록이 없으면 「아무도 정의하지 않은 변수」로 보여서
-        <strong>정리하다가 지우게 됩니다.</strong> 그래서 문서에 남겨 둡니다.</div>
+        <strong>정리하다가 지우게 됩니다.</strong> 그래서 문서에 남겨 둡니다.
+        <code>tools/style-audit.py</code>도 이 목록을 「정의 없는 변수」 검사에서 뺍니다.</div>
+      <div class="sg-rule sg-rule--dont"><strong>변수에 그림 주소를 넣을 때는 절대 주소로.</strong>
+        <code>url()</code>이 든 변수는 <strong>그 변수를 쓰는 CSS 파일 기준</strong>으로 풀립니다.
+        화면 CSS를 파일로 빼면서 <code>--m</code>의 상대 주소가 <code>styles/screens/assets/…</code>를 가리켜
+        행성 홈 소품 5장의 그늘이 사라진 적이 있어요(마감 회차에 고침). JS에서 <code>new URL(src, document.baseURI)</code>로 넣습니다.</div>
     </section>
 
     <!-- ===================================================== 검수 스위치 -->
@@ -216,16 +220,44 @@
           <tr><td><strong>계열 폴더와 index 그룹은<br>같은 단위</strong></td>
               <td>nav · concept · type · essay · assignment · exam · util · shared.
                   <strong>화면을 만들면 <code>index.html</code> 목록에도 넣는다</strong> — 둘이 어긋나면 화면이 미아가 된다</td></tr>
+          <tr><td><strong>화면 CSS는 <code>styles/screens/</code>,<br>화면 JS는 <code>scripts/</code></strong></td>
+              <td>파일 이름은 <code>&lt;계열&gt;-&lt;화면&gt;</code>. <strong>HTML 안에 <code>&lt;style&gt;</code>·<code>&lt;script&gt;</code>를 쓰지 않는다.</strong>
+                  예외는 <code>&lt;head&gt;</code>의 테마 초기화 한 줄뿐이다(아래 「유틸」 참고 — 빼면 깜빡인다)</td></tr>
+          <tr><td><strong>계열이 같이 쓰는 것은<br>계열 파일로</strong></td>
+              <td>결과 → <code>result.css</code> · 서술형 → <code>essay.css</code> · 유형 → <code>type.css</code> ·
+                  과제 → <code>assign.css</code> · 시험 → <code>exam.css</code> · 행성 탐색 → <code>nav.css</code>.
+                  여러 계열이 쓰면 <code>components.css</code>. 화면 파일에는 <strong>그 화면에만 있는 것</strong>만 남긴다</td></tr>
           <tr><td><strong>CSS·JS를 고쳤으면<br><code>?v=</code>를 그날 날짜로</strong></td>
               <td>안 올리면 브라우저가 옛 파일을 계속 써서 「고쳤는데 화면이 안 바뀐다」가 된다.
-                  <strong>파일별로 세지 않는다</strong> — 세는 순간 또 어긋난다. 전 화면이 같은 값을 쓴다</td></tr>
+                  <strong>파일별로 세지 않는다</strong> — 세는 순간 또 어긋난다. 전 화면이 같은 값을 쓴다.
+                  같은 날 또 고치면 회차를 붙인다(<code>20261012-3</code>)</td></tr>
           <tr><td><strong>링크로 이어진 화면은<br>폴더로 쪼개지 않는다</strong></td>
               <td>하나만 놓쳐도 죽은 링크가 되는데 <strong>화면은 멀쩡해 보인다.</strong> 여기서 배운 규칙이다</td></tr>
         </tbody>
       </table>
       <div class="sg-rule sg-rule--dont"><strong>조립식 경로를 문자열 검색만으로 옮기지 않습니다.</strong>
         이미지·화면 경로가 <code>'star-' + g</code>처럼 코드에서 조립되는 곳이 많아요.
-        경로를 옮겼으면 서버를 띄워 <strong>전 화면 404 검사</strong>로 확인합니다.</div>
+        경로를 옮겼으면 서버를 띄워 <strong>전 화면 404 검사</strong>로 확인합니다 —
+        전 화면을 헤드리스로 한 번 열고, 미리보기 서버 기록에서 <code>404</code>만 골라 봅니다.</div>
+    </section>
+
+    <!-- ===================================================== 남긴 예외 -->
+    <section class="sg-sec" id="except">
+      <h2>남긴 예외 <small>토큰 검사에서 빼는 것 — 이유와 함께</small></h2>
+      <p class="sg-lead">「토큰 밖 색 0」은 아래를 빼고 센 숫자입니다. 빼는 이유가 없으면 예외가 아니라 누락이에요.
+        <code>tools/style-audit.py</code>의 <code>EXCEPT</code>와 같은 목록입니다.</p>
+      <table class="sg-table">
+        <thead><tr><th style="width:220px">무엇</th><th style="width:200px">어디</th><th>왜 토큰으로 안 바꾸나</th></tr></thead>
+        <tbody>
+          <tr><td>마스크 안의 흑백</td><td>계기판 도넛 · 홀로그램 주사선 · 아이콘 마스크</td><td>색이 아니라 <strong>모양을 뚫는 도구</strong>다. 밝기만 의미가 있다</td></tr>
+          <tr><td>서랍 로고 5색</td><td><code>gnb-drawer.js</code></td><td>브랜드 마크 그림. 로고는 다시 칠하지 않는다</td></tr>
+          <tr><td>문제 속 도형 그림</td><td>기초 연산 · 유형 문제의 사다리꼴</td><td>UI가 아니라 <strong>콘텐츠</strong>다. 문항이 바뀌면 그림도 바뀐다</td></tr>
+          <tr><td>더미 이미지 자리</td><td>개념 학습의 파란 그라데이션</td><td>사진이 들어올 자리를 메운 가짜 그림. 실사진이 오면 없어진다</td></tr>
+          <tr><td>검수 패널</td><td><code>debug-panel.js</code></td><td><strong>일부러 앱과 안 어울리게</strong> 칠한 도구 — 화면에 속한 UI가 아님을 보여야 한다. 배포본에서는 안 보인다</td></tr>
+          <tr><td>우주 배경 성운 · 별빛</td><td><code>space-bg.css</code></td><td>토큰은 붙였지만(<code>--art-space-glow-*</code>) <strong>램프에 맞추지 않았다.</strong> 아트의 값이라 그대로 둔다</td></tr>
+          <tr><td>계산기(키패드)</td><td><code>keypad.css</code></td><td>토큰은 쓰되 <strong>테마를 따라가지 않는다</strong> — 우주선의 물건이라 라이트·다크에서 같은 모습이다</td></tr>
+        </tbody>
+      </table>
     </section>
 
     <!-- ===================================================== 검사 장치 -->
@@ -236,6 +268,10 @@
       <table class="sg-table">
         <thead><tr><th style="width:210px">도구</th><th>무엇을 하나</th></tr></thead>
         <tbody>
+          <tr><td><code>tools/style-audit.py</code></td>
+              <td><strong>먼저 이것.</strong> HTML 안 CSS·JS · 토큰 밖 색 · 정의 없는 변수 · 깨진 경로 · 캐시 번호를
+                  「지킬 것」(0이어야)으로, 1단 직접 사용 · 화면 간 복사 · 원시 px를 「지켜볼 것」으로 찍는다.
+                  <code>--strict</code>면 지킬 것이 깨졌을 때 실패한다</td></tr>
           <tr><td><code>tools/usage-scan.py</code></td>
               <td>37화면 마크업을 훑어 <strong>부품별 쓰는 화면 수</strong>를 센다.
                   이 문서의 배지가 그 결과다 — 손으로 안 센다</td></tr>
@@ -255,11 +291,16 @@
       </table>
       <div class="sg-rule sg-rule--why"><strong>화소 대조가 실수를 두 번 잡았습니다.</strong>
         여러 줄 규칙을 한 줄만 지워 과제 화면이 백지가 된 것, 잘린 출력을 보고 옮겨 적어
-        다섯 화면의 라벨 글자가 12→13px로 커진 것. <strong>둘 다 코드만 봐서는 안 보였습니다.</strong></div>
+        다섯 화면의 라벨 글자가 12→13px로 커진 것. <strong>둘 다 코드만 봐서는 안 보였습니다.</strong>
+        마감 회차에도 한 번 — 같은 요소에 붙은 기본형(<code>.tcell</code>)과 변형(<code>.tcell--name</code>) 중 변형만
+        공용 파일로 옮겨져 순서가 뒤집히고, 훈련 결과표의 이름 칸이 가운데로 몰렸습니다.</div>
+      <div class="sg-rule sg-rule--dont"><strong>화소 대조가 못 잡는 것도 있습니다.</strong>
+        눌러야 뜨는 것(토스트 · 모달)과 다른 규칙에 가려진 것(그림 경로 404)은 화면이 멀쩡해 보여요.
+        그래서 토스트는 화면마다 켜서 확인했고, 경로는 서버 기록으로 전수 확인했습니다.</div>
     </section>
 
   </main>
 </div>
-<script src="styleguide/sg.js?v=20261012-3"></script>
+<script src="styleguide/sg.js?v=20261012-4"></script>
 </body>
 </html>

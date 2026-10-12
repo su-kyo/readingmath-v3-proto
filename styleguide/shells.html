@@ -6,10 +6,10 @@
   <title>셸 — 리딩수학과학 디자인 시스템</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
   <base href="../" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261012-3" />
-  <link rel="stylesheet" href="styles/base.css?v=20261012-3" />
-  <link rel="stylesheet" href="styles/components.css?v=20261012-3" />
-  <link rel="stylesheet" href="styleguide/sg.css?v=20261012-3" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261012-4" />
+  <link rel="stylesheet" href="styles/base.css?v=20261012-4" />
+  <link rel="stylesheet" href="styles/components.css?v=20261012-4" />
+  <link rel="stylesheet" href="styleguide/sg.css?v=20261012-4" />
 </head>
 <body data-sg-css="tokens,base,components,learn-shell">
 <div class="sg">
@@ -90,15 +90,17 @@
           미끄러져 나오는 것이 맞아요. 그래서 테마로 뒤집히는 <code>--surface-*</code>가 아니라
           <strong>뒤집히지 않는 램프 <code>--n-*</code>를 직접 참조</strong>합니다.</p>
         <template class="sg-src">
-          <div style="height:60px;display:flex;align-items:center;padding:0 16px;color:#fff;font-size:13px">
+          <div style="height:60px;display:flex;align-items:center;padding:0 var(--sp-16);color:var(--n-000);font-size:var(--fs-13)">
             서랍은 이 문서에서 열 수 없습니다 — GNB가 있는 화면에서 <strong>메뉴(☰)</strong>를 누르면 나옵니다.
           </div>
         </template>
       </div>
-      <div class="sg-rule sg-rule--why">서랍이 v1.6 팔레트 <strong>이전에서 멈춰 있었습니다.</strong>
+      <div class="sg-rule sg-rule--why">서랍은 한때 v1.6 팔레트 <strong>이전에서 멈춰 있었습니다.</strong>
         CTA가 옛 주황(<code>#FF7F00</code>)이라 다른 화면의 <code>--primary</code>와 달랐고,
         학기 탭은 흰 글자 대비가 4.1로 미달이었어요. 눈에 잘 안 띄는 종류의 어긋남이라 오래 남아 있었습니다 —
-        <strong>스타일이 CSS 밖(JS 문자열)에 있으면 이런 일이 생깁니다.</strong></div>
+        <strong>스타일이 CSS 밖(JS 문자열)에 있으면 이런 일이 생깁니다.</strong>
+        Phase 10-①에서 색을, 마감 회차에서 반투명 색과 토스트 상태 이름까지 토큰·규칙에 맞췄습니다.
+        로고 5색만 브랜드 마크라 예외로 둡니다(「패턴 › 남긴 예외」).</div>
     </section>
 
     <!-- ===================================================== 학습 셸 -->
@@ -271,7 +273,7 @@
           화면 버튼을 대신 클릭합니다 — 입력 로직을 두 벌 만들지 않기 위해서예요.</p>
         <template class="sg-src">
           <div class="keypad" id="kp"></div>
-          <script src="scripts/keypad.js?v=20261012-3"></script>
+          <script src="scripts/keypad.js?v=20261012-4"></script>
           <script>
             /* 키 구성의 정본은 keypad.js 의 KEYS 배열 하나뿐이다.
                문서가 그걸 옮겨 적으면 키가 바뀔 때 문서만 옛것이 된다. */
@@ -289,7 +291,7 @@
           트레이 틴트와 LCD 글자색이 틸로 따라옵니다.</p>
         <template class="sg-src">
           <div class="keypad" id="kp2"></div>
-          <script src="scripts/keypad.js?v=20261012-3"></script>
+          <script src="scripts/keypad.js?v=20261012-4"></script>
           <script>document.getElementById('kp2').innerHTML = RMKeypad.html();</script>
         </template>
       </div>
@@ -322,7 +324,7 @@
 
   </main>
 </div>
-<script src="styleguide/shells.js?v=20261012-3"></script>
-<script src="styleguide/sg.js?v=20261012-3"></script>
+<script src="styleguide/shells.js?v=20261012-4"></script>
+<script src="styleguide/sg.js?v=20261012-4"></script>
 </body>
 </html>
