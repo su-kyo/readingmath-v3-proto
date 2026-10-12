@@ -193,7 +193,7 @@
   box-shadow: 0 0 0 3px var(--surface), 0 0 0 5px var(--accent), 0 8px 20px -8px color-mix(in srgb, var(--violet-600) 50%, transparent); }
 .tile__linkflag { position: absolute; top: -8px; left: -7px; z-index: 3;
   display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%;
-  background: var(--accent); color: var(--static-on); box-shadow: 0 0 0 2px var(--surface); }
+  background: var(--accent); color: var(--text-on-accent); box-shadow: 0 0 0 2px var(--surface); }
 .tile__linkflag svg { width: 12px; height: 12px; display: block; }
 /* 진입 순간 브리딩(호흡) 효과 — 약 2초 */
 @keyframes examLinkBreathe {
@@ -204,7 +204,7 @@
 /* 진입 콜아웃 말풍선 — 몇 초 뒤 사라짐 */
 .tile__callout { position: absolute; bottom: calc(100% + 12px); left: 50%; z-index: 6;
   transform: translateX(-50%); white-space: nowrap; padding: var(--sp-8) var(--sp-12); border-radius: var(--r-12);
-  background: var(--accent); color: var(--static-on); font-size: var(--fs-12); font-weight: var(--fw-bold); letter-spacing: -.01em;
+  background: var(--accent); color: var(--text-on-accent); font-size: var(--fs-12); font-weight: var(--fw-bold); letter-spacing: -.01em;
   box-shadow: 0 10px 24px -10px color-mix(in srgb, var(--violet-600) 70%, transparent); pointer-events: none;
   animation: examCalloutIn .34s cubic-bezier(.2,.9,.3,1.2) both; }
 .tile__callout::after { content: ""; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);

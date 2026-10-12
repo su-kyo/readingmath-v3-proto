@@ -45,8 +45,8 @@
   font-weight: var(--fw-bold);
   color: var(--text-on-accent);
   background: var(--surface-3);
-  transition: transform var(--transition), background var(--transition),
-              filter var(--transition);
+  transition: transform var(--t-fast), background var(--t-fast),
+              filter var(--t-fast);
   user-select: none;
 }
 .btn:active { transform: translateY(2px); }
@@ -80,7 +80,7 @@
 .btn:disabled,
 .btn.is-disabled {
   background: var(--surface-2);
-  color: var(--text-dim);
+  color: var(--text-meta);
   box-shadow: none;
   cursor: not-allowed;
   transform: none;
@@ -120,10 +120,10 @@
 /* 학습 완료 (비활성) */
 .cta-step--done {
   background: var(--surface-2);
-  color: var(--text-dim);
+  color: var(--text-meta);
   cursor: default;
 }
-.cta-step--done::before { content: "✓"; color: var(--success); font-weight: var(--fw-bold); }
+.cta-step--done::before { content: "✓"; color: var(--ok-on-dark); font-weight: var(--fw-bold); }
 
 @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
 
@@ -184,7 +184,7 @@
   background: var(--surface-2);
   color: var(--text);
   box-shadow: inset 0 0 0 1.5px transparent;
-  transition: var(--transition);
+  transition: var(--t-fast);
   text-align: left;
 }
 .answer__num {
@@ -196,18 +196,18 @@
   font-size: var(--fs-14); font-weight: var(--fw-bold);
 }
 .answer:hover { background: var(--surface-3); }
-.answer.is-selected { box-shadow: inset 0 0 0 2px var(--info); }
-.answer.is-selected .answer__num { background: var(--info); color: var(--n-000); }
+.answer.is-selected { box-shadow: inset 0 0 0 2px var(--info-on-dark); }
+.answer.is-selected .answer__num { background: var(--info-on-dark); color: var(--n-000); }
 .answer.is-correct {
-  background: color-mix(in srgb, var(--success) 16%, var(--surface-2));
-  box-shadow: inset 0 0 0 2px var(--success);
+  background: color-mix(in srgb, var(--ok-on-dark) 16%, var(--surface-2));
+  box-shadow: inset 0 0 0 2px var(--ok-on-dark);
 }
-.answer.is-correct .answer__num { background: var(--success); color: var(--n-900); }
+.answer.is-correct .answer__num { background: var(--ok-on-dark); color: var(--n-900); }
 .answer.is-wrong {
-  background: color-mix(in srgb, var(--danger) 16%, var(--surface-2));
-  box-shadow: inset 0 0 0 2px var(--danger);
+  background: color-mix(in srgb, var(--no-on-dark) 16%, var(--surface-2));
+  box-shadow: inset 0 0 0 2px var(--no-on-dark);
 }
-.answer.is-wrong .answer__num { background: var(--danger); color: var(--n-000); }
+.answer.is-wrong .answer__num { background: var(--no-on-dark); color: var(--n-000); }
 .answer.is-disabled { opacity: .5; cursor: not-allowed; }
 
 /* -------------------------------------------------------------------------
@@ -230,14 +230,14 @@
 .blank__num {
   font-size: var(--fs-12); font-weight: var(--fw-bold);
   color: var(--text-on-accent);
-  background: var(--text-dim);
+  background: var(--text-meta);
   border-radius: var(--r-full);
   padding: 1px var(--sp-6);
 }
-.blank.is-empty { color: var(--text-dim); }
+.blank.is-empty { color: var(--text-meta); }
 .blank.is-active { box-shadow: inset 0 0 0 2px var(--accent-blue); background: var(--surface-3); }
-.blank.is-filled { box-shadow: inset 0 0 0 1.5px var(--info); }
-.blank.is-wrong { box-shadow: inset 0 0 0 2px var(--danger); color: var(--danger); }
+.blank.is-filled { box-shadow: inset 0 0 0 1.5px var(--info-on-dark); }
+.blank.is-wrong { box-shadow: inset 0 0 0 2px var(--no-on-dark); color: var(--no-on-dark); }
 
 /* -------------------------------------------------------------------------
    등급 배지 S / A / B / C  (스텝 점수)
@@ -303,34 +303,34 @@
 .type-chip__label { font-size: var(--fs-14); }
 
 /* 미진행 — 이력 없음(중립) */
-.type-chip--none { color: var(--text-dim); }
+.type-chip--none { color: var(--text-meta); }
 /* 미판정 — 이력 1개(옅은 정보색) */
 .type-chip--pending {
-  color: var(--info);
-  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--info) 40%, transparent);
+  color: var(--info-on-dark);
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--info-on-dark) 40%, transparent);
 }
 /* 재학습 필요 — 최신 연속 2오답 */
 .type-chip--relearn {
-  color: var(--danger);
-  background: color-mix(in srgb, var(--danger) 14%, var(--surface-2));
-  box-shadow: inset 0 0 0 1.5px var(--danger);
+  color: var(--no-on-dark);
+  background: color-mix(in srgb, var(--no-on-dark) 14%, var(--surface-2));
+  box-shadow: inset 0 0 0 1.5px var(--no-on-dark);
 }
 /* 보충 필요 — 최신 정답1 오답1 */
 .type-chip--supplement {
-  color: var(--warning);
-  background: color-mix(in srgb, var(--warning) 14%, var(--surface-2));
-  box-shadow: inset 0 0 0 1.5px var(--warning);
+  color: var(--warn-on-dark);
+  background: color-mix(in srgb, var(--warn-on-dark) 14%, var(--surface-2));
+  box-shadow: inset 0 0 0 1.5px var(--warn-on-dark);
 }
 /* 유형 이해 — 최신 연속 2정답 */
 .type-chip--understand {
-  color: var(--success);
-  background: color-mix(in srgb, var(--success) 14%, var(--surface-2));
-  box-shadow: inset 0 0 0 1.5px var(--success);
+  color: var(--ok-on-dark);
+  background: color-mix(in srgb, var(--ok-on-dark) 14%, var(--surface-2));
+  box-shadow: inset 0 0 0 1.5px var(--ok-on-dark);
 }
 /* 유형 정복 — 최신 연속 3정답 이상 (왕관) */
 .type-chip--master {
   color: var(--orange-700);
-  background: var(--star-gold);
+  background: var(--gold-500);
   box-shadow: 0 4px 0 var(--orange-500);
 }
 .type-chip--master .type-chip__id { color: var(--orange-700); opacity: .8; }
@@ -344,8 +344,8 @@
   border-radius: var(--r-8);
   font-size: var(--fs-12); font-weight: var(--fw-bold);
 }
-.block--basic  { background: color-mix(in srgb, var(--info) 20%, var(--surface-2)); color: var(--subject-concept-soft); }
-.block--skill  { background: color-mix(in srgb, var(--success) 20%, var(--surface-2)); color: var(--success); }
+.block--basic  { background: color-mix(in srgb, var(--info-on-dark) 20%, var(--surface-2)); color: var(--subject-concept-soft); }
+.block--skill  { background: color-mix(in srgb, var(--ok-on-dark) 20%, var(--surface-2)); color: var(--ok-on-dark); }
 .block--deep   { background: color-mix(in srgb, var(--subject-essay-soft) 22%, var(--surface-2)); color: var(--subject-essay-soft); }
 
 /* -------------------------------------------------------------------------
@@ -361,7 +361,7 @@
   color: var(--text);
 }
 .timer::before { content: "⏱"; font-family: var(--font-sans); }
-.timer.is-timeover { background: color-mix(in srgb, var(--danger) 20%, var(--surface-2)); color: var(--danger); }
+.timer.is-timeover { background: color-mix(in srgb, var(--no-on-dark) 20%, var(--surface-2)); color: var(--no-on-dark); }
 
 /* -------------------------------------------------------------------------
    라이트/다크 토글 (.mode-toggle)
@@ -377,9 +377,9 @@
   width: 40px; height: 32px;
   display: inline-flex; align-items: center; justify-content: center;
   border-radius: var(--r-full);
-  color: var(--text-dim);
+  color: var(--text-meta);
   font-size: var(--fs-16);
-  transition: var(--transition);
+  transition: var(--t-fast);
 }
 .mode-toggle__opt.is-active { background: var(--surface-3); color: var(--accent-cyan); }
 
@@ -403,8 +403,8 @@
   background: var(--surface-2); color: var(--text-muted);
 }
 .badge--round { background: color-mix(in srgb, var(--accent-blue) 22%, var(--surface-2)); color: var(--accent-cyan); }
-.badge--correct { background: color-mix(in srgb, var(--success) 20%, var(--surface-2)); color: var(--success); }
-.badge--wrong { background: color-mix(in srgb, var(--danger) 20%, var(--surface-2)); color: var(--danger); }
+.badge--correct { background: color-mix(in srgb, var(--ok-on-dark) 20%, var(--surface-2)); color: var(--ok-on-dark); }
+.badge--wrong { background: color-mix(in srgb, var(--no-on-dark) 20%, var(--surface-2)); color: var(--no-on-dark); }
 .badge--new { background: color-mix(in srgb, var(--accent-cyan) 22%, var(--surface-2)); color: var(--accent-cyan); }
 
 /* -------------------------------------------------------------------------
@@ -418,7 +418,7 @@
   text-align: left;
 }
 .accordion__header:hover { background: var(--surface-2); }
-.accordion__chevron { transition: transform var(--transition); color: var(--text-dim); }
+.accordion__chevron { transition: transform var(--t-fast); color: var(--text-meta); }
 .accordion.is-open .accordion__chevron { transform: rotate(180deg); }
 .accordion__body { padding: 0 var(--sp-24) var(--sp-24); display: none; }
 .accordion.is-open .accordion__body { display: block; }
@@ -499,7 +499,7 @@
   z-index: var(--z-toast);
   padding: var(--sp-12) var(--sp-20); border-radius: var(--r-full);
   font-family: var(--font-sans); font-size: var(--fs-14); font-weight: var(--fw-semibold);
-  background: var(--toast-bg, color-mix(in srgb, var(--n-700) 94%, transparent)); color: var(--static-on);
+  background: var(--toast-bg, color-mix(in srgb, var(--n-700) 94%, transparent)); color: var(--text-on-accent);
   opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s;
 }
 .toast.is-on {

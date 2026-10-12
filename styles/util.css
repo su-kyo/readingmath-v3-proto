@@ -49,7 +49,7 @@ html,body{ height:100%; }
   --brand-on-sel:var(--blue-600); /* 선택(밝은) 칠면 위 브랜드색 */
 
   --cta:var(--primary);        /* 450 IDENTITY — 유일한 난색 */
-  --danger:var(--no-on-dark);  /* 빨강은 오류에만 (다크에서 읽히는 스텝) */
+  --err:var(--no-on-dark);     /* 빨강은 오류에만 (다크에서 읽히는 스텝) */
   --dis-bg:var(--n-700);       /* CTA 비활성 */
   --dis-fg:var(--n-350);
 
@@ -82,7 +82,7 @@ html,body{ height:100%; }
   --brand-fg:var(--n-000);
   --brand-on-sel:var(--blue-300); /* 선택(먹색) 칠면 위 */
 
-  --danger:var(--no-ink);
+  --err:var(--no-ink);
   --dis-bg:var(--n-100);
   --dis-fg:var(--n-400);
 }
@@ -160,7 +160,7 @@ html,body{ height:100%; }
 .u-state{ padding:104px var(--sp-24) 96px; text-align:center; }
 .u-state__ico{ width:48px; height:48px; margin:0 auto 20px; color:var(--icon-mute); }
 .u-state__ico svg{ width:48px; height:48px; }
-.u-state__ico.is-warn{ color:var(--danger); }
+.u-state__ico.is-warn{ color:var(--err); }
 .u-state__t{ font-size:var(--fs-19); font-weight:var(--fw-heavy); color:var(--ink); letter-spacing:-.045em; }
 .u-state__d{ margin-top:10px; font-size:var(--fs-14); font-weight:var(--fw-semibold); color:var(--ink-3); line-height:1.7; }
 .u-state .u-btn{ margin-top:22px; }
@@ -320,14 +320,14 @@ html,body{ height:100%; }
   font-family:inherit; font-size:var(--fs-14); font-weight:var(--fw-semibold); letter-spacing:-.03em; }
 .u-field::placeholder{ color:var(--ink-3); font-weight:var(--fw-semibold); }
 .u-field:focus{ outline:none; box-shadow:inset 0 0 0 2px var(--ink); }
-.u-field.is-bad{ box-shadow:inset 0 0 0 2px var(--danger); }
+.u-field.is-bad{ box-shadow:inset 0 0 0 2px var(--err); }
 .u-cp__btn{ height:44px; flex:none; padding:0 var(--sp-16); border:0; border-radius:var(--r-12); background:var(--paper);
   box-shadow:inset 0 0 0 1.5px var(--rule); color:var(--ink); font-family:inherit; font-size:var(--fs-14);
   font-weight:var(--fw-bold); letter-spacing:-.035em; cursor:pointer; transition:var(--t-fast); }
 .u-cp__btn:hover{ box-shadow:inset 0 0 0 1.5px var(--ink); }
 .u-cp__msg{ display:flex; align-items:flex-start; gap:var(--sp-6); margin-top:9px; font-size:var(--fs-12);
   font-weight:var(--fw-semibold); line-height:1.5; }
-.u-cp__msg.is-bad{ color:var(--danger); }
+.u-cp__msg.is-bad{ color:var(--err); }
 .u-cp__msg.is-ok{ color:var(--brand-ink); }
 .u-cp__msg svg{ width:14px; height:14px; flex:none; margin-top:2px; }
 
@@ -351,8 +351,8 @@ html,body{ height:100%; }
 .u-agree input:checked + .u-agree__box{ background:var(--sel-bg); box-shadow:inset 0 0 0 1.8px var(--sel-bg); }
 .u-agree input:checked + .u-agree__box svg{ opacity:1; }
 .u-agree__t{ flex:1; font-size:var(--fs-13); font-weight:var(--fw-semibold); color:var(--ink-2); letter-spacing:-.03em; }
-.u-agree.is-bad .u-agree__box{ box-shadow:inset 0 0 0 2px var(--danger); }
-.u-agree.is-bad .u-agree__t{ color:var(--danger); font-weight:var(--fw-bold); }
+.u-agree.is-bad .u-agree__box{ box-shadow:inset 0 0 0 2px var(--err); }
+.u-agree.is-bad .u-agree__t{ color:var(--err); font-weight:var(--fw-bold); }
 .u-agree__more{ font-size:var(--fs-12); font-weight:var(--fw-bold); color:var(--ink-3); text-decoration:underline;
   text-underline-offset:3px; flex:none; }
 .u-fine{ margin-top:16px; padding-top:var(--sp-12); border-top:1px solid var(--rule);

@@ -20,7 +20,7 @@
   --content: var(--n-900); --qpanel: var(--n-800); --panel: var(--n-800); --ink: var(--n-050); --sub: var(--text-muted);
   --line: var(--border-strong); --opt: var(--n-600); --opt-hover: var(--n-500); --track: var(--n-900); --dash: var(--n-350);
 }
-body { font-family: var(--font-sans); background: var(--assign-body); overflow: hidden; -webkit-font-smoothing: antialiased; }
+body { font-family: var(--font-sans); background: var(--asset-console-task-body); overflow: hidden; -webkit-font-smoothing: antialiased; }
 
 .wrap { position: relative; z-index: 1; flex: 1; min-height: 0; display: flex; flex-direction: column; padding: clamp(16px,2.4vw,30px) clamp(20px,5vw,72px) 0; gap: var(--sp-12); }
 

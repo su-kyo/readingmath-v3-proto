@@ -21,14 +21,14 @@ body.learn-body { background: var(--asset-console-concept-body); overflow: hidde
 /* ===== 헤더 ===== */
 .lheader { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-16); background: var(--th-static); border-radius: var(--r-30); padding: var(--sp-8) var(--sp-12) var(--sp-8) var(--sp-32); color: var(--th-on-accent); flex: none; }
 .breadcrumb { display: flex; align-items: center; gap: var(--sp-8); font-size: clamp(13px, 1.1vw, 15px); min-width: 0; overflow: hidden; }
-.breadcrumb .sep { opacity: .45; flex: none; color: var(--static-on); }
+.breadcrumb .sep { opacity: .45; flex: none; color: var(--text-on-accent); }
 .breadcrumb .crumb { opacity: .72; font-weight: var(--fw-semibold); white-space: nowrap; }
 .breadcrumb .crumb--strong { opacity: 1; font-weight: var(--fw-bold); }
 .breadcrumb .crumb--clip { overflow: hidden; text-overflow: ellipsis; }
 .lheader__actions { display: flex; align-items: center; gap: var(--sp-8); flex: none; }
 
 /* 헤더 타이머 (유형·서술형 공통) — 스텝 결과에선 .is-paused 로 정지 표시 */
-.lheader__timer { display: inline-flex; align-items: center; gap: var(--sp-6); background: var(--black-a25); border-radius: var(--r-full); padding: var(--sp-6) var(--sp-12); margin-right: 4px; flex: none; color: var(--static-on); }
+.lheader__timer { display: inline-flex; align-items: center; gap: var(--sp-6); background: var(--black-a25); border-radius: var(--r-full); padding: var(--sp-6) var(--sp-12); margin-right: 4px; flex: none; color: var(--text-on-accent); }
 .lheader__timer img { width: 18px; height: 18px; }
 .lheader__timer span { font-family: var(--font-mono); font-weight: var(--fw-bold); font-size: var(--fs-16); letter-spacing: .02em; }
 .lheader__timer.is-paused { opacity: .62; }
@@ -130,7 +130,7 @@ body.learn-body { background: var(--asset-console-concept-body); overflow: hidde
 .smodal__btn { flex: 1; height: 52px; border-radius: var(--r-16); font-family: var(--font-sans); font-weight: var(--fw-heavy); font-size: var(--fs-19);  /* 450 칠면 라벨 ≥19px (v1.6 §3.0b) */ cursor: pointer; transition: filter .12s, background .12s, transform .08s; }
 .smodal__btn--ghost { background: var(--surface-2); color: var(--text); }
 .smodal__btn--ghost:hover { background: var(--surface-3); }
-.smodal__btn--go { background: var(--primary); color: var(--static-on); box-shadow: 0 4px 0 var(--primary-pressed); }
+.smodal__btn--go { background: var(--primary); color: var(--text-on-accent); box-shadow: 0 4px 0 var(--primary-pressed); }
 .smodal__btn--go:hover { background: var(--primary-hover); }
 .smodal__btn--go:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--primary-pressed); }
 

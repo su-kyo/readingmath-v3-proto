@@ -16,7 +16,7 @@
   /* 문제 카드 = 프레임 테두리색(th-static)과 면 공유 · 라이트/다크 동일 */
   --pc-bg: var(--th-static); --pc-text: color-mix(in srgb, var(--violet-050) 92%, transparent); --pc-chev: var(--white-a60);
   --qtab-bg: var(--white-a10); --qtab-fg: var(--white-a50);
-  --qtab-done-bg: color-mix(in srgb, var(--th-accent) 52%, transparent); --qtab-done-fg: var(--static-on);
+  --qtab-done-bg: color-mix(in srgb, var(--th-accent) 52%, transparent); --qtab-done-fg: var(--text-on-accent);
 }
 :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
 :root[data-theme="light"] .content {
@@ -36,7 +36,7 @@
   background: var(--qtab-bg); color: var(--qtab-fg); transition: background .16s, color .16s, box-shadow .16s; }
 .qtab.is-done { background: var(--qtab-done-bg); color: var(--qtab-done-fg); }
 /* 현재 문제 = 흰 링으로 대비 강화 */
-.qtab.is-active { background: var(--th-solid); color: var(--static-on); box-shadow: 0 0 0 2px var(--static-on), 0 2px 8px var(--black-a30); }
+.qtab.is-active { background: var(--th-solid); color: var(--text-on-accent); box-shadow: 0 0 0 2px var(--text-on-accent), 0 2px 8px var(--black-a30); }
 
 /* ============ 단일 스크롤 영역 ============ */
 :root[data-theme="light"] .stage-scroll::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--violet-600) 28%, transparent); background-clip: padding-box; }

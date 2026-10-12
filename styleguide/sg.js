@@ -101,7 +101,7 @@
                 'font-family:var(--font-sans);overflow-x:hidden}' +
         '.sg-row{display:flex;flex-wrap:wrap;gap:16px;align-items:center}' +
         '.sg-col{display:flex;flex-direction:column;gap:12px;align-items:flex-start}' +
-        '.sg-cap{font-size:11px;font-weight:700;letter-spacing:.04em;color:var(--text-dim);' +
+        '.sg-cap{font-size:11px;font-weight:700;letter-spacing:.04em;color:var(--text-meta);' +
                 'margin-bottom:6px;display:block}' +
       '</style></head><body>' + markup + '</body></html>';
   }

@@ -54,7 +54,7 @@
    오답을 눌러 정답으로 치환한 칸은 정답 스타일이되 뱃지 없음(원래 맞힌 칸과 구분) */
 .rblank.is-correct::after, .rblank.is-wrong::after {
   position: absolute; top: -7px; right: -7px; width: 17px; height: 17px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center; font-weight: var(--fw-heavy); font-size: var(--fs-11); color: var(--static-on);
+  display: flex; align-items: center; justify-content: center; font-weight: var(--fw-heavy); font-size: var(--fs-11); color: var(--text-on-accent);
   box-shadow: 0 1px 3px var(--black-a30); }
 .rblank.is-correct::after { content: '✓'; background: var(--ok-solid); }
 .rblank.is-wrong::after { content: '✕'; background: var(--no-solid); }

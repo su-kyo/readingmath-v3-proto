@@ -48,7 +48,7 @@
 .qtab { min-width: 28px; height: 28px; padding: 0 var(--sp-6); border-radius: var(--r-8); display: inline-flex; align-items: center; justify-content: center;
   font-family: var(--font-sans); font-weight: var(--fw-heavy); font-size: var(--fs-13); background: var(--white-a10); color: var(--white-a50); transition: background .16s, color .16s, box-shadow .16s; }
 .qtab svg { width: 15px; height: 15px; }
-.qtab.is-done { background: color-mix(in srgb, var(--th-accent) 48%, transparent); color: var(--static-on); }
+.qtab.is-done { background: color-mix(in srgb, var(--th-accent) 48%, transparent); color: var(--text-on-accent); }
 /* 현재 문제 = 흰 링으로 대비 강화 (색맹 대비: border 형태로 구분) */
 .qtab.is-active { background: var(--th-solid); color: var(--n-000); box-shadow: 0 0 0 2px var(--n-000), 0 2px 8px var(--black-a30); }
 /* 정/오답 = 색 + 아이콘(색맹 접근성).
@@ -181,7 +181,7 @@
    오답을 눌러 정답으로 치환한 칸은 정답 스타일이되 뱃지 없음(원래 맞힌 칸과 구분) */
 .dblank.is-correct::after, .dblank.is-wrong::after {
   position: absolute; top: -8px; right: -8px; width: 17px; height: 17px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center; font-weight: var(--fw-heavy); font-size: var(--fs-11); color: var(--static-on);
+  display: flex; align-items: center; justify-content: center; font-weight: var(--fw-heavy); font-size: var(--fs-11); color: var(--text-on-accent);
   text-decoration: none; box-shadow: 0 1px 3px var(--black-a30); }
 .dblank.is-correct::after { content: '✓'; background: var(--ok-solid); }
 .dblank.is-wrong::after { content: '✕'; background: var(--no-solid); }

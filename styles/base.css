@@ -91,7 +91,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 /* ------- 재사용 유틸 ------- */
 .u-muted { color: var(--text-muted); }
-.u-dim   { color: var(--text-dim); }
+.u-dim   { color: var(--text-meta); }
 .u-center { text-align: center; }
 
 .text-display { font-size: var(--fs-32); font-weight: var(--fw-bold); }

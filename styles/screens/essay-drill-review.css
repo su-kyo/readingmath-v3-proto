@@ -120,7 +120,7 @@
 .rblank.is-correct::after, .rslot.is-correct::after,
 .rblank.is-wrong::after, .rslot.is-wrong::after {
   position: absolute; top: -7px; right: -7px; width: 17px; height: 17px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center; font-family: var(--font-sans); font-weight: var(--fw-heavy); font-size: var(--fs-11); color: var(--static-on);
+  display: flex; align-items: center; justify-content: center; font-family: var(--font-sans); font-weight: var(--fw-heavy); font-size: var(--fs-11); color: var(--text-on-accent);
   box-shadow: 0 1px 3px var(--black-a30); }
 .rblank.is-correct::after, .rslot.is-correct::after { content: '✓'; background: var(--ok-solid); }
 .rblank.is-wrong::after, .rslot.is-wrong::after { content: '✕'; background: var(--no-solid); }
