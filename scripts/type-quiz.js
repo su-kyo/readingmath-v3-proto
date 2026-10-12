@@ -93,16 +93,16 @@
 
   function renderMC(p) {
     var count = (p.type === 'mc-image') ? p.options.length : (typeof p.options === 'number' ? p.options : p.options.length);
-    var wrap = el('div', (p.grid || p.type === 'mc-image') ? 'opts-grid' : 'opts-row');
+    var wrap = el('div', (p.grid || p.type === 'mc-image') ? 'qopts-grid' : 'qopts-row');
     for (var i = 0; i < count; i++) {
-      var opt = el('button', 'opt');
-      if (p.type === 'mc-num') { opt.classList.add('opt--num'); opt.appendChild(el('span', 'opt__num', String(i + 1))); }
-      else if (p.type === 'mc-image') { opt.classList.add('opt--img'); opt.appendChild(el('span', 'opt__img')); opt.appendChild(el('span', 'opt__num', String(i + 1))); }
-      else { opt.classList.add('opt--text'); opt.appendChild(el('span', 'opt__num', String(i + 1))); opt.appendChild(el('span', null, p.options[i])); }
+      var opt = el('button', 'qopt');
+      if (p.type === 'mc-num') { opt.classList.add('qopt--num'); opt.appendChild(el('span', 'qopt__num', String(i + 1))); }
+      else if (p.type === 'mc-image') { opt.classList.add('qopt--img'); opt.appendChild(el('span', 'qopt__img')); opt.appendChild(el('span', 'qopt__num', String(i + 1))); }
+      else { opt.classList.add('qopt--text'); opt.appendChild(el('span', 'qopt__num', String(i + 1))); opt.appendChild(el('span', null, p.options[i])); }
       if (answers[idx] === i) opt.classList.add('is-selected');
       (function (i, opt) {
         opt.addEventListener('click', function () {
-          wrap.querySelectorAll('.opt').forEach(function (o) { o.classList.remove('is-selected'); });
+          wrap.querySelectorAll('.qopt').forEach(function (o) { o.classList.remove('is-selected'); });
           opt.classList.add('is-selected'); answers[idx] = i; updateButtons(); renderProgress();
         });
       })(i, opt);

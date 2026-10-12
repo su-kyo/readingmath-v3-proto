@@ -89,7 +89,7 @@
 
   function frameDoc(markup, theme, section, css, pad, bg) {
     var links = css.split(',').map(function (n) {
-      return '<link rel="stylesheet" href="styles/' + n.trim() + '.css?v=20261012-2">';
+      return '<link rel="stylesheet" href="styles/' + n.trim() + '.css?v=20261012-3">';
     }).join('');
     return '<!doctype html><html lang="ko" data-theme="' + theme + '" data-section="' + section + '">' +
       '<head><meta charset="utf-8"><base href="' + ROOT + '">' + links +

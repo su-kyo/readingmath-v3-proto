@@ -184,16 +184,16 @@
 
   function renderMC(p) {
     var count = (p.type === 'mc-image') ? p.options.length : (typeof p.options === 'number' ? p.options : p.options.length);
-    var wrap = el('div', (p.grid || p.type === 'mc-image') ? 'opts-grid' : 'opts-row');
+    var wrap = el('div', (p.grid || p.type === 'mc-image') ? 'qopts-grid' : 'qopts-row');
     for (var i = 0; i < count; i++) {
-      var opt = el('button', 'opt');
-      if (p.type === 'mc-num') { opt.classList.add('opt--num'); opt.appendChild(el('span', 'opt__num', String(i + 1))); }
-      else if (p.type === 'mc-image') { opt.classList.add('opt--img'); opt.appendChild(el('span', 'opt__img')); }
-      else { opt.classList.add('opt--text'); opt.appendChild(el('span', 'opt__num', String(i + 1))); opt.appendChild(el('span', null, p.options[i])); }
+      var opt = el('button', 'qopt');
+      if (p.type === 'mc-num') { opt.classList.add('qopt--num'); opt.appendChild(el('span', 'qopt__num', String(i + 1))); }
+      else if (p.type === 'mc-image') { opt.classList.add('qopt--img'); opt.appendChild(el('span', 'qopt__img')); }
+      else { opt.classList.add('qopt--text'); opt.appendChild(el('span', 'qopt__num', String(i + 1))); opt.appendChild(el('span', null, p.options[i])); }
       (function (i, opt) {
         opt.addEventListener('click', function () {
           if (graded) return;
-          wrap.querySelectorAll('.opt').forEach(function (o) { o.classList.remove('is-selected'); });
+          wrap.querySelectorAll('.qopt').forEach(function (o) { o.classList.remove('is-selected'); });
           opt.classList.add('is-selected'); selected = i;
           gradeBtn.disabled = false;
         });
@@ -269,11 +269,11 @@
     var p = PROBLEMS[idx], ok = false;
     if (p.type === 'mc-num' || p.type === 'mc-text' || p.type === 'mc-image') {
       ok = (selected === p.answer);
-      qEl.querySelectorAll('.opt').forEach(function (o, i) {
+      qEl.querySelectorAll('.qopt').forEach(function (o, i) {
         if (i === p.answer) o.classList.add('is-correct');
         if (i === selected && selected !== p.answer) o.classList.add('is-wrong');
       });
-      qEl.querySelector('.opts-row, .opts-grid').classList.add('is-graded');
+      qEl.querySelector('.qopts-row, .qopts-grid').classList.add('is-graded');
     } else if (p.type === 'blank') {
       ok = true;
       qEl.querySelectorAll('.dblank').forEach(function (b, i) {
@@ -335,7 +335,7 @@
     if (graded) return;
     var p = PROBLEMS[idx];
     if (p.type === 'mc-num' || p.type === 'mc-text' || p.type === 'mc-image') {
-      var opts = qEl.querySelectorAll('.opt');
+      var opts = qEl.querySelectorAll('.qopt');
       var pick = ok ? p.answer : (p.answer + 1) % opts.length;
       if (opts[pick]) opts[pick].click();
     } else if (p.type === 'blank') {
