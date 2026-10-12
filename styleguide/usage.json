@@ -15,6 +15,11 @@
   "allview": {
    "nav/freemode.html": "markup"
   },
+  "ans-correct": {
+   "concept/basic-ops.html": "js",
+   "concept/drill.html": "js",
+   "type/review.html": "js"
+  },
   "answer-opt": {
    "concept/learn.html": "markup"
   },
@@ -26,6 +31,12 @@
   },
   "answer-pop__hint": {
    "concept/learn.html": "markup"
+  },
+  "answer-row": {
+   "concept/basic-ops.html": "js",
+   "concept/drill.html": "js",
+   "type/quiz.html": "js",
+   "type/review.html": "js"
   },
   "app": {
    "assignment/home.html": "markup",
@@ -798,6 +809,29 @@
   "empty": {
    "assignment/solve.html": "js"
   },
+  "ex": {
+   "concept/basic-ops.html": "js",
+   "concept/drill.html": "js",
+   "type/quiz.html": "js",
+   "type/review.html": "js"
+  },
+  "ex__list": {
+   "concept/basic-ops.html": "js",
+   "concept/drill.html": "js",
+   "type/quiz.html": "js",
+   "type/review.html": "js"
+  },
+  "ex__shape": {
+   "concept/basic-ops.html": "js",
+   "type/quiz.html": "js",
+   "type/review.html": "js"
+  },
+  "ex__skel": {
+   "concept/basic-ops.html": "js",
+   "concept/drill.html": "js",
+   "type/quiz.html": "js",
+   "type/review.html": "js"
+  },
   "exam": {
    "exam/home.html": "markup"
   },
@@ -826,13 +860,18 @@
    "assignment/explain.html": "js"
   },
   "explain": {
-   "exam/solve.html": "js"
+   "exam/solve.html": "js",
+   "type/review.html": "js"
   },
   "explain__body": {
-   "exam/solve.html": "js"
+   "exam/solve.html": "js",
+   "type/review.html": "js"
   },
   "explain__cap": {
    "exam/solve.html": "js"
+  },
+  "explain__head": {
+   "type/review.html": "js"
   },
   "fbtn": {
    "exam/home.html": "markup"
@@ -893,6 +932,18 @@
   "frac__n": {
    "concept/basic-ops.html": "js",
    "concept/drill.html": "js",
+   "type/review.html": "js"
+  },
+  "fraction": {
+   "concept/basic-ops.html": "js",
+   "concept/drill.html": "js",
+   "type/quiz.html": "js",
+   "type/review.html": "js"
+  },
+  "fraction__bar": {
+   "concept/basic-ops.html": "js",
+   "concept/drill.html": "js",
+   "type/quiz.html": "js",
    "type/review.html": "js"
   },
   "frow": {
@@ -2009,6 +2060,9 @@
    "essay/training-result.html": "markup",
    "shared/training-result.html": "markup"
   },
+  "mathline": {
+   "concept/drill.html": "js"
+  },
   "meta": {
    "assignment/home.html": "js"
   },
@@ -2402,6 +2456,10 @@
    "essay/basics-v2.html": "js",
    "essay/basics.html": "js"
   },
+  "pcap__count": {
+   "concept/basic-ops.html": "js",
+   "type/quiz.html": "js"
+  },
   "pcard": {
    "exam/home.html": "markup",
    "exam/solve.html": "markup"
@@ -2413,6 +2471,11 @@
   "pcard__q": {
    "exam/home.html": "markup",
    "exam/solve.html": "markup"
+  },
+  "pcirc": {
+   "concept/basic-ops.html": "js",
+   "type/quiz.html": "js",
+   "type/review.html": "js"
   },
   "pgo": {
    "essay/step-result.html": "markup",
@@ -2566,6 +2629,12 @@
    "type/quiz.html": "markup",
    "type/review.html": "markup"
   },
+  "q__text": {
+   "concept/basic-ops.html": "js",
+   "concept/drill.html": "js",
+   "type/quiz.html": "js",
+   "type/review.html": "js"
+  },
   "qa": {
    "essay/basics.html": "markup"
   },
@@ -2580,6 +2649,9 @@
   },
   "qarea__scroll": {
    "exam/solve.html": "markup"
+  },
+  "qblank": {
+   "concept/drill.html": "js"
   },
   "qblank--math": {
    "concept/drill.html": "js"
@@ -2617,6 +2689,12 @@
    "assignment/explain.html": "js",
    "assignment/solve.html": "js"
   },
+  "qopt": {
+   "concept/basic-ops.html": "js",
+   "concept/drill.html": "js",
+   "type/quiz.html": "js",
+   "type/review.html": "js"
+  },
   "qopt--img": {
    "concept/basic-ops.html": "js",
    "concept/drill.html": "js",
@@ -2630,6 +2708,18 @@
    "type/review.html": "js"
   },
   "qopt--text": {
+   "concept/basic-ops.html": "js",
+   "concept/drill.html": "js",
+   "type/quiz.html": "js",
+   "type/review.html": "js"
+  },
+  "qopt__img": {
+   "concept/basic-ops.html": "js",
+   "concept/drill.html": "js",
+   "type/quiz.html": "js",
+   "type/review.html": "js"
+  },
+  "qopt__num": {
    "concept/basic-ops.html": "js",
    "concept/drill.html": "js",
    "type/quiz.html": "js",
@@ -4041,6 +4131,24 @@
    "type/review.html": "markup",
    "type/training-result.html": "markup"
   },
+  "sfield": {
+   "concept/basic-ops.html": "js",
+   "concept/drill.html": "js",
+   "type/quiz.html": "js",
+   "type/review.html": "js"
+  },
+  "sfield__ans": {
+   "concept/basic-ops.html": "js"
+  },
+  "sfield__row": {
+   "concept/basic-ops.html": "js"
+  },
+  "sfield__tag": {
+   "concept/basic-ops.html": "js",
+   "concept/drill.html": "js",
+   "type/quiz.html": "js",
+   "type/review.html": "js"
+  },
   "sfoot": {
    "exam/solve.html": "markup"
   },
@@ -4114,7 +4222,8 @@
   "show": {
    "concept/basic-ops.html": "js",
    "concept/drill.html": "js",
-   "exam/solve.html": "js"
+   "exam/solve.html": "js",
+   "type/review.html": "js"
   },
   "show-ans": {
    "concept/drill.html": "js",
@@ -4135,6 +4244,12 @@
   },
   "sinfo": {
    "exam/solve.html": "markup"
+  },
+  "sinput": {
+   "concept/basic-ops.html": "js",
+   "concept/drill.html": "js",
+   "type/quiz.html": "js",
+   "type/review.html": "js"
   },
   "sline": {
    "concept/learn.html": "markup",
