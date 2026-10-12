@@ -5,21 +5,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>홀로그램 톤 생존 검사 — 흰 홀로그램(1안)</title>
-<link rel="stylesheet" href="styles/tokens.css?v=25">
-<link rel="stylesheet" href="styles/base.css?v=10">
+<link rel="stylesheet" href="styles/tokens.css?v=20261012-2">
+<link rel="stylesheet" href="styles/base.css?v=20261012-2">
 <style>
   /* ── 페이지 골격 (검수 도구 — 배포 제외) ─────────────────── */
   body{ margin:0; padding:26px 20px 90px; background:var(--n-900);
     font-family:var(--font-sans); color:var(--n-000); }
   .page{ max-width:1000px; margin:0 auto; }
-  .page__ttl{ font-size:var(--fs-h1); font-weight:var(--fw-heavy); letter-spacing:-0.03em; margin:0; }
-  .page__sub{ font-size:var(--fs-sm); color:var(--n-300); margin:6px 0 16px; line-height:1.7; }
+  .page__ttl{ font-size:var(--fs-22); font-weight:var(--fw-heavy); letter-spacing:-0.03em; margin:0; }
+  .page__sub{ font-size:var(--fs-14); color:var(--n-300); margin:6px 0 16px; line-height:1.7; }
   .ctl{ position:sticky; top:0; z-index:60; display:flex; align-items:center; gap:8px;
     padding:10px 0; margin-bottom:6px; background:var(--n-900); flex-wrap:wrap; }
-  .ctl__lab{ font-size:var(--fs-sm); font-weight:var(--fw-bold); color:var(--n-300); margin-right:2px; }
-  .ctl__btn{ height:36px; padding:0 14px; border-radius:var(--r-md);
+  .ctl__lab{ font-size:var(--fs-14); font-weight:var(--fw-bold); color:var(--n-300); margin-right:2px; }
+  .ctl__btn{ height:36px; padding:0 14px; border-radius:var(--r-12);
     border:1px solid var(--n-500); background:var(--n-700); color:var(--n-000);
-    font-family:var(--font-sans); font-size:var(--fs-sm); font-weight:var(--fw-bold);
+    font-family:var(--font-sans); font-size:var(--fs-14); font-weight:var(--fw-bold);
     cursor:pointer; transition:background var(--t-fast); }
   .ctl__btn:hover{ background:var(--n-600); }
   .ctl__btn.is-on{ background:var(--primary); border-color:var(--primary); }
@@ -31,12 +31,12 @@
   .tile__hd{ display:flex; align-items:baseline; gap:10px; margin-bottom:8px; flex-wrap:wrap; }
   .tile__cat{ font-size:12px; font-weight:800; letter-spacing:.02em; padding:3px 9px;
     border-radius:var(--r-full); background:var(--n-600); color:var(--n-000); }
-  .tile__name{ font-size:var(--fs-h2); font-weight:var(--fw-heavy); letter-spacing:-0.02em; }
+  .tile__name{ font-size:var(--fs-19); font-weight:var(--fw-heavy); letter-spacing:-0.02em; }
   .tile__meta{ font-size:12.5px; color:var(--n-300); font-variant-numeric:tabular-nums; }
   .tile__note{ font-size:12.5px; color:var(--n-300); margin-left:auto; }
 
   /* ── 무대 (nav/home.html 축소 모형) ── */
-  .stage{ position:relative; border-radius:var(--r-xl); overflow:hidden;
+  .stage{ position:relative; border-radius:var(--r-22); overflow:hidden;
     background:var(--blue-300) center 46%/cover no-repeat; }
   .obj{ position:absolute; transform:translate(-50%,-50%); aspect-ratio:1; }
   .obj__img{ position:absolute; inset:0; background:center/contain no-repeat; }
