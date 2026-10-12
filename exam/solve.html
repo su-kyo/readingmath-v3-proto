@@ -79,18 +79,7 @@
     </footer>
   </div>
 
-  <script>
-    (function(){
-      var btn = document.getElementById('themeToggle');
-      if(!btn) return;
-      btn.addEventListener('click', function(){
-        var dark = document.documentElement.getAttribute('data-theme') === 'dark';
-        var next = dark ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        try{ localStorage.setItem('rm-theme', next); }catch(e){}
-      });
-    })();
-  </script>
+  <script src="scripts/exam-theme.js?v=20261012"></script>
   <!-- 검수용 디버그 패널 (?debug=1 일 때만 보임) -->
   <script src="scripts/debug-panel.js?v=20261012"></script>
   <!-- 키패드 물리 키보드 입력 (공용) -->

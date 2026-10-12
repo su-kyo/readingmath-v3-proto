@@ -51,7 +51,7 @@ LAYOUT = {
 }
 BGW, BGH = 2520, 1260          # 배경 원본 크기
 CW = 1440                      # 검사 이미지 폭
-# 캐릭터 칸 — 중심 y는 공통, 폭은 과목마다 다르다 (nav/home.html의 LAYOUT.hero와 같은 값).
+# 캐릭터 칸 — 중심 y는 공통, 폭은 과목마다 다르다 (scripts/nav-home.js의 LAYOUT.hero와 같은 값).
 # 실외(수학)는 오브젝트가 크고 실내(과학)는 작아서, 같은 폭이면 과학에서 캐릭터만 커 보인다.
 HERO_W, HERO_CY = {'math': 0.3125, 'sci': 0.25}, 0.627
 

@@ -117,18 +117,7 @@
     </aside>
   </div>
 
-  <script>
-    (function(){
-      var btn = document.getElementById('themeToggle');
-      if(!btn) return;
-      btn.addEventListener('click', function(){
-        var dark = document.documentElement.getAttribute('data-theme') === 'dark';
-        var next = dark ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        try{ localStorage.setItem('rm-theme', next); }catch(e){}
-      });
-    })();
-  </script>
+  <script src="scripts/exam-theme.js?v=20261012"></script>
   <script src="scripts/exam-home.js?v=20261012"></script>
 </body>
 </html>
