@@ -54,7 +54,9 @@
         secs.map(function (s) {
           var h = s.querySelector('h2');
           var t = h ? h.childNodes[0].textContent.trim() : s.id;
-          return '<a href="#' + s.id + '">' + t + '</a>';
+          // <base href="../"> 때문에 "#id" 만 쓰면 최상위(index.html#id)로 풀려 페이지를 떠난다.
+          // 그래서 이 문서의 경로를 붙이고, 누르면 이동 대신 그 자리로 스크롤한다.
+          return '<a href="' + DIR + here + '#' + s.id + '" data-sec="' + s.id + '">' + t + '</a>';
         }).join('') + '</div>';
     }
 
@@ -63,10 +65,20 @@
             ' 자동으로 셉니다 — <code>tools/usage-scan.py</code></p>';
     nav.innerHTML = html;
 
+    nav.addEventListener('click', function (e) {
+      var a = e.target.closest('a[data-sec]');
+      if (!a) return;
+      var sec = document.getElementById(a.getAttribute('data-sec'));
+      if (!sec) return;
+      e.preventDefault();
+      sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      history.replaceState(null, '', location.pathname + location.search + '#' + sec.id);
+    });
+
     // 스크롤에 따라 지금 보는 절을 목차에 표시
     if (!secs.length || !('IntersectionObserver' in window)) return;
     var links = {};
-    nav.querySelectorAll('.sg-nav__toc a').forEach(function (a) { links[a.getAttribute('href').slice(1)] = a; });
+    nav.querySelectorAll('.sg-nav__toc a').forEach(function (a) { links[a.getAttribute('data-sec')] = a; });
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         var a = links[e.target.id];
@@ -89,7 +101,7 @@
 
   function frameDoc(markup, theme, section, css, pad, bg) {
     var links = css.split(',').map(function (n) {
-      return '<link rel="stylesheet" href="styles/' + n.trim() + '.css?v=20261012-4">';
+      return '<link rel="stylesheet" href="styles/' + n.trim() + '.css?v=20261012-5">';
     }).join('');
     return '<!doctype html><html lang="ko" data-theme="' + theme + '" data-section="' + section + '">' +
       '<head><meta charset="utf-8"><base href="' + ROOT + '">' + links +
