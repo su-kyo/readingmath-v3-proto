@@ -31,9 +31,9 @@
   --input-bg: var(--n-000); --input-br: var(--border-strong);
 }
 /* 스크롤바 확실히 보이게 */
-.ops::-webkit-scrollbar { width: 10px; }
-.ops::-webkit-scrollbar-thumb { background: rgba(255,255,255,.24); border-radius: var(--r-full); border: 2px solid transparent; background-clip: padding-box; }
+
 :root[data-theme="light"] .ops::-webkit-scrollbar-thumb { background: rgba(20,32,58,.22); background-clip: padding-box; }
+
 
 /* ===== 상단 프로그레스 (박스 최상단 중앙에 탭처럼 붙음. 색=테두리색, 테마 무관) ===== */
 .progress-cap {
@@ -49,6 +49,7 @@
 .pcirc.is-wrong { background: var(--no-solid); }
 .pcirc.is-wrong::after { content: ""; position: absolute; inset: 0; background: center / 15px no-repeat url("../../assets/icons/ico-progress-wrong.svg"); }
 .pcap__count { margin-left: 4px; font-weight: var(--fw-bold); color: var(--n-000); font-size: var(--fs-16); font-family: var(--font-mono); }
+
 
 /* ===== 문제 ===== */
 /* 기본 중앙, 공간 부족하면 위부터 (margin auto → 넘치면 0으로 접힘) */
@@ -133,12 +134,11 @@
 
 /* ===== 하단 고정 채점 버튼 ===== */
 .ops__foot { flex: none; display: flex; justify-content: center; padding: var(--sp-8) 0 var(--sp-4); }
-.btn-grade { padding: var(--sp-12) 44px; border-radius: var(--r-16); background: var(--th-vivid); color: var(--n-000); font-weight: var(--fw-heavy); font-size: var(--fs-19); box-shadow: 0 4px 0 var(--th-accent-strong); }   /* 정체성 칠면 450 */
+   /* 정체성 칠면 450 */
 .btn-grade:hover:not(:disabled) { background: var(--th-accent); } .btn-grade:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 2px 0 var(--th-accent-strong); }
 .btn-grade:disabled { background: var(--n-500); color: var(--n-050); box-shadow: none; cursor: not-allowed; }
 .btn-grade--next { background: var(--primary); box-shadow: 0 4px 0 var(--primary-pressed); }
 .btn-grade--next:hover:not(:disabled) { background: var(--primary-hover); }
-.btn-grade[hidden] { display: none; }
 
 /* 하단바 다음으로 비활성 */
 

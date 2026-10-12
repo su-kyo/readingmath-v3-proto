@@ -24,6 +24,7 @@
   --r-lg: 16px; --r-md: 12px; --r-sm: 9px;
   --sh: 0 1px 2px rgba(13,18,32,.04), 0 20px 40px -28px rgba(13,18,32,.24);
 }
+
 /* ===== 다크 모드 — 로컬 var 리매핑(뉴트럴 램프 + 퍼플 액센트 밝게) ===== */
 :root[data-theme="dark"] {
   --canvas: var(--n-900); --surface: var(--n-800); --rail: var(--n-800);
@@ -38,7 +39,7 @@
   --hover: var(--n-700);
   --sh: 0 1px 2px rgba(0,0,0,.4), 0 20px 40px -28px rgba(0,0,0,.6);
 }
-:root[data-theme="dark"] .svideo { background: var(--n-700); }
+
 :root[data-theme="dark"] .qarea__scroll::-webkit-scrollbar-thumb,
 :root[data-theme="dark"] .sinfo::-webkit-scrollbar-thumb { background: var(--n-600); }
 :root[data-theme="dark"] .qarea__scroll::-webkit-scrollbar-thumb:hover,
@@ -53,10 +54,10 @@
 :root[data-theme="dark"] .sicon .ico-moon { display: none; }
 :root[data-theme="dark"] .sicon .ico-sun { display: block; }
 html, body { height: 100%; }
-body.exam-body { background: var(--canvas); color: var(--ink); overflow: hidden;
-  font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+
 .solve { display: flex; flex-direction: column; height: 100dvh; overflow: hidden; }
 ::selection { background: var(--accent-tint); }
+
 
 /* ===== 헤더 (투명 바 + 헤어라인) ===== */
 .shead { flex: none; display: flex; align-items: center; justify-content: space-between; gap: var(--sp-16);
@@ -76,6 +77,7 @@ body.exam-body { background: var(--canvas); color: var(--ink); overflow: hidden;
   padding: var(--sp-6) var(--sp-12); border-radius: var(--r-8); cursor: pointer; transition: .13s; }
 .slink:hover { background: var(--surface); color: var(--ink); }
 .slink svg { width: 15px; height: 15px; }
+
 
 /* ===== 워크스페이스: 하나의 표면을 헤어라인으로 분할 ===== */
 .scontent { flex: 1; min-height: 0; margin: 16px 20px; display: flex; background: var(--surface);
@@ -162,6 +164,7 @@ body.exam-body { background: var(--canvas); color: var(--ink); overflow: hidden;
 .explain__cap svg { width: 15px; height: 15px; }
 .explain__body { font-size: var(--fs-16); line-height: 1.68; color: var(--ink2); }
 
+
 /* ===== 정보 레일 ===== */
 .sinfo { flex: none; width: 356px; background: var(--rail); border-left: 1px solid var(--line);
   overflow-y: auto; padding: var(--sp-24); display: flex; flex-direction: column; }
@@ -176,13 +179,13 @@ body.exam-body { background: var(--canvas); color: var(--ink); overflow: hidden;
 .stype { font-size: var(--fs-19); font-weight: var(--fw-heavy); letter-spacing: -.02em; line-height: 1.35; margin-top: 1px; }
 .svideo { height: 172px; border-radius: var(--r-12); background: var(--n-100); border: 1px solid var(--line);
   display: grid; place-items: center; position: relative; overflow: hidden; cursor: pointer; }
-.svideo:hover .svideo__play { transform: scale(1.06); }
+
 .svideo__play { width: 50px; height: 50px; border-radius: 50%; background: rgba(13,18,32,.62); display: grid; place-items: center; transition: transform .15s; }
 .svideo__play svg { width: 19px; height: 19px; color: var(--n-000); margin-left: 3px; }
 .pcard { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-12); padding: var(--sp-16) var(--sp-16); display: flex; flex-direction: column; gap: var(--sp-8); }
-.pcard__q { font-size: var(--fs-14); font-weight: var(--fw-bold); color: var(--ink2); }
+
 .pcard__ex { text-align: center; font-family: var(--font-mono); font-size: var(--fs-19); font-weight: var(--fw-bold); letter-spacing: .01em; color: var(--ink); padding: var(--sp-4) 0 var(--sp-4); }
-.history { display: flex; flex-direction: column; }
+
 .history__item { display: flex; align-items: center; gap: var(--sp-12); padding: var(--sp-12) 0; border-top: 1px solid var(--line-2); }
 .history__item:first-child { border-top: none; padding-top: var(--sp-4); }
 .history__icon { width: 24px; height: 24px; flex: none; border-radius: 50%; display: grid; place-items: center; color: var(--n-000); }
@@ -190,8 +193,9 @@ body.exam-body { background: var(--canvas); color: var(--ink); overflow: hidden;
 .history__icon--ok { background: var(--good); } .history__icon--no { background: var(--bad); }
 .history__main { display: flex; flex-direction: column; gap: var(--sp-4); min-width: 0; }
 .history__top { font-size: var(--fs-13); font-weight: var(--fw-semibold); color: var(--ink2); }
-.history__tag { font-weight: var(--fw-heavy); } .history__tag--ok { color: var(--ok-on-dark); } .history__tag--no { color: var(--no-on-dark); }
+  .history__tag--no { color: var(--no-on-dark); }
 .history__time { font-family: var(--font-mono); font-size: var(--fs-11); color: var(--faint); font-variant-numeric: tabular-nums; }
+
 
 /* ===== 하단 액션 (투명 바 + 헤어라인) ===== */
 .sfoot { flex: none; display: flex; align-items: center; justify-content: space-between; gap: var(--sp-12);

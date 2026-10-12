@@ -141,17 +141,17 @@ body{ font-family:var(--font-sans); background:var(--bg); color:var(--ink); over
 .unit{ padding:var(--sp-12) var(--sp-20); border-top:2px solid var(--n-650); } .unit:first-child{ border-top:0; }
 .semhd + .unit{ border-top:0; }
 .unit__ttl{ display:flex; align-items:center; gap:var(--sp-8); font-size:var(--fs-16); font-weight:var(--fw-heavy); margin-bottom:9px; }
-.tag{ font-size:var(--fs-12); font-weight:var(--fw-bold); padding:var(--sp-4) var(--sp-6); border-radius:var(--r-4); white-space:nowrap; }
+
 .sub{ border-radius:var(--r-12); background:var(--surface-2); margin-bottom:8px; overflow:hidden; }
 .sub__head{ display:flex; align-items:center; gap:var(--sp-8); padding:var(--sp-12) var(--sp-12); cursor:pointer; }
 .sub__no{ font-size:var(--fs-14); font-weight:var(--fw-heavy); color:var(--th-accent-hi); flex:none; }
 .sub__title{ flex:1; min-width:0; font-size:var(--fs-14); font-weight:var(--fw-bold); color:var(--text); letter-spacing:-.03em; }
 .sub__chev{ width:20px; height:20px; color:var(--th-accent-hi); display:grid; place-items:center; transition:transform .2s; flex:none; }
-.sub.is-open .sub__chev{ transform:rotate(180deg); } .sub__chev svg{ width:13px; height:13px; }
+ .sub__chev svg{ width:13px; height:13px; }
 .sub__body{ display:none; padding:var(--sp-4) var(--sp-12) var(--sp-12); } .sub.is-open .sub__body{ display:block; }
 
 /* 접힘 요약: 통통·둥근 아이콘 별 (색=등급: A금 B은 C동 S프리즘) */
-.sub__mini{ display:flex; gap:var(--sp-4); flex:none; align-items:center; margin-right:2px; }
+
 .sub__mini svg{ display:block; }
 .sub__done2{ display:inline-flex; align-items:center; gap:var(--sp-4); padding:var(--sp-4) var(--sp-8); border-radius:var(--r-12);
   background:color-mix(in srgb, var(--ok-on-dark) 22%, transparent); color:var(--ok-on-dark); font-size:var(--fs-11); font-weight:var(--fw-heavy); flex:none; }
@@ -161,10 +161,10 @@ body{ font-family:var(--font-sans); background:var(--bg); color:var(--ink); over
   background:var(--surface-2); cursor:pointer; transition:background .14s; }
 .hyc:hover{ background:var(--surface-3); }
 .hyc__lab{ font-size:var(--fs-11); font-weight:var(--fw-heavy); color:var(--th-accent-hi); }
-.hyc__star{ width:34px; height:34px; display:grid; place-items:center; }
+
 .hyc__star img{ width:34px; height:34px; object-fit:contain; display:block; }
 .hyc__star img.x{ filter:grayscale(1) brightness(1.4) opacity(.4); }
-.rbar{ display:flex; gap:var(--sp-4); }
+
 .rbar i{ width:11px; height:6px; border-radius:var(--r-4); background:var(--border); }
 .rbar i.done{ background:var(--ok-on-dark); }
 .rbar i.cur{ background:var(--th-accent); }

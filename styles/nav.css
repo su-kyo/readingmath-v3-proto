@@ -1,0 +1,15 @@
+/* =========================================================================
+   행성 탐색(A층) 계열 공용 — 커리큘럼·자유 모드가 같이 쓰는 단원 행 · 등급 별 · 진행 막대
+   마감 회차(2026-10-12)에 화면 파일에서 똑같은 규칙만 골라 올렸다.
+   화면마다 다른 부분은 styles/screens/ 에 남아 있다.
+   ========================================================================= */
+
+.tag{ font-size:var(--fs-12); font-weight:var(--fw-bold); padding:var(--sp-4) var(--sp-6); border-radius:var(--r-4); white-space:nowrap; }
+
+.sub.is-open .sub__chev{ transform:rotate(180deg); }
+
+.sub__mini{ display:flex; gap:var(--sp-4); flex:none; align-items:center; margin-right:2px; }
+
+.hyc__star{ width:34px; height:34px; display:grid; place-items:center; }
+
+.rbar{ display:flex; gap:var(--sp-4); }

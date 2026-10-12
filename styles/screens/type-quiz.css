@@ -23,9 +23,9 @@
   --input-bg: var(--n-650); --input-br: var(--n-500);
 }
 :root[data-theme="light"] .ops { --qtext: var(--n-650); --muted: var(--text-muted); --ex-bg: var(--n-100); --opt-bg: var(--n-000); --opt-br: var(--n-100); --opt-hover: var(--n-050); --input-bg: var(--n-000); --input-br: var(--n-200); }
-.ops::-webkit-scrollbar { width: 10px; }
-.ops::-webkit-scrollbar-thumb { background: rgba(255,255,255,.24); border-radius: var(--r-full); border: 2px solid transparent; background-clip: padding-box; }
+
 :root[data-theme="light"] .ops::-webkit-scrollbar-thumb { background: rgba(20,60,52,.22); background-clip: padding-box; }
+
 
 /* ===== 상단 프로그레스 캡 (타이머 + 풀었다/미풀이) ===== */
 /* cap = 콘텐츠 테두리(--th-static, teal)에 매달린 탭 → 같은 teal로 (라이트·다크 공통) */
@@ -79,6 +79,7 @@
 .fraction .sinput { min-width: 96px; width: 96px; height: 50px; padding: 0 var(--sp-8); }
 .fraction__bar { width: 104px; height: 3px; background: var(--qtext); border-radius: var(--r-4); }
 
+
 /* ===== 다음 문제 (중앙) ===== */
 .ops__foot { flex: none; display: flex; justify-content: center; padding: var(--sp-8) 0 var(--sp-4); }
 .btn-next { padding: var(--sp-12) 44px; border-radius: var(--r-16); background: var(--subj); color: var(--n-000); font-weight: var(--fw-heavy); font-size: var(--fs-19); box-shadow: 0 4px 0 var(--th-accent-strong); }
@@ -86,7 +87,6 @@
 /* disabled: 라이트에서 text-muted가 n-500(배경)과 같은 색이라 안 보였음 → 테마 불변 n-200으로 */
 .btn-next:disabled { background: var(--n-500); color: var(--n-200); box-shadow: none; cursor: not-allowed; }
 .btn-next[hidden] { display: none; }
-
 
 /* 계산기 키패드 = 공용 styles/keypad.css (마크업은 scripts/keypad.js) */
 

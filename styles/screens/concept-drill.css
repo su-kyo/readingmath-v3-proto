@@ -35,9 +35,9 @@
   --st-ok: var(--ok-ink); --st-no: var(--no-ink);
 }
 /* 스크롤바 확실히 보이게 */
-.ops::-webkit-scrollbar { width: 10px; }
-.ops::-webkit-scrollbar-thumb { background: rgba(255,255,255,.24); border-radius: var(--r-full); border: 2px solid transparent; background-clip: padding-box; }
+
 :root[data-theme="light"] .ops::-webkit-scrollbar-thumb { background: rgba(20,32,58,.22); background-clip: padding-box; }
+
 
 /* ===== 문제 카드 (번호탭 헤더 + 접이식 · 프레임 테두리색과 면 공유 · 상단 부착) ===== */
 .problem { flex: none; width: min(1040px, calc(100% - 2 * clamp(24px, 5vw, 56px))); margin: 0 auto;
@@ -66,6 +66,7 @@
 .problem__body .ex { flex: none; width: clamp(200px, 36%, 340px); margin: 0; background: rgba(255,255,255,.07); }
 .problem__body .ex__list { color: rgba(249,249,249,.85); }
 .problem__body .ex__skel { color: rgba(255,255,255,.6); }
+
 
 /* ===== 문제 (풀이 영역) ===== */
 .q { width: min(1040px, 100%); margin: 0; display: flex; flex-direction: column; align-items: center; }
@@ -138,14 +139,14 @@
 .qblank--math .katex-display { margin: 10px 0; }
 .qblank--math .dblank { min-width: 46px; padding: 0 var(--sp-8); }
 
+
 /* ===== 하단 고정 채점 버튼 ===== */
 .ops__foot { flex: none; display: flex; justify-content: center; padding: var(--sp-8) 0 var(--sp-4); }
-.btn-grade { padding: var(--sp-12) 44px; border-radius: var(--r-16); background: var(--th-vivid); color: var(--n-000); font-weight: var(--fw-heavy); font-size: var(--fs-19); box-shadow: 0 4px 0 var(--th-accent-strong); }   /* 정체성 칠면 450 */
+   /* 정체성 칠면 450 */
 .btn-grade:hover:not(:disabled) { background: var(--th-accent); } .btn-grade:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 2px 0 var(--th-accent-strong); }
 .btn-grade:disabled { background: var(--n-500); color: var(--n-050); box-shadow: none; cursor: not-allowed; }
 .btn-grade--next { background: var(--primary); box-shadow: 0 4px 0 var(--primary-pressed); }
 .btn-grade--next:hover:not(:disabled) { background: var(--primary-hover); }
-.btn-grade[hidden] { display: none; }
 
 /* 하단바 다음으로 비활성 */
 

@@ -6,6 +6,7 @@
 /* 지문 전용 폰트: Noto Serif KR (수식/기호도 여기에 얹힘) */
 @import url("https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&display=swap");
 
+
 /* ===== 개념 학습 화면 · 풀블리드 반응형 무대 ===== */
 html, body { height: 100%; }
 body.learn-body { background: var(--bg); overflow: hidden; }
@@ -16,8 +17,10 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 .theme-toggle__knob { position: absolute; top: 2px; left: 2px; width: 30px; height: 30px; background: center / contain no-repeat url("../../assets/icons/ico-sun.svg"); transition: left .2s ease; }
 :root[data-theme="dark"] .theme-toggle__knob { left: 32px; background-image: url("../../assets/icons/ico-moon.svg"); }
 
+
 /* ===== 콘텐츠 패널 ===== */
 .content__inner { flex: 1; display: flex; justify-content: center; gap: clamp(24px, 4vw, 48px); padding: 0 clamp(24px, 5vw, 64px); min-height: 0; }
+
 
 /* ===== 지문 (끊어읽기) ===== */
 .article {
@@ -59,6 +62,7 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 .seg--blank.is-wrong { animation: blankShake .4s; }
 @keyframes blankShake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-4px)} 40%,80%{transform:translateX(4px)} }
 
+
 /* ===== 정답 선택 팝오버 (신규 패턴) ===== */
 .answer-pop {
   position: fixed; z-index: var(--z-float); transform: translateX(-50%);
@@ -87,6 +91,7 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 .seg--blank.is-just-correct:hover { background: var(--ok-solid); color: var(--n-000); box-shadow: none; }
 @media (prefers-reduced-motion: reduce) { .answer-opt.is-wrong, .seg--blank.is-wrong { animation: none; } }
 
+
 /* ===== 이미지 뷰어 (스켈레톤) ===== */
 .viewer { width: clamp(240px, 26vw, 340px); flex: none; display: flex; flex-direction: column; gap: var(--sp-12); align-items: center; justify-content: center; }
 .viewer__frame { width: 100%; aspect-ratio: 4 / 3; border-radius: var(--r-16); background: var(--th-tint); box-shadow: inset 0 0 0 2px var(--th-tint); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--sp-12); position: relative; overflow: hidden; cursor: default; }
@@ -101,12 +106,14 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 .viewer__pager button { width: 34px; height: 34px; border-radius: 50%; background: var(--th-tint); color: var(--th-ink-accent); font-size: var(--fs-15); }
 .viewer__pager button:hover { background: var(--th-tint-strong); }
 
+
 /* ===== 라이트박스 — 프레임은 공용 monitor, 안은 이미지뿐 ===== */
 #lightbox { --mon-w: 760px; }
 /* 실제 이미지가 들어간다고 가정한 더미 (테마 무관 = 사진처럼 고정) */
 .lightbox__img { position: relative; overflow: hidden; width: 100%; aspect-ratio: 4 / 3; display: flex; align-items: center; justify-content: center; font-size: var(--fs-19); font-weight: var(--fw-heavy); letter-spacing: .02em; color: rgba(255,255,255,.92);
   background: linear-gradient(135deg, #4a80e6 0%, #2456c4 46%, #16307a 100%); }
 .lightbox__img::after { content: ""; position: absolute; inset: 0; background: radial-gradient(120% 90% at 22% 18%, rgba(255,255,255,.28), transparent 55%); pointer-events: none; }
+
 
 /* ===== 하단 콘솔 바 ===== */
 /* 하단 콘솔 = 일러스트(우주선). 좌우 console SVG와 이어지는 고정색, 토큰/테마 영향 없음.
@@ -121,6 +128,7 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 }
 @media (max-width: 680px) { .breadcrumb .crumb--hide { display: none; } }
 @media (max-width: 520px) { .toolbtn span { display: none; } .toolbtn { padding: var(--sp-8) var(--sp-12); } }
+
 
 /* =========================================================================
    다크 모드 — 메인 콘텐츠 패널 안만 어둡게. 배경(우주선)·하단 콘솔바는 라이트와 동일.
@@ -164,6 +172,7 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 :root[data-theme="dark"] .answer-opt.is-wrong { background: color-mix(in srgb, var(--no-on-dark) 16%, transparent); color: var(--no-on-dark); }
 :root[data-theme="dark"] .answer-opt.is-wrong .answer-opt__dot { box-shadow: inset 0 0 0 2px var(--no-on-dark); }
 
+
 /* ===== 개념 영상 레이어 — 프레임은 공용 monitor, 안은 16:9 영상뿐 ===== */
 #videobox { --mon-w: 900px; }
 #videobox .monitor__screen { background: var(--n-950); }
@@ -171,6 +180,7 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 .videobox__frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 .videobox__fallback { position: absolute; inset: 0; display: none; flex-direction: column; align-items: center; justify-content: center; gap: var(--sp-12); color: var(--th-accent-hi); text-align: center; padding: var(--sp-24); font-family: var(--font-sans); }
 .videobox__fallback a { color: var(--th-accent-hi); font-weight: var(--fw-bold); }
+
 
 /* ===== 개념 요약하기 — 프레임은 공용 monitor, 안(끊어읽기·선지)은 그대로 ===== */
 .summary {

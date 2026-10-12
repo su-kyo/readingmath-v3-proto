@@ -21,13 +21,14 @@
   --no-bg: rgba(210,50,58,.1); --no-br: rgba(210,50,58,.45); --no-fg: var(--no-ink); --no-ink: var(--no-ink);
 }
 
+
 /* ============ 진행 표시 = 단계 스테퍼 (세로 확정안 drill-v2와 동일) ============ */
 .stepbar { display: inline-flex; align-items: center; gap: 0; }
 .stepbar__i { display: inline-flex; align-items: center; gap: var(--sp-6); padding: var(--sp-4) var(--sp-4);
   font-family: var(--font-sans); font-size: var(--fs-13); font-weight: var(--fw-bold); color: var(--step-fg); transition: color .2s; }
 .stepbar__dot { position: relative; box-sizing: border-box; flex: none; width: 18px; height: 18px; border-radius: 50%;
   border: 2px solid currentColor; opacity: .5; transition: opacity .2s, background .2s; }
-.stepbar__track { width: 28px; height: 2px; border-radius: var(--r-4); background: var(--step-fg); opacity: .3; transition: background .25s, opacity .25s; }
+
 .stepbar__i.is-on { color: var(--th-ink-accent); }
 :root[data-theme="dark"] .stepbar__i.is-on { color: var(--th-accent-hi); }
 .stepbar__i.is-on .stepbar__dot { opacity: 1; background: currentColor; }
@@ -39,8 +40,7 @@
 .stepbar__i.is-done + .stepbar__track { background: var(--th-accent); opacity: 1; }
 
 /* 문제 카드 헤더 안 = 어두운 패널 위 밝은 톤 */
-.phead__lead { display: inline-flex; align-items: center; gap: var(--sp-12); flex-wrap: wrap; min-width: 0; }
-.phead__div { width: 1px; height: 22px; background: rgba(255,255,255,.18); flex: none; }
+
 .qtabs { display: inline-flex; align-items: center; gap: var(--sp-8); }
 .qtab { min-width: 28px; height: 28px; padding: 0 var(--sp-6); border-radius: var(--r-8); display: inline-flex; align-items: center; justify-content: center;
   font-family: var(--font-sans); font-weight: var(--fw-heavy); font-size: var(--fs-13); cursor: pointer;
@@ -54,6 +54,7 @@
 .problem__head .stepbar__i.is-done .stepbar__dot::after { border-color: var(--th-static); }
 
 :root[data-theme="light"] .stage-scroll::-webkit-scrollbar-thumb { background: rgba(108,99,201,.28); background-clip: padding-box; }
+
 
 /* ============ 카드 ============ */
 .card { max-width: 760px; margin: 0 auto; background: var(--card); border: 1px solid var(--card-br); border-radius: var(--r-22); box-shadow: var(--card-sh); }
@@ -72,6 +73,7 @@
 .problem.is-collapsed .problem__body { max-height: 0; opacity: 0; padding-top: 0; padding-bottom: 0; }
 .problem__body .rline { color: rgba(249,249,249,.92); }
 
+
 /* ============ 다음 단계 진입 버튼 (drill-v2와 동일 · 콘텐츠 하단) ============ */
 .stage-action { max-width: 760px; margin: 16px auto 0; }
 .stage-action__btn { width: 100%; height: 54px; border-radius: var(--r-12); border: 0; cursor: pointer;
@@ -80,7 +82,6 @@
   box-shadow: inset 0 1px 0 rgba(255,255,255,.25); transition: background .15s; }
 .stage-action__btn:hover { background: var(--primary-hover); }
 .stage-action__btn svg { width: 19px; height: 19px; }
-
 
 /* 안내문 (오답 있을 때) */
 .review-hint { display: flex; align-items: center; gap: var(--sp-8); max-width: 760px; margin: 0 auto 14px;
@@ -94,6 +95,7 @@
 .rline + .rline { margin-top: 8px; }
 .rline--q { line-height: 2.0; }
 .rline--muted { color: var(--step-fg); }
+
 
 /* ============ 채점 빈칸/슬롯 ============ */
 .rblank, .rslot { position: relative; display: inline-flex; align-items: center; gap: var(--sp-6); vertical-align: middle;

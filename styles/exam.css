@@ -1,0 +1,20 @@
+/* =========================================================================
+   시험대비 계열 공용 — 시험 홈·시험 풀이가 같이 쓰는 영상 카드 · 응시 기록
+   마감 회차(2026-10-12)에 화면 파일에서 똑같은 규칙만 골라 올렸다.
+   화면마다 다른 부분은 styles/screens/ 에 남아 있다.
+   ========================================================================= */
+
+:root[data-theme="dark"] .svideo { background: var(--n-700); }
+
+body.exam-body { background: var(--canvas); color: var(--ink); overflow: hidden;
+  font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+
+.svideo:hover .svideo__play { transform: scale(1.06); }
+
+.pcard__q { font-size: var(--fs-14); font-weight: var(--fw-bold); color: var(--ink2); }
+
+.history { display: flex; flex-direction: column; }
+
+.history__tag { font-weight: var(--fw-heavy); }
+
+.history__tag--ok { color: var(--ok-on-dark); }

@@ -17,6 +17,7 @@
   --r-lg: 16px; --r-md: 12px; --r-sm: 9px;
   --sh: 0 1px 2px rgba(13,18,32,.04), 0 20px 40px -28px rgba(13,18,32,.20);
 }
+
 /* ===== 다크 모드 — 로컬 var 리매핑(뉴트럴 램프 + 퍼플 액센트 밝게) ===== */
 :root[data-theme="dark"] {
   --canvas: var(--n-900); --surface: var(--n-800); --rail: var(--n-700);
@@ -32,7 +33,7 @@
   --sh: 0 1px 2px rgba(0,0,0,.4), 0 20px 40px -28px rgba(0,0,0,.6);
 }
 /* 다크 — 시맨틱 직접 참조(라이트 고정색) 오버라이드 */
-:root[data-theme="dark"] .svideo { background: var(--n-700); }
+
 :root[data-theme="dark"] .panel::-webkit-scrollbar-thumb,
 :root[data-theme="dark"] .sidebar__list::-webkit-scrollbar-thumb { background: var(--n-600); }
 :root[data-theme="dark"] .panel::-webkit-scrollbar-thumb:hover,
@@ -62,10 +63,10 @@
 :root[data-theme="dark"] .gnb__ico .ico-moon { display: none; }
 :root[data-theme="dark"] .gnb__ico .ico-sun { display: block; }
 html, body { height: 100%; }
-body.exam-body { background: var(--canvas); color: var(--ink); overflow: hidden;
-  font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+
 .exam { display: flex; flex-direction: column; height: 100dvh; overflow: hidden; }
 ::selection { background: var(--accent-tint); }
+
 
 /* ===== 헤더 ===== */
 .xhead { flex: none; display: flex; align-items: stretch; gap: var(--sp-16); height: 56px; padding: 0 var(--sp-20); border-bottom: 1px solid var(--line); }
@@ -85,6 +86,7 @@ body.exam-body { background: var(--canvas); color: var(--ink); overflow: hidden;
 .xico:hover { border-color: var(--line-strong); color: var(--ink); }
 .xico svg { width: 18px; height: 18px; }
 .xico__new { position: absolute; top: 7px; right: 8px; width: 7px; height: 7px; border-radius: 50%; background: var(--no-solid); border: 1.5px solid var(--canvas); }
+
 
 /* ===== 본문 ===== */
 .xbody { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: var(--sp-12); padding: var(--sp-16) var(--sp-20); }
@@ -253,13 +255,13 @@ body.exam-body { background: var(--canvas); color: var(--ink); overflow: hidden;
 .dblock { display: flex; flex-direction: column; gap: var(--sp-8); }
 .dblock .dblock__cap { font-size: var(--fs-11); font-weight: var(--fw-heavy); letter-spacing: .08em; text-transform: uppercase; color: var(--faint); }
 .svideo { height: 158px; border-radius: var(--r-12); background: var(--n-100); border: 1px solid var(--line); display: grid; place-items: center; position: relative; overflow: hidden; cursor: pointer; }
-.svideo:hover .svideo__play { transform: scale(1.06); }
+
 .svideo__play { width: 48px; height: 48px; border-radius: 50%; background: rgba(13,18,32,.62); display: grid; place-items: center; transition: transform .15s; }
 .svideo__play svg { width: 18px; height: 18px; color: var(--n-000); margin-left: 3px; }
 .pcard { background: var(--rail); border: 1px solid var(--line); border-radius: var(--r-12); padding: var(--sp-16) var(--sp-16); display: flex; flex-direction: column; gap: var(--sp-8); }
-.pcard__q { font-size: var(--fs-14); font-weight: var(--fw-bold); color: var(--ink2); }
+
 .pcard__ex { text-align: center; font-family: var(--font-mono); font-size: var(--fs-19); font-weight: var(--fw-bold); color: var(--ink); padding: var(--sp-4) 0; }
-.history { display: flex; flex-direction: column; }
+
 .history__item { display: flex; align-items: center; gap: var(--sp-8); padding: var(--sp-8) 0; border-top: 1px solid var(--line-2); }
 .history__item:first-child { border-top: none; padding-top: var(--sp-4); }
 .history__icon { width: 22px; height: 22px; flex: none; border-radius: 50%; display: grid; place-items: center; color: var(--n-000); }
@@ -267,7 +269,7 @@ body.exam-body { background: var(--canvas); color: var(--ink); overflow: hidden;
 .history__icon--ok { background: var(--ok-solid); } .history__icon--no { background: var(--no-solid); }
 .history__main { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
 .history__top { font-size: var(--fs-12); font-weight: var(--fw-semibold); color: var(--ink2); }
-.history__tag { font-weight: var(--fw-heavy); } .history__tag--ok { color: var(--ok-on-dark); } .history__tag--no { color: var(--no-on-dark); }
+  .history__tag--no { color: var(--no-on-dark); }
 .history__time { font-family: var(--font-mono); font-size: var(--fs-11); color: var(--faint); }
 
 /* 스크롤바 */

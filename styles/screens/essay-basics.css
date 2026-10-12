@@ -21,6 +21,7 @@
   --bl-next: rgba(114,111,233,.7);
 }
 
+
 /* ============ 좌: 문제 영역 (더 좁게) ============ */
 .qa {
   flex: 0 1 clamp(300px, 33%, 372px); min-width: 0; display: flex; flex-direction: column; gap: var(--sp-12);
@@ -56,7 +57,7 @@
 :root[data-theme="light"] .qref__img { background: linear-gradient(110deg, var(--n-100) 25%, var(--n-050) 40%, var(--n-100) 55%); background-size: 220% 100%; }
 .qref__img span { color: rgba(255,255,255,.55); font-weight: var(--fw-bold); font-size: var(--fs-13); }
 :root[data-theme="light"] .qref__img span { color: rgba(80,66,150,.55); }
-@keyframes shimmer { from { background-position: 180% 0; } to { background-position: -40% 0; } }
+
 .qref__words { color: var(--qa-sub); font-size: clamp(14px, 1.25vw, 17px); line-height: 1.75; white-space: pre-line; }
 
 /* 스크롤바 (좌/우 공통) */
@@ -64,6 +65,7 @@
 .qa__body::-webkit-scrollbar-thumb, .expl::-webkit-scrollbar-thumb {
   background: rgba(255,255,255,.22); border-radius: var(--r-full); border: 2px solid transparent; background-clip: padding-box; }
 :root[data-theme="light"] .expl::-webkit-scrollbar-thumb { background: rgba(70,50,140,.28); background-clip: padding-box; }
+
 
 /* ============ 우: 풀이 가이드 ============ */
 .expl {
@@ -78,12 +80,10 @@
   display: flex; flex-direction: column; gap: clamp(26px, 3vw, 40px);
 }
 .para { display: flex; flex-direction: column; gap: var(--sp-8); }
-.line { font-size: clamp(15px, 1.4vw, 18px); line-height: 2.0; letter-spacing: -0.02em; }
+
 .para__head { font-weight: var(--fw-bold); }
 .box { background: var(--box-bg); border: 1px solid var(--box-br); border-radius: var(--r-16);
   padding: clamp(16px, 2vw, 28px); display: flex; flex-direction: column; gap: var(--sp-12); }
-.box__row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--sp-4) var(--sp-6);
-  font-family: var(--font-sans); font-size: clamp(16px, 1.55vw, 19px); font-weight: var(--fw-semibold); }
 
 /* 빈칸: 항상 클릭 가능(재편집) + 예시(given) 변형 — 코어는 essay.css */
 .blank { cursor: pointer; }

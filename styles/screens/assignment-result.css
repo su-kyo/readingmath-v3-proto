@@ -26,13 +26,7 @@ body { font-family: var(--font-sans); background: var(--assign-body); overflow: 
 .wrap { position: relative; z-index: 1; flex: 1; min-height: 0; display: flex; flex-direction: column; padding: clamp(16px,2.4vw,30px) clamp(20px,5vw,72px) 0; gap: var(--sp-12); }
 
 /* 헤더 (풀이 화면과 동일) */
-.hd { flex: none; display: flex; align-items: center; justify-content: space-between; gap: var(--sp-16); background: var(--hd); border-radius: var(--r-30); padding: var(--sp-8) var(--sp-12) var(--sp-8) 28px; color: var(--n-000); }
-.breadcrumb__strong { font-weight: var(--fw-heavy); letter-spacing: -.02em; white-space: nowrap; }
-.breadcrumb__title { opacity: .92; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.breadcrumb__sep { opacity: .5; flex: none; }
-.hd__acts { display: flex; align-items: center; gap: var(--sp-8); flex: none; }
-.toggle { width: 62px; height: 32px; border-radius: var(--r-full); background: rgba(0,0,0,.28); border: 0; position: relative; cursor: pointer; padding: 0; }
-.toggle__k { position: absolute; top: 2px; left: 2px; width: 28px; height: 28px; border-radius: 50%; background: center/contain no-repeat url("../../assets/icons/ico-sun.svg"); transition: left .2s ease; }
+
 :root[data-theme="dark"] .toggle__k { left: 32px; background-image: url("../../assets/icons/ico-moon.svg"); }
 
 /* 콘텐츠 (단일 패널) */
@@ -92,7 +86,6 @@ body { font-family: var(--font-sans); background: var(--assign-body); overflow: 
 /* 하단 콘솔 바 */
 /* 이 화면만 트레이가 가운데 정렬 (버튼 3개를 가운데 모은다) */
 .bar__tray { justify-content: center; gap: var(--sp-16); }
-
 
 .rpanel::-webkit-scrollbar { width: 10px; }
 .rpanel::-webkit-scrollbar-thumb { background: var(--n-200); border-radius: var(--r-full); border: 3px solid var(--panel); background-clip: padding-box; }

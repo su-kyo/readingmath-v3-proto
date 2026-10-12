@@ -26,6 +26,7 @@ html, body { height: 100%; margin: 0; }
 body { font-family: var(--font-sans); background: var(--nav-dark); color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
 .app { display: flex; flex-direction: column; height: 100dvh; }
 
+
 /* ===== 헤더 (다크) ===== */
 .nav { flex: none; height: 50px; display: flex; align-items: center; gap: var(--sp-16); padding: 0 var(--sp-16); background: var(--nav-dark); border-bottom: 1px solid rgba(255,255,255,.1); }
 .nav__info { display: flex; align-items: center; gap: var(--sp-6); flex: 1; min-width: 0; }
@@ -41,6 +42,7 @@ body { font-family: var(--font-sans); background: var(--nav-dark); color: var(--
 .nbtn:hover { background: rgba(255,255,255,.06); color: var(--n-200); }
 .nbtn svg { width: 20px; height: 20px; }
 .nbtn__dot { position: absolute; top: 8px; right: 9px; width: 6px; height: 6px; border-radius: 50%; background: var(--no-solid); }
+
 
 /* ===== 스테이지 (사방 여백 + 우주 배경) ===== */
 .stage { flex: 1; min-height: 0; display: flex; justify-content: center; align-items: stretch; padding: var(--sp-24) var(--sp-32);

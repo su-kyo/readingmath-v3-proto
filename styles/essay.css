@@ -112,3 +112,75 @@
 /* 풀이 카드(워크시트) */
 .worksheet { padding: clamp(18px, 2.3vw, 26px) clamp(20px, 2.6vw, 34px) clamp(20px, 2.4vw, 28px); }
 .worksheet__label { margin-bottom: 16px; }
+
+
+/* =========================================================================
+   화면에서 올라온 공용 규칙 (마감 회차 2026-10-12)
+   이 부품을 쓰는 화면 전부가 글자 하나 안 틀리고 똑같이 갖고 있던 것이다.
+   화면마다 다른 부분은 styles/screens/ 에 남아 있다.
+   ========================================================================= */
+.report-wrap { flex: 1; min-width: 0; overflow-y: auto; padding: clamp(8px, 1.4vw, 16px) clamp(12px, 2.4vw, 30px) 96px; }
+
+.report-wrap::-webkit-scrollbar-thumb { background: rgba(255,255,255,.2); border-radius: var(--r-full); border: 2px solid transparent; background-clip: padding-box; }
+
+.stepbar__track { width: 28px; height: 2px; border-radius: var(--r-4); background: var(--step-fg); opacity: .3; transition: background .25s, opacity .25s; }
+
+.report { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: clamp(92px, 12vw, 150px) 1fr;
+  gap: 1px; background: var(--rt-line); border: 1px solid var(--rt-line); border-radius: var(--r-12); overflow: hidden;
+  font-family: var(--font-sans); color: var(--rt-fg); }
+
+.rt-label { background: var(--rt-head); padding: var(--sp-16) var(--sp-12); display: flex; align-items: center; justify-content: center;
+  text-align: center; font-weight: var(--fw-bold); font-size: clamp(13px, 1.15vw, 15px); word-break: keep-all; }
+
+.rt-cell { background: var(--rt-cell); padding: var(--sp-16) var(--sp-16); display: flex; flex-direction: column; gap: var(--sp-8); justify-content: center;
+  font-size: clamp(13.5px, 1.15vw, 15px); line-height: 1.75; min-width: 0; }
+
+.rt-text { white-space: pre-line; word-break: keep-all; }
+
+.rt-img { border-radius: var(--r-8); overflow: hidden; max-width: 380px; align-self: flex-start; }
+
+.phead__lead { display: inline-flex; align-items: center; gap: var(--sp-12); flex-wrap: wrap; min-width: 0; }
+
+.phead__div { width: 1px; height: 22px; background: rgba(255,255,255,.18); flex: none; }
+
+@keyframes shimmer { from { background-position: 180% 0; } to { background-position: -40% 0; } }
+
+.pmodal { --mon-w: 820px; }
+
+.line { font-size: clamp(15px, 1.4vw, 18px); line-height: 2.0; letter-spacing: -0.02em; }
+
+.pmodal__paper { max-width: 680px; margin: 0 auto; background: var(--n-000); padding: var(--sp-32) var(--sp-32); border-radius: var(--r-4);
+  box-shadow: 0 2px 12px rgba(0,0,0,.09); font-family: var(--font-sans); color: var(--n-650); }
+
+.box__row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--sp-4) var(--sp-6);
+  font-family: var(--font-sans); font-size: clamp(16px, 1.55vw, 19px); font-weight: var(--fw-semibold); }
+
+.rp-title { font-size: var(--fs-19); font-weight: var(--fw-heavy); text-align: center; margin-bottom: 6px; color: var(--n-650); }
+
+.rp-sub { text-align: center; font-size: var(--fs-12); color: var(--n-400); margin-bottom: 20px; }
+
+.rp-table { display: grid; grid-template-columns: 116px 1fr; gap: 1px; background: var(--n-100); border: 1px solid var(--n-100); border-radius: var(--r-8); overflow: hidden; }
+
+.rp-label { background: var(--n-050); padding: var(--sp-12) var(--sp-8); display: flex; align-items: center; justify-content: center; text-align: center;
+  font-weight: var(--fw-bold); font-size: var(--fs-13); color: var(--n-650); word-break: keep-all; }
+
+.rp-cell { background: var(--n-000); padding: var(--sp-12) var(--sp-16); display: flex; flex-direction: column; gap: var(--sp-8); justify-content: center;
+  font-size: var(--fs-13); line-height: 1.7; color: var(--n-650); }
+
+.rp-img { max-width: 300px; border-radius: var(--r-4); overflow: hidden; align-self: flex-start; }
+
+@keyframes saIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+.slot { display: inline-flex; align-items: center; justify-content: center; vertical-align: middle;
+  min-width: 128px; min-height: 34px; margin: 3px 2px; padding: var(--sp-4) var(--sp-12); border-radius: var(--r-8);
+  font-family: var(--font-serif); font-size: var(--fs-16); font-weight: var(--fw-bold); text-align: center; transition: box-shadow .14s, background .14s; }
+
+.slot__ck { margin-left: 7px; color: var(--lock-ck); font-weight: var(--fw-heavy); }
+
+@keyframes lockPop { 0%{transform:scale(1)} 40%{transform:scale(1.06)} 100%{transform:scale(1)} }
+
+.pool { display: flex; flex-wrap: wrap; gap: var(--sp-8); justify-content: center; min-height: 44px; }
+
+.pool:empty::after { content: '블록을 모두 배치했어요'; color: var(--step-fg); font-family: var(--font-sans); font-size: var(--fs-13); opacity: .7; }
+
+@keyframes blockIn { from { opacity: .2; transform: scale(.85); } to { opacity: 1; transform: none; } }

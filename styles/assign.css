@@ -1,0 +1,43 @@
+/* =========================================================================
+   과제센터 계열 공용 — 풀이·해설·결과가 같이 쓰는 머리말 · 답안표(OMR) · 문항 패널
+   마감 회차(2026-10-12)에 화면 파일에서 똑같은 규칙만 골라 올렸다.
+   화면마다 다른 부분은 styles/screens/ 에 남아 있다.
+   ========================================================================= */
+
+.hd { flex: none; display: flex; align-items: center; justify-content: space-between; gap: var(--sp-16); background: var(--hd); border-radius: var(--r-30); padding: var(--sp-8) var(--sp-12) var(--sp-8) 28px; color: var(--n-000); }
+
+.breadcrumb__strong { font-weight: var(--fw-heavy); letter-spacing: -.02em; white-space: nowrap; }
+
+.breadcrumb__title { opacity: .92; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.breadcrumb__sep { opacity: .5; flex: none; }
+
+.hd__acts { display: flex; align-items: center; gap: var(--sp-8); flex: none; }
+
+.toggle { width: 62px; height: 32px; border-radius: var(--r-full); background: rgba(0,0,0,.28); border: 0; position: relative; cursor: pointer; padding: 0; }
+
+.toggle__k { position: absolute; top: 2px; left: 2px; width: 28px; height: 28px; border-radius: 50%; background: center/contain no-repeat url("../assets/icons/ico-sun.svg"); transition: left .2s ease; }
+
+.qpanel { background: var(--qpanel); border-radius: var(--r-30) var(--r-30) 0 0; }
+
+.omr { background: var(--panel); border-radius: var(--r-30) var(--r-30) 0 0; }
+
+.qpanel { flex: 1; min-width: 0; overflow-y: auto; padding: var(--sp-24) var(--sp-32) 120px; display: flex; flex-direction: column; gap: var(--sp-16); }
+
+.omr { width: 348px; flex: none; display: flex; flex-direction: column; gap: var(--sp-16); padding: var(--sp-20) var(--sp-20) 120px; }
+
+.qmeta__n { padding: var(--sp-4) var(--sp-8); border-radius: var(--r-8); background: var(--hd); color: var(--n-000); font-size: var(--fs-14); font-weight: var(--fw-bold); font-variant-numeric: tabular-nums; }
+
+.lvl { padding: var(--sp-4) var(--sp-8); border-radius: var(--r-full); font-size: var(--fs-12); font-weight: var(--fw-heavy); margin-left: auto; }
+
+.opt__n { width: 26px; height: 26px; flex: none; border-radius: 50%; border: 1.6px solid var(--dash); color: var(--sub); display: grid; place-items: center; font-size: var(--fs-13); font-weight: var(--fw-heavy); font-variant-numeric: tabular-nums; }
+
+.opt__t { font-size: var(--fs-16); font-weight: var(--fw-semibold); color: var(--ink); }
+
+.omr__prog { display: flex; flex-direction: column; gap: var(--sp-8); }
+
+.omr__ptop { display: flex; align-items: center; justify-content: space-between; }
+
+.omr__track { height: 12px; border-radius: var(--r-full); background: var(--track); padding: var(--sp-4); }
+
+.omr__grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--sp-8); }
