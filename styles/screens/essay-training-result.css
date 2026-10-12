@@ -33,7 +33,7 @@
 /* ===== 총점(별+점수 — 스텝 게이지와 다른 위계) + 단계별 표 ===== */
 
 .score { flex: none; display: flex; flex-direction: column; align-items: center; gap: var(--sp-8); min-width: 170px; }
-.score img { width: clamp(84px,9vw,110px); height: auto; filter: drop-shadow(0 8px 18px rgba(0,0,0,.4)); }
+.score img { width: clamp(84px,9vw,110px); height: auto; filter: drop-shadow(0 8px 18px var(--black-a40)); }
 
 .score__val span { font-size: var(--fs-22); font-weight: var(--fw-bold); }
 
@@ -59,7 +59,7 @@
 #stepMon { --mon-w: 720px; }
 .monitor__screen--lcd { position: relative; overflow: hidden;
   background-color: var(--n-900);
-  background-image: repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 5px);
+  background-image: repeating-linear-gradient(0deg, var(--white-a04) 0 1px, transparent 1px 5px);
   padding: clamp(26px,3vw,38px); --rate: var(--violet-400); }
 
 /* 스크린창 안 문제별 행 — 스텝 결과 화면과 같은 구성(빈칸 LED) */

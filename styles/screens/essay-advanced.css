@@ -7,14 +7,14 @@
 /* 실력 키우기 = 기초 기르기(v2)와 동일 디자인 : 세로 단일 스크롤 (문제 위 · 풀이 아래) */
 .content {
   flex-direction: column; padding: 0 clamp(12px, 1.6vw, 16px) 0;
-  --guide: rgba(249,249,249,.94); --card: var(--surface-1); --card-br: rgba(255,255,255,.08); --card-sh: none;
+  --guide: color-mix(in srgb, var(--violet-050) 94%, transparent); --card: var(--surface-1); --card-br: var(--white-a08); --card-sh: none;
   --step-fg: var(--text-muted);
-  --box-bg: var(--n-900); --box-br: rgba(255,255,255,.10);
-  --qa-soft: rgba(255,255,255,.06); --qa-sub: var(--n-100);
-  --bl-next: rgba(124,120,240,.85);
+  --box-bg: var(--n-900); --box-br: var(--white-a10);
+  --qa-soft: var(--white-a06); --qa-sub: var(--n-100);
+  --bl-next: color-mix(in srgb, var(--violet-450) 85%, transparent);
   /* 문제 카드 = 프레임 테두리색(th-static)과 면 공유 · 라이트/다크 동일 */
-  --pc-bg: var(--th-static); --pc-text: rgba(249,249,249,.92); --pc-chev: rgba(255,255,255,.62);
-  --qtab-bg: rgba(255,255,255,.10); --qtab-fg: rgba(255,255,255,.5);
+  --pc-bg: var(--th-static); --pc-text: color-mix(in srgb, var(--violet-050) 92%, transparent); --pc-chev: var(--white-a60);
+  --qtab-bg: var(--white-a10); --qtab-fg: var(--white-a50);
   --qtab-done-bg: color-mix(in srgb, var(--th-accent) 52%, transparent); --qtab-done-fg: var(--static-on);
 }
 :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
@@ -22,21 +22,21 @@
   background: var(--n-000); border-color: var(--th-static);
   --guide: var(--n-650); --card: var(--n-000); --card-br: var(--n-100); --card-sh: none;
   --step-fg: var(--text-meta);
-  --box-bg: var(--n-050); --box-br: rgba(108,99,201,.12);
-  --qa-soft: rgba(108,99,201,.055); --qa-sub: var(--text-meta);
-  --bl-next: rgba(114,111,233,.7);
+  --box-bg: var(--n-050); --box-br: color-mix(in srgb, var(--violet-600) 12%, transparent);
+  --qa-soft: color-mix(in srgb, var(--violet-600) 5.5%, transparent); --qa-sub: var(--text-meta);
+  --bl-next: color-mix(in srgb, var(--violet-500) 70%, transparent);
 }
 
-:root[data-theme="light"] .stage-scroll::-webkit-scrollbar-thumb { background: rgba(108,99,201,.28); background-clip: padding-box; }
+:root[data-theme="light"] .stage-scroll::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--violet-600) 28%, transparent); background-clip: padding-box; }
 
 /* ============ 카드 공용 ============ */
 .card { max-width: 760px; margin: 0 auto; background: var(--card); border: 1px solid var(--card-br); border-radius: var(--r-22); box-shadow: var(--card-sh); }
 .card + .card { margin-top: 14px; }
-:root[data-theme="light"] .sec-label--sol { background: rgba(124,58,237,.1); color: var(--th-accent-strong); }
+:root[data-theme="light"] .sec-label--sol { background: color-mix(in srgb, var(--violet-500) 10%, transparent); color: var(--th-accent-strong); }
 
 /* ============ 문제 카드 (헤더 + 접이식 · 프레임에 붙음) ============ */
 .problem { position: sticky; top: 0; z-index: 20; overflow: hidden;
-  background: var(--pc-bg); border: 0; border-radius: 0 0 var(--r-16) var(--r-16); margin: 0 auto; box-shadow: 0 10px 24px rgba(8,5,22,.28); }
+  background: var(--pc-bg); border: 0; border-radius: 0 0 var(--r-16) var(--r-16); margin: 0 auto; box-shadow: 0 10px 24px color-mix(in srgb, var(--n-950) 28%, transparent); }
 .problem__head { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--sp-8);
   padding: var(--sp-8) var(--sp-16); background: transparent; border: 0; text-align: left; }
 .problem.is-collapsible .problem__head { cursor: pointer; }
@@ -49,18 +49,18 @@
 .problem__qtext { flex: 1 1 auto; min-width: 0; }
 .problem.is-collapsed .problem__body { max-height: 0; opacity: 0; overflow: hidden; padding-top: 0; padding-bottom: 0; }
 .problem__body::-webkit-scrollbar { width: 8px; }
-.problem__body::-webkit-scrollbar-thumb { background: rgba(255,255,255,.2); border-radius: var(--r-full); border: 2px solid transparent; background-clip: padding-box; }
-:root[data-theme="light"] .problem__body::-webkit-scrollbar-thumb { background: rgba(108,99,201,.28); background-clip: padding-box; }
+.problem__body::-webkit-scrollbar-thumb { background: var(--white-a20); border-radius: var(--r-full); border: 2px solid transparent; background-clip: padding-box; }
+:root[data-theme="light"] .problem__body::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--violet-600) 28%, transparent); background-clip: padding-box; }
 
 /* 문제 본문 (텍스트 좌 + 참고자료 우) */
 .qtext { flex: 1 1 auto; min-width: 0; color: var(--pc-text); font-size: clamp(15px, 1.35vw, 17.5px); line-height: 1.75; }
-.qref { flex: none; width: clamp(190px, 33%, 290px); margin-top: 0; background: rgba(255,255,255,.06); border-radius: var(--r-16); padding: var(--sp-8); display: flex; flex-direction: column; gap: var(--sp-8); }
+.qref { flex: none; width: clamp(190px, 33%, 290px); margin-top: 0; background: var(--white-a06); border-radius: var(--r-16); padding: var(--sp-8); display: flex; flex-direction: column; gap: var(--sp-8); }
 .qref__img { width: 100%; aspect-ratio: 4 / 3; border-radius: var(--r-8);
-  background: linear-gradient(110deg, rgba(255,255,255,.12) 25%, rgba(255,255,255,.2) 40%, rgba(255,255,255,.12) 55%); background-size: 220% 100%;
+  background: linear-gradient(110deg, var(--white-a12) 25%, var(--white-a20) 40%, var(--white-a12) 55%); background-size: 220% 100%;
   animation: shimmer 1.8s ease-in-out infinite; display: flex; align-items: center; justify-content: center; }
-.qref__img span { color: rgba(255,255,255,.6); font-weight: var(--fw-bold); font-size: var(--fs-13); }
+.qref__img span { color: var(--white-a60); font-weight: var(--fw-bold); font-size: var(--fs-13); }
 
-.qref__words { color: rgba(255,255,255,.78); font-size: clamp(13px, 1.15vw, 15px); line-height: 1.7; white-space: pre-line; }
+.qref__words { color: var(--white-a80); font-size: clamp(13px, 1.15vw, 15px); line-height: 1.7; white-space: pre-line; }
 @media (prefers-reduced-motion: reduce) { .qref__img { animation: none; } }
 
 .expl { display: flex; flex-direction: column; align-items: center; font-family: var(--font-serif); color: var(--guide); }

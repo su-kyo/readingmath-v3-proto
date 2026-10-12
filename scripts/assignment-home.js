@@ -51,7 +51,7 @@
   var C = 2 * Math.PI * 34, off = C * (1 - AVG / 100);
   var hero = '<div class="hero">' +
     '<div class="ring"><svg viewBox="0 0 80 80">' +
-      '<circle cx="40" cy="40" r="34" fill="none" stroke="#EAEEF6" stroke-width="7"/>' +
+      '<circle cx="40" cy="40" r="34" fill="none" style="stroke:var(--n-100)" stroke-width="7"/>' +
       '<circle cx="40" cy="40" r="34" fill="none" style="stroke:var(--s-green)" stroke-width="7" stroke-linecap="round" ' +
         'stroke-dasharray="' + C.toFixed(1) + '" stroke-dashoffset="' + off.toFixed(1) + '"/>' +
     '</svg><span class="ring__c"><b>' + AVG + '</b></span></div>' +

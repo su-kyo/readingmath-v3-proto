@@ -23,7 +23,7 @@
 
 .dial__face { position: absolute; inset: 0; border-radius: 50%;
   background: conic-gradient(from 210deg, var(--rate, var(--cyan-300)) 0deg calc(var(--pct) * 3deg),
-    rgba(255,255,255,.13) calc(var(--pct) * 3deg) 300deg, transparent 300deg 360deg);
+    var(--white-a12) calc(var(--pct) * 3deg) 300deg, transparent 300deg 360deg);
   -webkit-mask: radial-gradient(closest-side, transparent 71%, #000 72%);
           mask: radial-gradient(closest-side, transparent 71%, #000 72%); }
 
@@ -32,7 +32,7 @@
   background: repeating-conic-gradient(from 210deg, var(--lmuted, var(--n-300)) 0deg 1.6deg, transparent 1.6deg 30deg);
   -webkit-mask: radial-gradient(closest-side, transparent 84%, #000 85%);
           mask: radial-gradient(closest-side, transparent 84%, #000 85%); }
-.dial__ticks--over { background: repeating-conic-gradient(from 210deg, rgba(6,14,32,.6) 0deg 1.6deg, transparent 1.6deg 30deg); opacity: 1; }
+.dial__ticks--over { background: repeating-conic-gradient(from 210deg, color-mix(in srgb, var(--n-900) 60%, transparent) 0deg 1.6deg, transparent 1.6deg 30deg); opacity: 1; }
 
 /* 바늘 → 링 띠 위 마커 (중심축 침 폐기 — 숫자를 안 가린다) */
 .dial__needle { position: absolute; left: calc(50% - 2px); bottom: 50%; width: 4px; height: 52%; z-index: 1;
@@ -50,8 +50,8 @@
 /* ===== 게이지 옆 판독계 ===== */
 .rmeters { display: flex; gap: var(--sp-12); }
 .win { display: flex; flex-direction: column; align-items: center; gap: var(--sp-6); min-width: 104px;
-  padding: var(--sp-12) var(--sp-16); border-radius: var(--r-12); background: rgba(0,0,0,.25);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.10); }
+  padding: var(--sp-12) var(--sp-16); border-radius: var(--r-12); background: var(--black-a25);
+  box-shadow: inset 0 0 0 1px var(--white-a10); }
 .win__lb { font-size: var(--fs-12); color: var(--lmuted, var(--n-300)); }
 .win img { width: 48px; height: 48px; }
 .win b { font-family: var(--font-mono); font-size: var(--fs-26); font-weight: var(--fw-bold); color: var(--rate, var(--cyan-300)); line-height: 1.3; }
@@ -62,8 +62,8 @@
    같은 .seg 를 끊어읽기 구간·분절 토글·경로 라벨이 각자 쓰고 있었다.
    지금 이름: .led · .chunk · .segmented · .scrumb__item) */
 .led { display: flex; gap: var(--sp-4); flex: 1; }
-.led i { flex: 1; height: 14px; border-radius: var(--r-4); background: rgba(255,255,255,.07);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.06); transition: background var(--t-fast); }
+.led i { flex: 1; height: 14px; border-radius: var(--r-4); background: var(--white-a06);
+  box-shadow: inset 0 0 0 1px var(--white-a06); transition: background var(--t-fast); }
 .led i.on { background: var(--rate, var(--cyan-300));
   box-shadow: 0 0 10px color-mix(in srgb, var(--rate, var(--cyan-300)) 35%, transparent); }
 
@@ -96,7 +96,7 @@
 .hwf__screen { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain;
   border-radius: var(--r-30) var(--r-30) 0 0;
   background-color: var(--n-900);
-  background-image: repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 5px);
+  background-image: repeating-linear-gradient(0deg, var(--white-a04) 0 1px, transparent 1px 5px);
   background-attachment: local;
   padding: clamp(20px,2.4vw,30px) clamp(18px,2.2vw,28px) 96px;
   display: flex; flex-direction: column; gap: clamp(18px,2vw,24px); }
@@ -130,7 +130,7 @@
 }
 
 .rside__hd { display: flex; align-items: center; gap: var(--sp-8); padding: 0 var(--sp-4) var(--sp-12);
-  border-bottom: 1px solid rgba(255,255,255,.10); }
+  border-bottom: 1px solid var(--white-a10); }
 
 .rside__title { font-size: var(--fs-16); font-weight: var(--fw-heavy); color: var(--ltext); }
 
@@ -138,7 +138,7 @@
 
 .rside__prog { margin-left: auto; display: flex; align-items: center; gap: var(--sp-8); }
 
-.trow--data { background: rgba(255,255,255,.04); border-radius: var(--r-12); }
+.trow--data { background: var(--white-a04); border-radius: var(--r-12); }
 
 .tnum { width: 24px; height: 24px; border-radius: var(--r-8); background: var(--th-solid); color: var(--n-000);
   display: inline-flex; align-items: center; justify-content: center; font-size: var(--fs-14); font-weight: var(--fw-bold); flex: none; }
@@ -148,9 +148,9 @@
 .tgrade { height: 36px; }
 
 .step-card .lamp2 { width: 14px; height: 14px; border-radius: 50%; flex: none;
-  background: rgba(0,0,0,.35); box-shadow: inset 0 0 0 1px rgba(255,255,255,.14); }
+  background: var(--black-a30); box-shadow: inset 0 0 0 1px var(--white-a14); }
 
-.comment { border-top: 1px dashed rgba(255,255,255,.14); padding-top: var(--sp-16);
+.comment { border-top: 1px dashed var(--white-a14); padding-top: var(--sp-16);
   font-family: var(--font-sans); font-size: clamp(15px,1.4vw,17px); line-height: 1.7;
   color: var(--n-050); white-space: pre-line; }
 
@@ -164,7 +164,7 @@
 
 .step-card__grade { height: 40px; margin-left: auto; }
 
-.mact { display: flex; align-items: center; gap: clamp(14px,2vw,24px); padding: var(--sp-12) var(--sp-16); border-radius: var(--r-12); background: rgba(255,255,255,.04); }
+.mact { display: flex; align-items: center; gap: clamp(14px,2vw,24px); padding: var(--sp-12) var(--sp-16); border-radius: var(--r-12); background: var(--white-a04); }
 
 .step-card .key { margin-left: auto; padding: var(--sp-8) var(--sp-16); border: none; border-radius: var(--r-8); cursor: pointer;
   background: var(--n-500); color: var(--n-000); font-family: var(--font-sans); font-weight: var(--fw-bold); font-size: var(--fs-15);
@@ -191,6 +191,6 @@
 
 .rside__prog b { font-family: var(--font-mono); font-size: var(--fs-14); font-weight: var(--fw-bold); color: var(--accent); }
 
-.trow--total { background: rgba(255,255,255,.09); border-radius: var(--r-12); }
+.trow--total { background: var(--white-a08); border-radius: var(--r-12); }
 
 .mact__stat > span { font-size: var(--fs-13); font-weight: var(--fw-semibold); color: var(--n-300); }

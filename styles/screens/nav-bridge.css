@@ -6,8 +6,8 @@
 :root{
   --ink:var(--text); --sub:var(--text-muted); --faint:var(--text-meta);
   --panel:var(--surface-2); --panel-br:var(--border);
-  --math:var(--th-accent-hi); --math-glow:rgba(76,134,255,.55);
-  --sci:var(--teal-400);  --sci-glow:rgba(53,221,166,.5);
+  --math:var(--th-accent-hi); --math-glow:color-mix(in srgb, var(--blue-450) 55%, transparent);
+  --sci:var(--teal-400);  --sci-glow:color-mix(in srgb, var(--teal-300) 50%, transparent);
   --cta:var(--primary);
 }
 *{ box-sizing:border-box; margin:0; padding:0; }

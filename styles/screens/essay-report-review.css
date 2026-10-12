@@ -6,23 +6,23 @@
 /* ============ 서술형(과학) 보고서 해설 = 퍼플 테마 ============ */
 .content {
   flex-direction: column; padding: clamp(12px, 1.6vw, 16px) clamp(12px, 1.6vw, 16px) 0;
-  --guide: rgba(249,249,249,.92);
-  --rt-line: var(--n-500); --rt-head: var(--surface-1); --rt-cell: var(--surface-1); --rt-fg: rgba(249,249,249,.9); --rt-sub: var(--text-muted);
-  --ok-bg: rgba(16,188,132,.16); --ok-br: rgba(16,188,132,.55); --ok-fg: var(--ok-on-dark); --ok-ink: var(--ok-tint);
-  --no-bg: rgba(229,88,95,.16); --no-br: rgba(229,88,95,.6); --no-fg: var(--no-on-dark); --no-ink: var(--no-tint);
+  --guide: color-mix(in srgb, var(--violet-050) 92%, transparent);
+  --rt-line: var(--n-500); --rt-head: var(--surface-1); --rt-cell: var(--surface-1); --rt-fg: color-mix(in srgb, var(--violet-050) 90%, transparent); --rt-sub: var(--text-muted);
+  --ok-bg: color-mix(in srgb, var(--teal-450) 16%, transparent); --ok-br: color-mix(in srgb, var(--teal-450) 55%, transparent); --ok-fg: var(--ok-on-dark); --ok-ink: var(--ok-tint);
+  --no-bg: color-mix(in srgb, var(--red-450) 16%, transparent); --no-br: color-mix(in srgb, var(--red-450) 60%, transparent); --no-fg: var(--no-on-dark); --no-ink: var(--no-tint);
 }
 :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
 :root[data-theme="light"] .content {
   background: var(--n-000); border-color: var(--th-static);
   --guide: var(--n-650);
   --rt-line: var(--n-100); --rt-head: var(--n-050); --rt-cell: var(--n-000); --rt-fg: var(--n-650); --rt-sub: var(--text-meta);
-  --ok-bg: rgba(16,140,100,.12); --ok-br: rgba(16,140,100,.5); --ok-fg: var(--ok-ink); --ok-ink: var(--ok-ink);
-  --no-bg: rgba(210,50,58,.1); --no-br: rgba(210,50,58,.5); --no-fg: var(--no-ink); --no-ink: var(--no-ink);
+  --ok-bg: color-mix(in srgb, var(--teal-500) 12%, transparent); --ok-br: color-mix(in srgb, var(--teal-500) 50%, transparent); --ok-fg: var(--ok-ink); --ok-ink: var(--ok-ink);
+  --no-bg: color-mix(in srgb, var(--red-500) 10%, transparent); --no-br: color-mix(in srgb, var(--red-500) 50%, transparent); --no-fg: var(--no-ink); --no-ink: var(--no-ink);
 }
 
 .report-wrap::-webkit-scrollbar { width: 10px; }
 
-:root[data-theme="light"] .report-wrap::-webkit-scrollbar-thumb { background: rgba(108,99,201,.28); background-clip: padding-box; }
+:root[data-theme="light"] .report-wrap::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--violet-600) 28%, transparent); background-clip: padding-box; }
 
 /* 안내문 */
 .review-hint { display: flex; align-items: center; gap: var(--sp-8); max-width: 1000px; margin: 0 auto 14px;
@@ -55,7 +55,7 @@
 .rblank.is-correct::after, .rblank.is-wrong::after {
   position: absolute; top: -7px; right: -7px; width: 17px; height: 17px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center; font-weight: var(--fw-heavy); font-size: var(--fs-11); color: var(--static-on);
-  box-shadow: 0 1px 3px rgba(0,0,0,.3); }
+  box-shadow: 0 1px 3px var(--black-a30); }
 .rblank.is-correct::after { content: '✓'; background: var(--ok-solid); }
 .rblank.is-wrong::after { content: '✕'; background: var(--no-solid); }
 .rblank.is-wrong.show-ans::after { content: none; }
@@ -74,5 +74,5 @@
 .rp-img img { display: block; width: 100%; height: auto; }
 .fillin { font-family: var(--font-serif); font-weight: var(--fw-bold); color: var(--ok-ink); border-bottom: 1.5px solid var(--ok-solid); padding: 0 var(--sp-4); }
 
-.toolbtn--primary { background: var(--th-solid); box-shadow: 0 4px 0 color-mix(in srgb, var(--th-accent) 62%, #000); }
+.toolbtn--primary { background: var(--th-solid); box-shadow: 0 4px 0 color-mix(in srgb, var(--th-accent) 62%, var(--n-950)); }
 @media (max-width: 620px) { .report { grid-template-columns: 80px 1fr; } }

@@ -7,18 +7,18 @@
 /* 페이지 고유 토큰만 (--bl-* 코어 / .blank / .qpop / 하단바 / .htimer = essay.css) */
 .content {
   flex-direction: column; padding: clamp(12px, 1.6vw, 16px) clamp(12px, 1.6vw, 16px) 0;
-  --guide: rgba(249,249,249,.94); --card: var(--surface-1); --card-br: rgba(255,255,255,.08); --card-sh: none;
-  --chip-bg: rgba(255,255,255,.055); --chip-br: rgba(255,255,255,.18); --chip-hover: rgba(255,255,255,.1);
-  --lock-bg: rgba(16,188,132,.16); --lock-br: rgba(16,188,132,.5); --lock-ck: var(--ok-solid);
-  --step-bg: rgba(255,255,255,.07); --step-fg: var(--text-muted);
+  --guide: color-mix(in srgb, var(--violet-050) 94%, transparent); --card: var(--surface-1); --card-br: var(--white-a08); --card-sh: none;
+  --chip-bg: var(--white-a06); --chip-br: var(--white-a16); --chip-hover: var(--white-a10);
+  --lock-bg: color-mix(in srgb, var(--teal-450) 16%, transparent); --lock-br: color-mix(in srgb, var(--teal-450) 50%, transparent); --lock-ck: var(--ok-solid);
+  --step-bg: var(--white-a06); --step-fg: var(--text-muted);
 }
 :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
 :root[data-theme="light"] .content {
   background: var(--n-000); border-color: var(--th-static);
-  --guide: var(--n-650); --card: var(--n-000); --card-br: var(--n-050); --card-sh: 0 12px 30px -22px rgba(60,40,130,.5);
-  --chip-bg: var(--n-050); --chip-br: rgba(108,99,201,.24); --chip-hover: var(--n-050);
+  --guide: var(--n-650); --card: var(--n-000); --card-br: var(--n-050); --card-sh: 0 12px 30px -22px color-mix(in srgb, var(--violet-800) 50%, transparent);
+  --chip-bg: var(--n-050); --chip-br: color-mix(in srgb, var(--violet-600) 24%, transparent); --chip-hover: var(--n-050);
   --bl-fill: var(--n-050);   /* drill 고유: 슬롯 겹침 때문에 라이트 fill은 불투명 */
-  --lock-bg: rgba(16,140,100,.1); --lock-br: rgba(16,140,100,.4); --lock-ck: var(--ok-ink);
+  --lock-bg: color-mix(in srgb, var(--teal-500) 10%, transparent); --lock-br: color-mix(in srgb, var(--teal-500) 40%, transparent); --lock-ck: var(--ok-ink);
   --step-bg: var(--n-100); --step-fg: var(--text-meta);
 }
 
@@ -36,20 +36,20 @@
 .stepbar__i.is-done { color: var(--lock-ck); }
 .stepbar__i.is-done::before { content: '✓'; font-weight: var(--fw-heavy); }
 
-:root[data-theme="light"] .stage-scroll::-webkit-scrollbar-thumb { background: rgba(108,99,201,.28); background-clip: padding-box; }
+:root[data-theme="light"] .stage-scroll::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--violet-600) 28%, transparent); background-clip: padding-box; }
 
 
 /* ============ 카드 공용 ============ */
 .card { max-width: 760px; margin: 0 auto; background: var(--card); border: 1px solid var(--card-br); border-radius: var(--r-22); box-shadow: var(--card-sh); }
 .card + .card { margin-top: 14px; }
-:root[data-theme="light"] .sec-label--sol { background: rgba(124,58,237,.1); color: var(--th-accent-strong); }
+:root[data-theme="light"] .sec-label--sol { background: color-mix(in srgb, var(--violet-500) 10%, transparent); color: var(--th-accent-strong); }
 
 
 /* ============ 문제 카드 (읽은 뒤 접힘·상주) ============ */
 .problem__head { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--sp-8);
   padding: var(--sp-12) var(--sp-20); background: transparent; border: 0; text-align: left; border-radius: var(--r-22); }
 .problem.is-collapsible .problem__head { cursor: pointer; }
-.problem.is-collapsible .problem__head:hover { background: rgba(124,58,237,.05); }
+.problem.is-collapsible .problem__head:hover { background: color-mix(in srgb, var(--violet-500) 5%, transparent); }
 .problem__hint { margin-left: 9px; font-family: var(--font-sans); font-size: var(--fs-12); font-weight: var(--fw-semibold); color: var(--step-fg); }
 .problem.is-collapsible:not(.is-collapsed) .problem__hint::after { content: '접기'; }
 .problem.is-collapsed .problem__hint::after { content: '문제 다시 보기'; }
@@ -69,7 +69,7 @@
 .stage-action__btn { width: 100%; height: 54px; border-radius: var(--r-12); border: 0; cursor: pointer;
   display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-8);
   background: var(--primary); color: var(--n-000); font-family: var(--font-sans); font-size: var(--fs-19); font-weight: var(--fw-heavy);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 4px 0 var(--primary-deep), 0 8px 18px -8px rgba(3,6,15,.5); transition: background .15s; }
+  box-shadow: inset 0 1px 0 var(--white-a24), 0 4px 0 var(--primary-deep), 0 8px 18px -8px color-mix(in srgb, var(--n-950) 50%, transparent); transition: background .15s; }
 .stage-action__btn:hover { background: var(--primary-hover); }
 .stage-action__btn svg { width: 19px; height: 19px; }
 
@@ -82,9 +82,9 @@
 .chunk.is-hidden { filter: blur(4px); opacity: .28; pointer-events: none; user-select: none; }
 .chunk.is-tappable { cursor: pointer; }
 .chunk__go { display: none; align-items: center; vertical-align: middle; margin-left: 8px;
-  padding: var(--sp-4) var(--sp-12); border-radius: var(--r-full); background: rgba(124,58,237,.16); color: var(--th-accent-hi);
+  padding: var(--sp-4) var(--sp-12); border-radius: var(--r-full); background: color-mix(in srgb, var(--violet-500) 16%, transparent); color: var(--th-accent-hi);
   font-family: var(--font-sans); font-size: var(--fs-12); font-weight: var(--fw-bold); white-space: nowrap; animation: goPulse 1.4s ease-in-out infinite; }
-:root[data-theme="light"] .chunk__go { background: rgba(124,58,237,.12); color: var(--th-accent-strong); }
+:root[data-theme="light"] .chunk__go { background: color-mix(in srgb, var(--violet-500) 12%, transparent); color: var(--th-accent-strong); }
 .chunk.is-tappable .chunk__go { display: inline-flex; }
 @keyframes goPulse { 0%,100%{transform:translateX(0)} 50%{transform:translateX(3px)} }
 @media (prefers-reduced-motion: reduce) { .chunk__go { animation: none; } }
@@ -99,7 +99,7 @@
 .slot.is-empty { border: 1.5px dashed var(--bl-line); }
 .slot.is-filled { background: var(--bl-fill); color: var(--bl-ans); border: 1.5px solid transparent; cursor: pointer; }
 .slot.is-filled:hover { box-shadow: inset 0 0 0 1.5px var(--bl-selline); }
-.slot.is-wrong { border: 1.5px solid var(--no-solid); background: rgba(229,88,95,.14); color: var(--no-on-dark); animation: qShake .35s; }
+.slot.is-wrong { border: 1.5px solid var(--no-solid); background: color-mix(in srgb, var(--red-450) 14%, transparent); color: var(--no-on-dark); animation: qShake .35s; }
 .slot.is-locked { background: var(--lock-bg); color: var(--bl-ans); border: 1.5px solid var(--lock-br); animation: lockPop .4s; }
 :root[data-theme="light"] .slot.is-locked { color: var(--ok-ink); }
 
@@ -118,6 +118,6 @@
 
 /* 입력 드롭다운(즉시 채점)·키패드·객관식 세로보기 = essay.css */
 /* 토스트 면색만 이 화면 것 */
-.toast { --toast-bg: rgba(20,14,44,.94); }
+.toast { --toast-bg: color-mix(in srgb, var(--n-700) 94%, transparent); }
 /* 가로 안(킵) — 스크롤 영역 위에 여백이 있다 */
 .stage-scroll { padding-top: clamp(6px, 1.2vw, 12px); }

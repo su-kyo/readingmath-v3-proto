@@ -13,7 +13,7 @@
 }
 .gnb__info{ display:flex; align-items:center; gap:var(--sp-8); flex:1; min-width:0; }
 .gnb__logo{ width:32px; height:32px; flex:none; display:grid; place-items:center; cursor:pointer; border-radius:var(--r-8); transition:var(--t-fast); }
-.gnb__logo:hover{ background:rgba(255,255,255,.06); }
+.gnb__logo:hover{ background:var(--white-a06); }
 .gnb--light .gnb__logo:hover{ background:var(--n-050); }
 .gnb__logo svg{ width:32px; height:32px; display:block; }
 .gnb__name{ color:var(--n-000); font-size:var(--fs-19); font-weight:var(--fw-heavy); letter-spacing:-.03em; white-space:nowrap; }
@@ -39,7 +39,7 @@
 .gnb__icons{ display:flex; align-items:center; justify-content:flex-end; gap:var(--sp-8); flex:1; }
 .gnb__ico{ position:relative; width:40px; height:40px; border:0; background:transparent; border-radius:var(--r-12);
   display:grid; place-items:center; color:var(--n-200); cursor:pointer; transition:var(--t-fast); }
-.gnb__ico:hover{ color:var(--n-000); background:rgba(255,255,255,.06); }
+.gnb__ico:hover{ color:var(--n-000); background:var(--white-a06); }
 .gnb__ico svg{ width:23px; height:23px; }
 .gnb__dot{ position:absolute; top:9px; right:9px; width:6px; height:6px; border-radius:50%; background:var(--no-solid); }
 

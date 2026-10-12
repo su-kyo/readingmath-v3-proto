@@ -21,8 +21,8 @@
 .ops {
   position: absolute; inset: 0; overflow-y: auto; display: flex; flex-direction: column; align-items: center;
   padding: 6px clamp(24px, 5vw, 56px) 26px;
-  --qtext: var(--text); --muted: var(--text-muted); --ex-bg: var(--surface-2); --ex-br: rgba(255,255,255,.06);
-  --opt-bg: var(--surface-3); --opt-br: rgba(255,255,255,.08); --opt-hover: var(--surface-hover);
+  --qtext: var(--text); --muted: var(--text-muted); --ex-bg: var(--surface-2); --ex-br: var(--white-a06);
+  --opt-bg: var(--surface-3); --opt-br: var(--white-a08); --opt-hover: var(--surface-hover);
   --input-bg: var(--surface-2); --input-br: var(--border-strong);
   /* 정오답 '글자' 색 — 다크 표면에선 밝힌 단계(300), 라이트에선 잉크 단계(600).
      테두리·칠은 solid(500) 그대로 두고 글자만 갈아끼운다. */
@@ -36,36 +36,36 @@
 }
 /* 스크롤바 확실히 보이게 */
 
-:root[data-theme="light"] .ops::-webkit-scrollbar-thumb { background: rgba(20,32,58,.22); background-clip: padding-box; }
+:root[data-theme="light"] .ops::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--n-650) 22%, transparent); background-clip: padding-box; }
 
 
 /* ===== 문제 카드 (번호탭 헤더 + 접이식 · 프레임 테두리색과 면 공유 · 상단 부착) ===== */
 .problem { flex: none; width: min(1040px, calc(100% - 2 * clamp(24px, 5vw, 56px))); margin: 0 auto;
-  overflow: hidden; background: var(--th-static); border-radius: 0 0 var(--r-16) var(--r-16); box-shadow: 0 10px 24px rgba(8,5,22,.28); }
+  overflow: hidden; background: var(--th-static); border-radius: 0 0 var(--r-16) var(--r-16); box-shadow: 0 10px 24px color-mix(in srgb, var(--n-950) 28%, transparent); }
 .problem__head { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--sp-8); padding: var(--sp-8) var(--sp-16); background: transparent; border: 0; }
 .problem.is-collapsible .problem__head { cursor: pointer; }
 .qtabs { display: inline-flex; align-items: center; gap: var(--sp-6); flex-wrap: wrap; }
 .qtab { min-width: 28px; height: 28px; padding: 0 var(--sp-6); border-radius: var(--r-8); display: inline-flex; align-items: center; justify-content: center;
-  font-family: var(--font-sans); font-weight: var(--fw-heavy); font-size: var(--fs-13); background: rgba(255,255,255,.10); color: rgba(255,255,255,.5); transition: background .16s, color .16s, box-shadow .16s; }
+  font-family: var(--font-sans); font-weight: var(--fw-heavy); font-size: var(--fs-13); background: var(--white-a10); color: var(--white-a50); transition: background .16s, color .16s, box-shadow .16s; }
 .qtab svg { width: 15px; height: 15px; }
 .qtab.is-done { background: color-mix(in srgb, var(--th-accent) 48%, transparent); color: var(--static-on); }
 /* 현재 문제 = 흰 링으로 대비 강화 (색맹 대비: border 형태로 구분) */
-.qtab.is-active { background: var(--th-solid); color: var(--n-000); box-shadow: 0 0 0 2px var(--n-000), 0 2px 8px rgba(0,0,0,.32); }
+.qtab.is-active { background: var(--th-solid); color: var(--n-000); box-shadow: 0 0 0 2px var(--n-000), 0 2px 8px var(--black-a30); }
 /* 정/오답 = 색 + 아이콘(색맹 접근성).
    어두운 문제 카드(th-static) 위라 600(ink)은 배경에 묻혔다 → 450 vivid 로 올림.
    올라가는 건 굵은 아이콘뿐이라 정체성 칠면 기준(3:1)이 맞는 자리다. */
 .qtab.is-correct { background: var(--ok-vivid); color: var(--n-000); }
 .qtab.is-wrong { background: var(--no-vivid); color: var(--n-000); }
-.problem__chev { width: 22px; height: 22px; color: rgba(255,255,255,.62); transition: transform .25s; flex: none; transform: rotate(180deg); }
+.problem__chev { width: 22px; height: 22px; color: var(--white-a60); transition: transform .25s; flex: none; transform: rotate(180deg); }
 .problem.is-collapsed .problem__chev { transform: rotate(0); }
 /* 본문 = 문제문(좌) + 참고자료(우) 한 행 · 밝은 톤(어두운 패널) */
-.problem__body { padding: var(--sp-6) var(--sp-16) var(--sp-16); overflow: hidden; max-height: 1200px; color: rgba(249,249,249,.92);
+.problem__body { padding: var(--sp-6) var(--sp-16) var(--sp-16); overflow: hidden; max-height: 1200px; color: color-mix(in srgb, var(--violet-050) 92%, transparent);
   display: flex; gap: var(--sp-20); align-items: flex-start; transition: max-height .32s ease, opacity .25s ease, padding .32s ease; }
 .problem.is-collapsed .problem__body { max-height: 0; opacity: 0; padding-top: 0; padding-bottom: 0; }
-.problem__body .q__text { flex: 1 1 auto; min-width: 0; margin-bottom: 0; color: rgba(249,249,249,.94); }
-.problem__body .ex { flex: none; width: clamp(200px, 36%, 340px); margin: 0; background: rgba(255,255,255,.07); }
-.problem__body .ex__list { color: rgba(249,249,249,.85); }
-.problem__body .ex__skel { color: rgba(255,255,255,.6); }
+.problem__body .q__text { flex: 1 1 auto; min-width: 0; margin-bottom: 0; color: color-mix(in srgb, var(--violet-050) 94%, transparent); }
+.problem__body .ex { flex: none; width: clamp(200px, 36%, 340px); margin: 0; background: var(--white-a06); }
+.problem__body .ex__list { color: color-mix(in srgb, var(--violet-050) 85%, transparent); }
+.problem__body .ex__skel { color: var(--white-a60); }
 
 
 /* ===== 문제 (풀이 영역) ===== */
@@ -87,7 +87,7 @@
   transition: background .12s, box-shadow .12s;
 }
 .opt:hover { background: var(--opt-hover); }
-.opt__num { flex: none; width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,.14); color: var(--qtext); display: flex; align-items: center; justify-content: center; font-weight: var(--fw-heavy); font-size: var(--fs-15); position: relative; }
+.opt__num { flex: none; width: 30px; height: 30px; border-radius: 50%; background: var(--white-a14); color: var(--qtext); display: flex; align-items: center; justify-content: center; font-weight: var(--fw-heavy); font-size: var(--fs-15); position: relative; }
 :root[data-theme="light"] .opt__num { background: var(--th-tint-strong); color: var(--th-ink-accent); }
 .opt--num { justify-content: center; } .opt--num .opt__num { width: 34px; height: 34px; }
 .opt__img { width: 100%; height: 96px; border-radius: var(--r-8); }
@@ -182,7 +182,7 @@
 .dblank.is-correct::after, .dblank.is-wrong::after {
   position: absolute; top: -8px; right: -8px; width: 17px; height: 17px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center; font-weight: var(--fw-heavy); font-size: var(--fs-11); color: var(--static-on);
-  text-decoration: none; box-shadow: 0 1px 3px rgba(0,0,0,.3); }
+  text-decoration: none; box-shadow: 0 1px 3px var(--black-a30); }
 .dblank.is-correct::after { content: '✓'; background: var(--ok-solid); }
 .dblank.is-wrong::after { content: '✕'; background: var(--no-solid); }
 .dblank.is-wrong.show-ans::after { content: none; }

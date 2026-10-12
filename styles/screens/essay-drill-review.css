@@ -6,19 +6,19 @@
 /* ============ 서술형 = 퍼플 (essay-drill 셸 재사용) ============ */
 .content {
   flex-direction: column; padding: clamp(12px, 1.6vw, 16px) clamp(12px, 1.6vw, 16px) 0;
-  --guide: rgba(249,249,249,.94); --card: var(--surface-1); --card-br: rgba(255,255,255,.08); --card-sh: none;
-  --step-bg: rgba(255,255,255,.07); --step-fg: var(--text-muted);
+  --guide: color-mix(in srgb, var(--violet-050) 94%, transparent); --card: var(--surface-1); --card-br: var(--white-a08); --card-sh: none;
+  --step-bg: var(--white-a06); --step-fg: var(--text-muted);
   /* 채점 색 (다크) */
-  --ok-bg: rgba(16,188,132,.16); --ok-br: rgba(16,188,132,.55); --ok-fg: var(--ok-ink); --ok-ink: var(--ok-tint);
-  --no-bg: rgba(229,88,95,.16); --no-br: rgba(229,88,95,.6); --no-fg: var(--no-ink); --no-ink: var(--no-tint);
+  --ok-bg: color-mix(in srgb, var(--teal-450) 16%, transparent); --ok-br: color-mix(in srgb, var(--teal-450) 55%, transparent); --ok-fg: var(--ok-ink); --ok-ink: var(--ok-tint);
+  --no-bg: color-mix(in srgb, var(--red-450) 16%, transparent); --no-br: color-mix(in srgb, var(--red-450) 60%, transparent); --no-fg: var(--no-ink); --no-ink: var(--no-tint);
 }
 :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
 :root[data-theme="light"] .content {
   background: var(--n-000); border-color: var(--th-static);
-  --guide: var(--n-650); --card: var(--n-000); --card-br: var(--n-050); --card-sh: 0 12px 30px -22px rgba(60,40,130,.5);
+  --guide: var(--n-650); --card: var(--n-000); --card-br: var(--n-050); --card-sh: 0 12px 30px -22px color-mix(in srgb, var(--violet-800) 50%, transparent);
   --step-bg: var(--n-100); --step-fg: var(--text-meta);
-  --ok-bg: rgba(16,140,100,.12); --ok-br: rgba(16,140,100,.45); --ok-fg: var(--ok-ink); --ok-ink: var(--ok-ink);
-  --no-bg: rgba(210,50,58,.1); --no-br: rgba(210,50,58,.45); --no-fg: var(--no-ink); --no-ink: var(--no-ink);
+  --ok-bg: color-mix(in srgb, var(--teal-500) 12%, transparent); --ok-br: color-mix(in srgb, var(--teal-500) 45%, transparent); --ok-fg: var(--ok-ink); --ok-ink: var(--ok-ink);
+  --no-bg: color-mix(in srgb, var(--red-500) 10%, transparent); --no-br: color-mix(in srgb, var(--red-500) 45%, transparent); --no-fg: var(--no-ink); --no-ink: var(--no-ink);
 }
 
 
@@ -44,34 +44,34 @@
 .qtabs { display: inline-flex; align-items: center; gap: var(--sp-8); }
 .qtab { min-width: 28px; height: 28px; padding: 0 var(--sp-6); border-radius: var(--r-8); display: inline-flex; align-items: center; justify-content: center;
   font-family: var(--font-sans); font-weight: var(--fw-heavy); font-size: var(--fs-13); cursor: pointer;
-  background: rgba(255,255,255,.10); color: rgba(255,255,255,.5); transition: background .16s, color .16s, box-shadow .16s; }
+  background: var(--white-a10); color: var(--white-a50); transition: background .16s, color .16s, box-shadow .16s; }
 .qtab.is-done { background: color-mix(in srgb, var(--th-accent) 52%, transparent); color: var(--n-000); }
-.qtab.is-active { background: var(--th-solid); color: var(--n-000); box-shadow: 0 0 0 2px var(--n-000), 0 2px 8px rgba(0,0,0,.32); }
-.problem__head .stepbar__i { color: rgba(255,255,255,.45); font-size: var(--fs-13); }
+.qtab.is-active { background: var(--th-solid); color: var(--n-000); box-shadow: 0 0 0 2px var(--n-000), 0 2px 8px var(--black-a30); }
+.problem__head .stepbar__i { color: var(--white-a40); font-size: var(--fs-13); }
 .problem__head .stepbar__i.is-on, .problem__head .stepbar__i.is-done { color: var(--th-accent-hi); }
-.problem__head .stepbar__track { background: rgba(255,255,255,.22); opacity: 1; }
+.problem__head .stepbar__track { background: var(--white-a20); opacity: 1; }
 .problem__head .stepbar__i.is-done + .stepbar__track { background: var(--th-accent-hi); }
 .problem__head .stepbar__i.is-done .stepbar__dot::after { border-color: var(--th-static); }
 
-:root[data-theme="light"] .stage-scroll::-webkit-scrollbar-thumb { background: rgba(108,99,201,.28); background-clip: padding-box; }
+:root[data-theme="light"] .stage-scroll::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--violet-600) 28%, transparent); background-clip: padding-box; }
 
 
 /* ============ 카드 ============ */
 .card { max-width: 760px; margin: 0 auto; background: var(--card); border: 1px solid var(--card-br); border-radius: var(--r-22); box-shadow: var(--card-sh); }
 .card + .card { margin-top: 14px; }
-:root[data-theme="light"] .sec-label--sol { background: rgba(124,58,237,.1); color: var(--th-accent-strong); }
+:root[data-theme="light"] .sec-label--sol { background: color-mix(in srgb, var(--violet-500) 10%, transparent); color: var(--th-accent-strong); }
 
 /* 문제 카드 (읽기전용, 접기) = 세로 확정안 drill-v2와 같은 스티키 패널 */
 .problem { position: sticky; top: 0; z-index: 20; overflow: hidden; max-width: none; margin: 0 auto;
-  background: var(--th-static); border: 0; border-radius: 0 0 var(--r-16) var(--r-16); box-shadow: 0 10px 24px rgba(8,5,22,.28); }
+  background: var(--th-static); border: 0; border-radius: 0 0 var(--r-16) var(--r-16); box-shadow: 0 10px 24px color-mix(in srgb, var(--n-950) 28%, transparent); }
 .problem__head { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--sp-12);
   padding: var(--sp-8) var(--sp-16); background: transparent; border: 0; text-align: left; cursor: pointer; }
-.problem__chev { width: 22px; height: 22px; color: rgba(255,255,255,.62); transition: transform .25s; flex: none; transform: rotate(180deg); }
+.problem__chev { width: 22px; height: 22px; color: var(--white-a60); transition: transform .25s; flex: none; transform: rotate(180deg); }
 .problem.is-collapsed .problem__chev { transform: rotate(0); }
-.problem__body { padding: var(--sp-6) var(--sp-16) var(--sp-16); overflow: hidden; max-height: 1600px; color: rgba(249,249,249,.92);
+.problem__body { padding: var(--sp-6) var(--sp-16) var(--sp-16); overflow: hidden; max-height: 1600px; color: color-mix(in srgb, var(--violet-050) 92%, transparent);
   transition: max-height .32s ease, opacity .25s ease, padding .32s ease; }
 .problem.is-collapsed .problem__body { max-height: 0; opacity: 0; padding-top: 0; padding-bottom: 0; }
-.problem__body .rline { color: rgba(249,249,249,.92); }
+.problem__body .rline { color: color-mix(in srgb, var(--violet-050) 92%, transparent); }
 
 
 /* ============ 다음 단계 진입 버튼 (drill-v2와 동일 · 콘텐츠 하단) ============ */
@@ -79,7 +79,7 @@
 .stage-action__btn { width: 100%; height: 54px; border-radius: var(--r-12); border: 0; cursor: pointer;
   display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-8);
   background: var(--primary); color: var(--n-000); font-family: var(--font-sans); font-size: var(--fs-19); font-weight: var(--fw-heavy);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.25); transition: background .15s; }
+  box-shadow: inset 0 1px 0 var(--white-a24); transition: background .15s; }
 .stage-action__btn:hover { background: var(--primary-hover); }
 .stage-action__btn svg { width: 19px; height: 19px; }
 
@@ -121,12 +121,12 @@
 .rblank.is-wrong::after, .rslot.is-wrong::after {
   position: absolute; top: -7px; right: -7px; width: 17px; height: 17px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center; font-family: var(--font-sans); font-weight: var(--fw-heavy); font-size: var(--fs-11); color: var(--static-on);
-  box-shadow: 0 1px 3px rgba(0,0,0,.3); }
+  box-shadow: 0 1px 3px var(--black-a30); }
 .rblank.is-correct::after, .rslot.is-correct::after { content: '✓'; background: var(--ok-solid); }
 .rblank.is-wrong::after, .rslot.is-wrong::after { content: '✕'; background: var(--no-solid); }
 .rblank.is-wrong.show-ans::after, .rslot.is-wrong.show-ans::after { content: none; }
 
 /* 하단 결과 버튼 (윗면·아랫면 모두 바이올렛으로 일치) */
-.toolbtn--primary { background: var(--th-solid); box-shadow: 0 4px 0 color-mix(in srgb, var(--th-accent) 62%, #000); }
+.toolbtn--primary { background: var(--th-solid); box-shadow: 0 4px 0 color-mix(in srgb, var(--th-accent) 62%, var(--n-950)); }
 /* 이 화면만 워크시트가 위로 떨어져 있다 */
 .worksheet { margin-top: 14px; }

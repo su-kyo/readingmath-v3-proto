@@ -59,8 +59,8 @@
 
       /* 잉크 3색 — 쓰는 순간의 테마를 따른다 (다크 기본 / 라이트 뒤집기) */
       /* 딤은 --scrim(0.44/0.72)보다 훨씬 진하게 눌러 문제 영역만 뜨게 한다 */
-      '.scratch{ --scratch-dim: rgba(6, 10, 22, .8); --scratch-ink-1: var(--n-050); --scratch-ink-2: var(--red-300); --scratch-ink-3: var(--blue-300); }',
-      ':root[data-theme="light"] .scratch{ --scratch-dim: rgba(20, 28, 48, .8); --scratch-ink-1: var(--n-650); --scratch-ink-2: var(--red-500); --scratch-ink-3: var(--blue-450); }',
+      '.scratch{ --scratch-dim: color-mix(in srgb, var(--n-950) 80%, transparent); --scratch-ink-1: var(--n-050); --scratch-ink-2: var(--red-300); --scratch-ink-3: var(--blue-300); }',
+      ':root[data-theme="light"] .scratch{ --scratch-dim: color-mix(in srgb, var(--n-700) 80%, transparent); --scratch-ink-1: var(--n-650); --scratch-ink-2: var(--red-500); --scratch-ink-3: var(--blue-450); }',
 
       /* 도구 바 = 화면 .bar의 복제본 + 네이비 톤. 형태는 화면 CSS를 그대로 물려받는다 */
       '.scratch .bar{ transform: translateY(112%); transition: transform .32s cubic-bezier(.2,.8,.3,1.08); pointer-events:auto; z-index:2; }',
@@ -73,7 +73,7 @@
       /* 도구 바 속 버튼은 화면이 이미 쓰는 .toolbtn 그대로 —
          같은 콘솔 패널의 다른 상태로 읽히게 한다. 여기선 연습장 전용 상태만 얹는다. */
       '.scratch__tools{ display:flex; align-items:center; gap:var(--sp-8); }',
-      '.scratch__sep{ width:1px; height:24px; background:rgba(255,255,255,.18); margin:0 2px; }',
+      '.scratch__sep{ width:1px; height:24px; background:var(--white-a16); margin:0 2px; }',
       '.scratch__done svg, .scratch__tool svg{ width:18px; height:18px; flex:none; }',
       '.scratch__tool.is-on{ background:var(--n-000); color:var(--n-650); }',  /* 고른 도구 = 눌린 키 */
       /* 잉크 칩도 같은 물리 버튼 언어(하드 드롭) */
@@ -286,7 +286,7 @@
       var dpr = window.devicePixelRatio || 1;
       ctx.globalCompositeOperation = tool === 'eraser' ? 'destination-out' : 'source-over';
       ctx.strokeStyle = getComputedStyle(root).getPropertyValue('--scratch-ink-' + ink).trim() || '#1F2B49'; /* 방어값 = --n-600 */
-      ctx.lineWidth = (tool === 'eraser' ? 26 : 3) * dpr;
+      ctx.lineWidth = (tool === 'eraser' ? 26: 3) * dpr;
       ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x, p.y); ctx.stroke();
     });
     canvas.addEventListener('pointermove', function (e) {

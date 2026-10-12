@@ -21,7 +21,7 @@ body{ font-family:var(--font-sans); background:var(--bg); color:var(--ink); over
 .segmented button.is-on{ background:var(--blue); color:var(--n-000); }
 .switch{ display:flex; align-items:center; gap:var(--sp-8); }
 .switch__l{ font-size:var(--fs-15); font-weight:var(--fw-heavy); }
-.switch__t{ width:56px; height:30px; border-radius:27px; background:rgba(255,255,255,.4); padding:var(--sp-4);
+.switch__t{ width:56px; height:30px; border-radius:27px; background:var(--white-a40); padding:var(--sp-4);
   cursor:pointer; transition:.2s; display:flex; }
 .switch__t.is-on{ background:var(--green2); justify-content:flex-end; }
 .switch__k{ width:22px; height:22px; border-radius:50%; background:var(--n-000); transition:.2s; }
@@ -55,7 +55,7 @@ body{ font-family:var(--font-sans); background:var(--bg); color:var(--ink); over
   opacity:.32; transform:scale(.86); transition:opacity .4s, transform .4s; cursor:pointer; }
 .planet.is-center{ opacity:1; transform:scale(1.18); }
 .planet__img{ width:186px; height:186px; object-fit:contain; pointer-events:none;
-  filter:drop-shadow(0 18px 30px rgba(0,0,0,.5)); }
+  filter:drop-shadow(0 18px 30px var(--black-a50)); }
 .planet__label{ font-size:var(--fs-22); font-weight:var(--fw-heavy); letter-spacing:-.04em; text-align:center; white-space:nowrap; }
 .planet__prog{ width:200px; opacity:0; height:0; overflow:hidden; transition:opacity .3s; text-align:center; }
 .planet.is-center .planet__prog{ opacity:1; height:auto; }
@@ -66,7 +66,7 @@ body{ font-family:var(--font-sans); background:var(--bg); color:var(--ink); over
 .planet__hint{ position:absolute; top:150px; left:50%; z-index:3; display:none; align-items:center; gap:var(--sp-6);
   height:34px; padding:0 var(--sp-12) 0 var(--sp-12); border-radius:var(--r-16); border:0; background:var(--blue); color:var(--n-000);
   font-family:inherit; font-size:var(--fs-13); font-weight:var(--fw-heavy); cursor:pointer; white-space:nowrap;
-  box-shadow:0 10px 22px -6px rgba(0,140,255,.75); animation:hintPulse 1.7s ease-in-out infinite; }
+  box-shadow:0 10px 22px -6px color-mix(in srgb, var(--blue-500) 75%, transparent); animation:hintPulse 1.7s ease-in-out infinite; }
 .planet.is-center .planet__hint{ display:inline-flex; }
 .fm.is-detail .planet.is-center .planet__hint{ display:none; }  /* 상세 열리면 목록보기 숨김 */
 .planet__hint svg{ width:16px; height:16px; }
@@ -89,7 +89,7 @@ body{ font-family:var(--font-sans); background:var(--bg); color:var(--ink); over
 /* unit-box (행성이 카드 위에 얹힘) */
 .ucard{ display:flex; flex-direction:column; align-items:center; }
 .ucard__img{ width:92px; height:92px; object-fit:contain; margin-bottom:-22px; position:relative; z-index:1;
-  filter:drop-shadow(0 8px 14px rgba(0,0,0,.45)); }
+  filter:drop-shadow(0 8px 14px var(--black-a40)); }
 .ucard__body{ width:100%; background:var(--rail); border-radius:var(--r-22); padding:var(--sp-32) var(--sp-16) var(--sp-16); }
 .ucard__nm{ text-align:center; font-size:var(--fs-16); font-weight:var(--fw-heavy); margin-bottom:12px; letter-spacing:-.03em; }
 .ubtn{ display:flex; align-items:center; gap:var(--sp-8); width:100%; padding:var(--sp-12) var(--sp-12); margin-bottom:7px; border:0;

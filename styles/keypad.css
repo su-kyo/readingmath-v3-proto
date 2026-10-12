@@ -57,7 +57,7 @@
   font-size: var(--fs-19); font-weight: var(--fw-bold);
   font-variant-numeric: tabular-nums;
   display: inline-flex; align-items: center; justify-content: center;
-  box-shadow: 0 2px 3px rgba(20, 40, 90, 0.1);
+  box-shadow: 0 2px 3px color-mix(in srgb, var(--n-600) 10%, transparent);
   transition: background var(--t-fast);
 }
 .keypad__key:hover{ background: var(--n-050); }
@@ -89,7 +89,7 @@
 /* ── 떠 있는 자리 (개념·유형 — 빈칸 옆) ── */
 .keypad--float{
   position: fixed; z-index: var(--z-toast);
-  box-shadow: 0 24px 55px rgba(9, 19, 40, 0.4), inset 0 0 0 3.5px var(--n-050);
+  box-shadow: 0 24px 55px color-mix(in srgb, var(--n-800) 40%, transparent), inset 0 0 0 3.5px var(--n-050);
   opacity: 0; visibility: hidden; translate: 0 6px;
   transition: opacity .14s ease, translate .14s ease, visibility .14s;
 }

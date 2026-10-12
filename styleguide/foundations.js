@@ -8,10 +8,10 @@
   // 칩 위 글자색 — 칩이 밝으면 검정, 어두우면 흰색.
   function ink(hex) {
     var m = /^#?([0-9a-f]{6})$/i.exec(hex.trim());
-    if (!m) return '#fff';
+    if (!m) return 'var(--n-000)';
     var n = parseInt(m[1], 16);
     var lum = 0.2126 * (n >> 16 & 255) + 0.7152 * (n >> 8 & 255) + 0.0722 * (n & 255);
-    return lum > 140 ? '#0B1424' : '#FFFFFF';
+    return lum > 140 ? 'var(--n-900)' : 'var(--n-000)';
   }
 
   /* ---- 색 램프 ---- */
@@ -89,8 +89,8 @@
              'background:' + bgUrl(p) + ' center/cover">' +
              '<span style="position:absolute;inset:0;background:' +
                 p.getPropertyValue('--art-screen-veil').trim() + '" data-veil></span>' +
-             '<span style="position:absolute;left:6px;bottom:6px;color:#fff;font-size:11px;' +
-             'font-weight:700;background:rgba(6,14,32,.72);padding:2px 6px;border-radius:4px">' +
+             '<span style="position:absolute;left:6px;bottom:6px;color:var(--n-000);font-size:var(--fs-11);' +
+             'font-weight:700;background:color-mix(in srgb, var(--n-900) 72%, transparent);padding:2px 6px;border-radius:4px">' +
              sec[1] + ' ' + sec[2] + '</span></div>';
     }).join('') + '</div>' +
     '<style>:root[data-theme="light"] [data-veil]{display:none}</style>';

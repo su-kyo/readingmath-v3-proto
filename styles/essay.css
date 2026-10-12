@@ -11,23 +11,23 @@
 .lheader { background: var(--th-static); }
 
 /* 헤더 타이머 칩 (drill · report 공용) */
-.htimer { display: inline-flex; align-items: center; gap: var(--sp-4); padding: var(--sp-6) var(--sp-8); border-radius: var(--r-8); background: rgba(0,0,0,.28); flex: none; }
+.htimer { display: inline-flex; align-items: center; gap: var(--sp-4); padding: var(--sp-6) var(--sp-8); border-radius: var(--r-8); background: var(--black-a30); flex: none; }
 .htimer img { width: 15px; height: 15px; }
 .htimer span { font-family: var(--font-mono); font-weight: var(--fw-bold); font-size: var(--fs-14); color: var(--n-000); }
 
 /* ============ 빈칸 상태 토큰 (테마별) ============
    .content 에 실린다. 페이지 고유 토큰(--guide 등)은 인라인에서 별도로 선언.  */
 .content {
-  --bl-bg: rgba(255,255,255,.07); --bl-line: rgba(200,205,225,.42);
-  --bl-bgh: rgba(255,255,255,.13); --bl-lineh: rgba(200,205,225,.72);
+  --bl-bg: var(--white-a06); --bl-line: color-mix(in srgb, var(--n-200) 42%, transparent);
+  --bl-bgh: var(--white-a12); --bl-lineh: color-mix(in srgb, var(--n-200) 72%, transparent);
   --bl-selbg: color-mix(in srgb, var(--orange-400) 26%, transparent); --bl-selline: var(--orange-400); --bl-selbadge: var(--orange-300);
-  --bl-badge: rgba(255,255,255,.18); --bl-fill: rgba(193,203,224,.22); --bl-ans: var(--n-000);
+  --bl-badge: var(--white-a16); --bl-fill: color-mix(in srgb, var(--n-200) 22%, transparent); --bl-ans: var(--n-000);
 }
 :root[data-theme="light"] .content {
-  --bl-bg: rgba(96,80,168,.07); --bl-line: rgba(108,99,201,.30);
-  --bl-bgh: rgba(96,80,168,.13); --bl-lineh: rgba(108,99,201,.5);
+  --bl-bg: color-mix(in srgb, var(--n-400) 7%, transparent); --bl-line: color-mix(in srgb, var(--violet-600) 30%, transparent);
+  --bl-bgh: color-mix(in srgb, var(--n-400) 13%, transparent); --bl-lineh: color-mix(in srgb, var(--violet-600) 50%, transparent);
   --bl-selbg: color-mix(in srgb, var(--orange-400) 16%, transparent); --bl-selline: var(--primary); --bl-selbadge: var(--orange-600);
-  --bl-badge: rgba(72,58,142,.2); --bl-fill: rgba(108,99,201,.12); --bl-ans: var(--n-650);
+  --bl-badge: color-mix(in srgb, var(--violet-700) 20%, transparent); --bl-fill: color-mix(in srgb, var(--violet-600) 12%, transparent); --bl-ans: var(--n-650);
 }
 
 /* ============ 빈칸 pill ============ */
@@ -57,7 +57,7 @@
 .qpop { position: fixed; z-index: var(--z-toast); width: max-content; max-width: 320px; display: none; }
 .qpop.is-open { display: block; }
 .qpop__inner { position: relative; background: var(--th-chip); border: 1.5px solid var(--border-strong); border-radius: var(--r-22);
-  padding: var(--sp-8); box-shadow: 0 18px 42px -14px rgba(20,10,50,.45), inset 0 0 0 3.5px var(--n-050);
+  padding: var(--sp-8); box-shadow: 0 18px 42px -14px color-mix(in srgb, var(--n-700) 45%, transparent), inset 0 0 0 3.5px var(--n-050);
   font-family: var(--font-sans); animation: qpop .13s ease; }
 @keyframes qpop { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .qpop__inner { animation: none; } }
@@ -102,12 +102,12 @@
 .sec-label { display: inline-flex; align-items: center; gap: var(--sp-6); padding: var(--sp-4) var(--sp-12); border-radius: var(--r-full);
   font-family: var(--font-sans); font-size: var(--fs-12); font-weight: var(--fw-heavy); letter-spacing: .01em; }
 .sec-label--problem { background: var(--th-solid); color: var(--n-000); }
-.sec-label--sol { background: rgba(124,58,237,.15); color: var(--th-accent-hi); }
+.sec-label--sol { background: color-mix(in srgb, var(--violet-500) 15%, transparent); color: var(--th-accent-hi); }
 
 /* 단일 스크롤 영역 — padding-top 0 이라 스티키 문제 카드가 스크롤포트 상단에 밀착한다 */
 .stage-scroll { flex: 1; min-height: 0; overflow-y: auto; padding: 0 clamp(10px, 2vw, 22px) 96px; }
 .stage-scroll::-webkit-scrollbar { width: 10px; }
-.stage-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,.2); border-radius: var(--r-full); border: 2px solid transparent; background-clip: padding-box; }
+.stage-scroll::-webkit-scrollbar-thumb { background: var(--white-a20); border-radius: var(--r-full); border: 2px solid transparent; background-clip: padding-box; }
 
 /* 풀이 카드(워크시트) */
 .worksheet { padding: clamp(18px, 2.3vw, 26px) clamp(20px, 2.6vw, 34px) clamp(20px, 2.4vw, 28px); }
@@ -121,7 +121,7 @@
    ========================================================================= */
 .report-wrap { flex: 1; min-width: 0; overflow-y: auto; padding: clamp(8px, 1.4vw, 16px) clamp(12px, 2.4vw, 30px) 96px; }
 
-.report-wrap::-webkit-scrollbar-thumb { background: rgba(255,255,255,.2); border-radius: var(--r-full); border: 2px solid transparent; background-clip: padding-box; }
+.report-wrap::-webkit-scrollbar-thumb { background: var(--white-a20); border-radius: var(--r-full); border: 2px solid transparent; background-clip: padding-box; }
 
 .stepbar__track { width: 28px; height: 2px; border-radius: var(--r-4); background: var(--step-fg); opacity: .3; transition: background .25s, opacity .25s; }
 
@@ -141,7 +141,7 @@
 
 .phead__lead { display: inline-flex; align-items: center; gap: var(--sp-12); flex-wrap: wrap; min-width: 0; }
 
-.phead__div { width: 1px; height: 22px; background: rgba(255,255,255,.18); flex: none; }
+.phead__div { width: 1px; height: 22px; background: var(--white-a16); flex: none; }
 
 @keyframes shimmer { from { background-position: 180% 0; } to { background-position: -40% 0; } }
 
@@ -150,7 +150,7 @@
 .line { font-size: clamp(15px, 1.4vw, 18px); line-height: 2.0; letter-spacing: -0.02em; }
 
 .pmodal__paper { max-width: 680px; margin: 0 auto; background: var(--n-000); padding: var(--sp-32) var(--sp-32); border-radius: var(--r-4);
-  box-shadow: 0 2px 12px rgba(0,0,0,.09); font-family: var(--font-sans); color: var(--n-650); }
+  box-shadow: 0 2px 12px var(--black-a10); font-family: var(--font-sans); color: var(--n-650); }
 
 .box__row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--sp-4) var(--sp-6);
   font-family: var(--font-sans); font-size: clamp(16px, 1.55vw, 19px); font-weight: var(--fw-semibold); }

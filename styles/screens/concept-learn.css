@@ -10,7 +10,7 @@
 body.learn-body { background: var(--bg); overflow: hidden; }
 
 /* 라이트/다크 토글 — 해/달 illust 자체가 노브. 라이트=해(좌), 다크=달(우) */
-.theme-toggle { width: 64px; height: 34px; border-radius: var(--r-full); background: rgba(0,0,0,.3); position: relative; flex: none; }
+.theme-toggle { width: 64px; height: 34px; border-radius: var(--r-full); background: var(--black-a30); position: relative; flex: none; }
 .theme-toggle__knob { position: absolute; top: 2px; left: 2px; width: 30px; height: 30px; background: center / contain no-repeat url("../../assets/icons/ico-sun.svg"); transition: left .2s ease; }
 :root[data-theme="dark"] .theme-toggle__knob { left: 32px; background-image: url("../../assets/icons/ico-moon.svg"); }
 
@@ -61,7 +61,7 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 .answer-pop {
   position: fixed; z-index: var(--z-float); transform: translateX(-50%);
   min-width: 210px; background: var(--n-000); border-radius: var(--r-16); padding: var(--sp-8);
-  box-shadow: 0 18px 44px rgba(16,32,72,.22), 0 3px 10px rgba(16,32,72,.10);
+  box-shadow: 0 18px 44px color-mix(in srgb, var(--blue-900) 22%, transparent), 0 3px 10px color-mix(in srgb, var(--blue-900) 10%, transparent);
   opacity: 0; visibility: hidden; translate: 0 4px; transition: opacity .14s ease, translate .14s ease, visibility .14s;
 }
 .answer-pop.is-open { opacity: 1; visibility: visible; translate: 0 0; }
@@ -93,7 +93,7 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 .viewer[data-state="filled"] .viewer__ph { animation: skel 1.6s ease-in-out infinite; }
 @keyframes skel { 0%,100% { opacity: 1; } 50% { opacity: .55; } }
 .viewer__label { color: var(--text-muted); font-size: var(--fs-14); font-weight: var(--fw-semibold); text-align: center; white-space: pre-line; padding: 0 var(--sp-16); }
-.viewer__zoom { position: absolute; bottom: 10px; right: 12px; font-size: var(--fs-12); font-weight: var(--fw-bold); color: var(--text-muted); background: var(--n-000); padding: var(--sp-4) var(--sp-8); border-radius: var(--r-full); box-shadow: 0 2px 6px rgba(16,32,72,.12); display: none; }
+.viewer__zoom { position: absolute; bottom: 10px; right: 12px; font-size: var(--fs-12); font-weight: var(--fw-bold); color: var(--text-muted); background: var(--n-000); padding: var(--sp-4) var(--sp-8); border-radius: var(--r-full); box-shadow: 0 2px 6px color-mix(in srgb, var(--blue-900) 12%, transparent); display: none; }
 .viewer[data-state="filled"] .viewer__zoom { display: block; }
 .viewer__pager { display: flex; align-items: center; gap: var(--sp-16); color: var(--text-muted); font-weight: var(--fw-bold); }
 .viewer__pager button { width: 34px; height: 34px; border-radius: 50%; background: var(--th-tint); color: var(--th-ink-accent); font-size: var(--fs-15); }
@@ -102,9 +102,9 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 /* ===== 라이트박스 — 프레임은 공용 monitor, 안은 이미지뿐 ===== */
 #lightbox { --mon-w: 760px; }
 /* 실제 이미지가 들어간다고 가정한 더미 (테마 무관 = 사진처럼 고정) */
-.lightbox__img { position: relative; overflow: hidden; width: 100%; aspect-ratio: 4 / 3; display: flex; align-items: center; justify-content: center; font-size: var(--fs-19); font-weight: var(--fw-heavy); letter-spacing: .02em; color: rgba(255,255,255,.92);
+.lightbox__img { position: relative; overflow: hidden; width: 100%; aspect-ratio: 4 / 3; display: flex; align-items: center; justify-content: center; font-size: var(--fs-19); font-weight: var(--fw-heavy); letter-spacing: .02em; color: var(--white-a90);
   background: linear-gradient(135deg, #4a80e6 0%, #2456c4 46%, #16307a 100%); }
-.lightbox__img::after { content: ""; position: absolute; inset: 0; background: radial-gradient(120% 90% at 22% 18%, rgba(255,255,255,.28), transparent 55%); pointer-events: none; }
+.lightbox__img::after { content: ""; position: absolute; inset: 0; background: radial-gradient(120% 90% at 22% 18%, var(--white-a30), transparent 55%); pointer-events: none; }
 
 /* ===== 하단 콘솔 바 ===== */
 /* 하단 콘솔 = 일러스트(우주선). 좌우 console SVG와 이어지는 고정색, 토큰/테마 영향 없음.
@@ -142,16 +142,16 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 }
 /* 입력 완료 = 은은한 톤 (다크 패널보다 살짝 밝게) */
 :root[data-theme="dark"] .chunk--blank.is-filled, :root[data-theme="dark"] .chunk--blank.is-filled.is-read {
-  background: rgba(255,255,255,.08); color: var(--text); box-shadow: none;
+  background: var(--white-a08); color: var(--text); box-shadow: none;
 }
-:root[data-theme="dark"] .viewer__frame { background: var(--surface-1); box-shadow: inset 0 0 0 2px rgba(255,255,255,.08); }
+:root[data-theme="dark"] .viewer__frame { background: var(--surface-1); box-shadow: inset 0 0 0 2px var(--white-a08); }
 :root[data-theme="dark"] .viewer__ph { background: var(--surface-2); color: var(--text-muted); }
 :root[data-theme="dark"] .viewer__label,
 :root[data-theme="dark"] .viewer__pager { color: var(--text-muted); }
 :root[data-theme="dark"] .viewer__pager button { background: var(--surface-2); color: var(--th-accent-hi); }
 :root[data-theme="dark"] .viewer__zoom { background: var(--surface-1); color: var(--text-muted); box-shadow: none; }
 /* 다크: 팝오버가 패널(surface-1)과 같은 색이라 안 떠 보임 → 더 밝은 surface-3 + 테두리로 floating 강조 */
-:root[data-theme="dark"] .answer-pop { background: var(--surface-3); border: 1px solid rgba(255,255,255,.12); box-shadow: 0 20px 48px rgba(0,0,0,.62); }
+:root[data-theme="dark"] .answer-pop { background: var(--surface-3); border: 1px solid var(--white-a12); box-shadow: 0 20px 48px var(--black-a60); }
 :root[data-theme="dark"] .answer-pop::before { background: var(--surface-3); }
 :root[data-theme="dark"] .answer-pop__hint { color: var(--text-muted); }
 :root[data-theme="dark"] .answer-opt { color: var(--text); }

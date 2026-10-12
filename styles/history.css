@@ -52,7 +52,7 @@
 .h-calwrap{ position:relative; }
 .h-cal{ position:absolute; top:42px; right:0; z-index:var(--z-float); width:296px; padding:var(--sp-16) var(--sp-16) var(--sp-12);
   background:var(--surface); border:1.5px solid var(--rule-2); border-radius:var(--r-16);
-  box-shadow:0 18px 40px -24px rgba(0,0,0,.7); display:none; }
+  box-shadow:0 18px 40px -24px var(--black-a70); display:none; }
 .h-cal.is-open{ display:block; }
 .h-cal__hd{ display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
 .h-cal__mo{ font-size:var(--fs-14); font-weight:var(--fw-heavy); letter-spacing:-.04em; color:var(--ink);

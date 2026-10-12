@@ -499,7 +499,7 @@
   z-index: var(--z-toast);
   padding: var(--sp-12) var(--sp-20); border-radius: var(--r-full);
   font-family: var(--font-sans); font-size: var(--fs-14); font-weight: var(--fw-semibold);
-  background: var(--toast-bg, rgba(18,22,40,.94)); color: var(--static-on);
+  background: var(--toast-bg, color-mix(in srgb, var(--n-700) 94%, transparent)); color: var(--static-on);
   opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s;
 }
 .toast.is-on {
@@ -514,7 +514,7 @@
    ========================================================================= */
 .ops::-webkit-scrollbar { width: 10px; }
 
-.ops::-webkit-scrollbar-thumb { background: rgba(255,255,255,.24); border-radius: var(--r-full); border: 2px solid transparent; background-clip: padding-box; }
+.ops::-webkit-scrollbar-thumb { background: var(--white-a24); border-radius: var(--r-full); border: 2px solid transparent; background-clip: padding-box; }
 
 .btn-grade { padding: var(--sp-12) 44px; border-radius: var(--r-16); background: var(--th-vivid); color: var(--n-000); font-weight: var(--fw-heavy); font-size: var(--fs-19); box-shadow: 0 4px 0 var(--th-accent-strong); }
 

@@ -22,7 +22,7 @@
   --warn: var(--warn-ink);
   --hover: var(--n-050);            /* 선지·키패드 hover 표면 (테마 스왑) */
   --r-lg: 16px; --r-md: 12px; --r-sm: 9px;
-  --sh: 0 1px 2px rgba(13,18,32,.04), 0 20px 40px -28px rgba(13,18,32,.24);
+  --sh: 0 1px 2px color-mix(in srgb, var(--n-900) 4%, transparent), 0 20px 40px -28px color-mix(in srgb, var(--n-900) 24%, transparent);
 }
 
 /* ===== 다크 모드 — 로컬 var 리매핑(뉴트럴 램프 + 퍼플 액센트 밝게) ===== */
@@ -32,12 +32,12 @@
   --line: var(--border-strong); --line-2: var(--border); --line-strong: var(--n-500);
   --accent: var(--th-accent); --accent-ink: var(--th-accent-hi);
   /* 다크 표면용 틴트 토큰 부재 — 기존 반투명 rgba 유지(라이트 위 글자 대비 보존) */
-  --accent-tint: rgba(119,119,255,.18); --accent-tint-br: rgba(119,119,255,.4);
-  --good: var(--ok-solid); --good-tint: rgba(88,204,2,.13); --good-br: rgba(88,204,2,.42);
-  --bad: var(--no-solid); --bad-tint: rgba(255,138,144,.15); --bad-br: rgba(255,138,144,.42);
+  --accent-tint: color-mix(in srgb, var(--violet-500) 18%, transparent); --accent-tint-br: color-mix(in srgb, var(--violet-500) 40%, transparent);
+  --good: var(--ok-solid); --good-tint: color-mix(in srgb, var(--green-400) 13%, transparent); --good-br: color-mix(in srgb, var(--green-400) 42%, transparent);
+  --bad: var(--no-solid); --bad-tint: color-mix(in srgb, var(--red-300) 15%, transparent); --bad-br: color-mix(in srgb, var(--red-300) 42%, transparent);
   --warn: var(--warn-solid);
   --hover: var(--n-700);
-  --sh: 0 1px 2px rgba(0,0,0,.4), 0 20px 40px -28px rgba(0,0,0,.6);
+  --sh: 0 1px 2px var(--black-a40), 0 20px 40px -28px var(--black-a60);
 }
 
 :root[data-theme="dark"] .qarea__scroll::-webkit-scrollbar-thumb,
@@ -176,7 +176,7 @@
 .svideo { height: 172px; border-radius: var(--r-12); background: var(--n-100); border: 1px solid var(--line);
   display: grid; place-items: center; position: relative; overflow: hidden; cursor: pointer; }
 
-.svideo__play { width: 50px; height: 50px; border-radius: 50%; background: rgba(13,18,32,.62); display: grid; place-items: center; transition: transform .15s; }
+.svideo__play { width: 50px; height: 50px; border-radius: 50%; background: color-mix(in srgb, var(--n-900) 62%, transparent); display: grid; place-items: center; transition: transform .15s; }
 .svideo__play svg { width: 19px; height: 19px; color: var(--n-000); margin-left: 3px; }
 .pcard { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-12); padding: var(--sp-16) var(--sp-16); display: flex; flex-direction: column; gap: var(--sp-8); }
 

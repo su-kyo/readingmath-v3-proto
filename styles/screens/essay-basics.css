@@ -8,17 +8,17 @@
 .content {
   padding: clamp(12px, 1.8vw, 16px) clamp(12px, 1.8vw, 16px) 96px;
   gap: var(--sp-16); align-items: stretch;
-  --guide: rgba(249,249,249,.92); --box-bg: var(--n-900); --box-br: rgba(255,255,255,.10);
-  --qa-bg: var(--surface-3); --qa-fg: rgba(249,249,249,.92); --qa-soft: rgba(255,255,255,.06); --qa-sub: var(--n-100);
-  --bl-next: rgba(124,120,240,.85);
+  --guide: color-mix(in srgb, var(--violet-050) 92%, transparent); --box-bg: var(--n-900); --box-br: var(--white-a10);
+  --qa-bg: var(--surface-3); --qa-fg: color-mix(in srgb, var(--violet-050) 92%, transparent); --qa-soft: var(--white-a06); --qa-sub: var(--n-100);
+  --bl-next: color-mix(in srgb, var(--violet-450) 85%, transparent);
 }
 :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
 :root[data-theme="light"] .content {
   /* 제일 뒤(베이스) = 흰색에 가까운 톤. 층위: 베이스(near-white) → 문제카드(흰색) → 수식박스(연라벤더 인셋) */
   background: var(--n-000); border-color: var(--th-static);
-  --guide: var(--n-650); --box-bg: var(--n-050); --box-br: rgba(108,99,201,.12);
-  --qa-bg: var(--n-000); --qa-fg: var(--n-650); --qa-soft: rgba(108,99,201,.055); --qa-sub: var(--text-meta);
-  --bl-next: rgba(114,111,233,.7);
+  --guide: var(--n-650); --box-bg: var(--n-050); --box-br: color-mix(in srgb, var(--violet-600) 12%, transparent);
+  --qa-bg: var(--n-000); --qa-fg: var(--n-650); --qa-soft: color-mix(in srgb, var(--violet-600) 5.5%, transparent); --qa-sub: var(--text-meta);
+  --bl-next: color-mix(in srgb, var(--violet-500) 70%, transparent);
 }
 
 /* ============ 좌: 문제 영역 (더 좁게) ============ */
@@ -27,20 +27,20 @@
   background: var(--qa-bg); color: var(--qa-fg);
   border-radius: var(--r-22); padding: clamp(16px, 2vw, 24px); overflow: hidden;
 }
-:root[data-theme="light"] .qa { border: 1px solid var(--n-050); box-shadow: 0 10px 24px -18px rgba(60,40,130,.32); }
+:root[data-theme="light"] .qa { border: 1px solid var(--n-050); box-shadow: 0 10px 24px -18px color-mix(in srgb, var(--violet-800) 32%, transparent); }
 .qa__top { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-8); flex: none; }
 .qtabs { display: flex; align-items: center; gap: var(--sp-4); }
 /* 문제 진행 인디케이터: 미완료(흐림) → 완료(중간 채움+✓) → 현재(진한 채움+링) */
 .qtab { min-width: 34px; height: 34px; padding: 0 var(--sp-8); border-radius: var(--r-8); display: inline-flex;
   align-items: center; justify-content: center; gap: var(--sp-4); cursor: default;
   font-weight: var(--fw-bold); font-size: var(--fs-16); text-align: center; transition: background .15s, box-shadow .15s; }
-.qtab { background: rgba(255,255,255,.12); color: rgba(255,255,255,.5); }              /* 미완료 (다크 카드) */
-.qtab.is-done { background: rgba(114,111,233,.55); color: var(--n-000); }                      /* 완료 */
+.qtab { background: var(--white-a12); color: var(--white-a50); }              /* 미완료 (다크 카드) */
+.qtab.is-done { background: color-mix(in srgb, var(--violet-500) 55%, transparent); color: var(--n-000); }                      /* 완료 */
 .qtab.is-active { background: var(--th-solid); color: var(--n-000); }  /* 현재 — 채움 하나로 (바깥 링 제거) */
-:root[data-theme="light"] .qtab { background: rgba(114,111,233,.10); color: var(--text-muted); }
-:root[data-theme="light"] .qtab.is-done { background: rgba(114,111,233,.20); color: var(--th-ink-accent); }
+:root[data-theme="light"] .qtab { background: color-mix(in srgb, var(--violet-500) 10%, transparent); color: var(--text-muted); }
+:root[data-theme="light"] .qtab.is-done { background: color-mix(in srgb, var(--violet-500) 20%, transparent); color: var(--th-ink-accent); }
 :root[data-theme="light"] .qtab.is-active { background: var(--th-solid); color: var(--n-000); }
-.qtimer { display: inline-flex; align-items: center; gap: var(--sp-4); background: rgba(0,0,0,.3);
+.qtimer { display: inline-flex; align-items: center; gap: var(--sp-4); background: var(--black-a30);
   border-radius: var(--r-8); padding: var(--sp-4) var(--sp-8); flex: none; }
 :root[data-theme="light"] .qtimer { background: var(--th-accent); }
 .qtimer img { width: 16px; height: 16px; }
@@ -54,16 +54,16 @@
   background: linear-gradient(110deg, var(--n-500) 25%, var(--n-500) 40%, var(--n-500) 55%); background-size: 220% 100%;
   animation: shimmer 1.8s ease-in-out infinite; display: flex; align-items: center; justify-content: center; }
 :root[data-theme="light"] .qref__img { background: linear-gradient(110deg, var(--n-100) 25%, var(--n-050) 40%, var(--n-100) 55%); background-size: 220% 100%; }
-.qref__img span { color: rgba(255,255,255,.55); font-weight: var(--fw-bold); font-size: var(--fs-13); }
-:root[data-theme="light"] .qref__img span { color: rgba(80,66,150,.55); }
+.qref__img span { color: var(--white-a50); font-weight: var(--fw-bold); font-size: var(--fs-13); }
+:root[data-theme="light"] .qref__img span { color: color-mix(in srgb, var(--violet-700) 55%, transparent); }
 
 .qref__words { color: var(--qa-sub); font-size: clamp(14px, 1.25vw, 17px); line-height: 1.75; white-space: pre-line; }
 
 /* 스크롤바 (좌/우 공통) */
 .qa__body::-webkit-scrollbar, .expl::-webkit-scrollbar { width: 9px; }
 .qa__body::-webkit-scrollbar-thumb, .expl::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,.22); border-radius: var(--r-full); border: 2px solid transparent; background-clip: padding-box; }
-:root[data-theme="light"] .expl::-webkit-scrollbar-thumb { background: rgba(70,50,140,.28); background-clip: padding-box; }
+  background: var(--white-a20); border-radius: var(--r-full); border: 2px solid transparent; background-clip: padding-box; }
+:root[data-theme="light"] .expl::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--violet-700) 28%, transparent); background-clip: padding-box; }
 
 /* ============ 우: 풀이 가이드 ============ */
 .expl {

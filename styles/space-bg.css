@@ -12,9 +12,9 @@
   z-index: var(--z-bg);
   overflow: hidden;
   background:
-    radial-gradient(1100px 740px at 80% -8%, rgba(64,92,178,.40), transparent 62%),
-    radial-gradient(920px 700px at 10% 110%, rgba(84,60,164,.32), transparent 58%),
-    radial-gradient(760px 560px at 52% 44%, rgba(26,48,112,.30), transparent 72%),
+    radial-gradient(1100px 740px at 80% -8%, var(--art-space-glow-1), transparent 62%),
+    radial-gradient(920px 700px at 10% 110%, var(--art-space-glow-2), transparent 58%),
+    radial-gradient(760px 560px at 52% 44%, var(--art-space-glow-3), transparent 72%),
     linear-gradient(180deg, var(--art-space-top) 0%, var(--art-space-mid) 46%, var(--art-space-bottom) 100%);
 }
 
@@ -29,8 +29,8 @@
   animation: rm-twinkle var(--d, 3.4s) ease-in-out var(--delay, 0s) infinite;
   will-change: opacity, transform;
 }
-.spacebg .star--bright { background: var(--art-star-bright); box-shadow: 0 0 4px 1px rgba(150,185,255,.72); }
-.spacebg .star--big    { box-shadow: 0 0 7px 2px rgba(190,210,255,.5); }
+.spacebg .star--bright { background: var(--art-star-bright); box-shadow: 0 0 4px 1px var(--art-star-halo); }
+.spacebg .star--big    { box-shadow: 0 0 7px 2px var(--art-star-halo-big); }
 
 /* 가장 밝은 몇 개: 십자 반짝임 */
 .spacebg .star--cross::before,
@@ -42,11 +42,11 @@
 }
 .spacebg .star--cross::before {
   width: 1px; height: 15px;
-  background: linear-gradient(to bottom, transparent, rgba(214,228,255,.9), transparent);
+  background: linear-gradient(to bottom, transparent, var(--art-star-flare), transparent);
 }
 .spacebg .star--cross::after {
   height: 1px; width: 15px;
-  background: linear-gradient(to right, transparent, rgba(214,228,255,.9), transparent);
+  background: linear-gradient(to right, transparent, var(--art-star-flare), transparent);
 }
 
 @keyframes rm-twinkle {

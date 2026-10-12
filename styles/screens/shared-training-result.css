@@ -28,13 +28,13 @@
 /* ===== LCD 판독 화면 (스캔라인은 스크롤을 따라간다) ===== */
 
 .hwf__screen::-webkit-scrollbar { width: 10px; }
-.hwf__screen::-webkit-scrollbar-thumb { background: rgba(143,235,255,.20); border-radius: var(--r-full); border: 3px solid transparent; background-clip: padding-box; }
-.hwf__screen { scrollbar-width: thin; scrollbar-color: rgba(143,235,255,.24) transparent; }
+.hwf__screen::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--cyan-200) 20%, transparent); border-radius: var(--r-full); border: 3px solid transparent; background-clip: padding-box; }
+.hwf__screen { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--cyan-200) 24%, transparent) transparent; }
 
 /* ===== 총점(별+점수 — 스텝 게이지와 다른 위계) + 단계별 표 ===== */
 
 .score { flex: none; display: flex; flex-direction: column; align-items: center; gap: var(--sp-8); min-width: 170px; }
-.score img { width: clamp(84px,9vw,110px); height: auto; filter: drop-shadow(0 8px 18px rgba(0,0,0,.4)); }
+.score img { width: clamp(84px,9vw,110px); height: auto; filter: drop-shadow(0 8px 18px var(--black-a40)); }
 
 .score__val span { font-size: var(--fs-22); font-weight: var(--fw-bold); }
 
@@ -59,7 +59,7 @@
 #stepMon { --mon-w: 720px; }
 .monitor__screen--lcd { position: relative; overflow: hidden;
   background-color: var(--n-900);
-  background-image: repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 5px);
+  background-image: repeating-linear-gradient(0deg, var(--white-a04) 0 1px, transparent 1px 5px);
   padding: clamp(26px,3vw,38px); }
 
 /* 스크린창 안 활동별 행 — 스텝 결과 화면과 같은 구성(문항 LED) */
@@ -77,6 +77,6 @@
   .trow { grid-template-columns: minmax(110px,1fr) 44px minmax(90px,1.2fr) 72px 54px 64px; }
 }
 /* 토스트 면색만 이 화면 것 */
-.toast { --toast-bg: rgba(10,20,44,.94); }
+.toast { --toast-bg: color-mix(in srgb, var(--n-800) 94%, transparent); }
 /* 훈련 결과는 띠가 행 전체를 채우고 조금 얇다 */
 .led { width: 100%; flex: none; }  .led i { height: 12px; }

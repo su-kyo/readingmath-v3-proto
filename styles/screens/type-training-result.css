@@ -34,7 +34,7 @@
 /* ===== 총점(별+점수 — 스텝 게이지와 다른 위계) + 단계별 표 ===== */
 
 .score { flex: none; display: flex; flex-direction: column; align-items: center; gap: var(--sp-8); min-width: 170px; }
-.score img { width: clamp(84px,9vw,110px); height: auto; filter: drop-shadow(0 8px 18px rgba(0,0,0,.4)); }
+.score img { width: clamp(84px,9vw,110px); height: auto; filter: drop-shadow(0 8px 18px var(--black-a40)); }
 
 .score__val span { font-size: var(--fs-22); font-weight: var(--fw-bold); }
 
@@ -59,14 +59,14 @@
 #stepMon { --mon-w: 720px; }
 .monitor__screen--lcd { position: relative; overflow: hidden;
   background-color: var(--n-900);
-  background-image: repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 5px);
+  background-image: repeating-linear-gradient(0deg, var(--white-a04) 0 1px, transparent 1px 5px);
   padding: clamp(26px,3vw,38px); --rate: var(--teal-300); }
 
 /* 스크린창 안 문항 판독 — 스텝 결과 화면과 같은 구성 */
 .qgrid { display: grid; grid-template-columns: repeat(10, 1fr); gap: var(--sp-8); margin-top: clamp(18px,2.2vw,26px); }
 .qcell { display: flex; align-items: center; justify-content: center; aspect-ratio: 1 / 1.04;
   border-radius: var(--r-12); font-family: var(--font-mono); font-size: var(--fs-19); font-weight: var(--fw-bold);
-  background: rgba(255,255,255,.05); color: var(--n-300); transition: background var(--t-fast); }
+  background: var(--white-a04); color: var(--n-300); transition: background var(--t-fast); }
 .qcell.ok { background: var(--rate); color: var(--n-900); box-shadow: 0 0 14px color-mix(in srgb, var(--rate) 32%, transparent); }
 .qcell.no { color: var(--red-400); box-shadow: inset 0 0 0 1.5px var(--no-vivid); }
 
@@ -77,6 +77,6 @@
   .trow { grid-template-columns: minmax(110px,1fr) 44px minmax(90px,1.2fr) 72px 54px 64px; }
 }
 /* 토스트 면색만 이 화면 것 */
-.toast { --toast-bg: rgba(6,34,29,.94); }
+.toast { --toast-bg: color-mix(in srgb, var(--teal-900) 94%, transparent); }
 /* 훈련 결과는 띠가 행 전체를 채우고 조금 얇다 */
 .led { width: 100%; flex: none; }  .led i { height: 12px; }

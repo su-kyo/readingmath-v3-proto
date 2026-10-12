@@ -28,7 +28,7 @@ body { font-family: var(--font-sans); background: var(--nav-dark); color: var(--
 
 
 /* ===== 헤더 (다크) ===== */
-.nav { flex: none; height: 50px; display: flex; align-items: center; gap: var(--sp-16); padding: 0 var(--sp-16); background: var(--nav-dark); border-bottom: 1px solid rgba(255,255,255,.1); }
+.nav { flex: none; height: 50px; display: flex; align-items: center; gap: var(--sp-16); padding: 0 var(--sp-16); background: var(--nav-dark); border-bottom: 1px solid var(--white-a10); }
 .nav__info { display: flex; align-items: center; gap: var(--sp-6); flex: 1; min-width: 0; }
 .nav__logo { width: 30px; height: 30px; flex: none; }
 .nav__logo svg { width: 100%; height: 100%; display: block; }
@@ -39,17 +39,17 @@ body { font-family: var(--font-sans); background: var(--nav-dark); color: var(--
 .mbtn.is-active { color: var(--n-000); background: var(--nav-tab); }
 .nav__icons { display: flex; align-items: center; justify-content: flex-end; gap: var(--sp-8); flex: 1; }
 .nbtn { position: relative; width: 40px; height: 40px; border: 0; background: transparent; border-radius: var(--r-12); display: grid; place-items: center; color: var(--nav-off); cursor: pointer; transition: .15s; }
-.nbtn:hover { background: rgba(255,255,255,.06); color: var(--n-200); }
+.nbtn:hover { background: var(--white-a06); color: var(--n-200); }
 .nbtn svg { width: 20px; height: 20px; }
 .nbtn__dot { position: absolute; top: 8px; right: 9px; width: 6px; height: 6px; border-radius: 50%; background: var(--no-solid); }
 
 
 /* ===== 스테이지 (사방 여백 + 우주 배경) ===== */
 .stage { flex: 1; min-height: 0; display: flex; justify-content: center; align-items: stretch; padding: var(--sp-24) var(--sp-32);
-  background: linear-gradient(rgba(9,12,40,.32), rgba(9,12,40,.32)), url("../../assets/img/bg/bg-space-hw.webp") center/cover no-repeat; }
+  background: linear-gradient(color-mix(in srgb, var(--n-800) 32%, transparent), color-mix(in srgb, var(--n-800) 32%, transparent)), url("../../assets/img/bg/bg-space-hw.webp") center/cover no-repeat; }
 .screen { position: relative; width: 100%; max-width: 1120px; height: 100%; overflow-y: auto; overflow-x: hidden;
-  background: var(--surface-1); border: 1px solid rgba(255,255,255,.5); border-radius: 26px;
-  box-shadow: 0 2px 6px rgba(6,12,30,.10), 0 30px 60px -28px rgba(6,12,30,.5);
+  background: var(--surface-1); border: 1px solid var(--white-a50); border-radius: 26px;
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--n-900) 10%, transparent), 0 30px 60px -28px color-mix(in srgb, var(--n-900) 50%, transparent);
   scrollbar-gutter: stable; }
 .inner { padding: 36px var(--sp-40) var(--sp-40); display: flex; flex-direction: column; gap: var(--sp-32); }
 
@@ -64,7 +64,7 @@ body { font-family: var(--font-sans); background: var(--nav-dark); color: var(--
 .summary { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: var(--sp-12); }
 /* 요약 카드 = 흰 카드 + 부드러운 그림자(모던·심플, 장식 없음) */
 .hero, .kpi { background: var(--surface-1); border: 1px solid var(--line); border-radius: var(--r-16);
-  box-shadow: 0 1px 2px rgba(20,32,58,.04), 0 6px 22px -16px rgba(20,32,58,.20); }
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--n-650) 4%, transparent), 0 6px 22px -16px color-mix(in srgb, var(--n-650) 20%, transparent); }
 .hero { display: flex; align-items: center; gap: var(--sp-20); padding: var(--sp-20) var(--sp-24); }
 .ring { position: relative; width: 82px; height: 82px; flex: none; }
 .ring > svg { width: 100%; height: 100%; transform: rotate(-90deg); }
@@ -101,8 +101,8 @@ body { font-family: var(--font-sans); background: var(--nav-dark); color: var(--
 
 /* ── 카드 공통 (모던·심플: 부드러운 그림자로 depth, 장식 없음) ── */
 .card { display: flex; align-items: center; gap: var(--sp-24); background: var(--surface-1); border: 1px solid var(--line); border-radius: var(--r-16); padding: var(--sp-20) var(--sp-24);
-  box-shadow: 0 1px 2px rgba(20,32,58,.04), 0 6px 22px -16px rgba(20,32,58,.20); transition: box-shadow .16s, transform .16s; }
-.card:hover { box-shadow: 0 2px 6px rgba(20,32,58,.06), 0 18px 34px -20px rgba(20,32,58,.30); transform: translateY(-2px); }
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--n-650) 4%, transparent), 0 6px 22px -16px color-mix(in srgb, var(--n-650) 20%, transparent); transition: box-shadow .16s, transform .16s; }
+.card:hover { box-shadow: 0 2px 6px color-mix(in srgb, var(--n-650) 6%, transparent), 0 18px 34px -20px color-mix(in srgb, var(--n-650) 30%, transparent); transform: translateY(-2px); }
 .card__main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--sp-8); }
 .card__title { font-size: var(--fs-16); font-weight: var(--fw-bold); color: var(--ink); letter-spacing: -.01em; line-height: 1.3; }
 .metarow { display: flex; align-items: center; gap: var(--sp-8); flex-wrap: wrap; }

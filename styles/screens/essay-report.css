@@ -7,8 +7,8 @@
 /* 페이지 고유 토큰만 (--bl-* / .blank / .qpop / 하단바 = essay.css) */
 .content {
   flex-direction: column; padding: clamp(12px, 1.6vw, 16px) clamp(12px, 1.6vw, 16px) 0;
-  --guide: rgba(249,249,249,.92);
-  --rt-line: var(--n-500); --rt-head: var(--surface-1); --rt-cell: var(--surface-1); --rt-fg: rgba(249,249,249,.9); --rt-sub: var(--text-muted);
+  --guide: color-mix(in srgb, var(--violet-050) 92%, transparent);
+  --rt-line: var(--n-500); --rt-head: var(--surface-1); --rt-cell: var(--surface-1); --rt-fg: color-mix(in srgb, var(--violet-050) 90%, transparent); --rt-sub: var(--text-muted);
 }
 :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
 :root[data-theme="light"] .content {
@@ -20,7 +20,7 @@
 
 .report-wrap::-webkit-scrollbar { width: 10px; }
 
-:root[data-theme="light"] .report-wrap::-webkit-scrollbar-thumb { background: rgba(108,99,201,.28); background-clip: padding-box; }
+:root[data-theme="light"] .report-wrap::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--violet-600) 28%, transparent); background-clip: padding-box; }
 
 
 /* ============ 보고서 표 (2열 n행) ============ */

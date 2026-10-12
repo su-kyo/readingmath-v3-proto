@@ -8,23 +8,23 @@
 /* 동작(끊어읽기/빈칸/순서맞추기)은 essay-drill.js 그대로 재사용 */
 .content {
   flex-direction: column; padding: 0 clamp(12px, 1.6vw, 16px) 0;
-  --guide: rgba(249,249,249,.94); --card: var(--surface-1); --card-br: rgba(255,255,255,.08); --card-sh: none;
-  --chip-bg: rgba(255,255,255,.055); --chip-br: rgba(255,255,255,.18); --chip-hover: rgba(255,255,255,.1);
-  --lock-bg: rgba(16,188,132,.16); --lock-br: rgba(16,188,132,.5); --lock-ck: var(--ok-solid);
-  --step-bg: rgba(255,255,255,.07); --step-fg: var(--text-muted);
+  --guide: color-mix(in srgb, var(--violet-050) 94%, transparent); --card: var(--surface-1); --card-br: var(--white-a08); --card-sh: none;
+  --chip-bg: var(--white-a06); --chip-br: var(--white-a16); --chip-hover: var(--white-a10);
+  --lock-bg: color-mix(in srgb, var(--teal-450) 16%, transparent); --lock-br: color-mix(in srgb, var(--teal-450) 50%, transparent); --lock-ck: var(--ok-solid);
+  --step-bg: var(--white-a06); --step-fg: var(--text-muted);
   /* 문제 카드(번호탭 헤더) = 프레임 테두리색(th-static)과 면 공유 · 라이트/다크 동일 */
-  --pc-bg: var(--th-static); --pc-text: rgba(249,249,249,.92); --pc-chev: rgba(255,255,255,.62);
-  --qtab-bg: rgba(255,255,255,.10); --qtab-fg: rgba(255,255,255,.5);
+  --pc-bg: var(--th-static); --pc-text: color-mix(in srgb, var(--violet-050) 92%, transparent); --pc-chev: var(--white-a60);
+  --qtab-bg: var(--white-a10); --qtab-fg: var(--white-a50);
   --qtab-done-bg: color-mix(in srgb, var(--th-accent) 52%, transparent); --qtab-done-fg: var(--static-on);
-  --pstep-fg: rgba(255,255,255,.45); --pstep-track: rgba(255,255,255,.22);
+  --pstep-fg: var(--white-a40); --pstep-track: var(--white-a20);
 }
 :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
 :root[data-theme="light"] .content {
   background: var(--n-000); border-color: var(--th-static);
   --guide: var(--n-650); --card: var(--n-000); --card-br: var(--n-100); --card-sh: none;
-  --chip-bg: var(--n-050); --chip-br: rgba(108,99,201,.24); --chip-hover: var(--n-050);
+  --chip-bg: var(--n-050); --chip-br: color-mix(in srgb, var(--violet-600) 24%, transparent); --chip-hover: var(--n-050);
   --bl-fill: var(--n-050);   /* drill 고유: 슬롯 겹침 때문에 라이트 fill은 불투명 */
-  --lock-bg: rgba(16,140,100,.1); --lock-br: rgba(16,140,100,.4); --lock-ck: var(--ok-ink);
+  --lock-bg: color-mix(in srgb, var(--teal-500) 10%, transparent); --lock-br: color-mix(in srgb, var(--teal-500) 40%, transparent); --lock-ck: var(--ok-ink);
   --step-bg: var(--n-100); --step-fg: var(--text-meta);
 }
 
@@ -51,20 +51,20 @@
 .stepbar__i.is-done + .stepbar__track { background: var(--th-accent); opacity: 1; }
 :root[data-theme="dark"] .stepbar__i.is-done + .stepbar__track { background: var(--th-accent-hi); }
 
-:root[data-theme="light"] .stage-scroll::-webkit-scrollbar-thumb { background: rgba(108,99,201,.28); background-clip: padding-box; }
+:root[data-theme="light"] .stage-scroll::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--violet-600) 28%, transparent); background-clip: padding-box; }
 
 
 /* ============ 카드 공용 ============ */
 .card { max-width: 760px; margin: 0 auto; background: var(--card); border: 1px solid var(--card-br); border-radius: var(--r-22); box-shadow: var(--card-sh); }
 .card + .card { margin-top: 14px; }
-:root[data-theme="light"] .sec-label--sol { background: rgba(124,58,237,.1); color: var(--th-accent-strong); }
+:root[data-theme="light"] .sec-label--sol { background: color-mix(in srgb, var(--violet-500) 10%, transparent); color: var(--th-accent-strong); }
 
 
 /* ============ 문제 카드 (번호탭+단계 헤더 + 접이식 · ref 655-27959/29414) ============ */
 /* 패널 = 프레임 테두리색(th-static)과 같은 면 · 상단 프레임에 붙음(플러시) · 라이트/다크 동일.
    헤더 한 행 = [문제 번호탭 1·2·3] [빈칸/순서 단계] … [접기 셰브론]. 열면 문제문(+이미지 옆). */
 .problem { position: sticky; top: 0; z-index: 20; overflow: hidden;
-  background: var(--pc-bg); border: 0; border-radius: 0 0 var(--r-16) var(--r-16); margin: 0 auto; box-shadow: 0 10px 24px rgba(8,5,22,.28); }
+  background: var(--pc-bg); border: 0; border-radius: 0 0 var(--r-16) var(--r-16); margin: 0 auto; box-shadow: 0 10px 24px color-mix(in srgb, var(--n-950) 28%, transparent); }
 .problem__head { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--sp-12);
   padding: var(--sp-8) var(--sp-16); background: transparent; border: 0; text-align: left; }
 .problem.is-collapsible .problem__head { cursor: pointer; }
@@ -74,7 +74,7 @@
   font-family: var(--font-sans); font-weight: var(--fw-heavy); font-size: var(--fs-13); background: var(--qtab-bg); color: var(--qtab-fg); transition: background .16s, color .16s, box-shadow .16s; }
 .qtab.is-done { background: var(--qtab-done-bg); color: var(--qtab-done-fg); }
 /* 현재 문제 = 흰 링으로 대비 강화 */
-.qtab.is-active { background: var(--th-solid); color: var(--static-on); box-shadow: 0 0 0 2px var(--static-on), 0 2px 8px rgba(0,0,0,.32); }
+.qtab.is-active { background: var(--th-solid); color: var(--static-on); box-shadow: 0 0 0 2px var(--static-on), 0 2px 8px var(--black-a30); }
 .problem__chev { width: 22px; height: 22px; color: var(--pc-chev); transition: transform .25s; flex: none; transform: rotate(180deg); }
 .problem.is-collapsed .problem__chev { transform: rotate(0); }
 /* 헤더 안 단계 스텝바(빈칸/순서) = 어두운 패널 위 밝은 톤 */
@@ -102,7 +102,7 @@
 .stage-action__btn { width: 100%; height: 54px; border-radius: var(--r-12); border: 0; cursor: pointer;
   display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-8);
   background: var(--primary); color: var(--n-000); font-family: var(--font-sans); font-size: var(--fs-19); font-weight: var(--fw-heavy);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.25); transition: background .15s; }
+  box-shadow: inset 0 1px 0 var(--white-a24); transition: background .15s; }
 .stage-action__btn:hover { background: var(--primary-hover); }
 .stage-action__btn svg { width: 19px; height: 19px; }
 
@@ -145,7 +145,7 @@
 .slot.is-empty { border: 1.5px dashed var(--bl-line); }
 .slot.is-filled { background: var(--bl-fill); color: var(--bl-ans); border: 1.5px solid transparent; cursor: pointer; }
 .slot.is-filled:hover { box-shadow: inset 0 0 0 1.5px var(--bl-selline); }
-.slot.is-wrong { border: 1.5px solid var(--no-solid); background: rgba(229,88,95,.14); color: var(--no-on-dark); animation: qShake .35s; }
+.slot.is-wrong { border: 1.5px solid var(--no-solid); background: color-mix(in srgb, var(--red-450) 14%, transparent); color: var(--no-on-dark); animation: qShake .35s; }
 .slot.is-locked { background: var(--lock-bg); color: var(--bl-ans); border: 1.5px solid var(--lock-br); animation: lockPop .4s; }
 :root[data-theme="light"] .slot.is-locked { color: var(--ok-ink); }
 
@@ -167,10 +167,10 @@
 /* ============ 문제 끊어읽기 — 프레임은 공용 monitor(잠금형·닫기 없음) ============ */
 /* 처음 문제 읽기 = 모달로 문장별 진행. 다 읽고 '문제 풀기 →' 누르면 풀이 시작. */
 .rmodal { --rm-card: var(--n-900);
-  --rm-read: rgba(249,249,249,.92); --rm-hl: rgba(124,58,237,.30); --rm-hl-fg: var(--n-000); --rm-hint: var(--text-muted);
+  --rm-read: color-mix(in srgb, var(--violet-050) 92%, transparent); --rm-hl: color-mix(in srgb, var(--violet-500) 30%, transparent); --rm-hl-fg: var(--n-000); --rm-hint: var(--text-muted);
   --mon-w: 760px; }
 :root[data-theme="light"] .rmodal { --rm-card: var(--n-000);
-  --rm-read: var(--n-700); --rm-hl: rgba(124,58,237,.14); --rm-hl-fg: var(--th-accent-strong); --rm-hint: var(--text-meta); }
+  --rm-read: var(--n-700); --rm-hl: color-mix(in srgb, var(--violet-500) 14%, transparent); --rm-hl-fg: var(--th-accent-strong); --rm-hint: var(--text-meta); }
 .rmodal .monitor__screen { background: var(--rm-card); padding: clamp(22px,2.8vw,34px);
   display: flex; flex-direction: column; gap: clamp(18px,2.4vw,26px); }
 /* 읽기 패널은 상자가 아니다 — 본문이 스크린에 직접 올라온다.
@@ -198,9 +198,9 @@
 .rmodal__hint { margin-right: auto; font-family: var(--font-sans); font-size: var(--fs-12); font-weight: var(--fw-semibold); color: var(--rm-hint); }
 .rmodal__go { display: inline-flex; align-items: center; gap: var(--sp-8); padding: var(--sp-12) var(--sp-20); border-radius: var(--r-12); border: 0; cursor: pointer;
   background: var(--primary); color: var(--n-000); font-family: var(--font-sans); font-size: var(--fs-19); font-weight: var(--fw-heavy);
-  box-shadow: 0 4px 0 color-mix(in srgb, var(--primary) 62%, #000); transition: transform .12s, box-shadow .12s, background .15s; }
+  box-shadow: 0 4px 0 color-mix(in srgb, var(--primary) 62%, var(--n-950)); transition: transform .12s, box-shadow .12s, background .15s; }
 .rmodal__go:hover { background: var(--primary-hover); }
-.rmodal__go:active { transform: translateY(3px); box-shadow: 0 1px 0 color-mix(in srgb, var(--primary) 62%, #000); }
+.rmodal__go:active { transform: translateY(3px); box-shadow: 0 1px 0 color-mix(in srgb, var(--primary) 62%, var(--n-950)); }
 .rmodal__go svg { width: 18px; height: 18px; }
 /* 토스트 면색만 이 화면 것 */
-.toast { --toast-bg: rgba(20,14,44,.94); }
+.toast { --toast-bg: color-mix(in srgb, var(--n-700) 94%, transparent); }

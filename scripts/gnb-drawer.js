@@ -31,11 +31,11 @@
     +   '--rmd-ink-2:var(--n-200);'                 /* 메뉴·고스트 글자 */
     +   '--rmd-ink-3:var(--n-300);'                 /* 닫기 버튼 */
     +   '--rmd-meta:var(--n-350);'                  /* 보조 글자·아이콘 (다크 4.9) */
-    +   '--rmd-line:rgba(255,255,255,.08);'
-    +   '--rmd-line-2:rgba(255,255,255,.16);'
-    +   '--rmd-hover:rgba(255,255,255,.06);'
-    +   '--rmd-fill:rgba(255,255,255,.08);'
-    +   '--rmd-fill-hover:rgba(255,255,255,.16);'
+    +   '--rmd-line:var(--white-a08);'
+    +   '--rmd-line-2:var(--white-a16);'
+    +   '--rmd-hover:var(--white-a06);'
+    +   '--rmd-fill:var(--white-a08);'
+    +   '--rmd-fill-hover:var(--white-a16);'
     + '}'
     + '.rmd-scrim{position:fixed;inset:0;z-index:var(--z-overlay);background:var(--scrim);opacity:0;pointer-events:none;transition:.24s;}'
     + '.rmd-scrim.is-open{opacity:1;pointer-events:auto;}'

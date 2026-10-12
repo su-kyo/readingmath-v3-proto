@@ -89,7 +89,7 @@ body { font-family: var(--font-sans); background: var(--assign-body); overflow: 
 .cell--correct { background: var(--ok-solid); }
 .cell--wrong { background: var(--bad); }
 .cell.is-cur { border: 3px solid var(--current); }
-.cell__mark { position: absolute; top: 3px; right: 3px; width: 16px; height: 16px; border-radius: 50%; background: var(--n-000); display: grid; place-items: center; box-shadow: 0 1px 2px rgba(0,0,0,.25); }
+.cell__mark { position: absolute; top: 3px; right: 3px; width: 16px; height: 16px; border-radius: 50%; background: var(--n-000); display: grid; place-items: center; box-shadow: 0 1px 2px var(--black-a25); }
 .cell__mark svg { width: 10px; height: 10px; }
 .cell--correct .cell__mark { color: var(--good); }
 .cell--wrong .cell__mark { color: var(--bad); }

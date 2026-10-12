@@ -21,8 +21,8 @@
 .ops {
   position: absolute; inset: 0; overflow-y: auto; display: flex; flex-direction: column; align-items: center;
   padding: 6px clamp(24px, 5vw, 56px) 26px;
-  --qtext: var(--text); --muted: var(--text-muted); --ex-bg: var(--surface-2); --ex-br: rgba(255,255,255,.06);
-  --opt-bg: var(--surface-3); --opt-br: rgba(255,255,255,.08); --opt-hover: var(--surface-hover);
+  --qtext: var(--text); --muted: var(--text-muted); --ex-bg: var(--surface-2); --ex-br: var(--white-a06);
+  --opt-bg: var(--surface-3); --opt-br: var(--white-a08); --opt-hover: var(--surface-hover);
   --input-bg: var(--surface-2); --input-br: var(--border-strong);
 }
 :root[data-theme="light"] .ops {
@@ -32,7 +32,7 @@
 }
 /* 스크롤바 확실히 보이게 */
 
-:root[data-theme="light"] .ops::-webkit-scrollbar-thumb { background: rgba(20,32,58,.22); background-clip: padding-box; }
+:root[data-theme="light"] .ops::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--n-650) 22%, transparent); background-clip: padding-box; }
 
 
 /* ===== 상단 프로그레스 (박스 최상단 중앙에 탭처럼 붙음. 색=테두리색, 테마 무관) ===== */
@@ -42,8 +42,8 @@
   background: var(--th-static); border-radius: 0 0 var(--r-16) var(--r-16); padding: 0 var(--sp-16) var(--sp-6);
   max-width: calc(100% - 48px); flex-wrap: nowrap; justify-content: center;
 }
-.pcirc { width: 20px; height: 20px; border-radius: 50%; flex: none; position: relative; background: rgba(255,255,255,.3); }
-.pcirc.is-current { background: rgba(255,255,255,.3); box-shadow: inset 0 0 0 2px var(--n-000); }
+.pcirc { width: 20px; height: 20px; border-radius: 50%; flex: none; position: relative; background: var(--white-a30); }
+.pcirc.is-current { background: var(--white-a30); box-shadow: inset 0 0 0 2px var(--n-000); }
 .pcirc.is-correct { background: var(--th-accent); }
 .pcirc.is-correct::after { content: ""; position: absolute; inset: 0; background: center / 15px no-repeat url("../../assets/icons/ico-progress-correct.svg"); }
 .pcirc.is-wrong { background: var(--no-solid); }
@@ -71,7 +71,7 @@
   transition: background .12s, box-shadow .12s;
 }
 .opt:hover { background: var(--opt-hover); }
-.opt__num { flex: none; width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,.14); color: var(--qtext); display: flex; align-items: center; justify-content: center; font-weight: var(--fw-heavy); font-size: var(--fs-15); position: relative; }
+.opt__num { flex: none; width: 30px; height: 30px; border-radius: 50%; background: var(--white-a14); color: var(--qtext); display: flex; align-items: center; justify-content: center; font-weight: var(--fw-heavy); font-size: var(--fs-15); position: relative; }
 :root[data-theme="light"] .opt__num { background: var(--th-tint-strong); color: var(--th-ink-accent); }
 .opt--num { justify-content: center; } .opt--num .opt__num { width: 34px; height: 34px; }
 .opt__img { width: 100%; height: 96px; border-radius: var(--r-8); }
