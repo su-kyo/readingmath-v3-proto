@@ -8,7 +8,6 @@
   --panel:var(--surface-1); --card:var(--n-650); --rail:var(--surface-3);
 }
 *{ box-sizing:border-box; margin:0; padding:0; }
-html,body{ height:100%; }
 body{ font-family:var(--font-sans); background:var(--bg); color:var(--ink); overflow:hidden;
   -webkit-font-smoothing:antialiased; letter-spacing:-.02em; }
 .app{ position:relative; z-index:1; height:100%; display:flex; flex-direction:column; }
@@ -165,7 +164,6 @@ body{ font-family:var(--font-sans); background:var(--bg); color:var(--ink); over
 .hyc__star img{ width:34px; height:34px; object-fit:contain; display:block; }
 .hyc__star img.x{ filter:grayscale(1) brightness(1.4) opacity(.4); }
 
-.rbar i{ width:11px; height:6px; border-radius:var(--r-4); background:var(--border); }
 .rbar i.done{ background:var(--ok-on-dark); }
 .rbar i.cur{ background:var(--th-accent); }
 

@@ -11,11 +11,9 @@
   --cta:var(--primary);
 }
 *{ box-sizing:border-box; margin:0; padding:0; }
-html,body{ height:100%; }
 body{ font-family:var(--font-sans); background:var(--bg); color:var(--ink); overflow:hidden;
   -webkit-font-smoothing:antialiased; letter-spacing:-.02em; }
 .app{ position:relative; z-index:1; height:100%; display:flex; flex-direction:column; }
-
 
 /* ===== 2-column ===== */
 .curr-wrap{ flex:1; min-height:0; display:flex; }
@@ -63,7 +61,6 @@ body{ font-family:var(--font-sans); background:var(--bg); color:var(--ink); over
 .hyc__star img{ width:34px; height:34px; object-fit:contain; display:block; }
 .hyc__star img.x{ filter:grayscale(1) brightness(1.4) opacity(.4); }
 
-.rbar i{ width:11px; height:6px; border-radius:var(--r-4); background:var(--border); }
 .rbar i.done{ background:var(--green); }
 .rbar i.cur{ background:var(--mint); }
 /* 시험대비 칩 (소단원명 옆) */
@@ -126,7 +123,6 @@ body{ font-family:var(--font-sans); background:var(--bg); color:var(--ink); over
   cursor:pointer; transition:.16s; backdrop-filter:blur(4px); }
 .homebtn:hover{ border-color:var(--border-strong); background:var(--surface-2); }
 .homebtn svg{ width:17px; height:17px; }
-
 
 /* ===== 훈련안내 — 프레임은 공용 monitor(보조 모니터), 안(msec)은 그대로 ===== */
 #infoModal{ --mon-w: 560px; }

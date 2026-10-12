@@ -41,3 +41,5 @@
 .omr__track { height: 12px; border-radius: var(--r-full); background: var(--track); padding: var(--sp-4); }
 
 .omr__grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--sp-8); }
+
+.omr__ptop b { font-size: var(--fs-16); font-weight: var(--fw-bold); color: var(--ink); }

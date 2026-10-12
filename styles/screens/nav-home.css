@@ -4,7 +4,6 @@
    ========================================================================= */
 
 *{ box-sizing:border-box; margin:0; padding:0; }
-html,body{ height:100%; }
 body{ font-family:var(--font-sans); background:var(--bg); overflow:hidden; -webkit-font-smoothing:antialiased; }
 .home{ height:100%; display:flex; flex-direction:column; }
 

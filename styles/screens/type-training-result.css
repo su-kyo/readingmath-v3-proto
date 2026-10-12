@@ -25,27 +25,23 @@
 .chip--warn::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--warn-solid); }
 .chip[hidden] { display: none; }
 
-
 /* ===== LCD 판독 화면 (스캔라인은 스크롤을 따라간다) ===== */
 
 .hwf__screen::-webkit-scrollbar { width: 10px; }
 .hwf__screen::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--rate) 24%, transparent); border-radius: var(--r-full); border: 3px solid transparent; background-clip: padding-box; }
 .hwf__screen { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--rate) 26%, transparent) transparent; }
 
-
 /* ===== 총점(별+점수 — 스텝 게이지와 다른 위계) + 단계별 표 ===== */
 
 .score { flex: none; display: flex; flex-direction: column; align-items: center; gap: var(--sp-8); min-width: 170px; }
 .score img { width: clamp(84px,9vw,110px); height: auto; filter: drop-shadow(0 8px 18px rgba(0,0,0,.4)); }
 
-.score__val b { font-family: var(--font-mono); font-size: clamp(46px,5vw,58px); font-weight: var(--fw-bold); line-height: 1; }
 .score__val span { font-size: var(--fs-22); font-weight: var(--fw-bold); }
 
 .trow { display: grid; grid-template-columns: minmax(128px,1fr) 52px minmax(130px,1.3fr) 84px 62px 74px;
   align-items: center; gap: clamp(8px,1.2vw,16px); padding: var(--sp-8) var(--sp-12); }
 .thead { padding-bottom: 0; }
 
-.trow--total { background: rgba(255,255,255,.09); border-radius: var(--r-12); }
 .tcell { display: flex; align-items: center; justify-content: center; font-family: var(--font-sans); color: var(--n-050); min-width: 0; }
 .tcell--name { justify-content: flex-start; gap: var(--sp-8); }
 

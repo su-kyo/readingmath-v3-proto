@@ -21,7 +21,6 @@
   --bl-next: rgba(114,111,233,.7);
 }
 
-
 /* ============ 좌: 문제 영역 (더 좁게) ============ */
 .qa {
   flex: 0 1 clamp(300px, 33%, 372px); min-width: 0; display: flex; flex-direction: column; gap: var(--sp-12);
@@ -66,7 +65,6 @@
   background: rgba(255,255,255,.22); border-radius: var(--r-full); border: 2px solid transparent; background-clip: padding-box; }
 :root[data-theme="light"] .expl::-webkit-scrollbar-thumb { background: rgba(70,50,140,.28); background-clip: padding-box; }
 
-
 /* ============ 우: 풀이 가이드 ============ */
 .expl {
   flex: 1 1 0; min-width: 0; overflow-y: auto;
@@ -81,7 +79,6 @@
 }
 .para { display: flex; flex-direction: column; gap: var(--sp-8); }
 
-.para__head { font-weight: var(--fw-bold); }
 .box { background: var(--box-bg); border: 1px solid var(--box-br); border-radius: var(--r-16);
   padding: clamp(16px, 2vw, 28px); display: flex; flex-direction: column; gap: var(--sp-12); }
 

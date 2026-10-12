@@ -184,3 +184,5 @@
 .pool:empty::after { content: '블록을 모두 배치했어요'; color: var(--step-fg); font-family: var(--font-sans); font-size: var(--fs-13); opacity: .7; }
 
 @keyframes blockIn { from { opacity: .2; transform: scale(.85); } to { opacity: 1; transform: none; } }
+
+.para__head { font-weight: var(--fw-bold); }

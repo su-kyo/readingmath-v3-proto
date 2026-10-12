@@ -19,8 +19,6 @@
   --panel: var(--n-800); --content: var(--n-900); --ink: var(--n-050); --sub: var(--text-muted); --faint: var(--text-muted);
   --line: var(--border-strong); --line-2: var(--border); --score-bg: var(--n-600);
 }
-* { box-sizing: border-box; }
-html, body { height: 100%; margin: 0; }
 body { font-family: var(--font-sans); background: var(--assign-body); overflow: hidden; -webkit-font-smoothing: antialiased; }
 
 .wrap { position: relative; z-index: 1; flex: 1; min-height: 0; display: flex; flex-direction: column; padding: clamp(16px,2.4vw,30px) clamp(20px,5vw,72px) 0; gap: var(--sp-12); }

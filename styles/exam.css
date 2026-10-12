@@ -18,3 +18,5 @@ body.exam-body { background: var(--canvas); color: var(--ink); overflow: hidden;
 .history__tag { font-weight: var(--fw-heavy); }
 
 .history__tag--ok { color: var(--ok-on-dark); }
+
+.history__tag--no { color: var(--no-on-dark); }

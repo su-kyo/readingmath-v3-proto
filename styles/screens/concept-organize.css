@@ -5,9 +5,7 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&display=swap");
 
-
 /* ===== 무대 (learn-concept 재사용) ===== */
-html, body { height: 100%; }
 body.learn-body { background: var(--bg); overflow: hidden; }
 
 .theme-toggle { width: 64px; height: 34px; border-radius: var(--r-full); background: rgba(0,0,0,.3); position: relative; flex: none; }
@@ -17,7 +15,6 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 /* 콘텐츠 패널 (다크 시 이 패널 안만 어두워짐) */
 /* 이 화면만 패널 안쪽 여백이 좁고 세로로 쌓는다 */
 .content { padding: clamp(16px, 2.4vw, 26px) 0 0; flex-direction: column; }
-
 
 /* ===== 지문 진행 표식 (슬림 · 도트+라벨) ===== */
 .pstep { display: flex; align-items: center; justify-content: center; gap: var(--sp-8); flex: none; font-family: var(--font-sans);
@@ -36,7 +33,6 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 
 .content__inner { flex: 1; display: flex; justify-content: center; gap: clamp(22px, 3.4vw, 42px); padding: 0 clamp(24px, 5vw, 64px) clamp(90px,10vh,110px); min-height: 0; }
 
-
 /* ===== 지문 (정독 · 인터랙션 없음) ===== */
 /* 큰 화면에서 한 줄이 너무 길어지지 않게 읽기 폭 제한 (learn-concept와 동일) */
 .article { flex: 1; max-width: 760px; color: var(--n-600); min-width: 0; overflow: auto; padding-bottom: var(--sp-24);
@@ -51,7 +47,6 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 :root[data-theme="dark"] .article { color: var(--text); }
 :root[data-theme="dark"] .seg--key { color: var(--th-accent-hi); border-bottom-color: var(--th-ink-accent); }
 :root[data-theme="dark"] .seg--img { text-decoration-color: var(--text-muted); }
-
 
 /* ===== 개념 요약 노트 (우측 · 레이아웃 통합, 모달 아님) ===== */
 .note { width: clamp(288px, 33vw, 408px); flex: none; align-self: stretch; overflow: auto;
@@ -86,7 +81,6 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 :root[data-theme="dark"] .note__hint { color: var(--text-muted); } :root[data-theme="dark"] .note__hint .big { background: var(--surface-2); color: var(--text-muted); }
 :root[data-theme="dark"] .nline { color: var(--text); }
 :root[data-theme="dark"] .nfill { background: color-mix(in srgb, var(--th-accent) 24%, transparent); color: var(--th-accent-hi); }
-
 
 /* ===== 라이트박스 (이미지 용어 클릭 시) ===== */
 .lightbox { position: fixed; inset: 0; z-index: var(--z-overlay); background: rgba(8,14,30,.74); display: none; align-items: center; justify-content: center; padding: var(--sp-40); }

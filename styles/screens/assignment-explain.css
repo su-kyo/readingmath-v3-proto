@@ -20,8 +20,6 @@
   --content: var(--n-900); --qpanel: var(--n-800); --panel: var(--n-800); --ink: var(--n-050); --sub: var(--text-muted);
   --line: var(--border-strong); --opt: var(--n-600); --track: var(--n-900); --dash: var(--n-350);
 }
-* { box-sizing: border-box; }
-html, body { height: 100%; margin: 0; }
 body { font-family: var(--font-sans); background: var(--assign-body); overflow: hidden; -webkit-font-smoothing: antialiased; }
 
 .wrap { position: relative; z-index: 1; flex: 1; min-height: 0; display: flex; flex-direction: column; padding: clamp(16px,2.4vw,30px) clamp(20px,5vw,72px) 0; gap: var(--sp-12); }
@@ -82,7 +80,6 @@ body { font-family: var(--font-sans); background: var(--assign-body); overflow: 
 
 /* OMR 사이드바 (리뷰) */
 
-.omr__ptop b { font-size: var(--fs-16); font-weight: var(--fw-bold); color: var(--ink); }
 .omr__ptop span { font-family: var(--font-mono); font-size: var(--fs-16); font-weight: var(--fw-bold); color: var(--good); font-variant-numeric: tabular-nums; }
 
 .omr__track > i { display: block; height: 100%; border-radius: var(--r-full); background: var(--ok-solid); }

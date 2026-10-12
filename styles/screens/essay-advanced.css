@@ -29,12 +29,10 @@
 
 :root[data-theme="light"] .stage-scroll::-webkit-scrollbar-thumb { background: rgba(108,99,201,.28); background-clip: padding-box; }
 
-
 /* ============ 카드 공용 ============ */
 .card { max-width: 760px; margin: 0 auto; background: var(--card); border: 1px solid var(--card-br); border-radius: var(--r-22); box-shadow: var(--card-sh); }
 .card + .card { margin-top: 14px; }
 :root[data-theme="light"] .sec-label--sol { background: rgba(124,58,237,.1); color: var(--th-accent-strong); }
-
 
 /* ============ 문제 카드 (헤더 + 접이식 · 프레임에 붙음) ============ */
 .problem { position: sticky; top: 0; z-index: 20; overflow: hidden;
@@ -69,7 +67,6 @@
 .expl__doc { width: 100%; max-width: 760px; display: flex; flex-direction: column; gap: clamp(24px, 2.8vw, 38px); padding-top: var(--sp-6); }
 .para { display: flex; flex-direction: column; gap: var(--sp-8); }
 
-.para__head { font-weight: var(--fw-bold); }
 .box { background: var(--box-bg); border: 1px solid var(--box-br); border-radius: var(--r-16);
   padding: clamp(16px, 2vw, 28px); display: flex; flex-direction: column; gap: var(--sp-12); }
 

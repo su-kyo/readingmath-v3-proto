@@ -185,3 +185,13 @@
 }
 
 .mact__stat { display: flex; align-items: baseline; justify-content: flex-end; gap: var(--sp-6); flex: none; width: 96px; }
+
+.rrow__stat > span { font-size: var(--fs-14); font-weight: var(--fw-semibold); color: var(--lmuted); }
+
+.score__val b { font-family: var(--font-mono); font-size: clamp(46px,5vw,58px); font-weight: var(--fw-bold); line-height: 1; }
+
+.rside__prog b { font-family: var(--font-mono); font-size: var(--fs-14); font-weight: var(--fw-bold); color: var(--accent); }
+
+.trow--total { background: rgba(255,255,255,.09); border-radius: var(--r-12); }
+
+.mact__stat > span { font-size: var(--fs-13); font-weight: var(--fw-semibold); color: var(--n-300); }

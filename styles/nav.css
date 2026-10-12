@@ -13,3 +13,5 @@
 .hyc__star{ width:34px; height:34px; display:grid; place-items:center; }
 
 .rbar{ display:flex; gap:var(--sp-4); }
+
+.rbar i{ width:11px; height:6px; border-radius:var(--r-4); background:var(--border); }
