@@ -1,0 +1,93 @@
+/* =========================================================================
+   type/quiz.html 전용 스타일 — 이 화면에만 있는 규칙.
+   여러 화면이 같이 쓰는 부품은 styles/ 의 공용 파일에 있다 (스토리북 참고).
+   ========================================================================= */
+
+/* ===== 유형 훈련 = 틸 테마 ===== */
+:root[data-theme="dark"] .content { background: var(--n-650); border-color: var(--th-static); }
+/* 라이트 = 쿨톤 베이스(스터디 페이퍼). 옵션/보기는 이 위에 카드로 은은히 분리 */
+:root[data-theme="light"] .content { background: var(--n-000); border-color: var(--th-static); --fade: var(--n-000); }
+.content { position: relative; flex-direction: column; padding: 0 0 96px; overflow: hidden; --fade: var(--n-050); --subj: var(--th-accent); --subj-solid: var(--th-solid); }
+:root[data-theme="dark"] .content { --fade: var(--n-650); }
+
+/* 스크롤 영역 (cap 아래) + 상하 페이드 */
+.ops-wrap { flex: 1; min-height: 0; position: relative; margin-top: 40px; }
+.ops-wrap::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 48px; pointer-events: none; z-index: 1; background: linear-gradient(to top, var(--fade), transparent); opacity: 0; transition: opacity .2s ease; }
+.ops-wrap::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 44px; pointer-events: none; z-index: 1; background: linear-gradient(to bottom, var(--fade), transparent); opacity: 0; transition: opacity .2s ease; }
+.ops-wrap.has-more::after { opacity: 1; } .ops-wrap.has-more-top::before { opacity: 1; }
+.ops {
+  position: absolute; inset: 0; overflow-y: auto; display: flex; flex-direction: column; align-items: center;
+  padding: 6px clamp(24px, 5vw, 56px) 26px;
+  /* 다크: 패널(121E37)보다 한 단계 가라앉힌 박스(n-800)로 구분 */
+  --qtext: var(--n-050); --muted: var(--text-muted); --ex-bg: var(--n-800); --opt-bg: var(--n-800); --opt-br: rgba(255,255,255,.1); --opt-hover: var(--n-600);
+  --input-bg: var(--n-650); --input-br: var(--n-500);
+}
+:root[data-theme="light"] .ops { --qtext: var(--n-650); --muted: var(--text-muted); --ex-bg: var(--n-100); --opt-bg: var(--n-000); --opt-br: var(--n-100); --opt-hover: var(--n-050); --input-bg: var(--n-000); --input-br: var(--n-200); }
+.ops::-webkit-scrollbar { width: 10px; }
+.ops::-webkit-scrollbar-thumb { background: rgba(255,255,255,.24); border-radius: var(--r-full); border: 2px solid transparent; background-clip: padding-box; }
+:root[data-theme="light"] .ops::-webkit-scrollbar-thumb { background: rgba(20,60,52,.22); background-clip: padding-box; }
+
+/* ===== 상단 프로그레스 캡 (타이머 + 풀었다/미풀이) ===== */
+/* cap = 콘텐츠 테두리(--th-static, teal)에 매달린 탭 → 같은 teal로 (라이트·다크 공통) */
+.progress-cap { position: absolute; top: 0; left: 50%; transform: translateX(-50%); z-index: 4; display: inline-flex; align-items: center; gap: var(--sp-8); background: var(--th-static); border-radius: 0 0 var(--r-16) var(--r-16); padding: 0 var(--sp-16) var(--sp-6); max-width: calc(100% - 48px); flex-wrap: nowrap; }
+.cap-timer { display: inline-flex; align-items: center; gap: var(--sp-6); background: var(--n-900); border-radius: var(--r-full); padding: var(--sp-4) var(--sp-12) var(--sp-4) var(--sp-8); margin-right: 4px; }
+.cap-timer img { width: 17px; height: 17px; }
+.cap-timer span { font-family: var(--font-mono); font-weight: var(--fw-bold); color: var(--n-000); font-size: var(--fs-15); }
+.pcirc { width: 20px; height: 20px; border-radius: 50%; flex: none; position: relative; background: rgba(255,255,255,.22); }
+.pcirc.is-current { background: transparent; box-shadow: inset 0 0 0 2px var(--n-000); }
+.pcirc.is-solved { background: var(--subj); }
+.pcirc.is-solved::after { content: ""; position: absolute; inset: 0; background: center / 15px no-repeat url("../../assets/icons/ico-progress-check.svg"); }
+.pcap__count { margin-left: 4px; font-weight: var(--fw-bold); color: var(--n-000); font-size: var(--fs-16); font-family: var(--font-mono); }
+/* 좌우에 닿을 때만 유지 — 임의 줄바꿈 없이 일렬 유지(높이 낭비 방지) */
+
+/* ===== 문제 ===== */
+.q { width: min(1040px, 100%); margin: auto 0; display: flex; flex-direction: column; align-items: center; }
+.q__text { align-self: stretch; font-size: clamp(16px, 1.5vw, 20px); font-weight: var(--fw-bold); color: var(--qtext); line-height: 1.6; margin-bottom: 20px; }
+.ex { align-self: stretch; background: var(--ex-bg); border-radius: var(--r-16); padding: var(--sp-20) var(--sp-24); margin-bottom: 22px; }
+.ex__list { display: flex; flex-direction: column; gap: var(--sp-8); font-size: clamp(15px,1.4vw,18px); color: var(--qtext); line-height: 1.5; }
+.ex__skel { min-height: 140px; display: flex; align-items: center; justify-content: center; color: var(--muted); font-weight: var(--fw-bold); }
+.ex__shape { display: flex; justify-content: center; }
+
+/* 객관식 */
+.opts-row { align-self: stretch; display: flex; gap: var(--sp-12); flex-wrap: wrap; justify-content: center; }
+.opts-row .opt { flex: 1 1 0; min-width: 120px; }
+.opts-grid { align-self: stretch; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--sp-12); }
+.opt { display: flex; align-items: center; gap: var(--sp-12); padding: var(--sp-16) var(--sp-20); min-height: 60px; border-radius: var(--r-12); background: var(--opt-bg); box-shadow: inset 0 0 0 1.5px var(--opt-br); color: var(--qtext); font-size: clamp(15px,1.35vw,17px); font-weight: var(--fw-semibold); text-align: left; cursor: pointer; transition: background .12s, box-shadow .12s; }
+.opt:hover { background: var(--opt-hover); }
+.opt__num { flex: none; width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,.14); color: var(--qtext); display: flex; align-items: center; justify-content: center; font-weight: var(--fw-heavy); font-size: var(--fs-15); position: relative; }
+:root[data-theme="light"] .opt__num { background: var(--th-tint-strong); color: var(--th-ink-accent); }
+.opt--num { justify-content: center; } .opt--num .opt__num { width: 34px; height: 34px; }
+.opt__img { width: 100%; height: 96px; border-radius: var(--r-8); }
+.opt--img { flex-direction: column; align-items: stretch; gap: var(--sp-8); padding: var(--sp-12); }
+.opt.is-selected { background: var(--subj); box-shadow: none; color: var(--n-000); }
+.opt.is-selected .opt__num { background: var(--n-000); color: transparent; }
+.opt.is-selected .opt__num::after { content: "✓"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--subj); font-weight: var(--fw-heavy); }
+/* 이미지 선지: 선택 = 채움 대신 테두리 + 번호 배지 (jpg 안 가림, 번호 항상 보임) */
+.opt--img .opt__num { align-self: center; color: var(--qtext) !important; }
+.opt--img .opt__num::after { content: none !important; }
+.opt--img.is-selected { background: var(--opt-bg); box-shadow: inset 0 0 0 3px var(--subj); color: var(--qtext); }
+.opt--img.is-selected .opt__num { background: var(--subj); color: var(--n-000) !important; }
+
+/* 주관식 = 박스 input + 계산기 키패드 */
+.answer-row { display: flex; align-items: center; justify-content: center; gap: var(--sp-12); flex-wrap: wrap; }
+.sfield { display: flex; align-items: center; gap: var(--sp-8); }
+.sfield__tag { font-weight: var(--fw-heavy); color: var(--qtext); }
+.sinput { height: 54px; min-width: 200px; padding: 0 var(--sp-16); text-align: center; background: var(--input-bg); border: 1.5px solid var(--input-br); border-radius: var(--r-12); color: var(--qtext); font-size: var(--fs-19); font-weight: var(--fw-bold); font-family: var(--font-sans); cursor: pointer; }
+.sinput::placeholder { color: var(--muted); font-weight: var(--fw-semibold); }
+.sinput:focus, .sinput.is-active-input { outline: none; border-color: var(--subj); }
+.fraction { display: inline-flex; flex-direction: column; align-items: center; gap: var(--sp-8); }
+.fraction .sinput { min-width: 96px; width: 96px; height: 50px; padding: 0 var(--sp-8); }
+.fraction__bar { width: 104px; height: 3px; background: var(--qtext); border-radius: var(--r-4); }
+
+/* ===== 다음 문제 (중앙) ===== */
+.ops__foot { flex: none; display: flex; justify-content: center; padding: var(--sp-8) 0 var(--sp-4); }
+.btn-next { padding: var(--sp-12) 44px; border-radius: var(--r-16); background: var(--subj); color: var(--n-000); font-weight: var(--fw-heavy); font-size: var(--fs-19); box-shadow: 0 4px 0 var(--th-accent-strong); }
+.btn-next:hover:not(:disabled) { filter: brightness(1.08); } .btn-next:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 2px 0 var(--th-accent-strong); }
+/* disabled: 라이트에서 text-muted가 n-500(배경)과 같은 색이라 안 보였음 → 테마 불변 n-200으로 */
+.btn-next:disabled { background: var(--n-500); color: var(--n-200); box-shadow: none; cursor: not-allowed; }
+.btn-next[hidden] { display: none; }
+
+
+/* 계산기 키패드 = 공용 styles/keypad.css (마크업은 scripts/keypad.js) */
+
+@media (max-width: 900px) { .opts-row .opt { min-width: 44%; } }

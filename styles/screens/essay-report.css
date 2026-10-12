@@ -1,0 +1,68 @@
+/* =========================================================================
+   essay/report.html 전용 스타일 — 이 화면에만 있는 규칙.
+   여러 화면이 같이 쓰는 부품은 styles/ 의 공용 파일에 있다 (스토리북 참고).
+   ========================================================================= */
+
+/* ============ 서술형 훈련(과학) = 퍼플 테마 (공통은 essay.css) ============ */
+/* 페이지 고유 토큰만 (--bl-* / .blank / .qpop / 하단바 = essay.css) */
+.content {
+  flex-direction: column; padding: clamp(12px, 1.6vw, 16px) clamp(12px, 1.6vw, 16px) 0;
+  --guide: rgba(249,249,249,.92);
+  --rt-line: var(--n-500); --rt-head: var(--surface-1); --rt-cell: var(--surface-1); --rt-fg: rgba(249,249,249,.9); --rt-sub: var(--text-muted);
+}
+:root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
+:root[data-theme="light"] .content {
+  /* 제일 뒤(베이스) = 흰색에 가까운 톤 */
+  background: var(--n-000); border-color: var(--th-static);
+  --guide: var(--n-650);
+  --rt-line: var(--n-100); --rt-head: var(--n-050); --rt-cell: var(--n-000); --rt-fg: var(--n-650); --rt-sub: var(--text-meta);
+}
+
+.report-wrap { flex: 1; min-width: 0; overflow-y: auto; padding: clamp(8px, 1.4vw, 16px) clamp(12px, 2.4vw, 30px) 96px; }
+.report-wrap::-webkit-scrollbar { width: 10px; }
+.report-wrap::-webkit-scrollbar-thumb { background: rgba(255,255,255,.2); border-radius: var(--r-full); border: 2px solid transparent; background-clip: padding-box; }
+:root[data-theme="light"] .report-wrap::-webkit-scrollbar-thumb { background: rgba(108,99,201,.28); background-clip: padding-box; }
+
+/* ============ 보고서 표 (2열 n행) ============ */
+.report { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: clamp(92px, 12vw, 150px) 1fr;
+  gap: 1px; background: var(--rt-line); border: 1px solid var(--rt-line); border-radius: var(--r-12); overflow: hidden;
+  font-family: var(--font-sans); color: var(--rt-fg); }
+.rt-label { background: var(--rt-head); padding: var(--sp-16) var(--sp-12); display: flex; align-items: center; justify-content: center;
+  text-align: center; font-weight: var(--fw-bold); font-size: clamp(13px, 1.15vw, 15px); word-break: keep-all; }
+.rt-cell { background: var(--rt-cell); padding: var(--sp-16) var(--sp-16); display: flex; flex-direction: column; gap: var(--sp-8); justify-content: center;
+  font-size: clamp(13.5px, 1.15vw, 15px); line-height: 1.75; min-width: 0; }
+.rt-text { white-space: pre-line; word-break: keep-all; }
+.rt-img { border-radius: var(--r-8); overflow: hidden; max-width: 380px; align-self: flex-start; }
+.rt-img img { display: block; width: 100%; height: auto; }
+.rt-span { line-height: 2.5; word-break: keep-all; }   /* 빈칸(32px) 들어가는 줄 → 여유 있는 행간 */
+
+/* 빈칸: 항상 클릭 가능(재편집) — 코어는 essay.css */
+.blank { cursor: pointer; }
+.blank:hover { background: var(--bl-bgh); box-shadow: inset 0 0 0 1px var(--bl-lineh); }
+
+/* ============ 보고서 미리보기 모달 ============ */
+/* ⚠ 의도적 뉴트럴: 실제 인쇄물(리포트 출력)을 흉내내는 흰 종이 프리뷰라
+   바이올렛 테마 대신 중성 톤을 유지한다. 테마 전환에 흔들리지 않도록
+   시맨틱 대신 고정 뉴트럴 프리미티브(--n-*)로 토큰화. */
+.pmodal { --mon-w: 820px; }
+.pmodal .monitor__screen { background: var(--n-050); padding: var(--sp-24); }
+.pmodal .monitor__tool svg { width: 16px; height: 16px; }
+.pmodal__paper { max-width: 680px; margin: 0 auto; background: var(--n-000); padding: var(--sp-32) var(--sp-32); border-radius: var(--r-4);
+  box-shadow: 0 2px 12px rgba(0,0,0,.09); font-family: var(--font-sans); color: var(--n-650); }
+.rp-title { font-size: var(--fs-19); font-weight: var(--fw-heavy); text-align: center; margin-bottom: 6px; color: var(--n-650); }
+.rp-sub { text-align: center; font-size: var(--fs-12); color: var(--n-400); margin-bottom: 20px; }
+.rp-table { display: grid; grid-template-columns: 116px 1fr; gap: 1px; background: var(--n-100); border: 1px solid var(--n-100); border-radius: var(--r-8); overflow: hidden; }
+.rp-label { background: var(--n-050); padding: var(--sp-12) var(--sp-8); display: flex; align-items: center; justify-content: center; text-align: center;
+  font-weight: var(--fw-bold); font-size: var(--fs-13); color: var(--n-650); word-break: keep-all; }
+.rp-cell { background: var(--n-000); padding: var(--sp-12) var(--sp-16); display: flex; flex-direction: column; gap: var(--sp-8); justify-content: center;
+  font-size: var(--fs-13); line-height: 1.7; color: var(--n-650); }
+.pmodal__paper .rt-text { white-space: pre-line; word-break: keep-all; }
+.pmodal__paper .rt-span { line-height: 1.85; word-break: keep-all; }
+.rp-img { max-width: 300px; border-radius: var(--r-4); overflow: hidden; align-self: flex-start; }
+.rp-img img { display: block; width: 100%; height: auto; }
+.fillin { font-family: var(--font-serif); font-weight: var(--fw-bold); color: var(--th-ink-accent); border-bottom: 1.5px solid var(--th-accent-hi); padding: 0 var(--sp-4); }
+
+
+@media (max-width: 620px) {
+  .report { grid-template-columns: 80px 1fr; }
+}

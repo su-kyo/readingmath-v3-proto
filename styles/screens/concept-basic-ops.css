@@ -1,0 +1,147 @@
+/* =========================================================================
+   concept/basic-ops.html 전용 스타일 — 이 화면에만 있는 규칙.
+   여러 화면이 같이 쓰는 부품은 styles/ 의 공용 파일에 있다 (스토리북 참고).
+   ========================================================================= */
+
+/* 콘텐츠 패널을 세로 3분할: [상단 프로그레스 고정] [문제 스크롤] [채점 버튼 고정] */
+.content { position: relative; flex-direction: column; padding: 0 0 96px; overflow: hidden; --fade: var(--th-panel); }
+:root[data-theme="dark"] .content { --fade: var(--surface-1); }
+/* 스크롤 영역을 cap 아래에서 시작 (스크롤해도 cap 뒤로 안 숨음) */
+.ops-wrap { flex: 1; min-height: 0; position: relative; margin-top: 40px; }
+.ops-wrap::after { /* 아래에 콘텐츠 더 있음 */
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 48px; pointer-events: none; z-index: 1;
+  background: linear-gradient(to top, var(--fade), transparent); opacity: 0; transition: opacity .2s ease;
+}
+.ops-wrap::before { /* 위에 가려진 콘텐츠 있음 */
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 44px; pointer-events: none; z-index: 1;
+  background: linear-gradient(to bottom, var(--fade), transparent); opacity: 0; transition: opacity .2s ease;
+}
+.ops-wrap.has-more::after { opacity: 1; }
+.ops-wrap.has-more-top::before { opacity: 1; }
+.ops {
+  position: absolute; inset: 0; overflow-y: auto; display: flex; flex-direction: column; align-items: center;
+  padding: 6px clamp(24px, 5vw, 56px) 26px;
+  --qtext: var(--text); --muted: var(--text-muted); --ex-bg: var(--surface-2); --ex-br: rgba(255,255,255,.06);
+  --opt-bg: var(--surface-3); --opt-br: rgba(255,255,255,.08); --opt-hover: var(--surface-hover);
+  --input-bg: var(--surface-2); --input-br: var(--border-strong);
+}
+:root[data-theme="light"] .ops {
+  --qtext: var(--n-600); --muted: var(--text-muted); --ex-bg: var(--th-tint); --ex-br: var(--border);
+  --opt-bg: var(--n-000); --opt-br: var(--border-strong); --opt-hover: var(--n-050);
+  --input-bg: var(--n-000); --input-br: var(--border-strong);
+}
+/* 스크롤바 확실히 보이게 */
+.ops::-webkit-scrollbar { width: 10px; }
+.ops::-webkit-scrollbar-thumb { background: rgba(255,255,255,.24); border-radius: var(--r-full); border: 2px solid transparent; background-clip: padding-box; }
+:root[data-theme="light"] .ops::-webkit-scrollbar-thumb { background: rgba(20,32,58,.22); background-clip: padding-box; }
+
+/* ===== 상단 프로그레스 (박스 최상단 중앙에 탭처럼 붙음. 색=테두리색, 테마 무관) ===== */
+.progress-cap {
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%); z-index: 4;
+  display: inline-flex; align-items: center; gap: var(--sp-6);
+  background: var(--th-static); border-radius: 0 0 var(--r-16) var(--r-16); padding: 0 var(--sp-16) var(--sp-6);
+  max-width: calc(100% - 48px); flex-wrap: nowrap; justify-content: center;
+}
+.pcirc { width: 20px; height: 20px; border-radius: 50%; flex: none; position: relative; background: rgba(255,255,255,.3); }
+.pcirc.is-current { background: rgba(255,255,255,.3); box-shadow: inset 0 0 0 2px var(--n-000); }
+.pcirc.is-correct { background: var(--th-accent); }
+.pcirc.is-correct::after { content: ""; position: absolute; inset: 0; background: center / 15px no-repeat url("../../assets/icons/ico-progress-correct.svg"); }
+.pcirc.is-wrong { background: var(--no-solid); }
+.pcirc.is-wrong::after { content: ""; position: absolute; inset: 0; background: center / 15px no-repeat url("../../assets/icons/ico-progress-wrong.svg"); }
+.pcap__count { margin-left: 4px; font-weight: var(--fw-bold); color: var(--n-000); font-size: var(--fs-16); font-family: var(--font-mono); }
+
+/* ===== 문제 ===== */
+/* 기본 중앙, 공간 부족하면 위부터 (margin auto → 넘치면 0으로 접힘) */
+.q { width: min(1040px, 100%); margin: auto 0; display: flex; flex-direction: column; align-items: center; }
+.q__text { align-self: stretch; font-size: clamp(16px, 1.5vw, 20px); font-weight: var(--fw-bold); color: var(--qtext); line-height: 1.6; margin-bottom: 20px; }
+.ex { align-self: stretch; background: var(--ex-bg); border-radius: var(--r-16); padding: var(--sp-20) var(--sp-24); margin-bottom: 22px; }
+.ex__list { display: flex; flex-direction: column; gap: var(--sp-8); font-size: clamp(15px,1.4vw,18px); color: var(--qtext); line-height: 1.5; }
+.ex__skel { min-height: 140px; display: flex; align-items: center; justify-content: center; color: var(--muted); font-weight: var(--fw-bold); }
+.ex__shape { display: flex; justify-content: center; }
+
+/* 객관식 */
+.opts-row { align-self: stretch; display: flex; gap: var(--sp-12); flex-wrap: wrap; justify-content: center; }
+.opts-row .opt { flex: 1 1 0; min-width: 120px; }
+.opts-grid { align-self: stretch; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--sp-12); }
+.opt {
+  display: flex; align-items: center; gap: var(--sp-12); padding: var(--sp-16) var(--sp-20); min-height: 60px;
+  border-radius: var(--r-12); background: var(--opt-bg); box-shadow: inset 0 0 0 1.5px var(--opt-br);
+  color: var(--qtext); font-size: clamp(15px,1.35vw,17px); font-weight: var(--fw-semibold); text-align: left; cursor: pointer;
+  transition: background .12s, box-shadow .12s;
+}
+.opt:hover { background: var(--opt-hover); }
+.opt__num { flex: none; width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,.14); color: var(--qtext); display: flex; align-items: center; justify-content: center; font-weight: var(--fw-heavy); font-size: var(--fs-15); position: relative; }
+:root[data-theme="light"] .opt__num { background: var(--th-tint-strong); color: var(--th-ink-accent); }
+.opt--num { justify-content: center; } .opt--num .opt__num { width: 34px; height: 34px; }
+.opt__img { width: 100%; height: 96px; border-radius: var(--r-8); }
+.opt--img { flex-direction: column; align-items: stretch; }
+/* 선택: 채움만 (테두리 X) */
+.opt.is-selected { background: var(--th-solid); box-shadow: none; color: var(--n-000); }
+.opt.is-selected .opt__num { background: var(--n-000); color: transparent; }
+.opt.is-selected .opt__num::after { content: "✓"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--th-accent); font-weight: var(--fw-heavy); }
+/* 채점: 정답표시 칸은 숫자, 내가 고른 칸만 아이콘 (겹침 방지) */
+.opt.is-correct { background: color-mix(in srgb, var(--ok-solid) 36%, var(--opt-bg)); box-shadow: inset 0 0 0 2px var(--ok-solid); color: var(--qtext); }
+.opt.is-correct .opt__num { background: var(--ok-solid); }
+.opt.is-correct:not(.is-selected) .opt__num { color: var(--n-000); }
+.opt.is-correct.is-selected .opt__num::after { color: var(--n-000); }
+.opt.is-wrong { background: color-mix(in srgb, var(--no-solid) 36%, var(--opt-bg)); box-shadow: inset 0 0 0 2px var(--no-solid); color: var(--qtext); }
+.opt.is-wrong .opt__num { background: var(--no-solid); }
+.opt.is-wrong:not(.is-selected) .opt__num { color: var(--n-000); }
+.opt.is-wrong.is-selected .opt__num::after { content: "✕"; color: var(--n-000); }
+.opts-row.is-graded .opt, .opts-grid.is-graded .opt { cursor: default; pointer-events: none; }
+/* 이미지 선지: 선택/채점 = 채움 대신 테두리 + 번호 상태 (jpg 안 가림, 번호 항상 보임) */
+.opt--img { flex-direction: column; align-items: stretch; gap: var(--sp-8); padding: var(--sp-12); }
+.opt--img .opt__num { align-self: center; color: var(--qtext) !important; }
+.opt--img .opt__num::after { content: none !important; }
+.opt--img.is-selected { background: var(--opt-bg); box-shadow: inset 0 0 0 3px var(--th-accent); color: var(--qtext); }
+.opt--img.is-selected .opt__num { background: var(--th-solid); color: var(--n-000) !important; }
+.opt--img.is-correct { background: var(--opt-bg); box-shadow: inset 0 0 0 3px var(--ok-solid); }
+.opt--img.is-correct .opt__num { background: var(--ok-ink); color: var(--n-000) !important; }
+.opt--img.is-wrong { background: var(--opt-bg); box-shadow: inset 0 0 0 3px var(--no-solid); }
+.opt--img.is-wrong .opt__num { background: var(--no-ink); color: var(--n-000) !important; }
+
+/* 주관식 / 분수 */
+.answer-row { display: flex; align-items: flex-start; justify-content: center; gap: var(--sp-16); flex-wrap: wrap; }
+.sfield { display: flex; flex-direction: column; align-items: center; gap: var(--sp-8); }
+.sfield__row { display: flex; align-items: center; gap: var(--sp-8); }
+.sfield__tag { font-weight: var(--fw-heavy); color: var(--qtext); }
+/* 칸별 오답 정답 표시 (2·3·4칸 각각 아래) */
+.sfield__ans { display: none; }
+.sfield__ans.show { display: inline-flex; align-items: center; gap: var(--sp-6); padding: var(--sp-4) var(--sp-12); border-radius: var(--r-8); background: color-mix(in srgb, var(--ok-solid) 22%, transparent); font-weight: var(--fw-bold); font-size: var(--fs-14); color: var(--ok-ink); }
+.sfield__ans b { color: var(--ok-solid); font-size: var(--fs-16); }
+/* 주관식 input = 깔끔한 단일 테두리 박스 (분수 혼동 방지) */
+.sinput {
+  height: 54px; min-width: 200px; padding: 0 var(--sp-16); text-align: center;
+  background: var(--input-bg); border: 1.5px solid var(--input-br); border-radius: var(--r-12);
+  color: var(--qtext); font-size: var(--fs-19); font-weight: var(--fw-bold); font-family: var(--font-sans); cursor: pointer;
+}
+.sinput::placeholder { color: var(--muted); font-weight: var(--fw-semibold); }
+.sinput:focus, .sinput.is-active-input { outline: none; border-color: var(--primary); }
+.sinput.is-correct { border-color: var(--ok-solid); color: var(--ok-solid); }
+.sinput.is-wrong { border-color: var(--no-solid); color: var(--no-solid); }
+/* 분수 = 분자박스 / 바 / 분모박스 */
+.fraction { display: inline-flex; flex-direction: column; align-items: center; gap: var(--sp-8); }
+.fraction .sinput { min-width: 96px; width: 96px; height: 50px; padding: 0 var(--sp-8); }
+.fraction__bar { width: 104px; height: 3px; background: var(--qtext); border-radius: var(--r-4); }
+
+/* 주관식 오답 시 정답 표시 (별도 공간) */
+.ans-correct { display: none; margin-top: 22px; padding: var(--sp-8) var(--sp-20); border-radius: var(--r-12); background: color-mix(in srgb, var(--ok-solid) 22%, transparent); color: var(--ok-ink); font-weight: var(--fw-bold); font-size: var(--fs-16); align-items: center; gap: var(--sp-8); }
+.ans-correct.show { display: inline-flex; }
+.ans-correct b { color: var(--ok-solid); font-size: var(--fs-19); }
+
+/* 계산기 키패드 = 공용 styles/keypad.css (마크업은 scripts/keypad.js) */
+
+/* ===== 하단 고정 채점 버튼 ===== */
+.ops__foot { flex: none; display: flex; justify-content: center; padding: var(--sp-8) 0 var(--sp-4); }
+.btn-grade { padding: var(--sp-12) 44px; border-radius: var(--r-16); background: var(--th-vivid); color: var(--n-000); font-weight: var(--fw-heavy); font-size: var(--fs-19); box-shadow: 0 4px 0 var(--th-accent-strong); }   /* 정체성 칠면 450 */
+.btn-grade:hover:not(:disabled) { background: var(--th-accent); } .btn-grade:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 2px 0 var(--th-accent-strong); }
+.btn-grade:disabled { background: var(--n-500); color: var(--n-050); box-shadow: none; cursor: not-allowed; }
+.btn-grade--next { background: var(--primary); box-shadow: 0 4px 0 var(--primary-pressed); }
+.btn-grade--next:hover:not(:disabled) { background: var(--primary-hover); }
+.btn-grade[hidden] { display: none; }
+
+/* 하단바 다음으로 비활성 */
+
+@media (max-width: 900px) { .opts-row .opt { min-width: 44%; } }
+/* 아주 좁아져 양옆에 닿을 때만 프로그레스 줄바꿈 */
+/* 좌우에 닿을 때만 유지 — 임의 줄바꿈 없이 일렬 유지(높이 낭비 방지) */
