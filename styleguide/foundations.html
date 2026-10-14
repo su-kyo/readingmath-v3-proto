@@ -6,10 +6,10 @@
   <title>기초 — 리딩수학과학 디자인 시스템</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
   <base href="../" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261014-12" />
-  <link rel="stylesheet" href="styles/base.css?v=20261014-12" />
-  <link rel="stylesheet" href="styles/components.css?v=20261014-12" />
-  <link rel="stylesheet" href="styleguide/sg.css?v=20261014-12" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261014-13" />
+  <link rel="stylesheet" href="styles/base.css?v=20261014-13" />
+  <link rel="stylesheet" href="styles/components.css?v=20261014-13" />
+  <link rel="stylesheet" href="styleguide/sg.css?v=20261014-13" />
 </head>
 <body data-sg-css="tokens,base,components">
 <div class="sg">
@@ -65,12 +65,15 @@
 
     <!-- ===================================================== 에셋 예외 -->
     <section class="sg-sec" id="asset">
-      <h2>색 1단 · 에셋 연동색 <small>그림의 실제 색과 이어 붙는 값</small></h2>
-      <p class="sg-lead">SVG·이미지의 실제 면색과 화면이 이어 붙는 자리의 색입니다. 그림을 다시 그리지 않는 한 이 값이 맞는 값이라
-        램프 대비 규칙을 적용하지 않습니다. 화면에서는 hex를 쓰지 않고 이 토큰을 부릅니다(<code>RM-ASSET-05</code>).</p>
-      <div id="assets"></div>
+      <h2>색 1단 · 에셋 연동색 <small>그림과 맞닿는 CSS 면 · 고르는 색이 아니다</small></h2>
+      <p class="sg-lead">SVG 일러스트 안의 색은 토큰으로 만들지 않고 검사에서도 뺍니다. 에셋 연동색은 그림 밖에서 CSS가 칠하지만 그림과 이어져야 하는 면의 색입니다.
+        예를 들어 콘솔바는 양끝이 SVG 그림이고 가운데 트레이를 CSS가 칠하므로, 트레이는 그림 속 색을 그대로 씁니다. 우주 배경 · 별 · 등급 칩 · 행성 링 · 형광펜도 같은 이유로 이름만 붙여 둡니다.</p>
+      <div class="sg-rule sg-rule--do">그림과 맞닿는 CSS 면은 <code>--asset-*</code> · <code>--art-*</code> 이름으로만 쓴다. hex를 직접 쓰지 않는다. <code>RM-ASSET-05</code></div>
+      <div class="sg-rule sg-rule--dont">새 UI의 색으로 고르지 않는다. 그림과 상관없는 자리에 그림 색이 퍼진다. 새 화면의 색은 2단 역할 토큰에서 찾는다. <code>RM-COL-05</code></div>
+      <p class="sg-lead">값은 <code>styles/tokens.css</code>와 개발자 파일 <a href="styleguide/data/tokens.json"><code>styleguide/data/tokens.json</code></a>(계열별 값 포함)에 있습니다.
+        그림을 다시 그리지 않는 한 값이 고정이라 램프 대비 규칙을 적용하지 않습니다.</p>
       <div class="sg-rule sg-rule--do">SVG에 토큰 색을 줄 때는 <code>style="fill:var(…)"</code>로 쓴다. 프레젠테이션 속성 <code>fill="var(…)"</code>는 무시된다.</div>
-      <p class="sg-lead">SVG 일러스트 안의 색은 토큰 검사에서 뺍니다. 좌표 그래프는 그림이 아니라 데이터를 그리는 UI라서 검사에 넣습니다.</p>
+      <p class="sg-lead">좌표 그래프는 그림이 아니라 데이터를 그리는 UI라서 토큰 검사에 넣습니다.</p>
     </section>
 
     <!-- ===================================================== 역할색 -->
@@ -369,7 +372,7 @@
   </main>
 </div>
 
-<script src="styleguide/foundations.js?v=20261014-12"></script>
-<script src="styleguide/sg.js?v=20261014-12"></script>
+<script src="styleguide/foundations.js?v=20261014-13"></script>
+<script src="styleguide/sg.js?v=20261014-13"></script>
 </body>
 </html>

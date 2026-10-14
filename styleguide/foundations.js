@@ -146,25 +146,4 @@
     return '<div class="sg-tile"><div class="sg-tile__box" style="border-radius:var(--r-12);background:var(--primary);box-shadow:0 var(--depth-' + d[0] + ') 0 var(--primary-edge)"></div>' +
            '<div class="sg-tile__name">--depth-' + d[0] + ' · ' + d[1] + '<br>' + d[2] + '</div></div>';
   }).join('');
-
-  /* ---- 에셋 연동색 ---- */
-  var ASSETS = [
-    ['--asset-console-concept-body','개념 콘솔 바탕'], ['--asset-console-concept-rim','개념 콘솔 립'],
-    ['--asset-console-concept-tray','개념 콘솔 트레이'], ['--asset-console-type-tray','유형 트레이'],
-    ['--asset-console-essay-rim','서술형 립'], ['--asset-console-essay-tray','서술형 트레이'],
-    ['--asset-console-task-body','과제 콘솔 바탕'], ['--asset-console-task-rim','과제 립'], ['--asset-console-task-tray','과제 트레이'],
-    ['--art-star','별'], ['--art-star-bright','밝은 별'],
-    ['--art-star-halo','별빛'], ['--art-star-halo-big','큰 별빛'], ['--art-star-flare','별 섬광'],
-    ['--art-space-glow-1','성운 1'], ['--art-space-glow-2','성운 2'], ['--art-space-glow-3','성운 3'],
-    ['--art-grade-s','등급 S 칩'], ['--art-grade-a','등급 A 칩'],
-    ['--art-grade-b','등급 B 칩'], ['--art-grade-c','등급 C 칩'],
-    ['--art-planet-1','행성 링 1'], ['--art-planet-2','행성 링 2'],
-    ['--art-planet-3','행성 링 3'], ['--art-planet-4','행성 링 4'],
-    ['--art-mark-bg','형광펜 면 (다크)'], ['--art-mark-fg','형광펜 글자 (다크)'],
-    ['--gold-500','별·등급 PNG 금색']
-  ];
-  document.getElementById('assets').innerHTML = '<div class="sg-tiles">' + ASSETS.map(function (a) {
-    return '<div class="sg-tile"><div style="height:44px;border-radius:8px;background:' + v(a[0]) + '"></div>' +
-           '<div class="sg-tile__name">' + a[0] + '<br>' + a[1] + '</div></div>';
-  }).join('') + '</div>';
 })();
