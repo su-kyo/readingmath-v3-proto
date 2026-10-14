@@ -4,7 +4,7 @@
    화면마다 다른 부분은 styles/screens/ 에 남아 있다.
    ========================================================================= */
 
-:root[data-theme="dark"] .svideo { background: var(--n-700); }
+:root[data-theme="dark"] .svideo { background: var(--surface-2); }
 
 body.exam-body { background: var(--canvas); color: var(--ink); overflow: hidden;
   font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }

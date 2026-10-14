@@ -91,7 +91,7 @@
   else hero.classList.add('is-nochar');
 
   var bub = document.getElementById('bubble');
-  bub.style.setProperty('--hl', subject === 'science' ? 'var(--teal-600)' : 'var(--blue-600)');
+  bub.dataset.subject = subject;   // 강조 글자색은 nav-home.css 가 과목으로 고른다 (RM-JS-01)
   bub.innerHTML = MSG[key] || ('<b>' + semLabel(sem) + '</b> 학습을 시작해보세요!');
 
   /* ── 오브젝트 세우기 ─────────────────────────────────────────────── */

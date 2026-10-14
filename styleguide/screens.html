@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light" data-section="concept">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>화면 지도 — 리딩수학과학 디자인 시스템</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
+  <base href="../" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261014-9" />
+  <link rel="stylesheet" href="styles/base.css?v=20261014-9" />
+  <link rel="stylesheet" href="styles/components.css?v=20261014-9" />
+  <link rel="stylesheet" href="styleguide/sg.css?v=20261014-9" />
+</head>
+<body>
+<div class="sg">
+  <aside class="sg-nav"></aside>
+  <main class="sg-main">
+
+    <header class="sg-head">
+      <div>
+        <h1>화면 지도</h1>
+        <p>화면 한 장이 <strong>어떤 부품 · 토큰 · 규칙으로 지어졌는지</strong>를 모았습니다.
+           디자인 QA에서 「이 화면이 틀어졌다」고 할 때 개발자가 먼저 물을 것 — 「무슨 부품이고 어느 규칙인데?」 — 의 답이에요.
+           부품을 누르면 그 부품 카드로, 규칙 번호를 누르면 규칙 카드로 갑니다.</p>
+        <p>이 장은 <code>styleguide/data/screens.json</code>을 그립니다. 그 파일은 <code>tools/screens-build.py</code>가
+           화면 HTML·CSS와 <code>usage.json</code>을 훑어 만들어요. <strong>손으로 적은 칸이 없습니다.</strong>
+           전 화면에 공통인 규칙(색은 토큰으로 · HTML 안 CSS 금지 등)은 빼고, 그 화면에 <strong>특히 걸리는 것</strong>만 싣습니다.</p>
+      </div>
+    </header>
+
+    <section class="sg-sec" id="concept"><h2>개념 <small>concept/ · 파랑</small></h2><div class="sg-map" data-family="concept"></div></section>
+    <section class="sg-sec" id="type"><h2>유형 <small>type/ · 틸</small></h2><div class="sg-map" data-family="type"></div></section>
+    <section class="sg-sec" id="essay"><h2>서술형 <small>essay/ · 보라 · 가로안(basics·drill)은 킵</small></h2><div class="sg-map" data-family="essay"></div></section>
+    <section class="sg-sec" id="shared"><h2>공용 결과 <small>shared/ · 개념·유형·서술형이 부른다 · 항상 다크</small></h2><div class="sg-map" data-family="shared"></div></section>
+    <section class="sg-sec" id="assignment"><h2>과제 <small>assignment/</small></h2><div class="sg-map" data-family="assignment"></div></section>
+    <section class="sg-sec" id="exam"><h2>시험대비 <small>exam/</small></h2><div class="sg-map" data-family="exam"></div></section>
+    <section class="sg-sec" id="nav"><h2>행성 탐색 <small>nav/ · A층 · 항상 다크</small></h2><div class="sg-map" data-family="nav"></div></section>
+    <section class="sg-sec" id="util"><h2>유틸 <small>util/ · 별도 색 체계</small></h2><div class="sg-map" data-family="util"></div></section>
+    <section class="sg-sec" id="index"><h2>목차 <small>index.html</small></h2><div class="sg-map" data-family="."></div></section>
+
+  </main>
+</div>
+<script src="styleguide/sg.js?v=20261014-9"></script>
+<script src="styleguide/screens.js?v=20261014-9"></script>
+</body>
+</html>

@@ -14,21 +14,21 @@
     var ax = 40, ay = 20, w = 250, h = 160, step = 46, dots = '';
     pts.forEach(function (p) {
       var cx = ax + p[0] * step * 0.86, cy = ay + h - p[1] * step * 0.62;
-      dots += '<circle cx="' + cx.toFixed(0) + '" cy="' + cy.toFixed(0) + '" r="4" style="fill:var(--n-650)"/>';
+      dots += '<circle cx="' + cx.toFixed(0) + '" cy="' + cy.toFixed(0) + '" r="4" class="chart__dot"/>';
     });
     var grid = '';
     for (var i = 1; i <= 5; i++) {
       var gx = ax + i * step * 0.86;
-      grid += '<line x1="' + gx + '" y1="' + ay + '" x2="' + gx + '" y2="' + (ay + h) + '" style="stroke:var(--n-100)"/>';
+      grid += '<line x1="' + gx + '" y1="' + ay + '" x2="' + gx + '" y2="' + (ay + h) + '" class="chart__grid"/>';
       var gy = ay + h - i * step * 0.62;
-      grid += '<line x1="' + ax + '" y1="' + gy + '" x2="' + (ax + w) + '" y2="' + gy + '" style="stroke:var(--n-100)"/>';
+      grid += '<line x1="' + ax + '" y1="' + gy + '" x2="' + (ax + w) + '" y2="' + gy + '" class="chart__grid"/>';
     }
     return '<svg viewBox="0 0 320 214" xmlns="http://www.w3.org/2000/svg">' + grid +
-      '<line x1="' + ax + '" y1="' + ay + '" x2="' + ax + '" y2="' + (ay + h) + '" stroke-width="2" style="stroke:var(--n-650)"/>' +
-      '<line x1="' + ax + '" y1="' + (ay + h) + '" x2="' + (ax + w) + '" y2="' + (ay + h) + '" stroke-width="2" style="stroke:var(--n-650)"/>' +
+      '<line x1="' + ax + '" y1="' + ay + '" x2="' + ax + '" y2="' + (ay + h) + '" stroke-width="2" class="chart__axis"/>' +
+      '<line x1="' + ax + '" y1="' + (ay + h) + '" x2="' + (ax + w) + '" y2="' + (ay + h) + '" stroke-width="2" class="chart__axis"/>' +
       dots +
-      '<text x="' + (ax + w) + '" y="' + (ay + h + 16) + '" font-size="11" text-anchor="end" style="fill:var(--n-650)">음악(점)</text>' +
-      '<text x="' + (ax - 6) + '" y="' + (ay - 6) + '" font-size="11" style="fill:var(--n-650)">미술(점)</text></svg>';
+      '<text x="' + (ax + w) + '" y="' + (ay + h + 16) + '" font-size="11" text-anchor="end" class="chart__label">음악(점)</text>' +
+      '<text x="' + (ax - 6) + '" y="' + (ay - 6) + '" font-size="11" class="chart__label">미술(점)</text></svg>';
   }
 
   // ── 15문항 ──

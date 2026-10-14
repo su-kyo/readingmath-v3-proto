@@ -29,25 +29,25 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 .chunk { border-radius: var(--r-4); padding: 1px 0; box-decoration-break: clone; -webkit-box-decoration-break: clone;
   transition: filter .22s ease, opacity .22s ease, background .15s ease; }
 .chunk.is-unread { filter: blur(4.5px); opacity: .3; user-select: none; }
-.chunk.is-current { cursor: pointer; background: var(--th-tint-strong); box-shadow: 0 0 0 3px var(--th-tint-strong); color: var(--th-ink-accent); font-weight: var(--fw-semibold); }
-.chunk.is-current:hover { background: var(--th-tint-strong); box-shadow: 0 0 0 3px var(--th-tint-strong); }
+.chunk.is-current { cursor: pointer; background: var(--th-tint-strong); box-shadow: 0 0 0 var(--bw-3) var(--th-tint-strong); color: var(--th-ink-accent); font-weight: var(--fw-semibold); }
+.chunk.is-current:hover { background: var(--th-tint-strong); box-shadow: 0 0 0 var(--bw-3) var(--th-tint-strong); }
 /* 이미지 보유 용어 */
 .chunk--img.is-read { cursor: pointer; }
 /* 현재 구간이 이미지 용어면 = 노란 마커(30% 톤)로 표시, 글자색은 일반 지문과 동일 */
 .chunk--img.is-current, .chunk--img.is-current:hover {
   cursor: pointer;
   background: color-mix(in srgb, var(--warn-solid) 30%, transparent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--warn-solid) 30%, transparent);
+  box-shadow: 0 0 0 var(--bw-3) color-mix(in srgb, var(--warn-solid) 30%, transparent);
   color: var(--n-600);
 }
 .chunk--img.is-read:not(.is-active) { text-decoration: underline dotted var(--text-muted); text-underline-offset: 5px; text-decoration-thickness: 2px; }
 .chunk--img.is-active { color: var(--th-ink-accent); font-weight: var(--fw-semibold); text-decoration: underline solid var(--th-ink-accent); text-underline-offset: 5px; text-decoration-thickness: 2px; background: transparent; box-shadow: none; }
 /* 빈칸 */
-.chunk--blank { display: inline-flex; align-items: center; justify-content: center; min-width: 62px; padding: var(--sp-4) var(--sp-12); margin: 0 3px; border-radius: var(--r-8); background: var(--th-tint-strong); color: var(--n-600); font-weight: var(--fw-bold); box-shadow: inset 0 0 0 1.5px var(--th-accent); vertical-align: baseline; font-family: var(--font-sans); }
+.chunk--blank { display: inline-flex; align-items: center; justify-content: center; min-width: 62px; padding: var(--sp-4) var(--sp-12); margin: 0 3px; border-radius: var(--r-8); background: var(--th-tint-strong); color: var(--n-600); font-weight: var(--fw-bold); box-shadow: inset 0 0 0 var(--bw-1_5) var(--th-accent); vertical-align: baseline; font-family: var(--font-sans); }
 /* 답 대기 · 선택 중: 테두리 대신 fill로 채워 hover에도 확실히 보이게 (읽기 유도) */
 .chunk--blank.is-current, .chunk--blank.is-open,
 .chunk--blank.is-current:hover, .chunk--blank.is-open:hover {
-  cursor: pointer; background: var(--th-solid); color: var(--n-000); box-shadow: none;
+  cursor: pointer; background: var(--th-solid); color: var(--text-on-accent); box-shadow: none;
 }
 /* 입력 완료: CTA처럼 튀지 않게 배경보다 살짝 밝은 은은한 톤 차이만 (읽기 흐름 유지) */
 .chunk--blank.is-filled, .chunk--blank.is-filled.is-read {
@@ -70,24 +70,24 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 .answer-pop.is-above::before { top: auto; bottom: -6px; }
 .answer-pop__hint { font-size: var(--fs-12); font-weight: var(--fw-bold); color: var(--text-muted); padding: var(--sp-4) var(--sp-8) var(--sp-6); }
 .answer-opt { display: flex; align-items: center; gap: var(--sp-8); padding: var(--sp-12) var(--sp-12); border-radius: var(--r-12); cursor: pointer; font-weight: var(--fw-semibold); font-size: var(--fs-15); color: var(--n-600); }
-.answer-opt__dot { width: 18px; height: 18px; border-radius: 50%; flex: none; box-shadow: inset 0 0 0 2px var(--th-accent-hi); transition: box-shadow .12s; }
+.answer-opt__dot { width: 18px; height: 18px; border-radius: 50%; flex: none; box-shadow: inset 0 0 0 var(--bw-2) var(--th-accent-hi); transition: box-shadow .12s; }
 .answer-opt:hover { background: var(--th-tint); }
-.answer-opt.is-selected { background: var(--th-solid); color: var(--n-000); }
+.answer-opt.is-selected { background: var(--th-solid); color: var(--text-on-accent); }
 .answer-opt.is-selected .answer-opt__dot { box-shadow: inset 0 0 0 5px var(--n-000); }
 /* 오답: 빨간 톤 + 흔들림, 팝오버는 열린 채로 재시도 유도 */
-.answer-opt.is-wrong { background: none; box-shadow: inset 0 0 0 1.5px var(--no-solid); color: var(--no-ink); animation: blankShake .4s; }
-.answer-opt.is-wrong .answer-opt__dot { box-shadow: inset 0 0 0 2px var(--no-ink); }
+.answer-opt.is-wrong { background: none; box-shadow: inset 0 0 0 var(--bw-1_5) var(--no-solid); color: var(--no-ink); animation: blankShake .4s; }
+.answer-opt.is-wrong .answer-opt__dot { box-shadow: inset 0 0 0 var(--bw-2) var(--no-ink); }
 /* 정답: 초록 톤 — 0.5초 보여주고 나서 팝오버가 닫히며 다음 구간으로 (오답과 대칭) */
-.answer-opt.is-correct { background: none; box-shadow: inset 0 0 0 1.5px var(--ok-solid); color: var(--ok-ink); font-weight: var(--fw-bold); }
+.answer-opt.is-correct { background: none; box-shadow: inset 0 0 0 var(--bw-1_5) var(--ok-solid); color: var(--ok-ink); font-weight: var(--fw-bold); }
 .answer-opt.is-correct .answer-opt__dot { box-shadow: inset 0 0 0 5px var(--ok-ink); }
 /* 방금 맞힌 빈칸도 같은 0.5초 동안 초록으로 (효과를 보고 나서 넘어간다) */
 .chunk--blank.is-just-correct, .chunk--blank.is-just-correct.is-read,
-.chunk--blank.is-just-correct:hover { background: var(--ok-solid); color: var(--n-000); box-shadow: none; }
+.chunk--blank.is-just-correct:hover { background: var(--ok-solid); color: var(--text-on-accent); box-shadow: none; }
 @media (prefers-reduced-motion: reduce) { .answer-opt.is-wrong, .chunk--blank.is-wrong { animation: none; } }
 
 /* ===== 이미지 뷰어 (스켈레톤) ===== */
 .viewer { width: clamp(240px, 26vw, 340px); flex: none; display: flex; flex-direction: column; gap: var(--sp-12); align-items: center; justify-content: center; }
-.viewer__frame { width: 100%; aspect-ratio: 4 / 3; border-radius: var(--r-16); background: var(--th-tint); box-shadow: inset 0 0 0 2px var(--th-tint); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--sp-12); position: relative; overflow: hidden; cursor: default; }
+.viewer__frame { width: 100%; aspect-ratio: 4 / 3; border-radius: var(--r-16); background: var(--th-tint); box-shadow: inset 0 0 0 var(--bw-2) var(--th-tint); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--sp-12); position: relative; overflow: hidden; cursor: default; }
 .viewer[data-state="filled"] .viewer__frame { cursor: zoom-in; }
 .viewer__ph { width: 60px; height: 60px; border-radius: var(--r-12); background: var(--th-tint); display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: var(--fs-26); }
 .viewer[data-state="filled"] .viewer__ph { animation: skel 1.6s ease-in-out infinite; }
@@ -128,39 +128,39 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 :root[data-theme="dark"] .article .hl-mark { background: var(--art-mark-bg); color: var(--art-mark-fg); }
 /* 다크: 파란 글자는 다크 바탕과 대비 약함 → 글자는 밝게(plain) 두고 highlight로만 강조 */
 :root[data-theme="dark"] .chunk.is-current,
-:root[data-theme="dark"] .chunk.is-current:hover { background: var(--th-tint-strong); box-shadow: 0 0 0 3px var(--th-tint-strong); color: var(--text); }
+:root[data-theme="dark"] .chunk.is-current:hover { background: var(--th-tint-strong); box-shadow: 0 0 0 var(--bw-3) var(--th-tint-strong); color: var(--text); }
 /* 이미지 용어 현재 구간 = 노란 마커(30%), 글자색은 일반 지문과 동일(밝게) */
 :root[data-theme="dark"] .chunk--img.is-current,
-:root[data-theme="dark"] .chunk--img.is-current:hover { background: color-mix(in srgb, var(--warn-solid) 30%, transparent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--warn-solid) 30%, transparent); color: var(--text); }
+:root[data-theme="dark"] .chunk--img.is-current:hover { background: color-mix(in srgb, var(--warn-solid) 30%, transparent); box-shadow: 0 0 0 var(--bw-3) color-mix(in srgb, var(--warn-solid) 30%, transparent); color: var(--text); }
 :root[data-theme="dark"] .chunk--img.is-active { color: var(--th-accent-hi); text-decoration-color: var(--th-accent-hi); }
 :root[data-theme="dark"] .chunk--img.is-read:not(.is-active) { text-decoration-color: var(--text-muted); }
-:root[data-theme="dark"] .chunk--blank { background: var(--th-tint-strong); color: var(--text); box-shadow: inset 0 0 0 1.5px var(--th-accent); }
+:root[data-theme="dark"] .chunk--blank { background: var(--th-tint-strong); color: var(--text); box-shadow: inset 0 0 0 var(--bw-1_5) var(--th-accent); }
 /* 답 대기·선택 중 = fill (테두리 clobber 방지) */
 :root[data-theme="dark"] .chunk--blank.is-current, :root[data-theme="dark"] .chunk--blank.is-open,
 :root[data-theme="dark"] .chunk--blank.is-current:hover, :root[data-theme="dark"] .chunk--blank.is-open:hover {
-  background: var(--th-solid); color: var(--n-000); box-shadow: none;
+  background: var(--th-solid); color: var(--text-on-accent); box-shadow: none;
 }
 /* 입력 완료 = 은은한 톤 (다크 패널보다 살짝 밝게) */
 :root[data-theme="dark"] .chunk--blank.is-filled, :root[data-theme="dark"] .chunk--blank.is-filled.is-read {
   background: var(--white-a08); color: var(--text); box-shadow: none;
 }
-:root[data-theme="dark"] .viewer__frame { background: var(--surface-1); box-shadow: inset 0 0 0 2px var(--white-a08); }
+:root[data-theme="dark"] .viewer__frame { background: var(--surface-1); box-shadow: inset 0 0 0 var(--bw-2) var(--white-a08); }
 :root[data-theme="dark"] .viewer__ph { background: var(--surface-2); color: var(--text-muted); }
 :root[data-theme="dark"] .viewer__label,
 :root[data-theme="dark"] .viewer__pager { color: var(--text-muted); }
 :root[data-theme="dark"] .viewer__pager button { background: var(--surface-2); color: var(--th-accent-hi); }
 :root[data-theme="dark"] .viewer__zoom { background: var(--surface-1); color: var(--text-muted); box-shadow: none; }
 /* 다크: 팝오버가 패널(surface-1)과 같은 색이라 안 떠 보임 → 더 밝은 surface-3 + 테두리로 floating 강조 */
-:root[data-theme="dark"] .answer-pop { background: var(--surface-3); border: 1px solid var(--white-a12); box-shadow: 0 20px 48px var(--black-a60); }
+:root[data-theme="dark"] .answer-pop { background: var(--surface-3); border: var(--bw-1) solid var(--white-a12); box-shadow: 0 20px 48px var(--black-a60); }
 :root[data-theme="dark"] .answer-pop::before { background: var(--surface-3); }
 :root[data-theme="dark"] .answer-pop__hint { color: var(--text-muted); }
 :root[data-theme="dark"] .answer-opt { color: var(--text); }
 :root[data-theme="dark"] .answer-opt:hover { background: var(--surface-hover); }
 :root[data-theme="dark"] .answer-opt.is-selected { background: var(--th-accent); }
-:root[data-theme="dark"] .answer-opt__dot { box-shadow: inset 0 0 0 2px var(--th-accent); }
+:root[data-theme="dark"] .answer-opt__dot { box-shadow: inset 0 0 0 var(--bw-2) var(--th-accent); }
 :root[data-theme="dark"] .answer-opt.is-selected .answer-opt__dot { box-shadow: inset 0 0 0 5px var(--n-000); }
 :root[data-theme="dark"] .answer-opt.is-wrong { color: var(--no-on-dark); }
-:root[data-theme="dark"] .answer-opt.is-wrong .answer-opt__dot { box-shadow: inset 0 0 0 2px var(--no-on-dark); }
+:root[data-theme="dark"] .answer-opt.is-wrong .answer-opt__dot { box-shadow: inset 0 0 0 var(--bw-2) var(--no-on-dark); }
 
 /* ===== 개념 영상 레이어 — 프레임은 공용 monitor, 안은 16:9 영상뿐 ===== */
 #videobox { --mon-w: 900px; }
@@ -193,23 +193,23 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 .sseg { border-radius: var(--r-4); padding: 1px 0; box-decoration-break: clone; -webkit-box-decoration-break: clone;
   transition: filter .2s ease, opacity .2s ease, background .15s ease; }
 .sseg.is-unread { filter: blur(4.5px); opacity: .3; user-select: none; }
-.sseg.is-current:not(.sblank) { cursor: pointer; background: var(--sm-current); box-shadow: 0 0 0 3px var(--sm-current); }
+.sseg.is-current:not(.sblank) { cursor: pointer; background: var(--sm-current); box-shadow: 0 0 0 var(--bw-3) var(--sm-current); }
 /* 모달도 동일: 이미지 용어 현재 구간 = 노란 마커(30%), 글자색은 일반 지문과 동일 */
-.sseg--img.is-current, .sseg--img.is-current:hover { cursor: pointer; background: color-mix(in srgb, var(--warn-solid) 30%, transparent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--warn-solid) 30%, transparent); color: var(--sm-text); border-radius: var(--r-4); }
-.sblank { display: inline-flex; align-items: center; justify-content: center; min-width: 84px; height: 32px; padding: 0 var(--sp-12); margin: 0 3px; border-radius: var(--r-8); font-weight: var(--fw-bold); vertical-align: middle; background: transparent; color: var(--sm-blank-muted); box-shadow: inset 0 0 0 1.5px var(--sm-blank-br); }
-.sblank.is-active { color: var(--ok-solid); box-shadow: inset 0 0 0 2px var(--ok-solid); }
+.sseg--img.is-current, .sseg--img.is-current:hover { cursor: pointer; background: color-mix(in srgb, var(--warn-solid) 30%, transparent); box-shadow: 0 0 0 var(--bw-3) color-mix(in srgb, var(--warn-solid) 30%, transparent); color: var(--sm-text); border-radius: var(--r-4); }
+.sblank { display: inline-flex; align-items: center; justify-content: center; min-width: 84px; height: 32px; padding: 0 var(--sp-12); margin: 0 3px; border-radius: var(--r-8); font-weight: var(--fw-bold); vertical-align: middle; background: transparent; color: var(--sm-blank-muted); box-shadow: inset 0 0 0 var(--bw-1_5) var(--sm-blank-br); }
+.sblank.is-active { color: var(--ok-solid); box-shadow: inset 0 0 0 var(--bw-2) var(--ok-solid); }
 .sblank.is-active::before { content: "?"; }
-.sblank.is-filled { background: var(--th-solid); color: var(--n-000); box-shadow: none; }
+.sblank.is-filled { background: var(--th-solid); color: var(--text-on-accent); box-shadow: none; }
 .sblank__thumb { width: 24px; height: 18px; border-radius: var(--r-4); }
 /* 선지 — 현재 구간이 빈칸일 때만 채우고, 공간은 항상 예약(박스 안 흔들림) */
 /* 선지 & '다음으로'를 같은 고정 슬롯에 (번갈아 표시 → 총 높이 불변, 안 밀림/안 벙벙) */
 .summary__foot { min-height: 96px; display: flex; align-items: center; justify-content: center; }
 .summary__options { flex: 1; display: flex; align-items: center; justify-content: center; gap: var(--sp-12); flex-wrap: wrap; }
 .summary__options:empty { display: none; }
-.sopt { flex: 1 1 0; min-width: 100px; max-width: 220px; height: 68px; border-radius: var(--r-12); background: var(--sm-opt); color: var(--sm-opt-text); font-size: var(--fs-22); font-weight: var(--fw-heavy); box-shadow: 0 4px 0 var(--sm-opt-sh); }
-.sopt:hover { filter: brightness(1.05); } .sopt:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--sm-opt-sh); }
+.sopt { flex: 1 1 0; min-width: 100px; max-width: 220px; height: 68px; border-radius: var(--r-12); background: var(--sm-opt); color: var(--sm-opt-text); font-size: var(--fs-22); font-weight: var(--fw-heavy); box-shadow: 0 var(--depth-4) 0 var(--sm-opt-sh); }
+.sopt:hover { filter: brightness(1.05); } .sopt:active { transform: translateY(2px); box-shadow: 0 var(--depth-2) 0 var(--sm-opt-sh); }
 .sopt--img { max-width: 380px; height: 88px; }
 .sopt__img { display: block; width: 84px; height: 62px; border-radius: var(--r-8); }
-.summary__next { display: inline-flex; align-items: center; gap: var(--sp-8); padding: var(--sp-12) var(--sp-32); border-radius: var(--r-16); background: var(--primary); color: var(--n-000); font-weight: var(--fw-heavy); font-size: clamp(15px, 1.4vw, 18px); box-shadow: 0 4px 0 var(--primary-pressed); }
+.summary__next { display: inline-flex; align-items: center; gap: var(--sp-8); padding: var(--sp-12) var(--sp-32); border-radius: var(--r-16); background: var(--primary); color: var(--text-on-accent); font-weight: var(--fw-heavy); font-size: clamp(15px, 1.4vw, 18px); box-shadow: 0 var(--depth-4) 0 var(--primary-pressed); }
 .summary__next[hidden] { display: none; }
 .summary__next:hover { background: var(--primary-hover); }

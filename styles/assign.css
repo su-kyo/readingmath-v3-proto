@@ -4,7 +4,7 @@
    화면마다 다른 부분은 styles/screens/ 에 남아 있다.
    ========================================================================= */
 
-.hd { flex: none; display: flex; align-items: center; justify-content: space-between; gap: var(--sp-16); background: var(--hd); border-radius: var(--r-30); padding: var(--sp-8) var(--sp-12) var(--sp-8) 28px; color: var(--n-000); }
+.hd { flex: none; display: flex; align-items: center; justify-content: space-between; gap: var(--sp-16); background: var(--hd); border-radius: var(--r-30); padding: var(--sp-8) var(--sp-12) var(--sp-8) 28px; color: var(--text-on-accent); }
 
 .breadcrumb__strong { font-weight: var(--fw-heavy); letter-spacing: -.02em; white-space: nowrap; }
 
@@ -26,7 +26,7 @@
 
 .omr { width: 348px; flex: none; display: flex; flex-direction: column; gap: var(--sp-16); padding: var(--sp-20) var(--sp-20) 120px; }
 
-.qmeta__n { padding: var(--sp-4) var(--sp-8); border-radius: var(--r-8); background: var(--hd); color: var(--n-000); font-size: var(--fs-14); font-weight: var(--fw-bold); font-variant-numeric: tabular-nums; }
+.qmeta__n { padding: var(--sp-4) var(--sp-8); border-radius: var(--r-8); background: var(--hd); color: var(--text-on-accent); font-size: var(--fs-14); font-weight: var(--fw-bold); font-variant-numeric: tabular-nums; }
 
 .lvl { padding: var(--sp-4) var(--sp-8); border-radius: var(--r-full); font-size: var(--fs-12); font-weight: var(--fw-heavy); margin-left: auto; }
 
@@ -43,3 +43,24 @@
 .omr__grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--sp-8); }
 
 .omr__ptop b { font-size: var(--fs-16); font-weight: var(--fw-bold); color: var(--ink); }
+
+/* ----- 화면 공용으로 올림 (2026-10-14 · RM-FILE-03) — assignment-explain · assignment-result · assignment-solve ----- */
+.wrap { position: relative; z-index: 1; flex: 1; min-height: 0; display: flex; flex-direction: column; padding: clamp(16px,2.4vw,30px) clamp(20px,5vw,72px) 0; gap: var(--sp-12); }
+:root[data-theme="dark"] .toggle__k { left: 32px; background-image: url("../assets/icons/ico-moon.svg"); }
+.toast { --toast-bg: var(--n-650); }
+
+/* ----- 화면 공용으로 올림 (2026-10-14 · RM-FILE-03) — assignment-explain · assignment-solve ----- */
+.qmeta { display: flex; align-items: center; gap: var(--sp-8); flex-wrap: wrap; }
+.qtext { font-size: clamp(17px,1.5vw,20px); font-weight: var(--fw-bold); line-height: 1.65; letter-spacing: -.02em; color: var(--ink); }
+.qimg { align-self: center; padding: var(--sp-12); border-radius: var(--r-16); background: var(--opt); border: var(--bw-1) solid var(--line); }
+.qimg svg { display: block; width: 320px; height: 214px; max-width: 100%; }
+.opts { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: var(--sp-8); }
+.short__unit { font-size: var(--fs-16); font-weight: var(--fw-bold); color: var(--sub); }
+.qpanel::-webkit-scrollbar { width: 10px; }
+.qpanel::-webkit-scrollbar-thumb { background: var(--n-200); border-radius: var(--r-full); border: var(--bw-3) solid var(--qpanel); background-clip: padding-box; }
+
+/* 문항 속 산점도(과제 4번) — 스크립트가 그리고 색은 여기서 정한다 (RM-JS-01).
+   문제 그림이라 테마를 따라가지 않는다(종이 위 그림) */
+.chart__grid { stroke: var(--n-100); }
+.chart__axis { stroke: var(--n-650); }
+.chart__dot, .chart__label { fill: var(--n-650); }

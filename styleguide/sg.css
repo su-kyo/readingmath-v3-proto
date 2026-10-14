@@ -14,7 +14,7 @@
 /* ===== 좌측 목록 (sg.js 가 그린다) ===== */
 .sg-nav {
   position: sticky; top: 0; align-self: start; height: 100vh; overflow-y: auto;
-  background: var(--surface-1); border-right: 1px solid var(--border);
+  background: var(--surface-1); border-right: var(--bw-1) solid var(--border);
   padding: var(--sp-24) var(--sp-16) var(--sp-40); display: flex; flex-direction: column; gap: var(--sp-24);
 }
 .sg-nav__brand { display: block; font-weight: var(--fw-heavy); font-size: var(--fs-16); letter-spacing: -.01em; color: var(--text); }
@@ -41,7 +41,7 @@
 .sg-sec { margin-top: var(--sp-40); scroll-margin-top: var(--sp-24); }
 .sg-sec > h2 {
   font-size: var(--fs-22); letter-spacing: -.01em; padding-bottom: var(--sp-12);
-  border-bottom: 1px solid var(--border); margin-bottom: var(--sp-20);
+  border-bottom: var(--bw-1) solid var(--border); margin-bottom: var(--sp-20);
   display: flex; align-items: baseline; gap: var(--sp-12); flex-wrap: wrap;
 }
 .sg-sec > h2 small { font-size: var(--fs-13); color: var(--text-meta); font-weight: var(--fw-regular); }
@@ -50,7 +50,7 @@
 .sg-lead code, .sg-note code, .sg-main p code, li code { font-family: var(--font-mono); font-size: .92em; background: var(--surface-2); padding: 1px 5px; border-radius: var(--r-4); }
 
 /* ===== 부품 카드 ===== */
-.sg-item { border: 1px solid var(--border); border-radius: var(--r-16); background: var(--surface-1); margin-bottom: var(--sp-20); overflow: hidden; }
+.sg-item { border: var(--bw-1) solid var(--border); border-radius: var(--r-16); background: var(--surface-1); margin-bottom: var(--sp-20); overflow: hidden; }
 .sg-item__hd { display: flex; align-items: baseline; gap: var(--sp-12); flex-wrap: wrap; padding: var(--sp-16) var(--sp-20); }
 .sg-item__hd h3 { font-size: var(--fs-16); letter-spacing: -.01em; }
 .sg-item__cls { font-family: var(--font-mono); font-size: var(--fs-12); color: var(--text-meta); }
@@ -61,7 +61,7 @@
 /* 쓰는 화면 배지 — usage.json 이 센 숫자다 (tools/usage-scan.py) */
 .sg-uses { margin-left: auto; display: flex; align-items: center; gap: var(--sp-8); }
 .sg-uses__btn {
-  border: 1px solid var(--border); background: var(--surface-2); color: var(--text-muted);
+  border: var(--bw-1) solid var(--border); background: var(--surface-2); color: var(--text-muted);
   font-size: var(--fs-11); font-weight: var(--fw-bold); padding: 3px var(--sp-8); border-radius: var(--r-full); cursor: pointer;
 }
 .sg-uses__btn:hover { border-color: var(--border-strong); color: var(--text); }
@@ -74,7 +74,7 @@
 
 /* ===== 라이트/다크 무대 =====
    토글로 왔다갔다 하면 어긋난 면을 못 본다. 늘 둘을 나란히 세운다. */
-.sg-stage { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border-top: 1px solid var(--border); }
+.sg-stage { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border-top: var(--bw-1) solid var(--border); }
 .sg-stage--one { grid-template-columns: 1fr; }
 .sg-pane { background: var(--surface-2); display: flex; flex-direction: column; min-width: 0; }
 .sg-pane__lb { font-size: var(--fs-11); font-weight: var(--fw-bold); letter-spacing: .06em; color: var(--text-meta); padding: var(--sp-8) var(--sp-12); }
@@ -82,7 +82,7 @@
 @media (max-width: 900px) { .sg-stage { grid-template-columns: 1fr; } .sg { grid-template-columns: 1fr; } .sg-nav { position: static; height: auto; } }
 
 /* 마크업 보기 */
-.sg-code { border-top: 1px solid var(--border); }
+.sg-code { border-top: var(--bw-1) solid var(--border); }
 .sg-code summary { cursor: pointer; padding: var(--sp-8) var(--sp-20); font-size: var(--fs-12); color: var(--text-meta); font-weight: var(--fw-semibold); }
 .sg-code summary:hover { color: var(--text); }
 .sg-code pre { margin: 0; padding: 0 var(--sp-20) var(--sp-16); overflow-x: auto; }
@@ -90,7 +90,7 @@
 
 /* ===== 표 · 목록 ===== */
 .sg-table { width: 100%; border-collapse: collapse; font-size: var(--fs-13); margin-bottom: var(--sp-24); }
-.sg-table th, .sg-table td { text-align: left; padding: var(--sp-8) var(--sp-12); border-bottom: 1px solid var(--border); vertical-align: top; }
+.sg-table th, .sg-table td { text-align: left; padding: var(--sp-8) var(--sp-12); border-bottom: var(--bw-1) solid var(--border); vertical-align: top; }
 .sg-table th { font-size: var(--fs-11); letter-spacing: .05em; text-transform: uppercase; color: var(--text-meta); }
 .sg-table td code { font-family: var(--font-mono); font-size: var(--fs-12); }
 .sg-table tbody tr:hover { background: var(--surface-1); }
@@ -103,7 +103,7 @@
 .sg-rule--do::before { content: "지킨다"; color: var(--ok-on-dark); }
 .sg-rule--dont { background: color-mix(in srgb, var(--no-on-dark) 12%, var(--surface-1)); color: var(--text); }
 .sg-rule--dont::before { content: "안 한다"; color: var(--no-on-dark); }
-.sg-rule--why { background: var(--surface-1); border: 1px solid var(--border); }
+.sg-rule--why { background: var(--surface-1); border: var(--bw-1) solid var(--border); }
 .sg-rule--why::before { content: "왜"; color: var(--text-meta); }
 
 /* ===== 색·눈금 견본 (foundations 전용이지만 여기 둔다 — 네 장이 공유하는 그릇이다) ===== */
@@ -118,11 +118,62 @@
 .sg-ramp + .sg-ramp__lb { margin-top: var(--sp-16); }
 
 .sg-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: var(--sp-12); margin-bottom: var(--sp-24); }
-.sg-tile { background: var(--surface-1); border: 1px solid var(--border); border-radius: var(--r-12); padding: var(--sp-12); }
+.sg-tile { background: var(--surface-1); border: var(--bw-1) solid var(--border); border-radius: var(--r-12); padding: var(--sp-12); }
 .sg-tile__name { font-family: var(--font-mono); font-size: var(--fs-11); color: var(--text-muted); margin-top: var(--sp-8); }
 .sg-tile__bar { height: 12px; background: var(--th-vivid); border-radius: var(--r-4); }
-.sg-tile__box { height: 52px; background: var(--surface-3); box-shadow: inset 0 0 0 1.5px var(--border-strong); }
+.sg-tile__box { height: 52px; background: var(--surface-3); box-shadow: inset 0 0 0 var(--bw-1_5) var(--border-strong); }
 
-.sg-type { display: flex; align-items: baseline; gap: var(--sp-16); padding: var(--sp-12) 0; border-bottom: 1px solid var(--border); }
+.sg-type { display: flex; align-items: baseline; gap: var(--sp-16); padding: var(--sp-12) 0; border-bottom: var(--bw-1) solid var(--border); }
 .sg-type small { color: var(--text-meta); font-family: var(--font-mono); font-size: var(--fs-12); white-space: nowrap; flex: none; width: 230px; }
 .sg-type span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ===== 규칙 색인 (2026-10-14) — 카드 하나 = 규칙 하나. 머리(번호·검사 딱지)는 sg.js 가 단다 ===== */
+.sg-rulecard { border: var(--bw-1) solid var(--border); border-radius: var(--r-12); background: var(--surface-1);
+  padding: var(--sp-16) var(--sp-20); margin-bottom: var(--sp-12); scroll-margin-top: var(--sp-24); }
+.sg-rulecard.is-target, .sg-rulecard:target { box-shadow: 0 0 0 var(--bw-2) var(--th-accent); }
+.sg-rulecard__hd { display: flex; align-items: center; gap: var(--sp-8); flex-wrap: wrap; margin-bottom: var(--sp-8); }
+.sg-rulecard__id { font-family: var(--font-mono); font-size: var(--fs-13); font-weight: var(--fw-bold); color: var(--th-ink-accent);
+  background: var(--th-tint-strong); padding: 2px var(--sp-8); border-radius: var(--r-4); text-decoration: none; }
+.sg-rulecard__since { margin-left: auto; font-size: var(--fs-11); color: var(--text-meta); font-family: var(--font-mono); }
+.sg-rulecard h3 { font-size: var(--fs-16); letter-spacing: -.01em; margin-bottom: var(--sp-6); }
+.sg-rulecard__do { font-size: var(--fs-14); line-height: 1.75; color: var(--text); margin-bottom: var(--sp-12); }
+.sg-rulecard dl { display: grid; grid-template-columns: 44px 1fr; gap: var(--sp-6) var(--sp-12); font-size: var(--fs-13); line-height: 1.7; }
+.sg-rulecard dt { color: var(--text-meta); font-weight: var(--fw-bold); }
+.sg-rulecard dd { color: var(--text-muted); margin: 0; }
+.sg-rulecard code, .sg-screen code { font-family: var(--font-mono); font-size: .92em; background: var(--surface-2); padding: 1px 5px; border-radius: var(--r-4); }
+
+/* 검사 딱지 — 기계가 잡나, 눈으로 보나 */
+.sg-chk { font-size: var(--fs-11); font-weight: var(--fw-bold); padding: 2px var(--sp-8); border-radius: var(--r-full);
+  border: var(--bw-1) solid var(--border-strong); color: var(--text-muted); }
+.sg-chk[data-k="tool"] { color: var(--info-ink); border-color: color-mix(in srgb, var(--info-solid) 45%, transparent); }
+:root:not([data-theme="light"]) .sg-chk[data-k="tool"] { color: var(--info-on-dark); }
+
+/* 본문 속 규칙 번호 → 규칙 카드 링크 */
+.sg-rid { font-family: var(--font-mono); font-size: .92em; font-weight: var(--fw-bold); color: var(--th-ink-accent);
+  background: var(--th-tint); padding: 1px 5px; border-radius: var(--r-4); text-decoration: none; white-space: nowrap; }
+.sg-rid:hover { background: var(--th-tint-strong); }
+
+/* ===== 화면 지도 (2026-10-14) ===== */
+.sg-map { display: grid; gap: var(--sp-12); }
+.sg-screen { border: var(--bw-1) solid var(--border); border-radius: var(--r-12); background: var(--surface-1); padding: var(--sp-16) var(--sp-20); }
+.sg-screen__hd { display: flex; align-items: baseline; gap: var(--sp-12); flex-wrap: wrap; margin-bottom: var(--sp-12); }
+.sg-screen__hd h3 { font-size: var(--fs-16); }
+.sg-screen__path { font-family: var(--font-mono); font-size: var(--fs-12); color: var(--th-ink-accent); }
+.sg-screen__meta { margin-left: auto; font-size: var(--fs-12); color: var(--text-meta); }
+.sg-screen__dl { display: grid; grid-template-columns: 44px 1fr; gap: var(--sp-8) var(--sp-12); font-size: var(--fs-13); }
+.sg-screen__dl dt { color: var(--text-meta); font-weight: var(--fw-bold); padding-top: 3px; }
+.sg-screen__dl dd { display: flex; flex-wrap: wrap; gap: var(--sp-6); align-items: center; margin: 0; }
+.sg-screen__from { flex-basis: 100%; font-size: var(--fs-11); color: var(--text-meta); }
+.sg-screen__files { color: var(--text-muted); font-size: var(--fs-12); }
+.sg-chip { font-size: var(--fs-12); padding: 2px var(--sp-8); border-radius: var(--r-full); background: var(--surface-2);
+  color: var(--text-muted); text-decoration: none; border: var(--bw-1) solid var(--border); white-space: nowrap; }
+a.sg-chip:hover { color: var(--text); border-color: var(--border-strong); }
+.sg-chip--rule { font-family: var(--font-mono); font-weight: var(--fw-bold); color: var(--th-ink-accent); background: var(--th-tint); }
+.sg-chip--tok { font-family: var(--font-mono); }
+.sg-chip--tok b { color: var(--text-meta); font-weight: var(--fw-regular); }
+.sg-chip--none { background: none; border-style: dashed; }
+
+/* 「아직 안 정한 부품」 띠 — 다음 작업에서 정할 것을 표시만 한다 */
+.sg-pending { display: block; padding: var(--sp-12) var(--sp-16); margin-bottom: var(--sp-16); border-radius: var(--r-8);
+  border: var(--bw-1_5) dashed var(--border-strong); font-size: var(--fs-13); line-height: 1.7; color: var(--text-muted); }
+.sg-pending strong { color: var(--text); }

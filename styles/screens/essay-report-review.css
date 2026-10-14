@@ -14,26 +14,22 @@
 }
 :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
 :root[data-theme="light"] .content {
-  background: var(--n-000); border-color: var(--th-static);
+  background: var(--th-panel); border-color: var(--th-static);
   --guide: var(--n-650);
   --rt-line: var(--n-100); --rt-head: var(--n-050); --rt-cell: var(--n-000); --rt-fg: var(--n-650); --rt-sub: var(--text-meta);
   --ok-fg: var(--ok-ink); --no-fg: var(--no-ink);
 }
 
-.report-wrap::-webkit-scrollbar { width: 10px; }
 
-:root[data-theme="light"] .report-wrap::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--violet-600) 28%, transparent); background-clip: padding-box; }
 
 /* 안내문 */
 .review-hint { display: flex; align-items: center; gap: var(--sp-8); max-width: 1000px; margin: 0 auto 14px;
-  padding: var(--sp-12) var(--sp-16); border-radius: var(--r-12); background: var(--no-bg); box-shadow: inset 0 0 0 1px var(--no-br);
+  padding: var(--sp-12) var(--sp-16); border-radius: var(--r-12); background: var(--no-bg); box-shadow: inset 0 0 0 var(--bw-1) var(--no-br);
   font-family: var(--font-sans); font-size: var(--fs-13); font-weight: var(--fw-bold); color: var(--no-fg); }
-.review-hint svg { width: 17px; height: 17px; flex: none; }
 
 
 /* ============ 보고서 표 (essay-report와 동일) ============ */
 
-.rt-img img { display: block; width: 100%; height: auto; }
 .rt-span { line-height: 2.6; word-break: keep-all; }
 
 
@@ -42,14 +38,14 @@
 .rblank { position: relative; display: inline-flex; align-items: center; gap: var(--sp-6); vertical-align: middle;
   padding: var(--sp-4) var(--sp-12); margin: 0 2px; border-radius: var(--r-8); font-family: var(--font-sans); font-weight: var(--fw-bold); }
 .rblank__val { line-height: 1.3; }
-.rblank.is-correct { background: var(--ok-bg); color: var(--ok-fg); box-shadow: inset 0 0 0 1.5px var(--ok-br); }
+.rblank.is-correct { background: var(--ok-bg); color: var(--ok-fg); box-shadow: inset 0 0 0 var(--bw-1_5) var(--ok-br); }
 /* 오답 = 내 답(빨강 채움). 취소선 없음 — 오답도 읽어야 할 정보다.
    클릭하면 같은 칸이 정답(초록)으로 토글 — 병렬 표시 아님 */
-.rblank.is-wrong { background: var(--no-bg); color: var(--no-fg); box-shadow: inset 0 0 0 1.5px var(--no-br);
+.rblank.is-wrong { background: var(--no-bg); color: var(--no-fg); box-shadow: inset 0 0 0 var(--bw-1_5) var(--no-br);
   cursor: pointer; transition: box-shadow .15s, background .15s, color .15s; }
-.rblank.is-wrong:hover { box-shadow: inset 0 0 0 2px var(--no-br), 0 0 0 3px var(--no-bg); }
-.rblank.is-wrong.show-ans { background: var(--ok-bg); color: var(--ok-fg); box-shadow: inset 0 0 0 1.5px var(--ok-br); }
-.rblank.is-wrong.show-ans:hover { box-shadow: inset 0 0 0 2px var(--ok-br), 0 0 0 3px var(--ok-bg); }
+.rblank.is-wrong:hover { box-shadow: inset 0 0 0 var(--bw-2) var(--no-br), 0 0 0 var(--bw-3) var(--no-bg); }
+.rblank.is-wrong.show-ans { background: var(--ok-bg); color: var(--ok-fg); box-shadow: inset 0 0 0 var(--bw-1_5) var(--ok-br); }
+.rblank.is-wrong.show-ans:hover { box-shadow: inset 0 0 0 var(--bw-2) var(--ok-br), 0 0 0 var(--bw-3) var(--ok-bg); }
 /* 정답 확인 = 우측 상단 원형 뱃지 (정답 초록 ✓ / 오답 빨강 ✕) — 색맹도 모양으로 구분.
    오답을 눌러 정답으로 치환한 칸은 정답 스타일이되 뱃지 없음(원래 맞힌 칸과 구분) */
 .rblank.is-correct::after, .rblank.is-wrong::after {
@@ -64,16 +60,12 @@
 /* ============ 추천 보고서 모달 (essay-report 미리보기 재사용) ============ */
 /* ⚠ 의도적 뉴트럴: 실제 인쇄물을 흉내내는 흰 종이 프리뷰라 중성 톤 유지. 테마 불변 위해 고정 뉴트럴 프리미티브(--n-*)로 토큰화. */
 
-.pmodal .monitor__screen { background: var(--n-050); padding: var(--sp-24); }
-.pmodal .monitor__tool svg { width: 16px; height: 16px; }
 .pmodal .monitor__ttl::before { content: '★ '; color: var(--primary-hover); }
 
-.pmodal__paper .rt-text { white-space: pre-line; word-break: keep-all; }
 .pmodal__paper .rt-span { line-height: 1.85; word-break: keep-all; }
 
-.rp-img img { display: block; width: 100%; height: auto; }
-.fillin { font-family: var(--font-serif); font-weight: var(--fw-bold); color: var(--ok-ink); border-bottom: 1.5px solid var(--ok-solid); padding: 0 var(--sp-4); }
+.fillin { font-family: var(--font-serif); font-weight: var(--fw-bold); color: var(--ok-ink); border-bottom: var(--bw-1_5) solid var(--ok-solid); padding: 0 var(--sp-4); }
 :root[data-theme="dark"] .fillin { color: var(--ok-on-dark); }   /* 전역 --ok-ink(600)는 다크 면에서 묻힌다 */
 
-.toolbtn--primary { background: var(--th-solid); box-shadow: 0 4px 0 color-mix(in srgb, var(--th-accent) 62%, var(--n-950)); }
+.toolbtn--primary { background: var(--th-solid); box-shadow: 0 var(--depth-4) 0 color-mix(in srgb, var(--th-accent) 62%, var(--n-950)); }
 @media (max-width: 620px) { .report { grid-template-columns: 80px 1fr; } }

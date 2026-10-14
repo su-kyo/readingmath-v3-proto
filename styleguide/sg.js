@@ -29,7 +29,9 @@
     ['foundations.html', '기초',   '색 · 글자 · 간격 · 층'],
     ['components.html',  '부품',   '버튼 · 상태 타일 · 선택지 · 계기판'],
     ['shells.html',      '셸',     '콘솔바 · 헤더 · 모니터 · 키패드'],
-    ['patterns.html',    '패턴',   '화면 껍데기 · 목록 상태 · 예외']
+    ['patterns.html',    '패턴',   '화면 껍데기 · 목록 상태 · 예외'],
+    ['rules.html',       '규칙 색인', 'RM-영역-번호 · 근거 · 검사 · 예외'],
+    ['screens.html',     '화면 지도', '화면마다 부품 · 토큰 · 규칙']
   ];
   var DIR = 'styleguide/';
 
@@ -94,6 +96,12 @@
   // 액자가 기본으로 부르는 스타일시트. 페이지가 body[data-sg-css] 로 갈아끼우고,
   // 부품 하나만 다르게 필요하면 .sg-item[data-css] 로 덮는다.
   var DEFAULT_CSS = 'tokens,base,components';
+  // 액자가 부르는 CSS 의 ?v= 는 이 문서가 부르는 sg.css 와 같은 값을 쓴다 — 따로 적으면 옛 값에 멈춘다(RM-FILE-06)
+  var VER = (function () {
+    var l = document.querySelector('link[href*="styleguide/sg.css"]');
+    var m = l && /\?v=([\w-]+)/.exec(l.getAttribute('href'));
+    return m ? m[1] : '';
+  })();
 
   // srcdoc 액자는 자기 주소가 없어서 부모의 base 를 물려받는다. 물려받은 값에 기대면
   // 나중에 부모의 <base> 가 바뀔 때 조용히 깨지므로, 최상위를 직접 계산해 박는다.
@@ -101,7 +109,7 @@
 
   function frameDoc(markup, theme, section, css, pad, bg) {
     var links = css.split(',').map(function (n) {
-      return '<link rel="stylesheet" href="styles/' + n.trim() + '.css?v=20261012-6">';
+      return '<link rel="stylesheet" href="styles/' + n.trim() + '.css' + (VER ? '?v=' + VER : '') + '">';
     }).join('');
     return '<!doctype html><html lang="ko" data-theme="' + theme + '" data-section="' + section + '">' +
       '<head><meta charset="utf-8"><base href="' + ROOT + '">' + links +
@@ -149,7 +157,9 @@
     var themes  = (item.dataset.themes || 'light,dark').split(',');
 
     var stage = document.createElement('div');
-    stage.className = 'sg-stage' + (themes.length === 1 ? ' sg-stage--one' : '');
+    // data-stack: 라이트·다크를 위아래로 쌓는다 — 화면 CSS 에 좁은 폭 규칙(@media)이 있는 부품은
+    // 반쪽 액자에서 모바일 모양으로 그려지므로, 액자를 화면 폭 그대로 세운다
+    stage.className = 'sg-stage' + (themes.length === 1 || item.dataset.stack ? ' sg-stage--one' : '');
 
     themes.forEach(function (t) {
       t = t.trim();
@@ -225,10 +235,69 @@
     });
   }
 
+  /* ------------------------------------------------------------------
+     ④ 규칙 번호 — 본문의 <code>RM-XXX-NN</code> 은 규칙 색인 카드로 가는 링크가 된다.
+        규칙 색인 장에서는 카드 머리에 번호·검사 딱지를 달고, 영역별 요약 표를 그린다.
+     ------------------------------------------------------------------ */
+  var ID_RE = /^RM-[A-Z]+-\d{2}$/;
+  function linkRuleIds() {
+    var here = location.pathname.split('/').pop();
+    document.querySelectorAll('.sg-main code').forEach(function (c) {
+      var id = c.textContent.trim();
+      if (!ID_RE.test(id) || c.closest('a, .sg-rulecard h3')) return;
+      var a = document.createElement('a');
+      a.className = 'sg-rid'; a.textContent = id;
+      a.href = DIR + 'rules.html#' + id;
+      if (here === 'rules.html') a.addEventListener('click', function (e) {
+        var t = document.getElementById(id); if (!t) return;
+        e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        history.replaceState(null, '', location.pathname + '#' + id);
+      });
+      c.replaceWith(a);
+    });
+  }
+  var CHECK_KO = { 'style-audit': 'style-audit', 'color-audit': 'color-audit', 'cta-check': 'cta-check',
+                   'screen-diff': '화면 대조', 'usage-scan': 'usage-scan', hook: '커밋 훅', eye: '눈' };
+  function buildRuleCards() {
+    var cards = [].slice.call(document.querySelectorAll('.sg-rulecard[id]'));
+    if (!cards.length) return;
+    cards.forEach(function (c) {
+      var checks = (c.dataset.check || '').split(',').map(function (x) { return x.trim(); }).filter(Boolean);
+      var hd = document.createElement('div'); hd.className = 'sg-rulecard__hd';
+      hd.innerHTML = '<a class="sg-rulecard__id" href="' + DIR + 'rules.html#' + c.id + '">' + c.id + '</a>' +
+        checks.map(function (k) {
+          return '<span class="sg-chk" data-k="' + (k === 'eye' ? 'eye' : 'tool') + '">' + (CHECK_KO[k] || k) + '</span>';
+        }).join('') + (c.dataset.since ? '<span class="sg-rulecard__since">' + c.dataset.since + '</span>' : '');
+      c.insertBefore(hd, c.firstChild);
+    });
+    var box = document.getElementById('ruleSummary');
+    if (!box) return;
+    var rows = [].slice.call(document.querySelectorAll('.sg-sec[id]')).map(function (sec) {
+      var cs = sec.querySelectorAll('.sg-rulecard'); if (!cs.length) return '';
+      var tool = [].filter.call(cs, function (c) { return c.dataset.check.split(',').some(function (k) { return k.trim() !== 'eye'; }); }).length;
+      var h = sec.querySelector('h2');
+      return '<tr><td><a href="' + DIR + 'rules.html#' + sec.id + '" data-sec="' + sec.id + '"><strong>' + sec.id + '</strong> ' +
+        h.childNodes[0].textContent.trim() + '</a></td><td>' + cs.length + '</td><td>' + tool + '</td><td>' + (cs.length - tool) + '</td></tr>';
+    }).join('');
+    box.innerHTML = '<table class="sg-table"><thead><tr><th>영역</th><th style="width:90px">규칙</th>' +
+      '<th style="width:120px">기계가 잡는다</th><th style="width:120px">눈으로 본다</th></tr></thead><tbody>' + rows +
+      '<tr><td><strong>합계</strong></td><td><strong>' + cards.length + '</strong></td><td colspan="2"></td></tr></tbody></table>';
+    box.addEventListener('click', function (e) {
+      var a = e.target.closest('a[data-sec]'); if (!a) return;
+      e.preventDefault(); document.getElementById(a.dataset.sec).scrollIntoView({ behavior: 'smooth' });
+    });
+  }
+
   /* ------------------------------------------------------------------ */
   function init() {
+    buildRuleCards();
+    linkRuleIds();
     buildNav();
     document.querySelectorAll('.sg-item').forEach(buildStage);
+    if (location.hash) {
+      var t = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+      if (t) setTimeout(function () { t.scrollIntoView({ block: 'center' }); t.classList.add('is-target'); }, 60);
+    }
     fetch(DIR + 'usage.json')
       .then(function (r) { return r.json(); })
       .then(attachUsage)

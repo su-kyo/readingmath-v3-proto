@@ -19,6 +19,7 @@
        http://localhost:8020/tools/color-audit.html            범위 전체
        ...?only=type/quiz                                       한 화면만
        결과는 표 + window.__audit (JSON)
+       ...?dump=1                                               결과 JSON 을 <pre id="dump"> 로도 남긴다(헤드리스 전후 대조)
      한계
        배경 그림(사진·그라데이션) 위 글자는 계산 못 해서 「그림 위」로만 표시한다.
      ========================================================================= -->
@@ -195,6 +196,8 @@
       }
     }
     render(); st.textContent = '끝 — ' + ALL.length + '건 (window.__audit)';
+    // ?dump=1 — 헤드리스(--dump-dom)로 돌릴 때 결과를 페이지에 남긴다. 전후 대조용 (2026-10-14)
+    if (qs.get('dump')) { var pre = document.createElement('pre'); pre.id = 'dump'; pre.textContent = JSON.stringify(ALL); document.body.appendChild(pre); }
   }
   function render() {
     var key = {}, rows = [];

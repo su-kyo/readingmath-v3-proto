@@ -2,22 +2,24 @@
 
 수학·과학 태블릿 학습 서비스의 리디자인 프로토타입. 프레임워크 없는 HTML·CSS·JS.
 폴더 구조와 화면 목록은 `README.md`, 디자인 시스템(원칙·부품·예외)은 **스토리북 `styleguide/`** 를 본다.
+**규칙에는 번호가 있다(`RM-영역-번호`, 2026-10-14).** 정본은 `styleguide/rules.html`이고 이 파일 끝의 「규칙 색인」은
+`tools/rules-build.py`가 만든다 — 규칙을 바꾸면 정본 카드를 고치고 그 도구를 돌린다(손으로 색인을 고치지 않는다).
 (`docs/design-system.md`는 2026-10-12부터 안내 한 장이다 — 옛 v1.0 본문은 낡았다.)
 상위 공통 규칙(`../../CLAUDE.md` — 이미지 경량본·_source 원본 보관)이 함께 적용된다.
 
 ## 반드시 지킬 것
 
-**① 하위 폴더 화면에는 `<base href="../">` 한 줄.**
+**① 하위 폴더 화면에는 `<base href="../">` 한 줄.** (`RM-FILE-05`)
 `<head>` 바로 아래에 넣는다. 이 덕분에 모든 경로(styles·scripts·assets·화면 링크)를
 최상위 기준으로 쓴다. 루트의 `index.html`에는 넣지 않는다 (`styleguide/` 4장은 하위 폴더라 붙인다).
 
-**② 색은 `styles/tokens.css`의 변수로만 쓴다.**
+**② 색은 `styles/tokens.css`의 변수로만 쓴다.** (`RM-COL-01`·`02`·`05`)
 화면 CSS·JS에 색값(hex·rgb)을 직접 쓰지 않는다(지금 0곳 — `tools/style-audit.py`가 잰다).
 반투명은 알파 램프(`--white-a10` · `--black-a30`), 색이 섞인 반투명은
 `color-mix(in srgb, var(--가족-스텝) N%, transparent)`로 쓴다. 마스크의 흑백은 색이 아니라 예외다.
 예외 목록은 스토리북 「패턴 › 남긴 예외」와 `style-audit.py`의 `EXCEPT`가 같다.
 
-**②-1 대비 잣대는 하나가 아니다 (v1.6 · 스토리북 「기초 › 칠면 셋」).**
+**②-1 대비 잣대는 하나가 아니다 (v1.6 · 스토리북 「기초 › 칠면 셋」 · `RM-FILL-01`~`08`).**
 "모든 칠면에 흰 글자 4.5"를 일률 적용해 화면 전체가 칙칙해진 적이 있다. 칠면은 셋이다:
 
 - **텍스트 칠면** (작은 글자) → 4.5:1 · 600 스텝(`--th-solid`) 또는 틴트+잉크
@@ -27,18 +29,18 @@
 
 앰버는 흰 글자를 못 얹는다 — 채움은 `--warn-solid` + 어두운 글자.
 **정오답 배지는 500**(테두리와 같은 색) + 숫자 20px w800(`--fs-20`)이나 ✓·✕ 아이콘 — 600으로 내리면 탁해진다.
-**칠면은 테마에 따라 안 뒤집히므로 그 위 글자도 다크에서 흰색 그대로.**
+**칠면은 테마에 따라 안 뒤집히므로 그 위 글자도 다크에서 흰색 그대로** — `--text-on-accent`로 쓴다(버튼·배지·프레임·GNB·우주 크롬처럼 안 뒤집히는 면 위 글자 전부).
 예외 하나: 콘솔바 주황 버튼의 14px 라벨(3.06) — 브랜드 인상 때문에 둔다(2026-10-14).
 **색이 칙칙해 보인다고 채도만 다시 올리지 말 것** — 그 시소를 두 번 탔다.
 정책(어떤 칠면에 어떤 글자)을 먼저 확인한다.
 
-**②-2 팔레트 hex는 손으로 고치지 않는다.**
+**②-2 팔레트 hex는 손으로 고치지 않는다.** (`RM-COL-03`·`04`)
 `tools/palette-gen.py`를 고쳐 재생성한다(450은 `solve_identity()`가 대비로 풀어 낸다).
 색을 건드렸으면 `tools/cta-check.html`을 열어 CTA가 홈 32배경에서 버티는지 확인한다
 (현재 32/32 통과, 최악 3.05). 상태색 `--*-vivid`의 **일괄 치환은 금지** —
 다크 호버면에서 대비가 깨지는 경계가 있어 화면별로 눈으로 보며 넓힌다.
 
-**②-4 학습 화면의 면 규칙 (2026-10-14 컬러 정리).** 색을 흰색에 옅게 섞은 면을 만들지 않는다 —
+**②-4 학습 화면의 면 규칙 (2026-10-14 컬러 정리 · `RM-SURF-01`~`05` · 스토리북 「기초 › 면 규칙」).** 색을 흰색에 옅게 섞은 면을 만들지 않는다 —
 빨강은 분홍, 초록은 쑥색, 주황+푸른 회색은 탁한 분홍·갈색이 된다. 그래서:
 - **정오답 칸**: 면은 기본 면(`--opt-bg`) 그대로, 상태는 2px 선(500) · 배지(500) · 글자로만.
   글자는 라이트 `--ok-ink`/`--no-ink`(600) · 다크 `--ok-on-dark`/`--no-on-dark`(300) — 개념 다지기의 `--st-ok`/`--st-no` 방식.
@@ -47,8 +49,9 @@
 - **프레임**: `--th-static` = 600(서술형 700). 헤더 칩은 `--th-static-deep`, 아이콘 버튼은 `--th-accent` —
   검정·흰 반투명 덧칠은 진한 프레임을 회색으로 죽인다. 틸·주황·앰버의 진한 단계는 그 명도의 최대 채도라 채도로는 못 살린다.
 - 검수: `tools/color-audit.html`.
+- **알려진 미적용** — 시험 풀이(`exam-solve.css`)의 정오답 칸은 아직 틴트 면 + 라이트 정답 배지 600. 10-14 정리에서 빠졌고 1차 범위 밖이라 보류(사용자 판단 대기).
 
-**②-3 유틸 4화면은 색 체계가 따로다 (`styles/util.css` · Phase 7-6).**
+**②-3 유틸 4화면은 색 체계가 따로다 (`styles/util.css` · Phase 7-6 · `RM-UTIL-01`~`06`).**
 면은 **뉴트럴-쿨 램프(n-000/050/100) 하나로만** 쌓고, 파랑은 점·선·글자로만 쓴다.
 **초록·앰버를 쓰지 않는다** — hue가 멀어 화면이 얼룩진다(그래서 한 번 갈아엎었다).
 **「선택 = 반전 칠」이 단일 규칙**이고(필터·페이지네이션·과목·기간·결제수단),
@@ -57,17 +60,17 @@
 `localStorage['rm-theme']`를 읽어 `'light'`일 때만 `data-theme`를 붙인다.
 유틸에 테마 토글 버튼은 없다.
 
-**③ 이미지는 쓰임 기준으로 분류한다.**
+**③ 이미지는 쓰임 기준으로 분류한다.** (`RM-ASSET-01`~`05`)
 - 그림(webp) → `assets/img/` (bg·home·planets·strands·grade·misc)
 - 아이콘(svg) → `assets/icons/` — 색은 파일 복제가 아니라 코드로 바꾼다
 - PNG 등 원본은 프로젝트에 넣지 않는다. `~/Documents/_source/RM/`에 둔다
   (깃 없음 — 삭제·덮어쓰기 전 반드시 사용자 확인)
 
-**④ 화면을 새로 만들면 `index.html` 목록에도 추가한다.**
+**④ 화면을 새로 만들면 `index.html` 목록에도 추가한다.** (`RM-FILE-07`)
 계열 폴더(nav·concept·type·essay·assignment·exam·util·shared)와
 index의 그룹 분류는 같은 단위다 — 둘이 어긋나게 두지 않는다.
 
-**⑤ 행성 홈(`nav/home.html`)은 좌표 고정 · 그림 교체 방식이다.** 배치표 `LAYOUT`·`HAS_CHAR`·`CHAR_V`는 `scripts/nav-home.js`에 있다.
+**⑤ 행성 홈(`nav/home.html`)은 좌표 고정 · 그림 교체 방식이다.** (`RM-ASSET-04`) 배치표 `LAYOUT`·`HAS_CHAR`·`CHAR_V`는 `scripts/nav-home.js`에 있다.
 학기 16종 × 과목 2종 = 32화면이지만 배치는 `LAYOUT`의 **과목당 한 벌**뿐이다.
 학기를 늘려도 좌표를 새로 잡지 않는다 — `assets/img/home/<과목>-<학기>/`에
 같은 이름으로 그림만 넣으면 된다. 원본 32세트가 모두 지키는 자리 규칙:
@@ -89,7 +92,7 @@ index의 그룹 분류는 같은 단위다 — 둘이 어긋나게 두지 않는
 고정이라 안 올리면 브라우저가 옛 그림을 계속 쓴다. 제작 규칙은 `docs/character-brief.md`.
 32화면을 한눈에 보려면 `tools/home-contact.html` (배포 제외).
 
-**⑥ 화면 파일 규칙 (마감 회차 2026-10-12 · RMDS v2.0).**
+**⑥ 화면 파일 규칙 (마감 회차 2026-10-12 · RMDS v2.0 · `RM-FILE-*` · `RM-NAME-*` · `RM-JS-*`).**
 - **HTML 안에 `<style>`·`<script>`를 쓰지 않는다.** 화면 CSS는 `styles/screens/<계열>-<화면>.css`,
   화면 JS는 `scripts/<계열>-<화면>.js`. 예외는 `<head>`의 테마 초기화 한 줄(빼면 첫 화면이 깜빡인다)과
   스토리북의 데모 틀(`<template>`) 안뿐이다.
@@ -104,7 +107,13 @@ index의 그룹 분류는 같은 단위다 — 둘이 어긋나게 두지 않는
   (`scripts/nav-home.js`의 `--m` — `new URL(src, document.baseURI)`).
 - **`components.css`에는 화면이 실제로 쓰는 것만 둔다.** 「언젠가 쓸」 라이브러리 부품은 만들지 않는다 —
   마감 회차에 그런 부품 17종을 걷어냈고, 그중 셋(`.blank`·`.block`·`.grade`)은 이름이 같은 화면 부품에 속성이 새고 있었다.
-- 고치고 나면: `python3 tools/style-audit.py`(지킬 것 6개 전부 ✓) → `tools/usage-scan.py` → `?v=` 올리기.
+- **JS는 스타일을 만들지 않는다**(`RM-JS-01`, 2026-10-14) — `<style>` 주입·색·글자·여백 인라인 금지. 계산값(위치·크기·진행률)·데이터값(그림 주소, CSS 변수 하나)·보이기/숨기기만.
+  서랍 CSS는 `gnb.css` 끝, 연습장 CSS는 `styles/scratchpad.css`(화면 CSS 바로 뒤에 부른다).
+- **치수 (`RM-SIZE-01`~`03`, 2026-10-14 A안)** — 눈금에 있는 값(글자·간격·모서리·선 굵기 `--bw-1/1_5/2/3/4`·볼록 두께 `--depth-2/4`)은 px로 쓰지 않는다(검사 0).
+  부품 고유 치수·위치 미세조정·`clamp()` 끝값·@media 조건은 px 허용. 눈금 밖 간격·글자·모서리는 「지켜볼 것」 — 맞추면 화면이 바뀌니 디자인 판단 때.
+- 공용 파일로 규칙을 올릴 때 **`url()` 경로를 그 파일 기준으로 다시 쓴다** — `screens/`는 `../../assets`, `styles/`는 `../assets` (`RM-FILE-08`).
+- 고치고 나면: `python3 tools/style-audit.py`(지킬 것 9개 전부 ✓) → `tools/color-audit.html` → `tools/usage-scan.py`
+  → `tools/screens-build.py` · `tools/tokens-build.py` · `tools/rules-build.py`(개발자 파일) → `?v=` 올리기.
 
 ## 조심할 것
 
@@ -159,7 +168,7 @@ Phase 6에서 키패드가 한 벌(`.keypad__key`)로 합쳐져 이 파일도 �
 「확인」이 무엇을 하는지는 화면이 정한다 — 개념·유형은 닫기, 서술형은 채점,
 과제 좌측은 다음 문제, 답안표는 접기, 시험은 제출.
 
-**연습장 — `scripts/scratchpad.js`.** 한 줄만 부르면 그 화면의 「연습장」 버튼에 알아서
+**연습장 — `scripts/scratchpad.js` + `styles/scratchpad.css`.** 둘을 부르면(CSS는 화면 CSS 바로 뒤) 그 화면의 「연습장」 버튼에 알아서
 붙는다(22개 화면). 화면 위를 덮는 투명 캔버스에 바로 필기하고, 딤은 필기 뒤에 깔리되
 **문제 영역(`.content`/`.rframe`)과 콘솔바는 딤에서 빠진다.**
 도구 바는 **그 화면의 `.bar`를 복제해 네이비로 다시 칠한 것**이라 트레이 형태와
@@ -173,14 +182,17 @@ Phase 6에서 키패드가 한 벌(`.keypad__key`)로 합쳐져 이 파일도 �
 
 ## 세미 스토리북 (Phase 10-④ 신설 · 배포 포함)
 
-`styleguide/` 4장이 디자인 시스템 문서다. **`index.html`에서 바로 갈 수 있다.**
+`styleguide/` 6장이 디자인 시스템 문서다. **`index.html`에서 바로 갈 수 있다.**
 
 ```
 styleguide/foundations.html   색 3단 · 칠면 셋 · 글자/간격/모서리/층 눈금
 styleguide/components.html    버튼 · 상태 타일 · 빈칸 · 선택지 · 계기판 · 토스트 (화면이 쓰는 것만)
 styleguide/shells.html        GNB/서랍 · 학습 헤더 · 콘솔바 · 보조 모니터 · 키패드 · 연습장
-styleguide/patterns.html      목록 네 상태 · 유틸 예외 체계 · JS가 넣는 변수 · 검수 스위치
-styleguide/sg.css · sg.js     네 장이 공유하는 뼈대 (목록 · 액자 · 배지)
+styleguide/patterns.html      목록 네 상태 · 유틸 예외 체계 · JS가 넣는 변수 · 검수 스위치 · 남긴 예외
+styleguide/rules.html         규칙 색인 — RM-영역-번호 51개의 정본 (2026-10-14)
+styleguide/screens.html       화면 지도 — 화면마다 부품 · 토큰 · 규칙 (data/screens.json 을 그린다)
+styleguide/data/              개발자용 tokens.json(DTCG) · rules.json · screens.json — 스크립트가 만든다
+styleguide/sg.css · sg.js     여섯 장이 공유하는 뼈대 (목록 · 액자 · 배지 · 규칙 카드 · 본문의 RM-번호 링크)
 styleguide/usage.json         tools/usage-scan.py 가 만든 사용 집계
 ```
 
@@ -191,7 +203,9 @@ iframe 두 개(`srcdoc`)에 넣고 `styles/`의 **진짜 CSS**를 불러 그린�
 
 부품을 추가할 때는 `.sg-item`에 `data-uses="클래스"`만 적으면 「쓰는 화면 N」이
 자동으로 붙는다. 쓸 수 있는 속성: `data-section` · `data-css`(액자가 부를 스타일시트) ·
-`data-themes`(기본 `light,dark`) · `data-pad` · `data-bg`.
+`data-themes`(기본 `light,dark`) · `data-pad` · `data-bg` · `data-stack`(라이트·다크를 위아래로 — 화면 CSS에
+좁은 폭 @media가 있는 부품은 반쪽 액자에서 모바일 모양이 되므로 이걸 쓴다).
+액자가 부르는 CSS의 `?v=`는 문서의 `sg.css` 링크에서 따온다 — 브라우저 캐시 때문에 「고쳤는데 데모가 옛 모양」이면 `?v=`부터 본다.
 
 **부품·공용 CSS를 고쳤으면 `tools/usage-scan.py`를 다시 돌린다.**
 
@@ -206,7 +220,9 @@ iframe 두 개(`srcdoc`)에 넣고 `styles/`의 **진짜 CSS**를 불러 그린�
 `planet-ref.py`(캐릭터 생성용 행성 자료 뽑기) · `char-on-bg.py`(캐릭터를 홈 배경에 올려
 대비 판정 — 몸 대비·자체 대비를 숫자로 찍는다) ·
 `usage-scan.py`(부품별 쓰는 화면 집계 → 스토리북) ·
-`style-audit.py`(스타일 규칙 검사 — 지킬 것 6 · 지켜볼 것 4, `--strict`면 실패 시 종료 코드 1) ·
+`style-audit.py`(스타일 규칙 검사 — 지킬 것 9 · 지켜볼 것 5, 줄마다 규칙 번호, `--strict`면 실패 시 종료 코드 1) ·
+`rules-build.py`(규칙 색인 → `rules.json` · CLAUDE.md 색인 + 번호 대조) · `tokens-build.py`(`tokens.css` → `tokens.json`) ·
+`screens-build.py`(화면 → `screens.json`, usage-scan 다음에) ·
 `dark-shot.html`(다크 모드 화면을 헤드리스로 찍는 액자 — `screen-shot.sh`는 라이트만 찍힌다) ·
 `color-audit.html`(그려진 화면의 글자·면 대비를 화면×테마×디버그 상태별로 잰다 — 다크용 색이 라이트에 새는 곳을 잡는다. 테마 토글이 없는 결과 화면은 그 테마 하나만 정식 기준으로 잰다)
 
@@ -248,3 +264,73 @@ tools/screen-diff.py /tmp/rm-before /tmp/rm-after
   Portfolio 폴더에서 세션을 열면 공통 설정의 **rm-static**(8040)을 쓴다(8020은 회사 MT와 겹친다).
   `screen-shot.sh`에 포트를 넘긴다: `tools/screen-shot.sh /tmp/x 8040`.
 - 배포: 푸시하면 Vercel 자동 배포. `figma-palette`·`tools`·`video`·`docs`·`generated`·`CLAUDE.md`는 배포 제외(`.vercelignore`).
+
+## 규칙 색인 (2026-10-14)
+
+<!-- rules:start (tools/rules-build.py 가 쓴다 — 손으로 고치지 않는다) -->
+
+규칙 색인 — 정본은 스토리북 `styleguide/rules.html`(근거·검사·예외는 거기). 인용은 번호로 한다.
+
+- **COL** 색
+  - `RM-COL-01` 색은 `tokens.css`의 변수로만 쓴다
+  - `RM-COL-02` 반투명은 알파 램프 또는 「가족 스텝을 N% 섞기」 두 문법만
+  - `RM-COL-03` 팔레트 hex는 손으로 고치지 않는다 — 생성기로 다시 만든다
+  - `RM-COL-04` 상태색 `--*-vivid`를 일괄 치환하지 않는다 (눈)
+  - `RM-COL-05` 화면은 2단 역할 토큰부터 찾는다
+- **FILL** 칠면
+  - `RM-FILL-01` 작은 글자가 올라가는 칠면은 600 스텝 · 4.5:1
+  - `RM-FILL-02` 정체성 칠면은 450 스텝 · 3:1 · 라벨 19px w700 이상
+  - `RM-FILL-03` 글자 없는 장식면은 400 스텝 · 면 대비 3:1 (눈)
+  - `RM-FILL-04` 앰버 위에는 흰 글자를 얹지 않는다
+  - `RM-FILL-05` 정오답 배지는 500 · 숫자 20px w800 또는 ✓·✕
+  - `RM-FILL-06` 칠면 위 글자는 다크에서도 흰색 — `--text-on-accent`
+  - `RM-FILL-07` 칙칙해 보이면 채도부터 올리지 않는다 (눈)
+  - `RM-FILL-08` CTA는 홈 32배경 모두에서 면 대비 3:1을 버틴다
+- **SURF** 학습 화면의 면
+  - `RM-SURF-01` 색을 흰색에 옅게 섞은 면을 만들지 않는다 (눈)
+  - `RM-SURF-02` 정오답 칸은 면을 칠하지 않는다 — 선 · 배지 · 글자로만
+  - `RM-SURF-03` 해설 박스는 면 없이 왼쪽 4px 계열색 띠 (눈)
+  - `RM-SURF-04` 보기 박스와 선지는 같은 테두리 한 벌 — 보기가 선지보다 진하면 안 된다 (눈)
+  - `RM-SURF-05` 프레임은 계열 600(서술형·시험 700) — 그 위에 반투명을 덧칠하지 않는다 (눈)
+- **UTIL** 유틸 4화면
+  - `RM-UTIL-01` 면은 뉴트럴-쿨 램프 하나로 쌓고, 파랑은 점·선·글자로만 (눈)
+  - `RM-UTIL-02` 유틸에는 초록·앰버를 쓰지 않는다 (눈)
+  - `RM-UTIL-03` 선택 = 반전 칠, 한 규칙 (눈)
+  - `RM-UTIL-04` 목록은 테두리 시트, 선택지는 타일 — 떠 있는 블록과 갭을 쓰지 않는다 (눈)
+  - `RM-UTIL-05` 다크가 기본, 라이트도 산다 — 테마 토글 버튼은 없다 (눈)
+  - `RM-UTIL-06` 목록은 네 상태를 다 갖춘다 — 정상 · 로딩 · 빈 목록 · 실패 (눈)
+- **SIZE** 치수
+  - `RM-SIZE-01` 글자·간격·모서리는 눈금 토큰으로 — 눈금에 있는 값을 px로 쓰지 않는다
+  - `RM-SIZE-02` 선 굵기와 볼록 두께도 눈금 — `--bw-*` · `--depth-*`
+  - `RM-SIZE-03` px를 허용하는 곳은 넷 — 부품 고유 치수 · 위치 미세조정 · 반응형 끝값 · @media 조건
+  - `RM-SIZE-04` 층위는 화면끼리만 `--z-*` 6단 — 부품 안쪽 순서는 1~9 (눈)
+- **FILE** 파일
+  - `RM-FILE-01` HTML 안에 `<style>`·`<script>`를 쓰지 않는다
+  - `RM-FILE-02` 화면 파일 이름은 `<계열>-<화면>` (눈)
+  - `RM-FILE-03` 계열이 같이 쓰는 규칙은 계열 파일로, 여러 계열이면 `components.css`
+  - `RM-FILE-04` `components.css`에는 화면이 실제로 쓰는 부품만 둔다
+  - `RM-FILE-05` 하위 폴더 화면은 `<head>` 바로 아래 `<base href="../">`
+  - `RM-FILE-06` CSS·JS를 고쳤으면 전 화면의 `?v=`를 그날 날짜로
+  - `RM-FILE-07` 새 화면은 `index.html` 목록에도 넣는다 (눈)
+  - `RM-FILE-08` 그림 주소는 그것을 해석하는 파일 기준 — 변수에 넣을 때는 절대 주소로
+- **NAME** 이름
+  - `RM-NAME-01` 뜻 하나에 이름 하나 — 같은 이름에 다른 부품을 담지 않는다 (눈)
+  - `RM-NAME-02` 상태는 `.is-*`, 변형은 `--modifier` (눈)
+- **ASSET** 이미지
+  - `RM-ASSET-01` 그림은 webp, 아이콘은 svg, 원본은 프로젝트 밖
+  - `RM-ASSET-02` 아이콘 색은 파일 복제가 아니라 코드로 바꾼다 (눈)
+  - `RM-ASSET-03` 그림이 들어올 빈자리는 `.dummy-img` (눈)
+  - `RM-ASSET-04` 행성 홈은 좌표 고정 · 그림 교체 (눈)
+  - `RM-ASSET-05` 그림과 이어 붙는 색은 에셋 연동색 토큰으로
+- **PART** 공용 부품
+  - `RM-PART-01` 이미 있는 부품을 먼저 찾는다 (눈)
+  - `RM-PART-02` 보조 모니터는 틀만 공용 — 안의 내용은 화면 것 그대로 (눈)
+  - `RM-PART-03` 계산기와 결과 계기판은 정적 하드웨어 — 테마를 따라가지 않는다 (눈)
+  - `RM-PART-04` 수식은 KaTeX — 분수는 `\dfrac`, 슬래시로 적지 않는다 (눈)
+  - `RM-PART-05` 새 학습 화면에는 검수 스위치를 붙인다 (눈)
+- **JS** 스크립트
+  - `RM-JS-01` JS는 스타일을 만들지 않는다
+  - `RM-JS-02` JS가 심는 변수는 목록에 올린다
+  - `RM-JS-03` 조립식 경로는 문자열 검색만 믿지 않는다 — 전 화면 404 검사 (눈)
+
+<!-- rules:end -->

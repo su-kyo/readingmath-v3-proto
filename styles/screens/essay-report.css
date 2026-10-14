@@ -13,24 +13,21 @@
 :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
 :root[data-theme="light"] .content {
   /* 제일 뒤(베이스) = 흰색에 가까운 톤 */
-  background: var(--n-000); border-color: var(--th-static);
+  background: var(--th-panel); border-color: var(--th-static);
   --guide: var(--n-650);
   --rt-line: var(--n-100); --rt-head: var(--n-050); --rt-cell: var(--n-000); --rt-fg: var(--n-650); --rt-sub: var(--text-meta);
 }
 
-.report-wrap::-webkit-scrollbar { width: 10px; }
 
-:root[data-theme="light"] .report-wrap::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--violet-600) 28%, transparent); background-clip: padding-box; }
 
 
 /* ============ 보고서 표 (2열 n행) ============ */
 
-.rt-img img { display: block; width: 100%; height: auto; }
 .rt-span { line-height: 2.5; word-break: keep-all; }   /* 빈칸(32px) 들어가는 줄 → 여유 있는 행간 */
 
 /* 빈칸: 항상 클릭 가능(재편집) — 코어는 essay.css */
 .blank { cursor: pointer; }
-.blank:hover { background: var(--bl-bgh); box-shadow: inset 0 0 0 1px var(--bl-lineh); }
+.blank:hover { background: var(--bl-bgh); box-shadow: inset 0 0 0 var(--bw-1) var(--bl-lineh); }
 
 
 /* ============ 보고서 미리보기 모달 ============ */
@@ -38,14 +35,10 @@
    바이올렛 테마 대신 중성 톤을 유지한다. 테마 전환에 흔들리지 않도록
    시맨틱 대신 고정 뉴트럴 프리미티브(--n-*)로 토큰화. */
 
-.pmodal .monitor__screen { background: var(--n-050); padding: var(--sp-24); }
-.pmodal .monitor__tool svg { width: 16px; height: 16px; }
 
-.pmodal__paper .rt-text { white-space: pre-line; word-break: keep-all; }
 .pmodal__paper .rt-span { line-height: 1.85; word-break: keep-all; }
 
-.rp-img img { display: block; width: 100%; height: auto; }
-.fillin { font-family: var(--font-serif); font-weight: var(--fw-bold); color: var(--th-ink-accent); border-bottom: 1.5px solid var(--th-accent-hi); padding: 0 var(--sp-4); }
+.fillin { font-family: var(--font-serif); font-weight: var(--fw-bold); color: var(--th-ink-accent); border-bottom: var(--bw-1_5) solid var(--th-accent-hi); padding: 0 var(--sp-4); }
 
 @media (max-width: 620px) {
   .report { grid-template-columns: 80px 1fr; }

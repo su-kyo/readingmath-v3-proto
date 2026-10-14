@@ -32,7 +32,7 @@
 .h-nav__arrow svg{ width:18px; height:18px; }
 .h-nav__range{ min-width:172px; text-align:center; font-size:var(--fs-14); font-weight:var(--fw-heavy);
   letter-spacing:-.035em; color:var(--ink); font-variant-numeric:tabular-nums; }
-.h-nav__sep{ width:1px; height:20px; background:var(--rule); margin:0 6px; flex:none; }
+.h-nav__sep{ width:1px; height:20px; background:var(--rule); margin:0 var(--sp-6); flex:none; }
 .h-nav__now{ height:34px; padding:0 var(--sp-12); border:0; border-radius:var(--r-full); background:transparent;
   color:var(--ink-3); font-family:inherit; font-size:var(--fs-13); font-weight:var(--fw-bold); letter-spacing:-.03em;
   cursor:pointer; transition:var(--t-fast); }
@@ -51,10 +51,10 @@
      화면 안에 놓인 블록에는 여전히 쓰지 않는다. */
 .h-calwrap{ position:relative; }
 .h-cal{ position:absolute; top:42px; right:0; z-index:var(--z-float); width:296px; padding:var(--sp-16) var(--sp-16) var(--sp-12);
-  background:var(--surface); border:1.5px solid var(--rule-2); border-radius:var(--r-16);
+  background:var(--surface); border:var(--bw-1_5) solid var(--rule-2); border-radius:var(--r-16);
   box-shadow:0 18px 40px -24px var(--black-a70); display:none; }
 .h-cal.is-open{ display:block; }
-.h-cal__hd{ display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+.h-cal__hd{ display:flex; align-items:center; justify-content:space-between; margin-bottom:var(--sp-12); }
 .h-cal__mo{ font-size:var(--fs-14); font-weight:var(--fw-heavy); letter-spacing:-.04em; color:var(--ink);
   font-variant-numeric:tabular-nums; }
 .h-cal__nav{ width:28px; height:28px; border:0; border-radius:var(--r-8); background:transparent;
@@ -77,12 +77,12 @@
 .h-cal__d.has-rec::after{ content:""; position:absolute; bottom:3px; left:50%; transform:translateX(-50%);
   width:4px; height:4px; border-radius:var(--r-full); background:var(--brand); }
 .h-cal__wk.is-on .h-cal__d.has-rec::after{ background:var(--brand-on-sel); }
-.h-cal__foot{ margin-top:8px; padding-top:var(--sp-8); border-top:1px solid var(--rule);
+.h-cal__foot{ margin-top:var(--sp-8); padding-top:var(--sp-8); border-top:var(--bw-1) solid var(--rule);
   font-size:var(--fs-11); font-weight:var(--fw-semibold); color:var(--ink-3); text-align:center; letter-spacing:-.02em; }
 
 /* ---- 히어로 = 화면에서 유일한 별도 면 (결제 요약 패널과 같은 어법) ---- */
 .h-hero{ display:grid; grid-template-columns:1fr auto; gap:var(--sp-40); align-items:center;
-  background:var(--inset); border:1px solid var(--rule); border-radius:var(--r-22); padding:28px var(--sp-32); }
+  background:var(--inset); border:var(--bw-1) solid var(--rule); border-radius:var(--r-22); padding:28px var(--sp-32); }
 .h-hero__l{ min-width:0; }
 .h-hero__k{ font-size:var(--fs-12); font-weight:var(--fw-heavy); color:var(--ink-3); letter-spacing:.12em; }
 .h-hero__big{ margin-top:10px; font-size:56px; font-weight:var(--fw-heavy); letter-spacing:-.07em; line-height:1;
@@ -91,17 +91,17 @@
 .h-hero__big.is-none{ font-size:var(--fs-26); letter-spacing:-.05em; color:var(--ph); }
 .h-hero__delta{ margin-top:13px; font-size:var(--fs-14); font-weight:var(--fw-bold); letter-spacing:-.035em;
   color:var(--ink-2); font-variant-numeric:tabular-nums; }
-.h-hero__sub{ margin-top:18px; padding-top:var(--sp-16); border-top:1px solid var(--rule);
+.h-hero__sub{ margin-top:18px; padding-top:var(--sp-16); border-top:var(--bw-1) solid var(--rule);
   display:flex; flex-wrap:wrap; align-items:center; gap:var(--sp-8) 0; font-size:var(--fs-13); font-weight:var(--fw-semibold);
   color:var(--ink-3); letter-spacing:-.025em; font-variant-numeric:tabular-nums; }
 .h-hero__sub b{ color:var(--ink); font-weight:var(--fw-heavy); margin-left:5px; }
 .h-hero__sub i{ width:3px; height:3px; border-radius:var(--r-full); background:var(--icon-mute);
-  margin:0 12px; flex:none; }
+  margin:0 var(--sp-12); flex:none; }
 
 /* 4주 스파크 — 이중축 그래프+표(현안)를 단일 지표 막대 4개로 줄인 자리 */
 .h-spark{ flex:none; }
 .h-spark__k{ font-size:var(--fs-11); font-weight:var(--fw-heavy); color:var(--ink-3); letter-spacing:.1em;
-  margin-bottom:12px; text-align:center; }
+  margin-bottom:var(--sp-12); text-align:center; }
 .h-spark__bars{ display:flex; align-items:flex-end; gap:var(--sp-12); }
 .h-sb{ display:flex; flex-direction:column; align-items:center; gap:var(--sp-8); width:44px; }
 .h-sb__v{ font-size:var(--fs-12); font-weight:var(--fw-heavy); color:var(--ink-2); font-variant-numeric:tabular-nums;
@@ -119,7 +119,7 @@
 .h-sb.is-cur .h-sb__wk{ color:var(--ink); font-weight:var(--fw-heavy); }
 
 .h-hero--empty{ grid-template-columns:1fr; }
-.h-hero__act{ margin-top:20px; }
+.h-hero__act{ margin-top:var(--sp-20); }
 .h-hero__big.is-none + .h-hero__delta{ margin-top:9px; }
 
 /* 목록 자리의 빈 문구 — 요약 자리가 이미 말했으니 여기는 한 줄 */
@@ -133,9 +133,9 @@
 
 /* ---- 내용별: 소단원 = 시트 안의 한 칸 ---- */
 .h-sub{ padding:var(--sp-24) var(--sp-24) var(--sp-20); }
-.h-sub + .h-sub{ border-top:1px solid var(--rule); }
+.h-sub + .h-sub{ border-top:var(--bw-1) solid var(--rule); }
 .h-sub__hd{ display:flex; align-items:flex-start; justify-content:space-between; gap:var(--sp-24);
-  margin-bottom:20px; }
+  margin-bottom:var(--sp-20); }
 .h-sub__path{ font-size:var(--fs-12); font-weight:var(--fw-bold); color:var(--ink-3); letter-spacing:-.025em;
   line-height:1.5; }
 .h-sub__nm{ margin-top:5px; font-size:var(--fs-19); font-weight:var(--fw-heavy); letter-spacing:-.05em; color:var(--ink);
@@ -144,25 +144,25 @@
 /* 소단원 결과 — 잠김이면 이유를 그 자리에 쓴다(도움말 박스 폐기 · brief §3-6) */
 .h-res{ flex:none; max-width:210px; text-align:right; font-size:var(--fs-12); font-weight:var(--fw-bold);
   color:var(--ink-3); letter-spacing:-.025em; line-height:1.6; padding:var(--sp-8) var(--sp-12); border-radius:var(--r-12);
-  box-shadow:inset 0 0 0 1px var(--rule); background:transparent; border:0; font-family:inherit; }
+  box-shadow:inset 0 0 0 var(--bw-1) var(--rule); background:transparent; border:0; font-family:inherit; }
 .h-res b{ display:block; margin-bottom:2px; font-size:var(--fs-13); color:var(--ink-2); font-weight:var(--fw-heavy); }
 .h-res--open{ cursor:pointer; transition:var(--t-fast); }
 .h-res--open b{ color:var(--brand-ink); }
-.h-res--open:hover{ box-shadow:inset 0 0 0 1.5px var(--rule-2); background:var(--wash); }
+.h-res--open:hover{ box-shadow:inset 0 0 0 var(--bw-1_5) var(--rule-2); background:var(--wash); }
 
 /* 3열 = 훈련. 갭이 아니라 세로 헤어라인으로 나눈다(떠 있는 블록 금지) */
 .h-cols{ display:grid; grid-template-columns:repeat(3,1fr); }
 .h-col{ padding:0 var(--sp-16); min-width:0; }
 .h-col:first-child{ padding-left:0; }
 .h-col:last-child{ padding-right:0; }
-.h-col + .h-col{ border-left:1px solid var(--rule); }
+.h-col + .h-col{ border-left:var(--bw-1) solid var(--rule); }
 .h-col__k{ font-size:var(--fs-12); font-weight:var(--fw-heavy); color:var(--ink-3); letter-spacing:-.02em;
   margin-bottom:10px; }
 .h-chips{ display:flex; flex-direction:column; gap:var(--sp-6); }
 
 /* 라운드 칩 = 타일 어법 */
 .h-chip{ position:relative; display:block; width:100%; text-align:left; border:0; border-radius:var(--r-12);
-  background:var(--surface); box-shadow:inset 0 0 0 1.5px var(--rule); font-family:inherit;
+  background:var(--surface); box-shadow:inset 0 0 0 var(--bw-1_5) var(--rule); font-family:inherit;
   color:inherit; padding:var(--sp-12) var(--sp-12); transition:var(--t-fast); }
 .h-chip__t{ display:flex; align-items:center; gap:var(--sp-8); }
 .h-chip__r{ flex:none; font-size:var(--fs-11); font-weight:var(--fw-heavy); color:var(--ink-3); letter-spacing:.04em;
@@ -180,18 +180,18 @@
 
 /* 완료 = 누를 수 있다(결과 모달) */
 .h-chip--done{ cursor:pointer; }
-.h-chip--done:hover{ background:var(--wash); box-shadow:inset 0 0 0 1.5px var(--rule-2); }
+.h-chip--done:hover{ background:var(--wash); box-shadow:inset 0 0 0 var(--bw-1_5) var(--rule-2); }
 /* 이번 주에 한 활동 — 「선택」이 아니라 「지금 보는 주의 것」이라 반전 칠을 쓰지 않는다.
    테두리 한 단계 + 파랑 태그로만 표시한다 */
-.h-chip--wk{ box-shadow:inset 0 0 0 1.5px var(--rule-2); }
+.h-chip--wk{ box-shadow:inset 0 0 0 var(--bw-1_5) var(--rule-2); }
 /* 진행 중 · 다음 라운드 · 시작 전 = 이어서 할 자리. 파랑 선+글자 */
-.h-chip--go{ cursor:pointer; box-shadow:inset 0 0 0 1.5px var(--brand); background:transparent; }
+.h-chip--go{ cursor:pointer; box-shadow:inset 0 0 0 var(--bw-1_5) var(--brand); background:transparent; }
 .h-chip--go:hover{ background:var(--wash); }
 /* 잠김 = 점선. 이유를 칩 안에 쓴다 */
-.h-chip--lock{ box-shadow:none; border:1.5px dashed var(--rule-2); background:transparent;
+.h-chip--lock{ box-shadow:none; border:var(--bw-1_5) dashed var(--rule-2); background:transparent;
   padding:var(--sp-8) var(--sp-12); }
 .h-chip--lock .h-chip__st{ font-size:var(--fs-12); font-weight:var(--fw-semibold); color:var(--ink-3); }
-.h-chip:focus-visible{ outline:2px solid var(--brand); outline-offset:2px; }
+.h-chip:focus-visible{ outline:var(--bw-2) solid var(--brand); outline-offset:2px; }
 
 /* 증감 — 색이 아니라 기호·굵기로. 파랑 한 칸만 쓴다(파일 머리 주석 참조) */
 .h-d--up{ color:var(--brand-ink); font-weight:var(--fw-heavy); }
@@ -200,7 +200,7 @@
 
 /* ---- 날짜별 타임라인 ---- */
 .h-day{ padding:var(--sp-20) var(--sp-24) var(--sp-20); }
-.h-day + .h-day{ border-top:1px solid var(--rule); }
+.h-day + .h-day{ border-top:var(--bw-1) solid var(--rule); }
 .h-day__d{ font-size:var(--fs-15); font-weight:var(--fw-heavy); letter-spacing:-.045em; color:var(--ink); margin-bottom:14px; }
 .h-day__d small{ font-size:var(--fs-12); font-weight:var(--fw-bold); color:var(--ink-3); margin-left:7px; letter-spacing:-.02em; }
 .h-day__d em{ font-style:normal; font-size:var(--fs-12); font-weight:var(--fw-bold); color:var(--ink-3); margin-left:9px;
@@ -224,7 +224,7 @@ button.h-ti__bx{ cursor:pointer; }
 button.h-ti__bx:hover{ background:var(--wash); }
 .h-ti__m{ flex:1; min-width:0; }
 .h-ti__what{ display:block; font-size:var(--fs-14); font-weight:var(--fw-heavy); letter-spacing:-.04em; color:var(--ink); }
-.h-ti__where{ display:block; margin-top:4px; font-size:var(--fs-12); font-weight:var(--fw-semibold); color:var(--ink-3);
+.h-ti__where{ display:block; margin-top:var(--sp-4); font-size:var(--fs-12); font-weight:var(--fw-semibold); color:var(--ink-3);
   letter-spacing:-.025em; line-height:1.45; }
 .h-ti__r{ flex:none; display:flex; align-items:baseline; gap:var(--sp-8); }
 .h-ti__min{ font-size:var(--fs-12); font-weight:var(--fw-semibold); color:var(--ink-3); font-variant-numeric:tabular-nums; }
@@ -239,35 +239,35 @@ button.h-ti__bx:hover{ background:var(--wash); }
   background:var(--scrim); }
 .h-modal.is-open{ display:grid; }
 .h-modal__box{ width:600px; max-width:100%; max-height:100%; overflow-y:auto;
-  background:var(--surface); border:1px solid var(--rule-2); border-radius:var(--r-22); padding:28px 28px var(--sp-24); }
+  background:var(--surface); border:var(--bw-1) solid var(--rule-2); border-radius:var(--r-22); padding:28px 28px var(--sp-24); }
 .h-modal__top{ display:flex; align-items:flex-start; justify-content:space-between; gap:var(--sp-16); }
 .h-modal__t{ font-size:var(--fs-22); font-weight:var(--fw-heavy); letter-spacing:-.055em; color:var(--ink); line-height:1.3; }
-.h-modal__s{ margin-top:8px; font-size:var(--fs-13); font-weight:var(--fw-semibold); color:var(--ink-3); line-height:1.6;
+.h-modal__s{ margin-top:var(--sp-8); font-size:var(--fs-13); font-weight:var(--fw-semibold); color:var(--ink-3); line-height:1.6;
   letter-spacing:-.025em; font-variant-numeric:tabular-nums; }
 /* 등급 배지 — 목록은 숫자만, 등급은 여기에만 (brief §4).
    등급마다 색을 바꾸지 않는다: 유틸 체계에 초록·앰버가 없어서 4색 배지를 만들 수 없고,
    억지로 만들면 화면이 얼룩진다. 등급 이름과 문구가 등급을 말한다 */
 .h-grade{ flex:none; text-align:center; padding:var(--sp-12) var(--sp-16); border-radius:var(--r-12);
-  box-shadow:inset 0 0 0 1.5px var(--rule-2); }
+  box-shadow:inset 0 0 0 var(--bw-1_5) var(--rule-2); }
 .h-grade__g{ font-size:var(--fs-26); font-weight:var(--fw-heavy); letter-spacing:-.05em; color:var(--ink); line-height:1; }
 .h-grade__w{ margin-top:5px; font-size:var(--fs-11); font-weight:var(--fw-bold); color:var(--ink-3); letter-spacing:-.01em; }
 
-.h-tb{ width:100%; border-collapse:collapse; margin-top:24px; }
+.h-tb{ width:100%; border-collapse:collapse; margin-top:var(--sp-24); }
 .h-tb th{ text-align:right; font-size:var(--fs-11); font-weight:var(--fw-heavy); color:var(--ink-3); letter-spacing:-.02em;
-  padding:0 0 var(--sp-8); border-bottom:1px solid var(--rule-2); }
+  padding:0 0 var(--sp-8); border-bottom:var(--bw-1) solid var(--rule-2); }
 .h-tb th:first-child{ text-align:left; }
 .h-tb td{ text-align:right; font-size:var(--fs-14); font-weight:var(--fw-bold); color:var(--ink-2); padding:var(--sp-12) 0;
-  border-bottom:1px solid var(--rule); font-variant-numeric:tabular-nums; letter-spacing:-.03em; }
+  border-bottom:var(--bw-1) solid var(--rule); font-variant-numeric:tabular-nums; letter-spacing:-.03em; }
 .h-tb td:first-child{ text-align:left; font-weight:var(--fw-bold); color:var(--ink); letter-spacing:-.04em; }
 .h-tb tr.is-sum td{ border-bottom:0; font-weight:var(--fw-heavy); color:var(--ink); font-size:var(--fs-15);
-  padding-top:var(--sp-16); border-top:1.5px solid var(--rule-2); }
+  padding-top:var(--sp-16); border-top:var(--bw-1_5) solid var(--rule-2); }
 .h-tb .h-d--up, .h-tb .h-d--dn, .h-tb .h-d--eq{ font-size:var(--fs-13); }
 
 .h-modal__act{ display:flex; gap:var(--sp-8); justify-content:flex-end; margin-top:26px; }
 .h-mbtn{ height:48px; padding:0 var(--sp-20); border:0; border-radius:var(--r-12); background:transparent;
-  box-shadow:inset 0 0 0 1.5px var(--rule-2); color:var(--ink); font-family:inherit; font-size:var(--fs-15);
+  box-shadow:inset 0 0 0 var(--bw-1_5) var(--rule-2); color:var(--ink); font-family:inherit; font-size:var(--fs-15);
   font-weight:var(--fw-bold); letter-spacing:-.035em; cursor:pointer; transition:var(--t-fast); }
-.h-mbtn:hover{ box-shadow:inset 0 0 0 1.5px var(--ink); }
+.h-mbtn:hover{ box-shadow:inset 0 0 0 var(--bw-1_5) var(--ink); }
 .h-mbtn--p{ background:var(--sel-bg); color:var(--sel-fg); box-shadow:none; font-weight:var(--fw-heavy); }
 .h-mbtn--p:hover{ background:var(--sel-bg); box-shadow:none; opacity:.88; }
 
@@ -278,7 +278,7 @@ button.h-ti__bx:hover{ background:var(--wash); }
   .h-cols{ grid-template-columns:1fr; }
   .h-col{ padding:var(--sp-16) 0 0; }
   .h-col:first-child{ padding-top:0; }
-  .h-col + .h-col{ border-left:0; border-top:1px solid var(--rule); }
+  .h-col + .h-col{ border-left:0; border-top:var(--bw-1) solid var(--rule); }
   .h-sub__hd{ flex-direction:column; gap:var(--sp-12); }
   .h-res{ max-width:none; text-align:left; align-self:stretch; }
 }

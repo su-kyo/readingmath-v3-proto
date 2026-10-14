@@ -51,8 +51,8 @@
   var C = 2 * Math.PI * 34, off = C * (1 - AVG / 100);
   var hero = '<div class="hero">' +
     '<div class="ring"><svg viewBox="0 0 80 80">' +
-      '<circle cx="40" cy="40" r="34" fill="none" style="stroke:var(--n-100)" stroke-width="7"/>' +
-      '<circle cx="40" cy="40" r="34" fill="none" style="stroke:var(--s-green)" stroke-width="7" stroke-linecap="round" ' +
+      '<circle cx="40" cy="40" r="34" fill="none" class="ring__track" stroke-width="7"/>' +
+      '<circle cx="40" cy="40" r="34" fill="none" class="ring__val" stroke-width="7" stroke-linecap="round" ' +
         'stroke-dasharray="' + C.toFixed(1) + '" stroke-dashoffset="' + off.toFixed(1) + '"/>' +
     '</svg><span class="ring__c"><b>' + AVG + '</b></span></div>' +
     '<div class="hero__body"><span class="hero__k">평균 점수</span>' +
@@ -98,7 +98,7 @@
     return '<article class="card">' +
       '<div class="card__main"><span class="card__title">' + d.title + '</span>' +
         '<div class="metarow"><span class="unit">' + d.unit + '</span>' + sep() + metaDate('출제', d.open) + sep() + metaDate('제출', d.sent) +
-          '<span class="meta">· 정답 <b style="color:var(--s-green)">' + d.correct + '</b>/' + d.total + '문항</span>' +
+          '<span class="meta">· 정답 <b class="meta__ok">' + d.correct + '</b>/' + d.total + '문항</span>' +
         '</div>' +
       '</div>' +
       '<div class="scoreblk"><div class="scoreblk__col">' +

@@ -8,8 +8,9 @@
 가장 쉬운 방법: **`index.html`을 더블클릭**해서 브라우저로 열면 됩니다.
 
 - `index.html` — 시작 페이지 (화면 전체 목록)
-- `styleguide/` — 세미 스토리북 4장(기초 · 부품 · 셸 · 패턴). 부품마다 라이트/다크를
-  나란히 세우고 「쓰는 화면 수」를 자동으로 센다. 배포에 포함된다
+- `styleguide/` — 세미 스토리북 6장(기초 · 부품 · 셸 · 패턴 · 규칙 색인 · 화면 지도). 부품마다 라이트/다크를
+  나란히 세우고 「쓰는 화면 수」를 자동으로 센다. 규칙마다 번호(`RM-영역-번호`)가 있다. 배포에 포함된다
+- `styleguide/data/` — 개발자용 `tokens.json` · `rules.json` · `screens.json`. 스크립트가 만든다(손으로 쓰지 않는다)
 
 > 학습 화면은 라이트로 시작하고 오른쪽 위 ☀ / ☾ 버튼으로 다크로 바꿉니다(고른 테마는 기억됩니다).
 > 행성 홈 · 결과 화면은 항상 다크(우주선), 유틸 화면은 다크가 기본입니다.
@@ -25,7 +26,8 @@
 ```
 RM/
 ├─ index.html            진입 · 화면 목록
-├─ styleguide/          세미 스토리북 (기초·부품·셸·패턴 + sg.css·sg.js·usage.json)
+├─ styleguide/          세미 스토리북 (기초·부품·셸·패턴·규칙 색인·화면 지도 + sg.css·sg.js·usage.json)
+│  └─ data/               개발자용 tokens.json · rules.json · screens.json (tools/*-build.py 가 만든다)
 │
 ├─ nav/                  메인 · 홈 / 네비게이션
 │  ├─ home.html            기본 모드 홈 (행성 메인)
@@ -214,6 +216,8 @@ webp로 바꿔 그대로 남겨뒀습니다.
 예전에는 `tokens.css` · `design-system.md` · `design-tokens.json` 셋이 서로 조금씩 달랐습니다.
 마감 회차(2026-10-12)에 **값은 `styles/tokens.css`, 설명은 스토리북 `styleguide/`** 하나씩으로 모았습니다.
 스토리북은 토큰의 계산값을 읽어 그리므로 둘이 어긋날 수 없고, 낡은 스냅샷(json)은 지웠습니다.
+2026-10-14부터 개발자에게 넘기는 json(`styleguide/data/`)이 다시 생겼지만, 이번엔 **스크립트가 원본에서 매번 새로 만드는 것**이라
+손으로 고친 스냅샷이 아닙니다 — `tools/tokens-build.py` · `rules-build.py` · `screens-build.py`.
 
 ### video 폴더는 깃에 없습니다
 

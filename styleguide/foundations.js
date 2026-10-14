@@ -112,9 +112,9 @@
 
   /* ---- 글자 눈금 ---- */
   var SAMPLE = '우주 탐험 학습 Reading Math 0123';
-  document.getElementById('fs').innerHTML = [11,12,13,14,15,16,19,22,26,32].map(function (n) {
+  document.getElementById('fs').innerHTML = [11,12,13,14,15,16,19,20,22,26,32].map(function (n) {
     var use = { 11:'캡션 · 배지 글자', 12:'메타 · 작은 라벨', 13:'보조 · 목록 항목', 14:'본문 보조',
-      15:'본문', 16:'강조 본문 · 타이머', 19:'정체성 라벨 최소 · CTA', 22:'소제목',
+      15:'본문', 16:'강조 본문 · 타이머', 19:'정체성 라벨 최소 · CTA', 20:'정오답 배지 숫자', 22:'소제목',
       26:'화면 제목', 32:'결과 히어로 숫자' }[n];
     return '<div class="sg-type"><small>--fs-' + n + ' · ' + n + 'px · ' + use + '</small>' +
            '<span style="font-size:var(--fs-' + n + ')">' + SAMPLE + '</span></div>';
@@ -135,6 +135,16 @@
     ['22','22px'],['30','30px'],['full','999px'],['frame','34px ★']].map(function (r) {
     return '<div class="sg-tile"><div class="sg-tile__box" style="border-radius:var(--r-' + r[0] + ')"></div>' +
            '<div class="sg-tile__name">--r-' + r[0] + ' · ' + r[1] + '</div></div>';
+  }).join('');
+
+  /* ---- 선 굵기 · 볼록 두께 (2026-10-14 · RM-SIZE-02) ---- */
+  document.getElementById('bw').innerHTML = [['1','1px','헤어라인'],['1_5','1.5px','보기·선지 테두리'],['2','2px','정오답 칸 선'],
+    ['3','3px','선택 링'],['4','4px','해설 띠']].map(function (b) {
+    return '<div class="sg-tile"><div class="sg-tile__box" style="background:none;box-shadow:inset 0 0 0 var(--bw-' + b[0] + ') var(--text)"></div>' +
+           '<div class="sg-tile__name">--bw-' + b[0] + ' · ' + b[1] + '<br>' + b[2] + '</div></div>';
+  }).join('') + [['2','2px','작은 버튼·칩'],['4','4px','CTA·채점·키패드']].map(function (d) {
+    return '<div class="sg-tile"><div class="sg-tile__box" style="border-radius:var(--r-12);background:var(--primary);box-shadow:0 var(--depth-' + d[0] + ') 0 var(--primary-edge)"></div>' +
+           '<div class="sg-tile__name">--depth-' + d[0] + ' · ' + d[1] + '<br>' + d[2] + '</div></div>';
   }).join('');
 
   /* ---- 에셋 연동색 ---- */

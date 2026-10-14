@@ -484,6 +484,22 @@
   "char": {
    "nav/home.html": "markup"
   },
+  "chart__axis": {
+   "assignment/explain.html": "js",
+   "assignment/solve.html": "js"
+  },
+  "chart__dot": {
+   "assignment/explain.html": "js",
+   "assignment/solve.html": "js"
+  },
+  "chart__grid": {
+   "assignment/explain.html": "js",
+   "assignment/solve.html": "js"
+  },
+  "chart__label": {
+   "assignment/explain.html": "js",
+   "assignment/solve.html": "js"
+  },
   "chip": {
    "essay/training-result.html": "markup",
    "exam/home.html": "markup",
@@ -1058,6 +1074,9 @@
    "util/report.html": "markup"
   },
   "grade": {
+   "assignment/result.html": "js"
+  },
+  "grade--none": {
    "assignment/result.html": "js"
   },
   "grade--o": {
@@ -2066,6 +2085,9 @@
   "meta": {
    "assignment/home.html": "js"
   },
+  "meta__ok": {
+   "assignment/home.html": "js"
+  },
   "metarow": {
    "assignment/home.html": "js"
   },
@@ -2877,7 +2899,13 @@
   "rcard__lockmsg": {
    "nav/curriculum.html": "js"
   },
+  "rcard__lockmsg--cur": {
+   "nav/curriculum.html": "js"
+  },
   "rcard__name": {
+   "nav/curriculum.html": "js"
+  },
+  "rcard__steps": {
    "nav/curriculum.html": "js"
   },
   "rcard__top": {
@@ -2950,6 +2978,12 @@
    "assignment/home.html": "js"
   },
   "ring__c": {
+   "assignment/home.html": "js"
+  },
+  "ring__track": {
+   "assignment/home.html": "js"
+  },
+  "ring__val": {
    "assignment/home.html": "js"
   },
   "rline": {
@@ -3319,6 +3353,18 @@
    "util/report.html": "js"
   },
   "rmd__prof": {
+   "assignment/home.html": "js",
+   "exam/home.html": "js",
+   "nav/curriculum.html": "js",
+   "nav/freemode.html": "js",
+   "nav/home.html": "js",
+   "util/history.html": "js",
+   "util/notice-detail.html": "js",
+   "util/notice.html": "js",
+   "util/payment.html": "js",
+   "util/report.html": "js"
+  },
+  "rmd__title": {
    "assignment/home.html": "js",
    "exam/home.html": "js",
    "nav/curriculum.html": "js",
@@ -3756,6 +3802,30 @@
    "type/training-result.html": "js"
   },
   "scratch__canvas": {
+   "assignment/explain.html": "js",
+   "assignment/solve.html": "js",
+   "concept/basic-ops.html": "js",
+   "concept/drill.html": "js",
+   "concept/learn.html": "js",
+   "concept/organize.html": "js",
+   "essay/advanced.html": "js",
+   "essay/basics-v2.html": "js",
+   "essay/basics.html": "js",
+   "essay/drill-review.html": "js",
+   "essay/drill-v2.html": "js",
+   "essay/drill.html": "js",
+   "essay/report-review.html": "js",
+   "essay/report.html": "js",
+   "essay/step-result.html": "js",
+   "essay/training-result.html": "js",
+   "shared/step-result.html": "js",
+   "shared/training-result.html": "js",
+   "type/quiz.html": "js",
+   "type/result.html": "js",
+   "type/review.html": "js",
+   "type/training-result.html": "js"
+  },
+  "scratch__defs": {
    "assignment/explain.html": "js",
    "assignment/solve.html": "js",
    "concept/basic-ops.html": "js",
@@ -4454,6 +4524,9 @@
   "step__grade": {
    "nav/curriculum.html": "js"
   },
+  "step__grade--": {
+   "nav/curriculum.html": "js"
+  },
   "step__i": {
    "nav/curriculum.html": "js"
   },
@@ -4572,6 +4645,10 @@
   },
   "summary__options": {
    "concept/learn.html": "markup"
+  },
+  "svg-defs": {
+   "nav/curriculum.html": "js",
+   "nav/freemode.html": "js"
   },
   "svideo": {
    "exam/home.html": "markup",

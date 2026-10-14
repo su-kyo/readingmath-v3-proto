@@ -6,10 +6,10 @@
   <title>패턴 — 리딩수학과학 디자인 시스템</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
   <base href="../" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261014-7" />
-  <link rel="stylesheet" href="styles/base.css?v=20261014-7" />
-  <link rel="stylesheet" href="styles/components.css?v=20261014-7" />
-  <link rel="stylesheet" href="styleguide/sg.css?v=20261014-7" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261014-9" />
+  <link rel="stylesheet" href="styles/base.css?v=20261014-9" />
+  <link rel="stylesheet" href="styles/components.css?v=20261014-9" />
+  <link rel="stylesheet" href="styleguide/sg.css?v=20261014-9" />
 </head>
 <body data-sg-css="tokens,base,components,util" data-sg-section="util">
 <div class="sg">
@@ -174,7 +174,8 @@
           <tr><td><code>--pct</code></td><td>결과 화면 엔진</td><td>정답률 0~100. 게이지 각도와 바늘이 이걸 읽는다</td></tr>
           <tr><td><code>--hero-w</code></td><td>행성 홈</td><td>캐릭터 칸 폭. 수학 31.25% · 과학 25%로 과목마다 다르다</td></tr>
           <tr><td><code>--caret-x</code></td><td>개념 학습 (<code>learn-concept.js</code>)</td><td>빈칸 팝오버의 꼬리 위치</td></tr>
-          <tr><td><code>--seg</code> · <code>--hl</code></td><td>행성 홈 (<code>nav-home.js</code>)</td><td>명판 진행칸 색 · 말풍선 강조색 — 과목(수학 파랑 · 과학 틸)이 정한다</td></tr>
+          <tr><td><code>--seg</code></td><td>행성 홈 (<code>nav-home.js</code>)</td><td>명판 진행칸 색 — 과목(수학 파랑 · 과학 틸)이 정한다. 말풍선 강조색은 2026-10-14부터 스크립트가 <code>data-subject</code>만 붙이고 CSS가 고른다</td></tr>
+          <tr><td><code>--tag-c</code></td><td>커리큘럼 · 자유 모드</td><td>단원 과목 태그의 색 하나. 섞는 비율(면 22% · 글자 72% · 테두리 42%)은 <code>nav.css</code>가 정한다 — CSS에 기본값이 있어 「정의 없는 변수」가 아니다</td></tr>
           <tr><td><code>--m</code></td><td>행성 홈</td><td>소품의 그늘·빛줄기가 몸체 모양을 따라가게 하는 <strong>마스크 그림 주소</strong></td></tr>
           <tr><td><code>--d</code> · <code>--o</code> · <code>--delay</code></td><td>우주 배경 (<code>space-bg.js</code>) · 행성 홈</td><td>별의 반짝임 주기 · 불투명도 · 시작 지연, 소품 홀로그램의 시차</td></tr>
         </tbody>
@@ -258,6 +259,17 @@
           <tr><td>계산기(키패드)</td><td><code>keypad.css</code></td><td>토큰은 쓰되 <strong>테마를 따라가지 않는다</strong> — 우주선의 물건이라 라이트·다크에서 같은 모습이다</td></tr>
         </tbody>
       </table>
+      <p class="sg-lead">색 검사가 아니라 <strong>대비 규칙</strong>에서 빼는 것도 있습니다 — 이건 「일부러 둔 위반」이라 더 분명히 적어 둡니다.</p>
+      <table class="sg-table">
+        <thead><tr><th style="width:220px">무엇</th><th style="width:200px">어긋나는 규칙</th><th>왜 두나</th></tr></thead>
+        <tbody>
+          <tr><td>콘솔바 주황 버튼의 14px 흰 라벨</td><td><code>RM-FILL-02</code> (라벨 19px 이상)</td>
+              <td>대비 3.06. 「주황 바탕에 흰 글씨」는 Phase 4에서 지키기로 한 브랜드 인상이다(2026-10-14 결정).
+                  <strong>새 주황 버튼의 근거로 쓰지 않는다</strong></td></tr>
+          <tr><td>시험 풀이의 정오답 칸 · 라이트 정답 배지</td><td><code>RM-SURF-02</code> · <code>RM-FILL-05</code></td>
+              <td>틴트 면 · 600 배지가 남아 있다. 10-14 컬러 정리에서 빠졌고 1차 실서버 범위 밖이라 <strong>보류</strong> — 적용 여부는 사용자 판단</td></tr>
+        </tbody>
+      </table>
     </section>
 
     <!-- ===================================================== 검사 장치 -->
@@ -281,6 +293,13 @@
           <tr><td><code>tools/dark-shot.html</code></td>
               <td>헤드리스는 라이트만 찍힌다(테마가 화면 안 버튼으로만 바뀌므로).
                   화면을 액자에 끼워 <strong>다크로 고정해</strong> 찍는다</td></tr>
+          <tr><td><code>tools/rules-build.py</code></td>
+              <td><strong>규칙 색인</strong>(<code>styleguide/rules.html</code>)에서 <code>rules.json</code>과 CLAUDE.md 색인을 만들고,
+                  번호가 CLAUDE.md · <code>style-audit.py</code>에 빠짐없이 있는지, 죽은 인용이 없는지 대조한다.
+                  <code>style-audit.py</code>가 이 대조를 「규칙 ID 어긋남」 줄로 부른다</td></tr>
+          <tr><td><code>tools/tokens-build.py</code><br><code>tools/screens-build.py</code></td>
+              <td>개발자용 <code>tokens.json</code>(DTCG · 라이트/다크·계열별 최종값)과 <code>screens.json</code>(화면 지도)을 만든다.
+                  <strong>손으로 쓰지 않는다</strong> — 원본을 고치고 다시 돌린다</td></tr>
           <tr><td><code>tools/rule-compare.py</code></td>
               <td>같은 클래스가 <strong>어느 화면에 어떻게 정의됐는지</strong> 비교한다.
                   「합칠 것인가 가를 것인가」를 여기서 판단했다</td></tr>
@@ -301,6 +320,6 @@
 
   </main>
 </div>
-<script src="styleguide/sg.js?v=20261014-7"></script>
+<script src="styleguide/sg.js?v=20261014-9"></script>
 </body>
 </html>

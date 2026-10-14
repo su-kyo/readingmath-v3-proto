@@ -79,14 +79,14 @@
   display: flex; align-items: center; gap: var(--sp-8);
   padding: var(--sp-4) var(--sp-6) var(--sp-12) var(--sp-12);
 }
-.monitor__lamps{ display: flex; gap: var(--sp-6); margin-right: 6px; }
+.monitor__lamps{ display: flex; gap: var(--sp-6); margin-right: var(--sp-6); }
 .monitor__lamps i{
   width: 9px; height: 9px; border-radius: var(--r-full);
   background: var(--n-500);
 }
 .monitor__lamps i.is-live{ background: var(--th-accent-hi, var(--blue-300)); }
 .monitor__ttl{
-  color: var(--n-000);
+  color: var(--text-on-accent);
   font-family: var(--font-sans);
   font-size: var(--fs-19); font-weight: var(--fw-bold);
   letter-spacing: -0.02em;
@@ -97,7 +97,7 @@
 .monitor__x,
 .monitor__tool{
   border: none; cursor: pointer;
-  background: var(--n-500); color: var(--n-000);
+  background: var(--n-500); color: var(--text-on-accent);
   border-radius: var(--r-12);
   display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-6);
   font-family: var(--font-sans); font-size: var(--fs-14); font-weight: var(--fw-bold);
@@ -131,7 +131,7 @@
 }
 
 /* 프레임 밖 아래로 걸리는 부속 (요약 선택지처럼 패널 밖 UI) */
-.monitor__below{ width: 100%; flex: none; margin-top: 16px; }
+.monitor__below{ width: 100%; flex: none; margin-top: var(--sp-16); }
 
 /* ── 기본 배치: 브라우저 세로 중앙 (Phase 7 — 암 제거 후 매달림 연출 폐기) ── */
 .monitor:not(.monitor--side) .monitor__frame{

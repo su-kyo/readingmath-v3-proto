@@ -21,11 +21,9 @@
 }
 body { font-family: var(--font-sans); background: var(--asset-console-task-body); overflow: hidden; -webkit-font-smoothing: antialiased; }
 
-.wrap { position: relative; z-index: 1; flex: 1; min-height: 0; display: flex; flex-direction: column; padding: clamp(16px,2.4vw,30px) clamp(20px,5vw,72px) 0; gap: var(--sp-12); }
 
 /* 헤더 (풀이 화면과 동일) */
 
-:root[data-theme="dark"] .toggle__k { left: 32px; background-image: url("../../assets/icons/ico-moon.svg"); }
 
 /* 콘텐츠 (단일 패널) */
 /* 프레임 테두리 = 헤더색(정적) · 다크·라이트 불변 */
@@ -35,7 +33,7 @@ body { font-family: var(--font-sans); background: var(--asset-console-task-body)
 .rhead { display: flex; align-items: center; gap: var(--sp-12); flex-wrap: wrap; }
 .rhead__t { font-size: var(--fs-22); font-weight: var(--fw-bold); color: var(--blue); letter-spacing: -.03em; }
 .rhead__sub { font-size: var(--fs-22); font-weight: var(--fw-regular); color: var(--blue); letter-spacing: -.02em; min-width: 0; }
-.rdate { margin-left: auto; display: inline-flex; align-items: center; gap: var(--sp-8); padding: var(--sp-4) var(--sp-12); border: 1px solid var(--good); border-radius: var(--r-12); font-size: var(--fs-15); white-space: nowrap; }
+.rdate { margin-left: auto; display: inline-flex; align-items: center; gap: var(--sp-8); padding: var(--sp-4) var(--sp-12); border: var(--bw-1) solid var(--good); border-radius: var(--r-12); font-size: var(--fs-15); white-space: nowrap; }
 .rdate__tag { display: inline-flex; align-items: center; gap: var(--sp-4); color: var(--good); font-weight: var(--fw-semibold); }
 .rdate__tag svg { width: 16px; height: 16px; }
 .rdate__d { color: var(--ink); font-variant-numeric: tabular-nums; }
@@ -45,7 +43,7 @@ body { font-family: var(--font-sans); background: var(--asset-console-task-body)
 .score { flex: 0 0 auto; min-width: 288px; display: flex; align-items: center; justify-content: center; gap: var(--sp-12); padding: var(--sp-16) 28px; background: var(--score-bg); border-radius: var(--r-22); }
 .score__n { font-size: 62px; font-weight: var(--fw-heavy); color: var(--blue); letter-spacing: -.04em; line-height: 1; font-variant-numeric: tabular-nums; }
 .score__d { font-size: var(--fs-26); font-weight: var(--fw-semibold); color: var(--sub); }
-.stats { flex: 1; display: flex; align-items: center; justify-content: center; gap: 44px; padding: var(--sp-16) var(--sp-40); border: 1px solid var(--line); border-radius: var(--r-22); }
+.stats { flex: 1; display: flex; align-items: center; justify-content: center; gap: 44px; padding: var(--sp-16) var(--sp-40); border: var(--bw-1) solid var(--line); border-radius: var(--r-22); }
 .stat { display: flex; flex-direction: column; gap: var(--sp-4); }
 .stat__k { font-size: var(--fs-15); font-weight: var(--fw-bold); }
 .stat__v { font-size: var(--fs-32); font-weight: var(--fw-heavy); color: var(--ink); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
@@ -57,13 +55,13 @@ body { font-family: var(--font-sans); background: var(--asset-console-task-body)
 
 /* 채점표 */
 .rtable { display: flex; flex-direction: column; }
-.trow { display: grid; grid-template-columns: 56px minmax(180px, 300px) 84px 1fr 108px; align-items: center; gap: var(--sp-12); padding: var(--sp-12) var(--sp-8); border-bottom: 1px solid var(--line-2); }
+.trow { display: grid; grid-template-columns: 56px minmax(180px, 300px) 84px 1fr 108px; align-items: center; gap: var(--sp-12); padding: var(--sp-12) var(--sp-8); border-bottom: var(--bw-1) solid var(--line-2); }
 /* 문항 행은 높이를 고정한다 — 발문이 한 줄이든 두 줄이든 행이 같은 높이로 선다.
    (예전엔 components.css 의 옛 .grade 가 56px 상자로 새어 들어 우연히 이 높이를 만들었다 · 마감 회차에 명시) */
 .trow[data-q] { min-height: 81px; cursor: pointer; transition: background .12s; }
 .trow[data-q]:hover { background: var(--th-tint); }
 :root[data-theme="dark"] .trow[data-q]:hover { background: var(--th-tint-strong); }
-.trow--head { border-bottom: 1px solid var(--line); }
+.trow--head { border-bottom: var(--bw-1) solid var(--line); }
 .trow--head > * { font-size: var(--fs-15); font-weight: var(--fw-bold); color: var(--sub); }
 .tc-center { text-align: center; }
 .tc-num { text-align: center; font-size: var(--fs-16); color: var(--sub); font-variant-numeric: tabular-nums; }
@@ -78,9 +76,10 @@ body { font-family: var(--font-sans); background: var(--asset-console-task-body)
 :root[data-theme="dark"] .lv--실력 { background: color-mix(in srgb, var(--th-accent) 24%, transparent); color: var(--th-accent-hi); }
 :root[data-theme="dark"] .lv--심화 { background: color-mix(in srgb, var(--warn-solid) 26%, transparent); color: var(--warn-on-dark); }
 .grade { justify-self: center; display: inline-flex; align-items: center; gap: var(--sp-6); font-size: var(--fs-15); font-weight: var(--fw-semibold); }
-.grade__ic { width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; color: var(--n-000); flex: none; }
+.grade__ic { width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; color: var(--text-on-accent); flex: none; }
 .grade__ic svg { width: 11px; height: 11px; }
 .grade--o { color: var(--correct); } .grade--o .grade__ic { background: var(--ok-solid); }
+.grade--none { color: var(--faint); }
 .grade--x { color: var(--bad); } .grade--x .grade__ic { background: var(--bad-ic); }
 
 /* 하단 콘솔 바 */
@@ -88,9 +87,9 @@ body { font-family: var(--font-sans); background: var(--asset-console-task-body)
 .bar__tray { justify-content: center; gap: var(--sp-16); }
 
 .rpanel::-webkit-scrollbar { width: 10px; }
-.rpanel::-webkit-scrollbar-thumb { background: var(--n-200); border-radius: var(--r-full); border: 3px solid var(--panel); background-clip: padding-box; }
+.rpanel::-webkit-scrollbar-thumb { background: var(--n-200); border-radius: var(--r-full); border: var(--bw-3) solid var(--panel); background-clip: padding-box; }
 :root[data-theme="dark"] .rpanel::-webkit-scrollbar-thumb { background: var(--n-500); background-clip: padding-box; }
-:focus-visible { outline: 3px solid var(--current); outline-offset: 2px; }
+:focus-visible { outline: var(--bw-3) solid var(--current); outline-offset: 2px; }
 
 @media (max-width: 900px) {
   .summary { flex-direction: column; }
@@ -99,4 +98,3 @@ body { font-family: var(--font-sans); background: var(--asset-console-task-body)
   .tc-text { display: none; }
 }
 /* 토스트 면색만 이 화면 것 */
-.toast { --toast-bg: var(--n-650); }

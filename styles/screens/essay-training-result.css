@@ -16,40 +16,23 @@
 /* 베젤 (하드웨어 — 학습 화면·스텝 결과와 같은 테마 림) → 공용 styles/result.css */
 
 /* 칩 = 림과 같은 계열의 한두 단계 어두운 톤온톤 */
-.chip { display: inline-flex; align-items: center; gap: var(--sp-6); padding: var(--sp-4) var(--sp-12); border-radius: var(--r-full);
-  background: color-mix(in srgb, var(--th-static) 45%, var(--n-900)); color: var(--n-050); font-size: var(--fs-13); font-weight: var(--fw-semibold); }
-.chip b { font-weight: var(--fw-bold); }
-.chip--round { font-weight: var(--fw-heavy); letter-spacing: .02em; }
-.chip--warn { color: var(--amber-200); }
-.chip--warn::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--warn-solid); }
 .chip[hidden] { display: none; }
 
 /* ===== LCD 판독 화면 (스캔라인은 스크롤을 따라간다) ===== */
 
-.hwf__screen::-webkit-scrollbar { width: 10px; }
-.hwf__screen::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--rate) 24%, transparent); border-radius: var(--r-full); border: 3px solid transparent; background-clip: padding-box; }
+.hwf__screen::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--rate) 24%, transparent); border-radius: var(--r-full); border: var(--bw-3) solid transparent; background-clip: padding-box; }
 .hwf__screen { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--rate) 26%, transparent) transparent; }
 
 /* ===== 총점(별+점수 — 스텝 게이지와 다른 위계) + 단계별 표 ===== */
 
-.score { flex: none; display: flex; flex-direction: column; align-items: center; gap: var(--sp-8); min-width: 170px; }
-.score img { width: clamp(84px,9vw,110px); height: auto; filter: drop-shadow(0 8px 18px var(--black-a40)); }
 
-.score__val span { font-size: var(--fs-22); font-weight: var(--fw-bold); }
 
-.trow { display: grid; grid-template-columns: minmax(128px,1fr) 52px minmax(130px,1.3fr) 84px 62px 74px;
-  align-items: center; gap: clamp(8px,1.2vw,16px); padding: var(--sp-8) var(--sp-12); }
-.thead { padding-bottom: 0; }
 
-.tcell { display: flex; align-items: center; justify-content: center; font-family: var(--font-sans); color: var(--n-050); min-width: 0; }
-.tcell--name { justify-content: flex-start; gap: var(--sp-8); }
 
-.tst { font-family: var(--font-mono); font-size: var(--fs-16); }
-.tst small { color: var(--n-300); font-size: var(--fs-13); }
 .tpc { font-family: var(--font-mono); font-size: var(--fs-16); color: var(--rate); }
 /* 빈칸이 24개라 칸이 촘촘하다 — gap을 좁힌다 (전체 행 72칸은 뭉개져서 비워 둔다) */
 .tview { padding: var(--sp-6) 0; width: 100%; max-width: 70px; border-radius: var(--r-8); border: none; background: transparent;
-  box-shadow: inset 0 0 0 1px var(--rate); color: var(--rate);
+  box-shadow: inset 0 0 0 var(--bw-1) var(--rate); color: var(--rate);
   font-family: var(--font-sans); font-weight: var(--fw-bold); font-size: var(--fs-14); cursor: pointer; transition: background var(--t-fast); }
 .tview:hover { background: color-mix(in srgb, var(--rate) 14%, transparent); }
 
@@ -65,12 +48,10 @@
 /* 스크린창 안 문제별 행 — 스텝 결과 화면과 같은 구성(빈칸 LED) */
 
 .mact__name { display: flex; align-items: center; gap: var(--sp-8); flex: none; min-width: 118px;
-  font-weight: var(--fw-heavy); font-size: var(--fs-15); color: var(--n-050); }
-.mact__name svg { width: 18px; height: 18px; color: var(--th-accent-hi); flex: none; }
+  font-weight: var(--fw-heavy); font-size: var(--fs-15); color: var(--text); }
 .mact .led { flex: 1; gap: var(--sp-4); }
 .mact .led i { height: 13px; border-radius: var(--r-4); }
 
-.mact__stat > b { font-family: var(--font-mono); font-weight: var(--fw-bold); font-size: var(--fs-16); color: var(--th-accent-hi); }
 
 @media (max-width: 900px) {
   .tsum { flex-direction: column; }

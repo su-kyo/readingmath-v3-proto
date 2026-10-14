@@ -19,7 +19,7 @@
 }
 :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
 :root[data-theme="light"] .content {
-  background: var(--n-000); border-color: var(--th-static);
+  background: var(--th-panel); border-color: var(--th-static);
   --guide: var(--n-650); --card: var(--n-000); --card-br: var(--n-100); --card-sh: none;
   --step-fg: var(--text-meta);
   --box-bg: var(--n-050); --box-br: color-mix(in srgb, var(--violet-600) 12%, transparent);
@@ -27,12 +27,8 @@
   --bl-next: color-mix(in srgb, var(--violet-500) 70%, transparent);
 }
 
-:root[data-theme="light"] .stage-scroll::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--violet-600) 28%, transparent); background-clip: padding-box; }
 
 /* ============ 카드 공용 ============ */
-.card { max-width: 760px; margin: 0 auto; background: var(--card); border: 1px solid var(--card-br); border-radius: var(--r-22); box-shadow: var(--card-sh); }
-.card + .card { margin-top: 14px; }
-:root[data-theme="light"] .sec-label--sol { background: color-mix(in srgb, var(--violet-500) 10%, transparent); color: var(--th-accent-strong); }
 
 /* ============ 문제 카드 (헤더 + 접이식 · 프레임에 붙음) ============ */
 .problem { position: sticky; top: 0; z-index: 20; overflow: hidden;
@@ -46,10 +42,9 @@
 /* 본문 = 문제문(좌) + 참고자료(우) 한 행 · 스티키라 상한+내부 스크롤 */
 .problem__body { padding: var(--sp-6) var(--sp-16) var(--sp-16); overflow-y: auto; max-height: 34vh; color: var(--pc-text);
   display: flex; gap: var(--sp-20); align-items: flex-start; transition: max-height .32s ease, opacity .25s ease, padding .32s ease; }
-.problem__qtext { flex: 1 1 auto; min-width: 0; }
 .problem.is-collapsed .problem__body { max-height: 0; opacity: 0; overflow: hidden; padding-top: 0; padding-bottom: 0; }
 .problem__body::-webkit-scrollbar { width: 8px; }
-.problem__body::-webkit-scrollbar-thumb { background: var(--white-a20); border-radius: var(--r-full); border: 2px solid transparent; background-clip: padding-box; }
+.problem__body::-webkit-scrollbar-thumb { background: var(--white-a20); border-radius: var(--r-full); border: var(--bw-2) solid transparent; background-clip: padding-box; }
 :root[data-theme="light"] .problem__body::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--violet-600) 28%, transparent); background-clip: padding-box; }
 
 /* 문제 본문 (텍스트 좌 + 참고자료 우) */
@@ -65,17 +60,11 @@
 
 .expl { display: flex; flex-direction: column; align-items: center; font-family: var(--font-serif); color: var(--guide); }
 .expl__doc { width: 100%; max-width: 760px; display: flex; flex-direction: column; gap: clamp(24px, 2.8vw, 38px); padding-top: var(--sp-6); }
-.para { display: flex; flex-direction: column; gap: var(--sp-8); }
 
-.box { background: var(--box-bg); border: 1px solid var(--box-br); border-radius: var(--r-16);
-  padding: clamp(16px, 2vw, 28px); display: flex; flex-direction: column; gap: var(--sp-12); }
 
 /* 빈칸: 항상 클릭 가능(재편집) + 예시(given) 변형 — 코어는 essay.css */
 .blank { cursor: pointer; }
-.blank:hover { background: var(--bl-bgh); box-shadow: inset 0 0 0 1px var(--bl-lineh); }
-.blank--given { background: var(--bl-fill); box-shadow: none; cursor: default; }
-.blank--given .blank__ans { opacity: 1; }
-.blank--given .blank__badge { display: none; }
+.blank:hover { background: var(--bl-bgh); box-shadow: inset 0 0 0 var(--bw-1) var(--bl-lineh); }
 /* 이 화면만 워크시트 여백이 좁고 라벨이 붙어 있다 */
 .worksheet { padding: clamp(16px, 2.2vw, 26px) clamp(14px, 2.4vw, 30px) clamp(20px, 2.4vw, 28px); }
-.worksheet__label { display: inline-flex; margin-bottom: 8px; }
+.worksheet__label { display: inline-flex; margin-bottom: var(--sp-8); }

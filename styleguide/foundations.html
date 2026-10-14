@@ -6,10 +6,10 @@
   <title>기초 — 리딩수학과학 디자인 시스템</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
   <base href="../" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261014-7" />
-  <link rel="stylesheet" href="styles/base.css?v=20261014-7" />
-  <link rel="stylesheet" href="styles/components.css?v=20261014-7" />
-  <link rel="stylesheet" href="styleguide/sg.css?v=20261014-7" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261014-9" />
+  <link rel="stylesheet" href="styles/base.css?v=20261014-9" />
+  <link rel="stylesheet" href="styles/components.css?v=20261014-9" />
+  <link rel="stylesheet" href="styleguide/sg.css?v=20261014-9" />
 </head>
 <body data-sg-css="tokens,base,components">
 <div class="sg">
@@ -136,6 +136,63 @@
         「어떤 칠면에 어떤 글자」 정책을 먼저 확인한다.</div>
     </section>
 
+    <!-- ===================================================== 면 규칙 -->
+    <section class="sg-sec" id="surfaces">
+      <h2>면 규칙 <small>학습 화면 · 2026-10-14 컬러 정리 · 색을 흰색에 섞은 면을 만들지 않는다</small></h2>
+      <p class="sg-lead">칠면 셋이 「칠한 면 위에 무슨 글자를 얹나」라면, 면 규칙은 <strong>「애초에 면을 칠하나」</strong>입니다.
+        학습 화면은 <strong>상태와 계열을 면으로 말하지 않습니다</strong> — 선 · 띠 · 배지 · 글자로 말해요(<code>RM-SURF-01</code>).
+        빨강을 흰색에 섞으면 분홍, 초록은 쑥색, 틸은 회녹색이 됩니다. 섞는 비율도 화면마다 36% · 20~22% · 10~16%로 제각각이었어요.
+        <strong>면을 없애면 비율 자체가 사라집니다.</strong></p>
+
+      <div class="sg-item" data-pad="24px" data-themes="light">
+        <div class="sg-item__hd"><h3>섞은 면 대신 선 · 배지 · 글자</h3>
+          <span class="sg-item__cls">--ok-solid · --no-solid · --ok-ink · --no-ink · --th-accent · --border-strong</span></div>
+        <p class="sg-note">위 줄이 예전 방식(섞은 면), 아래 줄이 지금 규칙입니다. 같은 정답·오답·해설인데 위는 분홍·쑥색으로 읽혀요.</p>
+        <template class="sg-src">
+          <div class="sg-col" style="gap:18px">
+            <span class="sg-cap" style="color:var(--no-solid);margin:0">✗ 섞은 면 — 안 한다</span>
+            <div class="sg-row">
+              <span style="display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:12px;min-width:150px;
+                           background:color-mix(in srgb, var(--ok-solid) 22%, var(--n-000));color:var(--ok-ink);font-weight:700">정답 칸</span>
+              <span style="display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:12px;min-width:150px;
+                           background:color-mix(in srgb, var(--no-solid) 16%, var(--n-000));color:var(--no-ink);font-weight:700">오답 칸</span>
+              <span style="display:inline-block;padding:12px 16px;border-radius:12px;min-width:200px;
+                           background:color-mix(in srgb, var(--teal-500) 8%, var(--n-000));color:var(--n-650)">해설 박스 (틸 8%)</span>
+            </div>
+            <span class="sg-cap" style="color:var(--ok-ink);margin:0">✓ 선 · 배지 · 글자 · 띠 — 지킨다</span>
+            <div class="sg-row">
+              <span style="display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:12px;min-width:150px;
+                           background:var(--n-000);box-shadow:inset 0 0 0 var(--bw-2) var(--ok-solid);color:var(--ok-ink);font-weight:700">
+                <b style="display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--ok-solid);color:var(--text-on-accent);font-size:var(--fs-20);font-weight:800">2</b>정답 칸</span>
+              <span style="display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:12px;min-width:150px;
+                           background:var(--n-000);box-shadow:inset 0 0 0 var(--bw-2) var(--no-solid);color:var(--no-ink);font-weight:700">
+                <b style="display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--no-solid);color:var(--text-on-accent);font-size:var(--fs-20);font-weight:800">4</b>오답 칸</span>
+              <span style="display:inline-block;padding:12px 16px 12px 20px;border-radius:4px;min-width:200px;
+                           background:var(--n-000);box-shadow:inset var(--bw-4) 0 0 var(--teal-500);color:var(--n-650)">해설 박스 (왼쪽 띠)</span>
+            </div>
+          </div>
+        </template>
+      </div>
+
+      <table class="sg-table">
+        <thead><tr><th style="width:150px">자리</th><th style="width:260px">면</th><th>상태 · 계열은 무엇으로</th><th style="width:110px">규칙</th></tr></thead>
+        <tbody>
+          <tr><td><strong>프레임 · 헤더</strong></td><td><code>--th-static</code> 600 (서술형·시험 700)</td>
+              <td>헤더 칩 <code>--th-static-deep</code>, 아이콘 버튼 <code>--th-accent</code>. 검정·흰 반투명 덧칠 금지</td><td><code>RM-SURF-05</code></td></tr>
+          <tr><td><strong>콘텐츠 패널</strong></td><td><code>--th-panel</code> (라이트 흰색) · 다크 <code>--surface-1</code></td>
+              <td>계열색을 섞지 않는다</td><td><code>RM-SURF-01</code></td></tr>
+          <tr><td><strong>보기 박스</strong></td><td>면 없음</td>
+              <td><code>--bw-1_5</code> <code>--border-strong</code> — 선지와 같은 한 벌. 보기가 선지보다 진하면 안 된다</td><td><code>RM-SURF-04</code></td></tr>
+          <tr><td><strong>선지 (정오답)</strong></td><td>기본 면(<code>--opt-bg</code>) 그대로</td>
+              <td>2px 선 500 · 번호 배지 500(숫자 20px w800) · 글자 라이트 <code>--ok-ink</code>/<code>--no-ink</code> · 다크 <code>--ok-on-dark</code>/<code>--no-on-dark</code></td><td><code>RM-SURF-02</code> <code>RM-FILL-05</code></td></tr>
+          <tr><td><strong>해설 박스</strong></td><td>면 없음</td>
+              <td>왼쪽 <code>--bw-4</code> 띠 — 라이트 <code>--th-accent</code> · 다크 <code>--th-accent-hi</code></td><td><code>RM-SURF-03</code></td></tr>
+        </tbody>
+      </table>
+      <div class="sg-rule sg-rule--why"><strong>예외 하나</strong> — 서술형 빈칸을 채웠을 때 다크에서 「칠해졌다」를 보여야 하는 틴트(<code>--th-tint</code> 24/38%)는 남깁니다.
+        라이트용 8%는 다크 면에서 안 보여서 따로 올린 값이에요. 그리고 <strong>시험 풀이의 정오답 칸은 아직 옛 방식</strong>입니다(보류 — 「부품 › 해설 화면의 면」).</div>
+    </section>
+
     <!-- ===================================================== 역할색 -->
     <section class="sg-sec" id="semantic">
       <h2>색 — 역할 <small>2단 · 라이트/다크가 뒤집히는 유일한 층</small></h2>
@@ -230,14 +287,13 @@
           (유형 213 · 과제 248) 같은 세기를 걸면 도착 밝기가 다시 갈립니다.
           지금 값 — 개념 45% · 유형 55% · 서술형 25% · 과제/시험 65%, 덮은 뒤 밝기 94~103.</p>
         <template class="sg-src" id="veilTpl"></template>
-        </template>
       </div>
       <p class="sg-lead">라이트에서는 막이 없습니다 — 위 견본의 왼쪽 칸이 원본 사진 밝기입니다.</p>
     </section>
 
     <!-- ===================================================== 글자 -->
     <section class="sg-sec" id="type">
-      <h2>글자 눈금 <small>10단 · Phase 10-② · 실측 30종(반픽셀 6종)을 흡수한 결과</small></h2>
+      <h2>글자 눈금 <small>11단 · Phase 10-② · 실측 30종(반픽셀 6종)을 흡수한 결과</small></h2>
       <p class="sg-lead"><strong>색은 역할로, 치수는 값으로 이름 짓습니다.</strong>
         「정답」·「주의」에는 뜻이 있지만 13px과 14px 사이에는 뜻의 차이가 없어요.
         sm/md/lg로 부르면 어느 게 몇 px인지 아무도 기억하지 못하고 결국 화면에서 숫자를 직접 쓰게 됩니다 —
@@ -273,13 +329,21 @@
 
     <!-- ===================================================== 간격·모서리 -->
     <section class="sg-sec" id="space">
-      <h2>간격 · 모서리 <small>간격 9단 · 모서리 7단 + 프레임 예외 1</small></h2>
+      <h2>간격 · 모서리 · 선 <small>간격 9단 · 모서리 7단 + 프레임 예외 1 · 선 굵기 5단 · 볼록 두께 2단</small></h2>
       <p class="sg-lead">4의 배수에 <strong>6을 하나 더 얹었습니다</strong> — 아이콘과 글자 사이처럼 4는 좁고 8은 넓은 자리가 실제로 많았어요.</p>
       <div class="sg-tiles" id="sp"></div>
       <h3 style="margin:var(--sp-24) 0 var(--sp-12);font-size:var(--fs-16)">모서리</h3>
       <div class="sg-tiles" id="r"></div>
       <p class="sg-lead"><code>--r-frame</code>(34px)은 눈금 밖 고정값입니다. 콘솔 프레임의 6px 베젤과
         세트로 잡힌 에셋 규격이라 눈금에 맞춰 흔들면 베젤이 어긋납니다.</p>
+      <h3 style="margin:var(--sp-24) 0 var(--sp-12);font-size:var(--fs-16)">선 굵기 · 볼록 두께 <small style="font-weight:400;color:var(--text-meta)">— 2026-10-14 신설</small></h3>
+      <div class="sg-tiles" id="bw"></div>
+      <p class="sg-lead">그림자 402곳을 재 보니 상당수가 <strong>그림자가 아니라 테두리</strong>(<code>inset 0 0 0 1.5px</code>)와
+        <strong>버튼 두께</strong>(<code>0 4px 0</code>)였습니다. 같은 뜻의 숫자가 border · outline · box-shadow에 흩어져 있어서
+        한 눈금으로 모았어요(<code>RM-SIZE-02</code>). 소수점은 밑줄로 씁니다 — <code>--bw-1_5</code>.</p>
+      <p class="sg-lead"><strong>px를 어디까지 토큰으로 옮기나</strong>(<code>RM-SIZE-03</code>) — 눈금에 있는 값은 전부 토큰입니다(검사 도구가 0을 지킨다).
+        배지 지름 · 아이콘 크기 · 격자 폭 같은 <strong>부품 고유 치수</strong>, 1~2px 위치 보정, <code>clamp()</code> 안의 반응형 끝값은 px로 둡니다.
+        간격·글자·모서리 자리인데 눈금 밖인 값은 「지켜볼 것」으로 세어 두고 디자인 판단 때 정리해요 — 맞추면 화면이 1~2px씩 바뀌기 때문입니다.</p>
       <p class="sg-lead">남긴 예외 — 1px 헤어라인 13곳, 96·104·120·140px 레이아웃 여백 17곳,
         모서리 19·26·27·36·40·50px 14곳. <strong>「가장 가까운 눈금이 2px 이내일 때만 붙인다」</strong>를
         스크립트로 강제한 결과입니다. 그보다 멀면 손대지 않고 예외로 남겼어요.</p>
@@ -323,7 +387,7 @@
   </main>
 </div>
 
-<script src="styleguide/foundations.js?v=20261014-7"></script>
-<script src="styleguide/sg.js?v=20261014-7"></script>
+<script src="styleguide/foundations.js?v=20261014-9"></script>
+<script src="styleguide/sg.js?v=20261014-9"></script>
 </body>
 </html>

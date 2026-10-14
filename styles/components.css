@@ -38,9 +38,9 @@
    ========================================================================= */
 .frac { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle;
   line-height: 1.05; font-weight: var(--fw-bold); margin: 0 3px; }
-.frac__n { padding: 0 var(--sp-4) 1px; border-bottom: 2px solid currentColor; }
+.frac__n { padding: 0 var(--sp-4) 1px; border-bottom: var(--bw-2) solid currentColor; }
 .frac__d { padding: 1px var(--sp-4) 0; }
-.frac--sm { font-size: .9em; } .frac--sm .frac__n { border-bottom-width: 1.5px; }
+.frac--sm { font-size: .9em; } .frac--sm .frac__n { border-bottom-width: var(--bw-1_5); }
 
 /* =========================================================================
    더미 이미지 자리 (.dummy-img) — "더미는 더미로 보이게"
@@ -59,7 +59,7 @@
   background-image: repeating-linear-gradient(-45deg,
     color-mix(in srgb, currentColor 26%, transparent) 0 1.5px,
     transparent 1.5px 9px);
-  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, currentColor 24%, transparent);
+  box-shadow: inset 0 0 0 var(--bw-1_5) color-mix(in srgb, currentColor 24%, transparent);
 }
 /* 라벨 = 빗금 위에 얹는 작은 필 (자리가 작은 .sblank__thumb 는 빗금만) */
 .dummy-img::after,
@@ -118,8 +118,29 @@
    ========================================================================= */
 .ops::-webkit-scrollbar { width: 10px; }
 
-.ops::-webkit-scrollbar-thumb { background: var(--white-a24); border-radius: var(--r-full); border: 2px solid transparent; background-clip: padding-box; }
+.ops::-webkit-scrollbar-thumb { background: var(--white-a24); border-radius: var(--r-full); border: var(--bw-2) solid transparent; background-clip: padding-box; }
 
-.btn-grade { padding: var(--sp-12) 44px; border-radius: var(--r-16); background: var(--th-vivid); color: var(--n-000); font-weight: var(--fw-heavy); font-size: var(--fs-19); box-shadow: 0 4px 0 var(--th-accent-strong); }
+.btn-grade { padding: var(--sp-12) 44px; border-radius: var(--r-16); background: var(--th-vivid); color: var(--text-on-accent); font-weight: var(--fw-heavy); font-size: var(--fs-19); box-shadow: 0 var(--depth-4) 0 var(--th-accent-strong); }
 
 .btn-grade[hidden] { display: none; }
+
+/* ----- 화면 공용으로 올림 (2026-10-14 · RM-FILE-03) — concept-basic-ops · concept-drill · type-quiz · type-review ----- */
+.ex { align-self: stretch; background: none; box-shadow: inset 0 0 0 var(--bw-1_5) var(--ex-br); border-radius: var(--r-16); padding: var(--sp-20) var(--sp-24); margin-bottom: 22px; }
+.ex__shape { display: flex; justify-content: center; }
+.qopts-row { align-self: stretch; display: flex; gap: var(--sp-12); flex-wrap: wrap; justify-content: center; }
+.qopts-row .qopt { flex: 1 1 0; min-width: 120px; }
+.qopts-grid { align-self: stretch; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--sp-12); }
+.qopt__num { flex: none; width: 30px; height: 30px; border-radius: 50%; background: var(--white-a14); color: var(--qtext); display: flex; align-items: center; justify-content: center; font-weight: var(--fw-heavy); font-size: var(--fs-15); position: relative; }
+.qopt--num { justify-content: center; }
+.qopt__img { width: 100%; height: 96px; border-radius: var(--r-8); }
+.sfield__tag { font-weight: var(--fw-heavy); color: var(--qtext); }
+.fraction { display: inline-flex; flex-direction: column; align-items: center; gap: var(--sp-8); }
+.fraction__bar { width: 104px; height: 3px; background: var(--qtext); border-radius: var(--r-4); }
+
+/* ----- 화면 공용으로 올림 (2026-10-14 · RM-FILE-03) — concept-basic-ops · type-quiz ----- */
+.pcap__count { margin-left: var(--sp-4); font-weight: var(--fw-bold); color: var(--text-on-accent); font-size: var(--fs-16); font-family: var(--font-mono); }
+
+/* ----- 화면 공용으로 올림 (2026-10-14 · RM-FILE-03) — concept-basic-ops · concept-drill ----- */
+.btn-grade:hover:not(:disabled) { background: var(--th-accent); }
+.btn-grade:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 var(--depth-2) 0 var(--th-accent-strong); }
+.btn-grade--next { background: var(--primary); box-shadow: 0 var(--depth-4) 0 var(--primary-pressed); }

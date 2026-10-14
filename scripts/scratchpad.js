@@ -38,51 +38,7 @@
     var pageBar = document.querySelector('.bar');
     if (!buttons.length || !pageBar) return;
 
-    /* ── 스타일 ── */
-    var css = document.createElement('style');
-    css.textContent = [
-      /* 기존 콘솔바 퇴장 연출 (스크립트가 클래스로만 켠다) */
-      '.bar.scratch-anim{ transition: transform .32s cubic-bezier(.4,0,.2,1); }',
-      '.bar.scratch-away{ transform: translateY(112%); }',
-
-      /* 오버레이 뼈대 — 콘텐츠 → 딤(둘레만) → 캔버스 → 도구 바 */
-      '.scratch{ position:fixed; inset:0; z-index:calc(var(--z-overlay) + 50); display:none; }',
-      '.scratch.is-open{ display:block; }',
-
-      /* 딤 — 문제 영역에 구멍을 뚫은 스포트라이트. 화면 끝까지 깔고,
-         콘솔바는 그 위에 얹혀(z-index) 안 눌린다 — 데코 곡선 바깥까지 빈틈 없이 덮인다 */
-      '.scratch__dim{ position:absolute; inset:0; overflow:hidden; opacity:0; transition:opacity .28s; pointer-events:none; }',
-      '.scratch.is-in .scratch__dim{ opacity:1; }',
-      '.scratch__hole{ position:absolute; box-shadow:0 0 0 9999px var(--scratch-dim); }',
-
-      '.scratch__canvas{ position:absolute; inset:0; width:100%; height:100%; touch-action:none; cursor:crosshair; }',
-
-      /* 잉크 3색 — 쓰는 순간의 테마를 따른다 (다크 기본 / 라이트 뒤집기) */
-      /* 딤은 --scrim(0.44/0.72)보다 훨씬 진하게 눌러 문제 영역만 뜨게 한다 */
-      '.scratch{ --scratch-dim: color-mix(in srgb, var(--n-950) 80%, transparent); --scratch-ink-1: var(--n-050); --scratch-ink-2: var(--red-300); --scratch-ink-3: var(--blue-300); }',
-      ':root[data-theme="light"] .scratch{ --scratch-dim: color-mix(in srgb, var(--n-700) 80%, transparent); --scratch-ink-1: var(--n-650); --scratch-ink-2: var(--red-500); --scratch-ink-3: var(--blue-450); }',
-
-      /* 도구 바 = 화면 .bar의 복제본 + 네이비 톤. 형태는 화면 CSS를 그대로 물려받는다 */
-      '.scratch .bar{ transform: translateY(112%); transition: transform .32s cubic-bezier(.2,.8,.3,1.08); pointer-events:auto; z-index:2; }',
-      '.scratch.is-in .bar{ transform: translateY(0); }',
-      '.scratch .bar__mid{ pointer-events:auto; }',   /* 면색은 아래 recolor()가 인라인으로 넣는다 */
-      /* 좌우 일러스트는 네이비 램프로 다시 칠한다 (아래 SVG 필터가 실제 색을 매핑) */
-      '.scratch .bar__deco{ filter: url(#scratchNavy); }',
-
-      /* 도구 바 속 — 램프 + 타이틀 + 물리 버튼 (보조 모니터 하드웨어 언어) */
-      /* 도구 바 속 버튼은 화면이 이미 쓰는 .toolbtn 그대로 —
-         같은 콘솔 패널의 다른 상태로 읽히게 한다. 여기선 연습장 전용 상태만 얹는다. */
-      '.scratch__tools{ display:flex; align-items:center; gap:var(--sp-8); }',
-      '.scratch__sep{ width:1px; height:24px; background:var(--white-a16); margin:0 2px; }',
-      '.scratch__done svg, .scratch__tool svg{ width:18px; height:18px; flex:none; }',
-      '.scratch__tool.is-on{ background:var(--n-000); color:var(--n-650); }',  /* 고른 도구 = 눌린 키 */
-      /* 잉크 칩도 같은 물리 버튼 언어(하드 드롭) */
-      '.scratch__swatch{ width:36px; height:36px; border-radius:50%; border:3px solid var(--n-500); background:var(--swatch); padding:0; box-shadow:0 4px 0 var(--n-650); }',
-      '.scratch__swatch.is-on{ border-color:var(--n-000); }',
-      '.scratch__swatch:hover{ filter:brightness(1.12); }',
-      '.scratch__swatch:active{ transform:translateY(2px); box-shadow:0 2px 0 var(--n-650); }'
-    ].join('\n');
-    document.head.appendChild(css);
+    /* ── 스타일 ── styles/scratchpad.css (2026-10-14: <style> 주입을 CSS 파일로 옮김 · RM-JS-01) ── */
 
     /* ── 오버레이 조립 ── */
     var root = document.createElement('div');
@@ -95,12 +51,17 @@
        같은 계산을 아래 recolor()가 JS로도 하기 때문에, 데코의 밴드색과
        바 가운데(.bar__mid·.bar__tray) 면색이 정확히 같은 값이 되어 이음매가 없다. */
     var SAT = 0.42;
-    /* n-950 · n-900 · n-800 · n-700 · n-650 · n-600 · n-500 · n-350 */
-    var RAMP = {
-      r: [0.012, 0.024, 0.035, 0.059, 0.071, 0.122, 0.227, 0.447],
-      g: [0.024, 0.055, 0.075, 0.098, 0.118, 0.169, 0.275, 0.522],
-      b: [0.059, 0.125, 0.157, 0.188, 0.216, 0.286, 0.416, 0.651]
-    };
+    /* 네이비 램프 여덟 단 — tokens.css 의 값을 그대로 읽는다(옮겨 적은 숫자가 토큰과 어긋나지 않게).
+       필터 표에 넣는 0–1 값이라 소수 셋째 자리에서 자른다. */
+    var RAMP_STEPS = ['--n-950', '--n-900', '--n-800', '--n-700', '--n-650', '--n-600', '--n-500', '--n-350'];
+    var RAMP = { r: [], g: [], b: [] };
+    var rootStyle = getComputedStyle(document.documentElement);
+    RAMP_STEPS.forEach(function (name) {
+      var hex = rootStyle.getPropertyValue(name).trim().replace('#', '');
+      ['r', 'g', 'b'].forEach(function (ch, i) {
+        RAMP[ch].push(Math.round(parseInt(hex.substr(i * 2, 2), 16) / 255 * 1000) / 1000);
+      });
+    });
     /* 섹션마다 원본 콘솔 밝기가 다르다(개념 파랑 .67 · 유형 베이지 .89 …).
        그대로 두면 연습장 바가 화면마다 다른 어둡기로 나오므로, 트레이 밝기를
        기준값에 맞추는 배율을 먼저 건다 — 어느 화면이든 같은 톤의 연습장이 된다. */
@@ -147,7 +108,7 @@
     }
 
     root.innerHTML =
-      '<svg width="0" height="0" style="position:absolute" aria-hidden="true">' +
+      '<svg class="scratch__defs" width="0" height="0" aria-hidden="true">' +
         '<filter id="scratchNavy" color-interpolation-filters="sRGB">' +
           '<feColorMatrix type="saturate" values="' + SAT + '"/>' +
           '<feComponentTransfer>' +
@@ -181,9 +142,9 @@
     tray.innerHTML =
       '<button class="toolbtn toolbtn--primary scratch__done" data-tool="close">' + ICO_CLOSE + '<span>연습장 닫기</span></button>' +
       '<div class="scratch__tools">' +
-        '<button class="scratch__swatch is-on" data-ink="1" style="--swatch:var(--scratch-ink-1)" aria-label="잉크 기본색"></button>' +
-        '<button class="scratch__swatch" data-ink="2" style="--swatch:var(--scratch-ink-2)" aria-label="잉크 빨강"></button>' +
-        '<button class="scratch__swatch" data-ink="3" style="--swatch:var(--scratch-ink-3)" aria-label="잉크 파랑"></button>' +
+        '<button class="scratch__swatch is-on" data-ink="1" aria-label="잉크 기본색"></button>' +
+        '<button class="scratch__swatch" data-ink="2" aria-label="잉크 빨강"></button>' +
+        '<button class="scratch__swatch" data-ink="3" aria-label="잉크 파랑"></button>' +
         '<button class="toolbtn scratch__tool" data-tool="eraser"><span>지우개</span></button>' +
         '<span class="scratch__sep"></span>' +
         '<button class="toolbtn scratch__tool scratch__tool--ico" data-tool="undo" aria-label="뒤로 복귀" disabled>' + ICO_UNDO + '</button>' +

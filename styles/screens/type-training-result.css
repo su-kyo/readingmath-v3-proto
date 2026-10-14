@@ -17,39 +17,22 @@
 /* 베젤 (하드웨어 — 학습 화면·스텝 결과와 같은 테마 림) → 공용 styles/result.css */
 
 /* 칩 = 림과 같은 계열의 한두 단계 어두운 톤온톤 */
-.chip { display: inline-flex; align-items: center; gap: var(--sp-6); padding: var(--sp-4) var(--sp-12); border-radius: var(--r-full);
-  background: color-mix(in srgb, var(--th-static) 45%, var(--n-900)); color: var(--n-050); font-size: var(--fs-13); font-weight: var(--fw-semibold); }
-.chip b { font-weight: var(--fw-bold); }
-.chip--round { font-weight: var(--fw-heavy); letter-spacing: .02em; }
-.chip--warn { color: var(--amber-200); }
-.chip--warn::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--warn-solid); }
 .chip[hidden] { display: none; }
 
 /* ===== LCD 판독 화면 (스캔라인은 스크롤을 따라간다) ===== */
 
-.hwf__screen::-webkit-scrollbar { width: 10px; }
-.hwf__screen::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--rate) 24%, transparent); border-radius: var(--r-full); border: 3px solid transparent; background-clip: padding-box; }
+.hwf__screen::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--rate) 24%, transparent); border-radius: var(--r-full); border: var(--bw-3) solid transparent; background-clip: padding-box; }
 .hwf__screen { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--rate) 26%, transparent) transparent; }
 
 /* ===== 총점(별+점수 — 스텝 게이지와 다른 위계) + 단계별 표 ===== */
 
-.score { flex: none; display: flex; flex-direction: column; align-items: center; gap: var(--sp-8); min-width: 170px; }
-.score img { width: clamp(84px,9vw,110px); height: auto; filter: drop-shadow(0 8px 18px var(--black-a40)); }
 
-.score__val span { font-size: var(--fs-22); font-weight: var(--fw-bold); }
 
-.trow { display: grid; grid-template-columns: minmax(128px,1fr) 52px minmax(130px,1.3fr) 84px 62px 74px;
-  align-items: center; gap: clamp(8px,1.2vw,16px); padding: var(--sp-8) var(--sp-12); }
-.thead { padding-bottom: 0; }
 
-.tcell { display: flex; align-items: center; justify-content: center; font-family: var(--font-sans); color: var(--n-050); min-width: 0; }
-.tcell--name { justify-content: flex-start; gap: var(--sp-8); }
 
-.tst { font-family: var(--font-mono); font-size: var(--fs-16); }
-.tst small { color: var(--n-300); font-size: var(--fs-13); }
 .tpc { font-family: var(--font-mono); font-size: var(--fs-16); color: var(--rate); }
 .tview { padding: var(--sp-6) 0; width: 100%; max-width: 70px; border-radius: var(--r-8); border: none; background: transparent;
-  box-shadow: inset 0 0 0 1px var(--rate); color: var(--rate);
+  box-shadow: inset 0 0 0 var(--bw-1) var(--rate); color: var(--rate);
   font-family: var(--font-sans); font-weight: var(--fw-bold); font-size: var(--fs-14); cursor: pointer; transition: background var(--t-fast); }
 .tview:hover { background: color-mix(in srgb, var(--rate) 14%, transparent); }
 
@@ -66,9 +49,9 @@
 .qgrid { display: grid; grid-template-columns: repeat(10, 1fr); gap: var(--sp-8); margin-top: clamp(18px,2.2vw,26px); }
 .qcell { display: flex; align-items: center; justify-content: center; aspect-ratio: 1 / 1.04;
   border-radius: var(--r-12); font-family: var(--font-mono); font-size: var(--fs-19); font-weight: var(--fw-bold);
-  background: var(--white-a04); color: var(--n-300); transition: background var(--t-fast); }
+  background: var(--white-a04); color: var(--text-muted); transition: background var(--t-fast); }
 .qcell.ok { background: var(--rate); color: var(--n-900); box-shadow: 0 0 14px color-mix(in srgb, var(--rate) 32%, transparent); }
-.qcell.no { color: var(--red-400); box-shadow: inset 0 0 0 1.5px var(--no-vivid); }
+.qcell.no { color: var(--red-400); box-shadow: inset 0 0 0 var(--bw-1_5) var(--no-vivid); }
 
 /* 하단바 = 유형(크림 트레이) */
 

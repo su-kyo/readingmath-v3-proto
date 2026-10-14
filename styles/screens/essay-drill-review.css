@@ -14,7 +14,7 @@
 }
 :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
 :root[data-theme="light"] .content {
-  background: var(--n-000); border-color: var(--th-static);
+  background: var(--th-panel); border-color: var(--th-static);
   --guide: var(--n-650); --card: var(--n-000); --card-br: var(--n-050); --card-sh: 0 12px 30px -22px color-mix(in srgb, var(--violet-800) 50%, transparent);
   --step-bg: var(--n-100); --step-fg: var(--text-meta);
   --ok-fg: var(--ok-ink); --no-fg: var(--no-ink);
@@ -26,7 +26,7 @@
 .stepbar__i { display: inline-flex; align-items: center; gap: var(--sp-6); padding: var(--sp-4) var(--sp-4);
   font-family: var(--font-sans); font-size: var(--fs-13); font-weight: var(--fw-bold); color: var(--step-fg); transition: color .2s; }
 .stepbar__dot { position: relative; box-sizing: border-box; flex: none; width: 18px; height: 18px; border-radius: 50%;
-  border: 2px solid currentColor; opacity: .5; transition: opacity .2s, background .2s; }
+  border: var(--bw-2) solid currentColor; opacity: .5; transition: opacity .2s, background .2s; }
 
 .stepbar__i.is-on { color: var(--th-ink-accent); }
 :root[data-theme="dark"] .stepbar__i.is-on { color: var(--th-accent-hi); }
@@ -35,8 +35,7 @@
 :root[data-theme="dark"] .stepbar__i.is-done { color: var(--th-accent-hi); }
 .stepbar__i.is-done .stepbar__dot { opacity: 1; background: currentColor; }
 .stepbar__i.is-done .stepbar__dot::after { content: ''; position: absolute; left: 4.5px; top: 1.5px;
-  width: 4px; height: 8px; border: solid var(--n-000); border-width: 0 2px 2px 0; transform: rotate(45deg); }
-.stepbar__i.is-done + .stepbar__track { background: var(--th-accent); opacity: 1; }
+  width: 4px; height: 8px; border: solid var(--n-000); border-width: 0 var(--bw-2) var(--bw-2) 0; transform: rotate(45deg); }
 
 /* 문제 카드 헤더 안 = 어두운 패널 위 밝은 톤 */
 
@@ -44,21 +43,17 @@
 .qtab { min-width: 28px; height: 28px; padding: 0 var(--sp-6); border-radius: var(--r-8); display: inline-flex; align-items: center; justify-content: center;
   font-family: var(--font-sans); font-weight: var(--fw-heavy); font-size: var(--fs-13); cursor: pointer;
   background: var(--white-a10); color: var(--white-a90); transition: background .16s, color .16s, box-shadow .16s; }
-.qtab.is-done { background: color-mix(in srgb, var(--th-accent) 52%, transparent); color: var(--n-000); }
-.qtab.is-active { background: var(--th-solid); color: var(--n-000); box-shadow: 0 0 0 2px var(--n-000), 0 2px 8px var(--black-a30); }
+.qtab.is-done { background: color-mix(in srgb, var(--th-accent) 52%, transparent); color: var(--text-on-accent); }
+.qtab.is-active { background: var(--th-solid); color: var(--text-on-accent); box-shadow: 0 0 0 var(--bw-2) var(--n-000), 0 2px 8px var(--black-a30); }
 .problem__head .stepbar__i { color: var(--white-a40); font-size: var(--fs-13); }
 .problem__head .stepbar__i.is-on, .problem__head .stepbar__i.is-done { color: var(--th-accent-hi); }
 .problem__head .stepbar__track { background: var(--white-a20); opacity: 1; }
 .problem__head .stepbar__i.is-done + .stepbar__track { background: var(--th-accent-hi); }
 .problem__head .stepbar__i.is-done .stepbar__dot::after { border-color: var(--th-static); }
 
-:root[data-theme="light"] .stage-scroll::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--violet-600) 28%, transparent); background-clip: padding-box; }
 
 
 /* ============ 카드 ============ */
-.card { max-width: 760px; margin: 0 auto; background: var(--card); border: 1px solid var(--card-br); border-radius: var(--r-22); box-shadow: var(--card-sh); }
-.card + .card { margin-top: 14px; }
-:root[data-theme="light"] .sec-label--sol { background: color-mix(in srgb, var(--violet-500) 10%, transparent); color: var(--th-accent-strong); }
 
 /* 문제 카드 (읽기전용, 접기) = 세로 확정안 drill-v2와 같은 스티키 패널 */
 .problem { position: sticky; top: 0; z-index: 20; overflow: hidden; max-width: none; margin: 0 auto;
@@ -74,24 +69,22 @@
 
 
 /* ============ 다음 단계 진입 버튼 (drill-v2와 동일 · 콘텐츠 하단) ============ */
-.stage-action { max-width: 760px; margin: 16px auto 0; }
+.stage-action { max-width: 760px; margin: var(--sp-16) auto 0; }
 .stage-action__btn { width: 100%; height: 54px; border-radius: var(--r-12); border: 0; cursor: pointer;
   display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-8);
-  background: var(--primary); color: var(--n-000); font-family: var(--font-sans); font-size: var(--fs-19); font-weight: var(--fw-heavy);
-  box-shadow: inset 0 1px 0 var(--white-a24); transition: background .15s; }
+  background: var(--primary); color: var(--text-on-accent); font-family: var(--font-sans); font-size: var(--fs-19); font-weight: var(--fw-heavy);
+  box-shadow: inset 0 var(--bw-1) 0 var(--white-a24); transition: background .15s; }
 .stage-action__btn:hover { background: var(--primary-hover); }
-.stage-action__btn svg { width: 19px; height: 19px; }
 
 /* 안내문 (오답 있을 때) */
 .review-hint { display: flex; align-items: center; gap: var(--sp-8); max-width: 760px; margin: 0 auto 14px;
-  padding: var(--sp-12) var(--sp-16); border-radius: var(--r-12); background: var(--no-bg); box-shadow: inset 0 0 0 1px var(--no-br);
+  padding: var(--sp-12) var(--sp-16); border-radius: var(--r-12); background: var(--no-bg); box-shadow: inset 0 0 0 var(--bw-1) var(--no-br);
   font-family: var(--font-sans); font-size: var(--fs-13); font-weight: var(--fw-bold); color: var(--no-fg); }
-.review-hint svg { width: 17px; height: 17px; flex: none; }
 
 /* 지문 라인 */
 .rline { display: block; font-family: var(--font-serif); color: var(--guide);
   font-size: clamp(16px, 1.45vw, 18.5px); line-height: 2.3; letter-spacing: -0.01em; }
-.rline + .rline { margin-top: 8px; }
+.rline + .rline { margin-top: var(--sp-8); }
 .rline--q { line-height: 2.0; }
 .rline--muted { color: var(--step-fg); }
 
@@ -104,15 +97,15 @@
 .rblank__val, .rslot__val { line-height: 1.2; }
 
 /* 정답 */
-.rblank.is-correct, .rslot.is-correct { background: var(--ok-bg); color: var(--ok-fg); box-shadow: inset 0 0 0 1.5px var(--ok-br); }
+.rblank.is-correct, .rslot.is-correct { background: var(--ok-bg); color: var(--ok-fg); box-shadow: inset 0 0 0 var(--bw-1_5) var(--ok-br); }
 
 /* 오답 = 내 답(빨강 채움). 취소선 없음 — 오답도 읽어야 할 정보다.
    클릭하면 같은 칸이 정답(초록)으로 토글 — 병렬 표시 아님 */
-.rblank.is-wrong, .rslot.is-wrong { background: var(--no-bg); color: var(--no-fg); box-shadow: inset 0 0 0 1.5px var(--no-br); cursor: pointer; transition: box-shadow .15s, background .15s, color .15s; }
-.rblank.is-wrong:hover, .rslot.is-wrong:hover { box-shadow: inset 0 0 0 2px var(--no-br), 0 0 0 3px var(--no-bg); }
+.rblank.is-wrong, .rslot.is-wrong { background: var(--no-bg); color: var(--no-fg); box-shadow: inset 0 0 0 var(--bw-1_5) var(--no-br); cursor: pointer; transition: box-shadow .15s, background .15s, color .15s; }
+.rblank.is-wrong:hover, .rslot.is-wrong:hover { box-shadow: inset 0 0 0 var(--bw-2) var(--no-br), 0 0 0 var(--bw-3) var(--no-bg); }
 /* 토글 상태 = 정답 노출(초록) : 같은 공간 */
-.rblank.is-wrong.show-ans, .rslot.is-wrong.show-ans { background: var(--ok-bg); color: var(--ok-fg); box-shadow: inset 0 0 0 1.5px var(--ok-br); }
-.rblank.is-wrong.show-ans:hover, .rslot.is-wrong.show-ans:hover { box-shadow: inset 0 0 0 2px var(--ok-br), 0 0 0 3px var(--ok-bg); }
+.rblank.is-wrong.show-ans, .rslot.is-wrong.show-ans { background: var(--ok-bg); color: var(--ok-fg); box-shadow: inset 0 0 0 var(--bw-1_5) var(--ok-br); }
+.rblank.is-wrong.show-ans:hover, .rslot.is-wrong.show-ans:hover { box-shadow: inset 0 0 0 var(--bw-2) var(--ok-br), 0 0 0 var(--bw-3) var(--ok-bg); }
 
 /* 정답 확인 = 우측 상단 원형 뱃지 (정답 초록 ✓ / 오답 빨강 ✕) — 색맹도 모양으로 구분.
    오답을 눌러 정답으로 치환한 칸은 정답 스타일이되 뱃지 없음(원래 맞힌 칸과 구분) */
@@ -126,6 +119,6 @@
 .rblank.is-wrong.show-ans::after, .rslot.is-wrong.show-ans::after { content: none; }
 
 /* 하단 결과 버튼 (윗면·아랫면 모두 바이올렛으로 일치) */
-.toolbtn--primary { background: var(--th-solid); box-shadow: 0 4px 0 color-mix(in srgb, var(--th-accent) 62%, var(--n-950)); }
+.toolbtn--primary { background: var(--th-solid); box-shadow: 0 var(--depth-4) 0 color-mix(in srgb, var(--th-accent) 62%, var(--n-950)); }
 /* 이 화면만 워크시트가 위로 떨어져 있다 */
 .worksheet { margin-top: 14px; }

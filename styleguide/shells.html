@@ -6,10 +6,10 @@
   <title>셸 — 리딩수학과학 디자인 시스템</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
   <base href="../" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261014-7" />
-  <link rel="stylesheet" href="styles/base.css?v=20261014-7" />
-  <link rel="stylesheet" href="styles/components.css?v=20261014-7" />
-  <link rel="stylesheet" href="styleguide/sg.css?v=20261014-7" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261014-9" />
+  <link rel="stylesheet" href="styles/base.css?v=20261014-9" />
+  <link rel="stylesheet" href="styles/components.css?v=20261014-9" />
+  <link rel="stylesheet" href="styleguide/sg.css?v=20261014-9" />
 </head>
 <body data-sg-css="tokens,base,components,learn-shell">
 <div class="sg">
@@ -84,8 +84,8 @@
         <div class="sg-item__hd"><h3>우측 서랍</h3>
           <span class="sg-item__cls">.rmd · --rmd-face/raised/ink/line/fill</span>
           <span class="sg-item__file">scripts/gnb-drawer.js</span></div>
-        <p class="sg-note">서랍은 <strong>스타일을 JS 안에서 만들어 넣습니다</strong> — 10화면이 함께 쓰는데
-          CSS 파일이 없어요. Phase 10-①에서 그 안의 색 36개를 토큰으로 바꿨습니다.
+        <p class="sg-note">서랍 스타일은 <code>styles/gnb.css</code> 끝에 있습니다 — 서랍을 쓰는 10화면이 모두 이 파일을 부르니까요.
+          예전엔 <strong>스크립트가 CSS 51줄을 문자열로 꽂아</strong> 검사 도구가 못 봤고, 2026-10-14에 파일로 옮겼습니다(<code>RM-JS-01</code>).
           <strong>서랍은 항상 다크입니다</strong>: 서랍이 달린 GNB가 애초에 다크라 어두운 서랍이 어두운 GNB에서
           미끄러져 나오는 것이 맞아요. 그래서 테마로 뒤집히는 <code>--surface-*</code>가 아니라
           <strong>뒤집히지 않는 램프 <code>--n-*</code>를 직접 참조</strong>합니다.</p>
@@ -99,7 +99,7 @@
         CTA가 옛 주황(<code>#FF7F00</code>)이라 다른 화면의 <code>--primary</code>와 달랐고,
         학기 탭은 흰 글자 대비가 4.1로 미달이었어요. 눈에 잘 안 띄는 종류의 어긋남이라 오래 남아 있었습니다 —
         <strong>스타일이 CSS 밖(JS 문자열)에 있으면 이런 일이 생깁니다.</strong>
-        Phase 10-①에서 색을, 마감 회차에서 반투명 색과 토스트 상태 이름까지 토큰·규칙에 맞췄습니다.
+        Phase 10-①에서 색을, 마감 회차에서 반투명 색과 토스트 상태 이름까지 토큰·규칙에 맞췄고, 2026-10-14에 CSS 파일로 옮겼습니다.
         로고 5색만 브랜드 마크라 예외로 둡니다(「패턴 › 남긴 예외」).</div>
     </section>
 
@@ -273,7 +273,7 @@
           화면 버튼을 대신 클릭합니다 — 입력 로직을 두 벌 만들지 않기 위해서예요.</p>
         <template class="sg-src">
           <div class="keypad" id="kp"></div>
-          <script src="scripts/keypad.js?v=20261014-7"></script>
+          <script src="scripts/keypad.js?v=20261014-9"></script>
           <script>
             /* 키 구성의 정본은 keypad.js 의 KEYS 배열 하나뿐이다.
                문서가 그걸 옮겨 적으면 키가 바뀔 때 문서만 옛것이 된다. */
@@ -291,7 +291,7 @@
           트레이 틴트와 LCD 글자색이 틸로 따라옵니다.</p>
         <template class="sg-src">
           <div class="keypad" id="kp2"></div>
-          <script src="scripts/keypad.js?v=20261014-7"></script>
+          <script src="scripts/keypad.js?v=20261014-9"></script>
           <script>document.getElementById('kp2').innerHTML = RMKeypad.html();</script>
         </template>
       </div>
@@ -302,8 +302,10 @@
 
     <!-- ===================================================== 연습장 -->
     <section class="sg-sec" id="scratch">
-      <h2>연습장 <small>scratchpad.js · 22화면 · 이 문서에서는 못 세운다</small></h2>
-      <p class="sg-lead">한 줄만 부르면 그 화면의 「연습장」 버튼에 알아서 붙습니다.
+      <h2>연습장 <small>scratchpad.js + scratchpad.css · 22화면 · 이 문서에서는 못 세운다</small></h2>
+      <p class="sg-lead">스크립트를 부르면 그 화면의 「연습장」 버튼에 알아서 붙습니다. 스타일은 <code>styles/scratchpad.css</code>에 있고
+        화면 CSS 바로 뒤에 부릅니다 — 예전엔 스크립트가 CSS 40줄을 <code>&lt;style&gt;</code>로 꽂았는데 2026-10-14에 파일로 옮겼어요(<code>RM-JS-01</code>).
+        네이비로 다시 칠하는 필터의 램프 값도 이제 숫자를 옮겨 적지 않고 <code>tokens.css</code>에서 읽습니다.
         <strong>화면 위를 덮는 투명 캔버스</strong>에 바로 필기하고, 딤은 <strong>필기 뒤에 깔립니다</strong> —
         그려 놓은 선이 딤에 묻히면 안 되니까요. 문제 영역과 콘솔바는 딤에서 빠집니다.</p>
       <div class="sg-rule sg-rule--why">도구 바는 <strong>그 화면의 <code>.bar</code>를 복제해 네이비로 다시 칠한 것</strong>입니다.
@@ -315,16 +317,17 @@
         <tbody>
           <tr><td><code>.scratch__canvas</code></td><td>필기하는 투명 판. 화면 전체를 덮는다</td></tr>
           <tr><td><code>.scratch__dim</code></td><td>딤. <strong>캔버스보다 아래</strong>에 깔린다</td></tr>
-          <tr><td><code>.scratch-away</code></td><td>딤에서 빠지는 것 — 문제 영역 · 콘솔바</td></tr>
+          <tr><td><code>.scratch__hole</code></td><td>딤에 뚫는 구멍 — 문제 영역(<code>.content</code>/<code>.rframe</code>) 자리를 원래 밝기로 남긴다</td></tr>
+          <tr><td><code>.bar.scratch-away</code></td><td>화면의 콘솔바가 아래로 내려가는 퇴장</td></tr>
           <tr><td><code>.scratch__tools</code> · <code>__tool</code> · <code>__swatch</code></td><td>복제한 콘솔바 위의 도구들</td></tr>
-          <tr><td><code>.scratch-anim</code></td><td>콘솔바가 네이비로 넘어가는 전환</td></tr>
+          <tr><td><code>.bar.scratch-anim</code></td><td>그 퇴장의 움직임(전환 시간). 네이비 도구 바는 복제본이 아래에서 올라온다</td></tr>
         </tbody>
       </table>
     </section>
 
   </main>
 </div>
-<script src="styleguide/shells.js?v=20261014-7"></script>
-<script src="styleguide/sg.js?v=20261014-7"></script>
+<script src="styleguide/shells.js?v=20261014-9"></script>
+<script src="styleguide/sg.js?v=20261014-9"></script>
 </body>
 </html>

@@ -28,7 +28,7 @@ body.learn-body { background: var(--asset-console-concept-body); overflow: hidde
 .lheader__actions { display: flex; align-items: center; gap: var(--sp-8); flex: none; }
 
 /* 헤더 타이머 (유형·서술형 공통) — 스텝 결과에선 .is-paused 로 정지 표시 */
-.lheader__timer { display: inline-flex; align-items: center; gap: var(--sp-6); background: var(--th-static-deep); border-radius: var(--r-full); padding: var(--sp-6) var(--sp-12); margin-right: 4px; flex: none; color: var(--text-on-accent); }
+.lheader__timer { display: inline-flex; align-items: center; gap: var(--sp-6); background: var(--th-static-deep); border-radius: var(--r-full); padding: var(--sp-6) var(--sp-12); margin-right: var(--sp-4); flex: none; color: var(--text-on-accent); }
 .lheader__timer img { width: 18px; height: 18px; }
 .lheader__timer span { font-family: var(--font-mono); font-weight: var(--fw-bold); font-size: var(--fs-16); letter-spacing: .02em; }
 .lheader__timer.is-paused { opacity: .62; }
@@ -43,7 +43,7 @@ body.learn-body { background: var(--asset-console-concept-body); overflow: hidde
 .theme-toggle__knob { position: absolute; top: 2px; left: 2px; width: 30px; height: 30px; background: center / contain no-repeat url("../assets/icons/ico-sun.svg"); transition: left .2s ease; }
 :root[data-theme="dark"] .theme-toggle__knob { left: 32px; background-image: url("../assets/icons/ico-moon.svg"); }
 /* 헤더 오른쪽 아이콘 버튼. <a>·<button> 둘 다로 쓰이고, 아이콘도 img·svg 둘 다 온다. */
-.nav-ico { width: 32px; height: 32px; border: 0; border-radius: var(--r-12); background: var(--th-accent); color: var(--n-000); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: background .14s; }
+.nav-ico { width: 32px; height: 32px; border: 0; border-radius: var(--r-12); background: var(--th-accent); color: var(--text-on-accent); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: background .14s; }
 .nav-ico img, .nav-ico svg { width: 20px; height: 20px; }
 .nav-ico:hover { filter: brightness(1.12); }
 
@@ -79,13 +79,13 @@ body.learn-body { background: var(--asset-console-concept-body); overflow: hidde
 .bar--flat { --asset-bar-rim: var(--n-100); --asset-bar-tray: var(--n-100); }
 /* 콘솔 트레이의 물리 버튼. 9화면이 함께 쓴다 — 화면에서 다시 정의하지 않는다.
    아이콘은 img·svg 둘 다 들어온다(화면마다 다르게 만들어져 있었다). */
-.toolbtn { display: inline-flex; align-items: center; gap: var(--sp-6); white-space: nowrap; padding: var(--sp-8) var(--sp-16); border: 0; border-radius: var(--r-16); background: var(--n-500); color: var(--n-000); font-family: inherit; font-weight: var(--fw-bold); font-size: clamp(13px, 1.1vw, 16px); cursor: pointer; box-shadow: 0 4px 0 var(--n-650); }
+.toolbtn { display: inline-flex; align-items: center; gap: var(--sp-6); white-space: nowrap; padding: var(--sp-8) var(--sp-16); border: 0; border-radius: var(--r-16); background: var(--n-500); color: var(--text-on-accent); font-family: inherit; font-weight: var(--fw-bold); font-size: clamp(13px, 1.1vw, 16px); cursor: pointer; box-shadow: 0 var(--depth-4) 0 var(--n-650); }
 .toolbtn:hover { filter: brightness(1.12); }
-.toolbtn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--n-650); }
-.toolbtn:disabled { opacity: .5; filter: grayscale(.5); cursor: not-allowed; transform: none; box-shadow: 0 4px 0 var(--n-650); }
+.toolbtn:active { transform: translateY(2px); box-shadow: 0 var(--depth-2) 0 var(--n-650); }
+.toolbtn:disabled { opacity: .5; filter: grayscale(.5); cursor: not-allowed; transform: none; box-shadow: 0 var(--depth-4) 0 var(--n-650); }
 .toolbtn:disabled:hover { filter: grayscale(.5); }   /* :hover 의 brightness 가 이기지 않게 */
 .toolbtn img, .toolbtn svg { width: 20px; height: 20px; }
-.toolbtn--primary { background: var(--primary); box-shadow: 0 4px 0 var(--primary-pressed); }
+.toolbtn--primary { background: var(--primary); box-shadow: 0 var(--depth-4) 0 var(--primary-pressed); }
 .toolbtn--primary:hover { background: var(--primary-hover); }
 
 /* ===================================================================
@@ -104,8 +104,8 @@ body.learn-body { background: var(--asset-console-concept-body); overflow: hidde
 .step-card.is-open { border-style: dashed; border-color: color-mix(in srgb, var(--accent, var(--th-accent)) 55%, transparent); }
 /* 시작하기 = pill 버튼 */
 .step-card__start { display: inline-flex; align-items: center; gap: var(--sp-4); padding: var(--sp-8) var(--sp-16); border-radius: var(--r-full);
-  background: var(--subj-solid, var(--th-solid)); color: var(--n-000) !important; font-weight: var(--fw-heavy); font-size: var(--fs-15); white-space: nowrap;
-  box-shadow: 0 4px 0 var(--black-a20); transition: filter .12s; }
+  background: var(--subj-solid, var(--th-solid)); color: var(--text-on-accent) !important; font-weight: var(--fw-heavy); font-size: var(--fs-15); white-space: nowrap;
+  box-shadow: 0 var(--depth-4) 0 var(--black-a20); transition: filter .12s; }
 .step-card.is-open:hover .step-card__start { filter: brightness(1.12); }
 
 /* ===== 학습 시작 확인 모달 ===== */
@@ -121,19 +121,19 @@ body.learn-body { background: var(--asset-console-concept-body); overflow: hidde
   display: inline-flex; align-items: center; justify-content: center; color: var(--text-muted); background: transparent; }
 .smodal__x:hover { background: var(--surface-2); color: var(--text-muted); }
 .smodal__x svg { width: 20px; height: 20px; }
-.smodal__icon { width: 64px; height: 64px; margin: 2px auto 16px; border-radius: var(--r-22); display: flex; align-items: center; justify-content: center;
+.smodal__icon { width: 64px; height: 64px; margin: 2px auto var(--sp-16); border-radius: var(--r-22); display: flex; align-items: center; justify-content: center;
   background: color-mix(in srgb, var(--subj, var(--th-accent)) 15%, var(--surface-1)); color: var(--subj, var(--th-accent)); }
 .smodal__icon svg { width: 32px; height: 32px; }
 .smodal__title { font-family: var(--font-sans); font-size: var(--fs-22); font-weight: var(--fw-heavy); color: var(--text); }
 .smodal__desc { margin-top: 10px; font-size: var(--fs-15); line-height: 1.6; color: var(--text-muted); }
 .smodal__desc b { color: var(--subj, var(--th-ink-accent)); font-weight: var(--fw-heavy); }
-.smodal__btns { display: flex; gap: var(--sp-8); margin-top: 24px; }
+.smodal__btns { display: flex; gap: var(--sp-8); margin-top: var(--sp-24); }
 .smodal__btn { flex: 1; height: 52px; border-radius: var(--r-16); font-family: var(--font-sans); font-weight: var(--fw-heavy); font-size: var(--fs-19);  /* 450 칠면 라벨 ≥19px (v1.6 §3.0b) */ cursor: pointer; transition: filter .12s, background .12s, transform .08s; }
 .smodal__btn--ghost { background: var(--surface-2); color: var(--text); }
 .smodal__btn--ghost:hover { background: var(--surface-3); }
-.smodal__btn--go { background: var(--primary); color: var(--text-on-accent); box-shadow: 0 4px 0 var(--primary-pressed); }
+.smodal__btn--go { background: var(--primary); color: var(--text-on-accent); box-shadow: 0 var(--depth-4) 0 var(--primary-pressed); }
 .smodal__btn--go:hover { background: var(--primary-hover); }
-.smodal__btn--go:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--primary-pressed); }
+.smodal__btn--go:active { transform: translateY(2px); box-shadow: 0 var(--depth-2) 0 var(--primary-pressed); }
 
 /* 공용 토스트(step-progress 가 주입) → components.css 의 .toast */
 

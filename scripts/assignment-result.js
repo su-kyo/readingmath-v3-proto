@@ -44,7 +44,7 @@
   function gradeCell(r) {
     if (r === true) return '<span class="grade grade--o"><span class="grade__ic">' + ICO.check + '</span>정답</span>';
     if (r === false) return '<span class="grade grade--x"><span class="grade__ic">' + ICO.x + '</span>오답</span>';
-    return '<span class="grade" style="color:var(--faint)">미입력</span>';
+    return '<span class="grade grade--none">미입력</span>';
   }
   var head = '<div class="trow trow--head"><span class="tc-center">문항</span><span>유형명</span>' +
     '<span class="tc-center">난이도</span><span>발문</span><span class="tc-center">채점 결과</span></div>';

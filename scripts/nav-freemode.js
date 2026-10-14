@@ -194,7 +194,7 @@
   // ---- 등급 별 (색=등급): A금 B은 C동 · S프리즘(무지개)
   var GCOL = { s:'var(--art-grade-s)', a:'var(--art-grade-a)', b:'var(--art-grade-b)', c:'var(--art-grade-c)' };
   (function(){ if(document.getElementById('rmStarDefs')) return;
-    var d=document.createElement('div'); d.style.cssText='position:absolute;width:0;height:0;overflow:hidden';
+    var d=document.createElement('div'); d.className='svg-defs';
     d.innerHTML='<svg id="rmStarDefs" aria-hidden="true"><defs><linearGradient id="rmPrism" x1="0" y1="0" x2="1" y2="1">'
       + '<stop offset="0" stop-color="var(--art-planet-1)"/><stop offset=".38" stop-color="var(--art-planet-2)"/>'
       + '<stop offset=".72" stop-color="var(--art-planet-3)"/><stop offset="1" stop-color="var(--art-planet-4)"/></linearGradient></defs></svg>';
@@ -217,7 +217,7 @@
     var unit=document.createElement('div'); unit.className='unit';
     var col=F_TAGCOLOR[u.tag]||'var(--text-muted)';
     var ttl=document.createElement('div'); ttl.className='unit__ttl';
-    ttl.innerHTML='<span class="tag" style="background:color-mix(in srgb, '+col+' 22%, transparent);color:color-mix(in srgb, '+col+' 72%, white);box-shadow:inset 0 0 0 1px color-mix(in srgb, '+col+' 42%, transparent)">'+u.tag+'</span>'+u.no+'단원 · '+u.name;
+    ttl.innerHTML='<span class="tag" style="--tag-c:'+col+'">'+u.tag+'</span>'+u.no+'단원 · '+u.name;
     unit.appendChild(ttl);
     u.subs.forEach(function(s,si){
       var sb=document.createElement('div'); sb.className='sub';  // 기본: 모두 닫힘

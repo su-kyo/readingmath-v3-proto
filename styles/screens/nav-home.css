@@ -139,7 +139,9 @@ body{ font-family:var(--font-sans); background:var(--bg); overflow:hidden; -webk
   background:var(--n-000); color:var(--n-650); border-radius:19px; padding:var(--sp-12) var(--sp-20);
   font-size:var(--fs-15); font-weight:var(--fw-semibold); line-height:1.5; text-align:center;
   box-shadow:0 12px 30px -12px color-mix(in srgb, var(--n-650) 55%, transparent); }
-.bubble b{ color:var(--hl,var(--blue-600)); font-weight:var(--fw-heavy); }
+.bubble{ --hl:var(--blue-600); }
+.bubble[data-subject="science"]{ --hl:var(--teal-600); }
+.bubble b{ color:var(--hl); font-weight:var(--fw-heavy); }
 .bubble::after{ content:""; position:absolute; left:50%; bottom:-10px; transform:translateX(-50%);
   border:11px solid transparent; border-top-color:var(--n-000); border-bottom:0; }
 
@@ -148,16 +150,16 @@ body{ font-family:var(--font-sans); background:var(--bg); overflow:hidden; -webk
    층 순서: 오브젝트(auto) < 명판(25) < 캐릭터(30) < CTA(40) < 토스트(50) */
 .cta{ position:absolute; left:50%; bottom:5%; transform:translateX(-50%); z-index:40;
   display:inline-flex; align-items:center; gap:var(--sp-8); height:56px; padding:0 var(--sp-32); border:0;
-  border-radius:var(--r-16); background:var(--primary); color:var(--n-000); font-family:inherit; font-size:var(--fs-19);
+  border-radius:var(--r-16); background:var(--primary); color:var(--text-on-accent); font-family:inherit; font-size:var(--fs-19);
   font-weight:var(--fw-heavy); letter-spacing:-.02em; cursor:pointer;
-  box-shadow:0 0 0 2px var(--primary-ring), 0 4px 0 var(--primary-deep), 0 14px 26px -12px color-mix(in srgb, var(--n-950) 50%, transparent), inset 0 1px 0 var(--white-a30);
+  box-shadow:0 0 0 var(--bw-2) var(--primary-ring), 0 var(--depth-4) 0 var(--primary-deep), 0 14px 26px -12px color-mix(in srgb, var(--n-950) 50%, transparent), inset 0 var(--bw-1) 0 var(--white-a30);
   transition:transform .16s, background .16s, box-shadow .16s; }
 .cta:hover{ transform:translateX(-50%) translateY(-3px); background:var(--primary-hover);
-  box-shadow:0 0 0 2px var(--primary-ring), 0 4px 0 var(--primary-deep), 0 18px 30px -12px color-mix(in srgb, var(--n-950) 60%, transparent), inset 0 1px 0 var(--white-a30); }
+  box-shadow:0 0 0 var(--bw-2) var(--primary-ring), 0 var(--depth-4) 0 var(--primary-deep), 0 18px 30px -12px color-mix(in srgb, var(--n-950) 60%, transparent), inset 0 var(--bw-1) 0 var(--white-a30); }
 .cta svg{ width:20px; height:20px; }
 
 .toast{ position:fixed; left:50%; bottom:30px; transform:translateX(-50%) translateY(16px); z-index:var(--z-toast);
-  background:var(--surface-2); border:1px solid var(--border); color:var(--text); padding:var(--sp-12) var(--sp-16);
+  background:var(--surface-2); border:var(--bw-1) solid var(--border); color:var(--text); padding:var(--sp-12) var(--sp-16);
   border-radius:var(--r-12); font-size:var(--fs-13); font-weight:var(--fw-semibold); opacity:0; pointer-events:none;
   transition:.2s; box-shadow:var(--shadow-2); font-family:var(--font-sans); }
 .toast.is-on{ opacity:1; transform:translateX(-50%) translateY(0); }

@@ -73,7 +73,7 @@ ul { margin: 0; padding: 0; list-style: none; }
    offset을 넉넉히 줘서 버튼 '테두리'가 아니라 링으로 읽히게 한다.
    (offset이 좁으면 CTA 버튼 위에서 파란 보더가 생긴 것처럼 보임) */
 :focus-visible {
-  outline: 3px solid var(--th-focus);
+  outline: var(--bw-3) solid var(--th-focus);
   outline-offset: 4px;
 }
 /* 마우스 클릭으로 활성화한 버튼에는 링을 남기지 않는다 (키보드 포커스일 때만 노출) */
@@ -84,7 +84,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 ::-webkit-scrollbar-thumb {
   background: var(--surface-3);
   border-radius: var(--r-full);
-  border: 2px solid transparent;
+  border: var(--bw-2) solid transparent;
   background-clip: padding-box;
 }
 ::-webkit-scrollbar-track { background: transparent; }

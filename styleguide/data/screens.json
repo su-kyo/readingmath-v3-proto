@@ -1,0 +1,4323 @@
+{
+ "_읽는 법": "화면마다 무엇으로 지어졌나. tools/screens-build.py 가 만든다(손으로 고치지 않는다). parts = 스토리북 부품 카드(doc 으로 간다) · tokens = 화면 CSS 가 많이 부르는 색·역할 토큰(눈금 제외) · rules = 이 화면에 특히 걸리는 규칙(전 화면 공통 규칙은 뺐다 — styleguide/data/rules.json).",
+ "_만든 도구": "tools/screens-build.py",
+ "count": 36,
+ "screens": [
+  {
+   "path": "assignment/explain.html",
+   "title": "과제 해설",
+   "family": "assignment",
+   "familyKo": "과제",
+   "section": "assign",
+   "theme": "light+dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/components.css",
+    "styles/learn-shell.css",
+    "styles/assign.css",
+    "styles/screens/assignment-explain.css",
+    "styles/scratchpad.css"
+   ],
+   "js": [
+    "scripts/scratchpad.js",
+    "scripts/assignment-explain.js",
+    "scripts/learn-exit.js"
+   ],
+   "parts": [
+    {
+     "name": "콘솔 도구 버튼",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "목록형 선택지",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "과제 해설 — 목록형 선지 · 해설 띠",
+     "group": "부품 › 해설 화면의 면 — 상태표",
+     "doc": "styleguide/components.html#surf"
+    },
+    {
+     "name": "토스트",
+     "group": "부품 › 토스트",
+     "doc": "styleguide/components.html#toast"
+    },
+    {
+     "name": "배경 사진과 다크 막",
+     "group": "기초 › 계열 슬롯",
+     "doc": "styleguide/foundations.html#section"
+    },
+    {
+     "name": "학습 헤더",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 — 계열 넷",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘텐츠 패널 — 변형 둘",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/assignment-explain.css"
+   ],
+   "tokens": [
+    {
+     "name": "--ok-solid",
+     "count": 5
+    },
+    {
+     "name": "--no-solid",
+     "count": 5
+    },
+    {
+     "name": "--n-000",
+     "count": 4
+    },
+    {
+     "name": "--opt",
+     "count": 4
+    },
+    {
+     "name": "--good",
+     "count": 4
+    },
+    {
+     "name": "--text-on-accent",
+     "count": 4
+    },
+    {
+     "name": "--th-accent-hi",
+     "count": 3
+    },
+    {
+     "name": "--bad",
+     "count": 3
+    },
+    {
+     "name": "--th-ink-accent",
+     "count": 2
+    },
+    {
+     "name": "--current",
+     "count": 2
+    },
+    {
+     "name": "--n-050",
+     "count": 2
+    },
+    {
+     "name": "--text-muted",
+     "count": 2
+    }
+   ],
+   "rules": [
+    "RM-SURF-05",
+    "RM-FILL-06",
+    "RM-PART-05",
+    "RM-SURF-02",
+    "RM-SURF-04",
+    "RM-FILL-05",
+    "RM-SURF-03",
+    "RM-FILL-02",
+    "RM-PART-01"
+   ]
+  },
+  {
+   "path": "assignment/home.html",
+   "title": "과제 센터 · 홈",
+   "family": "assignment",
+   "familyKo": "과제",
+   "section": "assign",
+   "theme": "light",
+   "css": [
+    "styles/gnb.css",
+    "styles/tokens.css",
+    "styles/screens/assignment-home.css"
+   ],
+   "js": [
+    "scripts/gnb-drawer.js",
+    "scripts/assignment-home.js"
+   ],
+   "parts": [
+    {
+     "name": "모드 탭",
+     "group": "셸 › 상단 GNB",
+     "doc": "styleguide/shells.html#gnb"
+    },
+    {
+     "name": "우측 서랍",
+     "group": "셸 › 상단 GNB",
+     "doc": "styleguide/shells.html#gnb"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/assignment-home.css"
+   ],
+   "tokens": [
+    {
+     "name": "--ink",
+     "count": 10
+    },
+    {
+     "name": "--surface-1",
+     "count": 9
+    },
+    {
+     "name": "--s-green",
+     "count": 8
+    },
+    {
+     "name": "--s-blue",
+     "count": 8
+    },
+    {
+     "name": "--n-650",
+     "count": 7
+    },
+    {
+     "name": "--n-200",
+     "count": 6
+    },
+    {
+     "name": "--muted",
+     "count": 5
+    },
+    {
+     "name": "--line",
+     "count": 5
+    },
+    {
+     "name": "--faint",
+     "count": 5
+    },
+    {
+     "name": "--text-meta",
+     "count": 4
+    },
+    {
+     "name": "--n-100",
+     "count": 4
+    },
+    {
+     "name": "--n-900",
+     "count": 4
+    }
+   ],
+   "rules": [
+    "RM-FILL-02",
+    "RM-PART-03"
+   ]
+  },
+  {
+   "path": "assignment/result.html",
+   "title": "과제 결과",
+   "family": "assignment",
+   "familyKo": "과제",
+   "section": "assign",
+   "theme": "light+dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/components.css",
+    "styles/learn-shell.css",
+    "styles/assign.css",
+    "styles/screens/assignment-result.css"
+   ],
+   "js": [
+    "scripts/assignment-result.js",
+    "scripts/learn-exit.js"
+   ],
+   "parts": [
+    {
+     "name": "콘솔 도구 버튼",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "토스트",
+     "group": "부품 › 토스트",
+     "doc": "styleguide/components.html#toast"
+    },
+    {
+     "name": "배경 사진과 다크 막",
+     "group": "기초 › 계열 슬롯",
+     "doc": "styleguide/foundations.html#section"
+    },
+    {
+     "name": "학습 헤더",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 — 계열 넷",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘텐츠 패널 — 변형 둘",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/assignment-result.css"
+   ],
+   "tokens": [
+    {
+     "name": "--ink",
+     "count": 4
+    },
+    {
+     "name": "--sub",
+     "count": 4
+    },
+    {
+     "name": "--text-muted",
+     "count": 3
+    },
+    {
+     "name": "--blue",
+     "count": 3
+    },
+    {
+     "name": "--good",
+     "count": 3
+    },
+    {
+     "name": "--line",
+     "count": 3
+    },
+    {
+     "name": "--th-accent-hi",
+     "count": 2
+    },
+    {
+     "name": "--text-meta",
+     "count": 2
+    },
+    {
+     "name": "--n-100",
+     "count": 2
+    },
+    {
+     "name": "--n-200",
+     "count": 2
+    },
+    {
+     "name": "--border",
+     "count": 2
+    },
+    {
+     "name": "--ok-on-dark",
+     "count": 2
+    }
+   ],
+   "rules": [
+    "RM-SURF-05",
+    "RM-FILL-06",
+    "RM-PART-05",
+    "RM-FILL-02"
+   ]
+  },
+  {
+   "path": "assignment/solve.html",
+   "title": "과제 풀이",
+   "family": "assignment",
+   "familyKo": "과제",
+   "section": "assign",
+   "theme": "light+dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/components.css",
+    "styles/learn-shell.css",
+    "styles/monitor.css",
+    "styles/keypad.css",
+    "styles/assign.css",
+    "styles/screens/assignment-solve.css",
+    "styles/scratchpad.css"
+   ],
+   "js": [
+    "scripts/scratchpad.js",
+    "scripts/debug-panel.js",
+    "scripts/keypad.js",
+    "scripts/keypad-input.js",
+    "scripts/assignment-solve.js",
+    "scripts/learn-exit.js"
+   ],
+   "parts": [
+    {
+     "name": "콘솔 도구 버튼",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "목록형 선택지",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "토스트",
+     "group": "부품 › 토스트",
+     "doc": "styleguide/components.html#toast"
+    },
+    {
+     "name": "배경 사진과 다크 막",
+     "group": "기초 › 계열 슬롯",
+     "doc": "styleguide/foundations.html#section"
+    },
+    {
+     "name": "학습 헤더",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 — 계열 넷",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘텐츠 패널 — 변형 둘",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "보조 모니터",
+     "group": "셸 › 보조 모니터",
+     "doc": "styleguide/shells.html#monitor"
+    },
+    {
+     "name": "숫자 키패드",
+     "group": "셸 › 키패드",
+     "doc": "styleguide/shells.html#keypad"
+    },
+    {
+     "name": "같은 키패드, 계열만 유형",
+     "group": "셸 › 키패드",
+     "doc": "styleguide/shells.html#keypad"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/assignment-solve.css"
+   ],
+   "tokens": [
+    {
+     "name": "--blue",
+     "count": 15
+    },
+    {
+     "name": "--sub",
+     "count": 6
+    },
+    {
+     "name": "--text-on-accent",
+     "count": 5
+    },
+    {
+     "name": "--ink",
+     "count": 5
+    },
+    {
+     "name": "--dash",
+     "count": 5
+    },
+    {
+     "name": "--n-050",
+     "count": 4
+    },
+    {
+     "name": "--n-200",
+     "count": 4
+    },
+    {
+     "name": "--th-ink-accent",
+     "count": 3
+    },
+    {
+     "name": "--current",
+     "count": 3
+    },
+    {
+     "name": "--n-000",
+     "count": 3
+    },
+    {
+     "name": "--n-500",
+     "count": 3
+    },
+    {
+     "name": "--th-accent-hi",
+     "count": 3
+    }
+   ],
+   "rules": [
+    "RM-SURF-05",
+    "RM-FILL-06",
+    "RM-PART-05",
+    "RM-SURF-02",
+    "RM-SURF-04",
+    "RM-FILL-05",
+    "RM-FILL-02",
+    "RM-PART-01",
+    "RM-PART-03",
+    "RM-PART-02"
+   ]
+  },
+  {
+   "path": "concept/basic-ops.html",
+   "title": "기초 연산 · 개념 훈련",
+   "family": "concept",
+   "familyKo": "개념",
+   "section": "concept",
+   "theme": "light+dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/components.css",
+    "styles/learn-shell.css",
+    "styles/keypad.css",
+    "styles/screens/concept-basic-ops.css",
+    "styles/scratchpad.css"
+   ],
+   "js": [
+    "scripts/keypad.js",
+    "scripts/scratchpad.js",
+    "scripts/debug-panel.js",
+    "scripts/keypad.js",
+    "scripts/keypad-input.js",
+    "scripts/learn-basic-ops.js",
+    "scripts/learn-exit.js"
+   ],
+   "parts": [
+    {
+     "name": "콘솔 도구 버튼",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "채점 버튼",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "타일형 선택지",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "유형 해설 — 보기 · 타일형 선지 · 해설 띠",
+     "group": "부품 › 해설 화면의 면 — 상태표",
+     "doc": "styleguide/components.html#surf"
+    },
+    {
+     "name": "수식 표기",
+     "group": "부품 › 그 밖에",
+     "doc": "styleguide/components.html#misc"
+    },
+    {
+     "name": "더미 이미지 자리",
+     "group": "부품 › 그 밖에",
+     "doc": "styleguide/components.html#misc"
+    },
+    {
+     "name": "배경 사진과 다크 막",
+     "group": "기초 › 계열 슬롯",
+     "doc": "styleguide/foundations.html#section"
+    },
+    {
+     "name": "학습 헤더",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 — 계열 넷",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘텐츠 패널 — 변형 둘",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "숫자 키패드",
+     "group": "셸 › 키패드",
+     "doc": "styleguide/shells.html#keypad"
+    },
+    {
+     "name": "같은 키패드, 계열만 유형",
+     "group": "셸 › 키패드",
+     "doc": "styleguide/shells.html#keypad"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/concept-basic-ops.css"
+   ],
+   "tokens": [
+    {
+     "name": "--ok-solid",
+     "count": 10
+    },
+    {
+     "name": "--qtext",
+     "count": 8
+    },
+    {
+     "name": "--text-on-accent",
+     "count": 8
+    },
+    {
+     "name": "--no-solid",
+     "count": 7
+    },
+    {
+     "name": "--border-strong",
+     "count": 6
+    },
+    {
+     "name": "--opt-bg",
+     "count": 6
+    },
+    {
+     "name": "--n-000",
+     "count": 4
+    },
+    {
+     "name": "--th-accent",
+     "count": 3
+    },
+    {
+     "name": "--fade",
+     "count": 2
+    },
+    {
+     "name": "--text-muted",
+     "count": 2
+    },
+    {
+     "name": "--n-050",
+     "count": 2
+    },
+    {
+     "name": "--white-a30",
+     "count": 2
+    }
+   ],
+   "rules": [
+    "RM-SURF-05",
+    "RM-FILL-06",
+    "RM-PART-05",
+    "RM-SURF-02",
+    "RM-SURF-04",
+    "RM-FILL-05",
+    "RM-FILL-02",
+    "RM-PART-01",
+    "RM-PART-03",
+    "RM-ASSET-03"
+   ]
+  },
+  {
+   "path": "concept/drill.html",
+   "title": "기초 연산 · 개념 훈련",
+   "family": "concept",
+   "familyKo": "개념",
+   "section": "concept",
+   "theme": "light+dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/components.css",
+    "styles/learn-shell.css",
+    "styles/keypad.css",
+    "styles/screens/concept-drill.css",
+    "styles/scratchpad.css"
+   ],
+   "js": [
+    "scripts/keypad.js",
+    "scripts/scratchpad.js",
+    "scripts/debug-panel.js",
+    "scripts/vendor/katex/katex.min.js",
+    "scripts/keypad.js",
+    "scripts/keypad-input.js",
+    "scripts/learn-drill.js",
+    "scripts/learn-exit.js"
+   ],
+   "parts": [
+    {
+     "name": "콘솔 도구 버튼",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "채점 버튼",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "타일형 선택지",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "유형 해설 — 보기 · 타일형 선지 · 해설 띠",
+     "group": "부품 › 해설 화면의 면 — 상태표",
+     "doc": "styleguide/components.html#surf"
+    },
+    {
+     "name": "수식 표기",
+     "group": "부품 › 그 밖에",
+     "doc": "styleguide/components.html#misc"
+    },
+    {
+     "name": "더미 이미지 자리",
+     "group": "부품 › 그 밖에",
+     "doc": "styleguide/components.html#misc"
+    },
+    {
+     "name": "배경 사진과 다크 막",
+     "group": "기초 › 계열 슬롯",
+     "doc": "styleguide/foundations.html#section"
+    },
+    {
+     "name": "학습 헤더",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 — 계열 넷",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘텐츠 패널 — 변형 둘",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "숫자 키패드",
+     "group": "셸 › 키패드",
+     "doc": "styleguide/shells.html#keypad"
+    },
+    {
+     "name": "같은 키패드, 계열만 유형",
+     "group": "셸 › 키패드",
+     "doc": "styleguide/shells.html#keypad"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/concept-drill.css"
+   ],
+   "tokens": [
+    {
+     "name": "--text-on-accent",
+     "count": 10
+    },
+    {
+     "name": "--qtext",
+     "count": 10
+    },
+    {
+     "name": "--ok-solid",
+     "count": 8
+    },
+    {
+     "name": "--border-strong",
+     "count": 6
+    },
+    {
+     "name": "--no-solid",
+     "count": 6
+    },
+    {
+     "name": "--input-bg",
+     "count": 6
+    },
+    {
+     "name": "--st-ok",
+     "count": 5
+    },
+    {
+     "name": "--n-000",
+     "count": 4
+    },
+    {
+     "name": "--muted",
+     "count": 4
+    },
+    {
+     "name": "--violet-050",
+     "count": 3
+    },
+    {
+     "name": "--opt-bg",
+     "count": 3
+    },
+    {
+     "name": "--fade",
+     "count": 2
+    }
+   ],
+   "rules": [
+    "RM-SURF-05",
+    "RM-FILL-06",
+    "RM-PART-05",
+    "RM-SURF-02",
+    "RM-SURF-04",
+    "RM-FILL-05",
+    "RM-FILL-02",
+    "RM-PART-01",
+    "RM-PART-03",
+    "RM-ASSET-03"
+   ]
+  },
+  {
+   "path": "concept/learn.html",
+   "title": "개념 학습 · 개념 훈련",
+   "family": "concept",
+   "familyKo": "개념",
+   "section": "concept",
+   "theme": "light+dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/learn-shell.css",
+    "styles/base.css",
+    "styles/components.css",
+    "styles/monitor.css",
+    "styles/screens/concept-learn.css",
+    "styles/scratchpad.css"
+   ],
+   "js": [
+    "scripts/scratchpad.js",
+    "scripts/debug-panel.js",
+    "scripts/learn-concept.js",
+    "scripts/concept-learn-video.js",
+    "scripts/learn-exit.js"
+   ],
+   "parts": [
+    {
+     "name": "콘솔 도구 버튼",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "더미 이미지 자리",
+     "group": "부품 › 그 밖에",
+     "doc": "styleguide/components.html#misc"
+    },
+    {
+     "name": "배경 사진과 다크 막",
+     "group": "기초 › 계열 슬롯",
+     "doc": "styleguide/foundations.html#section"
+    },
+    {
+     "name": "학습 헤더",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 — 계열 넷",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘텐츠 패널 — 변형 둘",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "보조 모니터",
+     "group": "셸 › 보조 모니터",
+     "doc": "styleguide/shells.html#monitor"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/concept-learn.css"
+   ],
+   "tokens": [
+    {
+     "name": "--text-muted",
+     "count": 12
+    },
+    {
+     "name": "--th-accent-hi",
+     "count": 10
+    },
+    {
+     "name": "--th-tint-strong",
+     "count": 9
+    },
+    {
+     "name": "--th-tint",
+     "count": 8
+    },
+    {
+     "name": "--n-000",
+     "count": 8
+    },
+    {
+     "name": "--n-600",
+     "count": 7
+    },
+    {
+     "name": "--warn-solid",
+     "count": 6
+    },
+    {
+     "name": "--text-on-accent",
+     "count": 6
+    },
+    {
+     "name": "--text",
+     "count": 6
+    },
+    {
+     "name": "--th-ink-accent",
+     "count": 5
+    },
+    {
+     "name": "--th-accent",
+     "count": 4
+    },
+    {
+     "name": "--th-solid",
+     "count": 4
+    }
+   ],
+   "rules": [
+    "RM-SURF-05",
+    "RM-FILL-06",
+    "RM-PART-05",
+    "RM-FILL-02",
+    "RM-SURF-01",
+    "RM-PART-02",
+    "RM-PART-01",
+    "RM-ASSET-03"
+   ]
+  },
+  {
+   "path": "concept/organize.html",
+   "title": "개념 정리하기 · 개념 훈련",
+   "family": "concept",
+   "familyKo": "개념",
+   "section": "concept",
+   "theme": "light+dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/learn-shell.css",
+    "styles/base.css",
+    "styles/components.css",
+    "styles/screens/concept-organize.css",
+    "styles/scratchpad.css"
+   ],
+   "js": [
+    "scripts/scratchpad.js",
+    "scripts/concept-organize.js",
+    "scripts/learn-exit.js"
+   ],
+   "parts": [
+    {
+     "name": "콘솔 도구 버튼",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "배경 사진과 다크 막",
+     "group": "기초 › 계열 슬롯",
+     "doc": "styleguide/foundations.html#section"
+    },
+    {
+     "name": "학습 헤더",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 — 계열 넷",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘텐츠 패널 — 변형 둘",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/concept-organize.css"
+   ],
+   "tokens": [
+    {
+     "name": "--text-muted",
+     "count": 12
+    },
+    {
+     "name": "--text-on-accent",
+     "count": 7
+    },
+    {
+     "name": "--th-accent-hi",
+     "count": 6
+    },
+    {
+     "name": "--th-solid",
+     "count": 6
+    },
+    {
+     "name": "--th-ink-accent",
+     "count": 5
+    },
+    {
+     "name": "--th-tint",
+     "count": 5
+    },
+    {
+     "name": "--th-accent",
+     "count": 4
+    },
+    {
+     "name": "--n-600",
+     "count": 3
+    },
+    {
+     "name": "--text",
+     "count": 3
+    },
+    {
+     "name": "--surface-1",
+     "count": 3
+    },
+    {
+     "name": "--n-500",
+     "count": 2
+    },
+    {
+     "name": "--blue-900",
+     "count": 2
+    }
+   ],
+   "rules": [
+    "RM-SURF-05",
+    "RM-FILL-06",
+    "RM-PART-05",
+    "RM-FILL-02",
+    "RM-PART-01"
+   ]
+  },
+  {
+   "path": "essay/advanced.html",
+   "title": "서술형 훈련 · 실력 키우기",
+   "family": "essay",
+   "familyKo": "서술형",
+   "section": "essay",
+   "theme": "light+dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/components.css",
+    "styles/learn-shell.css",
+    "styles/essay.css",
+    "styles/keypad.css",
+    "styles/screens/essay-advanced.css",
+    "styles/scratchpad.css"
+   ],
+   "js": [
+    "scripts/scratchpad.js",
+    "scripts/keypad.js",
+    "scripts/keypad-input.js",
+    "scripts/essay-advanced.js",
+    "scripts/learn-exit.js"
+   ],
+   "parts": [
+    {
+     "name": "콘솔 도구 버튼",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "서술형 빈칸",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "과제 해설 — 목록형 선지 · 해설 띠",
+     "group": "부품 › 해설 화면의 면 — 상태표",
+     "doc": "styleguide/components.html#surf"
+    },
+    {
+     "name": "배경 사진과 다크 막",
+     "group": "기초 › 계열 슬롯",
+     "doc": "styleguide/foundations.html#section"
+    },
+    {
+     "name": "학습 헤더",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 — 계열 넷",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘텐츠 패널 — 변형 둘",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "숫자 키패드",
+     "group": "셸 › 키패드",
+     "doc": "styleguide/shells.html#keypad"
+    },
+    {
+     "name": "같은 키패드, 계열만 유형",
+     "group": "셸 › 키패드",
+     "doc": "styleguide/shells.html#keypad"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/essay-advanced.css"
+   ],
+   "tokens": [
+    {
+     "name": "--th-static",
+     "count": 3
+    },
+    {
+     "name": "--violet-600",
+     "count": 3
+    },
+    {
+     "name": "--violet-050",
+     "count": 2
+    },
+    {
+     "name": "--surface-1",
+     "count": 2
+    },
+    {
+     "name": "--white-a10",
+     "count": 2
+    },
+    {
+     "name": "--white-a06",
+     "count": 2
+    },
+    {
+     "name": "--n-100",
+     "count": 2
+    },
+    {
+     "name": "--white-a60",
+     "count": 2
+    },
+    {
+     "name": "--text-on-accent",
+     "count": 2
+    },
+    {
+     "name": "--text-meta",
+     "count": 2
+    },
+    {
+     "name": "--pc-text",
+     "count": 2
+    },
+    {
+     "name": "--white-a20",
+     "count": 2
+    }
+   ],
+   "rules": [
+    "RM-SURF-05",
+    "RM-FILL-06",
+    "RM-PART-05",
+    "RM-SURF-03",
+    "RM-FILL-02",
+    "RM-SURF-01",
+    "RM-PART-01",
+    "RM-PART-03"
+   ]
+  },
+  {
+   "path": "essay/basics-v2.html",
+   "title": "서술형 훈련 · 기초 기르기 (레이아웃 v2)",
+   "family": "essay",
+   "familyKo": "서술형",
+   "section": "essay",
+   "theme": "light+dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/components.css",
+    "styles/learn-shell.css",
+    "styles/essay.css",
+    "styles/keypad.css",
+    "styles/screens/essay-basics-v2.css",
+    "styles/scratchpad.css"
+   ],
+   "js": [
+    "scripts/scratchpad.js",
+    "scripts/debug-panel.js",
+    "scripts/keypad.js",
+    "scripts/keypad-input.js",
+    "scripts/essay-basics-v2.js",
+    "scripts/learn-exit.js"
+   ],
+   "parts": [
+    {
+     "name": "콘솔 도구 버튼",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "서술형 빈칸",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "과제 해설 — 목록형 선지 · 해설 띠",
+     "group": "부품 › 해설 화면의 면 — 상태표",
+     "doc": "styleguide/components.html#surf"
+    },
+    {
+     "name": "배경 사진과 다크 막",
+     "group": "기초 › 계열 슬롯",
+     "doc": "styleguide/foundations.html#section"
+    },
+    {
+     "name": "학습 헤더",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 — 계열 넷",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘텐츠 패널 — 변형 둘",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "숫자 키패드",
+     "group": "셸 › 키패드",
+     "doc": "styleguide/shells.html#keypad"
+    },
+    {
+     "name": "같은 키패드, 계열만 유형",
+     "group": "셸 › 키패드",
+     "doc": "styleguide/shells.html#keypad"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/essay-basics-v2.css"
+   ],
+   "tokens": [
+    {
+     "name": "--th-static",
+     "count": 3
+    },
+    {
+     "name": "--text-on-accent",
+     "count": 3
+    },
+    {
+     "name": "--violet-600",
+     "count": 3
+    },
+    {
+     "name": "--violet-050",
+     "count": 2
+    },
+    {
+     "name": "--surface-1",
+     "count": 2
+    },
+    {
+     "name": "--white-a10",
+     "count": 2
+    },
+    {
+     "name": "--white-a06",
+     "count": 2
+    },
+    {
+     "name": "--n-100",
+     "count": 2
+    },
+    {
+     "name": "--white-a60",
+     "count": 2
+    },
+    {
+     "name": "--text-meta",
+     "count": 2
+    },
+    {
+     "name": "--pc-text",
+     "count": 2
+    },
+    {
+     "name": "--white-a20",
+     "count": 2
+    }
+   ],
+   "rules": [
+    "RM-SURF-05",
+    "RM-FILL-06",
+    "RM-PART-05",
+    "RM-SURF-03",
+    "RM-FILL-02",
+    "RM-SURF-01",
+    "RM-PART-01",
+    "RM-PART-03"
+   ]
+  },
+  {
+   "path": "essay/basics.html",
+   "title": "서술형 훈련 · 기초 기르기",
+   "family": "essay",
+   "familyKo": "서술형",
+   "section": "essay",
+   "theme": "light+dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/components.css",
+    "styles/learn-shell.css",
+    "styles/essay.css",
+    "styles/keypad.css",
+    "styles/screens/essay-basics.css",
+    "styles/scratchpad.css"
+   ],
+   "js": [
+    "scripts/scratchpad.js",
+    "scripts/keypad.js",
+    "scripts/keypad-input.js",
+    "scripts/essay-basics.js",
+    "scripts/learn-exit.js"
+   ],
+   "parts": [
+    {
+     "name": "콘솔 도구 버튼",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "서술형 빈칸",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "과제 해설 — 목록형 선지 · 해설 띠",
+     "group": "부품 › 해설 화면의 면 — 상태표",
+     "doc": "styleguide/components.html#surf"
+    },
+    {
+     "name": "배경 사진과 다크 막",
+     "group": "기초 › 계열 슬롯",
+     "doc": "styleguide/foundations.html#section"
+    },
+    {
+     "name": "학습 헤더",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 — 계열 넷",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘텐츠 패널 — 변형 둘",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "숫자 키패드",
+     "group": "셸 › 키패드",
+     "doc": "styleguide/shells.html#keypad"
+    },
+    {
+     "name": "같은 키패드, 계열만 유형",
+     "group": "셸 › 키패드",
+     "doc": "styleguide/shells.html#keypad"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/essay-basics.css"
+   ],
+   "tokens": [
+    {
+     "name": "--th-accent",
+     "count": 4
+    },
+    {
+     "name": "--text-on-accent",
+     "count": 4
+    },
+    {
+     "name": "--n-100",
+     "count": 3
+    },
+    {
+     "name": "--n-050",
+     "count": 3
+    },
+    {
+     "name": "--n-500",
+     "count": 3
+    },
+    {
+     "name": "--violet-050",
+     "count": 2
+    },
+    {
+     "name": "--th-static",
+     "count": 2
+    },
+    {
+     "name": "--n-650",
+     "count": 2
+    },
+    {
+     "name": "--violet-600",
+     "count": 2
+    },
+    {
+     "name": "--qa-fg",
+     "count": 2
+    },
+    {
+     "name": "--white-a50",
+     "count": 2
+    },
+    {
+     "name": "--th-solid",
+     "count": 2
+    }
+   ],
+   "rules": [
+    "RM-SURF-05",
+    "RM-FILL-06",
+    "RM-PART-05",
+    "RM-SURF-03",
+    "RM-FILL-02",
+    "RM-SURF-01",
+    "RM-PART-01",
+    "RM-PART-03"
+   ]
+  },
+  {
+   "path": "essay/drill-review.html",
+   "title": "서술형 훈련 · 기본 다지기 해설",
+   "family": "essay",
+   "familyKo": "서술형",
+   "section": "essay",
+   "theme": "light+dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/components.css",
+    "styles/learn-shell.css",
+    "styles/essay.css",
+    "styles/screens/essay-drill-review.css",
+    "styles/scratchpad.css"
+   ],
+   "js": [
+    "scripts/scratchpad.js",
+    "scripts/debug-panel.js",
+    "scripts/essay-drill-review.js",
+    "scripts/learn-exit.js"
+   ],
+   "parts": [
+    {
+     "name": "콘솔 도구 버튼",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "배경 사진과 다크 막",
+     "group": "기초 › 계열 슬롯",
+     "doc": "styleguide/foundations.html#section"
+    },
+    {
+     "name": "학습 헤더",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 — 계열 넷",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘텐츠 패널 — 변형 둘",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/essay-drill-review.css"
+   ],
+   "tokens": [
+    {
+     "name": "--th-static",
+     "count": 4
+    },
+    {
+     "name": "--th-accent-hi",
+     "count": 4
+    },
+    {
+     "name": "--text-on-accent",
+     "count": 4
+    },
+    {
+     "name": "--violet-050",
+     "count": 3
+    },
+    {
+     "name": "--n-000",
+     "count": 3
+    },
+    {
+     "name": "--no-bg",
+     "count": 3
+    },
+    {
+     "name": "--no-br",
+     "count": 3
+    },
+    {
+     "name": "--ok-bg",
+     "count": 3
+    },
+    {
+     "name": "--ok-br",
+     "count": 3
+    },
+    {
+     "name": "--surface-1",
+     "count": 2
+    },
+    {
+     "name": "--ok-solid",
+     "count": 2
+    },
+    {
+     "name": "--no-solid",
+     "count": 2
+    }
+   ],
+   "rules": [
+    "RM-SURF-05",
+    "RM-FILL-06",
+    "RM-PART-05",
+    "RM-FILL-02",
+    "RM-SURF-01",
+    "RM-PART-01"
+   ]
+  },
+  {
+   "path": "essay/drill-v2.html",
+   "title": "서술형 훈련 · 기본 다지기 (레이아웃 v2)",
+   "family": "essay",
+   "familyKo": "서술형",
+   "section": "essay",
+   "theme": "light+dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/components.css",
+    "styles/learn-shell.css",
+    "styles/essay.css",
+    "styles/keypad.css",
+    "styles/monitor.css",
+    "styles/screens/essay-drill-v2.css",
+    "styles/scratchpad.css"
+   ],
+   "js": [
+    "scripts/scratchpad.js",
+    "scripts/debug-panel.js",
+    "scripts/keypad.js",
+    "scripts/keypad-input.js",
+    "scripts/essay-drill-v2.js",
+    "scripts/learn-exit.js"
+   ],
+   "parts": [
+    {
+     "name": "콘솔 도구 버튼",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "토스트",
+     "group": "부품 › 토스트",
+     "doc": "styleguide/components.html#toast"
+    },
+    {
+     "name": "더미 이미지 자리",
+     "group": "부품 › 그 밖에",
+     "doc": "styleguide/components.html#misc"
+    },
+    {
+     "name": "배경 사진과 다크 막",
+     "group": "기초 › 계열 슬롯",
+     "doc": "styleguide/foundations.html#section"
+    },
+    {
+     "name": "학습 헤더",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 — 계열 넷",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘텐츠 패널 — 변형 둘",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "보조 모니터",
+     "group": "셸 › 보조 모니터",
+     "doc": "styleguide/shells.html#monitor"
+    },
+    {
+     "name": "숫자 키패드",
+     "group": "셸 › 키패드",
+     "doc": "styleguide/shells.html#keypad"
+    },
+    {
+     "name": "같은 키패드, 계열만 유형",
+     "group": "셸 › 키패드",
+     "doc": "styleguide/shells.html#keypad"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/essay-drill-v2.css"
+   ],
+   "tokens": [
+    {
+     "name": "--text-on-accent",
+     "count": 5
+    },
+    {
+     "name": "--th-accent-hi",
+     "count": 5
+    },
+    {
+     "name": "--th-static",
+     "count": 4
+    },
+    {
+     "name": "--n-000",
+     "count": 4
+    },
+    {
+     "name": "--primary",
+     "count": 4
+    },
+    {
+     "name": "--violet-050",
+     "count": 3
+    },
+    {
+     "name": "--n-050",
+     "count": 3
+    },
+    {
+     "name": "--th-ink-accent",
+     "count": 3
+    },
+    {
+     "name": "--n-950",
+     "count": 3
+    },
+    {
+     "name": "--surface-1",
+     "count": 2
+    },
+    {
+     "name": "--white-a06",
+     "count": 2
+    },
+    {
+     "name": "--white-a10",
+     "count": 2
+    }
+   ],
+   "rules": [
+    "RM-SURF-05",
+    "RM-FILL-06",
+    "RM-PART-05",
+    "RM-FILL-02",
+    "RM-PART-01",
+    "RM-PART-03",
+    "RM-PART-02",
+    "RM-ASSET-03"
+   ]
+  },
+  {
+   "path": "essay/drill.html",
+   "title": "서술형 훈련 · 기본 다지기",
+   "family": "essay",
+   "familyKo": "서술형",
+   "section": "essay",
+   "theme": "light+dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/components.css",
+    "styles/learn-shell.css",
+    "styles/essay.css",
+    "styles/keypad.css",
+    "styles/screens/essay-drill.css",
+    "styles/scratchpad.css"
+   ],
+   "js": [
+    "scripts/scratchpad.js",
+    "scripts/keypad.js",
+    "scripts/keypad-input.js",
+    "scripts/essay-drill.js",
+    "scripts/learn-exit.js"
+   ],
+   "parts": [
+    {
+     "name": "콘솔 도구 버튼",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "서술형 빈칸",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "토스트",
+     "group": "부품 › 토스트",
+     "doc": "styleguide/components.html#toast"
+    },
+    {
+     "name": "배경 사진과 다크 막",
+     "group": "기초 › 계열 슬롯",
+     "doc": "styleguide/foundations.html#section"
+    },
+    {
+     "name": "학습 헤더",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 — 계열 넷",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘텐츠 패널 — 변형 둘",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "숫자 키패드",
+     "group": "셸 › 키패드",
+     "doc": "styleguide/shells.html#keypad"
+    },
+    {
+     "name": "같은 키패드, 계열만 유형",
+     "group": "셸 › 키패드",
+     "doc": "styleguide/shells.html#keypad"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/essay-drill.css"
+   ],
+   "tokens": [
+    {
+     "name": "--step-fg",
+     "count": 6
+    },
+    {
+     "name": "--n-050",
+     "count": 4
+    },
+    {
+     "name": "--th-accent",
+     "count": 3
+    },
+    {
+     "name": "--surface-1",
+     "count": 2
+    },
+    {
+     "name": "--white-a06",
+     "count": 2
+    },
+    {
+     "name": "--teal-450",
+     "count": 2
+    },
+    {
+     "name": "--th-static",
+     "count": 2
+    },
+    {
+     "name": "--teal-500",
+     "count": 2
+    },
+    {
+     "name": "--ok-ink",
+     "count": 2
+    },
+    {
+     "name": "--guide",
+     "count": 2
+    },
+    {
+     "name": "--th-accent-hi",
+     "count": 2
+    },
+    {
+     "name": "--bl-selline",
+     "count": 2
+    }
+   ],
+   "rules": [
+    "RM-SURF-05",
+    "RM-FILL-06",
+    "RM-PART-05",
+    "RM-FILL-02",
+    "RM-SURF-01",
+    "RM-PART-01",
+    "RM-PART-03"
+   ]
+  },
+  {
+   "path": "essay/report-review.html",
+   "title": "서술형 훈련 · 탐구활동 보고서 해설",
+   "family": "essay",
+   "familyKo": "서술형",
+   "section": "essay",
+   "theme": "light+dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/components.css",
+    "styles/learn-shell.css",
+    "styles/essay.css",
+    "styles/monitor.css",
+    "styles/screens/essay-report-review.css",
+    "styles/scratchpad.css"
+   ],
+   "js": [
+    "scripts/scratchpad.js",
+    "scripts/essay-report-review.js",
+    "scripts/learn-exit.js"
+   ],
+   "parts": [
+    {
+     "name": "콘솔 도구 버튼",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "토스트",
+     "group": "부품 › 토스트",
+     "doc": "styleguide/components.html#toast"
+    },
+    {
+     "name": "배경 사진과 다크 막",
+     "group": "기초 › 계열 슬롯",
+     "doc": "styleguide/foundations.html#section"
+    },
+    {
+     "name": "학습 헤더",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 — 계열 넷",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘텐츠 패널 — 변형 둘",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "보조 모니터",
+     "group": "셸 › 보조 모니터",
+     "doc": "styleguide/shells.html#monitor"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/essay-report-review.css"
+   ],
+   "tokens": [
+    {
+     "name": "--surface-1",
+     "count": 3
+    },
+    {
+     "name": "--ok-solid",
+     "count": 3
+    },
+    {
+     "name": "--no-bg",
+     "count": 3
+    },
+    {
+     "name": "--no-br",
+     "count": 3
+    },
+    {
+     "name": "--ok-bg",
+     "count": 3
+    },
+    {
+     "name": "--ok-br",
+     "count": 3
+    },
+    {
+     "name": "--violet-050",
+     "count": 2
+    },
+    {
+     "name": "--ok-on-dark",
+     "count": 2
+    },
+    {
+     "name": "--no-solid",
+     "count": 2
+    },
+    {
+     "name": "--th-static",
+     "count": 2
+    },
+    {
+     "name": "--n-650",
+     "count": 2
+    },
+    {
+     "name": "--ok-ink",
+     "count": 2
+    }
+   ],
+   "rules": [
+    "RM-SURF-05",
+    "RM-FILL-06",
+    "RM-PART-05",
+    "RM-FILL-02",
+    "RM-SURF-01",
+    "RM-PART-02",
+    "RM-PART-01"
+   ]
+  },
+  {
+   "path": "essay/report.html",
+   "title": "서술형 훈련 · 탐구활동 보고서 만들기",
+   "family": "essay",
+   "familyKo": "서술형",
+   "section": "essay",
+   "theme": "light+dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/components.css",
+    "styles/learn-shell.css",
+    "styles/essay.css",
+    "styles/keypad.css",
+    "styles/monitor.css",
+    "styles/screens/essay-report.css",
+    "styles/scratchpad.css"
+   ],
+   "js": [
+    "scripts/scratchpad.js",
+    "scripts/keypad.js",
+    "scripts/keypad-input.js",
+    "scripts/essay-report.js",
+    "scripts/learn-exit.js"
+   ],
+   "parts": [
+    {
+     "name": "콘솔 도구 버튼",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "서술형 빈칸",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "토스트",
+     "group": "부품 › 토스트",
+     "doc": "styleguide/components.html#toast"
+    },
+    {
+     "name": "배경 사진과 다크 막",
+     "group": "기초 › 계열 슬롯",
+     "doc": "styleguide/foundations.html#section"
+    },
+    {
+     "name": "학습 헤더",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 — 계열 넷",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘텐츠 패널 — 변형 둘",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "보조 모니터",
+     "group": "셸 › 보조 모니터",
+     "doc": "styleguide/shells.html#monitor"
+    },
+    {
+     "name": "숫자 키패드",
+     "group": "셸 › 키패드",
+     "doc": "styleguide/shells.html#keypad"
+    },
+    {
+     "name": "같은 키패드, 계열만 유형",
+     "group": "셸 › 키패드",
+     "doc": "styleguide/shells.html#keypad"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/essay-report.css"
+   ],
+   "tokens": [
+    {
+     "name": "--surface-1",
+     "count": 3
+    },
+    {
+     "name": "--violet-050",
+     "count": 2
+    },
+    {
+     "name": "--th-static",
+     "count": 2
+    },
+    {
+     "name": "--n-650",
+     "count": 2
+    },
+    {
+     "name": "--n-500",
+     "count": 1
+    },
+    {
+     "name": "--text-muted",
+     "count": 1
+    },
+    {
+     "name": "--th-panel",
+     "count": 1
+    },
+    {
+     "name": "--n-100",
+     "count": 1
+    },
+    {
+     "name": "--n-050",
+     "count": 1
+    },
+    {
+     "name": "--n-000",
+     "count": 1
+    },
+    {
+     "name": "--text-meta",
+     "count": 1
+    },
+    {
+     "name": "--bl-bgh",
+     "count": 1
+    }
+   ],
+   "rules": [
+    "RM-SURF-05",
+    "RM-FILL-06",
+    "RM-PART-05",
+    "RM-FILL-02",
+    "RM-SURF-01",
+    "RM-PART-01",
+    "RM-PART-03",
+    "RM-PART-02"
+   ]
+  },
+  {
+   "path": "essay/step-result.html",
+   "title": "서술형 훈련 · 스텝 결과",
+   "family": "essay",
+   "familyKo": "서술형",
+   "section": "essay",
+   "theme": "dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/components.css",
+    "styles/learn-shell.css",
+    "styles/result.css",
+    "styles/essay.css",
+    "styles/screens/essay-step-result.css",
+    "styles/scratchpad.css"
+   ],
+   "js": [
+    "scripts/scratchpad.js",
+    "scripts/essay-step-result.js",
+    "scripts/step-progress.js",
+    "scripts/learn-exit.js"
+   ],
+   "parts": [
+    {
+     "name": "콘솔 도구 버튼",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "스텝 이동 모달",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "원형 게이지 · 판독계 · 문항 LED 띠",
+     "group": "부품 › 결과 계기판",
+     "doc": "styleguide/components.html#dial"
+    },
+    {
+     "name": "토스트",
+     "group": "부품 › 토스트",
+     "doc": "styleguide/components.html#toast"
+    },
+    {
+     "name": "배경 사진과 다크 막",
+     "group": "기초 › 계열 슬롯",
+     "doc": "styleguide/foundations.html#section"
+    },
+    {
+     "name": "학습 헤더",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 — 계열 넷",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/essay-step-result.css"
+   ],
+   "tokens": [
+    {
+     "name": "--rate",
+     "count": 4
+    },
+    {
+     "name": "--black-a30",
+     "count": 3
+    },
+    {
+     "name": "--n-050",
+     "count": 2
+    },
+    {
+     "name": "--white-a04",
+     "count": 2
+    },
+    {
+     "name": "--th-accent-hi",
+     "count": 2
+    },
+    {
+     "name": "--ltext",
+     "count": 2
+    },
+    {
+     "name": "--th-static",
+     "count": 1
+    },
+    {
+     "name": "--n-900",
+     "count": 1
+    },
+    {
+     "name": "--n-300",
+     "count": 1
+    },
+    {
+     "name": "--violet-400",
+     "count": 1
+    },
+    {
+     "name": "--white-a10",
+     "count": 1
+    },
+    {
+     "name": "--white-a06",
+     "count": 1
+    }
+   ],
+   "rules": [
+    "RM-SURF-05",
+    "RM-FILL-06",
+    "RM-PART-05",
+    "RM-FILL-02",
+    "RM-PART-01",
+    "RM-PART-03"
+   ]
+  },
+  {
+   "path": "essay/training-result.html",
+   "title": "서술형 훈련 · 학습 결과",
+   "family": "essay",
+   "familyKo": "서술형",
+   "section": "essay",
+   "theme": "dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/components.css",
+    "styles/learn-shell.css",
+    "styles/result.css",
+    "styles/essay.css",
+    "styles/monitor.css",
+    "styles/screens/essay-training-result.css",
+    "styles/scratchpad.css"
+   ],
+   "js": [
+    "scripts/scratchpad.js",
+    "scripts/debug-panel.js",
+    "scripts/essay-training-result.js",
+    "scripts/learn-exit.js"
+   ],
+   "parts": [
+    {
+     "name": "콘솔 도구 버튼",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "원형 게이지 · 판독계 · 문항 LED 띠",
+     "group": "부품 › 결과 계기판",
+     "doc": "styleguide/components.html#dial"
+    },
+    {
+     "name": "토스트",
+     "group": "부품 › 토스트",
+     "doc": "styleguide/components.html#toast"
+    },
+    {
+     "name": "배경 사진과 다크 막",
+     "group": "기초 › 계열 슬롯",
+     "doc": "styleguide/foundations.html#section"
+    },
+    {
+     "name": "학습 헤더",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 — 계열 넷",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘텐츠 패널 — 변형 둘",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "보조 모니터",
+     "group": "셸 › 보조 모니터",
+     "doc": "styleguide/shells.html#monitor"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/essay-training-result.css"
+   ],
+   "tokens": [
+    {
+     "name": "--rate",
+     "count": 6
+    },
+    {
+     "name": "--violet-400",
+     "count": 2
+    },
+    {
+     "name": "--n-900",
+     "count": 1
+    },
+    {
+     "name": "--white-a04",
+     "count": 1
+    },
+    {
+     "name": "--text",
+     "count": 1
+    }
+   ],
+   "rules": [
+    "RM-SURF-05",
+    "RM-FILL-06",
+    "RM-PART-05",
+    "RM-FILL-02",
+    "RM-PART-02",
+    "RM-PART-01",
+    "RM-PART-03"
+   ]
+  },
+  {
+   "path": "exam/home.html",
+   "title": "시험 대비 · 메인",
+   "family": "exam",
+   "familyKo": "시험대비",
+   "section": "exam",
+   "theme": "light+dark",
+   "css": [
+    "styles/gnb.css",
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/exam.css",
+    "styles/screens/exam-home.css"
+   ],
+   "js": [
+    "scripts/gnb-drawer.js",
+    "scripts/exam-theme.js",
+    "scripts/exam-tile.js",
+    "scripts/exam-home.js"
+   ],
+   "parts": [
+    {
+     "name": "유형 타일 — 성취 6단계",
+     "group": "부품 › 상태 표시",
+     "doc": "styleguide/components.html#badge"
+    },
+    {
+     "name": "모드 탭",
+     "group": "셸 › 상단 GNB",
+     "doc": "styleguide/shells.html#gnb"
+    },
+    {
+     "name": "우측 서랍",
+     "group": "셸 › 상단 GNB",
+     "doc": "styleguide/shells.html#gnb"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/exam-home.css"
+   ],
+   "tokens": [
+    {
+     "name": "--accent",
+     "count": 18
+    },
+    {
+     "name": "--surface",
+     "count": 17
+    },
+    {
+     "name": "--line",
+     "count": 12
+    },
+    {
+     "name": "--faint",
+     "count": 11
+    },
+    {
+     "name": "--ink",
+     "count": 9
+    },
+    {
+     "name": "--n-900",
+     "count": 8
+    },
+    {
+     "name": "--muted",
+     "count": 8
+    },
+    {
+     "name": "--text-on-accent",
+     "count": 8
+    },
+    {
+     "name": "--ok-solid",
+     "count": 7
+    },
+    {
+     "name": "--line-2",
+     "count": 7
+    },
+    {
+     "name": "--no-solid",
+     "count": 6
+    },
+    {
+     "name": "--warn-solid",
+     "count": 6
+    }
+   ],
+   "rules": [
+    "RM-FILL-02",
+    "RM-PART-03"
+   ]
+  },
+  {
+   "path": "exam/solve.html",
+   "title": "시험 대비 · 문제 풀이",
+   "family": "exam",
+   "familyKo": "시험대비",
+   "section": "exam",
+   "theme": "light+dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/keypad.css",
+    "styles/exam.css",
+    "styles/screens/exam-solve.css"
+   ],
+   "js": [
+    "scripts/exam-theme.js",
+    "scripts/debug-panel.js",
+    "scripts/keypad.js",
+    "scripts/keypad-input.js",
+    "scripts/exam-solve.js"
+   ],
+   "parts": [
+    {
+     "name": "목록형 선택지",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "유형 해설 — 보기 · 타일형 선지 · 해설 띠",
+     "group": "부품 › 해설 화면의 면 — 상태표",
+     "doc": "styleguide/components.html#surf"
+    },
+    {
+     "name": "시험 풀이 — 채점 뒤 · 해설 띠",
+     "group": "부품 › 해설 화면의 면 — 상태표",
+     "doc": "styleguide/components.html#surf"
+    },
+    {
+     "name": "숫자 키패드",
+     "group": "셸 › 키패드",
+     "doc": "styleguide/shells.html#keypad"
+    },
+    {
+     "name": "같은 키패드, 계열만 유형",
+     "group": "셸 › 키패드",
+     "doc": "styleguide/shells.html#keypad"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/exam-solve.css"
+   ],
+   "tokens": [
+    {
+     "name": "--line",
+     "count": 15
+    },
+    {
+     "name": "--accent",
+     "count": 11
+    },
+    {
+     "name": "--surface",
+     "count": 10
+    },
+    {
+     "name": "--ink",
+     "count": 9
+    },
+    {
+     "name": "--faint",
+     "count": 9
+    },
+    {
+     "name": "--line-strong",
+     "count": 8
+    },
+    {
+     "name": "--ink2",
+     "count": 7
+    },
+    {
+     "name": "--good",
+     "count": 7
+    },
+    {
+     "name": "--th-accent",
+     "count": 6
+    },
+    {
+     "name": "--muted",
+     "count": 6
+    },
+    {
+     "name": "--bad",
+     "count": 6
+    },
+    {
+     "name": "--n-050",
+     "count": 5
+    }
+   ],
+   "rules": [
+    "RM-SURF-02",
+    "RM-SURF-04",
+    "RM-FILL-05",
+    "RM-SURF-03",
+    "RM-PART-01",
+    "RM-PART-03"
+   ]
+  },
+  {
+   "path": "index.html",
+   "title": "리딩수학과학 · 리디자인",
+   "family": ".",
+   "familyKo": "목차",
+   "section": "util",
+   "theme": "light",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/components.css",
+    "styles/screens/index.css"
+   ],
+   "js": [
+    "scripts/theme.js"
+   ],
+   "parts": [
+    {
+     "name": "목차 배지",
+     "group": "부품 › 상태 표시",
+     "doc": "styleguide/components.html#badge"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/index.css"
+   ],
+   "tokens": [
+    {
+     "name": "--text-meta",
+     "count": 6
+    },
+    {
+     "name": "--surface-2",
+     "count": 4
+    },
+    {
+     "name": "--surface-3",
+     "count": 2
+    },
+    {
+     "name": "--surface-1",
+     "count": 2
+    },
+    {
+     "name": "--text-muted",
+     "count": 1
+    },
+    {
+     "name": "--subj-num",
+     "count": 1
+    },
+    {
+     "name": "--subj-chem",
+     "count": 1
+    }
+   ],
+   "rules": []
+  },
+  {
+   "path": "nav/bridge.html",
+   "title": "시작하기",
+   "family": "nav",
+   "familyKo": "행성 탐색",
+   "section": "space",
+   "theme": "dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/space-bg.css",
+    "styles/screens/nav-bridge.css"
+   ],
+   "js": [
+    "scripts/space-bg.js",
+    "scripts/nav-bridge.js"
+   ],
+   "parts": [
+    {
+     "name": "토스트",
+     "group": "부품 › 토스트",
+     "doc": "styleguide/components.html#toast"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/nav-bridge.css"
+   ],
+   "tokens": [
+    {
+     "name": "--accent",
+     "count": 7
+    },
+    {
+     "name": "--ink",
+     "count": 6
+    },
+    {
+     "name": "--border",
+     "count": 5
+    },
+    {
+     "name": "--border-strong",
+     "count": 4
+    },
+    {
+     "name": "--sub",
+     "count": 4
+    },
+    {
+     "name": "--panel-br",
+     "count": 4
+    },
+    {
+     "name": "--surface-2",
+     "count": 3
+    },
+    {
+     "name": "--th-accent-hi",
+     "count": 3
+    },
+    {
+     "name": "--teal-300",
+     "count": 2
+    },
+    {
+     "name": "--edge",
+     "count": 2
+    },
+    {
+     "name": "--shadow-2",
+     "count": 2
+    },
+    {
+     "name": "--n-950",
+     "count": 2
+    }
+   ],
+   "rules": []
+  },
+  {
+   "path": "nav/curriculum.html",
+   "title": "학기 커리큘럼",
+   "family": "nav",
+   "familyKo": "행성 탐색",
+   "section": "space",
+   "theme": "dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/space-bg.css",
+    "styles/gnb.css",
+    "styles/monitor.css",
+    "styles/nav.css",
+    "styles/screens/nav-curriculum.css"
+   ],
+   "js": [
+    "scripts/space-bg.js",
+    "scripts/nav-curriculum.js",
+    "scripts/gnb-drawer.js"
+   ],
+   "parts": [
+    {
+     "name": "토스트",
+     "group": "부품 › 토스트",
+     "doc": "styleguide/components.html#toast"
+    },
+    {
+     "name": "모드 탭",
+     "group": "셸 › 상단 GNB",
+     "doc": "styleguide/shells.html#gnb"
+    },
+    {
+     "name": "우측 서랍",
+     "group": "셸 › 상단 GNB",
+     "doc": "styleguide/shells.html#gnb"
+    },
+    {
+     "name": "보조 모니터",
+     "group": "셸 › 보조 모니터",
+     "doc": "styleguide/shells.html#monitor"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/nav-curriculum.css"
+   ],
+   "tokens": [
+    {
+     "name": "--mint",
+     "count": 8
+    },
+    {
+     "name": "--item",
+     "count": 6
+    },
+    {
+     "name": "--surface-3",
+     "count": 5
+    },
+    {
+     "name": "--muted",
+     "count": 5
+    },
+    {
+     "name": "--th-accent",
+     "count": 4
+    },
+    {
+     "name": "--green",
+     "count": 4
+    },
+    {
+     "name": "--line2",
+     "count": 3
+    },
+    {
+     "name": "--card",
+     "count": 3
+    },
+    {
+     "name": "--purple",
+     "count": 3
+    },
+    {
+     "name": "--surface-1",
+     "count": 2
+    },
+    {
+     "name": "--n-650",
+     "count": 2
+    },
+    {
+     "name": "--surface-2",
+     "count": 2
+    }
+   ],
+   "rules": [
+    "RM-PART-02",
+    "RM-FILL-02",
+    "RM-PART-03"
+   ]
+  },
+  {
+   "path": "nav/freemode.html",
+   "title": "자유 모드",
+   "family": "nav",
+   "familyKo": "행성 탐색",
+   "section": "space",
+   "theme": "dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/space-bg.css",
+    "styles/gnb.css",
+    "styles/nav.css",
+    "styles/screens/nav-freemode.css"
+   ],
+   "js": [
+    "scripts/space-bg.js",
+    "scripts/nav-freemode.js",
+    "scripts/gnb-drawer.js"
+   ],
+   "parts": [
+    {
+     "name": "토스트",
+     "group": "부품 › 토스트",
+     "doc": "styleguide/components.html#toast"
+    },
+    {
+     "name": "모드 탭",
+     "group": "셸 › 상단 GNB",
+     "doc": "styleguide/shells.html#gnb"
+    },
+    {
+     "name": "우측 서랍",
+     "group": "셸 › 상단 GNB",
+     "doc": "styleguide/shells.html#gnb"
+    },
+    {
+     "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 — 계열 넷",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/nav-freemode.css"
+   ],
+   "tokens": [
+    {
+     "name": "--text-on-accent",
+     "count": 7
+    },
+    {
+     "name": "--surface-1",
+     "count": 5
+    },
+    {
+     "name": "--n-650",
+     "count": 5
+    },
+    {
+     "name": "--border",
+     "count": 5
+    },
+    {
+     "name": "--th-accent-hi",
+     "count": 5
+    },
+    {
+     "name": "--ok-on-dark",
+     "count": 4
+    },
+    {
+     "name": "--surface-2",
+     "count": 4
+    },
+    {
+     "name": "--text",
+     "count": 3
+    },
+    {
+     "name": "--text-muted",
+     "count": 3
+    },
+    {
+     "name": "--surface-3",
+     "count": 3
+    },
+    {
+     "name": "--border-strong",
+     "count": 3
+    },
+    {
+     "name": "--ink",
+     "count": 2
+    }
+   ],
+   "rules": [
+    "RM-FILL-02",
+    "RM-PART-03"
+   ]
+  },
+  {
+   "path": "nav/home.html",
+   "title": "행성 메인",
+   "family": "nav",
+   "familyKo": "행성 탐색",
+   "section": "space",
+   "theme": "dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/gnb.css",
+    "styles/screens/nav-home.css"
+   ],
+   "js": [
+    "scripts/debug-panel.js",
+    "scripts/nav-home.js",
+    "scripts/gnb-drawer.js"
+   ],
+   "parts": [
+    {
+     "name": "토스트",
+     "group": "부품 › 토스트",
+     "doc": "styleguide/components.html#toast"
+    },
+    {
+     "name": "모드 탭",
+     "group": "셸 › 상단 GNB",
+     "doc": "styleguide/shells.html#gnb"
+    },
+    {
+     "name": "우측 서랍",
+     "group": "셸 › 상단 GNB",
+     "doc": "styleguide/shells.html#gnb"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/nav-home.css"
+   ],
+   "tokens": [
+    {
+     "name": "--n-650",
+     "count": 5
+    },
+    {
+     "name": "--m",
+     "count": 4
+    },
+    {
+     "name": "--n-000",
+     "count": 3
+    },
+    {
+     "name": "--seg",
+     "count": 3
+    },
+    {
+     "name": "--n-600",
+     "count": 2
+    },
+    {
+     "name": "--white-a50",
+     "count": 2
+    },
+    {
+     "name": "--n-200",
+     "count": 2
+    },
+    {
+     "name": "--primary-ring",
+     "count": 2
+    },
+    {
+     "name": "--primary-deep",
+     "count": 2
+    },
+    {
+     "name": "--n-950",
+     "count": 2
+    },
+    {
+     "name": "--white-a30",
+     "count": 2
+    },
+    {
+     "name": "--bg",
+     "count": 1
+    }
+   ],
+   "rules": [
+    "RM-ASSET-04",
+    "RM-FILL-08",
+    "RM-FILL-02",
+    "RM-PART-03"
+   ]
+  },
+  {
+   "path": "shared/step-result.html",
+   "title": "개념 학습 완료 · 스텝 결과",
+   "family": "shared",
+   "familyKo": "공용 결과",
+   "section": "concept",
+   "theme": "dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/components.css",
+    "styles/learn-shell.css",
+    "styles/result.css",
+    "styles/screens/shared-step-result.css",
+    "styles/scratchpad.css"
+   ],
+   "js": [
+    "scripts/scratchpad.js",
+    "scripts/step-result.js",
+    "scripts/step-progress.js",
+    "scripts/learn-exit.js"
+   ],
+   "parts": [
+    {
+     "name": "콘솔 도구 버튼",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "스텝 이동 모달",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "원형 게이지 · 판독계 · 문항 LED 띠",
+     "group": "부품 › 결과 계기판",
+     "doc": "styleguide/components.html#dial"
+    },
+    {
+     "name": "토스트",
+     "group": "부품 › 토스트",
+     "doc": "styleguide/components.html#toast"
+    },
+    {
+     "name": "배경 사진과 다크 막",
+     "group": "기초 › 계열 슬롯",
+     "doc": "styleguide/foundations.html#section"
+    },
+    {
+     "name": "학습 헤더",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 — 계열 넷",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/shared-step-result.css"
+   ],
+   "tokens": [
+    {
+     "name": "--cyan-200",
+     "count": 3
+    },
+    {
+     "name": "--black-a30",
+     "count": 3
+    },
+    {
+     "name": "--n-050",
+     "count": 2
+    },
+    {
+     "name": "--white-a04",
+     "count": 2
+    },
+    {
+     "name": "--th-accent-hi",
+     "count": 2
+    },
+    {
+     "name": "--ltext",
+     "count": 2
+    },
+    {
+     "name": "--th-static",
+     "count": 1
+    },
+    {
+     "name": "--n-900",
+     "count": 1
+    },
+    {
+     "name": "--n-300",
+     "count": 1
+    },
+    {
+     "name": "--n-700",
+     "count": 1
+    },
+    {
+     "name": "--th-accent",
+     "count": 1
+    },
+    {
+     "name": "--cyan-400",
+     "count": 1
+    }
+   ],
+   "rules": [
+    "RM-SURF-05",
+    "RM-FILL-06",
+    "RM-PART-05",
+    "RM-FILL-02",
+    "RM-PART-01",
+    "RM-PART-03"
+   ]
+  },
+  {
+   "path": "shared/training-result.html",
+   "title": "개념 훈련 · 학습 결과",
+   "family": "shared",
+   "familyKo": "공용 결과",
+   "section": "concept",
+   "theme": "dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/components.css",
+    "styles/learn-shell.css",
+    "styles/result.css",
+    "styles/monitor.css",
+    "styles/screens/shared-training-result.css",
+    "styles/scratchpad.css"
+   ],
+   "js": [
+    "scripts/scratchpad.js",
+    "scripts/debug-panel.js",
+    "scripts/concept-training-result.js",
+    "scripts/learn-exit.js"
+   ],
+   "parts": [
+    {
+     "name": "콘솔 도구 버튼",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "원형 게이지 · 판독계 · 문항 LED 띠",
+     "group": "부품 › 결과 계기판",
+     "doc": "styleguide/components.html#dial"
+    },
+    {
+     "name": "토스트",
+     "group": "부품 › 토스트",
+     "doc": "styleguide/components.html#toast"
+    },
+    {
+     "name": "배경 사진과 다크 막",
+     "group": "기초 › 계열 슬롯",
+     "doc": "styleguide/foundations.html#section"
+    },
+    {
+     "name": "학습 헤더",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 — 계열 넷",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘텐츠 패널 — 변형 둘",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "보조 모니터",
+     "group": "셸 › 보조 모니터",
+     "doc": "styleguide/shells.html#monitor"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/shared-training-result.css"
+   ],
+   "tokens": [
+    {
+     "name": "--cyan-200",
+     "count": 2
+    },
+    {
+     "name": "--cyan-300",
+     "count": 2
+    },
+    {
+     "name": "--cyan-400",
+     "count": 2
+    },
+    {
+     "name": "--n-900",
+     "count": 1
+    },
+    {
+     "name": "--white-a04",
+     "count": 1
+    },
+    {
+     "name": "--text",
+     "count": 1
+    },
+    {
+     "name": "--n-800",
+     "count": 1
+    }
+   ],
+   "rules": [
+    "RM-SURF-05",
+    "RM-FILL-06",
+    "RM-PART-05",
+    "RM-FILL-02",
+    "RM-PART-02",
+    "RM-PART-01",
+    "RM-PART-03"
+   ]
+  },
+  {
+   "path": "type/quiz.html",
+   "title": "유형 훈련 · 1차 유형 문제",
+   "family": "type",
+   "familyKo": "유형",
+   "section": "type",
+   "theme": "light+dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/components.css",
+    "styles/learn-shell.css",
+    "styles/type.css",
+    "styles/keypad.css",
+    "styles/screens/type-quiz.css",
+    "styles/scratchpad.css"
+   ],
+   "js": [
+    "scripts/keypad.js",
+    "scripts/scratchpad.js",
+    "scripts/debug-panel.js",
+    "scripts/keypad.js",
+    "scripts/keypad-input.js",
+    "scripts/type-quiz.js",
+    "scripts/learn-exit.js"
+   ],
+   "parts": [
+    {
+     "name": "콘솔 도구 버튼",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "타일형 선택지",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "유형 해설 — 보기 · 타일형 선지 · 해설 띠",
+     "group": "부품 › 해설 화면의 면 — 상태표",
+     "doc": "styleguide/components.html#surf"
+    },
+    {
+     "name": "더미 이미지 자리",
+     "group": "부품 › 그 밖에",
+     "doc": "styleguide/components.html#misc"
+    },
+    {
+     "name": "배경 사진과 다크 막",
+     "group": "기초 › 계열 슬롯",
+     "doc": "styleguide/foundations.html#section"
+    },
+    {
+     "name": "학습 헤더",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 — 계열 넷",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘텐츠 패널 — 변형 둘",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "숫자 키패드",
+     "group": "셸 › 키패드",
+     "doc": "styleguide/shells.html#keypad"
+    },
+    {
+     "name": "같은 키패드, 계열만 유형",
+     "group": "셸 › 키패드",
+     "doc": "styleguide/shells.html#keypad"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/type-quiz.css"
+   ],
+   "tokens": [
+    {
+     "name": "--subj",
+     "count": 7
+    },
+    {
+     "name": "--qtext",
+     "count": 6
+    },
+    {
+     "name": "--n-000",
+     "count": 5
+    },
+    {
+     "name": "--n-650",
+     "count": 4
+    },
+    {
+     "name": "--border-strong",
+     "count": 4
+    },
+    {
+     "name": "--th-static",
+     "count": 3
+    },
+    {
+     "name": "--n-050",
+     "count": 3
+    },
+    {
+     "name": "--text-on-accent",
+     "count": 3
+    },
+    {
+     "name": "--fade",
+     "count": 2
+    },
+    {
+     "name": "--text-muted",
+     "count": 2
+    },
+    {
+     "name": "--n-500",
+     "count": 2
+    },
+    {
+     "name": "--n-200",
+     "count": 2
+    }
+   ],
+   "rules": [
+    "RM-SURF-05",
+    "RM-FILL-06",
+    "RM-PART-05",
+    "RM-SURF-02",
+    "RM-SURF-04",
+    "RM-FILL-05",
+    "RM-FILL-02",
+    "RM-PART-01",
+    "RM-PART-03",
+    "RM-ASSET-03"
+   ]
+  },
+  {
+   "path": "type/result.html",
+   "title": "2차 유형 문제 완료 · 스텝 결과",
+   "family": "type",
+   "familyKo": "유형",
+   "section": "type",
+   "theme": "dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/components.css",
+    "styles/learn-shell.css",
+    "styles/result.css",
+    "styles/type.css",
+    "styles/screens/type-result.css",
+    "styles/scratchpad.css"
+   ],
+   "js": [
+    "scripts/scratchpad.js",
+    "scripts/type-result.js",
+    "scripts/step-progress.js",
+    "scripts/learn-exit.js"
+   ],
+   "parts": [
+    {
+     "name": "콘솔 도구 버튼",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "스텝 이동 모달",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "원형 게이지 · 판독계 · 문항 LED 띠",
+     "group": "부품 › 결과 계기판",
+     "doc": "styleguide/components.html#dial"
+    },
+    {
+     "name": "토스트",
+     "group": "부품 › 토스트",
+     "doc": "styleguide/components.html#toast"
+    },
+    {
+     "name": "배경 사진과 다크 막",
+     "group": "기초 › 계열 슬롯",
+     "doc": "styleguide/foundations.html#section"
+    },
+    {
+     "name": "학습 헤더",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 — 계열 넷",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/type-result.css"
+   ],
+   "tokens": [
+    {
+     "name": "--rate",
+     "count": 6
+    },
+    {
+     "name": "--white-a04",
+     "count": 3
+    },
+    {
+     "name": "--black-a30",
+     "count": 3
+    },
+    {
+     "name": "--n-900",
+     "count": 2
+    },
+    {
+     "name": "--n-050",
+     "count": 2
+    },
+    {
+     "name": "--th-accent-hi",
+     "count": 2
+    },
+    {
+     "name": "--lmuted",
+     "count": 2
+    },
+    {
+     "name": "--th-static",
+     "count": 1
+    },
+    {
+     "name": "--n-300",
+     "count": 1
+    },
+    {
+     "name": "--teal-300",
+     "count": 1
+    },
+    {
+     "name": "--red-400",
+     "count": 1
+    },
+    {
+     "name": "--no-vivid",
+     "count": 1
+    }
+   ],
+   "rules": [
+    "RM-SURF-05",
+    "RM-FILL-06",
+    "RM-PART-05",
+    "RM-FILL-02",
+    "RM-PART-01",
+    "RM-PART-03"
+   ]
+  },
+  {
+   "path": "type/review.html",
+   "title": "유형 훈련 · 해설 보기",
+   "family": "type",
+   "familyKo": "유형",
+   "section": "type",
+   "theme": "light+dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/components.css",
+    "styles/learn-shell.css",
+    "styles/type.css",
+    "styles/screens/type-review.css",
+    "styles/scratchpad.css"
+   ],
+   "js": [
+    "scripts/scratchpad.js",
+    "scripts/type-review.js",
+    "scripts/learn-exit.js"
+   ],
+   "parts": [
+    {
+     "name": "콘솔 도구 버튼",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "타일형 선택지",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "유형 해설 — 보기 · 타일형 선지 · 해설 띠",
+     "group": "부품 › 해설 화면의 면 — 상태표",
+     "doc": "styleguide/components.html#surf"
+    },
+    {
+     "name": "시험 풀이 — 채점 뒤 · 해설 띠",
+     "group": "부품 › 해설 화면의 면 — 상태표",
+     "doc": "styleguide/components.html#surf"
+    },
+    {
+     "name": "수식 표기",
+     "group": "부품 › 그 밖에",
+     "doc": "styleguide/components.html#misc"
+    },
+    {
+     "name": "더미 이미지 자리",
+     "group": "부품 › 그 밖에",
+     "doc": "styleguide/components.html#misc"
+    },
+    {
+     "name": "배경 사진과 다크 막",
+     "group": "기초 › 계열 슬롯",
+     "doc": "styleguide/foundations.html#section"
+    },
+    {
+     "name": "학습 헤더",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 — 계열 넷",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘텐츠 패널 — 변형 둘",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/type-review.css"
+   ],
+   "tokens": [
+    {
+     "name": "--ok-solid",
+     "count": 7
+    },
+    {
+     "name": "--n-000",
+     "count": 5
+    },
+    {
+     "name": "--text-on-accent",
+     "count": 5
+    },
+    {
+     "name": "--no-solid",
+     "count": 5
+    },
+    {
+     "name": "--qtext",
+     "count": 5
+    },
+    {
+     "name": "--n-650",
+     "count": 4
+    },
+    {
+     "name": "--th-static",
+     "count": 4
+    },
+    {
+     "name": "--border-strong",
+     "count": 4
+    },
+    {
+     "name": "--text-muted",
+     "count": 3
+    },
+    {
+     "name": "--n-500",
+     "count": 3
+    },
+    {
+     "name": "--th-accent-hi",
+     "count": 3
+    },
+    {
+     "name": "--opt-bg",
+     "count": 3
+    }
+   ],
+   "rules": [
+    "RM-SURF-05",
+    "RM-FILL-06",
+    "RM-PART-05",
+    "RM-SURF-02",
+    "RM-SURF-04",
+    "RM-FILL-05",
+    "RM-SURF-03",
+    "RM-FILL-02",
+    "RM-PART-01",
+    "RM-ASSET-03"
+   ]
+  },
+  {
+   "path": "type/training-result.html",
+   "title": "유형 훈련 · 학습 결과",
+   "family": "type",
+   "familyKo": "유형",
+   "section": "type",
+   "theme": "dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/components.css",
+    "styles/learn-shell.css",
+    "styles/result.css",
+    "styles/type.css",
+    "styles/monitor.css",
+    "styles/screens/type-training-result.css",
+    "styles/scratchpad.css"
+   ],
+   "js": [
+    "scripts/scratchpad.js",
+    "scripts/debug-panel.js",
+    "scripts/type-training-result.js",
+    "scripts/learn-exit.js"
+   ],
+   "parts": [
+    {
+     "name": "콘솔 도구 버튼",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "원형 게이지 · 판독계 · 문항 LED 띠",
+     "group": "부품 › 결과 계기판",
+     "doc": "styleguide/components.html#dial"
+    },
+    {
+     "name": "토스트",
+     "group": "부품 › 토스트",
+     "doc": "styleguide/components.html#toast"
+    },
+    {
+     "name": "배경 사진과 다크 막",
+     "group": "기초 › 계열 슬롯",
+     "doc": "styleguide/foundations.html#section"
+    },
+    {
+     "name": "학습 헤더",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 — 계열 넷",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘텐츠 패널 — 변형 둘",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "보조 모니터",
+     "group": "셸 › 보조 모니터",
+     "doc": "styleguide/shells.html#monitor"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/type-training-result.css"
+   ],
+   "tokens": [
+    {
+     "name": "--rate",
+     "count": 8
+    },
+    {
+     "name": "--teal-300",
+     "count": 2
+    },
+    {
+     "name": "--n-900",
+     "count": 2
+    },
+    {
+     "name": "--white-a04",
+     "count": 2
+    },
+    {
+     "name": "--text-muted",
+     "count": 1
+    },
+    {
+     "name": "--red-400",
+     "count": 1
+    },
+    {
+     "name": "--no-vivid",
+     "count": 1
+    },
+    {
+     "name": "--teal-900",
+     "count": 1
+    }
+   ],
+   "rules": [
+    "RM-SURF-05",
+    "RM-FILL-06",
+    "RM-PART-05",
+    "RM-FILL-02",
+    "RM-PART-02",
+    "RM-PART-01",
+    "RM-PART-03"
+   ]
+  },
+  {
+   "path": "util/history.html",
+   "title": "학습 기록",
+   "family": "util",
+   "familyKo": "유틸",
+   "section": "util",
+   "theme": "light+dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/gnb.css",
+    "styles/util.css",
+    "styles/history.css"
+   ],
+   "js": [
+    "scripts/util-history.js",
+    "scripts/gnb-drawer.js"
+   ],
+   "parts": [
+    {
+     "name": "토스트",
+     "group": "부품 › 토스트",
+     "doc": "styleguide/components.html#toast"
+    },
+    {
+     "name": "① 정상",
+     "group": "패턴 › 목록의 네 상태",
+     "doc": "styleguide/patterns.html#state"
+    },
+    {
+     "name": "「선택 = 반전 칠」 한 규칙",
+     "group": "패턴 › 유틸 화면의 별도 색 체계",
+     "doc": "styleguide/patterns.html#util"
+    },
+    {
+     "name": "모드 탭",
+     "group": "셸 › 상단 GNB",
+     "doc": "styleguide/shells.html#gnb"
+    },
+    {
+     "name": "우측 서랍",
+     "group": "셸 › 상단 GNB",
+     "doc": "styleguide/shells.html#gnb"
+    }
+   ],
+   "tokensFrom": [
+    "styles/history.css"
+   ],
+   "tokens": [
+    {
+     "name": "--ink-3",
+     "count": 29
+    },
+    {
+     "name": "--ink",
+     "count": 22
+    },
+    {
+     "name": "--rule",
+     "count": 12
+    },
+    {
+     "name": "--rule-2",
+     "count": 11
+    },
+    {
+     "name": "--wash",
+     "count": 10
+    },
+    {
+     "name": "--ink-2",
+     "count": 7
+    },
+    {
+     "name": "--brand",
+     "count": 5
+    },
+    {
+     "name": "--brand-ink",
+     "count": 5
+    },
+    {
+     "name": "--sel-bg",
+     "count": 4
+    },
+    {
+     "name": "--ph",
+     "count": 4
+    },
+    {
+     "name": "--sel-fg",
+     "count": 3
+    },
+    {
+     "name": "--surface",
+     "count": 3
+    }
+   ],
+   "rules": [
+    "RM-UTIL-01",
+    "RM-UTIL-02",
+    "RM-UTIL-03",
+    "RM-UTIL-04",
+    "RM-UTIL-05",
+    "RM-FILL-02",
+    "RM-PART-03"
+   ]
+  },
+  {
+   "path": "util/notice-detail.html",
+   "title": "공지사항",
+   "family": "util",
+   "familyKo": "유틸",
+   "section": "util",
+   "theme": "light+dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/gnb.css",
+    "styles/util.css"
+   ],
+   "js": [
+    "scripts/util-notice-detail.js",
+    "scripts/gnb-drawer.js"
+   ],
+   "parts": [
+    {
+     "name": "모드 탭",
+     "group": "셸 › 상단 GNB",
+     "doc": "styleguide/shells.html#gnb"
+    },
+    {
+     "name": "우측 서랍",
+     "group": "셸 › 상단 GNB",
+     "doc": "styleguide/shells.html#gnb"
+    }
+   ],
+   "tokensFrom": [
+    "styles/util.css"
+   ],
+   "tokens": [
+    {
+     "name": "--ink",
+     "count": 25
+    },
+    {
+     "name": "--ink-3",
+     "count": 24
+    },
+    {
+     "name": "--rule",
+     "count": 13
+    },
+    {
+     "name": "--sel-fg",
+     "count": 9
+    },
+    {
+     "name": "--brand-ink",
+     "count": 8
+    },
+    {
+     "name": "--wash",
+     "count": 7
+    },
+    {
+     "name": "--sel-bg",
+     "count": 7
+    },
+    {
+     "name": "--brand",
+     "count": 7
+    },
+    {
+     "name": "--ink-2",
+     "count": 6
+    },
+    {
+     "name": "--paper",
+     "count": 5
+    },
+    {
+     "name": "--icon-mute",
+     "count": 5
+    },
+    {
+     "name": "--err",
+     "count": 5
+    }
+   ],
+   "rules": [
+    "RM-UTIL-01",
+    "RM-UTIL-02",
+    "RM-UTIL-03",
+    "RM-UTIL-04",
+    "RM-UTIL-05",
+    "RM-FILL-02",
+    "RM-PART-03"
+   ]
+  },
+  {
+   "path": "util/notice.html",
+   "title": "공지사항",
+   "family": "util",
+   "familyKo": "유틸",
+   "section": "util",
+   "theme": "light+dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/gnb.css",
+    "styles/util.css"
+   ],
+   "js": [
+    "scripts/util-notice.js",
+    "scripts/gnb-drawer.js"
+   ],
+   "parts": [
+    {
+     "name": "① 정상",
+     "group": "패턴 › 목록의 네 상태",
+     "doc": "styleguide/patterns.html#state"
+    },
+    {
+     "name": "② 로딩",
+     "group": "패턴 › 목록의 네 상태",
+     "doc": "styleguide/patterns.html#state"
+    },
+    {
+     "name": "③ 빈 목록 · ④ 실패",
+     "group": "패턴 › 목록의 네 상태",
+     "doc": "styleguide/patterns.html#state"
+    },
+    {
+     "name": "「선택 = 반전 칠」 한 규칙",
+     "group": "패턴 › 유틸 화면의 별도 색 체계",
+     "doc": "styleguide/patterns.html#util"
+    },
+    {
+     "name": "모드 탭",
+     "group": "셸 › 상단 GNB",
+     "doc": "styleguide/shells.html#gnb"
+    },
+    {
+     "name": "우측 서랍",
+     "group": "셸 › 상단 GNB",
+     "doc": "styleguide/shells.html#gnb"
+    }
+   ],
+   "tokensFrom": [
+    "styles/util.css"
+   ],
+   "tokens": [
+    {
+     "name": "--ink",
+     "count": 25
+    },
+    {
+     "name": "--ink-3",
+     "count": 24
+    },
+    {
+     "name": "--rule",
+     "count": 13
+    },
+    {
+     "name": "--sel-fg",
+     "count": 9
+    },
+    {
+     "name": "--brand-ink",
+     "count": 8
+    },
+    {
+     "name": "--wash",
+     "count": 7
+    },
+    {
+     "name": "--sel-bg",
+     "count": 7
+    },
+    {
+     "name": "--brand",
+     "count": 7
+    },
+    {
+     "name": "--ink-2",
+     "count": 6
+    },
+    {
+     "name": "--paper",
+     "count": 5
+    },
+    {
+     "name": "--icon-mute",
+     "count": 5
+    },
+    {
+     "name": "--err",
+     "count": 5
+    }
+   ],
+   "rules": [
+    "RM-UTIL-01",
+    "RM-UTIL-02",
+    "RM-UTIL-03",
+    "RM-UTIL-04",
+    "RM-UTIL-05",
+    "RM-UTIL-06",
+    "RM-FILL-02",
+    "RM-PART-03"
+   ]
+  },
+  {
+   "path": "util/payment.html",
+   "title": "이용권 결제",
+   "family": "util",
+   "familyKo": "유틸",
+   "section": "util",
+   "theme": "light+dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/gnb.css",
+    "styles/util.css"
+   ],
+   "js": [
+    "scripts/util-payment.js",
+    "scripts/gnb-drawer.js"
+   ],
+   "parts": [
+    {
+     "name": "토스트",
+     "group": "부품 › 토스트",
+     "doc": "styleguide/components.html#toast"
+    },
+    {
+     "name": "모드 탭",
+     "group": "셸 › 상단 GNB",
+     "doc": "styleguide/shells.html#gnb"
+    },
+    {
+     "name": "우측 서랍",
+     "group": "셸 › 상단 GNB",
+     "doc": "styleguide/shells.html#gnb"
+    }
+   ],
+   "tokensFrom": [
+    "styles/util.css"
+   ],
+   "tokens": [
+    {
+     "name": "--ink",
+     "count": 25
+    },
+    {
+     "name": "--ink-3",
+     "count": 24
+    },
+    {
+     "name": "--rule",
+     "count": 13
+    },
+    {
+     "name": "--sel-fg",
+     "count": 9
+    },
+    {
+     "name": "--brand-ink",
+     "count": 8
+    },
+    {
+     "name": "--wash",
+     "count": 7
+    },
+    {
+     "name": "--sel-bg",
+     "count": 7
+    },
+    {
+     "name": "--brand",
+     "count": 7
+    },
+    {
+     "name": "--ink-2",
+     "count": 6
+    },
+    {
+     "name": "--paper",
+     "count": 5
+    },
+    {
+     "name": "--icon-mute",
+     "count": 5
+    },
+    {
+     "name": "--err",
+     "count": 5
+    }
+   ],
+   "rules": [
+    "RM-UTIL-01",
+    "RM-UTIL-02",
+    "RM-UTIL-03",
+    "RM-UTIL-04",
+    "RM-UTIL-05",
+    "RM-FILL-02",
+    "RM-PART-03"
+   ]
+  },
+  {
+   "path": "util/report.html",
+   "title": "월간보고서",
+   "family": "util",
+   "familyKo": "유틸",
+   "section": "util",
+   "theme": "light+dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/gnb.css",
+    "styles/util.css"
+   ],
+   "js": [
+    "scripts/util-report.js",
+    "scripts/gnb-drawer.js"
+   ],
+   "parts": [
+    {
+     "name": "토스트",
+     "group": "부품 › 토스트",
+     "doc": "styleguide/components.html#toast"
+    },
+    {
+     "name": "① 정상",
+     "group": "패턴 › 목록의 네 상태",
+     "doc": "styleguide/patterns.html#state"
+    },
+    {
+     "name": "② 로딩",
+     "group": "패턴 › 목록의 네 상태",
+     "doc": "styleguide/patterns.html#state"
+    },
+    {
+     "name": "③ 빈 목록 · ④ 실패",
+     "group": "패턴 › 목록의 네 상태",
+     "doc": "styleguide/patterns.html#state"
+    },
+    {
+     "name": "모드 탭",
+     "group": "셸 › 상단 GNB",
+     "doc": "styleguide/shells.html#gnb"
+    },
+    {
+     "name": "우측 서랍",
+     "group": "셸 › 상단 GNB",
+     "doc": "styleguide/shells.html#gnb"
+    }
+   ],
+   "tokensFrom": [
+    "styles/util.css"
+   ],
+   "tokens": [
+    {
+     "name": "--ink",
+     "count": 25
+    },
+    {
+     "name": "--ink-3",
+     "count": 24
+    },
+    {
+     "name": "--rule",
+     "count": 13
+    },
+    {
+     "name": "--sel-fg",
+     "count": 9
+    },
+    {
+     "name": "--brand-ink",
+     "count": 8
+    },
+    {
+     "name": "--wash",
+     "count": 7
+    },
+    {
+     "name": "--sel-bg",
+     "count": 7
+    },
+    {
+     "name": "--brand",
+     "count": 7
+    },
+    {
+     "name": "--ink-2",
+     "count": 6
+    },
+    {
+     "name": "--paper",
+     "count": 5
+    },
+    {
+     "name": "--icon-mute",
+     "count": 5
+    },
+    {
+     "name": "--err",
+     "count": 5
+    }
+   ],
+   "rules": [
+    "RM-UTIL-01",
+    "RM-UTIL-02",
+    "RM-UTIL-03",
+    "RM-UTIL-04",
+    "RM-UTIL-05",
+    "RM-UTIL-06",
+    "RM-FILL-02",
+    "RM-PART-03"
+   ]
+  }
+ ]
+}

@@ -67,7 +67,7 @@
   var GRANK = { s:4, a:3, b:2, c:1 };
   // 프리즘(S등급) 별 = 무지개빛 그라데이션 (금·은·동과 확실히 구분)
   (function(){ if(document.getElementById('rmStarDefs')) return;
-    var d=document.createElement('div'); d.style.cssText='position:absolute;width:0;height:0;overflow:hidden';
+    var d=document.createElement('div'); d.className='svg-defs';
     d.innerHTML='<svg id="rmStarDefs" aria-hidden="true"><defs>'
       + '<linearGradient id="rmPrism" x1="0" y1="0" x2="1" y2="1">'
       + '<stop offset="0" stop-color="var(--art-planet-1)"/><stop offset=".38" stop-color="var(--art-planet-2)"/>'
@@ -113,7 +113,7 @@
       var unit=document.createElement('div'); unit.className='unit';
       var col=TAGCOLOR[u.tag]||'var(--text-muted)';
       var ttl=document.createElement('div'); ttl.className='unit__ttl';
-      ttl.innerHTML='<span class="tag" style="background:color-mix(in srgb, '+col+' 22%, transparent);color:color-mix(in srgb, '+col+' 72%, white);box-shadow:inset 0 0 0 1px color-mix(in srgb, '+col+' 42%, transparent)">'+u.tag+'</span>'+u.no+'단원 · '+u.name;
+      ttl.innerHTML='<span class="tag" style="--tag-c:'+col+'">'+u.tag+'</span>'+u.no+'단원 · '+u.name;
       unit.appendChild(ttl);
       u.subs.forEach(function(s,si){
         var cb=trainBar(s.concept), tb=trainBar(s.type), eb=trainBar(s.essay);
@@ -164,22 +164,22 @@
     rounds.forEach(function(o){
       var card=document.createElement('div'); card.className='rcard'+(o.lock?' rcard--lock':(o.cur?' rcard--cur':''));
       var top=document.createElement('div'); top.className='rcard__top';
-      top.innerHTML='<span class="rcard__bar" style="background:'+(o.lock?'var(--n-500)':'var(--mint)')+'"></span><span class="rcard__name">Round '+o.r+'</span>';
+      top.innerHTML='<span class="rcard__bar"></span><span class="rcard__name">Round '+o.r+'</span>';
       // 라운드 = 별 점수
       if(o.g){ var gi=document.createElement('div'); gi.className='rcard__grade'; gi.innerHTML='<img src="assets/icons/star/star-'+o.g+'.svg" width="38" height="38" alt="'+o.g.toUpperCase()+'등급">'; top.appendChild(gi); }
       else if(o.lock){ var lm=document.createElement('span'); lm.className='rcard__lockmsg'; lm.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> 이전 라운드 완료 후 열려요'; top.appendChild(lm); }
-      else if(o.cur){ var cm=document.createElement('span'); cm.className='rcard__lockmsg'; cm.style.color='var(--mint)'; cm.textContent='진행중'; top.appendChild(cm); }
+      else if(o.cur){ var cm=document.createElement('span'); cm.className='rcard__lockmsg rcard__lockmsg--cur'; cm.textContent='진행중'; top.appendChild(cm); }
       card.appendChild(top);
       // 잠긴 라운드 = 스텝 접기 (표시 안 함)
       if(!o.lock){
-        var steps=document.createElement('div'); steps.className='steps'; steps.style.marginTop='16px';
+        var steps=document.createElement('div'); steps.className='steps rcard__steps';
         STEPS[sel.t].forEach(function(st,i){
           var sg = (o.sg && o.sg[i]) ? o.sg[i] : (o.g||null);
           var step=document.createElement('div'); step.className='step';
           var stat = o.g?['is-done','완료']:(o.cur?(i===0?['is-cur','진행중']:['is-todo','시작 전']):['is-todo','시작 전']);
           // 스텝 = 알파벳 점수(완료 시) / 아니면 이동 화살표
           var rightEl = (o.g && sg)
-            ? '<div class="step__grade" style="color:'+GCOL[sg]+';background:color-mix(in srgb, '+GCOL[sg]+' 20%, transparent)">'+sg.toUpperCase()+'</div>'
+            ? '<div class="step__grade step__grade--'+sg+'">'+sg.toUpperCase()+'</div>'
             : '<div class="step__go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>';
           step.innerHTML='<div class="step__i"><div class="step__k">'+st[0]+'</div><div class="step__n">'+st[1]+'</div><div class="step__s '+stat[0]+'">'+stat[1]+'</div></div>'+rightEl;
           step.addEventListener('click', function(){ location.href=st[2]; });
