@@ -57,7 +57,7 @@ body { font-family: var(--font-sans); background: var(--asset-console-task-body)
 .opt__num svg { width: 13px; height: 13px; }
 
 .opt.is-correct { border-color: var(--good); background: var(--ok-tint); }
-.opt.is-correct .opt__num { border-color: var(--good); background: var(--ok-ink); color: var(--n-000); }
+.opt.is-correct .opt__num { border-color: var(--good); background: var(--ok-solid); color: var(--n-000); }
 .opt.is-wrong { border-color: var(--bad); background: var(--no-tint); }
 .opt.is-wrong .opt__num { border-color: var(--no-solid); background: var(--no-solid); color: var(--n-000); }
 /* 다크 — 라이트용 틴트(050)는 밝은 면이라 흰 글자가 사라진다. 상태색을 어둡게 섞는다 (유형 해설과 같은 비율) */
