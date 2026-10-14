@@ -5392,6 +5392,9 @@
   },
   "xbody": {
    "exam/home.html": "markup"
+  },
+  "xstar": {
+   "exam/home.html": "js"
   }
  }
 }

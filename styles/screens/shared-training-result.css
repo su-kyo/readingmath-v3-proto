@@ -48,7 +48,7 @@
 /* 스크린창 안 활동별 행 — 스텝 결과 화면과 같은 구성(문항 LED) */
 
 .mact__name { display: flex; align-items: center; gap: var(--sp-8); flex: none; min-width: 128px;
-  font-weight: var(--fw-heavy); font-size: var(--fs-15); color: var(--text); }
+  font-weight: var(--fw-heavy); font-size: var(--fs-15); color: var(--n-050); }
 .mact .led { flex: 1; }
 .mact .led i { height: 13px; }
 

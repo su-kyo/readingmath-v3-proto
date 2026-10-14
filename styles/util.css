@@ -167,6 +167,7 @@ html,body{ height:100%; }
 
 @keyframes u-sk{ 0%,100%{ opacity:.45 } 50%{ opacity:1 } }
 .u-sk{ background:var(--sk); border-radius:var(--r-4); animation:u-sk 1.25s ease-in-out infinite; }
+.u-sk + .u-sk{ margin-top:11px; }  /* 제목 줄과 날짜 줄 사이 — 스켈레톤 행 높이를 정상 행과 맞춘 값 */
 .u-skrow{ padding:var(--sp-20) var(--sp-24); }
 .u-skrow + .u-skrow{ border-top:var(--bw-1) solid var(--rule); }
 

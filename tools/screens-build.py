@@ -39,7 +39,8 @@ for f in sorted(glob.glob('styleguide/*.html')):
 
 # 화면에 특히 걸리는 규칙 — (조건, 규칙 번호). 조건은 화면 정보 dict 를 받는다.
 uses = lambda *cls: (lambda p: any(c in p['_classes'] for c in cls))
-loads = lambda *names: (lambda p: any(n in p['css'] + p['js'] for n in names))
+# 파일 이름이나 폴더 앞부분으로 찾는다 — 'scripts/vendor/katex' 는 그 아래 katex.min.js 를 부르는 화면에 걸린다
+loads = lambda *names: (lambda p: any(x.startswith(n) for x in p['css'] + p['js'] for n in names))
 RULE_MAP = [
     (loads('styles/learn-shell.css'), ['RM-SURF-05', 'RM-FILL-06', 'RM-PART-05']),
     (uses('opt', 'qopt'), ['RM-SURF-02', 'RM-SURF-04', 'RM-FILL-05']),

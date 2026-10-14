@@ -49,7 +49,7 @@
 .qgrid { display: grid; grid-template-columns: repeat(10, 1fr); gap: var(--sp-8); margin-top: clamp(18px,2.2vw,26px); }
 .qcell { display: flex; align-items: center; justify-content: center; aspect-ratio: 1 / 1.04;
   border-radius: var(--r-12); font-family: var(--font-mono); font-size: var(--fs-19); font-weight: var(--fw-bold);
-  background: var(--white-a04); color: var(--text-muted); transition: background var(--t-fast); }
+  background: var(--white-a04); color: var(--n-300); transition: background var(--t-fast); }
 .qcell.ok { background: var(--rate); color: var(--n-900); box-shadow: 0 0 14px color-mix(in srgb, var(--rate) 32%, transparent); }
 .qcell.no { color: var(--red-400); box-shadow: inset 0 0 0 var(--bw-1_5) var(--no-vivid); }
 

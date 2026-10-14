@@ -183,14 +183,16 @@ def build():
             leaf['$value'] = val
         if note: leaf['$description'] = note
         ext = {'css': name}
-        if g in ('semantic', 'asset') and k == 'color':
+        if g in ('semantic', 'asset') and k in ('color', 'image'):
             for t in ('light', 'dark'):
                 r, v = resolve('var(%s)' % name, env(t, 'concept'))
                 ext[t] = {'ref': r, 'value': v}
             ext['flipsWithTheme'] = ext['light']['value'] != ext['dark']['value']
             ext['setInLight'] = name in light_names
-        if g == 'theme' or (g == 'semantic' and k == 'color' and any(
-                resolve('var(%s)' % name, env('light', s))[1] != resolve('var(%s)' % name, env('light', 'concept'))[1] for s in SECTIONS)):
+        # 계열마다 값이 갈리는 것은 계열별 최종값을 싣는다 — 3단 전부 + 2단·에셋 중 실제로 갈리는 것(콘솔바 테두리·배경 사진·다크 막 등)
+        if g == 'theme' or (g in ('semantic', 'asset') and k in ('color', 'image') and any(
+                resolve('var(%s)' % name, env(t, s))[1] != resolve('var(%s)' % name, env(t, 'concept'))[1]
+                for s in SECTIONS for t in ('light', 'dark'))):
             ext['sections'] = {}
             for s in SECTIONS:
                 ext['sections'][s] = {t: dict(zip(('ref', 'value'), resolve('var(%s)' % name, env(t, s)))) for t in ('light', 'dark')}

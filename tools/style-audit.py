@@ -215,8 +215,10 @@ row('지켜볼 것', '허용 px(부품 치수·위치·반응형 끝값) [RM-SIZ
 # ── JS 가 스타일을 만드는가 (RM-JS-01) ───────────────────────────────────
 # <style> 주입 · cssText · 색·글자·여백·테두리를 인라인으로 넣는 것. 계산값(위치·크기·진행률·다시 칠한
 # 면색)과 데이터값(그림 주소 · CSS 변수 하나) · 보이기/숨기기는 허용한다. debug-panel 은 검수 도구라 뺀다.
+# style="…" 는 따옴표 짝으로 끝을 찾는다 — JS 문자열 이어 붙이기('…'+값+'…') 너머의 margin-top 같은 세부 속성까지 본다.
+# stroke-dash* 는 진행률(계산값)이라 뺀다.
 JS_STYLE = re.compile(r"createElement\(\s*['\"]style['\"]|cssText|\.style\.(?:color|backgroundColor|fontSize|fontWeight|fontFamily|margin\w*|padding\w*|border(?!Radius)\w*)\s*="
-                      r"|style=\\?[\"'][^\"']*(?:(?<![\w-])color|background(?!-image)|font-|margin|padding|border|(?<![\w-])fill|stroke)\s*:")
+                      r"|style=\\?(?:\"[^\"]*?|'[^']*?)(?<![\w-])(?:color|background(?!-image)|font|margin|padding|border|fill|stroke(?!-dash))(?:-[\w-]+)?\s*:")
 js_style = collections.Counter()
 for f in JS:
     # 스토리북 그리개(styleguide/*.js)는 토큰 견본을 칠하는 문서 도구라 뺀다 — 견본의 색이 곧 보여 줄 데이터다

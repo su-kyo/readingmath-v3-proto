@@ -78,7 +78,7 @@ RM/
 │  ├─ phase7~10-brief.md   회차별 지시서와 진행 기록
 │  └─ plan-2026-07.md      7월 작업 계획 (보관용)
 │
-├─ figma-palette/        기존 팔레트 유지 스냅샷 (내부 비교용, 배포 제외)
+├─ figma-palette/        기존 팔레트 유지 스냅샷 (내부 비교용, 배포 제외 · 빌려 쓰던 공용 JS도 js/에 얼려 둠)
 ├─ tools/                로컬 전용 검수 도구 (배포 제외)
 │  ├─ palette-preview.html 팔레트 미리보기
 │  ├─ cta-check.html       CTA가 홈 32배경에서 버티는지 자동 판정

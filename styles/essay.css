@@ -206,7 +206,8 @@
 .para { display: flex; flex-direction: column; gap: var(--sp-8); }
 .box { background: var(--box-bg); border: var(--bw-1) solid var(--box-br); border-radius: var(--r-16);
   padding: clamp(16px, 2vw, 28px); display: flex; flex-direction: column; gap: var(--sp-12); }
-.blank--given { background: var(--bl-fill); box-shadow: none; cursor: default; }
+/* 화면 CSS의 .blank{cursor:pointer}가 뒤에 읽혀도 지도록 한 단계 세게 */
+.blank.blank--given { background: var(--bl-fill); box-shadow: none; cursor: default; }
 .blank--given .blank__ans { opacity: 1; }
 .blank--given .blank__badge { display: none; }
 
