@@ -39,9 +39,9 @@ body { font-family: var(--font-sans); background: var(--asset-console-task-body)
 .qmeta__type { font-size: var(--fs-15); font-weight: var(--fw-bold); color: var(--hd); }
 :root[data-theme="dark"] .qmeta__type { color: var(--th-accent-hi); }
 
-.lvl--기본 { background: var(--info-tint); color: var(--info-ink); }
+.lvl--기본 { background: var(--info-tint); color: var(--info-on-tint); }
 .lvl--실력 { background: var(--th-tint); color: var(--th-ink-accent); }
-.lvl--심화 { background: var(--warn-tint); color: var(--warn-ink); }
+.lvl--심화 { background: var(--warn-tint); color: var(--warn-on-tint); }
 
 /* 객관식 (리뷰: 정오답 표시, 비활성) */
 .opts--col { grid-template-columns: 1fr; }

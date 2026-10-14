@@ -6,10 +6,10 @@
   <title>기초 — 리딩수학과학 디자인 시스템</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
   <base href="../" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261014-13" />
-  <link rel="stylesheet" href="styles/base.css?v=20261014-13" />
-  <link rel="stylesheet" href="styles/components.css?v=20261014-13" />
-  <link rel="stylesheet" href="styleguide/sg.css?v=20261014-13" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261014-14" />
+  <link rel="stylesheet" href="styles/base.css?v=20261014-14" />
+  <link rel="stylesheet" href="styles/components.css?v=20261014-14" />
+  <link rel="stylesheet" href="styleguide/sg.css?v=20261014-14" />
 </head>
 <body data-sg-css="tokens,base,components">
 <div class="sg">
@@ -111,10 +111,13 @@
 
       <div class="sg-item" data-pad="20px">
         <div class="sg-item__hd"><h3>상태색 매트릭스</h3><span class="sg-item__cls">--ok-* · --no-* · --warn-* · --info-*</span></div>
-        <p class="sg-note">역할 넷 × 변형 다섯입니다. 채움(background)은 라이트·다크 모두 같은 솔리드를 씁니다.
-          <code>-on-dark</code>(300)는 다크 면 위의 글자·아이콘에만 씁니다.</p>
+        <p class="sg-note">역할 넷 × 변형 여섯입니다. 채움(<code>-solid</code> · <code>-vivid</code>)은 라이트·다크 모두 같은 색을 씁니다.
+          <code>-on-dark</code>(300)는 어두운 면 위의 글자·아이콘에만 씁니다. 견본은 두 칸 모두 어두운 바탕에 얹었습니다.
+          연한 면이 필요하면 <code>-tint</code> 면에 <code>-on-tint</code> 글자를 짝으로 씁니다. 이 짝만 테마를 따라 바뀝니다. 라이트는 050 면에 600 글자, 다크는 같은 가족 300을 16% 섞은 면에 300 글자입니다.
+          <code>-ink</code>(600)는 라이트 면 위 글자와 칠에 쓰는 고정색이라 틴트 위 글자로 쓰지 않습니다.</p>
         <details class="sg-why"><summary>근거</summary>
           <p>다크에서 채움을 연한 300으로 낮추던 때 색이 물빠져 보였다.</p>
+          <p>틴트 짝은 2026-10-14까지 다크 값이 없어서 다크에서 하얀 알약이 됐다. 화면마다 다크 틴트를 따로 만들었고(13 · 15 · 16 · 22~26%, 정답에 틸을 섞은 곳도 있었다), 그중 가장 많이 쓰던 16%를 규칙으로 정했다.</p>
         </details>
         <template class="sg-src">
           <div class="sg-col">
@@ -122,28 +125,28 @@
               <span class="sg-cap" style="width:64px">정답</span>
               <span style="background:var(--ok-solid);color:var(--text-on-accent);padding:6px 12px;border-radius:8px;font-size:13px;font-weight:700">solid</span>
               <span style="background:var(--ok-vivid);color:var(--text-on-accent);padding:6px 12px;border-radius:8px;font-size:13px;font-weight:700">vivid</span>
-              <span style="color:var(--ok-on-dark);font-size:13px;font-weight:700">on-dark 글자</span>
-              <span style="background:var(--ok-tint);color:var(--ok-ink);padding:6px 12px;border-radius:8px;font-size:13px;font-weight:700">tint + ink</span>
+              <span style="background:var(--n-900);color:var(--ok-on-dark);padding:6px 12px;border-radius:8px;font-size:13px;font-weight:700">on-dark 글자</span>
+              <span style="background:var(--ok-tint);color:var(--ok-on-tint);padding:6px 12px;border-radius:8px;font-size:13px;font-weight:700">tint + on-tint</span>
             </div>
             <div class="sg-row">
               <span class="sg-cap" style="width:64px">오답</span>
               <span style="background:var(--no-solid);color:var(--text-on-accent);padding:6px 12px;border-radius:8px;font-size:13px;font-weight:700">solid</span>
               <span style="background:var(--no-vivid);color:var(--text-on-accent);padding:6px 12px;border-radius:8px;font-size:13px;font-weight:700">vivid</span>
-              <span style="color:var(--no-on-dark);font-size:13px;font-weight:700">on-dark 글자</span>
-              <span style="background:var(--no-tint);color:var(--no-ink);padding:6px 12px;border-radius:8px;font-size:13px;font-weight:700">tint + ink</span>
+              <span style="background:var(--n-900);color:var(--no-on-dark);padding:6px 12px;border-radius:8px;font-size:13px;font-weight:700">on-dark 글자</span>
+              <span style="background:var(--no-tint);color:var(--no-on-tint);padding:6px 12px;border-radius:8px;font-size:13px;font-weight:700">tint + on-tint</span>
             </div>
             <div class="sg-row">
               <span class="sg-cap" style="width:64px">주의</span>
               <span style="background:var(--warn-solid);color:var(--n-900);padding:6px 12px;border-radius:8px;font-size:13px;font-weight:700">solid + 어두운 글자</span>
-              <span style="color:var(--warn-on-dark);font-size:13px;font-weight:700">on-dark 글자</span>
-              <span style="background:var(--warn-tint);color:var(--warn-ink);padding:6px 12px;border-radius:8px;font-size:13px;font-weight:700">tint + ink</span>
+              <span style="background:var(--n-900);color:var(--warn-on-dark);padding:6px 12px;border-radius:8px;font-size:13px;font-weight:700">on-dark 글자</span>
+              <span style="background:var(--warn-tint);color:var(--warn-on-tint);padding:6px 12px;border-radius:8px;font-size:13px;font-weight:700">tint + on-tint</span>
             </div>
             <div class="sg-row">
               <span class="sg-cap" style="width:64px">안내</span>
               <span style="background:var(--info-solid);color:var(--text-on-accent);padding:6px 12px;border-radius:8px;font-size:13px;font-weight:700">solid</span>
               <span style="background:var(--info-vivid);color:var(--text-on-accent);padding:6px 12px;border-radius:8px;font-size:13px;font-weight:700">vivid</span>
-              <span style="color:var(--info-on-dark);font-size:13px;font-weight:700">on-dark 글자</span>
-              <span style="background:var(--info-tint);color:var(--info-ink);padding:6px 12px;border-radius:8px;font-size:13px;font-weight:700">tint + ink</span>
+              <span style="background:var(--n-900);color:var(--info-on-dark);padding:6px 12px;border-radius:8px;font-size:13px;font-weight:700">on-dark 글자</span>
+              <span style="background:var(--info-tint);color:var(--info-on-tint);padding:6px 12px;border-radius:8px;font-size:13px;font-weight:700">tint + on-tint</span>
             </div>
           </div>
         </template>
@@ -185,7 +188,7 @@
         <thead><tr><th style="width:170px">칠면</th><th style="width:120px">기준</th><th style="width:150px">스텝</th><th>글자 조건</th></tr></thead>
         <tbody>
           <tr><td>텍스트 칠면<br><small>배지 · 작은 탭 · <code>RM-FILL-01</code></small></td><td>4.5 : 1</td>
-              <td><code>--th-solid</code> 600</td><td>작은 글자를 얹어도 된다. 또는 틴트 면에 잉크 글자.</td></tr>
+              <td><code>--th-solid</code> 600</td><td>작은 글자를 얹어도 된다. 또는 <code>--*-tint</code> 면에 <code>--*-on-tint</code> 글자.</td></tr>
           <tr><td>정체성 칠면<br><small>CTA · 모드탭 · 채점/확인 · <code>RM-FILL-02</code></small></td><td>3 : 1</td>
               <td><code>--primary</code> <code>--th-vivid</code> 450</td>
               <td>라벨 19px 이상 · w700 이상.<br>작은 글자가 필요한 자리는 정체성 칠면이 아니다.</td></tr>
@@ -372,7 +375,7 @@
   </main>
 </div>
 
-<script src="styleguide/foundations.js?v=20261014-13"></script>
-<script src="styleguide/sg.js?v=20261014-13"></script>
+<script src="styleguide/foundations.js?v=20261014-14"></script>
+<script src="styleguide/sg.js?v=20261014-14"></script>
 </body>
 </html>

@@ -68,13 +68,11 @@ body { font-family: var(--font-sans); background: var(--asset-console-task-body)
 .tc-name { font-size: var(--fs-15); color: var(--ink); font-weight: var(--fw-semibold); }
 .tc-text { font-size: var(--fs-15); color: var(--ink); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .lv { justify-self: center; padding: var(--sp-4) var(--sp-8); border-radius: var(--r-frame); font-size: var(--fs-14); font-weight: var(--fw-semibold); }
-.lv--기본 { background: var(--info-tint); color: var(--info-ink); }
+.lv--기본 { background: var(--info-tint); color: var(--info-on-tint); }
 .lv--실력 { background: var(--th-tint); color: var(--th-ink-accent); }
-.lv--심화 { background: var(--warn-tint); color: var(--warn-ink); }
+.lv--심화 { background: var(--warn-tint); color: var(--warn-on-tint); }
 /* 다크: tint 토큰이 라이트값 그대로라 전환 안 되고 실력(8% accent)은 거의 안 보임 → 다크 전용 반투명 배경 + 밝은 글자 */
-:root[data-theme="dark"] .lv--기본 { background: color-mix(in srgb, var(--info-solid) 22%, transparent); color: var(--info-on-dark); }
 :root[data-theme="dark"] .lv--실력 { background: color-mix(in srgb, var(--th-accent) 24%, transparent); color: var(--th-accent-hi); }
-:root[data-theme="dark"] .lv--심화 { background: color-mix(in srgb, var(--warn-solid) 26%, transparent); color: var(--warn-on-dark); }
 .grade { justify-self: center; display: inline-flex; align-items: center; gap: var(--sp-6); font-size: var(--fs-15); font-weight: var(--fw-semibold); }
 .grade__ic { width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; color: var(--text-on-accent); flex: none; }
 .grade__ic svg { width: 11px; height: 11px; }

@@ -31,10 +31,10 @@
   --ink: var(--n-050); --ink2: var(--n-200); --muted: var(--n-300); --faint: var(--n-350);
   --line: var(--border-strong); --line-2: var(--border); --line-strong: var(--n-500);
   --accent: var(--th-accent); --accent-ink: var(--th-accent-hi);
-  /* 다크 표면용 틴트 토큰 부재 — 기존 반투명 rgba 유지(라이트 위 글자 대비 보존) */
+  /* 계열색 틴트는 화면이 정한다. 상태색 틴트(--*-tint)는 tokens.css가 테마별로 바꾼다 */
   --accent-tint: color-mix(in srgb, var(--violet-500) 18%, transparent); --accent-tint-br: color-mix(in srgb, var(--violet-500) 40%, transparent);
-  --good: var(--ok-solid); --good-tint: color-mix(in srgb, var(--green-400) 13%, transparent); --good-br: color-mix(in srgb, var(--green-400) 42%, transparent);
-  --bad: var(--no-solid); --bad-tint: color-mix(in srgb, var(--red-300) 15%, transparent); --bad-br: color-mix(in srgb, var(--red-300) 42%, transparent);
+  --good: var(--ok-solid); --good-br: color-mix(in srgb, var(--green-400) 42%, transparent);
+  --bad: var(--no-solid); --bad-br: color-mix(in srgb, var(--red-300) 42%, transparent);
   --warn: var(--warn-solid);
   --hover: var(--n-700);
   --sh: 0 1px 2px var(--black-a40), 0 20px 40px -28px var(--black-a60);

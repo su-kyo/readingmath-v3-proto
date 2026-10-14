@@ -12,8 +12,8 @@
   --ink: var(--n-900); --ink2: var(--n-500); --muted: var(--text-meta); --faint: var(--n-400);
   --line: var(--n-100); --line-2: var(--n-050); --line-strong: var(--n-200);
   --accent: var(--th-accent); --accent-ink: var(--th-ink-accent); --accent-tint: var(--th-tint); --accent-tint-br: var(--violet-200);
-  --good: var(--ok-ink); --good-tint: var(--ok-tint); --bad: var(--no-solid); --bad-tint: var(--no-tint);
-  --amber: var(--warn-solid); --amber-tint: var(--warn-tint); --blue: var(--info-solid); --blue-tint: var(--info-tint);
+  --good: var(--ok-ink); --bad: var(--no-solid);
+  --amber: var(--warn-solid); --blue: var(--info-solid); --blue-tint: var(--info-tint);
   --r-lg: 16px; --r-md: 12px; --r-sm: 9px;
   --sh: 0 1px 2px color-mix(in srgb, var(--n-900) 4%, transparent), 0 20px 40px -28px color-mix(in srgb, var(--n-900) 20%, transparent);
 }
@@ -24,12 +24,9 @@
   --ink: var(--n-050); --ink2: var(--n-200); --muted: var(--n-300); --faint: var(--n-350);
   --line: var(--border-strong); --line-2: var(--border); --line-strong: var(--n-500);
   --accent: var(--th-accent-hi); --accent-ink: var(--th-accent-hi);
-  /* 다크 표면용 틴트 토큰 부재 — 기존 반투명 rgba 유지(라이트 위 글자 대비 보존) */
+  /* 계열색 틴트는 화면이 정한다. 상태색 틴트(--*-tint)는 tokens.css가 테마별로 바꾼다 */
   --accent-tint: color-mix(in srgb, var(--violet-500) 18%, transparent); --accent-tint-br: color-mix(in srgb, var(--violet-500) 40%, transparent);
-  --good: var(--ok-solid); --good-tint: color-mix(in srgb, var(--teal-400) 15%, transparent);
-  --bad: var(--no-on-dark); --bad-tint: color-mix(in srgb, var(--red-300) 15%, transparent);
-  --amber: var(--warn-solid); --amber-tint: color-mix(in srgb, var(--amber-300) 16%, transparent);
-  --blue: var(--info-on-dark); --blue-tint: color-mix(in srgb, var(--blue-300) 16%, transparent);
+  --good: var(--ok-solid); --bad: var(--no-on-dark); --amber: var(--warn-solid); --blue: var(--info-on-dark);
   --sh: 0 1px 2px var(--black-a40), 0 20px 40px -28px var(--black-a60);
 }
 /* 다크 — 시맨틱 직접 참조(라이트 고정색) 오버라이드 */
