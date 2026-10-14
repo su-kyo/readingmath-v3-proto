@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ko" data-section="space">
+<head>
+  <base href="../">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>시안 — 커리큘럼 라운드 배치</title>
+  <!-- =========================================================================
+       2026-10-14 시안 — 결론이 나면 지운다 (CLAUDE.md 「tools/ 정리 규칙」).
+       nav/curriculum.html 을 그대로 띄우고 오른쪽 라운드 영역(#trBody)만 바꿔 그린다.
+       주소: ?lay=A|B|C  &st=new|mid|full  &tab=concept|type|essay  &long=1
+       화면 파일(nav/curriculum.html · nav-curriculum.js/css)은 건드리지 않는다.
+       ========================================================================= -->
+  <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261014-2" />
+  <link rel="stylesheet" href="styles/base.css?v=20261014-2" />
+  <link rel="stylesheet" href="styles/space-bg.css?v=20261014-2" />
+  <link rel="stylesheet" href="styles/gnb.css?v=20261014-2" />
+  <link rel="stylesheet" href="styles/monitor.css?v=20261014-2" />
+  <link rel="stylesheet" href="styles/nav.css?v=20261014-2" />
+  <link rel="stylesheet" href="styles/screens/nav-curriculum.css?v=20261014-2" />
+  <style>
+    /* ---- 공통: 성적 표기 (스텝 = 육각 배지 + 정답률 / 라운드 = 별 + 총점) ---- */
+    .gb{ display:inline-flex; align-items:center; gap:var(--sp-6); }
+    .gb img{ width:30px; height:30px; object-fit:contain; display:block; }
+    .gb b{ font-family:'Kode Mono',monospace; font-size:var(--fs-15); font-weight:var(--fw-heavy); color:var(--ink); }
+    .gb--sm img{ width:24px; height:24px; }
+    .gb--sm b{ font-size:var(--fs-13); }
+    .dl{ margin-left:var(--sp-6); font-family:'Kode Mono',monospace; font-size:var(--fs-11); font-weight:var(--fw-heavy); color:var(--green); }
+    .rs{ display:inline-flex; align-items:center; gap:var(--sp-6); }
+    .rs img{ width:30px; height:30px; display:block; }
+    .rs b{ font-family:'Kode Mono',monospace; font-size:var(--fs-16); font-weight:var(--fw-heavy); }
+    .rs small{ font-size:var(--fs-11); font-weight:var(--fw-bold); color:var(--muted); margin-left:-2px; }
+    .go{ display:inline-flex; align-items:center; gap:var(--sp-4); height:36px; padding:0 var(--sp-12); border-radius:var(--r-8);
+      background:var(--mint); color:var(--n-900); font-size:var(--fs-14); font-weight:var(--fw-heavy); white-space:nowrap; }
+    .go svg{ width:15px; height:15px; }
+    .todo{ font-size:var(--fs-12); font-weight:var(--fw-bold); color:var(--muted); }
+    .lk{ display:inline-flex; align-items:center; gap:var(--sp-4); font-size:var(--fs-12); font-weight:var(--fw-bold); color:var(--muted); }
+    .lk svg{ width:14px; height:14px; flex:none; }
+    .rname{ font-size:var(--fs-19); font-weight:var(--fw-heavy); letter-spacing:-.03em; white-space:nowrap; }
+    .live{ font-size:var(--fs-12); font-weight:var(--fw-heavy); color:var(--mint); }
+
+    /* ================= A. 세로 흐름 · 상태별 크기 ================= */
+    .la{ display:flex; flex-direction:column; }
+    .la-r{ position:relative; display:flex; gap:var(--sp-16); padding-bottom:var(--sp-16); }
+    .la-r:last-child{ padding-bottom:0; }
+    .la-r::before{ content:""; position:absolute; left:15px; top:32px; bottom:0; width:2px; background:var(--line2); }
+    .la-r:last-child::before{ display:none; }
+    .la-r--done::before{ background:var(--green); }
+    .la-node{ width:32px; height:32px; flex:none; border-radius:50%; display:grid; place-items:center; margin-top:14px;
+      background:var(--card); color:var(--muted); position:relative; z-index:1; }
+    .la-node svg{ width:15px; height:15px; }
+    .la-r--done .la-node{ background:var(--green); color:var(--n-900); }
+    .la-r--cur .la-node, .la-r--open .la-node{ background:var(--mint); color:var(--n-900); box-shadow:0 0 0 5px color-mix(in srgb, var(--mint) 22%, transparent); }
+    .la-main{ flex:1; min-width:0; }
+    /* 끝난 라운드 = 한 줄 */
+    .la-line{ display:flex; align-items:center; gap:var(--sp-16); min-height:60px; padding:var(--sp-8) var(--sp-20);
+      background:var(--panel); border:1px solid var(--line2); border-radius:var(--r-16); cursor:pointer; }
+    .la-line .rname{ font-size:var(--fs-16); }
+    .la-chips{ display:flex; align-items:center; gap:var(--sp-16); margin-left:auto; }
+    .la-chips .gb{ gap:var(--sp-4); }
+    /* 지금 라운드 = 크게 */
+    .la-card{ background:var(--panel); border:1px solid var(--th-accent); box-shadow:0 0 0 1px var(--th-accent);
+      border-radius:var(--r-22); padding:var(--sp-20) var(--sp-24) var(--sp-24); }
+    .la-card__hd{ display:flex; align-items:center; gap:var(--sp-12); margin-bottom:var(--sp-16); }
+    .la-steps{ display:grid; gap:var(--sp-12); }
+    .la-st{ display:flex; flex-direction:column; gap:var(--sp-12); justify-content:space-between; min-height:118px;
+      background:var(--card); border-radius:var(--r-12); padding:var(--sp-16); }
+    .la-st.is-cur{ box-shadow:inset 0 0 0 1.5px var(--mint); }
+    .la-st__ft{ display:flex; align-items:center; min-height:36px; }
+    /* 잠긴 라운드 = 얇게 */
+    .la-lock{ display:flex; align-items:center; gap:var(--sp-12); min-height:52px; padding:0 var(--sp-20);
+      border:1px dashed var(--line); border-radius:var(--r-16); color:var(--muted); margin-top:4px; }
+    .la-lock .rname{ font-size:var(--fs-16); color:var(--muted); }
+    .la-lock .lk{ margin-left:auto; }
+    .la-r--lock .la-node{ margin-top:14px; }
+
+    /* ================= B. 가로 열 · 라운드 = 열, 스텝 = 행 ================= */
+    .lb{ display:grid; column-gap:var(--sp-8); align-items:stretch; }
+    .lb > div{ display:flex; align-items:center; min-height:76px; padding:var(--sp-12) var(--sp-16); border-top:1px solid var(--line2); }
+    .lb > .lb-h{ min-height:64px; border-top:0; flex-direction:column; align-items:flex-start; justify-content:center; gap:var(--sp-4); }
+    .lb > .lb-lab{ flex-direction:column; align-items:flex-start; justify-content:center; padding-left:0; }
+    .lb-col{ background:var(--panel); }
+    .lb-col.is-first{ border-radius:var(--r-16) var(--r-16) 0 0; border-top:0; }
+    .lb-col.is-last{ border-radius:0 0 var(--r-16) var(--r-16); }
+    .lb-col.is-cur{ background:color-mix(in srgb, var(--mint) 9%, var(--panel)); box-shadow:inset 1.5px 0 0 var(--mint), inset -1.5px 0 0 var(--mint); }
+    .lb-col.is-cur.is-first{ box-shadow:inset 1.5px 0 0 var(--mint), inset -1.5px 0 0 var(--mint), inset 0 1.5px 0 var(--mint); }
+    .lb-col.is-cur.is-last{ box-shadow:inset 1.5px 0 0 var(--mint), inset -1.5px 0 0 var(--mint), inset 0 -1.5px 0 var(--mint); }
+    .lb-col.is-lock{ background:transparent; border-top-style:dashed; box-shadow:inset 1px 0 0 var(--line2), inset -1px 0 0 var(--line2); }
+    .lb-col.is-lock.is-first{ box-shadow:inset 0 0 0 1px var(--line2); }
+    .lb-col.is-lock.is-last{ box-shadow:inset 1px 0 0 var(--line2), inset -1px 0 0 var(--line2), inset 0 -1px 0 var(--line2); }
+    .lb-hrow{ display:flex; align-items:center; gap:var(--sp-12); width:100%; }
+    .lb-hrow .rs{ margin-left:auto; }
+    .lb-cell{ display:flex; align-items:center; gap:var(--sp-8); width:100%; }
+    .lb-none{ color:var(--line); font-weight:var(--fw-heavy); }
+
+    /* ================= C. 한 라운드만 · 위 전환 막대 ================= */
+    .lc-sw{ display:flex; align-items:center; margin-bottom:var(--sp-20); }
+    .lc-seg{ flex:1; display:flex; align-items:center; gap:var(--sp-12); min-height:64px; padding:var(--sp-8) var(--sp-16);
+      background:var(--panel); border:1px solid var(--line2); border-radius:var(--r-16); cursor:pointer; transition:background .14s; }
+    .lc-seg:hover{ background:var(--card2); }
+    .lc-seg.is-sel{ border-color:var(--th-accent); box-shadow:0 0 0 1px var(--th-accent); }
+    .lc-seg.is-lock{ background:transparent; border-style:dashed; cursor:default; }
+    .lc-seg .rname{ font-size:var(--fs-16); }
+    .lc-seg .rs, .lc-seg .live, .lc-seg .lk{ margin-left:auto; }
+    .lc-link{ width:24px; height:2px; flex:none; background:var(--line2); }
+    .lc-link.is-done{ background:var(--green); }
+    .lc-list{ background:var(--panel); border:1px solid var(--line2); border-radius:var(--r-22); padding:var(--sp-8) var(--sp-24); }
+    .lc-row{ display:flex; align-items:center; gap:var(--sp-16); min-height:80px; border-top:1px solid var(--line2); }
+    .lc-row:first-child{ border-top:0; }
+    .lc-row__i{ flex:1; min-width:0; }
+    .lc-row.is-cur .step__n{ color:var(--mint); }
+    .lc-empty{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:var(--sp-8); min-height:260px;
+      border:1px dashed var(--line); border-radius:var(--r-22); color:var(--muted); font-size:var(--fs-14); font-weight:var(--fw-bold); }
+    .lc-empty svg{ width:28px; height:28px; }
+
+    /* 시안 표지 */
+    .tag-lay{ position:fixed; left:12px; bottom:12px; z-index:50; padding:var(--sp-4) var(--sp-8); border-radius:var(--r-8);
+      background:var(--black-a50); color:var(--n-000); font-family:'Kode Mono',monospace; font-size:var(--fs-12); font-weight:var(--fw-bold); }
+  </style>
+</head>
+<body>
+  <div class="spacebg" data-stars="150"></div>
+  <div class="app">
+    <header class="gnb">
+      <div class="gnb__info"><span class="gnb__logo"></span><span class="gnb__name">김학생</span></div>
+      <nav class="gnb__modes">
+        <button class="gnb__mode m-basic is-active">기본 모드</button>
+        <button class="gnb__mode m-free">자유 모드</button>
+        <button class="gnb__mode m-exam">시험 대비</button>
+        <button class="gnb__mode m-assign">과제 센터<span class="gnb__mode__dot"></span></button>
+      </nav>
+      <div class="gnb__icons">
+        <button class="gnb__ico" title="도움말"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.8.4-1 .9-1 1.7" stroke-linecap="round"/><circle cx="12" cy="16.5" r="1" fill="currentColor" stroke="none"/></svg></button>
+        <button class="gnb__ico" title="오류 신고"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17h.01"/></svg></button>
+        <button class="gnb__ico" title="공지사항"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 9v6h3l7 4V5L7 9H4zM18 8a5 5 0 0 1 0 8"/></svg><span class="gnb__dot"></span></button>
+        <button class="gnb__ico" id="menuBtn" title="메뉴"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      </div>
+    </header>
+
+    <div class="curr-wrap">
+      <aside class="curr">
+        <div class="curr__head">
+          <div><span class="curr__ttl" id="semTitle">3학년 1학기</span><span class="curr__sub" id="semSub">수학 · 기본 모드</span></div>
+        </div>
+        <div class="curr__list" id="currList"></div>
+      </aside>
+
+      <main class="train">
+        <div class="train__head">
+          <div class="train__unit" id="trUnit">1단원 · 덧셈과 뺄셈</div>
+          <div class="train__titlewrap"><span class="train__title" id="trTitle"></span><button class="examchip" id="trExam"></button></div>
+          <div class="train__tabs" id="trTabs">
+            <button class="ttab is-active" data-t="concept">개념 훈련</button>
+            <button class="ttab" data-t="type">유형 훈련</button>
+            <button class="ttab" data-t="essay">서술형 훈련</button>
+            <button class="ttab--info" id="infoBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01" stroke-linecap="round"/></svg>훈련 안내</button>
+          </div>
+        </div>
+        <div class="train__body" id="trBody"></div>
+        <button class="homebtn" id="homeBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>행성 메인으로</button>
+      </main>
+    </div>
+  </div>
+
+  <div class="monitor" id="infoModal"><div class="monitor__dim"></div><div class="monitor__rig"><div class="monitor__frame">
+    <div class="monitor__hd"><span class="monitor__ttl">훈련 안내</span><button class="monitor__x" id="infoClose" aria-label="닫기">×</button></div>
+    <div class="monitor__screen"></div></div></div></div>
+  <div class="toast" id="toast"></div>
+  <div class="tag-lay" id="tagLay"></div>
+
+  <script src="scripts/space-bg.js?v=20261014-2"></script>
+  <script src="scripts/nav-curriculum.js?v=20261014-2"></script>
+  <script>
+  /* 오른쪽 라운드 영역만 시안으로 다시 그린다.
+     nav-curriculum.js 가 #trBody 를 그릴 때마다(소단원·탭 전환) 뒤따라 덮어쓴다. */
+  (function(){
+    var qs = new URLSearchParams(location.search);
+    var LAY = (qs.get('lay')||'A').toUpperCase();
+    var ST  = qs.get('st') || 'mid';
+    var LONG = qs.get('long') === '1';
+
+    // 스텝 이름 — 개념 3 · 유형 4 · 서술형 3 (임시값: 스텝 결과 「학습 진행 현황」 · 현안 유형 4스텝 · 훈련 안내 문안 기준)
+    var STEPS = {
+      concept:['개념 학습','개념 다지기','개념 확인하기'],
+      type:['1차 유형','1차 유사','2차 유형','2차 유사'],
+      essay:['기초 기르기','기본 다지기','실력 키우기']
+    };
+    // 데모 정답률 (라운드 × 스텝) — 시안용 가짜 숫자
+    var PCT = {
+      concept:[[55,78,64],[80,88,74],[96,92,90]],
+      type:[[40,60,52,70],[70,80,66,84],[90,94,82,96]],
+      essay:[[62,58,70],[78,74,80],[88,96,84]]
+    };
+    // 등급 컷도 시안용 임시값 (실제 컷은 미확정)
+    function grade(p){ return p>=95?'s':p>=80?'a':p>=60?'b':'c'; }
+
+    function rounds(t){
+      var n = STEPS[t].length, P = PCT[t];
+      function done(r){ var s=P[r].map(function(p){ return {g:grade(p), p:p}; });
+        var sc=Math.round(P[r].reduce(function(a,b){return a+b;},0)/n);
+        return {st:'done', score:sc, g:grade(sc), steps:s}; }
+      function lock(){ return {st:'lock', steps:new Array(n).fill(null)}; }
+      if(ST==='new'){
+        var st=new Array(n).fill(null); st[0]='start';
+        return [{st:'open', steps:st}, lock(), lock()];
+      }
+      if(ST==='full') return [done(0), done(1), done(2)];
+      var cur = new Array(n).fill(null); cur[0]={g:grade(P[1][0]), p:P[1][0]}; cur[1]='cont';
+      return [done(0), {st:'cur', steps:cur}, lock()];
+    }
+
+    // ---- 조각
+    var ARROW='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+    var LOCK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+    var CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+    function josa(n){ return (n===2||n===4||n===5)?'를':'을'; }
+    function gb(o, sm){ return '<span class="gb'+(sm?' gb--sm':'')+'"><img src="assets/img/grade/grade-step-'+o.g+'.webp" alt="'+o.g.toUpperCase()+'"><b>'+o.p+'%</b></span>'; }
+    function rs(r){ return '<span class="rs"><img src="assets/icons/star/star-'+r.g+'.svg" alt="'+r.g.toUpperCase()+'등급"><b>'+r.score+'</b><small>점</small></span>'; }
+    function go(k){ return '<span class="go">'+(k==='start'?'시작하기':'이어하기')+ARROW+'</span>'; }
+    function lockMsg(i){ return '<span class="lk">'+LOCK+'Round '+i+josa(i)+' 마치면 열려요</span>'; }
+    function delta(rs_, ri, si){
+      if(ri===0) return '';
+      var prev = rs_[ri-1].steps[si], now = rs_[ri].steps[si];
+      if(!prev || !now || typeof prev!=='object' || typeof now!=='object') return '';
+      var d = now.p - prev.p; return d>0 ? '<span class="dl">▲'+d+'</span>' : '';
+    }
+    function stepStatus(s){
+      if(s && typeof s==='object') return ['is-done','완료'];
+      if(s==='cont') return ['is-cur','진행중'];
+      return ['is-todo','시작 전'];
+    }
+
+    // ---- A
+    var openA = {};
+    function renderA(t, R){
+      var names=STEPS[t], h='<div class="la">';
+      R.forEach(function(r,i){
+        var n=i+1;
+        if(r.st==='lock'){
+          h+='<div class="la-r la-r--lock"><span class="la-node">'+LOCK+'</span><div class="la-main"><div class="la-lock"><span class="rname">Round '+n+'</span>'+lockMsg(i)+'</div></div></div>';
+          return;
+        }
+        var expanded = r.st!=='done' || openA[t+i];
+        h+='<div class="la-r la-r--'+r.st+'"><span class="la-node">'+(r.st==='done'?CHECK:'<b>'+n+'</b>')+'</span><div class="la-main">';
+        if(!expanded){
+          h+='<div class="la-line" data-a="'+i+'"><span class="rname">Round '+n+'</span>'+rs(r)
+            +'<span class="la-chips">'+r.steps.map(function(s){ return gb(s,true); }).join('')+'</span></div>';
+        } else {
+          h+='<div class="la-card"'+(r.st==='done'?' data-a="'+i+'" style="border-color:var(--line2);box-shadow:none;cursor:pointer"':'')+'><div class="la-card__hd"><span class="rname">Round '+n+'</span>'
+            +(r.st==='done'? '<span style="margin-left:auto">'+rs(r)+'</span>' : '<span class="live" style="margin-left:auto">'+(r.st==='cur'?'진행중':'')+'</span>')+'</div>'
+            +'<div class="la-steps" style="grid-template-columns:repeat('+names.length+',1fr)">';
+          names.forEach(function(nm,si){
+            var s=r.steps[si], stt=stepStatus(s);
+            var ft = (s && typeof s==='object') ? gb(s)+delta(R,i,si) : (s==='start'||s==='cont') ? go(s) : '<span class="todo">시작 전</span>';
+            h+='<div class="la-st'+(s==='cont'||s==='start'?' is-cur':'')+'"><div><div class="step__k">STEP '+(si+1)+'</div><div class="step__n">'+nm+'</div>'
+              +((s==='cont')?'<div class="step__s is-cur">진행중</div>':'')+'</div><div class="la-st__ft">'+ft+'</div></div>';
+          });
+          h+='</div></div>';
+        }
+        h+='</div></div>';
+      });
+      return h+'</div>';
+    }
+
+    // ---- B
+    function renderB(t, R){
+      var names=STEPS[t], n=names.length;
+      var h='<div class="lb" style="grid-template-columns:minmax(120px,.8fr) repeat(3,1fr)">';
+      h+='<div class="lb-h"></div>';
+      R.forEach(function(r,i){
+        var cls='lb-col lb-h is-first'+(r.st==='cur'||r.st==='open'?' is-cur':'')+(r.st==='lock'?' is-lock':'');
+        var right = r.st==='done'? rs(r) : r.st==='lock' ? '' : '<span class="live" style="margin-left:auto">'+(r.st==='cur'?'진행중':'')+'</span>';
+        h+='<div class="'+cls+'"><div class="lb-hrow"><span class="rname"'+(r.st==='lock'?' style="color:var(--muted)"':'')+'>Round '+(i+1)+'</span>'+right+'</div>'
+          +(r.st==='lock'? lockMsg(i) : '')+'</div>';
+      });
+      names.forEach(function(nm,si){
+        h+='<div class="lb-lab"><div class="step__k">STEP '+(si+1)+'</div><div class="step__n">'+nm+'</div></div>';
+        R.forEach(function(r,i){
+          var s=r.steps[si];
+          var cls='lb-col'+(si===n-1?' is-last':'')+(r.st==='cur'||r.st==='open'?' is-cur':'')+(r.st==='lock'?' is-lock':'');
+          var inner = (s && typeof s==='object') ? gb(s)+delta(R,i,si)
+            : (s==='start'||s==='cont') ? go(s)
+            : r.st==='lock' ? '<span class="lb-none">·</span>' : '<span class="todo">시작 전</span>';
+          h+='<div class="'+cls+'"><div class="lb-cell">'+inner+'</div></div>';
+        });
+      });
+      return h+'</div>';
+    }
+
+    // ---- C
+    var selC = {};
+    function renderC(t, R){
+      var names=STEPS[t];
+      if(selC[t]==null){ var k=-1; R.forEach(function(r,i){ if(r.st==='cur'||r.st==='open') k=i; }); if(k<0) k=R.length-1; selC[t]=k; }
+      var sel=selC[t], h='<div class="lc-sw">';
+      R.forEach(function(r,i){
+        if(i>0) h+='<span class="lc-link'+(R[i-1].st==='done'?' is-done':'')+'"></span>';
+        var right = r.st==='done'? rs(r) : r.st==='lock' ? '<span class="lk">'+LOCK+'</span>' : '<span class="live">'+(r.st==='cur'?'진행중':'시작 전')+'</span>';
+        h+='<div class="lc-seg'+(i===sel?' is-sel':'')+(r.st==='lock'?' is-lock':'')+'" data-c="'+i+'"><span class="rname"'+(r.st==='lock'?' style="color:var(--muted)"':'')+'>Round '+(i+1)+'</span>'+right+'</div>';
+      });
+      h+='</div>';
+      var r=R[sel];
+      if(r.st==='lock') return h+'<div class="lc-empty">'+LOCK+lockMsg(sel).replace(/<svg[\s\S]*?<\/svg>/,'')+'</div>';
+      h+='<div class="lc-list">';
+      names.forEach(function(nm,si){
+        var s=r.steps[si], stt=stepStatus(s);
+        var right = (s && typeof s==='object') ? delta(R,sel,si)+gb(s) : (s==='start'||s==='cont') ? go(s) : '<span class="todo">시작 전</span>';
+        h+='<div class="lc-row'+(s==='cont'||s==='start'?' is-cur':'')+'"><div class="lc-row__i"><div class="step__k">STEP '+(si+1)+'</div><div class="step__n">'+nm+'</div></div>'
+          +'<div style="display:flex;align-items:center;gap:var(--sp-12)">'+right+'</div></div>';
+      });
+      return h+'</div>';
+    }
+
+    var body=document.getElementById('trBody'), busy=false;
+    function draw(){
+      if(busy) return; busy=true;
+      var t=(document.querySelector('.ttab.is-active')||{}).dataset; t=t?t.t:'concept';
+      var R=rounds(t);
+      body.innerHTML = LAY==='B'? renderB(t,R) : LAY==='C'? renderC(t,R) : renderA(t,R);
+      if(LONG) document.getElementById('trTitle').textContent='(1) 받아올림이 있는 세 자리 수와 두 자리 수의 덧셈과 뺄셈 — 어림하여 계산하기';
+      body.querySelectorAll('[data-a]').forEach(function(el){ el.addEventListener('click', function(){ var k=t+el.dataset.a; openA[k]=!openA[k]; busy=false; draw(); }); });
+      body.querySelectorAll('[data-c]').forEach(function(el){ el.addEventListener('click', function(){ if(el.classList.contains('is-lock')) return; selC[t]=+el.dataset.c; busy=false; draw(); }); });
+      setTimeout(function(){ busy=false; },0);
+    }
+    new MutationObserver(function(){ if(!busy) draw(); }).observe(body,{childList:true});
+    draw();
+    document.getElementById('tagLay').textContent = LAY+' · '+({new:'처음',mid:'진행 중',full:'전부 완료'}[ST]||ST)+(LONG?' · 긴 이름':'');
+  })();
+  </script>
+</body>
+</html>
