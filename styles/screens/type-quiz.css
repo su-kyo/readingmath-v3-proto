@@ -19,10 +19,10 @@
   position: absolute; inset: 0; overflow-y: auto; display: flex; flex-direction: column; align-items: center;
   padding: 6px clamp(24px, 5vw, 56px) 26px;
   /* 다크: 패널(121E37)보다 한 단계 가라앉힌 박스(n-800)로 구분 */
-  --qtext: var(--n-050); --muted: var(--text-muted); --ex-br: var(--border-strong); --opt-bg: var(--n-800); --opt-br: var(--white-a10); --opt-hover: var(--n-600);
+  --qtext: var(--n-050); --muted: var(--text-muted); --ex-br: var(--border-strong); --opt-bg: var(--n-800); --opt-br: var(--border-strong); --opt-hover: var(--n-600);
   --input-bg: var(--n-650); --input-br: var(--n-500);
 }
-:root[data-theme="light"] .ops { --qtext: var(--n-650); --muted: var(--text-muted); --ex-br: var(--border-strong); --opt-bg: var(--n-000); --opt-br: var(--n-100); --opt-hover: var(--n-050); --input-bg: var(--n-000); --input-br: var(--n-200); }
+:root[data-theme="light"] .ops { --qtext: var(--n-650); --muted: var(--text-muted); --ex-br: var(--border-strong); --opt-bg: var(--n-000); --opt-br: var(--border-strong); --opt-hover: var(--n-050); --input-bg: var(--n-000); --input-br: var(--n-200); }
 
 :root[data-theme="light"] .ops::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--teal-800) 22%, transparent); background-clip: padding-box; }
 

@@ -152,12 +152,15 @@
 .keypad { margin-top: 4px; }
 
 /* 해설 */
-.explain { border: 1px solid var(--line); background: var(--rail); border-radius: var(--r-12); padding: var(--sp-16) var(--sp-16);
+/* 해설 박스 = 면 없이 왼쪽 계열색 띠 하나 (2026-10-14 · 유형·과제·시험 공통). 띠는 라이트 500 · 다크 300 */
+.explain { border: 0; background: none; box-shadow: inset 4px 0 0 var(--th-accent); border-radius: var(--r-4); padding: var(--sp-16) var(--sp-16) var(--sp-16) var(--sp-20);
   display: none; flex-direction: column; gap: var(--sp-8); }
 .explain.show { display: flex; animation: rise .28s cubic-bezier(.2,.7,.3,1); }
 @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 .explain__cap { display: inline-flex; align-items: center; gap: var(--sp-6); font-size: var(--fs-12); font-weight: var(--fw-heavy);
-  letter-spacing: .06em; text-transform: uppercase; color: var(--warn); }
+  letter-spacing: .06em; text-transform: uppercase; color: var(--th-ink-accent); }
+:root[data-theme="dark"] .explain { box-shadow: inset 4px 0 0 var(--th-accent-hi); }
+:root[data-theme="dark"] .explain__cap { color: var(--th-accent-hi); }
 .explain__cap svg { width: 15px; height: 15px; }
 .explain__body { font-size: var(--fs-16); line-height: 1.68; color: var(--ink2); }
 

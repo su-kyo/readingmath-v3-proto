@@ -99,7 +99,7 @@
 .slot.is-empty { border: 1.5px dashed var(--bl-line); }
 .slot.is-filled { background: var(--bl-fill); color: var(--bl-ans); border: 1.5px solid transparent; cursor: pointer; }
 .slot.is-filled:hover { box-shadow: inset 0 0 0 1.5px var(--bl-selline); }
-.slot.is-wrong { border: 1.5px solid var(--no-solid); background: color-mix(in srgb, var(--red-450) 14%, transparent); color: var(--no-on-dark); animation: qShake .35s; }
+.slot.is-wrong { border: 1.5px solid var(--no-solid); background: none; color: var(--no-on-dark); animation: qShake .35s; }
 .slot.is-locked { background: var(--lock-bg); color: var(--bl-ans); border: 1.5px solid var(--lock-br); animation: lockPop .4s; }
 :root[data-theme="light"] .slot.is-locked { color: var(--ok-ink); }
 

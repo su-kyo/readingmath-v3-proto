@@ -6,10 +6,10 @@
   <title>기초 — 리딩수학과학 디자인 시스템</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
   <base href="../" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261014-5" />
-  <link rel="stylesheet" href="styles/base.css?v=20261014-5" />
-  <link rel="stylesheet" href="styles/components.css?v=20261014-5" />
-  <link rel="stylesheet" href="styleguide/sg.css?v=20261014-5" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261014-7" />
+  <link rel="stylesheet" href="styles/base.css?v=20261014-7" />
+  <link rel="stylesheet" href="styles/components.css?v=20261014-7" />
+  <link rel="stylesheet" href="styleguide/sg.css?v=20261014-7" />
 </head>
 <body data-sg-css="tokens,base,components">
 <div class="sg">
@@ -86,8 +86,15 @@
               <td><strong>라벨 19px 이상 · w700 이상 필수.</strong><br>작은 글자가 필요하면 그건 정체성 칠면이 아니다.</td></tr>
           <tr><td><strong>장식면</strong><br><small>글자 없음</small></td><td>면끼리 3 : 1</td>
               <td>400</td><td>글자를 얹지 않는다.</td></tr>
+          <tr><td><strong>정오답 배지</strong><br><small>선지 번호 동그라미</small></td><td>3 : 1</td>
+              <td><code>--ok-solid</code> <code>--no-solid</code> 500</td>
+              <td>테두리와 같은 500. <strong>숫자는 20px w800</strong>(<code>--fs-20</code>) 또는 ✓·✕ 아이콘.
+                600으로 내리면 테두리보다 어두워 탁해 보인다 (2026-10-14).</td></tr>
         </tbody>
       </table>
+      <p class="sg-note"><strong>남긴 예외 — 콘솔바 주황 버튼(<code>.toolbtn--primary</code>)의 14px 흰 라벨.</strong>
+        정체성 칠면인데 라벨이 19px보다 작아 대비가 3.06입니다. 「주황 바탕에 흰 글씨」라는 브랜드 인상을 지키려고
+        글자 크기·색을 바꾸지 않고 예외로 둡니다 (2026-10-14 결정). 새 주황 버튼을 만들 때 이 예외를 근거로 삼지 않습니다.</p>
 
       <div class="sg-item" data-uses="toolbtn--primary" data-pad="24px">
         <div class="sg-item__hd">
@@ -316,7 +323,7 @@
   </main>
 </div>
 
-<script src="styleguide/foundations.js?v=20261014-5"></script>
-<script src="styleguide/sg.js?v=20261014-5"></script>
+<script src="styleguide/foundations.js?v=20261014-7"></script>
+<script src="styleguide/sg.js?v=20261014-7"></script>
 </body>
 </html>

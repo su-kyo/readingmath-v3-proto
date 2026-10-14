@@ -28,7 +28,7 @@ body.learn-body { background: var(--asset-console-concept-body); overflow: hidde
 .lheader__actions { display: flex; align-items: center; gap: var(--sp-8); flex: none; }
 
 /* 헤더 타이머 (유형·서술형 공통) — 스텝 결과에선 .is-paused 로 정지 표시 */
-.lheader__timer { display: inline-flex; align-items: center; gap: var(--sp-6); background: var(--black-a25); border-radius: var(--r-full); padding: var(--sp-6) var(--sp-12); margin-right: 4px; flex: none; color: var(--text-on-accent); }
+.lheader__timer { display: inline-flex; align-items: center; gap: var(--sp-6); background: var(--th-static-deep); border-radius: var(--r-full); padding: var(--sp-6) var(--sp-12); margin-right: 4px; flex: none; color: var(--text-on-accent); }
 .lheader__timer img { width: 18px; height: 18px; }
 .lheader__timer span { font-family: var(--font-mono); font-weight: var(--fw-bold); font-size: var(--fs-16); letter-spacing: .02em; }
 .lheader__timer.is-paused { opacity: .62; }
@@ -38,13 +38,14 @@ body.learn-body { background: var(--asset-console-concept-body); overflow: hidde
 @media (max-width: 520px) { .lheader__timer { padding: var(--sp-6) var(--sp-8); } .lheader__timer span { font-size: var(--fs-14); } }
 
 /* 라이트/다크 토글 — 해/달 illust 자체가 노브 */
-.theme-toggle { width: 64px; height: 34px; border-radius: var(--r-full); background: var(--black-a30); position: relative; flex: none; }
+/* 헤더 칩 = 프레임보다 한 단계 진한 같은 계열(--th-static-deep) · 아이콘 버튼 = 계열 500. 반투명 덧칠은 프레임을 회색으로 죽인다 (2026-10-14) */
+.theme-toggle { width: 64px; height: 34px; border-radius: var(--r-full); background: var(--th-static-deep); position: relative; flex: none; }
 .theme-toggle__knob { position: absolute; top: 2px; left: 2px; width: 30px; height: 30px; background: center / contain no-repeat url("../assets/icons/ico-sun.svg"); transition: left .2s ease; }
 :root[data-theme="dark"] .theme-toggle__knob { left: 32px; background-image: url("../assets/icons/ico-moon.svg"); }
 /* 헤더 오른쪽 아이콘 버튼. <a>·<button> 둘 다로 쓰이고, 아이콘도 img·svg 둘 다 온다. */
-.nav-ico { width: 32px; height: 32px; border: 0; border-radius: var(--r-12); background: var(--white-a14); color: var(--n-000); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: background .14s; }
+.nav-ico { width: 32px; height: 32px; border: 0; border-radius: var(--r-12); background: var(--th-accent); color: var(--n-000); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: background .14s; }
 .nav-ico img, .nav-ico svg { width: 20px; height: 20px; }
-.nav-ico:hover { background: var(--white-a24); }
+.nav-ico:hover { filter: brightness(1.12); }
 
 /* ===== 콘텐츠 패널 (다크 시 이 패널 안만 어두워짐) ===== */
 /* 학습 콘텐츠 패널 = 라이트에서 쿨톤 near-white(스터디 페이퍼). 옵션/보기는 이 위에 카드로 분리. 다크는 아래 오버라이드. */

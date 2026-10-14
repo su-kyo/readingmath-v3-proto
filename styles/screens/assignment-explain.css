@@ -56,19 +56,17 @@ body { font-family: var(--font-sans); background: var(--asset-console-task-body)
 
 .opt__num svg { width: 13px; height: 13px; }
 
-.opt.is-correct { border-color: var(--good); background: var(--ok-tint); }
+/* 정오답 = 면은 칠하지 않고 선(500)·배지(500)·글자로만 (2026-10-14 · 섞은 면은 라이트=분홍·쑥색, 화면마다 비율도 달랐다) */
+.opt.is-correct { border-color: var(--good); background: var(--opt); }
 .opt.is-correct .opt__num { border-color: var(--good); background: var(--ok-solid); color: var(--n-000); }
-.opt.is-wrong { border-color: var(--bad); background: var(--no-tint); }
+.opt.is-wrong { border-color: var(--bad); background: var(--opt); }
 .opt.is-wrong .opt__num { border-color: var(--no-solid); background: var(--no-solid); color: var(--n-000); }
-/* 다크 — 라이트용 틴트(050)는 밝은 면이라 흰 글자가 사라진다. 상태색을 어둡게 섞는다 (유형 해설과 같은 비율) */
-:root[data-theme="dark"] .opt.is-correct, :root[data-theme="dark"] .short__field.is-correct { background: color-mix(in srgb, var(--ok-solid) 22%, transparent); }
-:root[data-theme="dark"] .opt.is-wrong, :root[data-theme="dark"] .short__field.is-wrong { background: color-mix(in srgb, var(--no-solid) 20%, transparent); }
 
 /* 주관식 (리뷰) */
 .short { display: flex; flex-direction: column; gap: var(--sp-12); align-items: center; }
 .short__field { display: inline-flex; align-items: center; gap: var(--sp-8); min-width: 220px; justify-content: center; padding: var(--sp-12) var(--sp-24); border: 2px solid var(--line); border-radius: var(--r-12); background: var(--opt); }
-.short__field.is-correct { border-color: var(--good); background: var(--ok-tint); }
-.short__field.is-wrong { border-color: var(--bad); background: var(--no-tint); }
+.short__field.is-correct { border-color: var(--good); background: none; }
+.short__field.is-wrong { border-color: var(--bad); background: none; }
 .short__val { font-family: var(--font-mono); font-size: var(--fs-22); font-weight: var(--fw-bold); color: var(--ink); font-variant-numeric: tabular-nums; }
 .short__unit { font-size: var(--fs-16); font-weight: var(--fw-bold); color: var(--sub); }
 .short__mark { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; color: var(--n-000); }
@@ -78,8 +76,9 @@ body { font-family: var(--font-sans); background: var(--asset-console-task-body)
 .short__ans b { color: var(--good-text); font-family: var(--font-mono); }
 
 /* 해설 박스 */
-.expl { background: var(--th-tint); border-radius: var(--r-12); padding: var(--sp-16) var(--sp-16); display: flex; flex-direction: column; gap: var(--sp-6); }
-:root[data-theme="dark"] .expl { background: var(--th-tint-strong); }
+/* 해설 박스 = 면 없이 왼쪽 계열색 띠 하나 (2026-10-14 · 유형·과제·시험 공통). 띠는 라이트 500 · 다크 300 */
+.expl { background: none; box-shadow: inset 4px 0 0 var(--th-accent); border-radius: var(--r-4); padding: var(--sp-16) var(--sp-16); display: flex; flex-direction: column; gap: var(--sp-6); }
+:root[data-theme="dark"] .expl { box-shadow: inset 4px 0 0 var(--th-accent-hi); }
 .expl__t { font-size: var(--fs-15); font-weight: var(--fw-heavy); color: var(--blue); }
 :root[data-theme="dark"] .expl__t { color: var(--th-accent-hi); }
 .expl__b { font-size: var(--fs-15); line-height: 1.7; color: var(--ink); }

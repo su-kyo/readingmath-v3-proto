@@ -22,7 +22,7 @@
   position: absolute; inset: 0; overflow-y: auto; display: flex; flex-direction: column; align-items: center;
   padding: 6px clamp(24px, 5vw, 56px) 26px;
   --qtext: var(--text); --muted: var(--text-muted); --ex-br: var(--border-strong);
-  --opt-bg: var(--surface-3); --opt-br: var(--white-a08); --opt-hover: var(--surface-hover);
+  --opt-bg: var(--surface-3); --opt-br: var(--border-strong); --opt-hover: var(--surface-hover);
   --input-bg: var(--surface-2); --input-br: var(--border-strong);
 }
 :root[data-theme="light"] .ops {
@@ -82,11 +82,12 @@
 .qopt.is-selected .qopt__num { background: var(--n-000); color: transparent; }
 .qopt.is-selected .qopt__num::after { content: "✓"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--th-accent); font-weight: var(--fw-heavy); }
 /* 채점: 정답표시 칸은 숫자, 내가 고른 칸만 아이콘 (겹침 방지) */
-.qopt.is-correct { background: color-mix(in srgb, var(--ok-solid) 36%, var(--opt-bg)); box-shadow: inset 0 0 0 2px var(--ok-solid); color: var(--qtext); }
+/* 정오답 = 면은 칠하지 않고 선(500)·배지(500)·글자로만 (2026-10-14 · 섞은 면은 라이트=분홍·쑥색, 화면마다 비율도 달랐다) */
+.qopt.is-correct { background: var(--opt-bg); box-shadow: inset 0 0 0 2px var(--ok-solid); color: var(--qtext); }
 .qopt.is-correct .qopt__num { background: var(--ok-solid); }
-.qopt.is-correct:not(.is-selected) .qopt__num { color: var(--n-000); }
+.qopt.is-correct:not(.is-selected) .qopt__num { color: var(--n-000); font-size: var(--fs-20); font-weight: var(--fw-heavy); }   /* 500 위 흰 숫자 = 20px 굵게 (큰 글자 3:1) */
 .qopt.is-correct.is-selected .qopt__num::after { color: var(--n-000); }
-.qopt.is-wrong { background: color-mix(in srgb, var(--no-solid) 36%, var(--opt-bg)); box-shadow: inset 0 0 0 2px var(--no-solid); color: var(--qtext); }
+.qopt.is-wrong { background: var(--opt-bg); box-shadow: inset 0 0 0 2px var(--no-solid); color: var(--qtext); }
 .qopt.is-wrong .qopt__num { background: var(--no-solid); }
 .qopt.is-wrong:not(.is-selected) .qopt__num { color: var(--n-000); }
 .qopt.is-wrong.is-selected .qopt__num::after { content: "✕"; color: var(--n-000); }
@@ -98,7 +99,7 @@
 .qopt--img.is-selected { background: var(--opt-bg); box-shadow: inset 0 0 0 3px var(--th-accent); color: var(--qtext); }
 .qopt--img.is-selected .qopt__num { background: var(--th-solid); color: var(--n-000) !important; }
 .qopt--img.is-correct { background: var(--opt-bg); box-shadow: inset 0 0 0 3px var(--ok-solid); }
-.qopt--img.is-correct .qopt__num { background: var(--ok-solid); color: var(--n-000) !important; }
+.qopt--img.is-correct .qopt__num { background: var(--ok-solid); color: var(--n-000) !important; font-size: var(--fs-20); font-weight: var(--fw-heavy); }
 .qopt--img.is-wrong { background: var(--opt-bg); box-shadow: inset 0 0 0 3px var(--no-solid); }
 .qopt--img.is-wrong .qopt__num { background: var(--no-solid); color: var(--n-000) !important; }
 

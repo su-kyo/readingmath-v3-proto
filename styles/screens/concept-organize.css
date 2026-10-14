@@ -8,7 +8,7 @@
 /* ===== 무대 (learn-concept 재사용) ===== */
 body.learn-body { background: var(--bg); overflow: hidden; }
 
-.theme-toggle { width: 64px; height: 34px; border-radius: var(--r-full); background: var(--black-a30); position: relative; flex: none; }
+.theme-toggle { width: 64px; height: 34px; border-radius: var(--r-full); background: var(--th-static-deep); position: relative; flex: none; }
 .theme-toggle__knob { position: absolute; top: 2px; left: 2px; width: 30px; height: 30px; background: center / contain no-repeat url("../../assets/icons/ico-sun.svg"); transition: left .2s ease; }
 :root[data-theme="dark"] .theme-toggle__knob { left: 32px; background-image: url("../../assets/icons/ico-moon.svg"); }
 

@@ -8,17 +8,16 @@
   flex-direction: column; padding: clamp(12px, 1.6vw, 16px) clamp(12px, 1.6vw, 16px) 0;
   --guide: color-mix(in srgb, var(--violet-050) 94%, transparent); --card: var(--surface-1); --card-br: var(--white-a08); --card-sh: none;
   --step-bg: var(--white-a06); --step-fg: var(--text-muted);
-  /* 채점 색 (다크) */
-  --ok-bg: color-mix(in srgb, var(--teal-450) 16%, transparent); --ok-br: color-mix(in srgb, var(--teal-450) 55%, transparent); --ok-fg: var(--ok-ink); --ok-ink: var(--ok-tint);
-  --no-bg: color-mix(in srgb, var(--red-450) 16%, transparent); --no-br: color-mix(in srgb, var(--red-450) 60%, transparent); --no-fg: var(--no-ink); --no-ink: var(--no-tint);
+  /* 채점 색 (다크) — 면 없음 · 선 = 500 · 글자 = 밝힌 단계. 전역 --ok-ink/--no-ink 는 덮어쓰지 않는다 (예전엔 자기 참조라 라이트 글자색이 무효였다) */
+  --ok-bg: transparent; --ok-br: var(--ok-solid); --ok-fg: var(--ok-on-dark);
+  --no-bg: transparent; --no-br: var(--no-solid); --no-fg: var(--no-on-dark);
 }
 :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
 :root[data-theme="light"] .content {
   background: var(--n-000); border-color: var(--th-static);
   --guide: var(--n-650); --card: var(--n-000); --card-br: var(--n-050); --card-sh: 0 12px 30px -22px color-mix(in srgb, var(--violet-800) 50%, transparent);
   --step-bg: var(--n-100); --step-fg: var(--text-meta);
-  --ok-bg: color-mix(in srgb, var(--teal-500) 12%, transparent); --ok-br: color-mix(in srgb, var(--teal-500) 45%, transparent); --ok-fg: var(--ok-ink); --ok-ink: var(--ok-ink);
-  --no-bg: color-mix(in srgb, var(--red-500) 10%, transparent); --no-br: color-mix(in srgb, var(--red-500) 45%, transparent); --no-fg: var(--no-ink); --no-ink: var(--no-ink);
+  --ok-fg: var(--ok-ink); --no-fg: var(--no-ink);
 }
 
 
@@ -44,7 +43,7 @@
 .qtabs { display: inline-flex; align-items: center; gap: var(--sp-8); }
 .qtab { min-width: 28px; height: 28px; padding: 0 var(--sp-6); border-radius: var(--r-8); display: inline-flex; align-items: center; justify-content: center;
   font-family: var(--font-sans); font-weight: var(--fw-heavy); font-size: var(--fs-13); cursor: pointer;
-  background: var(--white-a10); color: var(--white-a50); transition: background .16s, color .16s, box-shadow .16s; }
+  background: var(--white-a10); color: var(--white-a90); transition: background .16s, color .16s, box-shadow .16s; }
 .qtab.is-done { background: color-mix(in srgb, var(--th-accent) 52%, transparent); color: var(--n-000); }
 .qtab.is-active { background: var(--th-solid); color: var(--n-000); box-shadow: 0 0 0 2px var(--n-000), 0 2px 8px var(--black-a30); }
 .problem__head .stepbar__i { color: var(--white-a40); font-size: var(--fs-13); }

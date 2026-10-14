@@ -15,7 +15,7 @@
   --bl-next: color-mix(in srgb, var(--violet-450) 85%, transparent);
   /* 문제 카드 = 프레임 테두리색(th-static)과 면 공유 · 라이트/다크 동일 */
   --pc-bg: var(--th-static); --pc-text: color-mix(in srgb, var(--violet-050) 92%, transparent); --pc-chev: var(--white-a60);
-  --qtab-bg: var(--white-a10); --qtab-fg: var(--white-a50);
+  --qtab-bg: var(--white-a10); --qtab-fg: var(--white-a90);   /* 안 푼 번호 — 흐림은 바닥(10%)으로, 글자는 4.5 이상 (프레임 600·700 위) */
   --qtab-done-bg: color-mix(in srgb, var(--th-accent) 52%, transparent); --qtab-done-fg: var(--text-on-accent);
 }
 :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }

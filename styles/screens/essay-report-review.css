@@ -8,16 +8,16 @@
   flex-direction: column; padding: clamp(12px, 1.6vw, 16px) clamp(12px, 1.6vw, 16px) 0;
   --guide: color-mix(in srgb, var(--violet-050) 92%, transparent);
   --rt-line: var(--n-500); --rt-head: var(--surface-1); --rt-cell: var(--surface-1); --rt-fg: color-mix(in srgb, var(--violet-050) 90%, transparent); --rt-sub: var(--text-muted);
-  --ok-bg: color-mix(in srgb, var(--teal-450) 16%, transparent); --ok-br: color-mix(in srgb, var(--teal-450) 55%, transparent); --ok-fg: var(--ok-on-dark); --ok-ink: var(--ok-tint);
-  --no-bg: color-mix(in srgb, var(--red-450) 16%, transparent); --no-br: color-mix(in srgb, var(--red-450) 60%, transparent); --no-fg: var(--no-on-dark); --no-ink: var(--no-tint);
+  /* 채점 색 (다크) — 면 없음 · 선 = 500 · 글자 = 밝힌 단계. 전역 --ok-ink/--no-ink 는 덮어쓰지 않는다 (예전엔 자기 참조라 라이트 글자색이 무효였다) */
+  --ok-bg: transparent; --ok-br: var(--ok-solid); --ok-fg: var(--ok-on-dark);
+  --no-bg: transparent; --no-br: var(--no-solid); --no-fg: var(--no-on-dark);
 }
 :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
 :root[data-theme="light"] .content {
   background: var(--n-000); border-color: var(--th-static);
   --guide: var(--n-650);
   --rt-line: var(--n-100); --rt-head: var(--n-050); --rt-cell: var(--n-000); --rt-fg: var(--n-650); --rt-sub: var(--text-meta);
-  --ok-bg: color-mix(in srgb, var(--teal-500) 12%, transparent); --ok-br: color-mix(in srgb, var(--teal-500) 50%, transparent); --ok-fg: var(--ok-ink); --ok-ink: var(--ok-ink);
-  --no-bg: color-mix(in srgb, var(--red-500) 10%, transparent); --no-br: color-mix(in srgb, var(--red-500) 50%, transparent); --no-fg: var(--no-ink); --no-ink: var(--no-ink);
+  --ok-fg: var(--ok-ink); --no-fg: var(--no-ink);
 }
 
 .report-wrap::-webkit-scrollbar { width: 10px; }
@@ -73,6 +73,7 @@
 
 .rp-img img { display: block; width: 100%; height: auto; }
 .fillin { font-family: var(--font-serif); font-weight: var(--fw-bold); color: var(--ok-ink); border-bottom: 1.5px solid var(--ok-solid); padding: 0 var(--sp-4); }
+:root[data-theme="dark"] .fillin { color: var(--ok-on-dark); }   /* 전역 --ok-ink(600)는 다크 면에서 묻힌다 */
 
 .toolbtn--primary { background: var(--th-solid); box-shadow: 0 4px 0 color-mix(in srgb, var(--th-accent) 62%, var(--n-950)); }
 @media (max-width: 620px) { .report { grid-template-columns: 80px 1fr; } }
