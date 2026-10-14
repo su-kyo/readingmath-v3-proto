@@ -112,7 +112,7 @@ index의 그룹 분류는 같은 단위다 — 둘이 어긋나게 두지 않는
 - **치수 (`RM-SIZE-01`~`03`, 2026-10-14 A안)** — 눈금에 있는 값(글자·간격·모서리·선 굵기 `--bw-1/1_5/2/3/4`·볼록 두께 `--depth-2/4`)은 px로 쓰지 않는다(검사 0).
   부품 고유 치수·위치 미세조정·`clamp()` 끝값·@media 조건은 px 허용. 눈금 밖 간격·글자·모서리는 「지켜볼 것」 — 맞추면 화면이 바뀌니 디자인 판단 때.
 - 공용 파일로 규칙을 올릴 때 **`url()` 경로를 그 파일 기준으로 다시 쓴다** — `screens/`는 `../../assets`, `styles/`는 `../assets` (`RM-FILE-08`).
-- 고치고 나면: `python3 tools/style-audit.py`(지킬 것 9개 전부 ✓) → `tools/color-audit.html` → `tools/usage-scan.py`
+- 고치고 나면: `python3 tools/style-audit.py`(지킬 것 10개 전부 ✓) → `tools/color-audit.html` → `tools/usage-scan.py`
   → `tools/screens-build.py` · `tools/tokens-build.py` · `tools/rules-build.py`(개발자 파일) → `?v=` 올리기.
 
 ## 조심할 것
@@ -229,7 +229,7 @@ iframe 두 개(`srcdoc`)에 넣고 `styles/`의 **진짜 CSS**를 불러 그린�
 `planet-ref.py`(캐릭터 생성용 행성 자료 뽑기) · `char-on-bg.py`(캐릭터를 홈 배경에 올려
 대비 판정 — 몸 대비·자체 대비를 숫자로 찍는다) ·
 `usage-scan.py`(부품별 쓰는 화면 집계 → 스토리북) ·
-`style-audit.py`(스타일 규칙 검사 — 지킬 것 9 · 지켜볼 것 5, 줄마다 규칙 번호, `--strict`면 실패 시 종료 코드 1) ·
+`style-audit.py`(스타일 규칙 검사 — 지킬 것 10 · 지켜볼 것 5, 줄마다 규칙 번호, `--strict`면 실패 시 종료 코드 1) ·
 `rules-build.py`(규칙 색인 → `rules.json` · CLAUDE.md 색인 + 번호 대조) · `tokens-build.py`(`tokens.css` → `tokens.json`) ·
 `screens-build.py`(화면 → `screens.json`, usage-scan 다음에) ·
 `dark-shot.html`(다크 모드 화면을 헤드리스로 찍는 액자 — `screen-shot.sh`는 라이트만 찍힌다) ·

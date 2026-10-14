@@ -19,6 +19,7 @@ style-audit.py — 「사람이 지키는 규칙」을 기계가 잰다 (마감 
     정의 없는 변수               var(--x) 인데 어디에도 --x: 가 없는 것. JS 가 넣는 값(JS_VARS)은 제외
     깨진 경로                    CSS url() · HTML href/src 가 가리키는 파일이 없는 것
     캐시 번호 종류               ?v= 는 날짜 하나로 통일한다 (1 이어야 한다)
+    CSS 주석 짝                  주석을 걷은 뒤 */ · /* 가 남으면 뒷줄 선언이 사라진 것이다
   ■ 지켜보는 것 (줄면 좋다)
     1단 직접 사용                화면 CSS 가 팔레트 램프를 바로 부르는 횟수 — 2단 역할로 옮길 대상
     화면 간 똑같은 규칙          styles/screens/ 끼리 글자 하나 안 틀리고 같은 규칙
@@ -41,7 +42,7 @@ EXCEPT = {
     'styles/screens/concept-learn.css:gradient': '더미 이미지 자리 — 사진이 들어올 자리를 메운 그림',
 }
 # JS 가 style 로 심는 변수 — 정의가 CSS 에 없는 게 정상이다 (스토리북 「패턴 › JS가 넣는 변수」)
-# 안 써도 남기는 토큰 — 상태색 매트릭스(4역할 × 5변형)의 빈칸을 만들지 않는다
+# 안 써도 남기는 토큰 — 상태색 매트릭스(4역할 × 6변형)의 빈칸을 만들지 않는다
 KEEP = {'--warn-vivid'}
 JS_VARS = {'--caret-x', '--d', '--delay', '--hero-w', '--m', '--o', '--pct', '--seg'}
 PALETTE = r'(?:n|blue|cyan|teal|green|amber|orange|red|violet)-\d+'
@@ -227,6 +228,15 @@ for f in JS:
     js_style[f] += len(JS_STYLE.findall(t))
 js_style = +js_style
 row('지킬 것', 'JS 안 스타일 [RM-JS-01]', sum(js_style.values()), ', '.join('%s %d' % kv for kv in js_style.most_common(4)))
+
+# ── CSS 주석 짝 — 주석을 중간에 닫으면 뒷줄 선언이 통째로 사라진다 ─────────────────
+# 2026-10-14: tokens.css 주석 안에 */ 를 하나 더 넣어 --ok-solid 가 사라졌는데(정답 초록이 투명) 어느 검사도 못 잡았다.
+# 제대로 된 주석을 걷고 나서 */ 나 /* 가 남으면 깨진 것이다.
+broken_cmt = []
+for f in CSS:
+    rest = strip_comments(open(f, encoding='utf-8').read())
+    if '*/' in rest or '/*' in rest: broken_cmt.append(f)
+row('지킬 것', 'CSS 주석 짝 [문법]', len(broken_cmt), ', '.join(broken_cmt[:4]))
 
 # ── 규칙 ID — 규칙 색인(정본) · CLAUDE.md · 이 도구가 서로 맞는가 ───────────────
 try:
