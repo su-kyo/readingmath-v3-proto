@@ -21,7 +21,7 @@
 .ops {
   position: absolute; inset: 0; overflow-y: auto; display: flex; flex-direction: column; align-items: center;
   padding: 6px clamp(24px, 5vw, 56px) 26px;
-  --qtext: var(--text); --muted: var(--text-muted); --ex-bg: var(--surface-2); --ex-br: var(--white-a06);
+  --qtext: var(--text); --muted: var(--text-muted); --ex-br: var(--border-strong);
   --opt-bg: var(--surface-3); --opt-br: var(--white-a08); --opt-hover: var(--surface-hover);
   --input-bg: var(--surface-2); --input-br: var(--border-strong);
   /* 정오답 '글자' 색 — 다크 표면에선 밝힌 단계(300), 라이트에선 잉크 단계(600).
@@ -29,7 +29,7 @@
   --st-ok: var(--ok-on-dark); --st-no: var(--no-on-dark);
 }
 :root[data-theme="light"] .ops {
-  --qtext: var(--n-600); --muted: var(--text-muted); --ex-bg: var(--th-tint); --ex-br: var(--border);
+  --qtext: var(--n-600); --muted: var(--text-muted); --ex-br: var(--border-strong);
   --opt-bg: var(--n-000); --opt-br: var(--border-strong); --opt-hover: var(--n-050);
   --input-bg: var(--n-000); --input-br: var(--border-strong);
   --st-ok: var(--ok-ink); --st-no: var(--no-ink);
@@ -63,7 +63,7 @@
   display: flex; gap: var(--sp-20); align-items: flex-start; transition: max-height .32s ease, opacity .25s ease, padding .32s ease; }
 .problem.is-collapsed .problem__body { max-height: 0; opacity: 0; padding-top: 0; padding-bottom: 0; }
 .problem__body .q__text { flex: 1 1 auto; min-width: 0; margin-bottom: 0; color: color-mix(in srgb, var(--violet-050) 94%, transparent); }
-.problem__body .ex { flex: none; width: clamp(200px, 36%, 340px); margin: 0; background: var(--white-a06); }
+.problem__body .ex { flex: none; width: clamp(200px, 36%, 340px); margin: 0; --ex-br: var(--white-a20); }   /* 진한 문제 카드 위 — 흰 선 */
 .problem__body .ex__list { color: color-mix(in srgb, var(--violet-050) 85%, transparent); }
 .problem__body .ex__skel { color: var(--white-a60); }
 
@@ -71,7 +71,8 @@
 /* ===== 문제 (풀이 영역) ===== */
 .q { width: min(1040px, 100%); margin: 0; display: flex; flex-direction: column; align-items: center; }
 .q__text { align-self: stretch; font-size: clamp(16px, 1.5vw, 20px); font-weight: var(--fw-bold); color: var(--qtext); line-height: 1.6; margin-bottom: 20px; }
-.ex { align-self: stretch; background: var(--ex-bg); border-radius: var(--r-16); padding: var(--sp-20) var(--sp-24); margin-bottom: 22px; }
+/* 보기 박스 = 면 없이 테두리만 (2026-10-14) — 선지 테두리와 같은 굵기 · 공용 --border-strong */
+.ex { align-self: stretch; background: none; box-shadow: inset 0 0 0 1.5px var(--ex-br); border-radius: var(--r-16); padding: var(--sp-20) var(--sp-24); margin-bottom: 22px; }
 .ex__list { display: flex; flex-direction: column; gap: var(--sp-8); font-size: clamp(15px,1.4vw,18px); color: var(--qtext); line-height: 1.5; }
 .ex__skel { min-height: 140px; display: flex; align-items: center; justify-content: center; color: var(--muted); font-weight: var(--fw-bold); }
 .ex__shape { display: flex; justify-content: center; }

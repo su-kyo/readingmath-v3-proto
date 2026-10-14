@@ -16,10 +16,10 @@
 .ops {
   position: absolute; inset: 0; overflow-y: auto; display: flex; flex-direction: column; align-items: center;
   padding: 6px clamp(56px, 8vw, 96px) 26px;
-  --qtext: var(--n-050); --muted: var(--text-muted); --ex-bg: var(--n-800); --opt-bg: var(--n-800); --opt-br: var(--white-a10);
+  --qtext: var(--n-050); --muted: var(--text-muted); --ex-br: var(--border-strong); --opt-bg: var(--n-800); --opt-br: var(--white-a10);
   --input-bg: var(--n-800); --input-br: var(--n-500);
 }
-:root[data-theme="light"] .ops { --qtext: var(--n-650); --muted: var(--text-muted); --ex-bg: var(--n-100); --opt-bg: var(--n-000); --opt-br: var(--n-100); --input-bg: var(--n-000); --input-br: var(--n-200); }
+:root[data-theme="light"] .ops { --qtext: var(--n-650); --muted: var(--text-muted); --ex-br: var(--border-strong); --opt-bg: var(--n-000); --opt-br: var(--n-100); --input-bg: var(--n-000); --input-br: var(--n-200); }
 
 
 /* ===== 프로그레스 캡 (정오답 o/x + 오답 점프) ===== */
@@ -44,7 +44,8 @@
 
 .q { width: min(1040px, 100%); margin: auto 0; display: flex; flex-direction: column; align-items: center; }
 .q__text { align-self: stretch; font-size: clamp(16px, 1.5vw, 20px); font-weight: var(--fw-bold); color: var(--qtext); line-height: 1.6; margin-bottom: 20px; }
-.ex { align-self: stretch; background: var(--ex-bg); border-radius: var(--r-16); padding: var(--sp-20) var(--sp-24); margin-bottom: 22px; }
+/* 보기 박스 = 면 없이 테두리만 (2026-10-14) — 선지 테두리와 같은 굵기 · 공용 --border-strong */
+.ex { align-self: stretch; background: none; box-shadow: inset 0 0 0 1.5px var(--ex-br); border-radius: var(--r-16); padding: var(--sp-20) var(--sp-24); margin-bottom: 22px; }
 .ex__list { display: flex; flex-direction: column; gap: var(--sp-8); font-size: clamp(15px,1.4vw,18px); color: var(--qtext); line-height: 1.5; }
 .ex__skel { min-height: 120px; display: flex; align-items: center; justify-content: center; color: var(--muted); font-weight: var(--fw-bold); }
 .ex__shape { display: flex; justify-content: center; }
