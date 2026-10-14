@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<title>color-audit — 그려진 화면의 글자·면 대비 검사</title>
+<!-- =========================================================================
+     color-audit.html — 화면을 iframe에 띄워 「실제로 그려진 색」을 잰다 (2026-10-14 신설)
+
+     왜 필요한가
+       코드 검색으로는 "다크용 색이 라이트에 새는 곳"의 후보만 나온다. 같은 토큰이라도
+       결과 화면·키패드처럼 늘 어두운 곳에서는 정상이라, 실제 바탕 위에서 재야 판정이 된다.
+
+     하는 일 (화면 × 테마 × 상태마다)
+       ① 글자 대비 — 글자색 vs 실제 바탕(조상 면을 알파까지 겹쳐 계산). ::before/::after 포함.
+          기준: 작은 글자 4.5 · 큰 글자(≥19px w700 또는 ≥24px) 3.0 · 비활성(opacity<.6)은 따로 표시
+       ② 상태 면 — is-selected/is-correct/is-wrong 등 상태 요소의 면 vs 둘레 바탕 대비
+       ③ 탁한 면 후보 — 채도가 어중간하고(OKLCH C .015~.07) 색상이 네이비 축(235~280°)이 아닌 면
+
+     쓰는 법
+       http://localhost:8020/tools/color-audit.html            범위 전체
+       ...?only=type/quiz                                       한 화면만
+       결과는 표 + window.__audit (JSON)
+     한계
+       배경 그림(사진·그라데이션) 위 글자는 계산 못 해서 「그림 위」로만 표시한다.
+     ========================================================================= -->
+<link rel="stylesheet" href="../styles/tokens.css">
+<style>
+  body { margin: 0; background: var(--n-050); color: var(--n-650); font: 14px/1.5 var(--font-sans); }
+  main { padding: 24px; }
+  iframe { width: 1280px; height: 800px; border: 0; position: fixed; left: -1400px; top: 0; }
+  h1 { font-size: 22px; margin: 0 0 4px; } #st { color: var(--n-400); margin-bottom: 16px; }
+  table { border-collapse: collapse; width: 100%; background: var(--n-000); margin-bottom: 24px; font-size: 13px; }
+  td, th { border-bottom: 1px solid var(--n-100); padding: 4px 8px; text-align: left; vertical-align: top; }
+  th { background: var(--n-100); }
+  .sw { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: -2px; box-shadow: inset 0 0 0 1px var(--black-a20); margin-right: 4px; }
+  .bad { color: var(--no-ink); font-weight: 700; }
+</style>
+</head>
+<body><main>
+<h1>color-audit</h1><div id="st">준비 중…</div>
+<div id="out"></div>
+<iframe id="f"></iframe>
+</main>
+<script>
+(function () {
+  var SCREENS = [
+    'concept/learn', 'concept/organize', 'concept/drill', 'concept/basic-ops',
+    'type/quiz', 'type/review',
+    'essay/basics-v2', 'essay/drill-v2', 'essay/advanced', 'essay/report', 'essay/drill-review', 'essay/report-review',
+    'shared/step-result', 'type/result', 'essay/step-result',
+    'shared/training-result', 'type/training-result', 'essay/training-result',
+    'assignment/explain'
+  ];
+  var qs = new URLSearchParams(location.search);
+  if (qs.get('only')) SCREENS = qs.get('only').split(',');
+  var THEMES = (qs.get('themes') || 'light,dark').split(',');
+  var SKIP_DBG = /다음|이전|열기|건너뛰기|키패드|시간/;   // 화면을 옮기거나 상태와 무관한 디버그 버튼
+
+  var f = document.getElementById('f'), st = document.getElementById('st'), out = document.getElementById('out');
+  var ALL = []; window.__audit = ALL;
+
+  // ---------- 색 계산 ----------
+  function parse(c) {
+    if (!c || c === 'transparent') return null;
+    var n = c.match(/[\d.]+/g); if (!n) return null;
+    if (c.indexOf('color(srgb') === 0) return { r: n[0] * 255, g: n[1] * 255, b: n[2] * 255, a: n[3] != null ? +n[3] : 1 };
+    return { r: +n[0], g: +n[1], b: +n[2], a: n[3] != null ? +n[3] : 1 };
+  }
+  function over(top, bot) { var a = top.a; return { r: top.r * a + bot.r * (1 - a), g: top.g * a + bot.g * (1 - a), b: top.b * a + bot.b * (1 - a), a: 1 }; }
+  function lum(c) { function ch(v) { v /= 255; return v <= .04045 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); } return .2126 * ch(c.r) + .7152 * ch(c.g) + .0722 * ch(c.b); }
+  function ratio(a, b) { var x = lum(a), y = lum(b); return (Math.max(x, y) + .05) / (Math.min(x, y) + .05); }
+  function hex(c) { function h(v) { return ('0' + Math.round(v).toString(16)).slice(-2); } return '#' + h(c.r) + h(c.g) + h(c.b); }
+  function oklch(c) {
+    function s(v) { v /= 255; return v <= .04045 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }
+    var r = s(c.r), g = s(c.g), b = s(c.b);
+    var l = Math.cbrt(.4122214708 * r + .5363325363 * g + .0514459929 * b), m = Math.cbrt(.2119034982 * r + .6806995451 * g + .1073969566 * b), q = Math.cbrt(.0883024619 * r + .2817188376 * g + .6299787005 * b);
+    var L = .2104542553 * l + .793617785 * m - .0040720468 * q, A = 1.9779984951 * l - 2.428592205 * m + .4505937099 * q, B = .0259040371 * l + .7827717662 * m - .808675766 * q;
+    return { L: L, C: Math.hypot(A, B), H: (Math.atan2(B, A) * 180 / Math.PI + 360) % 360 };
+  }
+  // 요소 뒤의 실제 바탕 — 조상의 면을 위에서부터 겹친다. 그림을 만나면 'img'
+  function bgOf(el, win, selfToo) {
+    var layers = [], e = selfToo ? el : el.parentElement, img = false;
+    while (e && e.nodeType === 1) {
+      var cs = win.getComputedStyle(e);
+      if (cs.backgroundImage && cs.backgroundImage !== 'none' && !/dummy-img/.test(e.className)) { img = true; }
+      var c = parse(cs.backgroundColor);
+      if (c && c.a > 0) { layers.push(c); if (c.a >= .999) break; }
+      if (img && !layers.length) break;
+      e = e.parentElement;
+    }
+    var base = { r: 255, g: 255, b: 255, a: 1 };
+    if (layers.length && layers[layers.length - 1].a >= .999) base = layers.pop();
+    else if (img) return { img: true };
+    for (var i = layers.length - 1; i >= 0; i--) base = over(layers[i], base);
+    return base;
+  }
+  function opac(el, win) { var o = 1, e = el; while (e && e.nodeType === 1) { o *= +win.getComputedStyle(e).opacity; e = e.parentElement; } return o; }
+  function visible(el, win) {
+    var r = el.getBoundingClientRect(); if (r.width < 2 || r.height < 2) return false;
+    if (r.bottom < 0 || r.top > 800 || r.right < 0 || r.left > 1280) return false;
+    var cs = win.getComputedStyle(el); if (cs.visibility === 'hidden' || cs.display === 'none') return false;
+    if (el.closest('.rmdbg, [aria-hidden="true"]')) return false;
+    return true;
+  }
+  function path(el) {
+    var p = [], e = el;
+    for (var i = 0; i < 3 && e && e.nodeType === 1 && e.tagName !== 'BODY'; i++) { p.unshift(e.tagName.toLowerCase() + (e.className && typeof e.className === 'string' ? '.' + e.className.trim().split(/\s+/).slice(0, 3).join('.') : '')); e = e.parentElement; }
+    return p.join(' > ');
+  }
+
+  // ---------- 한 상태 재기 ----------
+  function audit(d, win, screen, theme, state) {
+    var found = [], muddy = {};
+    function textCheck(el, txt, cs, pseudo) {
+      var fg = parse(cs.color); if (!fg || fg.a === 0) return;
+      var bg = bgOf(el, win, true); if (bg.img) { return; }
+      if (pseudo) { var pb = parse(cs.backgroundColor); if (pb && pb.a > 0) bg = over(pb, bg); }
+      var real = over(fg, bg);
+      var size = parseFloat(cs.fontSize), w = +cs.fontWeight;
+      var big = size >= 24 || (size >= 18.6 && w >= 700);
+      var need = big ? 3 : 4.5, r = ratio(real, bg), o = opac(el, win);
+      var lim = theme === 'dark' ? 3 : need;   // 다크는 「안 보임」만 — 3 미만 (테마가 하나뿐인 화면은 'fixed' = 정식 기준)
+      if (r < lim) found.push({ kind: o < .6 ? '비활성 글자' : '글자', sel: path(el) + (pseudo || ''), txt: txt.slice(0, 24), fg: hex(real), bg: hex(bg), r: r, need: lim });
+    }
+    d.querySelectorAll('body *').forEach(function (el) {
+      if (!visible(el, win) || /^(SCRIPT|STYLE|svg|path|IMG|CANVAS|IFRAME|TEMPLATE)$/i.test(el.tagName)) return;
+      var cs = win.getComputedStyle(el);
+      var own = [].slice.call(el.childNodes).filter(function (n) { return n.nodeType === 3 && n.textContent.trim(); }).map(function (n) { return n.textContent.trim(); }).join(' ');
+      if (own && cs.color !== 'rgba(0, 0, 0, 0)' && cs.webkitTextFillColor !== 'rgba(0, 0, 0, 0)') textCheck(el, own, cs);
+      ['::before', '::after'].forEach(function (ps) {
+        var p = win.getComputedStyle(el, ps), ct = p.content;
+        if (ct && ct !== 'none' && ct !== 'normal' && ct.replace(/["']/g, '').trim()) textCheck(el, ct.replace(/["']/g, ''), p, ps);
+      });
+      // 상태 면
+      if (/\bis-(selected|correct|wrong|current|on|active|done)\b/.test(el.className)) {
+        var me = parse(cs.backgroundColor);
+        if (me && me.a > .05) {
+          var around = bgOf(el, win, false);
+          if (!around.img) {
+            var face = over(me, around), r2 = ratio(face, around);
+            found.push({ kind: '상태 면', sel: path(el), txt: (el.textContent || '').trim().slice(0, 16), fg: hex(face), bg: hex(around), r: r2, need: 0, info: true });
+          }
+        }
+      }
+      // 탁한 면 후보
+      var bc = parse(cs.backgroundColor);
+      if (bc && bc.a > .02) {
+        var eb = bgOf(el, win, true);
+        if (!eb.img) {
+          var k = oklch(eb), hx = hex(eb);
+          if (k.C > .015 && k.C < .07 && k.L > .25 && k.L < .95 && !(k.H > 235 && k.H < 280)) {
+            muddy[hx] = muddy[hx] || { n: 0, sel: path(el), k: k }; muddy[hx].n++;
+          }
+        }
+      }
+    });
+    Object.keys(muddy).forEach(function (h) { var m = muddy[h]; found.push({ kind: '탁한 면?', sel: m.sel + (m.n > 1 ? ' 외 ' + (m.n - 1) : ''), txt: 'L' + m.k.L.toFixed(2) + ' C' + m.k.C.toFixed(3) + ' H' + Math.round(m.k.H), fg: h, bg: h, r: 0, need: 0, info: true }); });
+    found.forEach(function (x) { x.screen = screen; x.theme = theme; x.state = state; ALL.push(x); });
+  }
+
+  // ---------- 화면 열기 · 상태 만들기 ----------
+  function load(src, theme) {
+    return new Promise(function (res) {
+      f.onload = function () {
+        var d = f.contentDocument;
+        if (theme !== 'fixed') d.documentElement.setAttribute('data-theme', theme);
+        var s = d.createElement('style'); s.textContent = '*,*::before,*::after{transition:none!important;animation-duration:0s!important;animation-delay:0s!important}'; d.head.appendChild(s);
+        d.querySelectorAll('.monitor.is-open').forEach(function (m) { m.classList.remove('is-open'); });
+        setTimeout(function () { res(d); }, 900);
+      };
+      f.src = '../' + src + '.html?debug=1&ca=' + Date.now();
+    });
+  }
+  function wait(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+  async function run() {
+    for (var i = 0; i < SCREENS.length; i++) {
+      var probe = await load(SCREENS[i], 'fixed');
+      var themes = probe.getElementById('themeToggle') ? THEMES : ['fixed'];   // 토글 없는 화면(결과 = 늘 다크)은 그 테마 하나만
+      for (var t = 0; t < themes.length; t++) {
+        var sc = SCREENS[i], th = themes[t];
+        st.textContent = sc + ' · ' + th + ' (' + (i + 1) + '/' + SCREENS.length + ')';
+        var d = await load(sc, th), win = f.contentWindow;
+        audit(d, win, sc, th, '처음');
+        var labels = [].slice.call(d.querySelectorAll('.rmdbg__btn')).map(function (b) { return b.textContent.trim(); }).filter(function (l) { return !SKIP_DBG.test(l); });
+        // 선택 상태 — 첫 선택지를 눌러 본다
+        var opt = d.querySelector('.qopt:not(.is-selected), .opt:not(.is-selected), .pop-opt');
+        if (opt) { opt.click(); await wait(300); audit(d, win, sc, th, '선택'); }
+        for (var k = 0; k < labels.length; k++) {
+          d = await load(sc, th); win = f.contentWindow;
+          var b = [].slice.call(d.querySelectorAll('.rmdbg__btn')).find(function (x) { return x.textContent.trim() === labels[k]; });
+          if (b) { b.click(); await wait(500); audit(d, win, sc, th, labels[k]); }
+        }
+      }
+    }
+    render(); st.textContent = '끝 — ' + ALL.length + '건 (window.__audit)';
+  }
+  function render() {
+    var key = {}, rows = [];
+    ALL.forEach(function (x) { var k = x.theme + x.kind + x.sel + x.fg + x.bg; if (key[k]) { key[k].states.push(x.screen + ':' + x.state); return; } x.states = [x.screen + ':' + x.state]; key[k] = x; rows.push(x); });
+    ['light', 'fixed', 'dark'].forEach(function (th) {
+      var rs = rows.filter(function (x) { return x.theme === th && !x.info; });
+      var h = '<h2>' + th + ' · 대비 미달 ' + rs.length + '</h2><table><tr><th>종류</th><th>화면:상태</th><th>요소</th><th>글자</th><th>색</th><th>대비</th></tr>';
+      rs.forEach(function (x) { h += '<tr><td>' + x.kind + '</td><td>' + x.states.slice(0, 4).join('<br>') + (x.states.length > 4 ? '<br>…+' + (x.states.length - 4) : '') + '</td><td>' + x.sel + '</td><td>' + x.txt + '</td><td><span class="sw" style="background:' + x.fg + '"></span>' + x.fg + ' / <span class="sw" style="background:' + x.bg + '"></span>' + x.bg + '</td><td class="bad">' + x.r.toFixed(2) + ' &lt; ' + x.need + '</td></tr>'; });
+      out.insertAdjacentHTML('beforeend', h + '</table>');
+    });
+    var md = rows.filter(function (x) { return x.kind === '탁한 면?'; });
+    var h2 = '<h2>탁한 면 후보 ' + md.length + '</h2><table><tr><th>테마</th><th>화면</th><th>요소</th><th>OKLCH</th><th>색</th></tr>';
+    md.forEach(function (x) { h2 += '<tr><td>' + x.theme + '</td><td>' + x.states.slice(0, 3).join('<br>') + '</td><td>' + x.sel + '</td><td>' + x.txt + '</td><td><span class="sw" style="background:' + x.fg + '"></span>' + x.fg + '</td></tr>'; });
+    out.insertAdjacentHTML('beforeend', h2 + '</table>');
+  }
+  run();
+})();
+</script>
+</body></html>

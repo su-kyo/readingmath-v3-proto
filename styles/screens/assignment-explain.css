@@ -10,7 +10,9 @@
    ========================================================================= */
 :root {
   --hd: var(--th-static); --blue: var(--th-ink-accent); --yellow: var(--current);
-  --good: var(--ok-on-dark); --bad: var(--no-on-dark);
+  /* 정오답 — 선·아이콘(--good/--bad) · 글자(--good-text) · 칠면은 규칙에서 --ok-solid/--no-solid.
+     (예전엔 다크용 300 스텝을 라이트에도 써서 오답 칸이 분홍, 정답 숫자가 연두로 날아갔다) */
+  --good: var(--ok-solid); --good-text: var(--ok-ink); --bad: var(--no-solid);
   /* 라이트 표면 — content 거터(살짝틴트) → qpanel 흰색 / omr 살짝틴트 */
   --content: var(--n-000); --qpanel: var(--n-000); --panel: var(--n-050); --ink: var(--n-650); --sub: var(--text-muted);
   --line: var(--n-200); --opt: var(--n-000); --track: var(--n-100); --dash: var(--n-200);
@@ -19,6 +21,7 @@
   /* 다크 표면 — 뉴트럴 램프 단조증가(bg n-900 < 패널 n-800 < 카드 n-600)로 대비 확보 */
   --content: var(--n-900); --qpanel: var(--n-800); --panel: var(--n-800); --ink: var(--n-050); --sub: var(--text-muted);
   --line: var(--border-strong); --opt: var(--n-600); --track: var(--n-900); --dash: var(--n-350);
+  --good: var(--ok-on-dark); --good-text: var(--ok-on-dark); --bad: var(--no-on-dark);
 }
 body { font-family: var(--font-sans); background: var(--asset-console-task-body); overflow: hidden; -webkit-font-smoothing: antialiased; }
 
@@ -56,7 +59,10 @@ body { font-family: var(--font-sans); background: var(--asset-console-task-body)
 .opt.is-correct { border-color: var(--good); background: var(--ok-tint); }
 .opt.is-correct .opt__num { border-color: var(--good); background: var(--ok-ink); color: var(--n-000); }
 .opt.is-wrong { border-color: var(--bad); background: var(--no-tint); }
-.opt.is-wrong .opt__num { border-color: var(--bad); background: var(--bad); color: var(--n-000); }
+.opt.is-wrong .opt__num { border-color: var(--no-solid); background: var(--no-solid); color: var(--n-000); }
+/* 다크 — 라이트용 틴트(050)는 밝은 면이라 흰 글자가 사라진다. 상태색을 어둡게 섞는다 (유형 해설과 같은 비율) */
+:root[data-theme="dark"] .opt.is-correct, :root[data-theme="dark"] .short__field.is-correct { background: color-mix(in srgb, var(--ok-solid) 22%, transparent); }
+:root[data-theme="dark"] .opt.is-wrong, :root[data-theme="dark"] .short__field.is-wrong { background: color-mix(in srgb, var(--no-solid) 20%, transparent); }
 
 /* 주관식 (리뷰) */
 .short { display: flex; flex-direction: column; gap: var(--sp-12); align-items: center; }
@@ -67,9 +73,9 @@ body { font-family: var(--font-sans); background: var(--asset-console-task-body)
 .short__unit { font-size: var(--fs-16); font-weight: var(--fw-bold); color: var(--sub); }
 .short__mark { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; color: var(--n-000); }
 .short__mark svg { width: 12px; height: 12px; }
-.short__mark.o { background: var(--ok-solid); } .short__mark.x { background: var(--bad); }
+.short__mark.o { background: var(--ok-solid); } .short__mark.x { background: var(--no-solid); }
 .short__ans { font-size: var(--fs-14); color: var(--sub); font-weight: var(--fw-semibold); }
-.short__ans b { color: var(--good); font-family: var(--font-mono); }
+.short__ans b { color: var(--good-text); font-family: var(--font-mono); }
 
 /* 해설 박스 */
 .expl { background: var(--th-tint); border-radius: var(--r-12); padding: var(--sp-16) var(--sp-16); display: flex; flex-direction: column; gap: var(--sp-6); }
@@ -80,14 +86,14 @@ body { font-family: var(--font-sans); background: var(--asset-console-task-body)
 
 /* OMR 사이드바 (리뷰) */
 
-.omr__ptop span { font-family: var(--font-mono); font-size: var(--fs-16); font-weight: var(--fw-bold); color: var(--good); font-variant-numeric: tabular-nums; }
+.omr__ptop span { font-family: var(--font-mono); font-size: var(--fs-16); font-weight: var(--fw-bold); color: var(--good-text); font-variant-numeric: tabular-nums; }
 
 .omr__track > i { display: block; height: 100%; border-radius: var(--r-full); background: var(--ok-solid); }
 
 .cell { aspect-ratio: 1; border: 0; border-radius: var(--r-8); font-family: var(--font-mono); font-size: var(--fs-19); font-weight: var(--fw-bold); color: var(--n-000); cursor: pointer; font-variant-numeric: tabular-nums; display: grid; place-items: center; position: relative; transition: transform .1s; }
 .cell:hover { transform: translateY(-1px); }
 .cell--correct { background: var(--ok-solid); }
-.cell--wrong { background: var(--bad); }
+.cell--wrong { background: var(--no-solid); }
 .cell.is-cur { border: 3px solid var(--current); }
 .cell__mark { position: absolute; top: 3px; right: 3px; width: 16px; height: 16px; border-radius: 50%; background: var(--n-000); display: grid; place-items: center; box-shadow: 0 1px 2px var(--black-a25); }
 .cell__mark svg { width: 10px; height: 10px; }
