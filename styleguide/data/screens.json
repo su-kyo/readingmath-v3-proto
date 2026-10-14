@@ -37,7 +37,7 @@
     },
     {
      "name": "과제 해설 — 목록형 선지 · 해설 띠",
-     "group": "부품 › 해설 화면의 면 — 상태표",
+     "group": "부품 › 해설 화면의 면",
      "doc": "styleguide/components.html#surf"
     },
     {
@@ -47,7 +47,7 @@
     },
     {
      "name": "배경 사진과 다크 막",
-     "group": "기초 › 계열 슬롯",
+     "group": "기초 › 색 3단 · 계열 슬롯",
      "doc": "styleguide/foundations.html#section"
     },
     {
@@ -254,7 +254,7 @@
     },
     {
      "name": "배경 사진과 다크 막",
-     "group": "기초 › 계열 슬롯",
+     "group": "기초 › 색 3단 · 계열 슬롯",
      "doc": "styleguide/foundations.html#section"
     },
     {
@@ -382,7 +382,7 @@
     },
     {
      "name": "배경 사진과 다크 막",
-     "group": "기초 › 계열 슬롯",
+     "group": "기초 › 색 3단 · 계열 슬롯",
      "doc": "styleguide/foundations.html#section"
     },
     {
@@ -530,7 +530,7 @@
     },
     {
      "name": "유형 해설 — 보기 · 타일형 선지 · 해설 띠",
-     "group": "부품 › 해설 화면의 면 — 상태표",
+     "group": "부품 › 해설 화면의 면",
      "doc": "styleguide/components.html#surf"
     },
     {
@@ -545,7 +545,7 @@
     },
     {
      "name": "배경 사진과 다크 막",
-     "group": "기초 › 계열 슬롯",
+     "group": "기초 › 색 3단 · 계열 슬롯",
      "doc": "styleguide/foundations.html#section"
     },
     {
@@ -689,7 +689,7 @@
     },
     {
      "name": "유형 해설 — 보기 · 타일형 선지 · 해설 띠",
-     "group": "부품 › 해설 화면의 면 — 상태표",
+     "group": "부품 › 해설 화면의 면",
      "doc": "styleguide/components.html#surf"
     },
     {
@@ -704,7 +704,7 @@
     },
     {
      "name": "배경 사진과 다크 막",
-     "group": "기초 › 계열 슬롯",
+     "group": "기초 › 색 3단 · 계열 슬롯",
      "doc": "styleguide/foundations.html#section"
     },
     {
@@ -841,7 +841,7 @@
     },
     {
      "name": "배경 사진과 다크 막",
-     "group": "기초 › 계열 슬롯",
+     "group": "기초 › 색 3단 · 계열 슬롯",
      "doc": "styleguide/foundations.html#section"
     },
     {
@@ -962,7 +962,7 @@
     },
     {
      "name": "배경 사진과 다크 막",
-     "group": "기초 › 계열 슬롯",
+     "group": "기초 › 색 3단 · 계열 슬롯",
      "doc": "styleguide/foundations.html#section"
     },
     {
@@ -1084,12 +1084,12 @@
     },
     {
      "name": "과제 해설 — 목록형 선지 · 해설 띠",
-     "group": "부품 › 해설 화면의 면 — 상태표",
+     "group": "부품 › 해설 화면의 면",
      "doc": "styleguide/components.html#surf"
     },
     {
      "name": "배경 사진과 다크 막",
-     "group": "기초 › 계열 슬롯",
+     "group": "기초 › 색 3단 · 계열 슬롯",
      "doc": "styleguide/foundations.html#section"
     },
     {
@@ -1225,12 +1225,12 @@
     },
     {
      "name": "과제 해설 — 목록형 선지 · 해설 띠",
-     "group": "부품 › 해설 화면의 면 — 상태표",
+     "group": "부품 › 해설 화면의 면",
      "doc": "styleguide/components.html#surf"
     },
     {
      "name": "배경 사진과 다크 막",
-     "group": "기초 › 계열 슬롯",
+     "group": "기초 › 색 3단 · 계열 슬롯",
      "doc": "styleguide/foundations.html#section"
     },
     {
@@ -1365,12 +1365,12 @@
     },
     {
      "name": "과제 해설 — 목록형 선지 · 해설 띠",
-     "group": "부품 › 해설 화면의 면 — 상태표",
+     "group": "부품 › 해설 화면의 면",
      "doc": "styleguide/components.html#surf"
     },
     {
      "name": "배경 사진과 다크 막",
-     "group": "기초 › 계열 슬롯",
+     "group": "기초 › 색 3단 · 계열 슬롯",
      "doc": "styleguide/foundations.html#section"
     },
     {
@@ -1498,7 +1498,7 @@
     },
     {
      "name": "배경 사진과 다크 막",
-     "group": "기초 › 계열 슬롯",
+     "group": "기초 › 색 3단 · 계열 슬롯",
      "doc": "styleguide/foundations.html#section"
     },
     {
@@ -1628,7 +1628,7 @@
     },
     {
      "name": "배경 사진과 다크 막",
-     "group": "기초 › 계열 슬롯",
+     "group": "기초 › 색 3단 · 계열 슬롯",
      "doc": "styleguide/foundations.html#section"
     },
     {
@@ -1773,7 +1773,7 @@
     },
     {
      "name": "배경 사진과 다크 막",
-     "group": "기초 › 계열 슬롯",
+     "group": "기초 › 색 3단 · 계열 슬롯",
      "doc": "styleguide/foundations.html#section"
     },
     {
@@ -1905,7 +1905,7 @@
     },
     {
      "name": "배경 사진과 다크 막",
-     "group": "기초 › 계열 슬롯",
+     "group": "기초 › 색 3단 · 계열 슬롯",
      "doc": "styleguide/foundations.html#section"
     },
     {
@@ -2040,7 +2040,7 @@
     },
     {
      "name": "배경 사진과 다크 막",
-     "group": "기초 › 계열 슬롯",
+     "group": "기초 › 색 3단 · 계열 슬롯",
      "doc": "styleguide/foundations.html#section"
     },
     {
@@ -2189,7 +2189,7 @@
     },
     {
      "name": "배경 사진과 다크 막",
-     "group": "기초 › 계열 슬롯",
+     "group": "기초 › 색 3단 · 계열 슬롯",
      "doc": "styleguide/foundations.html#section"
     },
     {
@@ -2312,7 +2312,7 @@
     },
     {
      "name": "배경 사진과 다크 막",
-     "group": "기초 › 계열 슬롯",
+     "group": "기초 › 색 3단 · 계열 슬롯",
      "doc": "styleguide/foundations.html#section"
     },
     {
@@ -2500,12 +2500,12 @@
     },
     {
      "name": "유형 해설 — 보기 · 타일형 선지 · 해설 띠",
-     "group": "부품 › 해설 화면의 면 — 상태표",
+     "group": "부품 › 해설 화면의 면",
      "doc": "styleguide/components.html#surf"
     },
     {
      "name": "시험 풀이 — 채점 뒤 · 해설 띠",
-     "group": "부품 › 해설 화면의 면 — 상태표",
+     "group": "부품 › 해설 화면의 면",
      "doc": "styleguide/components.html#surf"
     },
     {
@@ -2600,8 +2600,8 @@
    "parts": [
     {
      "name": "목차 배지",
-     "group": "부품 › 상태 표시",
-     "doc": "styleguide/components.html#badge"
+     "group": "부품 › 그 밖에",
+     "doc": "styleguide/components.html#misc"
     }
    ],
    "tokensFrom": [
@@ -3065,7 +3065,7 @@
     },
     {
      "name": "배경 사진과 다크 막",
-     "group": "기초 › 계열 슬롯",
+     "group": "기초 › 색 3단 · 계열 슬롯",
      "doc": "styleguide/foundations.html#section"
     },
     {
@@ -3187,7 +3187,7 @@
     },
     {
      "name": "배경 사진과 다크 막",
-     "group": "기초 › 계열 슬롯",
+     "group": "기초 › 색 3단 · 계열 슬롯",
      "doc": "styleguide/foundations.html#section"
     },
     {
@@ -3298,7 +3298,7 @@
     },
     {
      "name": "유형 해설 — 보기 · 타일형 선지 · 해설 띠",
-     "group": "부품 › 해설 화면의 면 — 상태표",
+     "group": "부품 › 해설 화면의 면",
      "doc": "styleguide/components.html#surf"
     },
     {
@@ -3308,7 +3308,7 @@
     },
     {
      "name": "배경 사진과 다크 막",
-     "group": "기초 › 계열 슬롯",
+     "group": "기초 › 색 3단 · 계열 슬롯",
      "doc": "styleguide/foundations.html#section"
     },
     {
@@ -3454,7 +3454,7 @@
     },
     {
      "name": "배경 사진과 다크 막",
-     "group": "기초 › 계열 슬롯",
+     "group": "기초 › 색 3단 · 계열 슬롯",
      "doc": "styleguide/foundations.html#section"
     },
     {
@@ -3569,12 +3569,12 @@
     },
     {
      "name": "유형 해설 — 보기 · 타일형 선지 · 해설 띠",
-     "group": "부품 › 해설 화면의 면 — 상태표",
+     "group": "부품 › 해설 화면의 면",
      "doc": "styleguide/components.html#surf"
     },
     {
      "name": "시험 풀이 — 채점 뒤 · 해설 띠",
-     "group": "부품 › 해설 화면의 면 — 상태표",
+     "group": "부품 › 해설 화면의 면",
      "doc": "styleguide/components.html#surf"
     },
     {
@@ -3589,7 +3589,7 @@
     },
     {
      "name": "배경 사진과 다크 막",
-     "group": "기초 › 계열 슬롯",
+     "group": "기초 › 색 3단 · 계열 슬롯",
      "doc": "styleguide/foundations.html#section"
     },
     {
@@ -3721,7 +3721,7 @@
     },
     {
      "name": "배경 사진과 다크 막",
-     "group": "기초 › 계열 슬롯",
+     "group": "기초 › 색 3단 · 계열 슬롯",
      "doc": "styleguide/foundations.html#section"
     },
     {
@@ -3828,7 +3828,7 @@
     },
     {
      "name": "「선택 = 반전 칠」 한 규칙",
-     "group": "패턴 › 유틸 화면의 별도 색 체계",
+     "group": "패턴 › 유틸 화면의 색 체계",
      "doc": "styleguide/patterns.html#util"
     },
     {
@@ -4032,7 +4032,7 @@
     },
     {
      "name": "「선택 = 반전 칠」 한 규칙",
-     "group": "패턴 › 유틸 화면의 별도 색 체계",
+     "group": "패턴 › 유틸 화면의 색 체계",
      "doc": "styleguide/patterns.html#util"
     },
     {

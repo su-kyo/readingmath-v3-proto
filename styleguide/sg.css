@@ -140,6 +140,30 @@
 .sg-rulecard dl { display: grid; grid-template-columns: 44px 1fr; gap: var(--sp-6) var(--sp-12); font-size: var(--fs-13); line-height: 1.7; }
 .sg-rulecard dt { color: var(--text-meta); font-weight: var(--fw-bold); }
 .sg-rulecard dd { color: var(--text-muted); margin: 0; }
+
+/* 근거 접기 — 「무엇 · 언제 · 어떻게」를 먼저 읽고, 「왜」(이유 · 이력)는 펼쳐 본다.
+   규칙 카드 · 절 머리 · 부품 카드가 같이 쓴다. */
+.sg-why { margin-top: var(--sp-8); font-size: var(--fs-13); line-height: 1.75; color: var(--text-muted); max-width: 76ch; }
+.sg-why > summary { display: flex; align-items: center; gap: var(--sp-4); width: fit-content; list-style: none; cursor: pointer;
+  font-size: var(--fs-12); font-weight: var(--fw-bold); color: var(--text-meta); }
+.sg-why > summary::-webkit-details-marker { display: none; }
+.sg-why > summary::before { content: "▸"; transition: transform var(--t-fast); }
+.sg-why[open] > summary::before { transform: rotate(90deg); }
+.sg-why > summary:hover { color: var(--text); }
+.sg-why > p, .sg-why > ul { margin-top: var(--sp-6); }
+.sg-why ul { padding-left: var(--sp-20); }
+.sg-why code { font-family: var(--font-mono); font-size: .92em; background: var(--surface-2); padding: 1px 5px; border-radius: var(--r-4); }
+.sg-sec > .sg-why { margin: calc(var(--sp-16) * -1) 0 var(--sp-24); }
+
+/* 본문 속 링크 — 다른 장의 절 · 규칙 카드로 가는 길 */
+.sg-lead a, .sg-note a, .sg-why a, .sg-list a, .sg-rulecard dd a, .sg-rulecard__do a, .sg-table td a, .sg-head p a {
+  color: var(--th-ink-accent); text-decoration: underline; text-underline-offset: 2px; text-decoration-thickness: var(--bw-1); }
+
+/* 절 머리의 짧은 목록 — 규칙 번호를 나란히 적을 때 */
+.sg-list { margin: calc(var(--sp-16) * -1) 0 var(--sp-24); padding-left: var(--sp-20); font-size: var(--fs-14); line-height: 1.9; color: var(--text-muted); max-width: 74ch; }
+ul.sg-list { list-style: disc; }
+.sg-list code { font-family: var(--font-mono); font-size: .92em; background: var(--surface-2); padding: 1px 5px; border-radius: var(--r-4); }
+.sg-item > .sg-why { margin: 0; padding: 0 var(--sp-20) var(--sp-16); }
 .sg-rulecard code, .sg-screen code { font-family: var(--font-mono); font-size: .92em; background: var(--surface-2); padding: 1px 5px; border-radius: var(--r-4); }
 
 /* 검사 딱지 — 기계가 잡나, 눈으로 보나 */

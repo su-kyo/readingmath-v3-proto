@@ -14,7 +14,8 @@ rules-build.py — 규칙 색인(정본)에서 rules.json 과 CLAUDE.md 의 색�
 정본의 모양
   <article class="sg-rulecard" id="RM-영역-번호" data-check="style-audit,eye" data-since="YYYY-MM-DD">
     <h3>제목</h3> <p class="sg-rulecard__do">지킬 것</p>
-    <dl><dt>근거</dt><dd>…</dd><dt>검사</dt><dd>…</dd><dt>예외</dt><dd>…</dd></dl>
+    <dl><dt>검사</dt><dd>…</dd><dt>예외</dt><dd>…</dd></dl>
+    <details class="sg-why"><summary>근거</summary><p>…</p></details>
   </article>
 
 대조하는 것
@@ -58,13 +59,14 @@ def parse():
         dl = dict((text(k), text(v)) for k, v in re.findall(r'<dt>(.*?)</dt>\s*<dd>(.*?)</dd>', body, flags=re.S))
         do = re.search(r'<p class="sg-rulecard__do">(.*?)</p>', body, flags=re.S)
         h3 = re.search(r'<h3>(.*?)</h3>', body, flags=re.S)
+        why = re.search(r'<details class="sg-why">\s*<summary>.*?</summary>(.*?)</details>', body, flags=re.S)
         checks = [c.strip() for c in a.get('check', '').split(',') if c.strip()]
         rules.append({
             'id': rid,
             'area': rid.split('-')[1],
             'title': text(h3.group(1)) if h3 else '',
             'rule': text(do.group(1)) if do else '',
-            'why': dl.get('근거', ''),
+            'why': text(why.group(1)) if why else dl.get('근거', ''),
             'check': {'by': checks, 'tools': [TOOLS.get(c, c) for c in checks], 'how': dl.get('검사', ''),
                       'machine': any(c != 'eye' for c in checks)},
             'except': dl.get('예외', ''),

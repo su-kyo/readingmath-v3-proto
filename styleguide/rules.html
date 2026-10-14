@@ -6,10 +6,10 @@
   <title>규칙 색인 — 리딩수학과학 디자인 시스템</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
   <base href="../" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261014-10" />
-  <link rel="stylesheet" href="styles/base.css?v=20261014-10" />
-  <link rel="stylesheet" href="styles/components.css?v=20261014-10" />
-  <link rel="stylesheet" href="styleguide/sg.css?v=20261014-10" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261014-12" />
+  <link rel="stylesheet" href="styles/base.css?v=20261014-12" />
+  <link rel="stylesheet" href="styles/components.css?v=20261014-12" />
+  <link rel="stylesheet" href="styleguide/sg.css?v=20261014-12" />
 </head>
 <body>
 <div class="sg">
@@ -19,25 +19,19 @@
     <header class="sg-head">
       <div>
         <h1>규칙 색인</h1>
-        <p>이 디자인 시스템이 지키는 규칙을 <strong>하나씩 인용할 수 있게</strong> 번호를 붙였습니다.
-           디자인 QA에서 「<code>RM-SURF-02</code> 위반 — 오답 칸에 분홍 면」처럼 번호로 부르면,
-           개발자도 그의 AI도 이 카드를 열어 근거와 검사 방법을 바로 찾을 수 있어요.</p>
-        <p><strong>이 장이 규칙의 정본입니다.</strong> <code>tools/rules-build.py</code>가 이 카드들을 읽어
-           <code>styleguide/data/rules.json</code>을 만들고, <code>CLAUDE.md</code>·<code>tools/style-audit.py</code>에
-           모든 번호가 빠짐없이 인용돼 있는지 대조합니다. 손으로 세 곳을 맞추지 않아요.</p>
+        <p>이 디자인 시스템이 지키는 규칙을 번호로 모은 장입니다. 디자인 QA에서는 규칙을 번호로 부릅니다.
+           예를 들어 오답 칸에 분홍 면이 보이면 <code>RM-SURF-02</code> 위반입니다. 번호를 누르면 이 카드로 옵니다.</p>
+        <p>규칙의 정본은 이 장입니다. <code>tools/rules-build.py</code>가 카드를 읽어 <code>styleguide/data/rules.json</code>과
+           CLAUDE.md 색인을 만들고, 다른 파일에 인용된 번호가 정본과 맞는지 대조합니다.</p>
       </div>
     </header>
 
     <!-- ===================================================== 읽는 법 -->
     <section class="sg-sec" id="how">
       <h2>읽는 법 <small>번호 · 카드 · 검사</small></h2>
-      <p class="sg-lead">번호는 <code>RM-영역-번호</code>입니다. 영역 열 개 — <strong>색 COL · 칠면 FILL · 학습 화면 면 SURF ·
-        유틸 UTIL · 치수 SIZE · 파일 FILE · 이름 NAME · 이미지 ASSET · 공용 부품 PART · 스크립트 JS</strong>.
-        한 번 붙인 번호는 바꾸지 않습니다. 규칙이 폐기되면 카드를 지우지 않고 「폐기」로 남겨 번호가 다른 뜻으로 재사용되지 않게 합니다.</p>
-      <p class="sg-lead">카드마다 넷을 적습니다 — <strong>지킬 것</strong>(한 줄) · <strong>근거</strong>(언제 왜 생겼나) ·
-        <strong>검사</strong>(어느 도구의 어느 줄이 잡나, 또는 눈으로 보는 것) · <strong>예외</strong>.
-        검사 딱지가 <span class="sg-chk" data-k="tool">기계</span>면 도구가 숫자로 잡고,
-        <span class="sg-chk" data-k="eye">눈</span>이면 화면을 보고 판단해야 합니다.</p>
+      <p class="sg-lead">번호는 <code>RM-영역-번호</code>입니다. 한 번 붙인 번호는 바꾸지 않습니다. 규칙을 폐기해도 카드를 남겨 같은 번호를 다른 뜻으로 쓰지 않습니다.</p>
+      <p class="sg-lead">카드는 제목(지킬 것) · 어떻게 · 검사 · 예외 순서이고, 근거는 접혀 있습니다.
+        검사 딱지가 <span class="sg-chk" data-k="tool">기계</span>면 도구가 숫자로 잡고, <span class="sg-chk" data-k="eye">눈</span>이면 화면을 보고 판단합니다.</p>
       <div id="ruleSummary"></div>
     </section>
 
@@ -47,387 +41,471 @@
 
       <article class="sg-rulecard" id="RM-COL-01" data-check="style-audit" data-since="2026-08-17">
         <h3>색은 <code>tokens.css</code>의 변수로만 쓴다</h3>
-        <p class="sg-rulecard__do">화면 CSS·JS·HTML <code>style=""</code>에 hex·<code>rgb()</code>를 직접 쓰지 않는다. 색값은 <code>styles/tokens.css</code> 한 곳에만 있다.</p>
+        <p class="sg-rulecard__do">화면 CSS·JS와 HTML <code>style=""</code>에 hex·<code>rgb()</code>를 직접 쓰지 않는다. 색값은 <code>styles/tokens.css</code> 한 곳에만 있다.</p>
         <dl>
-          <dt>근거</dt><dd>2026-08-17 대비 감사 때 화면에 직접 쓴 색 76곳이 「어느 단계를 골랐나」를 숨기고 있었다. 지금 0곳.</dd>
           <dt>검사</dt><dd><code>style-audit.py</code> 「토큰 밖 색」 = 0</dd>
-          <dt>예외</dt><dd>마스크의 흑백 · 서랍 로고 5색 · 문제 속 도형 그림 · 더미 이미지 · 검수 패널 — 「패턴 › 남긴 예외」와 <code>style-audit.py</code>의 <code>EXCEPT</code>가 같은 목록</dd>
+          <dt>예외</dt><dd>마스크의 흑백, 서랍 로고 5색, 문제 속 도형 그림, 더미 이미지, 검수 패널. 목록은 <a href="styleguide/patterns.html#except">패턴 › 남긴 예외</a>와 <code>style-audit.py</code>의 <code>EXCEPT</code>가 같다.</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>화면에 직접 쓴 색은 어느 단계를 골랐는지 숨긴다. 2026-08-17 대비 감사 때 이런 곳이 76곳 있었고, 지금은 0곳이다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-COL-02" data-check="style-audit" data-since="2026-10-12">
         <h3>반투명은 알파 램프 또는 「가족 스텝을 N% 섞기」 두 문법만</h3>
-        <p class="sg-rulecard__do">흰·검 반투명은 <code>--white-a10</code>·<code>--black-a30</code> 같은 알파 램프, 색이 섞인 반투명은 <code>color-mix(in srgb, var(--&lt;가족&gt;-&lt;스텝&gt;) N%, transparent)</code>. 즉흥 <code>rgba()</code>를 만들지 않는다.</p>
+        <p class="sg-rulecard__do">흰·검 반투명은 <code>--white-a10</code>·<code>--black-a30</code> 같은 알파 램프로 쓴다. 색이 섞인 반투명은 <code>color-mix(in srgb, var(--&lt;가족&gt;-&lt;스텝&gt;) N%, transparent)</code>로 쓴다. 즉흥 <code>rgba()</code>를 만들지 않는다.</p>
         <dl>
-          <dt>근거</dt><dd>마감 회차(2026-10-12)에 즉흥 rgba 450곳을 이 두 문법으로 다 넣었다. 반투명이 늘 때마다 새 색이 생기는 것을 막는다.</dd>
           <dt>검사</dt><dd><code>style-audit.py</code> 「토큰 밖 색」(rgba 포함) = 0</dd>
           <dt>예외</dt><dd>없음</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>반투명이 필요할 때마다 새 색이 생기는 것을 막는다. 2026-10-12에 즉흥 rgba 450곳을 이 두 문법으로 모았다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-COL-03" data-check="cta-check" data-since="2026-08-17">
         <h3>팔레트 hex는 손으로 고치지 않는다 — 생성기로 다시 만든다</h3>
-        <p class="sg-rulecard__do"><code>tools/palette-gen.py</code>를 고쳐 재생성한다(450 스텝은 <code>solve_identity()</code>가 대비로 풀어 낸다). 색을 건드렸으면 <code>tools/cta-check.html</code>로 CTA가 홈 32배경에서 버티는지 본다.</p>
+        <p class="sg-rulecard__do"><code>tools/palette-gen.py</code>를 고쳐 다시 만든다. 450 스텝은 <code>solve_identity()</code>가 대비를 기준으로 계산한다. 색을 바꿨으면 <code>tools/cta-check.html</code>로 CTA가 홈 32배경에서 버티는지 확인한다.</p>
         <dl>
-          <dt>근거</dt><dd>램프는 가족마다 같은 명도 사다리에 서 있다. 한 칸을 손으로 고치면 사다리가 깨지고 대비 계산이 어긋난다.</dd>
-          <dt>검사</dt><dd><code>cta-check.html</code> 32/32 통과(최악 3.05) + 깃 기록에서 hex 변경이 생성기 출력과 함께인지</dd>
-          <dt>예외</dt><dd>에셋 연동색(<code>--asset-*</code>·<code>--art-*</code>) — 램프가 아니라 그림의 실제 색이다(<code>RM-ASSET-05</code>)</dd>
+          <dt>검사</dt><dd><code>cta-check.html</code> 32/32 통과(최악 3.05). 깃 기록에서 hex 변경이 생성기 출력과 함께 들어왔는지 본다.</dd>
+          <dt>예외</dt><dd>에셋 연동색(<code>--asset-*</code>·<code>--art-*</code>). 램프가 아니라 그림의 실제 색이다(<code>RM-ASSET-05</code>).</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>램프는 가족마다 같은 명도 사다리에 서 있다. 한 칸을 손으로 고치면 사다리가 깨지고 대비 계산이 어긋난다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-COL-04" data-check="eye" data-since="2026-08-17">
         <h3>상태색 <code>--*-vivid</code>를 일괄 치환하지 않는다</h3>
         <p class="sg-rulecard__do">정오답·주의 색을 넓힐 때는 화면별로 눈으로 보며 바꾼다.</p>
         <dl>
-          <dt>근거</dt><dd>다크 호버면 위에서 대비가 깨지는 경계가 있다. 한꺼번에 바꾸면 그 경계를 넘는 곳이 숨는다.</dd>
           <dt>검사</dt><dd>눈 + <code>tools/color-audit.html</code>(화면 × 테마 × 디버그 상태)</dd>
           <dt>예외</dt><dd>없음</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>다크 호버면 위에서 대비가 깨지는 경계가 있다. 한꺼번에 바꾸면 그 경계를 넘는 곳이 눈에 띄지 않는다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-COL-05" data-check="style-audit" data-since="2026-10-14">
         <h3>화면은 2단 역할 토큰부터 찾는다</h3>
-        <p class="sg-rulecard__do">팔레트(<code>--blue-500</code>·<code>--n-800</code> 같은 1단)를 화면이 직접 부르는 것은 「값이 테마·계열과 무관해야 하는 곳」뿐이다. 같은 값·같은 뜻의 역할(<code>--surface-*</code>·<code>--text*</code>·<code>--th-*</code>·<code>--ok-*</code>)이 있으면 역할을 쓴다.</p>
+        <p class="sg-rulecard__do">같은 값, 같은 뜻의 역할 토큰(<code>--surface-*</code>·<code>--text*</code>·<code>--th-*</code>·<code>--ok-*</code>)이 있으면 그것을 쓴다. 팔레트(<code>--blue-500</code>·<code>--n-800</code> 같은 1단)는 값이 테마·계열과 무관해야 하는 곳에서만 직접 부른다.</p>
         <dl>
-          <dt>근거</dt><dd>역할 이름은 라이트·다크·계열이 바뀔 때 함께 바뀐다. 팔레트를 직접 쓰면 그 화면만 뒤집히지 않는다. 2026-10-14에 값과 뜻이 모두 맞는 155곳을 옮겼다(761 → 606).</dd>
-          <dt>검사</dt><dd><code>style-audit.py</code> 지켜볼 것 「1단(팔레트) 직접 사용」 — 줄면 좋다</dd>
-          <dt>예외</dt><dd>화면 지역 별칭 정의(<code>--ink: var(--n-650)</code> 같은 화면 머리의 이름 짓기) · 정적 하드웨어(계산기·결과 계기판 <code>RM-PART-03</code>) · 우주 크롬의 그림 요소(말풍선·별·명판) · 스크롤바 손잡이</dd>
+          <dt>검사</dt><dd><code>style-audit.py</code> 지켜볼 것 「1단(팔레트) 직접 사용」. 줄어들수록 좋다.</dd>
+          <dt>예외</dt><dd>화면 머리의 지역 별칭 정의(<code>--ink: var(--n-650)</code> 등), 정적 하드웨어(계산기·결과 계기판, <code>RM-PART-03</code>), 우주 크롬의 그림 요소(말풍선·별·명판), 스크롤바 손잡이</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>역할 토큰은 라이트·다크·계열이 바뀔 때 함께 바뀐다. 팔레트를 직접 쓰면 그 화면만 테마를 따라가지 않는다.</p>
+          <p>2026-10-14에 값과 뜻이 모두 맞는 곳을 역할 토큰으로 옮겼다. 결과 계기판은 테마를 따라가면 안 되는 자리라 같은 날 고정색으로 되돌렸다.</p>
+        </details>
       </article>
     </section>
 
     <!-- ===================================================== FILL 칠면 -->
     <section class="sg-sec" id="FILL">
-      <h2>칠면 <small>FILL · 어떤 칠면에 어떤 글자 · 색 정책 v1.6</small></h2>
+      <h2>칠면 <small>FILL · 어떤 칠면에 어떤 글자</small></h2>
 
       <article class="sg-rulecard" id="RM-FILL-01" data-check="color-audit" data-since="2026-08-17">
         <h3>작은 글자가 올라가는 칠면은 600 스텝 · 4.5:1</h3>
-        <p class="sg-rulecard__do">배지·작은 탭처럼 흰 작은 글자를 얹는 칠면은 <code>--th-solid</code>(600). 또는 틴트 면 + 잉크 글자.</p>
+        <p class="sg-rulecard__do">배지·작은 탭처럼 흰 작은 글자를 얹는 칠면은 <code>--th-solid</code>(600)로 칠한다. 또는 틴트 면에 잉크 글자를 쓴다.</p>
         <dl>
-          <dt>근거</dt><dd>WCAG AA 일반 글자 기준.</dd>
           <dt>검사</dt><dd><code>color-audit.html</code> 글자 대비</dd>
           <dt>예외</dt><dd>없음</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>WCAG AA 일반 글자 기준이다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-FILL-02" data-check="color-audit" data-since="2026-08-17">
         <h3>정체성 칠면은 450 스텝 · 3:1 · 라벨 19px w700 이상</h3>
-        <p class="sg-rulecard__do">CTA(<code>--primary</code>)·GNB 모드탭(<code>--mode-*</code>)·채점/확인(<code>--th-vivid</code>)은 450. 그 위 라벨은 <strong>19px 이상 · w700 이상</strong>. 작은 글자가 필요하면 그건 정체성 칠면이 아니다.</p>
+        <p class="sg-rulecard__do">CTA(<code>--primary</code>), GNB 모드탭(<code>--mode-*</code>), 채점·확인(<code>--th-vivid</code>)은 450으로 칠한다. 그 위 라벨은 19px 이상, w700 이상이다. 작은 글자가 필요한 자리는 정체성 칠면이 아니다.</p>
         <dl>
-          <dt>근거</dt><dd>v1.6(2026-08-17). 「모든 칠면에 흰 글자 4.5」를 일률 적용해 화면이 칙칙해졌다 — 큰 글자 기준(3:1)으로 밝은 칠면을 살렸다.</dd>
           <dt>검사</dt><dd><code>color-audit.html</code> + 눈(라벨 크기)</dd>
-          <dt>예외</dt><dd><strong>콘솔바 주황 버튼(<code>.toolbtn--primary</code>)의 14px 흰 라벨(3.06)</strong> — 「주황 바탕에 흰 글씨」 브랜드 인상을 지키려고 둔다(2026-10-14). 새 주황 버튼의 근거로 쓰지 않는다.</dd>
+          <dt>예외</dt><dd>콘솔바 주황 버튼(<code>.toolbtn--primary</code>)의 14px 흰 라벨(대비 3.06). 주황 바탕에 흰 글씨라는 브랜드 인상을 지키려고 둔다. 새 주황 버튼의 근거로 쓰지 않는다.</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>큰 글자는 3:1이면 읽힌다. 라벨을 키우면 밝은 칠면을 그대로 쓸 수 있다.</p>
+          <p>v1.6(2026-08-17) 전에는 모든 칠면에 흰 글자 4.5:1을 적용해 화면 전체가 칙칙했다. 주황 버튼 예외는 2026-10-14에 정했다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-FILL-03" data-check="eye" data-since="2026-08-17">
         <h3>글자 없는 장식면은 400 스텝 · 면 대비 3:1</h3>
         <p class="sg-rulecard__do">장식면에는 글자를 얹지 않는다.</p>
         <dl>
-          <dt>근거</dt><dd>WCAG 비텍스트 대비. 글자가 없으니 4.5가 필요 없다.</dd>
           <dt>검사</dt><dd>눈</dd>
           <dt>예외</dt><dd>없음</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>WCAG 비텍스트 대비 기준이다. 글자가 없으니 4.5:1이 필요 없다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-FILL-04" data-check="color-audit" data-since="2026-08-17">
         <h3>앰버 위에는 흰 글자를 얹지 않는다</h3>
-        <p class="sg-rulecard__do">앰버 채움이 필요하면 <code>--warn-solid</code> + 어두운 글자.</p>
+        <p class="sg-rulecard__do">앰버 채움이 필요하면 <code>--warn-solid</code>에 어두운 글자를 쓴다.</p>
         <dl>
-          <dt>근거</dt><dd>앰버는 어느 스텝에서도 흰 글자 대비가 안 나온다.</dd>
           <dt>검사</dt><dd><code>color-audit.html</code></dd>
           <dt>예외</dt><dd>없음</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>앰버는 어느 스텝에서도 흰 글자 대비가 나오지 않는다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-FILL-05" data-check="color-audit" data-since="2026-10-14">
         <h3>정오답 배지는 500 · 숫자 20px w800 또는 ✓·✕</h3>
-        <p class="sg-rulecard__do">선지 번호 동그라미의 정답·오답 칠은 <code>--ok-solid</code>·<code>--no-solid</code>(500 — 테두리와 같은 색). 숫자는 <code>--fs-20</code> w800, 또는 아이콘.</p>
+        <p class="sg-rulecard__do">선지 번호 동그라미의 정답·오답 칠은 <code>--ok-solid</code>·<code>--no-solid</code>(500, 테두리와 같은 색)이다. 숫자는 <code>--fs-20</code> w800으로 쓰거나 아이콘을 쓴다.</p>
         <dl>
-          <dt>근거</dt><dd>유형만 600이라 「정오답이 더 탁하다」는 지적(2026-10-14). 칠면을 내리지 않고 <strong>글자를 키워</strong> 큰 글자 기준으로 넘겼다.</dd>
-          <dt>검사</dt><dd><code>color-audit.html</code> · 「부품 › 해설 화면의 면 — 상태표」</dd>
-          <dt>예외</dt><dd><strong>알려진 미적용 — 시험 풀이</strong>: 라이트 정답 배지가 600(<code>--ok-ink</code>)이다. <code>RM-SURF-02</code>의 시험 예외와 함께 보류</dd>
+          <dt>검사</dt><dd><code>color-audit.html</code> · <a href="styleguide/components.html#surf">부품 › 해설 화면의 면</a> 상태표</dd>
+          <dt>예외</dt><dd>알려진 미적용: 시험 풀이의 라이트 정답 배지가 600(<code>--ok-ink</code>)이다. <code>RM-SURF-02</code>의 시험 예외와 함께 보류 중이다.</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>배지가 테두리보다 어두우면 탁해 보인다. 칠면을 내리지 않고 글자를 키워 큰 글자 기준(3:1)을 맞췄다.</p>
+          <p>2026-10-14에 유형 화면만 600이라 정오답이 더 탁하다는 지적이 있었다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-FILL-06" data-check="color-audit" data-since="2026-10-14">
         <h3>칠면 위 글자는 다크에서도 흰색 — <code>--text-on-accent</code></h3>
-        <p class="sg-rulecard__do">칠면(버튼·배지·프레임·헤더 칩·GNB·우주 크롬처럼 <strong>테마가 바뀌어도 안 뒤집히는 면</strong>)은 다크에서 그대로이므로 그 위 글자도 그대로 흰색이다. 이 글자는 <code>--text-on-accent</code>로 쓴다.</p>
+        <p class="sg-rulecard__do">버튼·배지·프레임·헤더 칩·GNB·우주 크롬처럼 테마가 바뀌어도 안 뒤집히는 면 위의 글자는 다크에서도 흰색이다. 이 글자는 <code>--text-on-accent</code>로 쓴다.</p>
         <dl>
-          <dt>근거</dt><dd>유형 해설에서 다크일 때 정답 번호를 검정으로 바꾸는 옛 줄이 남아 있었다. 대비 3.1로 숫자는 통과했지만 눈으로는 안 보였다(2026-10-14).</dd>
           <dt>검사</dt><dd><code>color-audit.html</code> 「칠면보다 어두운 글자」</dd>
           <dt>예외</dt><dd>앰버 칠면(<code>RM-FILL-04</code>)</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>면이 그대로인데 글자만 뒤집히면 대비가 무너진다.</p>
+          <p>2026-10-14에 유형 해설에서 다크일 때 정답 번호를 검정으로 바꾸는 옛 줄이 발견됐다. 대비 3.1이라 숫자로는 통과했지만 눈으로는 안 보였다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-FILL-07" data-check="eye" data-since="2026-10-14">
         <h3>칙칙해 보이면 채도부터 올리지 않는다</h3>
-        <p class="sg-rulecard__do">먼저 「어떤 칠면에 어떤 글자」 정책을 확인하고, 그다음 밝기(스텝)를 본다.</p>
+        <p class="sg-rulecard__do">먼저 어떤 칠면에 어떤 글자를 얹었는지 이 장의 FILL 규칙으로 확인한다. 그다음 밝기(스텝)를 본다.</p>
         <dl>
-          <dt>근거</dt><dd>「칙칙하다」 진단을 네 번 했다. 채도를 올렸다 대비를 깨고, 다시 내리는 시소를 두 번 탔다. 틸·주황·앰버의 600·700은 그 명도의 최대 채도를 이미 쓰고 있어 채도 손잡이가 없다(2026-10-14).</dd>
           <dt>검사</dt><dd>눈</dd>
           <dt>예외</dt><dd>없음</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>틸·주황·앰버의 600·700은 그 명도에서 낼 수 있는 최대 채도를 이미 쓰고 있다. 채도로는 더 살릴 수 없다.</p>
+          <p>칙칙하다는 진단을 네 번 했다. 그중 두 번은 채도를 올렸다가 대비가 깨져 다시 내렸다. 2026-10-14에는 프레임을 700에서 600으로 밝혀서 풀었다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-FILL-08" data-check="cta-check" data-since="2026-08-17">
         <h3>CTA는 홈 32배경 모두에서 면 대비 3:1을 버틴다</h3>
-        <p class="sg-rulecard__do">경계는 셋이 나눠 진다 — 어두운 배경은 면(450), 밝은 배경은 딥 엣지(<code>--primary-deep</code>), 중간 명도는 라이트 링(<code>--primary-ring</code>).</p>
+        <p class="sg-rulecard__do">경계는 셋이 나눠 맡는다. 어두운 배경에서는 면(450), 밝은 배경에서는 딥 엣지(<code>--primary-deep</code>), 중간 명도에서는 라이트 링(<code>--primary-ring</code>)이 경계를 만든다.</p>
         <dl>
-          <dt>근거</dt><dd>행성 홈은 학기마다 배경 그림이 달라 한 가지 색으로는 모든 배경에서 안 보인다.</dd>
           <dt>검사</dt><dd><code>tools/cta-check.html</code> 32/32 (최악 3.05)</dd>
           <dt>예외</dt><dd>없음</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>행성 홈은 학기마다 배경 그림이 달라서, 색 하나로는 모든 배경에서 보이지 않는다.</p>
+        </details>
       </article>
     </section>
 
     <!-- ===================================================== SURF 학습 화면 면 -->
     <section class="sg-sec" id="SURF">
-      <h2>학습 화면의 면 <small>SURF · 2026-10-14 컬러 정리</small></h2>
+      <h2>학습 화면의 면 <small>SURF · 선지 · 보기 · 해설 · 프레임</small></h2>
 
       <article class="sg-rulecard" id="RM-SURF-01" data-check="eye" data-since="2026-10-14">
         <h3>색을 흰색에 옅게 섞은 면을 만들지 않는다</h3>
-        <p class="sg-rulecard__do">상태·계열을 면으로 칠하지 않는다. 선·띠·배지·글자로 말한다.</p>
+        <p class="sg-rulecard__do">상태와 계열을 면 색으로 표현하지 않는다. 선·띠·배지·글자로 표현한다.</p>
         <dl>
-          <dt>근거</dt><dd>빨강은 분홍, 초록은 쑥색, 주황+푸른 회색은 탁한 분홍·갈색이 된다. 섞는 비율도 화면마다 36% · 20~22% · 10~16%로 제각각이었다.</dd>
           <dt>검사</dt><dd>눈 + <code>color-audit.html</code></dd>
-          <dt>예외</dt><dd>서술형 빈칸 채움처럼 <strong>다크에서 「칠해졌다」를 보여야 하는 틴트</strong>(<code>--th-tint</code> 24/38%)</dd>
+          <dt>예외</dt><dd>다크에서 칠해졌다는 것을 보여야 하는 틴트. 예: 서술형 빈칸 채움(<code>--th-tint</code> 24/38%)</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>흰색에 섞으면 빨강은 분홍, 초록은 쑥색, 주황과 푸른 회색은 탁한 분홍·갈색이 된다. 면을 없애면 섞는 비율을 정할 일도 없다.</p>
+          <p>2026-10-14 정리 전에는 섞는 비율이 화면마다 36% · 20~22% · 10~16%로 제각각이었다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-SURF-02" data-check="color-audit" data-since="2026-10-14">
         <h3>정오답 칸은 면을 칠하지 않는다 — 선 · 배지 · 글자로만</h3>
-        <p class="sg-rulecard__do">면은 기본 면(<code>--opt-bg</code>) 그대로. 상태는 2px 선(500) · 배지(500) · 글자. 글자는 라이트 <code>--ok-ink</code>/<code>--no-ink</code>(600), 다크 <code>--ok-on-dark</code>/<code>--no-on-dark</code>(300).</p>
+        <p class="sg-rulecard__do">면은 기본 면(<code>--opt-bg</code>) 그대로 둔다. 상태는 2px 선(500), 배지(500), 글자로 표시한다. 글자는 라이트 <code>--ok-ink</code>/<code>--no-ink</code>(600), 다크 <code>--ok-on-dark</code>/<code>--no-on-dark</code>(300)이다.</p>
         <dl>
-          <dt>근거</dt><dd>「과제 해설 오답이 핑크」(사용자 지적). 면을 없애면 섞는 비율 자체가 사라진다.</dd>
-          <dt>검사</dt><dd><code>color-audit.html</code> · 「부품 › 해설 화면의 면 — 상태표」</dd>
-          <dt>예외</dt><dd><strong>알려진 미적용 — 시험 풀이(<code>exam-solve.css</code>)</strong>: 정오답 칸이 아직 틴트 면(라이트 <code>--ok-tint</code>·<code>--no-tint</code>, 다크 13~15%)이다. 10-14 정리 때 빠졌고, 1차 실서버 범위 밖이라 적용 여부를 보류 중(2026-10-14 발견)</dd>
+          <dt>검사</dt><dd><code>color-audit.html</code> · <a href="styleguide/components.html#surf">부품 › 해설 화면의 면</a> 상태표</dd>
+          <dt>예외</dt><dd>알려진 미적용: 시험 풀이(<code>exam-solve.css</code>)의 정오답 칸은 아직 틴트 면이다(라이트 <code>--ok-tint</code>·<code>--no-tint</code>, 다크 13~15%). 1차 실서버 범위 밖이라 적용 여부를 보류 중이다.</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p><code>RM-SURF-01</code>을 정오답 칸에 적용한 것이다. 과제 해설의 오답 칸이 분홍으로 보인다는 지적에서 시작했다(2026-10-14). 시험 풀이는 같은 날 정리에서 빠진 것이 나중에 발견됐다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-SURF-03" data-check="eye" data-since="2026-10-14">
         <h3>해설 박스는 면 없이 왼쪽 4px 계열색 띠</h3>
-        <p class="sg-rulecard__do">라이트 <code>--th-accent</code> · 다크 <code>--th-accent-hi</code>. 유형·과제·시험 공통. 띠 굵기는 <code>--bw-4</code>.</p>
+        <p class="sg-rulecard__do">띠 색은 라이트 <code>--th-accent</code>, 다크 <code>--th-accent-hi</code>이고 굵기는 <code>--bw-4</code>다. 유형·과제·시험이 같이 쓴다.</p>
         <dl>
-          <dt>근거</dt><dd>틸 8% 틴트가 흰 바탕에서 쑥색으로 읽혔다(사용자 지적). 시험 화면의 「조건」 칸이 이미 왼쪽 띠를 써서 어휘도 이어진다.</dd>
-          <dt>검사</dt><dd>눈 · 「부품 › 해설 박스」 상태표</dd>
+          <dt>검사</dt><dd>눈 · <a href="styleguide/components.html#surf">부품 › 해설 화면의 면</a> 상태표</dd>
           <dt>예외</dt><dd>없음</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>시험 화면의 조건 칸이 이미 왼쪽 띠를 쓰고 있어서 같은 표현으로 이어진다.</p>
+          <p>2026-10-14에 틸 8% 틴트 면이 흰 바탕에서 쑥색으로 읽힌다는 지적이 있었다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-SURF-04" data-check="eye" data-since="2026-10-14">
         <h3>보기 박스와 선지는 같은 테두리 한 벌 — 보기가 선지보다 진하면 안 된다</h3>
-        <p class="sg-rulecard__do">둘 다 면 없이 <code>--bw-1_5</code> <code>--border-strong</code>.</p>
+        <p class="sg-rulecard__do">둘 다 면 없이 <code>--bw-1_5</code> <code>--border-strong</code>을 쓴다.</p>
         <dl>
-          <dt>근거</dt><dd>유형은 선지 테두리가 더 옅어 「누르지 않는 보기가 누르는 선지보다 진한」 역전이 있었다.</dd>
-          <dt>검사</dt><dd>눈 · 「부품 › 보기 박스」 상태표</dd>
+          <dt>검사</dt><dd>눈 · <a href="styleguide/components.html#surf">부품 › 해설 화면의 면</a> 상태표</dd>
           <dt>예외</dt><dd>없음</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>누르지 않는 보기가 누르는 선지보다 진하면 무엇을 눌러야 하는지 흐려진다. 2026-10-14 전에는 유형 화면의 선지 테두리가 보기보다 옅었다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-SURF-05" data-check="eye" data-since="2026-10-14">
         <h3>프레임은 계열 600(서술형·시험 700) — 그 위에 반투명을 덧칠하지 않는다</h3>
-        <p class="sg-rulecard__do">프레임 <code>--th-static</code>. 헤더 칩(타이머·토글) 면은 <code>--th-static-deep</code>, 아이콘 버튼은 <code>--th-accent</code>.</p>
+        <p class="sg-rulecard__do">프레임은 <code>--th-static</code>이다. 헤더 칩(타이머·토글) 면은 <code>--th-static-deep</code>, 아이콘 버튼은 <code>--th-accent</code>로 칠한다.</p>
         <dl>
-          <dt>근거</dt><dd>진한 틸에 검정 25%·흰 14%를 얹으면 칩이 회색이 된다 — 반투명은 색을 섞는 것이라 프레임 색을 죽인다. 프레임은 700→600으로 밝혀 「탁하다」를 풀었다.</dd>
           <dt>검사</dt><dd>눈</dd>
           <dt>예외</dt><dd>없음</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>반투명은 색을 섞는다. 진한 틸에 검정 25%나 흰 14%를 얹으면 칩이 회색이 된다.</p>
+          <p>2026-10-14에 프레임을 700에서 600으로 밝혀 탁하다는 피드백을 풀었다.</p>
+        </details>
       </article>
     </section>
 
     <!-- ===================================================== UTIL 유틸 -->
     <section class="sg-sec" id="UTIL">
-      <h2>유틸 4화면 <small>UTIL · 학습 기록 · 공지 · 보고서 · 결제 · Phase 7-6</small></h2>
+      <h2>유틸 4화면 <small>UTIL · 학습 기록 · 공지 · 보고서 · 결제</small></h2>
 
       <article class="sg-rulecard" id="RM-UTIL-01" data-check="eye" data-since="2026-08-24">
         <h3>면은 뉴트럴-쿨 램프 하나로 쌓고, 파랑은 점·선·글자로만</h3>
-        <p class="sg-rulecard__do">면은 <code>n-000/050/100</code>. 파랑(<code>--brand</code>)으로 면을 칠하지 않는다.</p>
+        <p class="sg-rulecard__do">면은 <code>n-000/050/100</code>으로 쌓는다. 파랑(<code>--brand</code>)으로 면을 칠하지 않는다.</p>
         <dl>
-          <dt>근거</dt><dd>유틸은 학습 계열색이 없는 화면이다. 색 면이 생기면 어디가 중요한지 흐려진다.</dd>
-          <dt>검사</dt><dd>눈 · 「패턴 › 유틸 화면의 별도 색 체계」</dd>
+          <dt>검사</dt><dd>눈 · <a href="styleguide/patterns.html#util">패턴 › 유틸 화면의 색 체계</a></dd>
           <dt>예외</dt><dd>없음</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>유틸은 학습 계열색이 없는 문서 화면이다. 색 면이 생기면 어디가 중요한지 흐려진다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-UTIL-02" data-check="eye" data-since="2026-08-24">
         <h3>유틸에는 초록·앰버를 쓰지 않는다</h3>
-        <p class="sg-rulecard__do">상태도 파랑 계열과 무채로 말한다.</p>
+        <p class="sg-rulecard__do">상태도 파랑 계열과 무채색으로 표시한다.</p>
         <dl>
-          <dt>근거</dt><dd>hue가 멀어 화면이 얼룩진다 — 그래서 한 번 갈아엎었다.</dd>
           <dt>검사</dt><dd>눈</dd>
           <dt>예외</dt><dd>없음</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>파랑과 색상 거리가 멀어 화면이 얼룩져 보인다. 2026-08-24에 이 이유로 유틸 색을 한 번 다시 짰다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-UTIL-03" data-check="eye" data-since="2026-08-24">
         <h3>선택 = 반전 칠, 한 규칙</h3>
-        <p class="sg-rulecard__do">필터 · 페이지네이션 · 과목 · 기간 · 결제수단 모두 고른 것은 면과 글자를 뒤집어 칠한다(<code>--sel-bg</code>/<code>--sel-fg</code>).</p>
+        <p class="sg-rulecard__do">필터·페이지네이션·과목·기간·결제수단 모두 고른 것은 면과 글자를 뒤집어 칠한다(<code>--sel-bg</code>/<code>--sel-fg</code>).</p>
         <dl>
-          <dt>근거</dt><dd>선택 표시가 화면마다 달랐다(밑줄·테두리·칠). 규칙 하나로 모았다.</dd>
           <dt>검사</dt><dd>눈</dd>
           <dt>예외</dt><dd>없음</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>선택 표시가 화면마다 밑줄·테두리·칠로 달랐던 것을 한 규칙으로 모았다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-UTIL-04" data-check="eye" data-since="2026-08-24">
         <h3>목록은 테두리 시트, 선택지는 타일 — 떠 있는 블록과 갭을 쓰지 않는다</h3>
-        <p class="sg-rulecard__do">목록은 한 장의 시트 안에 행을 선으로 가른다(<code>.u-sheet</code>·<code>.u-row</code>).</p>
+        <p class="sg-rulecard__do">목록은 시트 한 장 안에서 행을 선으로 가른다(<code>.u-sheet</code>·<code>.u-row</code>).</p>
         <dl>
-          <dt>근거</dt><dd>카드가 떠 있으면 목록이 아니라 장식으로 읽힌다.</dd>
           <dt>검사</dt><dd>눈</dd>
           <dt>예외</dt><dd>없음</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>카드가 떠 있으면 목록이 아니라 장식으로 읽힌다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-UTIL-05" data-check="eye" data-since="2026-08-24">
         <h3>다크가 기본, 라이트도 산다 — 테마 토글 버튼은 없다</h3>
-        <p class="sg-rulecard__do">각 화면 <code>&lt;head&gt;</code>의 부트스트랩 한 줄이 <code>localStorage['rm-theme']</code>를 읽어 <code>'light'</code>일 때만 <code>data-theme</code>를 붙인다.</p>
+        <p class="sg-rulecard__do">각 화면 <code>&lt;head&gt;</code>의 테마 초기화 한 줄이 <code>localStorage['rm-theme']</code>를 읽고, 값이 <code>'light'</code>일 때만 <code>data-theme</code>를 붙인다.</p>
         <dl>
-          <dt>근거</dt><dd>외부 파일로 빼면 첫 화면이 다크로 그렸다가 라이트로 뒤집혀 깜빡인다.</dd>
           <dt>검사</dt><dd><code>style-audit.py</code>가 이 한 줄만 「HTML 안 &lt;script&gt;」에서 뺀다 · 눈</dd>
           <dt>예외</dt><dd>없음</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>이 줄을 외부 파일로 빼면 첫 화면이 다크로 그려졌다가 라이트로 바뀌며 깜빡인다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-UTIL-06" data-check="eye" data-since="2026-08-24">
         <h3>목록은 네 상태를 다 갖춘다 — 정상 · 로딩 · 빈 목록 · 실패</h3>
-        <p class="sg-rulecard__do">로딩은 스켈레톤, 빈 목록·실패는 <code>.u-state</code>. 주소에 <code>?state=loading|empty|error</code>로 바로 본다.</p>
+        <p class="sg-rulecard__do">로딩은 스켈레톤, 빈 목록과 실패는 <code>.u-state</code>로 그린다. 주소 끝에 <code>?state=loading|empty|error</code>를 붙이면 바로 볼 수 있다.</p>
         <dl>
-          <dt>근거</dt><dd>정적 데모라 통신이 없어서 이 상태들이 저절로 나오지 않는다 — 안 만들면 개발 때 즉흥으로 생긴다.</dd>
-          <dt>검사</dt><dd>눈(<code>?state=</code>) · 「패턴 › 목록의 네 상태」</dd>
+          <dt>검사</dt><dd>눈(<code>?state=</code>) · <a href="styleguide/patterns.html#state">패턴 › 목록의 네 상태</a></dd>
           <dt>예외</dt><dd>없음</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>정적 데모에는 통신이 없어서 이 상태들이 저절로 나오지 않는다. 시안에 없으면 개발 단계에서 즉흥으로 만들어진다.</p>
+        </details>
       </article>
     </section>
 
     <!-- ===================================================== SIZE 치수 -->
     <section class="sg-sec" id="SIZE">
-      <h2>치수 <small>SIZE · 값으로 이름한 눈금 · 어디까지 토큰인가</small></h2>
+      <h2>치수 <small>SIZE · 어디까지 토큰인가</small></h2>
 
       <article class="sg-rulecard" id="RM-SIZE-01" data-check="style-audit" data-since="2026-10-12">
         <h3>글자·간격·모서리는 눈금 토큰으로 — 눈금에 있는 값을 px로 쓰지 않는다</h3>
-        <p class="sg-rulecard__do">글자 <code>--fs-*</code> 11단 · 간격 <code>--sp-*</code> 9단 · 모서리 <code>--r-*</code> 7단. 색은 역할로, 치수는 값으로 이름한다(<code>--sp-16</code> = 16px).</p>
+        <p class="sg-rulecard__do">글자는 <code>--fs-*</code> 11단, 간격은 <code>--sp-*</code> 9단, 모서리는 <code>--r-*</code> 7단이다. 치수 토큰은 값으로 이름 짓는다(<code>--sp-16</code> = 16px).</p>
         <dl>
-          <dt>근거</dt><dd>13px과 14px 사이에는 뜻의 차이가 없다. sm/md/lg로 부르면 아무도 몇 px인지 기억하지 못해 결국 숫자를 직접 쓴다(그래서 원시 px가 735회까지 늘었다). Figma 텍스트 스타일과도 1:1로 붙는다.</dd>
           <dt>검사</dt><dd><code>style-audit.py</code> 「눈금에 있는데 px」 = 0</dd>
           <dt>예외</dt><dd><code>RM-SIZE-03</code>의 허용 px</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>13px과 14px 사이에는 뜻의 차이가 없다. sm/md/lg로 부르면 몇 px인지 기억하지 못해 결국 숫자를 직접 쓰게 된다. 값 이름은 Figma 텍스트 스타일과도 1:1로 맞는다.</p>
+          <p>2026-10-12 전에는 원시 px가 735회까지 늘어 있었다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-SIZE-02" data-check="style-audit" data-since="2026-10-14">
         <h3>선 굵기와 볼록 두께도 눈금 — <code>--bw-*</code> · <code>--depth-*</code></h3>
-        <p class="sg-rulecard__do">선 굵기 5단 <code>--bw-1 · 1_5 · 2 · 3 · 4</code>는 border·outline·안쪽 테두리 그림자(<code>inset 0 0 0 N</code>)·바깥 링·한쪽 선이 같이 쓴다. 볼록 두께 2단 <code>--depth-2 · 4</code>는 눌리는 버튼 아래로 흐림 없이 내린 그림자(<code>0 N 0 색</code>)의 높이.</p>
+        <p class="sg-rulecard__do">선 굵기 5단(<code>--bw-1 · 1_5 · 2 · 3 · 4</code>)은 border, outline, 안쪽 테두리 그림자(<code>inset 0 0 0 N</code>), 바깥 링, 한쪽 선이 같이 쓴다. 볼록 두께 2단(<code>--depth-2 · 4</code>)은 눌리는 버튼 아래에 흐림 없이 내린 그림자(<code>0 N 0 색</code>)의 높이다.</p>
         <dl>
-          <dt>근거</dt><dd>그림자 402곳 중 상당수가 사실은 테두리(1.5px 안쪽 선)와 버튼 두께(4px)였다. 같은 뜻의 숫자가 속성마다 흩어져 있었다(2026-10-14, 488곳 변환 · 값 동일 증명).</dd>
           <dt>검사</dt><dd><code>style-audit.py</code> 「눈금에 있는데 px」 = 0</dd>
-          <dt>예외</dt><dd>눈금 밖 굵기(1.6·2.5·6px 등) — 부품 고유 치수로 허용</dd>
+          <dt>예외</dt><dd>눈금 밖 굵기(1.6·2.5·6px 등)는 부품 고유 치수로 허용한다.</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>같은 뜻의 숫자가 border·outline·box-shadow에 흩어져 있었다. 그림자 402곳 중 상당수가 실제로는 안쪽 테두리(1.5px)와 버튼 두께(4px)였다.</p>
+          <p>2026-10-14에 488곳을 바꿨고, 값이 같은 것을 확인했다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-SIZE-03" data-check="style-audit" data-since="2026-10-14">
         <h3>px를 허용하는 곳은 넷 — 부품 고유 치수 · 위치 미세조정 · 반응형 끝값 · @media 조건</h3>
-        <p class="sg-rulecard__do">배지 지름·아이콘 크기·격자 폭 같은 <strong>부품 고유 치수</strong>, 1~2px 위치 보정, <code>clamp()</code> 안의 반응형 끝값, 미디어 쿼리 조건은 px로 둔다. 간격·글자·모서리 자리인데 <strong>눈금 밖 값</strong>(26·14·18px 등)은 지켜볼 목록으로 세고, 디자인 판단 때 정리한다.</p>
+        <p class="sg-rulecard__do">배지 지름·아이콘 크기·격자 폭 같은 부품 고유 치수, 1~2px 위치 보정, <code>clamp()</code> 안의 반응형 끝값, 미디어 쿼리 조건은 px로 둔다. 간격·글자·모서리 자리인데 눈금 밖인 값(26·14·18px 등)은 지켜볼 목록으로 세고, 디자인 판단 때 정리한다.</p>
         <dl>
-          <dt>근거</dt><dd>2026-10-14 A안(사용자 결정). 눈금 밖 값을 눈금에 맞추면 화면이 1~2px씩 바뀌어 전후 대조로 검증할 수 없고, 개발자가 옮기고 있는 화면과 어긋난다 — 그건 코드 정리가 아니라 디자인 결정이다.</dd>
           <dt>검사</dt><dd><code>style-audit.py</code> 지켜볼 것 「눈금 밖 간격·글자·모서리」 · 「허용 px」</dd>
-          <dt>예외</dt><dd>—</dd>
+          <dt>예외</dt><dd>없음</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>눈금 밖 값을 눈금에 맞추면 화면이 1~2px씩 바뀐다. 그러면 전후 대조로 검증할 수 없고, 개발자가 옮기고 있는 화면과도 어긋난다. 이건 코드 정리가 아니라 디자인 결정이다.</p>
+          <p>2026-10-14에 사용자가 이 방식(A안)으로 정했다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-SIZE-04" data-check="eye" data-since="2026-10-12">
         <h3>층위는 화면끼리만 <code>--z-*</code> 6단 — 부품 안쪽 순서는 1~9</h3>
-        <p class="sg-rulecard__do">배경 0 · 본문 1 · 붙박이 크롬 100 · 튀어나온 것 200 · 화면을 덮는 것 300 · 토스트·키패드 400 · 검수 패널 900.</p>
+        <p class="sg-rulecard__do">배경 0, 본문 1, 붙박이 크롬 100, 튀어나온 것 200, 화면을 덮는 것 300, 토스트·키패드 400, 검수 패널 900이다.</p>
         <dl>
-          <dt>근거</dt><dd>z-index 숫자가 화면마다 9999까지 올라가는 경쟁을 막는다.</dd>
           <dt>검사</dt><dd>눈</dd>
-          <dt>예외</dt><dd>연습장 오버레이 <code>calc(var(--z-overlay) + 50)</code> — 다른 덮개 위에 와야 한다</dd>
+          <dt>예외</dt><dd>연습장 오버레이 <code>calc(var(--z-overlay) + 50)</code>. 다른 덮개보다 위에 와야 한다.</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>화면마다 z-index 숫자를 9999까지 올리는 경쟁을 막는다.</p>
+        </details>
       </article>
     </section>
 
     <!-- ===================================================== FILE 파일 -->
     <section class="sg-sec" id="FILE">
-      <h2>파일 <small>FILE · 어디에 무엇을 쓰나 · RMDS v2.0</small></h2>
+      <h2>파일 <small>FILE · 어디에 무엇을 쓰나</small></h2>
 
       <article class="sg-rulecard" id="RM-FILE-01" data-check="style-audit" data-since="2026-10-12">
         <h3>HTML 안에 <code>&lt;style&gt;</code>·<code>&lt;script&gt;</code>를 쓰지 않는다</h3>
-        <p class="sg-rulecard__do">화면 CSS는 <code>styles/screens/</code>, 화면 JS는 <code>scripts/</code>.</p>
+        <p class="sg-rulecard__do">화면 CSS는 <code>styles/screens/</code>, 화면 JS는 <code>scripts/</code>에 둔다.</p>
         <dl>
-          <dt>근거</dt><dd>마감 회차(2026-10-12). 개발자가 화면을 열었을 때 스타일이 HTML·CSS·JS 세 곳에 흩어져 있으면 무엇이 정본인지 알 수 없다.</dd>
           <dt>검사</dt><dd><code>style-audit.py</code> 「HTML 안 &lt;style&gt;·&lt;script&gt; 줄」 = 0</dd>
-          <dt>예외</dt><dd><code>&lt;head&gt;</code>의 테마 초기화 한 줄(<code>RM-UTIL-05</code>) · 스토리북 데모 틀(<code>&lt;template&gt;</code>) 안</dd>
+          <dt>예외</dt><dd><code>&lt;head&gt;</code>의 테마 초기화 한 줄(<code>RM-UTIL-05</code>), 스토리북 데모 틀(<code>&lt;template&gt;</code>) 안</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>스타일이 HTML·CSS·JS 세 곳에 흩어져 있으면 개발자가 무엇이 정본인지 알 수 없다. 2026-10-12에 전부 파일로 뺐다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-FILE-02" data-check="eye" data-since="2026-10-12">
         <h3>화면 파일 이름은 <code>&lt;계열&gt;-&lt;화면&gt;</code></h3>
-        <p class="sg-rulecard__do"><code>styles/screens/type-quiz.css</code> · <code>scripts/type-quiz.js</code>. 계열 폴더(nav·concept·type·essay·assignment·exam·util·shared)와 같은 이름.</p>
+        <p class="sg-rulecard__do">예: <code>styles/screens/type-quiz.css</code>, <code>scripts/type-quiz.js</code>. 계열 이름은 계열 폴더(nav·concept·type·essay·assignment·exam·util·shared)와 같다.</p>
         <dl>
-          <dt>근거</dt><dd>화면 하나를 고칠 때 볼 파일을 이름만으로 찾게 한다.</dd>
           <dt>검사</dt><dd>눈</dd>
           <dt>예외</dt><dd>공용 JS(<code>gnb-drawer.js</code>·<code>step-progress.js</code>·<code>learn-exit.js</code>·<code>keypad.js</code>·<code>scratchpad.js</code> 등)</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>화면 하나를 고칠 때 볼 파일을 이름만으로 찾게 한다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-FILE-03" data-check="style-audit,screen-diff" data-since="2026-10-12">
         <h3>계열이 같이 쓰는 규칙은 계열 파일로, 여러 계열이면 <code>components.css</code></h3>
-        <p class="sg-rulecard__do">result · essay · type · assign · exam · nav · util(+history). 화면 파일에는 그 화면에만 있는 것만. 옮길 때 <strong>같은 요소에 붙는 클래스(기본형·변형)의 순서</strong>를 지키고, 그림 주소(<code>url()</code>)는 옮긴 파일 기준으로 다시 쓴다.</p>
+        <p class="sg-rulecard__do">계열 파일은 result · essay · type · assign · exam · nav · util(+history)이다. 화면 파일에는 그 화면에만 있는 것을 남긴다. 옮길 때는 같은 요소에 붙는 클래스(기본형·변형)의 순서를 지키고, 그림 주소(<code>url()</code>)를 옮긴 파일 기준으로 다시 쓴다.</p>
         <dl>
-          <dt>근거</dt><dd>변형만 먼저 옮겨 훈련 결과표 이름 칸이 가운데로 몰린 적이 있다(마감 회차). 2026-10-14에 새지 않고 순서가 안 뒤집히는 160곳을 올렸다(406 → 246) — 남은 것은 대부분 이름은 같지만 화면마다 다르게 쓴 규칙이다.</dd>
           <dt>검사</dt><dd><code>style-audit.py</code> 지켜볼 것 「화면 간 똑같은 규칙」 · <code>screen-diff.py</code> 0.00%</dd>
-          <dt>예외</dt><dd>킵 화면 쌍(서술형 가로안 <code>basics</code>·<code>drill</code>과 v2) — 일부러 둔 대안이다</dd>
+          <dt>예외</dt><dd>킵 화면 쌍(서술형 가로안 <code>basics</code>·<code>drill</code>과 v2). 일부러 둔 대안이다.</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>같은 규칙이 여러 화면에 복사돼 있으면 한 곳만 고쳐져 어긋난다. 반대로 순서를 지키지 않고 옮기면 화면이 바뀐다.</p>
+          <p>2026-10-12에 변형만 먼저 옮겨 훈련 결과표의 이름 칸이 가운데로 몰린 적이 있다. 2026-10-14에 안전한 160곳을 올렸고(406 → 246), 남은 것은 대부분 이름만 같고 화면마다 다르게 쓰는 규칙이다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-FILE-04" data-check="usage-scan" data-since="2026-10-12">
         <h3><code>components.css</code>에는 화면이 실제로 쓰는 부품만 둔다</h3>
-        <p class="sg-rulecard__do">「언젠가 쓸」 라이브러리 부품을 만들지 않는다.</p>
+        <p class="sg-rulecard__do">언젠가 쓸 라이브러리 부품을 미리 만들지 않는다.</p>
         <dl>
-          <dt>근거</dt><dd>마감 회차에 그런 부품 17종을 걷어냈고, 그중 셋(<code>.blank</code>·<code>.block</code>·<code>.grade</code>)은 이름이 같은 화면 부품에 속성이 새고 있었다.</dd>
-          <dt>검사</dt><dd><code>usage-scan.py</code> — 스토리북 「쓰는 화면 0」 배지가 없어야 한다</dd>
+          <dt>검사</dt><dd><code>usage-scan.py</code>. 스토리북에 「쓰는 화면 0」 배지가 없어야 한다.</dd>
           <dt>예외</dt><dd>없음</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>쓰지 않는 부품은 이름이 같은 화면 부품에 속성을 흘린다. 2026-10-12에 이런 부품 17종을 걷어냈고, 그중 셋(<code>.blank</code>·<code>.block</code>·<code>.grade</code>)이 실제로 속성을 흘리고 있었다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-FILE-05" data-check="style-audit" data-since="2026-08-17">
         <h3>하위 폴더 화면은 <code>&lt;head&gt;</code> 바로 아래 <code>&lt;base href="../"&gt;</code></h3>
-        <p class="sg-rulecard__do">모든 경로(스타일·스크립트·그림·화면 링크)를 최상위 기준 한 가지로 쓴다. 루트 <code>index.html</code>에는 넣지 않는다.</p>
+        <p class="sg-rulecard__do">모든 경로(스타일·스크립트·그림·화면 링크)를 최상위 기준 하나로 쓴다. 루트 <code>index.html</code>에는 넣지 않는다.</p>
         <dl>
-          <dt>근거</dt><dd>폴더 깊이마다 <code>../</code> 개수가 달라 경로가 깨지던 것을 없앴다.</dd>
           <dt>검사</dt><dd><code>style-audit.py</code> 「깨진 경로」 = 0</dd>
           <dt>예외</dt><dd>없음</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>폴더 깊이마다 <code>../</code> 개수가 달라 경로가 깨지던 것을 없앤다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-FILE-06" data-check="style-audit" data-since="2026-08-19">
         <h3>CSS·JS를 고쳤으면 전 화면의 <code>?v=</code>를 그날 날짜로</h3>
-        <p class="sg-rulecard__do">같은 날 또 고치면 회차를 붙인다(<code>20261014-8</code>). 파일별로 세지 않는다.</p>
+        <p class="sg-rulecard__do">같은 날 또 고치면 회차를 붙인다(<code>20261014-8</code>). 파일마다 따로 세지 않는다.</p>
         <dl>
-          <dt>근거</dt><dd>안 올리면 브라우저가 옛 파일을 써서 「고쳤는데 화면이 안 바뀐다」가 된다 — Phase 5에서 두 번, 마감 회차에 한 번.</dd>
           <dt>검사</dt><dd><code>style-audit.py</code> 「캐시 번호 종류」 = 1</dd>
           <dt>예외</dt><dd>없음</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>번호를 안 올리면 브라우저가 옛 파일을 계속 써서, 고쳤는데 화면이 안 바뀐다. 2026-08-19 이후 세 번 겪었다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-FILE-07" data-check="eye" data-since="2026-08-17">
         <h3>새 화면은 <code>index.html</code> 목록에도 넣는다</h3>
         <p class="sg-rulecard__do">계열 폴더와 index의 그룹은 같은 단위다. 링크로 이어진 화면은 폴더로 쪼개지 않는다.</p>
         <dl>
-          <dt>근거</dt><dd>목록에 없으면 화면이 미아가 되고, 쪼개진 링크는 죽어도 화면은 멀쩡해 보인다.</dd>
           <dt>검사</dt><dd>눈</dd>
           <dt>예외</dt><dd>없음</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>목록에 없는 화면은 아무도 찾지 못한다. 링크가 끊겨도 화면은 멀쩡해 보여서 늦게 발견된다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-FILE-08" data-check="style-audit" data-since="2026-10-12">
         <h3>그림 주소는 그것을 해석하는 파일 기준 — 변수에 넣을 때는 절대 주소로</h3>
-        <p class="sg-rulecard__do"><code>url()</code>은 <strong>그 CSS 파일 기준</strong>으로 풀린다(<code>styles/screens/</code>는 <code>../../assets</code>, <code>styles/</code>는 <code>../assets</code>). 변수에 그림 주소를 넣으면 그 변수를 쓰는 CSS 파일 기준이 되므로 JS에서 <code>new URL(src, document.baseURI)</code>로 절대 주소를 넣는다.</p>
+        <p class="sg-rulecard__do"><code>url()</code>은 그 CSS 파일 기준으로 풀린다(<code>styles/screens/</code>는 <code>../../assets</code>, <code>styles/</code>는 <code>../assets</code>). 그림 주소를 변수에 넣으면 그 변수를 쓰는 CSS 파일 기준이 되므로, JS에서 <code>new URL(src, document.baseURI)</code>로 절대 주소를 넣는다.</p>
         <dl>
-          <dt>근거</dt><dd>행성 홈 소품 5장의 그늘이 사라진 적이 있다(마감 회차). 2026-10-14에도 공용 파일로 올린 규칙 하나의 아이콘 주소가 깨졌다가 검사에 잡혔다.</dd>
           <dt>검사</dt><dd><code>style-audit.py</code> 「깨진 경로」 = 0</dd>
           <dt>예외</dt><dd>없음</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>2026-10-12에 행성 홈 소품 5장의 그늘이 사라진 적이 있다. 2026-10-14에도 공용 파일로 올린 규칙 하나의 아이콘 주소가 깨졌다가 검사에서 잡혔다.</p>
+        </details>
       </article>
     </section>
 
@@ -437,22 +515,26 @@
 
       <article class="sg-rulecard" id="RM-NAME-01" data-check="eye" data-since="2026-10-12">
         <h3>뜻 하나에 이름 하나 — 같은 이름에 다른 부품을 담지 않는다</h3>
-        <p class="sg-rulecard__do">토스트 <code>.toast</code>(서랍만 <code>.rmd-toast</code>) · 선택지 목록형 <code>.opt</code>(과제·시험) / 타일형 <code>.qopt</code>(개념·유형) · 옛 <code>.seg</code>는 <code>.led</code>(결과 LED) · <code>.chunk</code>(끊어읽기) · <code>.segmented</code>(분절 토글) · <code>.scrumb__item</code>(시험 경로).</p>
+        <p class="sg-rulecard__do">토스트는 <code>.toast</code>(서랍만 <code>.rmd-toast</code>), 목록형 선택지는 <code>.opt</code>(과제·시험), 타일형 선택지는 <code>.qopt</code>(개념·유형)다. 옛 <code>.seg</code>는 <code>.led</code>(결과 LED), <code>.chunk</code>(끊어읽기), <code>.segmented</code>(분절 토글), <code>.scrumb__item</code>(시험 경로)로 갈랐다.</p>
         <dl>
-          <dt>근거</dt><dd>이름이 같으면 한쪽을 고칠 때 다른 쪽이 따라 바뀐다. 「합칠 것이 아니라 가를 것」이었다 — 「부품 › 갈라낸 이름」.</dd>
           <dt>검사</dt><dd>눈 · <code>tools/rule-compare.py</code></dd>
           <dt>예외</dt><dd>아직 안 가른 이름: <code>.card</code> · <code>.qtab</code> · <code>.problem</code> · <code>.content</code>(화면마다 다르다)</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>이름이 같으면 한쪽을 고칠 때 다른 쪽이 따라 바뀐다. 옛 이름과 새 이름은 <a href="styleguide/components.html#split">부품 › 옛 이름 대조표</a>에 있다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-NAME-02" data-check="eye" data-since="2026-10-12">
         <h3>상태는 <code>.is-*</code>, 변형은 <code>--modifier</code></h3>
-        <p class="sg-rulecard__do">상태 <code>.is-selected · .is-correct · .is-wrong · .is-on · .is-open · .is-active</code>. 변형은 BEM <code>.toolbtn--primary</code>. 상태를 변형 이름으로 만들지 않는다.</p>
+        <p class="sg-rulecard__do">상태는 <code>.is-selected · .is-correct · .is-wrong · .is-on · .is-open · .is-active</code>로 쓴다. 변형은 BEM(<code>.toolbtn--primary</code>)으로 쓴다. 상태를 변형 이름으로 만들지 않는다.</p>
         <dl>
-          <dt>근거</dt><dd>JS가 켜고 끄는 것(상태)과 마크업에 박힌 것(변형)을 이름만 보고 가르게 한다.</dd>
           <dt>검사</dt><dd>눈</dd>
           <dt>예외</dt><dd>없음</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>JS가 켜고 끄는 것(상태)과 마크업에 고정된 것(변형)을 이름만 보고 구분하게 한다.</p>
+        </details>
       </article>
     </section>
 
@@ -462,52 +544,62 @@
 
       <article class="sg-rulecard" id="RM-ASSET-01" data-check="hook" data-since="2026-08-17">
         <h3>그림은 webp, 아이콘은 svg, 원본은 프로젝트 밖</h3>
-        <p class="sg-rulecard__do">그림 → <code>assets/img/</code>(webp) · 아이콘 → <code>assets/icons/</code>(svg) · 영상 mp4. PNG 같은 원본은 <code>~/Documents/_source/RM/</code>.</p>
+        <p class="sg-rulecard__do">그림은 <code>assets/img/</code>(webp), 아이콘은 <code>assets/icons/</code>(svg), 영상은 mp4로 둔다. PNG 같은 원본은 <code>~/Documents/_source/RM/</code>에 둔다.</p>
         <dl>
-          <dt>근거</dt><dd>이미지를 webp로 바꿔 69MB → 7MB. 원본이 깃에 섞이면 기록이 수백 MB로 분다(MT 580MB).</dd>
           <dt>검사</dt><dd><code>.gitignore</code> + 커밋 전 5MB 검사 훅</dd>
           <dt>예외</dt><dd>없음</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>원본이 깃에 섞이면 기록이 수백 MB로 불어난다(다른 프로젝트에서 580MB까지 불었다). 이 프로젝트는 그림을 webp로 바꿔 69MB를 7MB로 줄였다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-ASSET-02" data-check="eye" data-since="2026-08-17">
         <h3>아이콘 색은 파일 복제가 아니라 코드로 바꾼다</h3>
-        <p class="sg-rulecard__do"><code>currentColor</code> 또는 마스크로 칠한다. 같은 아이콘을 색깔별로 복사하지 않는다.</p>
+        <p class="sg-rulecard__do"><code>currentColor</code>나 마스크로 칠한다. 같은 아이콘을 색깔별로 복사하지 않는다.</p>
         <dl>
-          <dt>근거</dt><dd>복제하면 한 벌이 세 벌이 되고, 모양을 고칠 때 셋을 다 고쳐야 한다.</dd>
           <dt>검사</dt><dd>눈</dd>
-          <dt>예외</dt><dd>그림 성격의 2톤 아이콘(시험 타일 별) — 색은 CSS에서 정한다</dd>
+          <dt>예외</dt><dd>그림 성격의 2톤 아이콘(시험 타일 별). 색은 CSS에서 정한다.</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>복제하면 한 벌이 세 벌이 되고, 모양을 고칠 때 세 벌을 다 고쳐야 한다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-ASSET-03" data-check="eye" data-since="2026-08-19">
         <h3>그림이 들어올 빈자리는 <code>.dummy-img</code></h3>
-        <p class="sg-rulecard__do">빗금 + 「이미지 예시」 라벨. 그 자리에 화면 CSS가 <code>background</code>를 다시 지정하지 않는다(빗금이 지워진다).</p>
+        <p class="sg-rulecard__do">빗금과 「이미지 예시」 라벨로 표시한다. 그 자리에 화면 CSS가 <code>background</code>를 다시 지정하지 않는다(빗금이 지워진다).</p>
         <dl>
-          <dt>근거</dt><dd>가짜 그림이 실제 그림처럼 보이면 개발 때 그대로 남는다.</dd>
-          <dt>검사</dt><dd>눈 · 「부품 › 더미 이미지 자리」</dd>
+          <dt>검사</dt><dd>눈 · <a href="styleguide/components.html#misc">부품 › 그 밖에</a></dd>
           <dt>예외</dt><dd>개념 학습의 파란 그라데이션 자리(<code>RM-COL-01</code> 예외 목록)</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>가짜 그림이 진짜처럼 보이면 개발 단계에서 그대로 남는다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-ASSET-04" data-check="eye" data-since="2026-08-17">
         <h3>행성 홈은 좌표 고정 · 그림 교체</h3>
-        <p class="sg-rulecard__do">배치표 <code>LAYOUT</code>는 과목당 한 벌. 학기를 늘리면 <code>assets/img/home/&lt;과목&gt;-&lt;학기&gt;/</code>에 같은 이름(<code>obj-1</code>~<code>obj-6</code>)으로 그림만 넣는다. 캐릭터를 바꾸면 <code>CHAR_V</code>를 올린다.</p>
+        <p class="sg-rulecard__do">배치표 <code>LAYOUT</code>는 과목당 한 벌이다. 학기를 늘리면 <code>assets/img/home/&lt;과목&gt;-&lt;학기&gt;/</code>에 같은 이름(<code>obj-1</code>~<code>obj-6</code>)으로 그림만 넣는다. 캐릭터 그림을 바꾸면 <code>CHAR_V</code>를 올린다.</p>
         <dl>
-          <dt>근거</dt><dd>32화면의 좌표를 따로 잡으면 유지보수가 안 된다. 원본 32세트가 모두 같은 자리 규칙을 지킨다.</dd>
           <dt>검사</dt><dd>눈 · <code>tools/home-contact.html</code>(32화면 한눈보기)</dd>
-          <dt>예외</dt><dd>캐릭터 칸 폭은 과목마다 다르다(수학 31.25% · 과학 25%)</dd>
+          <dt>예외</dt><dd>캐릭터 칸 폭은 과목마다 다르다(수학 31.25% · 과학 25%).</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>원본 32세트가 모두 같은 자리 규칙을 지킨다. 32화면의 좌표를 따로 잡으면 유지보수할 수 없다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-ASSET-05" data-check="style-audit" data-since="2026-08-17">
         <h3>그림과 이어 붙는 색은 에셋 연동색 토큰으로</h3>
-        <p class="sg-rulecard__do">콘솔 SVG의 밴드·트레이 면, 우주 배경, 등급 칩, 형광펜은 <code>--asset-*</code>·<code>--art-*</code>. 램프에서 고를 수 없고, 그림을 다시 그리지 않는 한 값이 고정이다.</p>
+        <p class="sg-rulecard__do">콘솔 SVG의 밴드·트레이 면, 우주 배경, 등급 칩, 형광펜은 <code>--asset-*</code>·<code>--art-*</code>로 쓴다. 램프에서 고를 수 없고, 그림을 다시 그리지 않는 한 값이 고정이다.</p>
         <dl>
-          <dt>근거</dt><dd>화면 면과 그림의 실제 색이 한 픽셀이라도 다르면 이음매가 보인다.</dd>
           <dt>검사</dt><dd><code>style-audit.py</code> 「토큰 밖 색」(화면이 hex를 직접 쓰지 않는다)</dd>
           <dt>예외</dt><dd>없음</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>화면 면과 그림의 실제 색이 조금이라도 다르면 이음매가 보인다.</p>
+        </details>
       </article>
     </section>
 
@@ -517,52 +609,63 @@
 
       <article class="sg-rulecard" id="RM-PART-01" data-check="eye" data-since="2026-08-20">
         <h3>이미 있는 부품을 먼저 찾는다</h3>
-        <p class="sg-rulecard__do">화면 위에 뜨는 것 → 보조 모니터(<code>monitor.css</code>) · 숫자 입력 → 키패드(<code>keypad.js</code>+<code>keypad.css</code>) · 필기 → 연습장(<code>scratchpad.js</code>+<code>scratchpad.css</code>) · 수식 → KaTeX(동봉).</p>
+        <p class="sg-rulecard__do">화면 위에 뜨는 것은 보조 모니터(<code>monitor.css</code>), 숫자 입력은 키패드(<code>keypad.js</code>+<code>keypad.css</code>), 필기는 연습장(<code>scratchpad.js</code>+<code>scratchpad.css</code>), 수식은 KaTeX(동봉)를 쓴다.</p>
         <dl>
-          <dt>근거</dt><dd>Phase 6에 오버레이 7종 · 키패드 4벌을 한 벌로 합쳤다. 화면마다 만들면 반드시 다시 갈라진다.</dd>
-          <dt>검사</dt><dd>눈 · 「셸」 장</dd>
+          <dt>검사</dt><dd>눈 · <a href="styleguide/shells.html">셸</a> 장</dd>
           <dt>예외</dt><dd>없음</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>화면마다 만들면 다시 갈라진다. 2026-08-20에 오버레이 7종과 키패드 4벌을 한 벌로 합쳤다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-PART-02" data-check="eye" data-since="2026-08-20">
         <h3>보조 모니터는 틀만 공용 — 안의 내용은 화면 것 그대로</h3>
-        <p class="sg-rulecard__do">골격 <code>.monitor &gt; __rig &gt; __frame &gt; (__hd · __screen · __chin)</code>, 여는 상태 <code>.is-open</code>. 변형은 <code>--side</code>(오른쪽 도킹) · <code>--lock</code>(닫기 없음)뿐.</p>
+        <p class="sg-rulecard__do">골격은 <code>.monitor &gt; __rig &gt; __frame &gt; (__hd · __screen · __chin)</code>이고, 여는 상태는 <code>.is-open</code>이다. 변형은 <code>--side</code>(오른쪽 도킹)와 <code>--lock</code>(닫기 없음) 둘뿐이다.</p>
         <dl>
-          <dt>근거</dt><dd>내용까지 공용으로 만들면 화면마다 다른 요구를 옵션으로 흡수하다 부품이 비대해진다.</dd>
           <dt>검사</dt><dd>눈</dd>
           <dt>예외</dt><dd>없음</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>내용까지 공용으로 만들면 화면마다 다른 요구를 옵션으로 받아들이다 부품이 비대해진다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-PART-03" data-check="eye" data-since="2026-08-20">
         <h3>계산기와 결과 계기판은 정적 하드웨어 — 테마를 따라가지 않는다</h3>
-        <p class="sg-rulecard__do">키패드는 라이트·다크에서 같은 모습. 결과 화면 6장은 항상 다크. 서랍(GNB에 딸린 면)도 항상 다크.</p>
+        <p class="sg-rulecard__do">키패드는 라이트·다크에서 같은 모습이다. 결과 화면 6장과 서랍(GNB에 딸린 면)은 항상 다크다. 이 자리의 색은 테마를 따라 뒤집히는 역할 토큰(<code>--text</code>·<code>--surface-*</code>)이 아니라 고정색으로 쓴다.</p>
         <dl>
-          <dt>근거</dt><dd>우주선의 물건이다 — 조명이 바뀌어도 사물의 색은 그대로다.</dd>
           <dt>검사</dt><dd>눈 · <code>color-audit.html</code>은 테마 토글이 없는 결과 화면을 그 테마 하나로만 잰다</dd>
           <dt>예외</dt><dd>없음</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>우주선 안의 물건이라, 조명(테마)이 바뀌어도 색은 그대로다.</p>
+          <p>2026-10-14 정리 때 결과 계기판 글자를 역할 토큰으로 바꿨다가, 라이트를 적용하면 글자가 어두워지는 것이 검수에서 잡혀 고정색으로 되돌렸다. 실서버는 라이트만 쓰므로 그대로 옮기면 실제로 생길 수 있는 문제였다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-PART-04" data-check="eye" data-since="2026-08-20">
         <h3>수식은 KaTeX — 분수는 <code>\dfrac</code>, 슬래시로 적지 않는다</h3>
-        <p class="sg-rulecard__do">수식 안 빈칸은 <code>\htmlClass{dblank}{?}</code>(<code>trust</code> 콜백 필요). 본보기는 개념 다지기 6번 문제.</p>
+        <p class="sg-rulecard__do">수식 안 빈칸은 <code>\htmlClass{dblank}{?}</code>로 만든다(<code>trust</code> 콜백 필요). 본보기는 개념 다지기 6번 문제다.</p>
         <dl>
-          <dt>근거</dt><dd>슬래시 분수(<code>a/b</code>)는 초등 교과서 표기가 아니다.</dd>
           <dt>검사</dt><dd>눈</dd>
           <dt>예외</dt><dd>없음</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>슬래시 분수(<code>a/b</code>)는 초등 교과서 표기가 아니다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-PART-05" data-check="eye" data-since="2026-08-19">
         <h3>새 학습 화면에는 검수 스위치를 붙인다</h3>
-        <p class="sg-rulecard__do"><code>scripts/debug-panel.js</code>를 부르고 엔진에서 <code>window.RMDebug.register({title, actions})</code>. 주소 끝 <code>?debug=1</code>로 정답·오답·완료 상태를 오간다.</p>
+        <p class="sg-rulecard__do"><code>scripts/debug-panel.js</code>를 부르고, 엔진에서 <code>window.RMDebug.register({title, actions})</code>로 등록한다. 주소 끝에 <code>?debug=1</code>을 붙이면 정답·오답·완료 상태를 오갈 수 있다.</p>
         <dl>
-          <dt>근거</dt><dd>정적 프로토타입이라 문제를 풀어야 도달하는 상태가 많다. 손으로 만들면 검수가 안 된다.</dd>
-          <dt>검사</dt><dd>눈 · 「패턴 › 검수 스위치」</dd>
+          <dt>검사</dt><dd>눈 · <a href="styleguide/patterns.html#debug">패턴 › 검수 스위치</a></dd>
           <dt>예외</dt><dd>없음</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>정적 프로토타입이라 문제를 풀어야 도달하는 상태가 많다. 매번 손으로 만들면 검수를 할 수 없다.</p>
+        </details>
       </article>
     </section>
 
@@ -572,55 +675,97 @@
 
       <article class="sg-rulecard" id="RM-JS-01" data-check="style-audit" data-since="2026-10-14">
         <h3>JS는 스타일을 만들지 않는다</h3>
-        <p class="sg-rulecard__do"><code>&lt;style&gt;</code> 주입 · <code>cssText</code> · 색·글자·여백·테두리 인라인을 쓰지 않는다. JS가 넣는 것은 <strong>계산값</strong>(위치·크기·진행률·다시 칠한 면색), <strong>데이터값</strong>(그림 주소 · CSS 변수 하나 — 예: <code>--tag-c</code>), <strong>보이기/숨기기</strong>뿐이다. 데이터에서 오는 상태는 클래스로(<code>.step__grade--a</code>).</p>
+        <p class="sg-rulecard__do"><code>&lt;style&gt;</code> 주입, <code>cssText</code>, 색·글자·여백·테두리 인라인을 쓰지 않는다. JS가 넣는 것은 계산값(위치·크기·진행률·다시 칠한 면색), 데이터값(그림 주소, CSS 변수 하나. 예: <code>--tag-c</code>), 보이기·숨기기뿐이다. 데이터에서 오는 상태는 클래스로 넣는다(<code>.step__grade--a</code>).</p>
         <dl>
-          <dt>근거</dt><dd>서랍(51줄)과 연습장(40줄)이 CSS를 문자열로 꽂고 있어 검사 도구가 못 봤고, 서랍은 v1.6 팔레트 이전 색으로 오래 남아 있었다. 2026-10-14에 <code>gnb.css</code>·<code>scratchpad.css</code>로 옮겼다.</dd>
           <dt>검사</dt><dd><code>style-audit.py</code> 「JS 안 스타일」 = 0</dd>
-          <dt>예외</dt><dd>검수 패널(<code>debug-panel.js</code>) · 스토리북 견본 그리개(<code>styleguide/*.js</code> — 토큰 견본의 색이 곧 보여 줄 데이터)</dd>
+          <dt>예외</dt><dd>검수 패널(<code>debug-panel.js</code>), 스토리북 견본 그리개(<code>styleguide/*.js</code>. 토큰 견본의 색이 곧 보여 줄 데이터다)</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>문자열로 넣은 CSS는 검사 도구가 보지 못한다. 서랍은 그래서 v1.6 팔레트 이전 색으로 오래 남아 있었다.</p>
+          <p>2026-10-14에 서랍(51줄)과 연습장(40줄)의 CSS를 <code>gnb.css</code>·<code>scratchpad.css</code>로 옮겼다. 같은 날 검사가 문자열 이어 붙이기 너머의 <code>margin-top</code>을 놓치던 것을 고쳤다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-JS-02" data-check="style-audit" data-since="2026-10-12">
         <h3>JS가 심는 변수는 목록에 올린다</h3>
-        <p class="sg-rulecard__do">CSS에 정의 없이 <code>var()</code>로만 불리는 변수(<code>--pct</code>·<code>--hero-w</code>·<code>--m</code> 등)는 「패턴 › JS가 넣는 변수」와 <code>style-audit.py</code>의 <code>JS_VARS</code>에 올린다. 기본값을 CSS에 둘 수 있으면 둔다.</p>
+        <p class="sg-rulecard__do">CSS에 정의 없이 <code>var()</code>로만 불리는 변수(<code>--pct</code>·<code>--hero-w</code>·<code>--m</code> 등)는 <a href="styleguide/patterns.html#jsvars">패턴 › JS가 넣는 변수</a>와 <code>style-audit.py</code>의 <code>JS_VARS</code>에 올린다. CSS에 기본값을 둘 수 있으면 둔다.</p>
         <dl>
-          <dt>근거</dt><dd>목록이 없으면 「아무도 정의하지 않은 변수」로 보여 정리하다 지우게 된다.</dd>
           <dt>검사</dt><dd><code>style-audit.py</code> 「정의 없는 변수」 = 0</dd>
           <dt>예외</dt><dd>없음</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>목록이 없으면 아무도 정의하지 않은 변수처럼 보여서 정리하다 지우게 된다.</p>
+        </details>
       </article>
 
       <article class="sg-rulecard" id="RM-JS-03" data-check="eye" data-since="2026-08-17">
         <h3>조립식 경로는 문자열 검색만 믿지 않는다 — 전 화면 404 검사</h3>
-        <p class="sg-rulecard__do"><code>'star-' + g</code>처럼 코드에서 조립되는 경로가 많다. 경로를 옮기면 서버를 띄워 전 화면을 열고 404를 전수로 본다. 공용 JS(<code>gnb-drawer.js</code>·<code>step-progress.js</code>·<code>learn-exit.js</code>) 안에도 화면 이동 경로가 있다.</p>
+        <p class="sg-rulecard__do"><code>'star-' + g</code>처럼 코드에서 조립되는 경로가 많다. 경로를 옮기면 서버를 띄워 전 화면을 열고 404를 전부 확인한다. 공용 JS(<code>gnb-drawer.js</code>·<code>step-progress.js</code>·<code>learn-exit.js</code>) 안에도 화면 이동 경로가 있다.</p>
         <dl>
-          <dt>근거</dt><dd>죽은 링크·빠진 그림은 화면이 멀쩡해 보여 화소 대조로도 안 잡힌다.</dd>
           <dt>검사</dt><dd>미리보기 서버 기록의 404</dd>
           <dt>예외</dt><dd>없음</dd>
         </dl>
+        <details class="sg-why"><summary>근거</summary>
+          <p>죽은 링크나 빠진 그림은 화면이 멀쩡해 보여서 화소 대조로도 잡히지 않는다.</p>
+        </details>
       </article>
+    </section>
+
+    <!-- ===================================================== 검사 도구 -->
+    <section class="sg-sec" id="tools">
+      <h2>검사 도구 <small>카드의 검사 칸이 가리키는 것</small></h2>
+      <p class="sg-lead">모두 <code>tools/</code>에 있고 배포에서 빠집니다. 고친 뒤에는 <code>style-audit.py</code>부터 돌립니다.</p>
+      <table class="sg-table">
+        <thead><tr><th style="width:210px">도구</th><th>무엇을 하나</th></tr></thead>
+        <tbody>
+          <tr><td><code>tools/style-audit.py</code></td>
+              <td>지킬 것(0이어야 하는 것)과 지켜볼 것(줄면 좋은 것)을 줄마다 규칙 번호와 함께 찍는다.
+                  지킬 것은 HTML 안 CSS·JS, 토큰 밖 색, 정의 없는 변수, 깨진 경로, 캐시 번호, 눈금 위 px, JS 안 스타일, 규칙 ID 어긋남이다.
+                  <code>--strict</code>면 지킬 것이 깨졌을 때 실패한다.</td></tr>
+          <tr><td><code>tools/color-audit.html</code></td>
+              <td>그려진 화면의 글자·면 대비를 화면 × 테마 × 디버그 상태별로 잰다.</td></tr>
+          <tr><td><code>tools/usage-scan.py</code></td>
+              <td>화면 마크업을 훑어 부품별로 쓰는 화면 수를 센다. 스토리북의 「쓰는 화면」 배지가 그 결과다.</td></tr>
+          <tr><td><code>tools/screen-shot.sh</code><br><code>tools/screen-diff.py</code></td>
+              <td>고치기 전과 후를 헤드리스로 찍어 화소 단위로 대조한다. 부품을 옮겼는데 0.00%가 나오면 성공이다.</td></tr>
+          <tr><td><code>tools/dark-shot.html</code></td>
+              <td>헤드리스 촬영은 라이트만 찍힌다. 화면을 액자에 끼워 다크로 고정해서 찍는다.</td></tr>
+          <tr><td><code>tools/rules-build.py</code></td>
+              <td>이 장에서 <code>rules.json</code>과 CLAUDE.md 색인을 만들고, 번호가 CLAUDE.md·<code>style-audit.py</code>에 빠짐없이 있는지, 죽은 인용이 없는지 대조한다.</td></tr>
+          <tr><td><code>tools/tokens-build.py</code><br><code>tools/screens-build.py</code></td>
+              <td>개발자용 <code>tokens.json</code>과 <code>screens.json</code>을 만든다. <code>screens-build.py</code>는 <code>usage-scan.py</code> 다음에 돌린다.</td></tr>
+          <tr><td><code>tools/rule-compare.py</code></td>
+              <td>같은 클래스가 어느 화면에 어떻게 정의됐는지 비교한다. 합칠지 가를지를 판단할 때 쓴다.</td></tr>
+          <tr><td><code>tools/palette-gen.py</code><br><code>tools/cta-check.html</code></td>
+              <td>팔레트를 만들고(450은 대비를 기준으로 계산한다), CTA가 홈 32배경에서 버티는지 판정한다.</td></tr>
+        </tbody>
+      </table>
+      <details class="sg-why"><summary>화소 대조가 잡은 것과 못 잡는 것</summary>
+        <p>잡은 것: 여러 줄 규칙을 한 줄만 지워 과제 화면이 백지가 된 것, 잘린 출력을 보고 옮겨 적어 다섯 화면의 라벨이 12px에서 13px로 커진 것, 기본형과 변형 중 변형만 옮겨져 훈련 결과표의 이름 칸이 가운데로 몰린 것. 셋 다 코드만 봐서는 보이지 않았다.</p>
+        <p>못 잡는 것: 눌러야 뜨는 것(토스트·모달), 다른 규칙에 가려진 것(그림 경로 404), 마우스 커서 모양, 화면이 쓰지 않는 테마에서만 생기는 차이. 2026-10-14 외부 검수에서 서술형 주어진 답 칸의 커서와 결과 계기판의 라이트 글자색이 이렇게 빠졌다. 이런 것은 이전 커밋과 계산 스타일을 대조해서 확인한다.</p>
+      </details>
     </section>
 
     <!-- ===================================================== 개발자 파일 -->
     <section class="sg-sec" id="data">
-      <h2>개발자 파일 <small>손으로 쓰지 않는다 · 스크립트가 만든다</small></h2>
-      <p class="sg-lead">아래 셋은 <strong>사람이 아니라 스크립트가 쓴 파일</strong>입니다. 개발자와 그의 AI가 그대로 읽게 만들었어요.
+      <h2>개발자 파일 <small>스크립트가 만든다</small></h2>
+      <p class="sg-lead">아래 세 파일은 스크립트가 만듭니다. 개발자와 개발자의 AI가 그대로 읽을 수 있는 형식입니다.
         고칠 일이 있으면 이 파일이 아니라 원본(토큰 · 이 장 · 화면)을 고치고 다시 만듭니다.</p>
       <table class="sg-table">
         <thead><tr><th style="width:220px">파일</th><th style="width:200px">원본 → 만드는 도구</th><th>무엇</th></tr></thead>
         <tbody>
           <tr><td><a href="styleguide/data/tokens.json"><code>styleguide/data/tokens.json</code></a></td><td><code>styles/tokens.css</code> → <code>tools/tokens-build.py</code></td>
-              <td>디자인 토큰 표준 형식(W3C DTCG). 역할 토큰마다 라이트·다크 값과 계열 7벌의 값, 원본 팔레트 이름을 같이 싣는다</td></tr>
+              <td>디자인 토큰 표준 형식(W3C DTCG). 역할 토큰과 에셋 연동색마다 라이트·다크 값, 계열마다 값이 갈리면 계열 7벌의 값, 원본 팔레트 이름을 싣는다.</td></tr>
           <tr><td><a href="styleguide/data/rules.json"><code>styleguide/data/rules.json</code></a></td><td>이 장 → <code>tools/rules-build.py</code></td>
-              <td>규칙 카드 전부 — 번호 · 지킬 것 · 근거 · 검사 · 예외</td></tr>
+              <td>규칙 카드 전부. 번호 · 지킬 것 · 근거 · 검사 · 예외.</td></tr>
           <tr><td><a href="styleguide/data/screens.json"><code>styleguide/data/screens.json</code></a></td><td>화면 HTML·CSS → <code>tools/screens-build.py</code></td>
-              <td>화면마다 계열 · 테마 · 부르는 CSS·JS · 쓰는 부품 · 많이 쓰는 토큰 · 걸리는 규칙 — 「화면 지도」 장이 이걸 그린다</td></tr>
+              <td>화면마다 계열, 테마, 부르는 CSS·JS, 쓰는 부품, 많이 쓰는 토큰, 걸리는 규칙. <a href="styleguide/screens.html">화면 지도</a> 장이 이 파일을 그린다.</td></tr>
         </tbody>
       </table>
     </section>
 
   </main>
 </div>
-<script src="styleguide/sg.js?v=20261014-10"></script>
+<script src="styleguide/sg.js?v=20261014-12"></script>
 </body>
 </html>
