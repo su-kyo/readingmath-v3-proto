@@ -12,6 +12,7 @@
        ① 글자 대비 — 글자색 vs 실제 바탕(조상 면을 알파까지 겹쳐 계산). ::before/::after 포함.
           기준: 작은 글자 4.5 · 큰 글자(≥19px w700 또는 ≥24px) 3.0 · 비활성(opacity<.6)은 따로 표시
        ② 상태 면 — is-selected/is-correct/is-wrong 등 상태 요소의 면 vs 둘레 바탕 대비
+       ②-1 칠면 위 어두운 글자 — 채도 있는 진한 면(정답·오답·계열색) 위 글자가 면보다 어두우면 표시 (대비가 기준을 넘어도)
        ③ 탁한 면 후보 — 채도가 어중간하고(OKLCH C .015~.07) 색상이 네이비 축(235~280°)이 아닌 면
 
      쓰는 법
@@ -119,6 +120,9 @@
       var need = big ? 3 : 4.5, r = ratio(real, bg), o = opac(el, win);
       var lim = theme === 'dark' ? 3 : need;   // 다크는 「안 보임」만 — 3 미만 (테마가 하나뿐인 화면은 'fixed' = 정식 기준)
       if (r < lim) found.push({ kind: o < .6 ? '비활성 글자' : '글자', sel: path(el) + (pseudo || ''), txt: txt.slice(0, 24), fg: hex(real), bg: hex(bg), r: r, need: lim });
+      // 색 칠면(채도 있는 중간~진한 면) 위에 어두운 글자 — 칠면은 테마에 따라 안 뒤집히니 글자도 흰색이어야 한다
+      var kb = oklch(bg), kf = oklch(real);
+      if (kb.C > .06 && kb.L < .75 && kf.L < kb.L) found.push({ kind: '칠면 위 어두운 글자', sel: path(el) + (pseudo || ''), txt: txt.slice(0, 24), fg: hex(real), bg: hex(bg), r: r, need: 0 });
     }
     d.querySelectorAll('body *').forEach(function (el) {
       if (!visible(el, win) || /^(SCRIPT|STYLE|svg|path|IMG|CANVAS|IFRAME|TEMPLATE)$/i.test(el.tagName)) return;

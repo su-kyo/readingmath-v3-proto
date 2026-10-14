@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>시안 — 커리큘럼 라운드 배치</title>
+<!-- =========================================================================
+     2026-10-14 시안 — 결론이 나면 지운다 (CLAUDE.md 「tools/ 정리 규칙」).
+     액자 하나하나가 tools/curr-layout.html 이다 (실제 커리큘럼 화면 + 오른쪽 영역만 교체).
+     ========================================================================= -->
+<link rel="stylesheet" href="../styles/tokens.css">
+<style>
+  body { margin: 0; background: var(--n-100); color: var(--n-650); font-family: var(--font-sans); letter-spacing: var(--tracking); }
+  main { max-width: 1960px; margin: 0 auto; padding: var(--sp-32) var(--sp-24) 80px; }
+  h1 { font-size: var(--fs-26); margin: 0 0 var(--sp-8); }
+  .lead { font-size: var(--fs-15); color: var(--n-500); margin: 0 0 var(--sp-40); line-height: 1.6; }
+  section { margin-bottom: 48px; }
+  .row { background: var(--n-000); border-radius: var(--r-16); padding: var(--sp-16) var(--sp-20) var(--sp-20); }
+  .row__hd { display: flex; align-items: baseline; gap: var(--sp-12); margin-bottom: var(--sp-12); }
+  .row__k { font-family: var(--font-mono); font-weight: var(--fw-bold); font-size: var(--fs-16); color: var(--n-000); background: var(--n-650); border-radius: var(--r-8); padding: 2px var(--sp-8); }
+  .row__t { font-weight: var(--fw-heavy); font-size: var(--fs-19); }
+  .row__d { font-size: var(--fs-14); color: var(--n-400); }
+  .frames { display: flex; gap: var(--sp-12); flex-wrap: wrap; }
+  .fr { --s: .35; width: calc(1280px * var(--s)); text-decoration: none; color: inherit; }
+  .fr__box { width: calc(1280px * var(--s)); height: calc(800px * var(--s)); overflow: hidden; border-radius: var(--r-8); box-shadow: inset 0 0 0 1px var(--n-200); background: var(--n-900); }
+  .fr iframe { width: 1280px; height: 800px; border: 0; transform: scale(var(--s)); transform-origin: 0 0; pointer-events: none; }
+  .fr__cap { font-size: var(--fs-13); color: var(--n-400); margin-top: var(--sp-6); font-weight: var(--fw-semibold); }
+  .fr:hover .fr__cap { color: var(--n-650); }
+  .note { font-size: var(--fs-14); color: var(--n-500); line-height: 1.6; margin: var(--sp-12) 0 0; }
+  .note b { color: var(--n-650); }
+</style>
+</head>
+<body><main>
+  <h1>시안 — 커리큘럼 라운드 배치</h1>
+  <p class="lead">무드·테마는 지금 그대로, 오른쪽 라운드 영역의 <b>배치</b>만 바꾼 거친 시안입니다. 왼쪽 목록은 지금 화면 그대로라 오른쪽과 숫자가 맞지 않습니다.<br>
+  가르는 축 — <b>라운드 세 개를 어느 방향으로 늘어놓나.</b> 액자를 누르면 크게 열리고, 그 안에서 탭·라운드를 눌러 볼 수 있습니다.</p>
+
+  <section id="A"><div class="row">
+    <div class="row__hd"><span class="row__k">A</span><span class="row__t">세로 흐름 · 상태별 크기</span><span class="row__d">끝난 라운드는 한 줄 · 지금 라운드만 크게 · 잠긴 라운드는 얇게. 왼쪽 선이 세 라운드를 잇는다</span></div>
+    <div class="frames" data-lay="A"></div>
+    <p class="note">끝난 라운드 줄을 누르면 펼쳐진다. 다 끝난 상태에서는 세 줄이 모두 접혀 가장 짧아진다.</p>
+  </div></section>
+
+  <section id="B"><div class="row">
+    <div class="row__hd"><span class="row__k">B</span><span class="row__t">가로 열 · 라운드 = 열, 스텝 = 행</span><span class="row__d">같은 스텝이 같은 높이에 놓여 가로로 읽으면 성장이 보인다</span></div>
+    <div class="frames" data-lay="B"></div>
+    <p class="note">지금 라운드 열만 테두리로 띄운다. 잠긴 열은 빈 칸 그대로 남아 「아직 남은 자리」를 보여 준다.</p>
+  </div></section>
+
+  <section id="C"><div class="row">
+    <div class="row__hd"><span class="row__k">C</span><span class="row__t">한 라운드만 · 위 전환 막대</span><span class="row__d">라운드 셋은 위 막대에 요약만, 아래는 고른 라운드의 스텝 목록</span></div>
+    <div class="frames" data-lay="C"></div>
+    <p class="note">기본으로 지금 라운드가 골라져 있다. 지난 라운드 성적을 보려면 막대를 한 번 눌러야 한다.</p>
+  </div></section>
+</main>
+<script>
+  var STATES = [
+    ['st=new&tab=concept', '처음 들어옴 · 개념(3스텝)'],
+    ['st=mid&tab=concept', '진행 중 · 개념'],
+    ['st=mid&tab=type&long=1', '진행 중 · 유형(4스텝) · 긴 소단원명'],
+    ['st=full&tab=type', '3라운드 전부 완료 · 유형']
+  ];
+  document.querySelectorAll('.frames').forEach(function (host) {
+    var lay = host.dataset.lay;
+    STATES.forEach(function (s) {
+      var url = 'curr-layout.html?lay=' + lay + '&' + s[0];
+      var a = document.createElement('a'); a.className = 'fr'; a.href = url; a.target = '_blank';
+      a.innerHTML = '<div class="fr__box"><iframe loading="lazy" src="' + url + '"></iframe></div><div class="fr__cap">' + s[1] + '</div>';
+      host.appendChild(a);
+    });
+  });
+</script>
+</body></html>

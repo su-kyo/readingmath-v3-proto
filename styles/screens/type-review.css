@@ -63,7 +63,6 @@
 .qopt.qopt--img .qopt__num { background: var(--th-static); color: var(--n-000); }
 .qopt.is-correct { background: color-mix(in srgb, var(--ok-solid) 22%, var(--opt-bg)); box-shadow: inset 0 0 0 2px var(--ok-solid); }
 .qopt.is-correct .qopt__num { background: var(--ok-ink); color: var(--n-000); }
-:root[data-theme="dark"] .qopt.is-correct .qopt__num { color: var(--n-900); }  /* 다크=밝은민트 위 어두운 글씨 */
 .qopt.is-wrong { background: color-mix(in srgb, var(--no-solid) 20%, var(--opt-bg)); box-shadow: inset 0 0 0 2px var(--no-solid); }
 .qopt.is-wrong .qopt__num { background: var(--no-ink); color: var(--n-000); font-size: 0; }  /* 숫자 숨기고 ✕만 */
 .qopt.is-wrong .qopt__num::after { content: "✕"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: var(--fs-15); }
