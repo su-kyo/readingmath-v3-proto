@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>시안 1014 — 해설 · 회색 · 나가기</title>
+<!-- =========================================================================
+     2026-10-14 시안 — 결론이 나면 지운다 (CLAUDE.md 「tools/ 정리 규칙」).
+     실제 화면을 iframe으로 띄우고 변형 CSS·마크업만 덮어 씌운다. 화면 파일은 건드리지 않는다.
+     ========================================================================= -->
+<link rel="stylesheet" href="../styles/tokens.css">
+<style>
+  body { margin: 0; background: var(--n-100); color: var(--n-650); font-family: var(--font-sans); letter-spacing: var(--tracking); }
+  main { max-width: 1960px; margin: 0 auto; padding: var(--sp-32) var(--sp-24) 80px; }
+  h1 { font-size: var(--fs-26); margin: 0 0 var(--sp-8); }
+  .lead { font-size: var(--fs-15); color: var(--n-500); margin: 0 0 var(--sp-40); }
+  section { margin-bottom: 64px; }
+  h2 { font-size: var(--fs-22); margin: 0 0 var(--sp-6); }
+  .axis { font-size: var(--fs-15); color: var(--n-500); margin: 0 0 var(--sp-20); }
+  .axis b { color: var(--n-650); }
+  .row { background: var(--n-000); border-radius: var(--r-16); padding: var(--sp-16) var(--sp-20) var(--sp-20); margin-bottom: var(--sp-16); }
+  .row__hd { display: flex; align-items: baseline; gap: var(--sp-12); margin-bottom: var(--sp-12); }
+  .row__k { font-family: var(--font-mono); font-weight: var(--fw-bold); font-size: var(--fs-16); color: var(--n-000); background: var(--n-650); border-radius: var(--r-8); padding: 2px var(--sp-8); }
+  .row__t { font-weight: var(--fw-heavy); font-size: var(--fs-16); }
+  .row__d { font-size: var(--fs-14); color: var(--n-400); }
+  .row--now .row__k { background: var(--n-400); }
+  .frames { display: flex; gap: var(--sp-12); flex-wrap: wrap; }
+  .fr { --s: .33; width: calc(1280px * var(--s)); }
+  .fr__box { width: calc(1280px * var(--s)); height: calc(800px * var(--s)); overflow: hidden; border-radius: var(--r-8); box-shadow: inset 0 0 0 1px var(--n-200); background: var(--n-050); }
+  .fr iframe { width: 1280px; height: 800px; border: 0; transform: scale(var(--s)); transform-origin: 0 0; pointer-events: none; }
+  .fr__cap { font-size: var(--fs-13); color: var(--n-400); margin-top: var(--sp-6); font-weight: var(--fw-semibold); }
+  .note { font-size: var(--fs-14); color: var(--n-500); line-height: 1.6; margin: var(--sp-8) 0 0; }
+  .note b { color: var(--n-650); }
+</style>
+</head>
+<body><main>
+  <h1>시안 — 해설 박스 · 기본 회색 · 나가기 확인</h1>
+  <p class="lead">실제 화면 위에 바뀐 부분만 덮어 씌운 거친 시안입니다. 화면 파일은 아직 그대로입니다.</p>
+
+  <section id="A">
+    <h2>A. 해설 박스를 하나로</h2>
+    <p class="axis">가르는 축 — <b>해설 박스가 무엇을 말하나.</b> 어느 훈련인지(계열색) · 내용만(무채) · 둘 다 조금씩(흰 바탕 + 계열 띠)</p>
+    <div id="A-rows"></div>
+  </section>
+
+  <section id="B">
+    <h2>B. 기본 회색의 색 기운</h2>
+    <p class="axis">가르는 축 — <b>보기 박스·표 머리칸의 회색이 어디에 붙나.</b> 브랜드 네이비(현행) · 그 화면의 계열색 · 어디에도 안 붙음(순회색).
+      명도는 셋 다 같고 색 기운만 다릅니다(라이트만 해당 — 다크 회색은 그대로).</p>
+    <div id="B-rows"></div>
+  </section>
+
+  <section id="C">
+    <h2>C. 나가기를 누르면</h2>
+    <p class="axis">가르는 축 — <b>실수로 나가는 걸 어떻게 막나.</b> 막지 않음(현행) · 멈춰 세움(확인 창) · 알리기만(한 번 더 누르기)</p>
+    <div id="C-rows"></div>
+  </section>
+</main>
+
+<script>
+(function () {
+  // ---------- 틀 ----------
+  function row(host, key, title, desc, frames, now) {
+    var r = document.createElement('div'); r.className = 'row' + (now ? ' row--now' : '');
+    r.innerHTML = '<div class="row__hd"><span class="row__k">' + key + '</span><span class="row__t">' + title + '</span><span class="row__d">' + desc + '</span></div><div class="frames"></div>';
+    var fs = r.querySelector('.frames');
+    frames.forEach(function (f) { fs.appendChild(frame(f)); });
+    document.getElementById(host).appendChild(r);
+    return r;
+  }
+  function frame(f) {
+    var w = document.createElement('div'); w.className = 'fr';
+    w.innerHTML = '<div class="fr__box"><iframe loading="lazy"></iframe></div><div class="fr__cap">' + f.cap + '</div>';
+    var ifr = w.querySelector('iframe');
+    ifr.src = '../' + f.src + (f.src.indexOf('?') < 0 ? '?' : '&') + 'pv=1014';
+    ifr.onload = function () {
+      var d = ifr.contentDocument, win = ifr.contentWindow;
+      d.documentElement.setAttribute('data-theme', f.theme || 'light');
+      if (f.css) { var s = d.createElement('style'); s.textContent = f.css; d.head.appendChild(s); }
+      var hide = d.createElement('style'); hide.textContent = '.rmdbg{display:none!important}'; d.head.appendChild(hide);
+      if (f.setup) setTimeout(function () { f.setup(d, win); }, 400);
+    };
+    return w;
+  }
+  function clickDbg(label) {
+    return function (d) {
+      var b = [].slice.call(d.querySelectorAll('.rmdbg__btn')).find(function (x) { return x.textContent.trim() === label; });
+      if (b) b.click();
+    };
+  }
+
+  // ---------- A. 해설 박스 ----------
+  var A_SCREENS = [
+    { src: 'type/review.html', cap: '유형 해설 · 라이트', theme: 'light' },
+    { src: 'type/review.html', cap: '유형 해설 · 다크', theme: 'dark' },
+    { src: 'assignment/explain.html', cap: '과제 해설 · 라이트', theme: 'light' },
+    { src: 'exam/solve.html?debug=1', cap: '시험 풀이 (오답 후) · 라이트', theme: 'light', setup: clickDbg('오답 제출') }
+  ];
+  var A = [
+    { k: 'A1', t: '계열색 틴트', d: '어제 유형에 적용한 방식 = 과제 해설 현행. 시험만 바뀜', css: {
+        exam: '.explain{background:var(--th-tint);border-color:transparent}.explain__cap{color:var(--th-ink-accent)}' } },
+    { k: 'A2', t: '무채 면만', d: '테두리 없이 옅은 회색 면 하나. 제목도 글자색', css: {
+        type: ':root[data-theme] .explain{background:var(--n-050);box-shadow:none}:root[data-theme] .explain__head{color:var(--qtext)}'
+            + ':root[data-theme="dark"] .explain{background:var(--n-800)}',
+        assign: '.expl,:root[data-theme="dark"] .expl{background:var(--n-050)}.expl__t,:root[data-theme="dark"] .expl__t{color:var(--ink)}',
+        exam: '.explain{border-color:transparent}.explain__cap{color:var(--ink)}' } },
+    { k: 'A3', t: '흰 바탕 + 왼쪽 계열 띠', d: '면은 칠하지 않고 띠 하나로만 계열을 알림', css: {
+        type: ':root[data-theme] .explain{background:transparent;box-shadow:inset 4px 0 0 var(--th-accent);border-radius:var(--r-4)}:root[data-theme] .explain__head{color:var(--th-ink-accent)}'
+            + ':root[data-theme="dark"] .explain{box-shadow:inset 4px 0 0 var(--th-accent-hi)}:root[data-theme="dark"] .explain__head{color:var(--th-accent-hi)}',
+        assign: '.expl{background:transparent;box-shadow:inset 4px 0 0 var(--th-accent);border-radius:var(--r-4)}.expl__t{color:var(--th-ink-accent)}',
+        exam: '.explain{border:0;background:transparent;box-shadow:inset 4px 0 0 var(--th-accent);border-radius:var(--r-4)}.explain__cap{color:var(--th-ink-accent)}' } }
+  ];
+  row('A-rows', '현행', '지금 상태', '유형·과제 = 계열색 틴트 / 시험 = 회색 면 + 테두리 + 앰버 제목', A_SCREENS, true);
+  A.forEach(function (v) {
+    row('A-rows', v.k, v.t, v.d, A_SCREENS.map(function (s) {
+      var key = s.src.indexOf('type/') === 0 ? 'type' : s.src.indexOf('assignment/') === 0 ? 'assign' : 'exam';
+      return Object.assign({}, s, { css: v.css[key] || '' });
+    }));
+  });
+
+  // ---------- B. 기본 회색 ----------
+  // 현행 n-050/100/200 의 OKLCH 명도·채도를 그대로 두고 색상각만 바꾼 값 (시안용 계산값 — 확정 전 palette-gen.py 로 다시 뽑는다)
+  var TINT = {
+    type:   { '050': '#ECF8F5', '100': '#DDF1EC', '200': '#BFDED8' },   // 틸 기운
+    essay:  { '050': '#F4F4FD', '100': '#EAEAFA', '200': '#D5D4ED' },   // 보라 기운
+    concept:{ '050': '#F0F5FE', '100': '#E4ECFB', '200': '#CBD7EE' }    // 개념·과제는 파랑이라 현행과 같음
+  };
+  var GRAY = { '050': '#F5F5F5', '100': '#EBEBEB', '200': '#D6D6D6' };
+  function nvars(m) { return ':root:root{--n-050:' + m['050'] + ';--n-100:' + m['100'] + ';--n-200:' + m['200'] + '}'; }
+  var B_SCREENS = [
+    { src: 'type/review.html', cap: '유형 해설 — 보기 박스', sec: 'type' },
+    { src: 'essay/report.html', cap: '서술형 보고서 — 표 머리칸', sec: 'essay' },
+    { src: 'assignment/solve.html', cap: '과제 풀이 — 오른쪽 답안 패널', sec: 'concept' }
+  ];
+  row('B-rows', 'B0', '네이비 회색 (현행)', '전 화면이 같은 회색 한 벌', B_SCREENS, true);
+  row('B-rows', 'B1', '계열색 기운 회색', '회색이 화면마다 달라짐 — 파랑 계열(개념·과제)은 그대로', B_SCREENS.map(function (s) { return Object.assign({}, s, { css: nvars(TINT[s.sec]) }); }));
+  row('B-rows', 'B2', '순회색', '전 화면 같은 회색 한 벌, 색 기운 없음', B_SCREENS.map(function (s) { return Object.assign({}, s, { css: nvars(GRAY) }); }));
+
+  // ---------- C. 나가기 ----------
+  var MON_CSS =
+    '#exitMon{--mon-w:520px}' +
+    '#exitMon .monitor__screen{padding:var(--sp-32) var(--sp-32) var(--sp-24);display:flex;flex-direction:column;gap:var(--sp-24);background:var(--surface-1)}' +
+    '#exitMon .xm__t{font-size:var(--fs-22);font-weight:var(--fw-heavy);color:var(--text);margin:0}' +
+    '#exitMon .xm__b{font-size:var(--fs-16);color:var(--text-muted);margin:-12px 0 0;line-height:1.6}' +
+    '#exitMon .xm__foot{display:flex;gap:var(--sp-12)}' +
+    '#exitMon .xm__btn{flex:1;height:56px;border-radius:var(--r-16);font-size:var(--fs-19);font-weight:var(--fw-heavy);border:0;font-family:var(--font-sans)}' +
+    '#exitMon .xm__btn--stay{background:var(--primary);color:var(--n-000);box-shadow:0 4px 0 var(--primary-pressed)}' +
+    '#exitMon .xm__btn--go{background:var(--surface-3);color:var(--text)}';
+  var MON_HTML =
+    '<div class="monitor monitor--lock is-open" id="exitMon"><div class="monitor__dim"></div><div class="monitor__rig">' +
+    '<div class="monitor__mount"><i></i><i></i></div><div class="monitor__frame">' +
+    '<div class="monitor__hd"><span class="monitor__lamps"><i class="is-live"></i><i></i><i></i></span><span class="monitor__ttl">나가기</span></div>' +
+    '<div class="monitor__screen"><p class="xm__t">학습을 그만둘까요?</p><p class="xm__b">지금 나가면 이 스텝은 처음부터 다시 풀어요.</p>' +
+    '<div class="xm__foot"><button class="xm__btn xm__btn--go">나가기</button><button class="xm__btn xm__btn--stay">계속 풀기</button></div></div>' +
+    '<div class="monitor__chin"><span class="monitor__slit"></span></div></div></div></div>';
+  function withMonitor(d) {
+    var l = d.createElement('link'); l.rel = 'stylesheet'; l.href = 'styles/monitor.css?v=20261014'; d.head.appendChild(l);
+    var s = d.createElement('style'); s.textContent = MON_CSS; d.head.appendChild(s);
+    d.body.insertAdjacentHTML('beforeend', MON_HTML);
+  }
+  function withToast(d) {
+    var t = d.querySelector('.toast');
+    if (!t) { d.body.insertAdjacentHTML('beforeend', '<div class="toast"></div>'); t = d.querySelector('.toast'); }
+    t.textContent = '한 번 더 누르면 학습을 그만둬요';
+    t.classList.add('is-on');
+    var b = d.querySelector('header img[src*="ico-exit"]'); if (b) b.closest('button').style.outline = '3px solid var(--current)';
+  }
+  var Q = 'type/quiz.html';
+  row('C-rows', 'C0', '바로 나감 (현행)', '시험 대비와 같음 · 실수로 누르면 진행이 사라짐', [{ src: Q, cap: '유형 풀이 중 · 누르면 곧바로 커리큘럼' }], true);
+  row('C-rows', 'C1', '확인 창 (보조 모니터)', '기본 동작은 「계속 풀기」 = 주황 · 나가기는 한 단계 약하게', [
+    { src: Q, cap: '라이트', setup: withMonitor },
+    { src: Q, cap: '다크', theme: 'dark', setup: withMonitor }
+  ]);
+  row('C-rows', 'C2', '한 번 더 누르기', '창 없이 토스트로만 알림 · 2초 안에 다시 누르면 나감', [
+    { src: Q, cap: '라이트 · 버튼 둘레는 시안 표시용', setup: withToast },
+    { src: Q, cap: '다크', theme: 'dark', setup: withToast }
+  ]);
+})();
+</script>
+</body></html>
