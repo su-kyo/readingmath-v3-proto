@@ -54,6 +54,8 @@
     if (!queue.length) return;
     // 등록이 끝난 뒤 실행 (엔진이 여럿이면 register가 여러 번 불린다)
     clearTimeout(runFromUrl.t);
+    // 스크립트가 여럿이면 앞 파일의 setTimeout 이 뒤 파일 등록보다 먼저 돌 수 있다 — 페이지를 다 불러온 뒤에 실행한다
+    if (document.readyState !== 'complete') { if (!runFromUrl.wait) { runFromUrl.wait = true; window.addEventListener('load', runFromUrl); } return; }
     runFromUrl.t = setTimeout(function () {
       queue.forEach(function (label) {
         groups.forEach(function (g) {

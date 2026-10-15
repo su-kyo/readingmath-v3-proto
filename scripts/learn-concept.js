@@ -188,6 +188,8 @@
 
   /* ---- 검수용 디버그 훅 (?debug=1일 때만 패널에 뜸) ---- */
   function dbgBlank(ok) {
+    var bi = segs.indexOf(blank);
+    if (cursor < bi) { cursor = bi; render(); blank.scrollIntoView({ block: 'center' }); }   // 빈칸 차례까지 먼저 읽는다 — 주소(&do=)로 바로 열 수 있게
     if (!isPopOpen()) openPop();
     var o = [].filter.call(document.querySelectorAll('.bpop__opt:not(.is-dead)'), function (x) {
       return (x.dataset.val === ANSWER) === ok;
