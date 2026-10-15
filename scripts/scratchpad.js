@@ -10,8 +10,8 @@
    · 딤은 "둘레만" — 문제 영역(.content/.rframe)과 콘솔바 띠는 딤에 깔리지 않고
      원래 밝기로 남는다. 딤 농도는 0.8 — 둘레를 확실히 눌러 문제만 뜨게 한다.
    · 콘솔바 전환 연출 — 기존 .bar가 아래로 내려가고, 같은 자리에 이 스크립트가
-     화면의 .bar를 복제해 네이비 톤으로 칠한 도구 바를 올린다.
-     좌우 일러스트도 같은 계산으로 다시 칠해 이음매가 없다(포인트 컬러는 살아 있음).
+     화면의 .bar를 그대로 복제한 도구 바를 올린다(모양·색이 원래 콘솔바와 같다 — 2026-10-15,
+     전에는 네이비로 다시 칠했다). 트레이 안 버튼만 연습장 도구로 바뀐다.
    · 도구: 잉크 3색(기본·빨강·파랑) · 지우개 · 뒤로/앞으로 복귀 · 전체 지우기.
    · 나가는 버튼은 「연습장」 버튼과 같은 왼쪽 자리 — 켠 자리에서 끈다.
    · 잉크는 쓰는 순간의 테마를 따른다 — 라이트=진한 색, 다크=밝은 색.
@@ -45,84 +45,7 @@
     root.className = 'scratch';
     root.id = 'scratchpad';
     root.setAttribute('aria-hidden', 'true');
-    /* ── 좌우 일러스트 리컬러 ──────────────────────────────────────────────
-       ① 채도를 살짝만 낮춘다(SAT) — 램프·레이더 같은 포인트 컬러가 살아남는다.
-       ② 명암 단계를 네이비 램프(RAMP)로 갈아끼운다.
-       같은 계산을 아래 recolor()가 JS로도 하기 때문에, 데코의 밴드색과
-       바 가운데(.bar__mid·.bar__tray) 면색이 정확히 같은 값이 되어 이음매가 없다. */
-    var SAT = 0.42;
-    /* 네이비 램프 여덟 단 — tokens.css 의 값을 그대로 읽는다(옮겨 적은 숫자가 토큰과 어긋나지 않게).
-       필터 표에 넣는 0–1 값이라 소수 셋째 자리에서 자른다. */
-    var RAMP_STEPS = ['--n-950', '--n-900', '--n-800', '--n-700', '--n-650', '--n-600', '--n-500', '--n-350'];
-    var RAMP = { r: [], g: [], b: [] };
-    var rootStyle = getComputedStyle(document.documentElement);
-    RAMP_STEPS.forEach(function (name) {
-      var hex = rootStyle.getPropertyValue(name).trim().replace('#', '');
-      ['r', 'g', 'b'].forEach(function (ch, i) {
-        RAMP[ch].push(Math.round(parseInt(hex.substr(i * 2, 2), 16) / 255 * 1000) / 1000);
-      });
-    });
-    /* 섹션마다 원본 콘솔 밝기가 다르다(개념 파랑 .67 · 유형 베이지 .89 …).
-       그대로 두면 연습장 바가 화면마다 다른 어둡기로 나오므로, 트레이 밝기를
-       기준값에 맞추는 배율을 먼저 건다 — 어느 화면이든 같은 톤의 연습장이 된다. */
-    var TARGET_L = 0.667;
-    var SLOPE = (function () {
-      var t = pageBar.querySelector('.bar__tray');
-      var m = t && /rgba?\(([^)]+)\)/.exec(getComputedStyle(t).backgroundColor);
-      if (!m) return 1;
-      var p = m[1].split(',').map(parseFloat);
-      var L = (0.2126 * p[0] + 0.7152 * p[1] + 0.0722 * p[2]) / 255;
-      if (!L) return 1;
-      return Math.min(1.4, Math.max(0.5, TARGET_L / L));
-    })();
-    function satMatrix(s) {
-      return [
-        0.213 + 0.787 * s, 0.715 - 0.715 * s, 0.072 - 0.072 * s,
-        0.213 - 0.213 * s, 0.715 + 0.285 * s, 0.072 - 0.072 * s,
-        0.213 - 0.213 * s, 0.715 - 0.715 * s, 0.072 + 0.928 * s
-      ];
-    }
-    function tableAt(v, c) {                     /* feFuncR/G/B type="table"과 같은 보간 */
-      c = Math.min(1, Math.max(0, c));
-      var n = v.length - 1, k = Math.min(n - 1, Math.floor(c * n)), t = c * n - k;
-      return v[k] + t * (v[k + 1] - v[k]);
-    }
-    function recolorRGB(r, g, b) {               /* 0–255 → 0–255 (필터와 동일 계산) */
-      var m = satMatrix(SAT);
-      r /= 255; g /= 255; b /= 255;
-      var R = (m[0] * r + m[1] * g + m[2] * b) * SLOPE;
-      var G = (m[3] * r + m[4] * g + m[5] * b) * SLOPE;
-      var B = (m[6] * r + m[7] * g + m[8] * b) * SLOPE;
-      return [
-        Math.round(tableAt(RAMP.r, R) * 255),
-        Math.round(tableAt(RAMP.g, G) * 255),
-        Math.round(tableAt(RAMP.b, B) * 255)
-      ];
-    }
-    function recolorCSS(css) {                   /* "rgb(135,174,236)" → "rgb(...)" */
-      var m = /rgba?\(([^)]+)\)/.exec(css || '');
-      if (!m) return null;
-      var p = m[1].split(',').map(parseFloat);
-      var o = recolorRGB(p[0], p[1], p[2]);
-      return 'rgb(' + o[0] + ',' + o[1] + ',' + o[2] + ')';
-    }
-
     root.innerHTML =
-      '<svg class="scratch__defs" width="0" height="0" aria-hidden="true">' +
-        '<filter id="scratchNavy" color-interpolation-filters="sRGB">' +
-          '<feColorMatrix type="saturate" values="' + SAT + '"/>' +
-          '<feComponentTransfer>' +
-            '<feFuncR type="linear" slope="' + SLOPE + '"/>' +
-            '<feFuncG type="linear" slope="' + SLOPE + '"/>' +
-            '<feFuncB type="linear" slope="' + SLOPE + '"/>' +
-          '</feComponentTransfer>' +
-          '<feComponentTransfer>' +
-            '<feFuncR type="table" tableValues="' + RAMP.r.join(' ') + '"/>' +
-            '<feFuncG type="table" tableValues="' + RAMP.g.join(' ') + '"/>' +
-            '<feFuncB type="table" tableValues="' + RAMP.b.join(' ') + '"/>' +
-          '</feComponentTransfer>' +
-        '</filter>' +
-      '</svg>' +
       '<div class="scratch__dim"><i class="scratch__hole"></i></div>' +
       '<canvas class="scratch__canvas" aria-label="연습장 필기면"></canvas>';
 
@@ -131,7 +54,7 @@
 
     var ICO_CLOSE = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>';
 
-    /* 화면의 콘솔바를 복제해 도구 바로 쓴다 — 형태·좌우 일러스트가 그대로 온다 */
+    /* 화면의 콘솔바를 복제해 도구 바로 쓴다 — 형태 · 색 · 좌우 일러스트가 그대로 온다 */
     var toolbar = pageBar.cloneNode(true);
     toolbar.classList.remove('scratch-anim', 'scratch-away');
     toolbar.querySelectorAll('[id]').forEach(function (el) { el.removeAttribute('id'); });
@@ -151,16 +74,6 @@
         '<button class="toolbtn scratch__tool scratch__tool--ico" data-tool="redo" aria-label="앞으로 복귀" disabled>' + ICO_REDO + '</button>' +
         '<button class="toolbtn scratch__tool" data-tool="clear"><span>전체 지우기</span></button>' +
       '</div>';
-    /* 가운데 면색도 데코와 똑같은 계산으로 옮긴다 — 이래야 이음매가 안 보인다.
-       화면마다 트레이 색이 다르지만(개념 파랑·유형 베이지·서술형 보라·과제 회색)
-       실제 계산된 색을 읽어 변환하므로 어느 화면이든 데코 밴드와 정확히 맞는다. */
-    ['.bar__mid', '.bar__tray'].forEach(function (sel) {
-      var src = pageBar.querySelector(sel), dst = toolbar.querySelector(sel);
-      if (!src || !dst) return;
-      var next = recolorCSS(getComputedStyle(src).backgroundColor);
-      if (next) dst.style.background = next;
-    });
-
     root.appendChild(toolbar);
     document.body.appendChild(root);
 

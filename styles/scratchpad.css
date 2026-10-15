@@ -11,7 +11,6 @@
 /* 오버레이 뼈대 — 콘텐츠 → 딤(둘레만) → 캔버스 → 도구 바 */
 .scratch { position: fixed; inset: 0; z-index: calc(var(--z-overlay) + 50); display: none; }
 .scratch.is-open { display: block; }
-.scratch__defs { position: absolute; }   /* 좌우 일러스트를 다시 칠하는 SVG 필터의 보관함 */
 
 /* 딤 — 문제 영역에 구멍을 뚫은 스포트라이트. 화면 끝까지 깔고,
    콘솔바는 그 위에 얹혀(z-index) 안 눌린다 — 데코 곡선 바깥까지 빈틈 없이 덮인다 */
@@ -24,17 +23,15 @@
 /* 잉크 3색 — 쓰는 순간의 테마를 따른다 (다크 기본 / 라이트 뒤집기)
    딤은 --scrim 보다 훨씬 진하게 눌러 문제 영역만 뜨게 한다 */
 
-/* 도구 바 = 화면 .bar의 복제본 + 네이비 톤. 형태는 화면 CSS를 그대로 물려받는다 */
+/* 도구 바 = 화면 .bar의 복제본. 모양 · 색은 화면 CSS를 그대로 물려받는다 (원래 콘솔바와 같은 모습) */
 .scratch .bar { transform: translateY(112%); transition: transform .32s cubic-bezier(.2,.8,.3,1.08); pointer-events: auto; z-index: 2; }
 .scratch.is-in .bar { transform: translateY(0); }
-.scratch .bar__mid { pointer-events: auto; }   /* 면색은 scratchpad.js 의 recolor() 가 계산해 넣는다 */
-/* 좌우 일러스트는 네이비 램프로 다시 칠한다 (SVG 필터가 실제 색을 매핑) */
-.scratch .bar__deco { filter: url(#scratchNavy); }
+.scratch .bar__mid { pointer-events: auto; }
 
 /* 도구 바 속 버튼은 화면이 이미 쓰는 .toolbtn 그대로 —
    같은 콘솔 패널의 다른 상태로 읽히게 한다. 여기선 연습장 전용 상태만 얹는다. */
 .scratch__tools { display: flex; align-items: center; gap: var(--sp-8); }
-.scratch__sep { width: var(--bw-1); height: 24px; background: var(--white-a16); margin: 0 2px; }
+.scratch__sep { width: var(--bw-1); height: 24px; background: color-mix(in srgb, var(--shade) 20%, transparent); margin: 0 2px; }   /* 콘솔 트레이는 모든 계열에서 밝은 면이라 어두운 선 */
 .scratch__done svg, .scratch__tool svg { width: 18px; height: 18px; flex: none; }
 .scratch__tool.is-on { background: var(--hw-light); color: var(--paper-ink); }   /* 고른 도구 = 눌린 키 */
 /* 잉크 칩도 같은 물리 버튼 언어(하드 드롭) */

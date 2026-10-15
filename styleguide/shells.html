@@ -6,10 +6,10 @@
   <title>셸 — 리딩수학과학 디자인 시스템</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
   <base href="../" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261015-9" />
-  <link rel="stylesheet" href="styles/base.css?v=20261015-9" />
-  <link rel="stylesheet" href="styles/components.css?v=20261015-9" />
-  <link rel="stylesheet" href="styleguide/sg.css?v=20261015-9" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261015-11" />
+  <link rel="stylesheet" href="styles/base.css?v=20261015-11" />
+  <link rel="stylesheet" href="styles/components.css?v=20261015-11" />
+  <link rel="stylesheet" href="styleguide/sg.css?v=20261015-11" />
 </head>
 <body data-sg-css="tokens,base,components,learn-shell">
 <div class="sg">
@@ -262,7 +262,7 @@
           물리 키보드도 됩니다. <code>keypad-input.js</code>가 누른 키에 해당하는 화면 버튼을 대신 클릭하므로, 입력 로직은 한 벌입니다.</p>
         <template class="sg-src">
           <div class="keypad" id="kp"></div>
-          <script src="scripts/keypad.js?v=20261015-9"></script>
+          <script src="scripts/keypad.js?v=20261015-11"></script>
           <script>
             /* 키 구성의 정본은 keypad.js 의 KEYS 배열 하나뿐이다.
                문서가 그걸 옮겨 적으면 키가 바뀔 때 문서만 옛것이 된다. */
@@ -278,7 +278,7 @@
         <p class="sg-note">마크업과 CSS가 위와 같고, 견본의 <code>data-section</code>만 <code>type</code>입니다. 트레이 틴트와 LCD 글자색이 틸로 바뀝니다.</p>
         <template class="sg-src">
           <div class="keypad" id="kp2"></div>
-          <script src="scripts/keypad.js?v=20261015-9"></script>
+          <script src="scripts/keypad.js?v=20261015-11"></script>
           <script>document.getElementById('kp2').innerHTML = RMKeypad.html();</script>
         </template>
       </div>
@@ -293,9 +293,9 @@
         검수할 때는 주소 끝에 <code>?scratch=1</code>을 붙입니다.</p>
       <details class="sg-why"><summary>근거</summary>
         <p>딤이 필기 위에 있으면 그려 놓은 선이 딤에 묻힌다.</p>
-        <p>스크립트가 CSS 40줄을 <code>&lt;style&gt;</code>로 넣던 것을 2026-10-14에 파일로 옮겼다(<code>RM-JS-01</code>). 네이비로 다시 칠하는 필터의 램프 값도 숫자를 옮겨 적지 않고 <code>tokens.css</code>에서 읽는다.</p>
+        <p>스크립트가 CSS 40줄을 <code>&lt;style&gt;</code>로 넣던 것을 2026-10-14에 파일로 옮겼다(<code>RM-JS-01</code>). 2026-10-15까지는 복제한 바를 네이비로 다시 칠했다. 원래 콘솔바와 같은 모습이 낫다는 판단으로 걷었다.</p>
       </details>
-      <div class="sg-rule sg-rule--do">도구 바는 그 화면의 <code>.bar</code>를 복제해 네이비로 다시 칠한 것이다. 트레이 모양과 좌우 일러스트가 자동으로 따라오므로, 콘솔바 구조를 바꾸면 연습장도 함께 확인한다.</div>
+      <div class="sg-rule sg-rule--do">도구 바는 그 화면의 <code>.bar</code>를 그대로 복제한 것이다. 모양 · 색 · 좌우 일러스트가 원래 콘솔바와 같고 트레이 안 버튼만 연습장 도구로 바뀌므로, 콘솔바 구조를 바꾸면 연습장도 함께 확인한다.</div>
       <table class="sg-table">
         <thead><tr><th style="width:180px">클래스</th><th>무엇</th></tr></thead>
         <tbody>
@@ -304,14 +304,14 @@
           <tr><td><code>.scratch__hole</code></td><td>딤에 뚫는 구멍. 문제 영역(<code>.content</code>/<code>.rframe</code>) 자리를 원래 밝기로 남긴다</td></tr>
           <tr><td><code>.bar.scratch-away</code></td><td>화면의 콘솔바가 아래로 내려가는 퇴장</td></tr>
           <tr><td><code>.scratch__tools</code> · <code>__tool</code> · <code>__swatch</code></td><td>복제한 콘솔바 위의 도구들</td></tr>
-          <tr><td><code>.bar.scratch-anim</code></td><td>그 퇴장의 움직임(전환 시간). 네이비 도구 바는 복제본이 아래에서 올라온다</td></tr>
+          <tr><td><code>.bar.scratch-anim</code></td><td>그 퇴장의 움직임(전환 시간). 도구 바는 복제본이 아래에서 올라온다</td></tr>
         </tbody>
       </table>
     </section>
 
   </main>
 </div>
-<script src="styleguide/shells.js?v=20261015-9"></script>
-<script src="styleguide/sg.js?v=20261015-9"></script>
+<script src="styleguide/shells.js?v=20261015-11"></script>
+<script src="styleguide/sg.js?v=20261015-11"></script>
 </body>
 </html>

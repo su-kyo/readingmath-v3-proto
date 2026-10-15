@@ -116,7 +116,7 @@
     "how": "`style-audit.py` 지킬 것 「1단(팔레트) 직접 사용」. 0이어야 한다. CSS · JS · HTML 인라인 style을 센다.",
     "machine": true
    },
-   "except": "`tokens.css`, 스토리북(팔레트 견본), 연습장 일러스트 재채색 필터(`scratchpad.js`가 램프 값을 데이터로 읽는다), SVG 그림 파일",
+   "except": "`tokens.css`, 스토리북(팔레트 견본), SVG 그림 파일",
    "since": "2026-10-14",
    "deprecated": false,
    "doc": "styleguide/rules.html#RM-COL-05"

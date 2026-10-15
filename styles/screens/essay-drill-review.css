@@ -5,7 +5,7 @@
 
 /* ============ 서술형 = 퍼플 (essay-drill 셸 재사용) ============ */
 .content {
-  flex-direction: column; padding: clamp(12px, 1.6vw, 16px) clamp(12px, 1.6vw, 16px) 0;
+  flex-direction: column; padding: 0 clamp(12px, 1.6vw, 16px) 0;   /* 문제 카드가 프레임 윗변에 붙는다 (기본 다지기 v2와 같음) */
   --guide: color-mix(in srgb, var(--text-on-frame) 94%, transparent); --card: var(--surface-1); --card-br: var(--white-a08); --card-sh: none;
   --step-bg: var(--white-a06); --step-fg: var(--text-muted);
   /* 채점 색 (다크) — 면 없음 · 선 = 500 · 글자 = 밝힌 단계. 전역 --ok-ink/--no-ink 는 덮어쓰지 않는다 (예전엔 자기 참조라 라이트 글자색이 무효였다) */
