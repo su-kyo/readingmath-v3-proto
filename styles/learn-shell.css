@@ -104,7 +104,7 @@ body.learn-body { background: var(--asset-console-concept-body); overflow: hidde
 .step-card.is-open { border-style: dashed; border-color: color-mix(in srgb, var(--accent, var(--th-accent)) 55%, transparent); }
 /* 시작하기 = pill 버튼 */
 .step-card__start { display: inline-flex; align-items: center; gap: var(--sp-4); padding: var(--sp-8) var(--sp-16); border-radius: var(--r-full);
-  background: var(--subj-solid, var(--th-solid)); color: var(--text-on-accent) !important; font-weight: var(--fw-heavy); font-size: var(--fs-15); white-space: nowrap;
+  background: var(--th-solid); color: var(--text-on-accent) !important; font-weight: var(--fw-heavy); font-size: var(--fs-15); white-space: nowrap;
   box-shadow: 0 var(--depth-4) 0 var(--black-a20); transition: filter .12s; }
 .step-card.is-open:hover .step-card__start { filter: brightness(1.12); }
 

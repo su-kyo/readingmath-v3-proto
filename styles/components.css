@@ -125,7 +125,7 @@
 .btn-grade[hidden] { display: none; }
 
 /* ----- 화면 공용으로 올림 (2026-10-14 · RM-FILE-03) — concept-basic-ops · concept-drill · type-quiz · type-review ----- */
-.ex { align-self: stretch; background: none; box-shadow: inset 0 0 0 var(--bw-1_5) var(--ex-br); border-radius: var(--r-16); padding: var(--sp-20) var(--sp-24); margin-bottom: 22px; }
+.ex { align-self: stretch; background: none; box-shadow: inset 0 0 0 var(--bw-1_5) var(--ex-br, var(--border-strong)); border-radius: var(--r-16); padding: var(--sp-20) var(--sp-24); margin-bottom: 22px; }
 .ex__shape { display: flex; justify-content: center; }
 .qopts-row { align-self: stretch; display: flex; gap: var(--sp-12); flex-wrap: wrap; justify-content: center; }
 .qopts-row .qopt { flex: 1 1 0; min-width: 120px; }

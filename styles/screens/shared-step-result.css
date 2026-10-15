@@ -9,9 +9,9 @@
   flex: 1; min-height: 0; display: flex; gap: var(--sp-12);
   background: var(--th-static); border-radius: var(--r-frame) var(--r-frame) 0 0; padding: var(--sp-8) var(--sp-8) 0;
   --lmain: var(--n-900); --ltext: var(--n-050); --lmuted: var(--n-300);
-  --bar-track: var(--n-700); --lcd: var(--white-a04);
-  --accent: var(--th-accent-hi); --title1: var(--th-accent-hi); --title2: var(--th-accent); --rate: var(--cyan-400);
-  --row-bg: var(--white-a04); --row-br: color-mix(in srgb, var(--teal-200) 38%, transparent);
+  --lcd: var(--white-a04);
+  --accent: var(--th-accent-hi); --title1: var(--th-accent-hi); --rate: var(--cyan-400);
+  --row-bg: var(--white-a04);
 }
 /* 우측 '학습 진행 현황' — 항상 다크. 면 색은 림(--th-static)과 같은 블루 계열에서 파생(톤온톤) → 공용 styles/result.css */
 

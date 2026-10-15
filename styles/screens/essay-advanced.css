@@ -10,10 +10,8 @@
   --guide: color-mix(in srgb, var(--violet-050) 94%, transparent); --card: var(--surface-1); --card-br: var(--white-a08); --card-sh: none;
   --step-fg: var(--text-muted);
   --box-bg: var(--n-900); --box-br: var(--white-a10);
-  --qa-soft: var(--white-a06); --qa-sub: var(--n-100);
-  --bl-next: color-mix(in srgb, var(--violet-450) 85%, transparent);
   /* 문제 카드 = 프레임 테두리색(th-static)과 면 공유 · 라이트/다크 동일 */
-  --pc-bg: var(--th-static); --pc-text: color-mix(in srgb, var(--violet-050) 92%, transparent); --pc-chev: var(--white-a60);
+  --pc-text: color-mix(in srgb, var(--violet-050) 92%, transparent); --pc-chev: var(--white-a60);
   --qtab-bg: var(--white-a10); --qtab-fg: var(--white-a90);
   --qtab-done-bg: color-mix(in srgb, var(--th-accent) 52%, transparent); --qtab-done-fg: var(--text-on-accent);
 }
@@ -23,8 +21,6 @@
   --guide: var(--n-650); --card: var(--n-000); --card-br: var(--n-100); --card-sh: none;
   --step-fg: var(--text-meta);
   --box-bg: var(--n-050); --box-br: color-mix(in srgb, var(--violet-600) 12%, transparent);
-  --qa-soft: color-mix(in srgb, var(--violet-600) 5.5%, transparent); --qa-sub: var(--text-meta);
-  --bl-next: color-mix(in srgb, var(--violet-500) 70%, transparent);
 }
 
 
@@ -32,7 +28,7 @@
 
 /* ============ 문제 카드 (헤더 + 접이식 · 프레임에 붙음) ============ */
 .problem { position: sticky; top: 0; z-index: 20; overflow: hidden;
-  background: var(--pc-bg); border: 0; border-radius: 0 0 var(--r-16) var(--r-16); margin: 0 auto; box-shadow: 0 10px 24px color-mix(in srgb, var(--n-950) 28%, transparent); }
+  background: var(--th-static); border: 0; border-radius: 0 0 var(--r-16) var(--r-16); margin: 0 auto; box-shadow: 0 10px 24px color-mix(in srgb, var(--n-950) 28%, transparent); }
 .problem__head { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--sp-8);
   padding: var(--sp-8) var(--sp-16); background: transparent; border: 0; text-align: left; }
 .problem.is-collapsible .problem__head { cursor: pointer; }

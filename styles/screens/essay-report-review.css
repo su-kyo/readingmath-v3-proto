@@ -7,7 +7,7 @@
 .content {
   flex-direction: column; padding: clamp(12px, 1.6vw, 16px) clamp(12px, 1.6vw, 16px) 0;
   --guide: color-mix(in srgb, var(--violet-050) 92%, transparent);
-  --rt-line: var(--n-500); --rt-head: var(--surface-1); --rt-cell: var(--surface-1); --rt-fg: color-mix(in srgb, var(--violet-050) 90%, transparent); --rt-sub: var(--text-muted);
+  --rt-line: var(--n-500); --rt-head: var(--surface-1); --rt-cell: var(--surface-1); --rt-fg: color-mix(in srgb, var(--violet-050) 90%, transparent);
   /* 채점 색 (다크) — 면 없음 · 선 = 500 · 글자 = 밝힌 단계. 전역 --ok-ink/--no-ink 는 덮어쓰지 않는다 (예전엔 자기 참조라 라이트 글자색이 무효였다) */
   --ok-bg: transparent; --ok-br: var(--ok-solid); --ok-fg: var(--ok-on-dark);
   --no-bg: transparent; --no-br: var(--no-solid); --no-fg: var(--no-on-dark);
@@ -16,7 +16,7 @@
 :root[data-theme="light"] .content {
   background: var(--th-panel); border-color: var(--th-static);
   --guide: var(--n-650);
-  --rt-line: var(--n-100); --rt-head: var(--n-050); --rt-cell: var(--n-000); --rt-fg: var(--n-650); --rt-sub: var(--text-meta);
+  --rt-line: var(--n-100); --rt-head: var(--n-050); --rt-cell: var(--n-000); --rt-fg: var(--n-650);
   --ok-fg: var(--ok-ink); --no-fg: var(--no-ink);
 }
 

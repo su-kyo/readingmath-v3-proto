@@ -84,7 +84,7 @@
 @media (prefers-reduced-motion: reduce) { .chunk__go { animation: none; } }
 
 /* 빈칸: 현재 채울 칸만 활성(주황 채움) — 코어는 essay.css. 바깥 펄스 링(글로우)은 제거 */
-.blank.is-active { cursor: pointer; background: var(--bl-selbg); box-shadow: inset 0 0 0 var(--bw-1_5) var(--bl-selline); }
+.blank.is-active { cursor: pointer; background: var(--th-tint-strong); box-shadow: inset 0 0 0 var(--bw-1_5) var(--th-focus); }
 .blank.is-active .blank__badge { color: var(--bl-selbadge); }
 
 
@@ -101,7 +101,7 @@
 .tray { padding: 15px clamp(18px, 2.4vw, 26px) 18px; }
 .tray__label { display: block; font-family: var(--font-sans); font-size: var(--fs-13); font-weight: var(--fw-bold); color: var(--step-fg); margin-bottom: 11px; }
 
-.block:hover { background: var(--chip-hover); box-shadow: inset 0 0 0 var(--bw-1_5) var(--bl-selline); transform: translateY(-1px); }
+.block:hover { background: var(--chip-hover); box-shadow: inset 0 0 0 var(--bw-1_5) var(--th-focus); transform: translateY(-1px); }
 
 @media (prefers-reduced-motion: reduce) { .block.is-in { animation: none; } }
 

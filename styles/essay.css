@@ -20,13 +20,13 @@
   --bl-bg: var(--white-a06); --bl-line: color-mix(in srgb, var(--n-200) 42%, transparent);
   --bl-bgh: var(--white-a12); --bl-lineh: color-mix(in srgb, var(--n-200) 72%, transparent);
   /* 선택 = 계열색(보라). 주황은 CTA 전용 (2026-10-14) · 번호 = 약한 글자(--text-meta) — 힌트지만 읽혀야 한다 */
-  --bl-selbg: var(--th-tint-strong); --bl-selline: var(--th-accent-hi); --bl-selbadge: var(--th-accent-hi);
+  --bl-selbadge: var(--th-accent-hi);
   --bl-badge: var(--text-meta); --bl-fill: color-mix(in srgb, var(--n-200) 22%, transparent); --bl-ans: var(--n-000);
 }
 :root[data-theme="light"] .content {
   --bl-bg: color-mix(in srgb, var(--n-400) 7%, transparent); --bl-line: color-mix(in srgb, var(--violet-600) 30%, transparent);
   --bl-bgh: color-mix(in srgb, var(--n-400) 13%, transparent); --bl-lineh: color-mix(in srgb, var(--violet-600) 50%, transparent);
-  --bl-selbg: var(--th-tint-strong); --bl-selline: var(--th-accent); --bl-selbadge: var(--th-ink-accent);
+  --bl-selbadge: var(--th-ink-accent);
   --bl-badge: var(--text-meta); --bl-fill: color-mix(in srgb, var(--violet-600) 12%, transparent); --bl-ans: var(--n-650);
 }
 
@@ -47,7 +47,7 @@
 .blank.is-filled .blank__ans { opacity: 1; }
 .blank.is-filled .blank__badge { display: none; }
 /* 선택됨(드롭다운 열림) = 주황 (is-filled 뒤에 선언 → 재편집 시 우선) */
-.blank.is-sel { background: var(--bl-selbg); box-shadow: inset 0 0 0 var(--bw-1_5) var(--bl-selline); }
+.blank.is-sel { background: var(--th-tint-strong); box-shadow: inset 0 0 0 var(--bw-1_5) var(--th-focus); }
 .blank.is-sel .blank__badge { color: var(--bl-selbadge); }
 
 /* ============ 빈칸 입력 드롭다운 (팝오버) ============ */
@@ -226,7 +226,7 @@
 /* ----- 화면 공용으로 올림 (2026-10-14 · RM-FILE-03) — essay-drill · essay-drill-v2 ----- */
 .problem__img img { display: block; width: 100%; height: auto; }
 .slot.is-empty { border: var(--bw-1_5) dashed var(--bl-line); }
-.slot.is-filled:hover { box-shadow: inset 0 0 0 var(--bw-1_5) var(--bl-selline); }
+.slot.is-filled:hover { box-shadow: inset 0 0 0 var(--bw-1_5) var(--th-focus); }
 .block { padding: var(--sp-12) var(--sp-16); border-radius: var(--r-12); background: var(--chip-bg); box-shadow: inset 0 0 0 var(--bw-1) var(--chip-br);
   color: var(--guide); font-family: var(--font-serif); font-size: var(--fs-16); font-weight: var(--fw-bold); cursor: pointer; transition: transform .1s, box-shadow .14s, background .14s; }
 .block.is-in { animation: blockIn .22s ease; }
