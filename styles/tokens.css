@@ -335,6 +335,7 @@
   --scratch-ink-1: var(--text);
   --scratch-ink-2: var(--red-300);
   --scratch-ink-3: var(--blue-300);
+  --scratch-ink-1-on: var(--n-900);   /* 기본색 칩 위 체크 — 칩이 다크에선 밝고 라이트에선 진하다 */
 
   /* 유틸 4화면 (RM-UTIL-01~06) — 다크 기본, 라이트 값은 아래 라이트 블록 */
   --util-paper:        var(--n-900);
@@ -510,6 +511,7 @@
   --scratch-dim:   color-mix(in srgb, var(--n-700) 80%, transparent);
   --scratch-ink-2: var(--red-500);
   --scratch-ink-3: var(--blue-450);
+  --scratch-ink-1-on: var(--n-000);
 
   --surface-inset: var(--n-050);
   --divider:        var(--n-100);

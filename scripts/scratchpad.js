@@ -52,6 +52,7 @@
     var ICO_UNDO = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M8 4L3.5 8.5 8 13" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 8.5h7.5a4.5 4.5 0 0 1 0 9H8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
     var ICO_REDO = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12 4l4.5 4.5L12 13" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 8.5H8.5a4.5 4.5 0 0 0 0 9H12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
 
+    var ICO_CHECK = '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     var ICO_CLOSE = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>';
 
     /* 화면의 콘솔바를 복제해 도구 바로 쓴다 — 형태 · 색 · 좌우 일러스트가 그대로 온다 */
@@ -65,9 +66,9 @@
     tray.innerHTML =
       '<button class="toolbtn toolbtn--primary scratch__done" data-tool="close">' + ICO_CLOSE + '<span>연습장 닫기</span></button>' +
       '<div class="scratch__tools">' +
-        '<button class="scratch__swatch is-on" data-ink="1" aria-label="잉크 기본색"></button>' +
-        '<button class="scratch__swatch" data-ink="2" aria-label="잉크 빨강"></button>' +
-        '<button class="scratch__swatch" data-ink="3" aria-label="잉크 파랑"></button>' +
+        '<button class="scratch__swatch is-on" data-ink="1" aria-label="잉크 기본색">' + ICO_CHECK + '</button>' +
+        '<button class="scratch__swatch" data-ink="2" aria-label="잉크 빨강">' + ICO_CHECK + '</button>' +
+        '<button class="scratch__swatch" data-ink="3" aria-label="잉크 파랑">' + ICO_CHECK + '</button>' +
         '<button class="toolbtn scratch__tool" data-tool="eraser"><span>지우개</span></button>' +
         '<span class="scratch__sep"></span>' +
         '<button class="toolbtn scratch__tool scratch__tool--ico" data-tool="undo" aria-label="뒤로 복귀" disabled>' + ICO_UNDO + '</button>' +
