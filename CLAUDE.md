@@ -180,6 +180,11 @@ Phase 6에서 키패드가 한 벌(`.keypad__key`)로 합쳐져 이 파일도 �
 테마를 따라 뒤집히는 카드이고 계열색은 왼쪽 원에만. 오답 → 빨간 ✕ 0.5초 → 회색 ✕ 비활성, 정답 → 초록 ✓ 0.5초 뒤 닫힘. `answer`가 없으면 채점 없이 바로 넣는다.
 서술형 주관식 키패드 창(`.qpop`)은 정적 하드웨어라 따로다. 판단은 `docs/blank-pop-1015.md`.
 
+**빈칸 — `components.css`의 공용 빈칸 + `--blank-*` 토큰 (2026-10-15 · `RM-PART-08`).** 문장 속 빈칸은 칸형 한 벌이다
+(개념 학습 `.chunk--blank` · 요약 창 `.sblank` · 개념 다지기 `.dblank` · 서술형 `.blank` — 이름은 화면 것을 그대로 받는다).
+면은 기본 면 하나, 상태는 테두리 · 글자 · 배지로만: 빈칸 1.5px 계열 500 · 지금 2px 계열 600 · 채움 1.5px 회색 + 계열 600 답 · 정답/오답 2px 500 + 600 글자 + ✓·✕.
+「지금」에 바깥 링 · 깜빡이는 커서를 두지 않는다. 화면 CSS는 크기 · 글꼴 · 배지 · 누를 수 있는지만 정한다. 답안 칸 `.sinput` · 순서 맞추기 `.slot`은 밖이다.
+
 **콘솔바 안내 — `scripts/learn-guide.js` + `learn-shell.css`의 `.guide` (2026-10-15 · `RM-PART-07`).** 학습 화면 콘솔바 오른쪽 CTA 바로 왼쪽의 한 줄 안내.
 화면은 `RMGuide.set(문장, 'ok' | 'no')`만 부른다(빈 문장 = 숨김). 글자는 `--guide-ink` 하나, 상태는 램프(진한 테두리 700 + 밝은 불 300)로만 — 상태색 글자는 개념 파란 트레이에서 안 읽힌다.
 테스트 서버에 개발자가 넣은 안내(cockpit-guide)를 받아 옮긴 것이고, 함께 받아들인 것: 「채점하기 · 다음 문제」를 콘솔바 CTA로(개념 다지기 · 기초 연산 · 유형 풀이 · 유형 해설),
@@ -211,7 +216,7 @@ styleguide/foundations.html   색 3단 · 칠면 셋 · 글자/간격/모서리/
 styleguide/components.html    버튼 · 상태 타일 · 빈칸 · 선택지 · 계기판 · 토스트 (화면이 쓰는 것만)
 styleguide/shells.html        GNB/서랍 · 학습 헤더 · 콘솔바 · 보조 모니터 · 키패드 · 연습장
 styleguide/patterns.html      목록 네 상태 · 유틸 예외 체계 · JS가 넣는 변수 · 검수 스위치 · 남긴 예외
-styleguide/rules.html         규칙 색인 — RM-영역-번호 57개의 정본 (2026-10-14 · 끊어읽기 READ · 빈칸 선지 창 PART-06 · 콘솔바 안내 PART-07 2026-10-15)
+styleguide/rules.html         규칙 색인 — RM-영역-번호 58개의 정본 (2026-10-14 · 끊어읽기 READ · 빈칸 선지 창 PART-06 · 콘솔바 안내 PART-07 · 빈칸 PART-08 2026-10-15)
 styleguide/screens.html       화면 지도 — 화면마다 부품 · 토큰 · 규칙 (data/screens.json 을 그린다)
 styleguide/data/              개발자용 tokens.json(DTCG) · rules.json · screens.json — 스크립트가 만든다
 styleguide/sg.css · sg.js     여섯 장이 공유하는 뼈대 (목록 · 액자 · 배지 · 규칙 카드 · 본문의 RM-번호 링크)
@@ -372,6 +377,7 @@ tools/screen-diff.py /tmp/rm-before /tmp/rm-after
   - `RM-PART-05` 새 학습 화면에는 검수 스위치를 붙인다 (눈)
   - `RM-PART-06` 빈칸 선지는 공용 창 하나 — 오답은 회색 ✕로 남고 정답은 0.5초 뒤 닫힌다 (눈)
   - `RM-PART-07` 콘솔바 안내는 CTA 바로 왼쪽 한 줄 — 글자는 하나, 상태는 램프로만 (눈)
+  - `RM-PART-08` 문장 속 빈칸은 칸형 한 벌 — 면은 하나, 상태는 테두리 · 글자 · 배지로 (눈)
 - **JS** 스크립트
   - `RM-JS-01` JS는 스타일을 만들지 않는다
   - `RM-JS-02` JS가 심는 변수는 목록에 올린다

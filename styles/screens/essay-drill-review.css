@@ -93,14 +93,14 @@
 .rblank__val, .rslot__val { line-height: 1.2; }
 
 /* 정답 */
-.rblank.is-correct, .rslot.is-correct { background: var(--ok-bg); color: var(--ok-fg); box-shadow: inset 0 0 0 var(--bw-1_5) var(--ok-br); }
+.rblank.is-correct, .rslot.is-correct { background: var(--ok-bg); color: var(--ok-fg); box-shadow: inset 0 0 0 var(--bw-2) var(--ok-br); }
 
 /* 오답 = 내 답(빨강 채움). 취소선 없음 — 오답도 읽어야 할 정보다.
    클릭하면 같은 칸이 정답(초록)으로 토글 — 병렬 표시 아님 */
-.rblank.is-wrong, .rslot.is-wrong { background: var(--no-bg); color: var(--no-fg); box-shadow: inset 0 0 0 var(--bw-1_5) var(--no-br); cursor: pointer; transition: box-shadow .15s, background .15s, color .15s; }
+.rblank.is-wrong, .rslot.is-wrong { background: var(--no-bg); color: var(--no-fg); box-shadow: inset 0 0 0 var(--bw-2) var(--no-br); cursor: pointer; transition: box-shadow .15s, background .15s, color .15s; }
 .rblank.is-wrong:hover, .rslot.is-wrong:hover { box-shadow: inset 0 0 0 var(--bw-2) var(--no-br), 0 0 0 var(--bw-3) var(--no-bg); }
 /* 토글 상태 = 정답 노출(초록) : 같은 공간 */
-.rblank.is-wrong.show-ans, .rslot.is-wrong.show-ans { background: var(--ok-bg); color: var(--ok-fg); box-shadow: inset 0 0 0 var(--bw-1_5) var(--ok-br); }
+.rblank.is-wrong.show-ans, .rslot.is-wrong.show-ans { background: var(--ok-bg); color: var(--ok-fg); box-shadow: inset 0 0 0 var(--bw-2) var(--ok-br); }
 .rblank.is-wrong.show-ans:hover, .rslot.is-wrong.show-ans:hover { box-shadow: inset 0 0 0 var(--bw-2) var(--ok-br), 0 0 0 var(--bw-3) var(--ok-bg); }
 
 /* 정답 확인 = 우측 상단 원형 뱃지 (정답 초록 ✓ / 오답 빨강 ✕) — 색맹도 모양으로 구분.

@@ -122,8 +122,7 @@
 
 /* 빈칸: 현재 채울 칸만 활성(주황 펄스) — 코어는 essay.css */
 /* 지금 채울 칸 = 주황 채움+테두리 하나로 충분. 바깥 펄스 링(글로우)은 제거 */
-.blank.is-active { cursor: pointer; background: var(--th-tint-strong); box-shadow: inset 0 0 0 var(--bw-1_5) var(--th-focus); }
-.blank.is-active .blank__badge { color: var(--bl-selbadge); }
+.blank.is-active { cursor: pointer; }   /* 모양은 공용 빈칸의 「지금」 */
 
 
 /* ============ 순서 맞추기 인라인 슬롯 ============ */

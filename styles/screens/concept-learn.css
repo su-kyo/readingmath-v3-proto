@@ -51,25 +51,17 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 .img-tag__num { width: 24px; height: 24px; border-radius: var(--r-4); display: flex; align-items: center; justify-content: center;
   font: var(--fw-bold) var(--fs-14)/1 var(--font-sans); letter-spacing: 0; cursor: pointer; transition: background .15s ease; }
 .img-tag__num.is-on { background: var(--th-solid); color: var(--text-on-accent); }
-/* 빈칸 */
-.chunk--blank { display: inline-flex; align-items: center; justify-content: center; min-width: 62px; padding: var(--sp-4) var(--sp-12); margin: 0 3px; border-radius: var(--r-8); background: var(--th-tint-strong); color: var(--text); font-weight: var(--fw-bold); box-shadow: inset 0 0 0 var(--bw-1_5) var(--th-accent); vertical-align: baseline; font-family: var(--font-sans); }
-/* 답 대기 · 선택 중: 테두리 대신 fill로 채워 hover에도 확실히 보이게 (읽기 유도) */
-.chunk--blank.is-current, .chunk--blank.is-open,
-.chunk--blank.is-current:hover, .chunk--blank.is-open:hover {
-  cursor: pointer; background: var(--th-solid); color: var(--text-on-accent); box-shadow: none;
-}
-/* 입력 완료: CTA처럼 튀지 않게 배경보다 살짝 밝은 은은한 톤 차이만 (읽기 흐름 유지) */
-.chunk--blank.is-filled, .chunk--blank.is-filled.is-read {
-  background: var(--th-tint); color: var(--th-ink-accent); box-shadow: none;
-}
+/* 빈칸 — 모양 · 상태는 공용 빈칸(components.css · RM-PART-08). .chunk 의 모서리 · 여백을 칸 쪽으로 되돌리고 글꼴만 정한다 */
+.chunk--blank { padding: 0 var(--sp-12); border-radius: var(--r-8); font-family: var(--font-sans); }
+.chunk--blank.is-current, .chunk--blank.is-open { cursor: pointer; }
 /* 오답 흔들림 */
 .chunk--blank.is-wrong { animation: blankShake .4s; }
 @keyframes blankShake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-4px)} 40%,80%{transform:translateX(4px)} }
-
 /* 빈칸 선지 창 = 공용 .bpop (components.css · scripts/blank-pop.js) */
-/* 방금 맞힌 빈칸도 같은 0.5초 동안 초록으로 (효과를 보고 나서 넘어간다) */
-.chunk--blank.is-just-correct, .chunk--blank.is-just-correct.is-read,
-.chunk--blank.is-just-correct:hover { background: var(--ok-solid); color: var(--text-on-accent); box-shadow: none; }
+/* 방금 맞힌 빈칸 0.5초 = 공용 「정답」 + ✓ 배지 (효과를 보고 나서 넘어간다) */
+.chunk--blank.is-just-correct::after { content: "✓"; position: absolute; top: -8px; right: -8px; width: 17px; height: 17px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; font-size: var(--fs-11); font-weight: var(--fw-heavy);
+  background: var(--ok-solid); color: var(--text-on-accent); box-shadow: 0 1px 3px var(--black-a30); }
 @media (prefers-reduced-motion: reduce) { .chunk--blank.is-wrong { animation: none; } }
 
 /* ===== 이미지 뷰어 (스켈레톤) ===== */
@@ -115,16 +107,6 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 :root[data-theme="dark"] .article .hl-mark { background: var(--art-mark-bg); color: var(--art-mark-fg); }
 :root[data-theme="dark"] .chunk--img.is-active { color: var(--th-accent-hi); }
 :root[data-theme="dark"] .img-tag__pill { background: var(--surface-2); color: var(--th-accent-hi); }
-:root[data-theme="dark"] .chunk--blank { background: var(--th-tint-strong); color: var(--text); box-shadow: inset 0 0 0 var(--bw-1_5) var(--th-accent); }
-/* 답 대기·선택 중 = fill (테두리 clobber 방지) */
-:root[data-theme="dark"] .chunk--blank.is-current, :root[data-theme="dark"] .chunk--blank.is-open,
-:root[data-theme="dark"] .chunk--blank.is-current:hover, :root[data-theme="dark"] .chunk--blank.is-open:hover {
-  background: var(--th-solid); color: var(--text-on-accent); box-shadow: none;
-}
-/* 입력 완료 = 은은한 톤 (다크 패널보다 살짝 밝게) */
-:root[data-theme="dark"] .chunk--blank.is-filled, :root[data-theme="dark"] .chunk--blank.is-filled.is-read {
-  background: var(--white-a08); color: var(--text); box-shadow: none;
-}
 :root[data-theme="dark"] .viewer__frame { background: var(--surface-1); box-shadow: inset 0 0 0 var(--bw-2) var(--white-a08); }
 :root[data-theme="dark"] .viewer__ph { background: var(--surface-2); color: var(--text-muted); }
 :root[data-theme="dark"] .viewer__label,
@@ -146,7 +128,6 @@ body.learn-body { background: var(--bg); overflow: hidden; }
   --mon-w: 820px;
   /* 라이트 기본 토큰 */
   --sm-card: var(--surface-1); --sm-text: var(--text);
-  --sm-blank-muted: var(--text-muted);
   /* 선지 = 박스(연블루)와 구분되는 흰 버튼 + 진한 글자 + 파란 입체 그림자 (기존엔 박스와 같은 8% 틴트라 흐릿) */
   --sm-opt: var(--surface-1); --sm-opt-text: var(--text); --sm-opt-sh: var(--th-accent-hi);
 }
@@ -154,7 +135,6 @@ body.learn-body { background: var(--bg); overflow: hidden; }
    선지는 그보다 한 단계 더 밝은 면(n-500)으로 층을 만든다. */
 :root[data-theme="dark"] .summary {
   --sm-card: var(--surface-3); --sm-text: var(--text);
-  --sm-blank-muted: var(--text-muted);
   --sm-opt: var(--surface-hover); --sm-opt-text: var(--text-on-accent); --sm-opt-sh: var(--surface-2);
 }
 .summary .monitor__screen { background: var(--sm-card); padding: var(--sp-16) var(--sp-24) var(--sp-20); }
@@ -167,10 +147,9 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 .sseg { border-radius: var(--r-4); padding: 1px 0; box-decoration-break: clone; -webkit-box-decoration-break: clone;
   scroll-margin-block: var(--sp-8); transition: filter .2s ease, opacity .2s ease; }
 .sseg.is-unread { filter: blur(4.5px); opacity: .3; }
-.sblank { display: inline-flex; align-items: center; justify-content: center; min-width: 84px; height: 32px; padding: 0 var(--sp-12); margin: 0 3px; border-radius: var(--r-8); font-weight: var(--fw-bold); vertical-align: middle; background: transparent; color: var(--sm-blank-muted); box-shadow: inset 0 0 0 var(--bw-1_5) var(--th-accent-hi); }
-.sblank.is-active { color: var(--ok-solid); box-shadow: inset 0 0 0 var(--bw-2) var(--ok-solid); }
+/* 요약 창 빈칸 — 모양 · 상태는 공용 빈칸(RM-PART-08). 칸 폭만 넓게 */
+.sblank { min-width: 84px; padding: 0 var(--sp-12); }
 .sblank.is-active::before { content: "?"; }
-.sblank.is-filled { background: var(--th-solid); color: var(--text-on-accent); box-shadow: none; }
 .sblank__thumb { width: 24px; height: 18px; border-radius: var(--r-4); }
 /* 선지 — 현재 구간이 빈칸일 때만 채우고, 공간은 항상 예약(박스 안 흔들림) */
 /* 선지 & '다음으로'를 같은 고정 슬롯에 (번갈아 표시 → 총 높이 불변, 안 밀림/안 벙벙) */

@@ -71,7 +71,7 @@
 
 /* 빈칸: 항상 클릭 가능(재편집) + 예시(given) 변형 — 코어는 essay.css */
 .blank { cursor: pointer; }
-.blank:hover { background: var(--bl-bgh); box-shadow: inset 0 0 0 var(--bw-1) var(--bl-lineh); }
+.blank:not(.blank--given):hover { background: var(--blank-hover); }
 /* 이 화면만 워크시트 여백이 좁고 라벨이 붙어 있다 */
 .worksheet { padding: clamp(16px, 2.2vw, 26px) clamp(14px, 2.4vw, 30px) clamp(20px, 2.4vw, 28px); }
 .worksheet__label { display: inline-flex; margin-bottom: var(--sp-8); }

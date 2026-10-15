@@ -76,7 +76,7 @@
 
 /* 빈칸: 항상 클릭 가능(재편집) + 예시(given) 변형 — 코어는 essay.css */
 .blank { cursor: pointer; }
-.blank:hover { background: var(--bl-bgh); box-shadow: inset 0 0 0 var(--bw-1) var(--bl-lineh); }
+.blank:not(.blank--given):hover { background: var(--blank-hover); }
 
 @media (max-width: 860px) {
   .content { flex-direction: column; overflow-y: auto; }

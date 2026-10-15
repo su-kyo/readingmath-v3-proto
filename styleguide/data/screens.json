@@ -680,6 +680,11 @@
      "doc": "styleguide/components.html#btn"
     },
     {
+     "name": "빈칸 — 칸형",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
      "name": "타일형 선택지",
      "group": "부품 › 답 입력",
      "doc": "styleguide/components.html#input"
@@ -750,26 +755,18 @@
     },
     {
      "name": "--qtext",
-     "count": 10
+     "count": 9
     },
     {
      "name": "--ok-solid",
-     "count": 8
-    },
-    {
-     "name": "--no-solid",
-     "count": 6
-    },
-    {
-     "name": "--input-bg",
-     "count": 6
-    },
-    {
-     "name": "--st-ok",
      "count": 5
     },
     {
      "name": "--text-muted",
+     "count": 4
+    },
+    {
+     "name": "--no-solid",
      "count": 4
     },
     {
@@ -791,6 +788,14 @@
     {
      "name": "--opt-bg",
      "count": 3
+    },
+    {
+     "name": "--st-ok",
+     "count": 3
+    },
+    {
+     "name": "--fade",
+     "count": 2
     }
    ],
    "rules": [
@@ -837,6 +842,11 @@
      "name": "콘솔 도구 버튼",
      "group": "부품 › 버튼",
      "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "빈칸 — 칸형",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
     },
     {
      "name": "빈칸 선지 창",
@@ -895,34 +905,26 @@
    "tokens": [
     {
      "name": "--text-muted",
-     "count": 9
-    },
-    {
-     "name": "--text",
-     "count": 8
-    },
-    {
-     "name": "--th-accent-hi",
-     "count": 8
-    },
-    {
-     "name": "--text-on-accent",
      "count": 7
     },
     {
+     "name": "--th-accent-hi",
+     "count": 7
+    },
+    {
+     "name": "--text",
+     "count": 5
+    },
+    {
      "name": "--th-tint",
-     "count": 6
+     "count": 5
     },
     {
      "name": "--surface-1",
      "count": 5
     },
     {
-     "name": "--th-ink-accent",
-     "count": 4
-    },
-    {
-     "name": "--th-solid",
+     "name": "--text-on-accent",
      "count": 4
     },
     {
@@ -930,16 +932,24 @@
      "count": 4
     },
     {
-     "name": "--th-tint-strong",
+     "name": "--th-ink-accent",
      "count": 3
     },
     {
-     "name": "--ok-solid",
-     "count": 3
-    },
-    {
-     "name": "--th-accent",
+     "name": "--hw-screen",
      "count": 2
+    },
+    {
+     "name": "--sm-opt-sh",
+     "count": 2
+    },
+    {
+     "name": "--bg",
+     "count": 1
+    },
+    {
+     "name": "--th-static-deep",
+     "count": 1
     }
    ],
    "rules": [
@@ -1105,7 +1115,12 @@
      "doc": "styleguide/components.html#btn"
     },
     {
-     "name": "서술형 빈칸",
+     "name": "빈칸 — 칸형",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "빈칸 — 서술형 속",
      "group": "부품 › 답 입력",
      "doc": "styleguide/components.html#input"
     },
@@ -1259,7 +1274,12 @@
      "doc": "styleguide/components.html#btn"
     },
     {
-     "name": "서술형 빈칸",
+     "name": "빈칸 — 칸형",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "빈칸 — 서술형 속",
      "group": "부품 › 답 입력",
      "doc": "styleguide/components.html#input"
     },
@@ -1411,7 +1431,12 @@
      "doc": "styleguide/components.html#btn"
     },
     {
-     "name": "서술형 빈칸",
+     "name": "빈칸 — 칸형",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "빈칸 — 서술형 속",
      "group": "부품 › 답 입력",
      "doc": "styleguide/components.html#input"
     },
@@ -1846,7 +1871,12 @@
      "doc": "styleguide/components.html#btn"
     },
     {
-     "name": "서술형 빈칸",
+     "name": "빈칸 — 칸형",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "빈칸 — 서술형 속",
      "group": "부품 › 답 입력",
      "doc": "styleguide/components.html#input"
     },
@@ -1950,7 +1980,7 @@
      "count": 2
     },
     {
-     "name": "--th-focus",
+     "name": "--bl-ans",
      "count": 2
     }
    ],
@@ -2133,7 +2163,12 @@
      "doc": "styleguide/components.html#btn"
     },
     {
-     "name": "서술형 빈칸",
+     "name": "빈칸 — 칸형",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "빈칸 — 서술형 속",
      "group": "부품 › 답 입력",
      "doc": "styleguide/components.html#input"
     },
@@ -2230,11 +2265,7 @@
      "count": 1
     },
     {
-     "name": "--bl-bgh",
-     "count": 1
-    },
-    {
-     "name": "--bl-lineh",
+     "name": "--blank-hover",
      "count": 1
     },
     {
