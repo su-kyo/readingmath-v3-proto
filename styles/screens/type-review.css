@@ -71,9 +71,9 @@
 /* ===== 오답 해설 박스 (모든 문제) ===== */
 /* 과제 해설(.expl)과 같은 규칙 — 면은 계열색 틴트, 제목은 계열 잉크. 주황은 CTA 전용이라 쓰지 않는다
    (주황을 푸른 뉴트럴에 섞으면 라이트=탁한 분홍 · 다크=갈색이 된다). */
-/* 해설 박스 = 면 없이 왼쪽 계열색 띠 하나 (2026-10-14 · 유형·과제·시험 공통). 띠는 라이트 500 · 다크 300 */
-.explain { align-self: stretch; margin-top: 26px; border-radius: var(--r-4); background: none; box-shadow: inset var(--bw-4) 0 0 var(--th-accent); padding: var(--sp-16) var(--sp-20); }
-:root[data-theme="dark"] .explain { box-shadow: inset var(--bw-4) 0 0 var(--th-accent-hi); }
+/* 유형 해설 박스 = 옅은 계열색(틸) 면 · 띠 없음 (2026-10-15 사용자 결정 · RM-SURF-03 예외). 과제 · 시험 해설은 왼쪽 띠 그대로.
+   면은 --th-tint (라이트 8% · 다크 24%) */
+.explain { align-self: stretch; margin-top: 26px; border-radius: var(--r-12); background: var(--th-tint); padding: var(--sp-16) var(--sp-20); }
 .explain__head { display: flex; align-items: center; gap: var(--sp-6); font-weight: var(--fw-heavy); color: var(--th-ink-accent); font-size: var(--fs-15); margin-bottom: var(--sp-8); }
 :root[data-theme="dark"] .explain__head { color: var(--th-accent-hi); }
 .explain__body { color: var(--qtext); font-size: clamp(14px,1.3vw,16px); line-height: 1.6; }

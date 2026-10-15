@@ -6,10 +6,10 @@
   <title>규칙 색인 — 리딩수학과학 디자인 시스템</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
   <base href="../" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261015-11" />
-  <link rel="stylesheet" href="styles/base.css?v=20261015-11" />
-  <link rel="stylesheet" href="styles/components.css?v=20261015-11" />
-  <link rel="stylesheet" href="styleguide/sg.css?v=20261015-11" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261015-13" />
+  <link rel="stylesheet" href="styles/base.css?v=20261015-13" />
+  <link rel="stylesheet" href="styles/components.css?v=20261015-13" />
+  <link rel="stylesheet" href="styleguide/sg.css?v=20261015-13" />
 </head>
 <body>
 <div class="sg">
@@ -241,11 +241,12 @@
         <p class="sg-rulecard__do">띠 색은 라이트 <code>--th-accent</code>, 다크 <code>--th-accent-hi</code>이고 굵기는 <code>--bw-4</code>다. 유형·과제·시험이 같이 쓴다.</p>
         <dl>
           <dt>검사</dt><dd>눈 · <a href="styleguide/components.html#surf">부품 › 해설 화면의 면</a> 상태표</dd>
-          <dt>예외</dt><dd>없음</dd>
+          <dt>예외</dt><dd>유형 해설(<code>type/review</code>)은 띠 없이 옅은 계열색 면(<code>--th-tint</code>)을 쓴다</dd>
         </dl>
         <details class="sg-why"><summary>근거</summary>
           <p>시험 화면의 조건 칸이 이미 왼쪽 띠를 쓰고 있어서 같은 표현으로 이어진다.</p>
           <p>2026-10-14에 틸 8% 틴트 면이 흰 바탕에서 쑥색으로 읽힌다는 지적이 있었다.</p>
+          <p>2026-10-15에 유형 해설만 다시 옅은 틸 면으로 정했다. 회색 면 · 회색 면과 띠 · 틸 면 시안을 실제 화면에 놓고 비교한 사용자 결정이다. 과제 · 시험 해설은 띠 그대로다.</p>
         </details>
       </article>
 
@@ -834,6 +835,6 @@
 
   </main>
 </div>
-<script src="styleguide/sg.js?v=20261015-11"></script>
+<script src="styleguide/sg.js?v=20261015-13"></script>
 </body>
 </html>

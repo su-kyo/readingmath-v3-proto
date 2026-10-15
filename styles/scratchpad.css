@@ -34,11 +34,15 @@
 .scratch__sep { width: var(--bw-1); height: 24px; background: color-mix(in srgb, var(--shade) 20%, transparent); margin: 0 2px; }   /* 콘솔 트레이는 모든 계열에서 밝은 면이라 어두운 선 */
 .scratch__done svg, .scratch__tool svg { width: 18px; height: 18px; flex: none; }
 .scratch__tool.is-on { background: var(--hw-light); color: var(--paper-ink); }   /* 고른 도구 = 눌린 키 */
-/* 잉크 칩도 같은 물리 버튼 언어(하드 드롭) */
-.scratch__swatch { width: 36px; height: 36px; border-radius: 50%; border: var(--bw-3) solid var(--hw-key); background: var(--swatch); padding: 0; box-shadow: 0 var(--depth-4) 0 var(--hw-key-edge); }
+/* 잉크 칩도 콘솔 버튼과 같은 물리 버튼 언어 — 옆면은 그 색을 진하게 한 불투명 면(틸 버튼 아래 진한 틸과 같은 방식).
+   고른 색 = 눌려 들어간 칩 + 안쪽 흰 테두리 (2026-10-15 · 전에는 네이비 바 기준의 회색 테두리 + 남색 두께) */
+.scratch__swatch { --swatch-side: color-mix(in srgb, var(--swatch) 62%, var(--shade));
+  width: 36px; height: 36px; border-radius: 50%; border: 0; background: var(--swatch); padding: 0;
+  box-shadow: 0 var(--depth-4) 0 var(--swatch-side); transition: transform .12s, box-shadow .12s; }
 .scratch__swatch[data-ink="1"] { --swatch: var(--scratch-ink-1); }
 .scratch__swatch[data-ink="2"] { --swatch: var(--scratch-ink-2); }
 .scratch__swatch[data-ink="3"] { --swatch: var(--scratch-ink-3); }
-.scratch__swatch.is-on { border-color: var(--hw-light); }
+.scratch__swatch.is-on { transform: translateY(2px); box-shadow: inset 0 0 0 var(--bw-3) var(--paper-bg), 0 var(--depth-2) 0 var(--swatch-side); }
 .scratch__swatch:hover { filter: brightness(1.12); }
-.scratch__swatch:active { transform: translateY(2px); box-shadow: 0 var(--depth-2) 0 var(--hw-key-edge); }
+.scratch__swatch:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--swatch-side); }
+.scratch__swatch.is-on:active { box-shadow: inset 0 0 0 var(--bw-3) var(--paper-bg), 0 1px 0 var(--swatch-side); }

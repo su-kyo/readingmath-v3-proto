@@ -3720,10 +3720,6 @@
      "count": 3
     },
     {
-     "name": "--th-accent-hi",
-     "count": 3
-    },
-    {
      "name": "--text-muted",
      "count": 3
     },
@@ -3737,6 +3733,10 @@
     },
     {
      "name": "--fade",
+     "count": 2
+    },
+    {
+     "name": "--surface-hover",
      "count": 2
     }
    ],
