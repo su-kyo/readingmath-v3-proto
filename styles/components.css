@@ -7,7 +7,7 @@
      .frac                   온전한 분수 — 개념 기초 연산·다지기, 유형 해설
      .dummy-img 외 넷        더미 이미지 자리 — 개념·유형·서술형
      .toast                  토스트 — 학습·결과·과제 계열
-     .ops 스크롤바 · .btn-grade   화면에서 올라온 공용 규칙
+     .ops 스크롤바   화면에서 올라온 공용 규칙 (.btn-grade 는 2026-10-15 콘솔바 CTA로 옮기며 지움)
    쓰는 화면은 스토리북이 센다(styleguide/usage.json). 한 계열만 쓰면 계열 파일로 간다 —
    학습 셸은 learn-shell.css, 서술형 빈칸은 essay.css, 결과 계기판은 result.css.
 
@@ -183,9 +183,6 @@
 
 .ops::-webkit-scrollbar-thumb { background: var(--white-a24); border-radius: var(--r-full); border: var(--bw-2) solid transparent; background-clip: padding-box; }
 
-.btn-grade { padding: var(--sp-12) 44px; border-radius: var(--r-16); background: var(--th-vivid); color: var(--text-on-accent); font-weight: var(--fw-heavy); font-size: var(--fs-19); box-shadow: 0 var(--depth-4) 0 var(--th-accent-strong); }
-
-.btn-grade[hidden] { display: none; }
 
 /* ----- 화면 공용으로 올림 (2026-10-14 · RM-FILE-03) — concept-basic-ops · concept-drill · type-quiz · type-review ----- */
 .ex { align-self: stretch; background: none; box-shadow: inset 0 0 0 var(--bw-1_5) var(--ex-br, var(--border-strong)); border-radius: var(--r-16); padding: var(--sp-20) var(--sp-24); margin-bottom: 22px; }
@@ -203,7 +200,3 @@
 /* ----- 화면 공용으로 올림 (2026-10-14 · RM-FILE-03) — concept-basic-ops · type-quiz ----- */
 .pcap__count { margin-left: var(--sp-4); font-weight: var(--fw-bold); color: var(--text-on-accent); font-size: var(--fs-16); font-family: var(--font-mono); }
 
-/* ----- 화면 공용으로 올림 (2026-10-14 · RM-FILE-03) — concept-basic-ops · concept-drill ----- */
-.btn-grade:hover:not(:disabled) { background: var(--th-accent); }
-.btn-grade:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 var(--depth-2) 0 var(--th-accent-strong); }
-.btn-grade--next { background: var(--primary); box-shadow: 0 var(--depth-4) 0 var(--primary-pressed); }

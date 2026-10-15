@@ -509,17 +509,13 @@
     "scripts/debug-panel.js",
     "scripts/keypad.js",
     "scripts/keypad-input.js",
+    "scripts/learn-guide.js",
     "scripts/learn-basic-ops.js",
     "scripts/learn-exit.js"
    ],
    "parts": [
     {
      "name": "콘솔 도구 버튼",
-     "group": "부품 › 버튼",
-     "doc": "styleguide/components.html#btn"
-    },
-    {
-     "name": "채점 버튼",
      "group": "부품 › 버튼",
      "doc": "styleguide/components.html#btn"
     },
@@ -555,6 +551,11 @@
     },
     {
      "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 안내",
      "group": "셸 › 학습 화면 셸",
      "doc": "styleguide/shells.html#learn"
     },
@@ -647,7 +648,7 @@
   },
   {
    "path": "concept/drill.html",
-   "title": "기초 연산 · 개념 훈련",
+   "title": "개념 다지기 · 개념 훈련",
    "family": "concept",
    "familyKo": "개념",
    "section": "concept",
@@ -668,17 +669,13 @@
     "scripts/vendor/katex/katex.min.js",
     "scripts/keypad.js",
     "scripts/keypad-input.js",
+    "scripts/learn-guide.js",
     "scripts/learn-drill.js",
     "scripts/learn-exit.js"
    ],
    "parts": [
     {
      "name": "콘솔 도구 버튼",
-     "group": "부품 › 버튼",
-     "doc": "styleguide/components.html#btn"
-    },
-    {
-     "name": "채점 버튼",
      "group": "부품 › 버튼",
      "doc": "styleguide/components.html#btn"
     },
@@ -714,6 +711,11 @@
     },
     {
      "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 안내",
      "group": "셸 › 학습 화면 셸",
      "doc": "styleguide/shells.html#learn"
     },
@@ -825,6 +827,7 @@
     "scripts/scratchpad.js",
     "scripts/debug-panel.js",
     "scripts/blank-pop.js",
+    "scripts/learn-guide.js",
     "scripts/learn-concept.js",
     "scripts/concept-learn-video.js",
     "scripts/learn-exit.js"
@@ -862,6 +865,11 @@
     },
     {
      "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 안내",
      "group": "셸 › 학습 화면 셸",
      "doc": "styleguide/shells.html#learn"
     },
@@ -1085,6 +1093,7 @@
     "scripts/keypad.js",
     "scripts/blank-pop.js",
     "scripts/keypad-input.js",
+    "scripts/learn-guide.js",
     "scripts/essay-advanced.js",
     "scripts/learn-timer.js",
     "scripts/learn-exit.js"
@@ -1122,6 +1131,11 @@
     },
     {
      "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 안내",
      "group": "셸 › 학습 화면 셸",
      "doc": "styleguide/shells.html#learn"
     },
@@ -1233,6 +1247,7 @@
     "scripts/keypad.js",
     "scripts/blank-pop.js",
     "scripts/keypad-input.js",
+    "scripts/learn-guide.js",
     "scripts/essay-basics-v2.js",
     "scripts/learn-timer.js",
     "scripts/learn-exit.js"
@@ -1270,6 +1285,11 @@
     },
     {
      "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 안내",
      "group": "셸 › 학습 화면 셸",
      "doc": "styleguide/shells.html#learn"
     },
@@ -1524,6 +1544,7 @@
    "js": [
     "scripts/scratchpad.js",
     "scripts/debug-panel.js",
+    "scripts/learn-guide.js",
     "scripts/essay-drill-review.js",
     "scripts/learn-timer.js",
     "scripts/learn-exit.js"
@@ -1546,6 +1567,11 @@
     },
     {
      "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 안내",
      "group": "셸 › 학습 화면 셸",
      "doc": "styleguide/shells.html#learn"
     },
@@ -1585,14 +1611,6 @@
      "count": 3
     },
     {
-     "name": "--no-bg",
-     "count": 3
-    },
-    {
-     "name": "--no-br",
-     "count": 3
-    },
-    {
      "name": "--ok-bg",
      "count": 3
     },
@@ -1610,6 +1628,14 @@
     },
     {
      "name": "--step-fg",
+     "count": 2
+    },
+    {
+     "name": "--th-ink-accent",
+     "count": 2
+    },
+    {
+     "name": "--th-accent",
      "count": 2
     }
    ],
@@ -1646,6 +1672,7 @@
     "scripts/keypad.js",
     "scripts/blank-pop.js",
     "scripts/keypad-input.js",
+    "scripts/learn-guide.js",
     "scripts/essay-drill-v2.js",
     "scripts/learn-timer.js",
     "scripts/learn-exit.js"
@@ -1688,6 +1715,11 @@
     },
     {
      "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 안내",
      "group": "셸 › 학습 화면 셸",
      "doc": "styleguide/shells.html#learn"
     },
@@ -1951,6 +1983,7 @@
    ],
    "js": [
     "scripts/scratchpad.js",
+    "scripts/learn-guide.js",
     "scripts/essay-report-review.js",
     "scripts/learn-timer.js",
     "scripts/learn-exit.js"
@@ -1978,6 +2011,11 @@
     },
     {
      "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 안내",
      "group": "셸 › 학습 화면 셸",
      "doc": "styleguide/shells.html#learn"
     },
@@ -2010,14 +2048,6 @@
      "count": 3
     },
     {
-     "name": "--no-bg",
-     "count": 3
-    },
-    {
-     "name": "--no-br",
-     "count": 3
-    },
-    {
      "name": "--ok-bg",
      "count": 3
     },
@@ -2047,6 +2077,14 @@
     },
     {
      "name": "--ok-ink",
+     "count": 2
+    },
+    {
+     "name": "--ok-fg",
+     "count": 2
+    },
+    {
+     "name": "--no-bg",
      "count": 2
     }
    ],
@@ -2083,6 +2121,7 @@
     "scripts/keypad.js",
     "scripts/blank-pop.js",
     "scripts/keypad-input.js",
+    "scripts/learn-guide.js",
     "scripts/essay-report.js",
     "scripts/learn-timer.js",
     "scripts/learn-exit.js"
@@ -2120,6 +2159,11 @@
     },
     {
      "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 안내",
      "group": "셸 › 학습 화면 셸",
      "doc": "styleguide/shells.html#learn"
     },
@@ -3292,16 +3336,16 @@
    ],
    "tokens": [
     {
+     "name": "--rate",
+     "count": 4
+    },
+    {
      "name": "--accent-cyan-soft",
      "count": 2
     },
     {
-     "name": "--accent-cyan",
-     "count": 2
-    },
-    {
-     "name": "--accent-blue",
-     "count": 2
+     "name": "--th-rate",
+     "count": 1
     },
     {
      "name": "--hw-bg",
@@ -3353,6 +3397,7 @@
     "scripts/debug-panel.js",
     "scripts/keypad.js",
     "scripts/keypad-input.js",
+    "scripts/learn-guide.js",
     "scripts/type-quiz.js",
     "scripts/learn-timer.js",
     "scripts/learn-exit.js"
@@ -3394,6 +3439,11 @@
      "doc": "styleguide/shells.html#learn"
     },
     {
+     "name": "콘솔바 안내",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
      "name": "콘솔바 — 계열 넷",
      "group": "셸 › 학습 화면 셸",
      "doc": "styleguide/shells.html#learn"
@@ -3420,18 +3470,18 @@
    "tokens": [
     {
      "name": "--subj",
-     "count": 7
+     "count": 6
     },
     {
      "name": "--qtext",
      "count": 6
     },
     {
-     "name": "--text-on-accent",
-     "count": 5
+     "name": "--surface-1",
+     "count": 4
     },
     {
-     "name": "--surface-1",
+     "name": "--text-on-accent",
      "count": 4
     },
     {
@@ -3463,8 +3513,8 @@
      "count": 2
     },
     {
-     "name": "--th-accent-strong",
-     "count": 2
+     "name": "--th-panel",
+     "count": 1
     }
    ],
    "rules": [
@@ -3626,6 +3676,7 @@
    ],
    "js": [
     "scripts/scratchpad.js",
+    "scripts/learn-guide.js",
     "scripts/type-review.js",
     "scripts/learn-timer.js",
     "scripts/learn-exit.js"
@@ -3677,6 +3728,11 @@
      "doc": "styleguide/shells.html#learn"
     },
     {
+     "name": "콘솔바 안내",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
      "name": "콘솔바 — 계열 넷",
      "group": "셸 › 학습 화면 셸",
      "doc": "styleguide/shells.html#learn"
@@ -3701,7 +3757,7 @@
     },
     {
      "name": "--text-on-accent",
-     "count": 6
+     "count": 5
     },
     {
      "name": "--no-solid",
@@ -3720,10 +3776,6 @@
      "count": 3
     },
     {
-     "name": "--text-muted",
-     "count": 3
-    },
-    {
      "name": "--opt-bg",
      "count": 3
     },
@@ -3737,6 +3789,10 @@
     },
     {
      "name": "--surface-hover",
+     "count": 2
+    },
+    {
+     "name": "--border-strong",
      "count": 2
     }
    ],

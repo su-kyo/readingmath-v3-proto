@@ -123,11 +123,10 @@
 
 /* 계산기 키패드 = 공용 styles/keypad.css (마크업은 scripts/keypad.js) */
 
-/* ===== 하단 고정 채점 버튼 ===== */
-.ops__foot { flex: none; display: flex; justify-content: center; padding: var(--sp-8) 0 var(--sp-4); }
-   /* 정체성 칠면 450 */
-.btn-grade:disabled { background: var(--hw-key); color: var(--hw-text); box-shadow: none; cursor: not-allowed; }
-.btn-grade--next:hover:not(:disabled) { background: var(--primary-hover); }
+/* ===== 채점 뒤 오답을 눌러 정답 열기 (2026-10-15) =====
+   채점하기 · 다음 문제는 콘솔바 CTA 로 옮겼다(안내 .guide 와 짝, RM-PART-07).
+   정답을 열기 전(.is-reveal)에는 오답 칸만 누를 수 있다. */
+.is-reveal .qopt.is-wrong, .sinput.is-wrong.is-reveal { pointer-events: auto; cursor: pointer; }
 
 /* 하단바 다음으로 비활성 */
 

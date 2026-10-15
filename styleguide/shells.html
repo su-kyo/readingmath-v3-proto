@@ -6,10 +6,10 @@
   <title>셸 — 리딩수학과학 디자인 시스템</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
   <base href="../" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261015-14" />
-  <link rel="stylesheet" href="styles/base.css?v=20261015-14" />
-  <link rel="stylesheet" href="styles/components.css?v=20261015-14" />
-  <link rel="stylesheet" href="styleguide/sg.css?v=20261015-14" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261015-23" />
+  <link rel="stylesheet" href="styles/base.css?v=20261015-23" />
+  <link rel="stylesheet" href="styles/components.css?v=20261015-23" />
+  <link rel="stylesheet" href="styleguide/sg.css?v=20261015-23" />
 </head>
 <body data-sg-css="tokens,base,components,learn-shell">
 <div class="sg">
@@ -177,6 +177,49 @@
         </template>
       </div>
 
+      <div class="sg-item" data-uses="guide, guide__lamp" data-pad="0" data-themes="light" data-bg="var(--n-200)">
+        <div class="sg-item__hd"><h3>콘솔바 안내</h3>
+          <span class="sg-item__cls">.guide · .guide__lamp · .is-ok · .is-no</span>
+          <span class="sg-item__file">learn-shell.css · scripts/learn-guide.js</span></div>
+        <p class="sg-note">오른쪽 CTA 바로 왼쪽에 놓는 한 줄 안내입니다. 버튼이 왜 꺼져 있는지, 다음에 무엇을 할지를 말합니다.
+          글자는 상태와 상관없이 하나(<code>--guide-ink</code>)이고, 상태는 램프 색으로만 말합니다. 위부터 기본 · 정답 · 오답입니다.
+          문장은 화면 엔진이 <code>RMGuide.set(문장, 'ok' | 'no')</code>로 넣고, 빈 문장이면 숨깁니다. 18em을 넘는 문장은 두 줄로 접힙니다. 규칙은 <code>RM-PART-07</code>입니다.</p>
+        <template class="sg-src">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="position:relative;height:100px;overflow:hidden">
+              <div class="bar">
+                <img class="bar__deco bar__deco--l" src="assets/icons/console/console-right.svg" alt="">
+                <div class="bar__mid"><div class="bar__tray">
+                  <div class="bar__group"><button class="toolbtn">연습장</button></div>
+                  <div class="bar__group"><p class="guide"><i class="guide__lamp"></i><span class="guide__text">답안을 입력해 주세요!</span></p><button class="toolbtn toolbtn--primary" disabled>채점하기</button></div>
+                </div></div>
+                <img class="bar__deco bar__deco--r" src="assets/icons/console/console-left.svg" alt="">
+              </div>
+            </div>
+            <div style="position:relative;height:100px;overflow:hidden">
+              <div class="bar">
+                <img class="bar__deco bar__deco--l" src="assets/icons/console/console-right.svg" alt="">
+                <div class="bar__mid"><div class="bar__tray">
+                  <div class="bar__group"><button class="toolbtn">연습장</button></div>
+                  <div class="bar__group"><p class="guide is-ok"><i class="guide__lamp"></i><span class="guide__text">정답이에요!</span></p><button class="toolbtn toolbtn--primary">다음 문제</button></div>
+                </div></div>
+                <img class="bar__deco bar__deco--r" src="assets/icons/console/console-left.svg" alt="">
+              </div>
+            </div>
+            <div style="position:relative;height:100px;overflow:hidden">
+              <div class="bar">
+                <img class="bar__deco bar__deco--l" src="assets/icons/console/console-right.svg" alt="">
+                <div class="bar__mid"><div class="bar__tray">
+                  <div class="bar__group"><button class="toolbtn">연습장</button></div>
+                  <div class="bar__group"><p class="guide is-no"><i class="guide__lamp"></i><span class="guide__text">오답을 눌러 정답을 확인해 보세요!</span></p><button class="toolbtn toolbtn--primary" disabled>다음 문제</button></div>
+                </div></div>
+                <img class="bar__deco bar__deco--r" src="assets/icons/console/console-left.svg" alt="">
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+
       <div class="sg-item" data-uses="bar" data-pad="0" data-themes="light" data-bg="var(--n-200)">
         <div class="sg-item__hd"><h3>콘솔바 — 계열 넷</h3>
           <span class="sg-item__cls">data-section="concept | type | essay | assign"</span></div>
@@ -262,7 +305,7 @@
           물리 키보드도 됩니다. <code>keypad-input.js</code>가 누른 키에 해당하는 화면 버튼을 대신 클릭하므로, 입력 로직은 한 벌입니다.</p>
         <template class="sg-src">
           <div class="keypad" id="kp"></div>
-          <script src="scripts/keypad.js?v=20261015-14"></script>
+          <script src="scripts/keypad.js?v=20261015-23"></script>
           <script>
             /* 키 구성의 정본은 keypad.js 의 KEYS 배열 하나뿐이다.
                문서가 그걸 옮겨 적으면 키가 바뀔 때 문서만 옛것이 된다. */
@@ -278,7 +321,7 @@
         <p class="sg-note">마크업과 CSS가 위와 같고, 견본의 <code>data-section</code>만 <code>type</code>입니다. 트레이 틴트와 LCD 글자색이 틸로 바뀝니다.</p>
         <template class="sg-src">
           <div class="keypad" id="kp2"></div>
-          <script src="scripts/keypad.js?v=20261015-14"></script>
+          <script src="scripts/keypad.js?v=20261015-23"></script>
           <script>document.getElementById('kp2').innerHTML = RMKeypad.html();</script>
         </template>
       </div>
@@ -311,7 +354,7 @@
 
   </main>
 </div>
-<script src="styleguide/shells.js?v=20261015-14"></script>
-<script src="styleguide/sg.js?v=20261015-14"></script>
+<script src="styleguide/shells.js?v=20261015-23"></script>
+<script src="styleguide/sg.js?v=20261015-23"></script>
 </body>
 </html>

@@ -64,6 +64,17 @@
   var qEl = document.getElementById('q');
   var gradeBtn = document.getElementById('gradeBtn');
   var nextStepBtn = document.getElementById('nextStepBtn');
+  var guide = window.RMGuide || { set: function () {} };
+  var revealPending = false;   // 채점 뒤 오답을 눌러 정답을 열기 전
+  function setCta(t) { gradeBtn.querySelector('span').textContent = t; }
+  /* 콘솔바 안내(RM-PART-07) — 입력 전: 객관식은 「골라」, 칸이 여럿이면 「모든」. 다 채우면 숨긴다. */
+  function guideInput() {
+    var p = PROBLEMS[idx];
+    if (/^mc-/.test(p.type)) { guide.set(selected == null ? '답을 골라 주세요!' : ''); return; }
+    var fields = qEl.querySelectorAll('.sinput, .dblank'), empty = 0;
+    fields.forEach(function (x) { if (!getV(x).trim()) empty++; });
+    guide.set(!empty ? '' : fields.length > 1 ? '모든 답안을 입력해 주세요!' : '답안을 입력해 주세요!');
+  }
   var opsScroll = document.getElementById('opsScroll');
 
   // 문제 카드 열고 접기
@@ -175,10 +186,11 @@
 
     gradeBtn.hidden = false;
     gradeBtn.disabled = true;
-    gradeBtn.classList.remove('btn-grade--next');
-    gradeBtn.textContent = '채점하기';
+    setCta('채점하기');
+    revealPending = false;
 
     renderTabs();
+    guideInput();
     requestAnimationFrame(updateFade);
   }
 
@@ -196,6 +208,7 @@
           wrap.querySelectorAll('.qopt').forEach(function (o) { o.classList.remove('is-selected'); });
           opt.classList.add('is-selected'); selected = i;
           gradeBtn.disabled = false;
+          guide.set('');
         });
       })(i, opt);
       wrap.appendChild(opt);
@@ -250,6 +263,7 @@
     var fields = qEl.querySelectorAll('.sinput, .dblank'), all = fields.length > 0;
     fields.forEach(function (x) { if (!getV(x).trim()) all = false; });
     gradeBtn.disabled = !all;
+    guideInput();
   }
 
   /* ---- 채점 / 다음 ---- */
@@ -258,8 +272,10 @@
   /* 채점 후 오답 빈칸 토글: 같은 칸에서 내 답 ↔ 정답 (병렬 표시 아님 · 취소선 없음) */
   qEl.addEventListener('click', function (e) {
     if (!graded) return;
-    var w = e.target.closest('.dblank.is-wrong');
+    var w = e.target.closest('.dblank.is-wrong, .qopt.is-wrong, .sinput.is-wrong');
     if (!w) return;
+    if (revealPending) { reveal(); return; }
+    if (!w.classList.contains('dblank')) return;
     var showAns = w.classList.toggle('show-ans');
     w.textContent = showAns ? w.dataset.ans : w.dataset.my;
     w.title = showAns ? '눌러서 내 답 보기' : '눌러서 정답 보기';
@@ -270,8 +286,8 @@
     if (p.type === 'mc-num' || p.type === 'mc-text' || p.type === 'mc-image') {
       ok = (selected === p.answer);
       qEl.querySelectorAll('.qopt').forEach(function (o, i) {
-        if (i === p.answer) o.classList.add('is-correct');
-        if (i === selected && selected !== p.answer) o.classList.add('is-wrong');
+        if (i === p.answer && ok) o.classList.add('is-correct');
+        if (i === selected && !ok) o.classList.add('is-wrong');
       });
       qEl.querySelector('.qopts-row, .qopts-grid').classList.add('is-graded');
     } else if (p.type === 'blank') {
@@ -298,7 +314,8 @@
       var on = norm(nu.value) === norm(p.answer.num), od = norm(de.value) === norm(p.answer.den);
       mark(nu, on); mark(de, od); ok = on && od;
     }
-    qEl.querySelectorAll('.sinput').forEach(function (x) { x.disabled = true; });
+    // 오답 칸은 눌러야 정답이 열리므로 잠그지 않는다(.is-reveal) — 나머지만 잠근다
+    qEl.querySelectorAll('.sinput').forEach(function (x) { if (x.classList.contains('is-wrong')) x.classList.add('is-reveal'); else x.disabled = true; });
     closePad();
 
     // 주관식 오답 → 정답 표시 (분수는 온전한 분수 형태)
@@ -307,15 +324,38 @@
         : p.type === 'fraction' ? '<span class="frac"><span class="frac__n">' + p.answer.num + '</span><span class="frac__d">' + p.answer.den + '</span></span>'
         : p.answer;
       var ac = qEl.querySelector('.ans-correct');
-      if (ac) { ac.innerHTML = '정답 <b>' + txt + '</b>'; ac.classList.add('show'); }
+      if (ac) ac.innerHTML = '정답 <b>' + txt + '</b>';   // 보이는 건 reveal() 때
     }
 
     graded = true;
     results[idx] = ok ? 'correct' : 'wrong';
     renderTabs();
 
-    if (idx < TOTAL - 1) { gradeBtn.classList.add('btn-grade--next'); gradeBtn.textContent = '다음 문제 →'; }
-    else { gradeBtn.hidden = true; nextStepBtn.disabled = false; }
+    if (ok) { guide.set('정답이에요!', 'ok'); settle(); }
+    else {
+      revealPending = true;
+      var rw = qEl.querySelector('.qopts-row, .qopts-grid'); if (rw) rw.classList.add('is-reveal');
+      gradeBtn.disabled = true; setCta(idx < TOTAL - 1 ? '다음 문제' : '다음으로');
+      guide.set('오답을 눌러 정답을 확인해 보세요!', 'no');
+    }
+  }
+
+  /* 오답을 눌러야 정답이 열린다(테스트 서버 동작을 받아들임, 2026-10-15). 열기 전에는 「다음」이 꺼져 있다. */
+  function reveal() {
+    var p = PROBLEMS[idx];
+    revealPending = false;
+    var row = qEl.querySelector('.qopts-row, .qopts-grid');
+    if (row) { row.classList.remove('is-reveal'); var c = row.querySelectorAll('.qopt')[p.answer]; if (c) c.classList.add('is-correct'); }
+    qEl.querySelectorAll('.dblank.is-wrong').forEach(function (b) { b.classList.add('show-ans'); b.textContent = b.dataset.ans; b.title = '눌러서 내 답 보기'; });
+    qEl.querySelectorAll('.sinput.is-wrong').forEach(function (x) { x.classList.remove('is-reveal'); x.disabled = true; });
+    var ac = qEl.querySelector('.ans-correct'); if (ac && ac.innerHTML) ac.classList.add('show');
+    guide.set('');
+    settle();
+  }
+  /* 문제가 끝났을 때 CTA — 마지막 문제면 「다음 문제」 대신 「다음으로」 */
+  function settle() {
+    if (idx < TOTAL - 1) { setCta('다음 문제'); gradeBtn.disabled = false; }
+    else { gradeBtn.hidden = true; nextStepBtn.hidden = false; nextStepBtn.disabled = false; }
   }
 
   function next() { if (idx < TOTAL - 1) { idx++; renderQ(); } }
@@ -366,6 +406,7 @@
     actions: [
       { label: '정답 처리', tone: 'ok', run: function () { dbgAnswer(true); } },
       { label: '오답 처리', tone: 'no', run: function () { dbgAnswer(false); } },
+      { label: '정답 공개', run: function () { if (revealPending) reveal(); } },
       { label: '전부 풀기', run: dbgSolveAll },
       { label: '키패드 열기', run: function () { var f = qEl.querySelector('.sinput, .dblank'); if (f) openPad(f); } }
     ]

@@ -110,6 +110,7 @@
   function refreshNext() {
     var done = order.every(function (id) { return filled[id]; });
     if (done) { resultBtn.disabled = false; resultBtn.removeAttribute('title'); }
+    if (window.RMGuide) window.RMGuide.set(done ? '' : '모든 답안을 입력해 주세요!');   // 콘솔바 안내(RM-PART-07)
   }
 
   // 입력값을 그대로 빈칸에 넣음 (즉답 채점 없음). 같은 번호 칸에 함께 들어감.

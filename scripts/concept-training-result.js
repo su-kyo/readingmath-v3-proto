@@ -33,7 +33,7 @@
   var overtime = false;
   var SCORE = BASE_SCORE - (overtime ? PENALTY : 0);
   var COMMENT =
-    '진방울님의 개념 훈련 결과는 100점 만점 중 ' + SCORE + '점 입니다.\n' +
+    '진방울님의 개념 훈련 결과는 100점 만점 중 ' + SCORE + '점입니다.\n' +
     '개념 다지기와 확인하기는 탄탄하게 이해했지만, 개념 학습에서 몇 문제를 놓쳤어요.\n' +
     '오답노트를 확인한 뒤 개념 학습을 한 번 더 복습해 보세요.';
 
@@ -163,6 +163,8 @@
 
   /* ---------- 시간 초과 상태 토글 (검수용) ---------- */
   var overPill = document.getElementById('overPill');
+  var inPill = document.getElementById('inPill');
+  var durVal = document.getElementById('durVal');
   var overLamp = document.getElementById('overLamp');
   var commentEl = document.getElementById('comment');
   function setOvertime(on, initial) {
@@ -172,6 +174,9 @@
     if (!initial) { clearInterval(sTimer); scoreEl.textContent = SCORE; }
     document.getElementById('totalStar').src = 'assets/icons/star/star-' + gradeOf(SCORE) + '.svg';
     if (overPill) overPill.hidden = !on;
+    if (inPill) inPill.hidden = on;
+    // 소요 시간도 상태에 맞춘다 — 감점이면 제한(60:00)보다 길게
+    if (durVal) durVal.textContent = on ? durVal.dataset.over : durVal.dataset.in;
     if (overLamp) overLamp.style.display = on ? '' : 'none';
     if (commentEl) commentEl.textContent = commentEl.textContent
       .replace(/100점 만점 중 \d+점/, '100점 만점 중 ' + SCORE + '점');

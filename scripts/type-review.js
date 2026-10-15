@@ -33,6 +33,10 @@
   var prevArrow = document.getElementById('prevArrow');
   var nextArrow = document.getElementById('nextArrow');
   var nextBtn = document.getElementById('nextBtn');
+  var resultBtn = document.getElementById('resultBtn');
+  // 오답은 눌러야 정답이 보인다(테스트 서버 동작을 받아들임, 2026-10-15). 문제마다 한 번 열면 계속 열려 있다.
+  var revealed = PROBLEMS.map(function () { return false; });
+  function pending() { return !isCorrect(idx) && !revealed[idx]; }
 
   function el(tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
   // 온전한 분수 표기(읽기용). '3/4' 사선표기 금지 → 분자↑·가로선·분모↓
@@ -86,10 +90,14 @@
     exp.appendChild(el('div', 'explain__body', p.explain));
     qEl.appendChild(exp);
 
+    qEl.classList.toggle('is-reveal', pending());
     renderProgress();
     updateNav();
     requestAnimationFrame(updateFade);
   }
+  qEl.addEventListener('click', function (e) {
+    if (pending() && e.target.closest('.qopt.is-wrong, .sinput.is-wrong')) { revealed[idx] = true; renderQ(); }
+  });
 
   function renderMC(p) {
     var count = (p.type === 'mc-image') ? p.options.length : (typeof p.options === 'number' ? p.options : p.options.length);
@@ -99,7 +107,7 @@
       if (p.type === 'mc-num') { opt.classList.add('qopt--num'); opt.appendChild(el('span', 'qopt__num', String(i + 1))); }
       else if (p.type === 'mc-image') { opt.classList.add('qopt--img'); opt.appendChild(el('span', 'qopt__num', String(i + 1))); opt.appendChild(el('span', 'qopt__img')); }
       else { opt.classList.add('qopt--text'); opt.appendChild(el('span', 'qopt__num', String(i + 1))); opt.appendChild(el('span', null, p.options[i])); }
-      if (i === p.answer) opt.classList.add('is-correct');
+      if (i === p.answer && !pending()) opt.classList.add('is-correct');
       if (i === p.picked && p.picked !== p.answer) opt.classList.add('is-wrong');
       wrap.appendChild(opt);
     }
@@ -127,7 +135,7 @@
     // 틀린 주관식 → 정답 표시
     var wrap = el('div');
     wrap.appendChild(row);
-    if (!isCorrect(idx)) {
+    if (!isCorrect(idx) && revealed[idx]) {
       var ans = p.type === 'short-2' ? p.answer.join(', ') : p.type === 'fraction' ? fracHTML(p.answer.num, p.answer.den) : p.answer;
       var ac = el('div', 'ans-correct show', '정답 <b>' + ans + '</b>');
       wrap.style.display = 'flex'; wrap.style.flexDirection = 'column'; wrap.style.alignItems = 'center';
@@ -136,7 +144,7 @@
     return wrap;
   }
   function field(val, correct) {
-    var inp = el('input', 'sinput ' + (correct ? 'is-correct' : 'is-wrong')); inp.type = 'text'; inp.value = val; inp.disabled = true; return inp;
+    var inp = el('input', 'sinput ' + (correct ? 'is-correct' : 'is-wrong')); inp.type = 'text'; inp.value = val; inp.readOnly = true; inp.tabIndex = -1; return inp;
   }
 
   /* ---- 이동 ---- */
@@ -144,7 +152,10 @@
   function updateNav() {
     prevArrow.disabled = (idx === 0);
     nextArrow.disabled = (idx === TOTAL - 1);
-    nextBtn.disabled = (idx === TOTAL - 1);
+    nextBtn.hidden = (idx === TOTAL - 1);        // 콘솔바 CTA 한 자리 — 마지막 문제에서만 「결과보기」
+    if (resultBtn) resultBtn.hidden = !nextBtn.hidden;
+    // 콘솔바 안내(RM-PART-07)
+    if (window.RMGuide) window.RMGuide.set(pending() ? '오답을 눌러 정답을 확인해 보세요!' : '위쪽 문항 표시나 화살표를 눌러 이동할 수 있어요!', pending() ? 'no' : '');
   }
   prevArrow.addEventListener('click', function () { go(idx - 1); });
   nextArrow.addEventListener('click', function () { go(idx + 1); });

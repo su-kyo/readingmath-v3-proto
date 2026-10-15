@@ -8,6 +8,7 @@
    · 제한 시간은 .lheader__limit 의 글자가 정본이다 — 화면마다 다르면 HTML 만 고친다.
    · .is-paused(해설 · 결과 화면)면 세지 않고, 적힌 값으로 넘었는지만 본다.
    · 분은 60을 넘어도 분으로 센다(62:10). 제한 시간과 같은 단위로 읽히게. 모양은 styles/learn-shell.css.
+   · 풀이 중이면 말풍선 「N분 안에 문제를 모두 풀어보세요!」를 붙인다(N = 제한 시간의 분).
    검수: ?debug=1 이면 패널에 「제한 5초 전」 · 「시간 초과」가 붙는다.
    ============================================================ */
 (function () {
@@ -25,6 +26,14 @@
 
   var LIMIT = lim ? parse(lim.textContent) : 0;
   var sec = parse(el.textContent);
+
+  // 말풍선 — 마우스를 올리거나 포커스하면 뜬다(테스트 서버에서 받아옴, 2026-10-15). 풀이 중에만. 문장은 제한 시간을 따라간다.
+  if (LIMIT && !box.classList.contains('is-paused')) {
+    var tip = document.createElement('span');
+    tip.className = 'lheader__tip'; tip.id = 'hdrTimerTip'; tip.setAttribute('role', 'tooltip');
+    tip.textContent = Math.round(LIMIT / 60) + '분 안에 문제를 모두 풀어보세요!';
+    box.appendChild(tip); box.tabIndex = 0; box.setAttribute('aria-describedby', tip.id);
+  }
   function show() {
     el.textContent = fmt(sec);
     box.classList.toggle('is-over', LIMIT > 0 && sec > LIMIT);

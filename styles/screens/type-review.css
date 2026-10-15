@@ -6,7 +6,7 @@
 /* ===== 유형 = 틸 테마 ===== */
 :root[data-theme="dark"] .content { background: var(--type-panel-dark); border-color: var(--th-static); }  /* 공통 뉴트럴 다크 · 틸 프레임 유지 */
 :root[data-theme="light"] .content { background: var(--th-panel); border-color: var(--th-static); --fade: var(--surface-1); }  /* 공통 뉴트럴 라이트 · 틸 프레임 유지 */
-.content { position: relative; flex-direction: column; padding: 0 0 96px; overflow: hidden; --subj: var(--primary); }  /* 액센트 = 오렌지 */
+.content { position: relative; flex-direction: column; padding: 0 0 96px; overflow: hidden; }
 :root[data-theme="dark"] .content { --fade: var(--type-panel-dark); }
 
 .ops-wrap { flex: 1; min-height: 0; position: relative; margin-top: var(--sp-40); }
@@ -80,9 +80,9 @@
 
 
 /* ===== 하단 (이전/다음) ===== */
-.ops__foot { flex: none; display: flex; justify-content: center; align-items: center; gap: var(--sp-12); padding: var(--sp-8) 0 var(--sp-4); }
-.btn-move { padding: var(--sp-12) var(--sp-40); border-radius: var(--r-16); background: var(--subj); color: var(--text-on-accent); font-weight: var(--fw-heavy); font-size: var(--fs-19); box-shadow: 0 var(--depth-4) 0 var(--primary-pressed); }
-.btn-move:hover:not(:disabled) { filter: brightness(1.08); } .btn-move:disabled { background: var(--hw-key); color: var(--text-muted); box-shadow: none; cursor: not-allowed; }
+/* 「다음 문제」는 콘솔바 CTA 로 옮겼다(안내 .guide 와 짝, RM-PART-07 · 2026-10-15).
+   오답은 눌러야 정답이 보인다 — 열기 전(.is-reveal)에는 오답 칸이 눌리는 물건이다 */
+.is-reveal .qopt.is-wrong, .is-reveal .sinput.is-wrong { cursor: pointer; }
 
 /* 하단바 = 유형 footer */
 

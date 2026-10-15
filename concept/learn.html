@@ -6,13 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>개념 학습 · 개념 훈련 — 리딩수학과학</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261015-14" />
-  <link rel="stylesheet" href="styles/learn-shell.css?v=20261015-14" />
-  <link rel="stylesheet" href="styles/base.css?v=20261015-14" />
-  <link rel="stylesheet" href="styles/components.css?v=20261015-14" />
-  <link rel="stylesheet" href="styles/monitor.css?v=20261015-14" />
-  <link rel="stylesheet" href="styles/screens/concept-learn.css?v=20261015-14" />
-  <link rel="stylesheet" href="styles/scratchpad.css?v=20261015-14" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261015-23" />
+  <link rel="stylesheet" href="styles/learn-shell.css?v=20261015-23" />
+  <link rel="stylesheet" href="styles/base.css?v=20261015-23" />
+  <link rel="stylesheet" href="styles/components.css?v=20261015-23" />
+  <link rel="stylesheet" href="styles/monitor.css?v=20261015-23" />
+  <link rel="stylesheet" href="styles/screens/concept-learn.css?v=20261015-23" />
+  <link rel="stylesheet" href="styles/scratchpad.css?v=20261015-23" />
 </head>
 <body class="learn-body">
   <div class="screen">
@@ -128,6 +128,7 @@
           </div>
           <div class="bar__group">
             <button class="toolbtn" id="videoBtn"><img src="assets/icons/ico-play.svg" alt="" /><span>개념 영상 보기</span></button>
+            <p class="guide" role="status" aria-live="polite" hidden><i class="guide__lamp"></i><span class="guide__text"></span></p>
             <button class="toolbtn toolbtn--primary" id="summaryBtn" disabled title="끊어읽기를 모두 끝내면 활성화돼요"><img src="assets/icons/ico-summary.svg" alt="" /><span>개념 요약하기</span></button>
           </div>
         </div>
@@ -204,11 +205,12 @@
 
   <!-- 검수용 디버그 패널 (?debug=1 일 때만 보임) -->
   <!-- 연습장 캔버스 (공용) -->
-  <script src="scripts/scratchpad.js?v=20261015-14"></script>
-  <script src="scripts/debug-panel.js?v=20261015-14"></script>
-  <script src="scripts/blank-pop.js?v=20261015-14"></script>
-  <script src="scripts/learn-concept.js?v=20261015-14"></script>
-  <script src="scripts/concept-learn-video.js?v=20261015-14"></script>
-  <script src="scripts/learn-exit.js?v=20261015-14"></script>
+  <script src="scripts/scratchpad.js?v=20261015-23"></script>
+  <script src="scripts/debug-panel.js?v=20261015-23"></script>
+  <script src="scripts/blank-pop.js?v=20261015-23"></script>
+  <script src="scripts/learn-guide.js?v=20261015-23"></script>
+  <script src="scripts/learn-concept.js?v=20261015-23"></script>
+  <script src="scripts/concept-learn-video.js?v=20261015-23"></script>
+  <script src="scripts/learn-exit.js?v=20261015-23"></script>
 </body>
 </html>

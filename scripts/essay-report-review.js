@@ -60,9 +60,8 @@
     return '<div class="rt-label">' + r.label + '</div><div class="rt-cell">' + r.cell + '</div>';
   }).join('');
 
-  // 오답 있으면 안내문 노출
-  var hint = document.getElementById('reviewHint');
-  if (hint) hint.style.display = report.querySelector('.rblank.is-wrong') ? '' : 'none';
+  // 오답 있으면 콘솔바 안내(RM-PART-07)
+  if (window.RMGuide) window.RMGuide.set(report.querySelector('.rblank.is-wrong') ? '오답을 눌러 정답을 확인해 보세요!' : '', 'no');
 
   // 오답 토글 — 같은 칸 안에서 내 답(빨강) ↔ 정답(초록) 교체 (병렬 표시 아님)
   report.addEventListener('click', function (e) {

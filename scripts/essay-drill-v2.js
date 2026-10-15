@@ -145,6 +145,8 @@
   // 콘텐츠 하단 진입 버튼 = 단계 완료 시에만 노출 (콘솔바 아님)
   function showAction(label) { primaryLabel.textContent = label; stageAction.classList.add('is-ready'); }
   function hideAction() { stageAction.classList.remove('is-ready'); }
+  // 콘솔바 안내(RM-PART-07) — 단계마다 「지금 무엇을」 한 줄
+  function guide(t, tone) { if (window.RMGuide) window.RMGuide.set(t, tone); }
 
   // 문제 번호탭 렌더 (헤더) — 현재 문제 강조, 지난 문제는 done
   function renderTabs() {
@@ -207,6 +209,7 @@
   var readCur = 0;
   function openRead() {
     phase = 'read';
+    guide('');   // 읽기 모달은 제 안내(rmHint)를 쓴다
     // 상단 카드 = 다시보기용 전체 문제문(접힘 상태로 상주)
     problem.classList.add('is-collapsible', 'is-collapsed');
     var texts = P.statement.map(statementText).filter(Boolean);
@@ -298,6 +301,8 @@
     var pending = pendingBlank(segEls[curSeg]);
     if (pending) { pending.classList.add('is-active'); segEls[curSeg].classList.add('is-answering'); }
     sol.classList.toggle('is-done', curSeg >= segEls.length);
+    if (curSeg < segEls.length) guide(!pending ? '글을 눌러 이어 읽어 주세요!'
+      : (blankMap[pending.dataset.blank] || {}).choices ? '답을 골라 주세요!' : '답안을 입력해 주세요!');
     keepInView(segEls[curSeg]);
   }
   function advanceSeg() {
@@ -313,6 +318,7 @@
   function fillComplete() {
     pillFill.classList.remove('is-on'); pillFill.classList.add('is-done');
     showAction('순서 맞추기');
+    guide('순서 맞추기 문제로 이동해 주세요!');
     showToast('빈칸을 모두 맞혔어요! 순서 맞추기로 이동해요.');
   }
   /* 진행 = 풀이 아무 데나 누르기 · 스페이스바. 답할 빈칸이 남은 구간에서는 그 빈칸을 눌러야 한다 */
@@ -449,6 +455,7 @@
       tray.hidden = true;
     }
     asol.classList.toggle('is-reading', isReadingLine());
+    guide(isReadingLine() ? '글을 눌러 이어 읽어 주세요!' : '블록을 눌러 알맞은 자리에 넣어 주세요!');
   }
   function renderArrangeChunk() {
     var slots = asol.querySelectorAll('.slot[data-ac="' + ac + '"]');
@@ -499,6 +506,7 @@
   function arrangeComplete() {
     pillArrange.classList.remove('is-on'); pillArrange.classList.add('is-done');
     showAction(pi < N - 1 ? '다음 문제' : '결과 보기');
+    guide('');
     showToast(pi < N - 1 ? '풀이를 완성했어요! 다음 문제로 넘어가요.' : '모든 문제를 완성했어요! 🎉');
   }
 

@@ -79,6 +79,7 @@
   function refreshNext() {
     var done = order.every(function (id) { return filled[id]; });
     if (done) { resultBtn.disabled = false; resultBtn.removeAttribute('title'); }
+    if (window.RMGuide) window.RMGuide.set(done ? '' : '모든 답안을 입력해 주세요!');   // 콘솔바 안내(RM-PART-07)
   }
 
   function fill(id, value) {

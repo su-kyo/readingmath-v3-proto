@@ -186,8 +186,6 @@
 /* ----- 화면 공용으로 올림 (2026-10-14 · RM-FILE-03) — essay-drill · essay-drill-review · essay-drill-v2 ----- */
 .stage-action__btn svg { width: 19px; height: 19px; }
 
-/* ----- 화면 공용으로 올림 (2026-10-14 · RM-FILE-03) — essay-drill-review · essay-report-review ----- */
-.review-hint svg { width: 17px; height: 17px; flex: none; }
 
 /* ----- 화면 공용으로 올림 (2026-10-14 · RM-FILE-03) — essay-advanced · essay-basics · essay-basics-v2 ----- */
 .para { display: flex; flex-direction: column; gap: var(--sp-8); }

@@ -112,7 +112,6 @@
   var readBody = document.getElementById('readBody');
   var fillDoc = document.getElementById('fillDoc');
   var arrangeDoc = document.getElementById('arrangeDoc');
-  var reviewHint = document.getElementById('reviewHint');
   var qtabs = document.getElementById('qtabs');
   var pillFill = document.getElementById('pillFill');
   var pillArrange = document.getElementById('pillArrange');
@@ -201,9 +200,9 @@
     arrangeDoc.hidden = !arrange;
     wsLabel.textContent = arrange ? '② 순서 맞추기' : '① 빈칸 맞추기';
 
-    // 안내문 = 지금 보고 있는 단계에 오답이 있을 때만
+    // 콘솔바 안내(RM-PART-07) = 지금 보고 있는 단계에 오답이 있을 때만
     var view = arrange ? arrangeDoc : fillDoc;
-    reviewHint.style.display = view.querySelector('.is-wrong') ? '' : 'none';
+    if (window.RMGuide) window.RMGuide.set(view.querySelector('.is-wrong') ? '오답을 눌러 정답을 확인해 보세요!' : '', 'no');
 
     if (!arrange) primaryLabel.textContent = '순서 맞추기 해설';
     else primaryLabel.textContent = (pi < N - 1) ? '다음 문제' : '결과로 돌아가기';

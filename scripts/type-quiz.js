@@ -143,9 +143,20 @@
 
   /* ---- 버튼 상태 ---- */
   function updateButtons() {
+    var last = idx === TOTAL - 1;
     nextBtn.disabled = !isAnswered(idx);
-    nextBtn.hidden = (idx === TOTAL - 1);
+    nextBtn.hidden = last;
+    submitBtn.hidden = !last;          // 콘솔바 CTA 한 자리 — 마지막 문제에서만 「제출하기」
     submitBtn.disabled = !allAnswered();
+    guideInput();
+  }
+  /* 콘솔바 안내(RM-PART-07) — 지금 문제를 안 풀었을 때만. 객관식은 「골라」, 칸이 여럿이면 「모든」. */
+  function guideInput() {
+    if (!window.RMGuide) return;
+    var p = PROBLEMS[idx];
+    if (isAnswered(idx)) { window.RMGuide.set(''); return; }
+    window.RMGuide.set(/^mc-/.test(p.type) ? '답을 골라 주세요!'
+      : p.type === 'short-1' ? '답안을 입력해 주세요!' : '모든 답안을 입력해 주세요!');
   }
   nextBtn.addEventListener('click', function () { if (isAnswered(idx) && idx < TOTAL - 1) { idx++; renderQ(); } });
   submitBtn.addEventListener('click', function () { if (submitBtn.disabled) return; window.location.href = 'type/result.html'; });

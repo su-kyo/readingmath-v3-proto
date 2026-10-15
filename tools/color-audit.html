@@ -123,7 +123,8 @@
       if (r < lim) found.push({ kind: o < .6 ? '비활성 글자' : '글자', sel: path(el) + (pseudo || ''), txt: txt.slice(0, 24), fg: hex(real), bg: hex(bg), r: r, need: lim });
       // 색 칠면(채도 있는 중간~진한 면) 위에 어두운 글자 — 칠면은 테마에 따라 안 뒤집히니 글자도 흰색이어야 한다
       var kb = oklch(bg), kf = oklch(real);
-      if (kb.C > .06 && kb.L < .75 && kf.L < kb.L) found.push({ kind: '칠면 위 어두운 글자', sel: path(el) + (pseudo || ''), txt: txt.slice(0, 24), fg: hex(real), bg: hex(bg), r: r, need: 0 });
+      // 콘솔바 안내(.guide)는 칠면이 아니라 콘솔 트레이(에셋 연동색) 위 남색 글자다 — RM-PART-07에서 정함(트레이 셋 모두 7:1 이상)
+      if (kb.C > .06 && kb.L < .75 && kf.L < kb.L && !el.closest('.guide')) found.push({ kind: '칠면 위 어두운 글자', sel: path(el) + (pseudo || ''), txt: txt.slice(0, 24), fg: hex(real), bg: hex(bg), r: r, need: 0 });
     }
     d.querySelectorAll('body *').forEach(function (el) {
       if (!visible(el, win) || /^(SCRIPT|STYLE|svg|path|IMG|CANVAS|IFRAME|TEMPLATE)$/i.test(el.tagName)) return;

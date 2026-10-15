@@ -52,6 +52,9 @@
     var ICO_UNDO = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M8 4L3.5 8.5 8 13" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 8.5h7.5a4.5 4.5 0 0 1 0 9H8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
     var ICO_REDO = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12 4l4.5 4.5L12 13" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 8.5H8.5a4.5 4.5 0 0 0 0 9H12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
 
+    // 지우개 · 전체 지우기 — 테스트 서버에 개발자가 넣은 아이콘(Font Awesome Regular eraser · trash-can)을 그대로 받아옴 (2026-10-15)
+    var ICO_ERASER = '<svg width="22" height="20" viewBox="0 0 576 512" aria-hidden="true"><path fill="currentColor" d="M97 319c-9.4 9.4-9.4 24.6 0 33.9l72 72c4.5 4.5 10.6 7 17 7H294.1c6.4 0 12.5-2.5 17-7l65-65L216 200 97 319zM285.1 63c28.1-28.1 73.7-28.1 101.8 0L513 189.1c28.1 28.1 28.1 73.7 0 101.8L371.9 432H520c13.3 0 24 10.7 24 24s-10.7 24-24 24H296v0c-.6 0-1.3 0-1.9 0H185.9c-19.1 0-37.4-7.6-50.9-21.1l-72-72c-28.1-28.1-28.1-73.7 0-101.8L285.1 63z"/></svg>';
+    var ICO_TRASH = '<svg width="18" height="20" viewBox="0 0 448 512" aria-hidden="true"><path fill="currentColor" d="M170.5 51.6L151.5 80h145l-19-28.4c-1.5-2.2-4-3.6-6.7-3.6H177.1c-2.7 0-5.2 1.3-6.7 3.6zm147-26.6L354.2 80H368h48 8c13.3 0 24 10.7 24 24s-10.7 24-24 24h-8V432c0 44.2-35.8 80-80 80H112c-44.2 0-80-35.8-80-80V128H24c-13.3 0-24-10.7-24-24S10.7 80 24 80h8H80 93.8l36.7-55.1C140.9 9.4 158.4 0 177.1 0h93.7c18.7 0 36.2 9.4 46.6 24.9zM80 128V432c0 17.7 14.3 32 32 32H336c17.7 0 32-14.3 32-32V128H80zm80 64V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16z"/></svg>';
     var ICO_CHECK = '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     var ICO_CLOSE = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>';
 
@@ -69,11 +72,11 @@
         '<button class="scratch__swatch is-on" data-ink="1" aria-label="잉크 기본색">' + ICO_CHECK + '</button>' +
         '<button class="scratch__swatch" data-ink="2" aria-label="잉크 빨강">' + ICO_CHECK + '</button>' +
         '<button class="scratch__swatch" data-ink="3" aria-label="잉크 파랑">' + ICO_CHECK + '</button>' +
-        '<button class="toolbtn scratch__tool" data-tool="eraser"><span>지우개</span></button>' +
+        '<button class="toolbtn scratch__tool scratch__tool--ico" data-tool="eraser" aria-label="지우개" title="지우개">' + ICO_ERASER + '</button>' +
         '<span class="scratch__sep"></span>' +
         '<button class="toolbtn scratch__tool scratch__tool--ico" data-tool="undo" aria-label="뒤로 복귀" disabled>' + ICO_UNDO + '</button>' +
         '<button class="toolbtn scratch__tool scratch__tool--ico" data-tool="redo" aria-label="앞으로 복귀" disabled>' + ICO_REDO + '</button>' +
-        '<button class="toolbtn scratch__tool" data-tool="clear"><span>전체 지우기</span></button>' +
+        '<button class="toolbtn scratch__tool scratch__tool--ico" data-tool="clear" aria-label="전체 지우기" title="전체 지우기">' + ICO_TRASH + '</button>' +
       '</div>';
     root.appendChild(toolbar);
     document.body.appendChild(root);

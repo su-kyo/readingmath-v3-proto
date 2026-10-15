@@ -38,7 +38,7 @@
   var overtime = false;
   var SCORE = BASE_SCORE - (overtime ? PENALTY : 0);
   var COMMENT =
-    '진방울님의 서술형 훈련 결과는 100점 만점 중 ' + SCORE + '점 입니다.\n' +
+    '진방울님의 서술형 훈련 결과는 100점 만점 중 ' + SCORE + '점입니다.\n' +
     '실력 키우기는 거의 완벽했지만, 기초 기르기에서 계산 과정과 서술의 정확성이 흔들렸어요.\n' +
     '오답노트를 확인한 뒤 기초 기르기를 한 번 더 복습해 보세요.';
 
@@ -166,6 +166,8 @@
 
   /* ---------- 시간 초과 상태 토글 (검수용) ---------- */
   var overPill = document.getElementById('overPill');
+  var inPill = document.getElementById('inPill');
+  var durVal = document.getElementById('durVal');
   var commentEl = document.getElementById('comment');
   function setOvertime(on, initial) {
     overtime = on;
@@ -174,6 +176,9 @@
     if (!initial) { clearInterval(sTimer); scoreEl.textContent = SCORE; }
     document.getElementById('totalStar').src = 'assets/icons/star/star-' + gradeOf(SCORE) + '.svg';
     if (overPill) overPill.hidden = !on;
+    if (inPill) inPill.hidden = on;
+    // 소요 시간도 상태에 맞춘다 — 감점이면 제한(60:00)보다 길게
+    if (durVal) durVal.textContent = on ? durVal.dataset.over : durVal.dataset.in;
     if (commentEl) commentEl.textContent = commentEl.textContent
       .replace(/100점 만점 중 \d+점/, '100점 만점 중 ' + SCORE + '점');
   }

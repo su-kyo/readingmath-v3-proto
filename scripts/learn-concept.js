@@ -34,6 +34,9 @@
     article.classList.toggle('is-done', cursor >= segs.length);
     // 마지막 구간까지 모두 읽으면 '개념 요약하기' 활성화
     if (summaryBtn && cursor >= segs.length) summaryBtn.disabled = false;
+    // 콘솔바 안내(RM-PART-07) — 첫 구간에서 「어떻게 읽나」, 다 읽으면 「다음에 무엇을」. 그 사이는 숨긴다.
+    if (window.RMGuide) window.RMGuide.set(cursor >= segs.length ? '다 읽었어요! 개념 요약하기 버튼을 눌러 주세요!'
+      : cursor === 0 ? '글을 눌러 이어 읽어 주세요!' : '');
     renderTags();
   }
 

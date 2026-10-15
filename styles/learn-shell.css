@@ -36,6 +36,14 @@ body.learn-body { background: var(--asset-console-concept-body); overflow: hidde
 .lheader__limit { margin-left: -2px; font-family: var(--font-mono); font-weight: var(--fw-semibold); font-size: var(--fs-14); letter-spacing: .02em; color: var(--white-a80); }
 .lheader__timer.is-over { box-shadow: inset 0 0 0 var(--bw-2) var(--no-solid); }
 .lheader__timer.is-over .lheader__time { color: var(--no-on-dark); }
+/* 말풍선 — 마우스를 올리거나 포커스하면. 머리줄과 같은 고정 다크 물건이라 테마를 따라가지 않는다 */
+.lheader__timer { position: relative; outline: none; }
+.lheader__tip { position: absolute; top: calc(100% + 10px); right: 0; z-index: var(--z-float); padding: var(--sp-8) var(--sp-12);
+  border-radius: var(--r-12); background: var(--hw-bg); color: var(--hw-text); font-family: var(--font-sans); font-size: var(--fs-12);
+  font-weight: var(--fw-semibold); letter-spacing: 0; white-space: nowrap; pointer-events: none;
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--hw-bg) 28%, transparent); opacity: 0; transform: translateY(-4px); transition: opacity .15s, transform .15s; }
+.lheader__tip::before { content: ""; position: absolute; top: -5px; right: 22px; width: 10px; height: 10px; background: inherit; transform: rotate(45deg); }
+.lheader__timer:hover .lheader__tip, .lheader__timer:focus-visible .lheader__tip { opacity: 1; transform: none; }
 .lheader__timer.is-paused { opacity: .62; }
 .lheader__timer.is-paused::before { content: ""; width: 12px; height: 12px; flex: none; background: currentColor;
   -webkit-mask: linear-gradient(#000 0 0) 0/4px 12px no-repeat, linear-gradient(#000 0 0) 8px 0/4px 12px no-repeat;
@@ -90,8 +98,25 @@ body.learn-body { background: var(--asset-console-concept-body); overflow: hidde
 .toolbtn:disabled { opacity: .5; filter: grayscale(.5); cursor: not-allowed; transform: none; box-shadow: 0 var(--depth-4) 0 var(--hw-key-edge); }
 .toolbtn:disabled:hover { filter: grayscale(.5); }   /* :hover 의 brightness 가 이기지 않게 */
 .toolbtn img, .toolbtn svg { width: 20px; height: 20px; }
+.toolbtn[hidden] { display: none; }
 .toolbtn--primary { background: var(--primary); box-shadow: 0 var(--depth-4) 0 var(--primary-pressed); }
 .toolbtn--primary:hover { background: var(--primary-hover); }
+
+/* 콘솔바 안내 (RM-PART-07) — 오른쪽 CTA 바로 왼쪽. 「왜 이 버튼이 꺼져 있나 / 다음에 무엇을」을 한 줄로.
+   글자는 하나(--guide-ink), 상태(.is-ok · .is-no)는 램프 색으로만. 문장은 화면 엔진이 scripts/learn-guide.js 로 넣는다. */
+.guide { display: inline-flex; align-items: center; gap: var(--sp-8); margin: 0; min-width: 0; max-width: 18em;
+  color: var(--guide-ink); font-size: var(--fs-14); font-weight: var(--fw-bold); line-height: 1.3; word-break: keep-all; }
+/* 버튼이 많은 콘솔바(개념 학습)에서 긴 안내는 두 줄로 접힌다 — 버튼은 줄지 않는다 */
+.bar__group .toolbtn { flex: none; }
+.guide[hidden] { display: none; }
+.guide__lamp { --lamp: var(--guide-lamp); --ring: var(--guide-ring);
+  width: 8px; height: 8px; flex: none; box-sizing: content-box; border: var(--bw-4) solid var(--ring); border-radius: var(--r-full);
+  background: var(--lamp); box-shadow: 0 0 8px color-mix(in srgb, var(--lamp) 80%, transparent);
+  animation: guide-blink 1.6s ease-in-out infinite; }
+.guide.is-ok .guide__lamp { --lamp: var(--guide-lamp-ok); --ring: var(--guide-ring-ok); }
+.guide.is-no .guide__lamp { --lamp: var(--guide-lamp-no); --ring: var(--guide-ring-no); }
+@keyframes guide-blink { 50% { opacity: .35; } }
+@media (prefers-reduced-motion: reduce) { .guide__lamp { animation: none; } }
 
 /* ===================================================================
    스텝 결과 · 학습 진행 현황 버튼화 + 학습 시작 모달 (Phase B 공용)

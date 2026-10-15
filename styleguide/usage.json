@@ -424,20 +424,6 @@
   "btn--sec": {
    "exam/solve.html": "markup"
   },
-  "btn-grade": {
-   "concept/basic-ops.html": "markup",
-   "concept/drill.html": "markup"
-  },
-  "btn-grade--next": {
-   "concept/basic-ops.html": "js",
-   "concept/drill.html": "js"
-  },
-  "btn-move": {
-   "type/review.html": "markup"
-  },
-  "btn-next": {
-   "type/quiz.html": "markup"
-  },
   "bub": {
    "assignment/solve.html": "js"
   },
@@ -546,6 +532,11 @@
    "essay/training-result.html": "markup",
    "exam/home.html": "markup",
    "nav/bridge.html": "markup",
+   "shared/training-result.html": "markup",
+   "type/training-result.html": "markup"
+  },
+  "chip--in": {
+   "essay/training-result.html": "markup",
    "shared/training-result.html": "markup",
    "type/training-result.html": "markup"
   },
@@ -1132,6 +1123,45 @@
   },
   "grid": {
    "exam/home.html": "js"
+  },
+  "guide": {
+   "concept/basic-ops.html": "markup",
+   "concept/drill.html": "markup",
+   "concept/learn.html": "markup",
+   "essay/advanced.html": "markup",
+   "essay/basics-v2.html": "markup",
+   "essay/drill-review.html": "markup",
+   "essay/drill-v2.html": "markup",
+   "essay/report-review.html": "markup",
+   "essay/report.html": "markup",
+   "type/quiz.html": "markup",
+   "type/review.html": "markup"
+  },
+  "guide__lamp": {
+   "concept/basic-ops.html": "markup",
+   "concept/drill.html": "markup",
+   "concept/learn.html": "markup",
+   "essay/advanced.html": "markup",
+   "essay/basics-v2.html": "markup",
+   "essay/drill-review.html": "markup",
+   "essay/drill-v2.html": "markup",
+   "essay/report-review.html": "markup",
+   "essay/report.html": "markup",
+   "type/quiz.html": "markup",
+   "type/review.html": "markup"
+  },
+  "guide__text": {
+   "concept/basic-ops.html": "markup",
+   "concept/drill.html": "markup",
+   "concept/learn.html": "markup",
+   "essay/advanced.html": "markup",
+   "essay/basics-v2.html": "markup",
+   "essay/drill-review.html": "markup",
+   "essay/drill-v2.html": "markup",
+   "essay/report-review.html": "markup",
+   "essay/report.html": "markup",
+   "type/quiz.html": "markup",
+   "type/review.html": "markup"
   },
   "h-bar": {
    "util/history.html": "js"
@@ -1751,6 +1781,19 @@
   "is-match": {
    "exam/home.html": "js"
   },
+  "is-no": {
+   "concept/basic-ops.html": "js",
+   "concept/drill.html": "js",
+   "concept/learn.html": "js",
+   "essay/advanced.html": "js",
+   "essay/basics-v2.html": "js",
+   "essay/drill-review.html": "js",
+   "essay/drill-v2.html": "js",
+   "essay/report-review.html": "js",
+   "essay/report.html": "js",
+   "type/quiz.html": "js",
+   "type/review.html": "js"
+  },
   "is-nochar": {
    "nav/home.html": "js"
   },
@@ -1761,6 +1804,17 @@
    "concept/organize.html": "js"
   },
   "is-ok": {
+   "concept/basic-ops.html": "js",
+   "concept/drill.html": "js",
+   "concept/learn.html": "js",
+   "essay/advanced.html": "js",
+   "essay/basics-v2.html": "js",
+   "essay/drill-review.html": "js",
+   "essay/drill-v2.html": "js",
+   "essay/report-review.html": "js",
+   "essay/report.html": "js",
+   "type/quiz.html": "js",
+   "type/review.html": "js",
    "util/payment.html": "js"
   },
   "is-on": {
@@ -1874,6 +1928,11 @@
   "is-ready": {
    "essay/drill-v2.html": "js",
    "essay/drill.html": "js"
+  },
+  "is-reveal": {
+   "concept/basic-ops.html": "js",
+   "concept/drill.html": "js",
+   "type/review.html": "js"
   },
   "is-sel": {
    "essay/advanced.html": "js",
@@ -2125,6 +2184,20 @@
    "type/quiz.html": "markup",
    "type/result.html": "markup",
    "type/review.html": "markup"
+  },
+  "lheader__tip": {
+   "essay/advanced.html": "js",
+   "essay/basics-v2.html": "js",
+   "essay/basics.html": "js",
+   "essay/drill-review.html": "js",
+   "essay/drill-v2.html": "js",
+   "essay/drill.html": "js",
+   "essay/report-review.html": "js",
+   "essay/report.html": "js",
+   "essay/step-result.html": "js",
+   "type/quiz.html": "js",
+   "type/result.html": "js",
+   "type/review.html": "js"
   },
   "lightbox": {
    "concept/learn.html": "markup"
@@ -2552,12 +2625,6 @@
    "type/review.html": "markup"
   },
   "ops-wrap": {
-   "concept/basic-ops.html": "markup",
-   "concept/drill.html": "markup",
-   "type/quiz.html": "markup",
-   "type/review.html": "markup"
-  },
-  "ops__foot": {
    "concept/basic-ops.html": "markup",
    "concept/drill.html": "markup",
    "type/quiz.html": "markup",
@@ -3048,10 +3115,6 @@
   },
   "resume__unit": {
    "nav/bridge.html": "markup"
-  },
-  "review-hint": {
-   "essay/drill-review.html": "markup",
-   "essay/report-review.html": "markup"
   },
   "rframe": {
    "essay/step-result.html": "markup",
