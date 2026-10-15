@@ -103,7 +103,7 @@
   z-index: var(--z-toast);
   padding: var(--sp-12) var(--sp-20); border-radius: var(--r-full);
   font-family: var(--font-sans); font-size: var(--fs-14); font-weight: var(--fw-semibold);
-  background: var(--toast-bg, color-mix(in srgb, var(--n-700) 94%, transparent)); color: var(--text-on-accent);
+  background: var(--toast-bg, color-mix(in srgb, var(--hw-raised) 94%, transparent)); color: var(--text-on-accent);
   opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s;
 }
 .toast.is-on {
@@ -128,8 +128,8 @@
   width: max-content; min-width: 176px; max-width: min(320px, calc(100vw - 16px)); box-sizing: border-box;
   padding: var(--sp-8); border: var(--bw-1) solid var(--border); border-radius: var(--r-16);
   background: var(--surface-1); color: var(--text); font-family: var(--font-sans);
-  box-shadow: 0 18px 40px -14px color-mix(in srgb, var(--n-900) 30%, transparent),
-              0 3px 10px color-mix(in srgb, var(--n-900) 8%, transparent);
+  box-shadow: 0 18px 40px -14px color-mix(in srgb, var(--shade) 30%, transparent),
+              0 3px 10px color-mix(in srgb, var(--shade) 8%, transparent);
   opacity: 0; visibility: hidden; translate: 0 4px;
   transition: opacity .14s ease, translate .14s ease, visibility .14s;
 }

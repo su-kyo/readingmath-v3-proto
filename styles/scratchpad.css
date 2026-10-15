@@ -23,8 +23,6 @@
 
 /* 잉크 3색 — 쓰는 순간의 테마를 따른다 (다크 기본 / 라이트 뒤집기)
    딤은 --scrim 보다 훨씬 진하게 눌러 문제 영역만 뜨게 한다 */
-.scratch { --scratch-dim: color-mix(in srgb, var(--n-950) 80%, transparent); --scratch-ink-1: var(--n-050); --scratch-ink-2: var(--red-300); --scratch-ink-3: var(--blue-300); }
-:root[data-theme="light"] .scratch { --scratch-dim: color-mix(in srgb, var(--n-700) 80%, transparent); --scratch-ink-1: var(--n-650); --scratch-ink-2: var(--red-500); --scratch-ink-3: var(--blue-450); }
 
 /* 도구 바 = 화면 .bar의 복제본 + 네이비 톤. 형태는 화면 CSS를 그대로 물려받는다 */
 .scratch .bar { transform: translateY(112%); transition: transform .32s cubic-bezier(.2,.8,.3,1.08); pointer-events: auto; z-index: 2; }
@@ -38,12 +36,12 @@
 .scratch__tools { display: flex; align-items: center; gap: var(--sp-8); }
 .scratch__sep { width: var(--bw-1); height: 24px; background: var(--white-a16); margin: 0 2px; }
 .scratch__done svg, .scratch__tool svg { width: 18px; height: 18px; flex: none; }
-.scratch__tool.is-on { background: var(--n-000); color: var(--n-650); }   /* 고른 도구 = 눌린 키 */
+.scratch__tool.is-on { background: var(--hw-light); color: var(--paper-ink); }   /* 고른 도구 = 눌린 키 */
 /* 잉크 칩도 같은 물리 버튼 언어(하드 드롭) */
-.scratch__swatch { width: 36px; height: 36px; border-radius: 50%; border: var(--bw-3) solid var(--n-500); background: var(--swatch); padding: 0; box-shadow: 0 var(--depth-4) 0 var(--n-650); }
+.scratch__swatch { width: 36px; height: 36px; border-radius: 50%; border: var(--bw-3) solid var(--hw-key); background: var(--swatch); padding: 0; box-shadow: 0 var(--depth-4) 0 var(--hw-key-edge); }
 .scratch__swatch[data-ink="1"] { --swatch: var(--scratch-ink-1); }
 .scratch__swatch[data-ink="2"] { --swatch: var(--scratch-ink-2); }
 .scratch__swatch[data-ink="3"] { --swatch: var(--scratch-ink-3); }
-.scratch__swatch.is-on { border-color: var(--n-000); }
+.scratch__swatch.is-on { border-color: var(--hw-light); }
 .scratch__swatch:hover { filter: brightness(1.12); }
-.scratch__swatch:active { transform: translateY(2px); box-shadow: 0 var(--depth-2) 0 var(--n-650); }
+.scratch__swatch:active { transform: translateY(2px); box-shadow: 0 var(--depth-2) 0 var(--hw-key-edge); }

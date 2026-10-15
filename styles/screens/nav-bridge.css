@@ -6,8 +6,8 @@
 :root{
   --ink:var(--text); --sub:var(--text-muted); --faint:var(--text-meta);
   --panel:var(--surface-2); --panel-br:var(--border);
-  --math:var(--th-accent-hi); --math-glow:color-mix(in srgb, var(--blue-450) 55%, transparent);
-  --sci:var(--teal-400);  --sci-glow:color-mix(in srgb, var(--teal-300) 50%, transparent);
+  --math:var(--th-accent-hi); --math-glow:color-mix(in srgb, var(--subject-math) 55%, transparent);
+  --sci:var(--subject-sci);  --sci-glow:color-mix(in srgb, var(--subject-sci-hi) 50%, transparent);
   --cta:var(--primary);
 }
 *{ box-sizing:border-box; margin:0; padding:0; }
@@ -56,7 +56,7 @@ body{
 }
 .card:hover{ transform:translateY(-5px); border-color:var(--edge); box-shadow:var(--shadow-2); }
 .card--math{ --accent:var(--math); --halo:var(--math-glow); --edge:var(--th-accent-hi); }
-.card--sci{  --accent:var(--sci);  --halo:var(--sci-glow);  --edge:var(--teal-300); }
+.card--sci{  --accent:var(--sci);  --halo:var(--sci-glow);  --edge:var(--subject-sci-hi); }
 
 .card__top{ display:flex; align-items:center; gap:var(--sp-12); margin-bottom:18px; }
 .emblem{
@@ -87,7 +87,7 @@ body{
 }
 .card__gotext{ font-size:var(--fs-14); font-weight:var(--fw-bold); color:var(--ink); }
 .card__arrow{ width:34px; height:34px; border-radius:var(--r-8); display:grid; place-items:center;
-  background:var(--accent); color:var(--n-950); transition:transform .2s; }
+  background:var(--accent); color:var(--text-on-bright-deep); transition:transform .2s; }
 .card:hover .card__arrow{ transform:translateX(4px); }
 .card__arrow svg{ width:17px; height:17px; }
 
@@ -97,7 +97,7 @@ body{
 .autoenter input{ position:absolute; opacity:0; pointer-events:none; }
 .box{ width:22px; height:22px; border-radius:var(--r-8); border:1.6px solid var(--border-strong);
   background:var(--border); display:grid; place-items:center; transition:.16s; }
-.box svg{ width:13px; height:13px; opacity:0; transform:scale(.6); transition:.16s; color:var(--n-950); }
+.box svg{ width:13px; height:13px; opacity:0; transform:scale(.6); transition:.16s; color:var(--text-on-bright-deep); }
 .autoenter input:checked + .box{ background:var(--cta); border-color:var(--cta); }
 .autoenter input:checked + .box svg{ opacity:1; transform:scale(1); }
 .autoenter:hover .box{ border-color:var(--border-strong); }

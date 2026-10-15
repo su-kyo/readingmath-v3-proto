@@ -68,7 +68,7 @@
 .monitor__frame{
   display: flex; flex-direction: column; min-height: 0;
   width: 100%;
-  background: var(--n-650);
+  background: var(--hw-frame);
   border-radius: var(--r-frame);
   padding: var(--sp-8) var(--sp-8) var(--sp-12);
   box-shadow: var(--shadow-2);
@@ -82,9 +82,9 @@
 .monitor__lamps{ display: flex; gap: var(--sp-6); margin-right: var(--sp-6); }
 .monitor__lamps i{
   width: 9px; height: 9px; border-radius: var(--r-full);
-  background: var(--n-500);
+  background: var(--hw-key);
 }
-.monitor__lamps i.is-live{ background: var(--th-accent-hi, var(--blue-300)); }
+.monitor__lamps i.is-live{ background: var(--th-accent-hi); }
 .monitor__ttl{
   color: var(--text-on-accent);
   font-family: var(--font-sans);
@@ -97,14 +97,14 @@
 .monitor__x,
 .monitor__tool{
   border: none; cursor: pointer;
-  background: var(--n-500); color: var(--text-on-accent);
+  background: var(--hw-key); color: var(--text-on-accent);
   border-radius: var(--r-12);
   display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-6);
   font-family: var(--font-sans); font-size: var(--fs-14); font-weight: var(--fw-bold);
   transition: background var(--t-fast);
 }
 .monitor__x:hover,
-.monitor__tool:hover{ background: var(--n-400); }
+.monitor__tool:hover{ background: var(--hw-key-hover); }
 .monitor__x{ margin-left: auto; width: 40px; height: 36px; flex: none; }
 .monitor__tool{ height: 36px; padding: 0 var(--sp-12); flex: none; }
 .monitor__tools{ display: flex; gap: var(--sp-8); margin-left: auto; }
@@ -127,7 +127,7 @@
 }
 .monitor__slit{
   width: 64px; height: 6px; border-radius: var(--r-full);
-  background: var(--n-500);
+  background: var(--hw-key);
 }
 
 /* 프레임 밖 아래로 걸리는 부속 (요약 선택지처럼 패널 밖 UI) */

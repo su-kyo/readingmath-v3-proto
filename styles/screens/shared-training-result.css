@@ -21,8 +21,8 @@
 
 /* ===== LCD 판독 화면 (스캔라인은 스크롤을 따라간다) ===== */
 
-.hwf__screen::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--cyan-200) 20%, transparent); border-radius: var(--r-full); border: var(--bw-3) solid transparent; background-clip: padding-box; }
-.hwf__screen { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--cyan-200) 24%, transparent) transparent; }
+.hwf__screen::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--accent-cyan-soft) 20%, transparent); border-radius: var(--r-full); border: var(--bw-3) solid transparent; background-clip: padding-box; }
+.hwf__screen { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--accent-cyan-soft) 24%, transparent) transparent; }
 
 /* ===== 총점(별+점수 — 스텝 게이지와 다른 위계) + 단계별 표 ===== */
 
@@ -30,25 +30,25 @@
 
 
 
-.tpc { font-family: var(--font-mono); font-size: var(--fs-16); color: var(--cyan-300); }
+.tpc { font-family: var(--font-mono); font-size: var(--fs-16); color: var(--accent-cyan); }
 .tview { padding: var(--sp-6) 0; width: 100%; max-width: 70px; border-radius: var(--r-8); border: none; background: transparent;
-  box-shadow: inset 0 0 0 var(--bw-1) var(--cyan-400); color: var(--cyan-300);
+  box-shadow: inset 0 0 0 var(--bw-1) var(--accent-blue); color: var(--accent-cyan);
   font-family: var(--font-sans); font-weight: var(--fw-bold); font-size: var(--fs-14); cursor: pointer; transition: background var(--t-fast); }
-.tview:hover { background: color-mix(in srgb, var(--cyan-400) 14%, transparent); }
+.tview:hover { background: color-mix(in srgb, var(--accent-blue) 14%, transparent); }
 
 /* 코멘트 (LCD 하단 판독 텍스트) → 공용 styles/result.css */
 
 /* ===== 「보기」 스크린창 — 스텝 결과 판독 (보조 모니터 + LCD) ===== */
 #stepMon { --mon-w: 720px; }
 .monitor__screen--lcd { position: relative; overflow: hidden;
-  background-color: var(--n-900);
+  background-color: var(--hw-bg);
   background-image: repeating-linear-gradient(0deg, var(--white-a04) 0 1px, transparent 1px 5px);
   padding: clamp(26px,3vw,38px); }
 
 /* 스크린창 안 활동별 행 — 스텝 결과 화면과 같은 구성(문항 LED) */
 
 .mact__name { display: flex; align-items: center; gap: var(--sp-8); flex: none; min-width: 128px;
-  font-weight: var(--fw-heavy); font-size: var(--fs-15); color: var(--n-050); }
+  font-weight: var(--fw-heavy); font-size: var(--fs-15); color: var(--hw-text); }
 .mact .led { flex: 1; }
 .mact .led i { height: 13px; }
 
@@ -58,6 +58,6 @@
   .trow { grid-template-columns: minmax(110px,1fr) 44px minmax(90px,1.2fr) 72px 54px 64px; }
 }
 /* 토스트 면색만 이 화면 것 */
-.toast { --toast-bg: color-mix(in srgb, var(--n-800) 94%, transparent); }
+.toast { --toast-bg: color-mix(in srgb, var(--hw-surface) 94%, transparent); }
 /* 훈련 결과는 띠가 행 전체를 채우고 조금 얇다 */
 .led { width: 100%; flex: none; }  .led i { height: 12px; }

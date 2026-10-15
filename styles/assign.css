@@ -47,7 +47,7 @@
 /* ----- 화면 공용으로 올림 (2026-10-14 · RM-FILE-03) — assignment-explain · assignment-result · assignment-solve ----- */
 .wrap { position: relative; z-index: 1; flex: 1; min-height: 0; display: flex; flex-direction: column; padding: clamp(16px,2.4vw,30px) clamp(20px,5vw,72px) 0; gap: var(--sp-12); }
 :root[data-theme="dark"] .toggle__k { left: 32px; background-image: url("../assets/icons/ico-moon.svg"); }
-.toast { --toast-bg: var(--n-650); }
+.toast { --toast-bg: var(--hw-frame); }
 
 /* ----- 화면 공용으로 올림 (2026-10-14 · RM-FILE-03) — assignment-explain · assignment-solve ----- */
 .qmeta { display: flex; align-items: center; gap: var(--sp-8); flex-wrap: wrap; }
@@ -57,10 +57,10 @@
 .opts { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: var(--sp-8); }
 .short__unit { font-size: var(--fs-16); font-weight: var(--fw-bold); color: var(--sub); }
 .qpanel::-webkit-scrollbar { width: 10px; }
-.qpanel::-webkit-scrollbar-thumb { background: var(--n-200); border-radius: var(--r-full); border: var(--bw-3) solid var(--qpanel); background-clip: padding-box; }
+.qpanel::-webkit-scrollbar-thumb { background: var(--scroll-thumb-light); border-radius: var(--r-full); border: var(--bw-3) solid var(--qpanel); background-clip: padding-box; }
 
 /* 문항 속 산점도(과제 4번) — 스크립트가 그리고 색은 여기서 정한다 (RM-JS-01).
    문제 그림이라 테마를 따라가지 않는다(종이 위 그림) */
-.chart__grid { stroke: var(--n-100); }
-.chart__axis { stroke: var(--n-650); }
-.chart__dot, .chart__label { fill: var(--n-650); }
+.chart__grid { stroke: var(--paper-line); }
+.chart__axis { stroke: var(--paper-ink); }
+.chart__dot, .chart__label { fill: var(--paper-ink); }

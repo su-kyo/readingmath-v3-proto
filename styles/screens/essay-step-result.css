@@ -10,9 +10,9 @@
 .rframe {
   flex: 1; min-height: 0; display: flex; gap: var(--sp-12);
   background: var(--th-static); border-radius: var(--r-frame) var(--r-frame) 0 0; padding: var(--sp-8) var(--sp-8) 0;
-  --lmain: var(--n-900); --ltext: var(--n-050); --lmuted: var(--n-300);
+  --lmain: var(--hw-bg); --ltext: var(--hw-text); --lmuted: var(--hw-text-muted);
   --lcd: var(--white-a04);
-  --accent: var(--th-accent-hi); --title1: var(--th-accent-hi); --rate: var(--violet-400);
+  --accent: var(--th-accent-hi); --title1: var(--th-accent-hi); --rate: var(--th-rate);
   --row-bg: var(--white-a04);
 }
 /* 우측 조작 패널 — 면 색은 림(--th-static)과 같은 계열에서 파생(톤온톤) → 공용 styles/result.css */
@@ -20,7 +20,7 @@
 /* 좌측: 결과 (LCD 라인 패턴) */
 
 .rmain::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--rate) 26%, transparent); border-radius: var(--r-full); border: var(--bw-3) solid transparent; background-clip: padding-box; }
-.rside__list::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--n-050) 18%, transparent); border-radius: var(--r-full); border: var(--bw-3) solid transparent; background-clip: padding-box; }
+.rside__list::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--hw-text) 18%, transparent); border-radius: var(--r-full); border: var(--bw-3) solid transparent; background-clip: padding-box; }
 .rmain, .rside__list { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--rate) 28%, transparent) transparent; }
 
 

@@ -23,7 +23,7 @@
 .spacebg .star {
   position: absolute;
   border-radius: 50%;
-  background: var(--n-000);
+  background: var(--hw-light);
   color: var(--art-star);                 /* cross sparkle 색 */
   opacity: var(--o, .6);
   animation: rm-twinkle var(--d, 3.4s) ease-in-out var(--delay, 0s) infinite;

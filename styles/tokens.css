@@ -105,6 +105,8 @@
   --asset-console-task-body:    #AFC6E8;
   --asset-console-task-rim:     #EEF0F6;
   --asset-console-task-tray:    #E0E6EF;
+  --asset-console-flat:         var(--n-100);
+  --asset-home-sky:             var(--blue-300);   /* 행성 홈 그림이 뜨기 전 하늘 */   /* 그림 없는 납작한 콘솔 바(.bar--flat)의 립·트레이 */
 
   /* 우주 배경 아트 (원칙1 예외 — space-bg 캔버스) */
   --art-space-top:    #050B26;
@@ -211,6 +213,21 @@
   /* 우주 배경 액센트 (space-bg 아트 — 원칙1 예외) */
   --accent-cyan: var(--cyan-300);
   --accent-blue: var(--cyan-400);
+  --accent-cyan-soft: var(--cyan-200);   /* 결과 계기판 스크롤바 */
+
+  /* 밝은 칠면(계열색 LED · 앰버 · 밝은 버튼) 위 어두운 글자 — 테마를 따라 뒤집히지 않는다 (RM-FILL-04) */
+  --text-on-bright:      var(--n-900);
+  --text-on-bright-deep: var(--n-950);
+
+  /* 과목색 — 수학 파랑 · 과학 틸 (과목 고르기 · 홈 말풍선 강조) */
+  --subject-math:     var(--blue-450);
+  --subject-math-ink: var(--blue-600);
+  --subject-sci:      var(--teal-400);
+  --subject-sci-hi:   var(--teal-300);
+  --subject-sci-ink:  var(--teal-600);
+
+  /* 시험 액센트 — 시험 계열 밖에서 시험을 가리키는 칩 (커리큘럼의 시험 대비 칩) */
+  --exam-accent: var(--violet-500);
 
   /* 계산기 — 정적 하드웨어(RM-PART-03). 테마도 계열도 따라가지 않는 회색 한 벌이고,
      계열색은 확인 키(--th-vivid)에만 남긴다. 라이트 테마 블록에서 덮지 않는다. */
@@ -227,6 +244,59 @@
   --kp-display-ink: var(--n-050);
   --kp-shadow:      color-mix(in srgb, var(--n-600) 10%, transparent);
   --kp-float-shadow: color-mix(in srgb, var(--n-800) 40%, transparent);
+
+  /* =======================================================================
+     부품 토큰 — 고정 물건 · 화면군 (2026-10-15)
+     화면 CSS 는 팔레트(1단)를 직접 부르지 않는다(RM-COL-05). 2단 역할에 맞는 뜻이 없으면 여기서 이름을 받는다.
+     ======================================================================= */
+
+  /* 고정 다크 = 하드웨어 — GNB · 서랍 · 결과 계기판 · 보조 모니터 · 콘솔 버튼 · 연습장 도구.
+     테마를 따라 뒤집히지 않는다(RM-PART-03). 사다리는 다크 테마 2단과 같다. */
+  --hw-bg:          var(--n-900);
+  --hw-surface:     var(--n-800);
+  --hw-raised:      var(--n-700);
+  --hw-frame:       var(--n-650);   /* 모니터 베젤 */
+  --hw-key:         var(--n-500);   /* 물리 버튼 · 꺼진 램프 · 비활성 버튼 */
+  --hw-key-hover:   var(--n-400);
+  --hw-key-edge:    var(--n-650);   /* 버튼 아래 두께 */
+  --hw-text:        var(--n-050);
+  --hw-text-soft:   var(--n-200);
+  --hw-text-muted:  var(--n-300);
+  --hw-text-meta:   var(--n-350);
+  --hw-light:       var(--n-000);   /* 켜진 점 · 고른 도구 면 · 별 */
+  --hw-accent:      var(--blue-300);   /* 하드웨어 위 파랑 글자 · 선 (서랍) */
+  --hw-accent-solid: var(--blue-600);  /* 하드웨어 위 파랑 칠 (서랍 탭) */
+  --hw-card:        var(--n-650);   /* 우주 화면 카드 면 */
+  --hw-no:          var(--red-400);   /* 계기판 오답 글자 */
+
+  /* 고정 라이트 = 종이 — 보고서 미리보기 · 밝은 GNB · 과제 차트 · 행성 홈 명패와 말풍선.
+     테마를 따라 뒤집히지 않는다. 사다리는 라이트 테마 2단과 같다. */
+  --paper-bg:          var(--n-000);
+  --paper-sunken:      var(--n-050);
+  --paper-tint:        var(--n-100);
+  --paper-line:        var(--n-100);
+  --paper-line-strong: var(--n-200);
+  --paper-ink:         var(--n-650);
+  --paper-ink-muted:   var(--n-500);
+  --paper-ink-meta:    var(--n-400);
+
+  /* 그늘 — 그림자 · 딤 · 막의 바탕색. color-mix(in srgb, var(--shade) N%, transparent) 로 섞어 쓴다 */
+  --shade:       var(--n-900);
+  --shade-deep:  var(--n-950);
+  --shade-soft:  var(--n-650);   /* 밝은 면 위 카드 그림자 */
+  --shade-mid:   var(--n-600);   /* 행성 홈 오브젝트 · 캐릭터 바닥 그림자 */
+
+  /* 스크롤바 손잡이 — 밝은 면용 · 어두운 면용 (화면마다 아직 고르는 값이 달라 두 단씩 둔다) */
+  --scroll-thumb-light:        var(--n-200);
+  --scroll-thumb-light-strong: var(--n-300);
+  --scroll-thumb-dark:         var(--n-600);
+  --scroll-thumb-dark-strong:  var(--n-500);
+
+  /* 연습장 — 딤과 펜 세 자루 (라이트 값은 아래 라이트 블록) */
+  --scratch-dim:   color-mix(in srgb, var(--n-950) 80%, transparent);
+  --scratch-ink-1: var(--text);
+  --scratch-ink-2: var(--red-300);
+  --scratch-ink-3: var(--blue-300);
 
   /* =======================================================================
      3단 · THEME SLOT 기본값 (data-section 미지정 시 fallback = concept/blue)
@@ -248,6 +318,9 @@
   --th-tint-strong:   color-mix(in srgb, var(--th-accent) 15%, transparent);
   --th-panel:         var(--n-100);
   --th-focus:         var(--th-accent);
+  --th-rate:          var(--cyan-400);   /* 결과 계기판의 진행률 · LED */
+  --th-shadow:        var(--blue-900);   /* 계열 빛이 도는 그림자의 바탕 */
+  --th-night:         var(--blue-900);   /* 계열의 가장 깊은 색 (어두운 토스트) */
   --asset-bar-rim:    var(--asset-console-concept-rim);
   --asset-bar-tray:   var(--asset-console-concept-tray);
   --art-screen-bg:    url("../assets/img/bg/bg-spaceship-light.webp");
@@ -361,6 +434,10 @@
   --shadow-2: 0 10px 28px rgba(24, 40, 80, 0.14);
 
   --th-focus: var(--th-accent);
+
+  --scratch-dim:   color-mix(in srgb, var(--n-700) 80%, transparent);
+  --scratch-ink-2: var(--red-500);
+  --scratch-ink-3: var(--blue-450);
 }
 /* 다크에서 포커스 링은 밝힌 액센트 + 틴트는 더 진하게 (v1.6)
    — 라이트용 8/15% 틴트는 다크 표면에서 식별 불가(끊어읽기 하이라이트·빈칸 채움이
@@ -405,6 +482,9 @@
   --th-solid: var(--teal-600);   /* 흰 글자 받침 */
   --th-vivid: var(--teal-450);   /* 정체성 버튼(≥19px w700 흰 라벨) */
   --th-panel: var(--n-000);   /* 콘텐츠 패널 = 라이트에서 흰색 */
+  --th-rate: var(--teal-300);
+  --th-shadow: var(--teal-800);
+  --th-night: var(--teal-900);
   --asset-bar-rim:  var(--amber-050);   /* 하단 콘솔 바 — 립 */
   --asset-bar-tray: var(--asset-console-type-tray);
   --art-screen-bg:  url("../assets/img/bg/bg-spaceship-teal.webp");   /* 학습 화면 배경 사진 */
@@ -422,6 +502,9 @@
   --th-solid: var(--violet-600);   /* 흰 글자 받침 */
   --th-vivid: var(--violet-450);   /* 정체성 버튼(≥19px w700 흰 라벨) */
   --th-panel: var(--n-000);   /* 콘텐츠 패널 = 라이트에서 흰색 */
+  --th-rate: var(--violet-400);
+  --th-shadow: var(--violet-800);
+  --th-night: var(--violet-900);
   --asset-bar-rim:  var(--asset-console-essay-rim);   /* 하단 콘솔 바 — 립 */
   --asset-bar-tray: var(--asset-console-essay-tray);
   --art-screen-bg:  url("../assets/img/bg/bg-spaceship-essay.webp");   /* 학습 화면 배경 사진 */

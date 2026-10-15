@@ -4,10 +4,10 @@
    ========================================================================= */
 
 :root{
-  --panel:var(--surface-1); --card:var(--n-650); --card2:var(--surface-2); --rail:var(--surface-3);
-  --line:var(--surface-3); --line2:var(--n-650);
+  --panel:var(--surface-1); --card:var(--hw-card); --card2:var(--surface-2); --rail:var(--surface-3);
+  --line:var(--surface-3); --line2:var(--hw-frame);
   --ink:var(--text); --body:var(--text); --muted:var(--text-muted); --item:var(--th-accent-hi);
-  --mint:var(--th-accent); --green:var(--ok-on-dark); --blue:var(--info-ink); --purple:var(--violet-500); --red:var(--no-on-dark);
+  --mint:var(--th-accent); --green:var(--ok-on-dark); --blue:var(--info-ink); --purple:var(--exam-accent); --red:var(--no-on-dark);
   --cta:var(--primary);
 }
 *{ box-sizing:border-box; margin:0; padding:0; }
@@ -60,7 +60,7 @@ body{ font-family:var(--font-sans); background:var(--bg); color:var(--ink); over
 /* 시험대비 칩 (소단원명 옆) */
 .train__titlewrap{ display:flex; align-items:center; gap:var(--sp-12); flex-wrap:wrap; margin:var(--sp-8) 0 var(--sp-16); }
 .examchip{ display:inline-flex; align-items:center; gap:var(--sp-4); padding:var(--sp-4) var(--sp-12); border-radius:var(--r-16); border:0; cursor:pointer;
-  background:color-mix(in srgb, var(--purple) 22%, transparent); color:color-mix(in srgb, var(--purple) 45%, white);
+  background:color-mix(in srgb, var(--purple) 22%, transparent); color:color-mix(in srgb, var(--purple) 45%, var(--hw-light));
   font-family:inherit; font-size:var(--fs-12); font-weight:var(--fw-heavy); letter-spacing:-.02em; transition:background .14s; }
 .examchip .cr{ color:var(--warn-solid); }
 .examchip:hover{ background:color-mix(in srgb, var(--purple) 32%, transparent); }
@@ -93,7 +93,7 @@ body{ font-family:var(--font-sans); background:var(--bg); color:var(--ink); over
 .rcard{ background:var(--panel); border:var(--bw-1) solid var(--line2); border-radius:var(--r-22); padding:var(--sp-20) var(--sp-24); }
 .rcard__top{ display:flex; align-items:center; gap:var(--sp-12); margin-bottom:var(--sp-16); }
 .rcard__bar{ width:6px; height:20px; border-radius:var(--r-22); background:var(--mint); }
-.rcard--lock .rcard__bar{ background:var(--n-500); }
+.rcard--lock .rcard__bar{ background:var(--hw-key); }
 .rcard__name{ font-size:var(--fs-22); font-weight:var(--fw-heavy); letter-spacing:-.03em; }
 .rcard__grade{ margin-left:auto; }
 .rcard__lockmsg{ margin-left:auto; font-size:var(--fs-12); font-weight:var(--fw-bold); color:var(--muted); display:inline-flex; align-items:center; gap:var(--sp-4); }
@@ -113,7 +113,7 @@ body{ font-family:var(--font-sans); background:var(--bg); color:var(--ink); over
 .step__s.is-done{ color:var(--green); }
 .step__s.is-todo{ color:var(--muted); }
 .step__go{ width:34px; height:34px; flex:none; border-radius:var(--r-8); display:grid; place-items:center;
-  background:var(--mint); color:var(--n-900); }
+  background:var(--mint); color:var(--text-on-bright); }
 .step__go svg{ width:17px; height:17px; }
 .step.is-lock .step__go{ background:var(--rail); color:var(--muted); }
 

@@ -9,7 +9,7 @@
 .svg-defs{ position:absolute; width:0; height:0; overflow:hidden; }
 /* 단원 과목 태그 — 색은 스크립트가 과목 표(TAGCOLOR)에서 골라 --tag-c 하나만 넘긴다(RM-JS-01). 섞는 비율은 여기서 정한다 */
 .tag{ --tag-c:var(--text-muted);
-  background:color-mix(in srgb, var(--tag-c) 22%, transparent); color:color-mix(in srgb, var(--tag-c) 72%, var(--n-000));
+  background:color-mix(in srgb, var(--tag-c) 22%, transparent); color:color-mix(in srgb, var(--tag-c) 72%, var(--hw-light));
   box-shadow:inset 0 0 0 var(--bw-1) color-mix(in srgb, var(--tag-c) 42%, transparent); }
 
 .sub.is-open .sub__chev{ transform:rotate(180deg); }

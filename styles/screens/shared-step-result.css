@@ -8,9 +8,9 @@
 .rframe {
   flex: 1; min-height: 0; display: flex; gap: var(--sp-12);
   background: var(--th-static); border-radius: var(--r-frame) var(--r-frame) 0 0; padding: var(--sp-8) var(--sp-8) 0;
-  --lmain: var(--n-900); --ltext: var(--n-050); --lmuted: var(--n-300);
+  --lmain: var(--hw-bg); --ltext: var(--hw-text); --lmuted: var(--hw-text-muted);
   --lcd: var(--white-a04);
-  --accent: var(--th-accent-hi); --title1: var(--th-accent-hi); --rate: var(--cyan-400);
+  --accent: var(--th-accent-hi); --title1: var(--th-accent-hi); --rate: var(--th-rate);
   --row-bg: var(--white-a04);
 }
 /* 우측 '학습 진행 현황' — 항상 다크. 면 색은 림(--th-static)과 같은 블루 계열에서 파생(톤온톤) → 공용 styles/result.css */
@@ -18,10 +18,10 @@
 /* 좌측: 결과 (LCD 라인 패턴) */
 
 /* 스크롤바 = 화면톤에 녹인 얇은 pill */
-.rmain::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--cyan-200) 20%, transparent); border-radius: var(--r-full); border: var(--bw-3) solid transparent; background-clip: padding-box; }
-.rmain::-webkit-scrollbar-thumb:hover { background: color-mix(in srgb, var(--cyan-200) 32%, transparent); background-clip: padding-box; }
-.rside__list::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--n-050) 18%, transparent); border-radius: var(--r-full); border: var(--bw-3) solid transparent; background-clip: padding-box; }
-.rmain, .rside__list { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--cyan-200) 24%, transparent) transparent; }
+.rmain::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--accent-cyan-soft) 20%, transparent); border-radius: var(--r-full); border: var(--bw-3) solid transparent; background-clip: padding-box; }
+.rmain::-webkit-scrollbar-thumb:hover { background: color-mix(in srgb, var(--accent-cyan-soft) 32%, transparent); background-clip: padding-box; }
+.rside__list::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--hw-text) 18%, transparent); border-radius: var(--r-full); border: var(--bw-3) solid transparent; background-clip: padding-box; }
+.rmain, .rside__list { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--accent-cyan-soft) 24%, transparent) transparent; }
 
 
 /* ===== 계기판 히어로 (Phase 7 ① A안) — 다이얼 게이지 + 판독창 → 공용 styles/result.css ===== */
@@ -38,7 +38,7 @@
 /* 헤더 — 진행 표현은 LED 세그 + 수치 한 벌. 구분선은 헤더 묶음에 붙는다(위 11px < 아래 21px) */
 
 .rside__prog i { width: 20px; height: 12px; border-radius: var(--r-4); background: var(--white-a10); }
-.rside__prog i.on { background: var(--rate); box-shadow: 0 0 8px color-mix(in srgb, var(--cyan-300) 45%, transparent); }
+.rside__prog i.on { background: var(--rate); box-shadow: 0 0 8px color-mix(in srgb, var(--accent-cyan) 45%, transparent); }
 
 /* 스텝 모듈 — 면판 위에 올라앉은 블록 (크리스프 받침 그림자) */
 /* 바닥 4px 여유 = 마지막 모듈의 받침 그림자가 스크롤 영역에 안 잘리게 */
