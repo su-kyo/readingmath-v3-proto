@@ -835,6 +835,11 @@
      "doc": "styleguide/components.html#btn"
     },
     {
+     "name": "끊어읽기 구간 · 그림 번호 알약",
+     "group": "부품 › 끊어읽기",
+     "doc": "styleguide/components.html#read"
+    },
+    {
      "name": "더미 이미지 자리",
      "group": "부품 › 그 밖에",
      "doc": "styleguide/components.html#misc"
@@ -875,15 +880,11 @@
    ],
    "tokens": [
     {
-     "name": "--text",
-     "count": 12
-    },
-    {
      "name": "--text-muted",
-     "count": 12
+     "count": 10
     },
     {
-     "name": "--th-tint-strong",
+     "name": "--text",
      "count": 9
     },
     {
@@ -891,36 +892,40 @@
      "count": 9
     },
     {
-     "name": "--th-tint",
-     "count": 8
-    },
-    {
      "name": "--n-000",
      "count": 8
     },
     {
-     "name": "--warn-solid",
-     "count": 6
+     "name": "--th-tint",
+     "count": 7
     },
     {
      "name": "--text-on-accent",
-     "count": 6
+     "count": 7
+    },
+    {
+     "name": "--th-solid",
+     "count": 5
     },
     {
      "name": "--th-ink-accent",
-     "count": 5
+     "count": 4
     },
     {
      "name": "--th-accent",
      "count": 4
     },
     {
-     "name": "--th-solid",
+     "name": "--ok-solid",
      "count": 4
     },
     {
-     "name": "--ok-solid",
-     "count": 4
+     "name": "--th-tint-strong",
+     "count": 3
+    },
+    {
+     "name": "--blue-900",
+     "count": 3
     }
    ],
    "rules": [
@@ -961,6 +966,11 @@
      "doc": "styleguide/components.html#btn"
     },
     {
+     "name": "끊어읽기 구간 · 그림 번호 알약",
+     "group": "부품 › 끊어읽기",
+     "doc": "styleguide/components.html#read"
+    },
+    {
      "name": "배경 사진과 다크 막",
      "group": "기초 › 색 3단 · 계열 슬롯",
      "doc": "styleguide/foundations.html#section"
@@ -992,15 +1002,11 @@
    "tokens": [
     {
      "name": "--text-muted",
-     "count": 12
+     "count": 10
     },
     {
      "name": "--text-on-accent",
      "count": 7
-    },
-    {
-     "name": "--th-accent-hi",
-     "count": 6
     },
     {
      "name": "--th-solid",
@@ -1011,16 +1017,20 @@
      "count": 6
     },
     {
-     "name": "--th-ink-accent",
-     "count": 5
-    },
-    {
      "name": "--th-tint",
      "count": 5
     },
     {
+     "name": "--th-accent-hi",
+     "count": 4
+    },
+    {
      "name": "--th-accent",
      "count": 4
+    },
+    {
+     "name": "--th-ink-accent",
+     "count": 3
     },
     {
      "name": "--surface-1",
@@ -1622,6 +1632,11 @@
      "doc": "styleguide/components.html#toast"
     },
     {
+     "name": "끊어읽기 구간 · 그림 번호 알약",
+     "group": "부품 › 끊어읽기",
+     "doc": "styleguide/components.html#read"
+    },
+    {
      "name": "더미 이미지 자리",
      "group": "부품 › 그 밖에",
      "doc": "styleguide/components.html#misc"
@@ -1692,23 +1707,11 @@
      "count": 3
     },
     {
-     "name": "--n-000",
-     "count": 3
-    },
-    {
      "name": "--n-050",
      "count": 3
     },
     {
-     "name": "--th-ink-accent",
-     "count": 3
-    },
-    {
      "name": "--n-950",
-     "count": 3
-    },
-    {
-     "name": "--th-tint-strong",
      "count": 3
     },
     {
@@ -1717,6 +1720,18 @@
     },
     {
      "name": "--white-a06",
+     "count": 2
+    },
+    {
+     "name": "--white-a10",
+     "count": 2
+    },
+    {
+     "name": "--teal-450",
+     "count": 2
+    },
+    {
+     "name": "--text-muted",
      "count": 2
     }
    ],
@@ -1770,6 +1785,11 @@
      "name": "토스트",
      "group": "부품 › 토스트",
      "doc": "styleguide/components.html#toast"
+    },
+    {
+     "name": "끊어읽기 구간 · 그림 번호 알약",
+     "group": "부품 › 끊어읽기",
+     "doc": "styleguide/components.html#read"
     },
     {
      "name": "배경 사진과 다크 막",

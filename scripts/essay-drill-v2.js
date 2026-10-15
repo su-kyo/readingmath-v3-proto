@@ -233,7 +233,7 @@
       el.classList.toggle('is-current', i === readCur);
       el.classList.toggle('is-unread', i > readCur);
     });
-    rmHint.textContent = readCur < last ? '구간을 눌러 이어 읽어요' : '문제를 다 읽었어요';
+    rmHint.textContent = readCur < last ? '글을 누르면 이어 읽어요' : '문제를 다 읽었어요';
     keepInView(els[readCur]);
   }
   /* 지금 구간이 화면 밖으로 밀리지 않게 (이미지 구간이 끼면 본문이 길어진다).
@@ -256,11 +256,12 @@
     else if (r.top < b.top + pad) d = r.top - (b.top + pad);
     if (d) sp.scrollTop += d;   // 즉각 (부드러운 스크롤은 연속 진행에서 서로 끊긴다)
   }
-  rmRead.addEventListener('click', function (e) {
-    if (!e.target.closest('.chunk.is-current')) return;   // 진행은 '지금 구간'을 눌러서만
+  /* 진행 = 지문 아무 데나 누르기 · 스페이스바 (지금 구간을 겨눠 누를 필요 없다) */
+  function advanceRead() {
     var els = rmRead.querySelectorAll('.chunk');
     if (readCur < els.length - 1) { readCur++; renderReadModal(); }
-  });
+  }
+  rmRead.addEventListener('click', advanceRead);
   function closeReadModal() { rmodal.classList.remove('is-open'); rmodal.setAttribute('aria-hidden', 'true'); }
   rmGo.addEventListener('click', function () {
     // 남은 문장까지 모두 드러낸 뒤 풀이 시작
@@ -296,6 +297,7 @@
     segEls.forEach(function (el) { el.classList.remove('is-answering'); });
     var pending = pendingBlank(segEls[curSeg]);
     if (pending) { pending.classList.add('is-active'); segEls[curSeg].classList.add('is-answering'); }
+    sol.classList.toggle('is-done', curSeg >= segEls.length);
     keepInView(segEls[curSeg]);
   }
   function advanceSeg() {
@@ -313,10 +315,15 @@
     showAction('순서 맞추기');
     showToast('빈칸을 모두 맞혔어요! 순서 맞추기로 이동해요.');
   }
+  /* 진행 = 풀이 아무 데나 누르기 · 스페이스바. 답할 빈칸이 남은 구간에서는 그 빈칸을 눌러야 한다 */
+  function stepFill() {
+    if (curSeg >= segEls.length || pendingBlank(segEls[curSeg])) return;
+    advanceSeg();
+  }
   sol.addEventListener('click', function (e) {
     var bl = e.target.closest('.blank.is-active'); if (bl) { openPop(bl); return; }
-    var seg = e.target.closest('.chunk.is-current');   // 진행은 '지금 구간'을 눌러서만
-    if (seg && !pendingBlank(seg)) advanceSeg();
+    if (e.target.closest('.blank')) return;
+    stepFill();
   });
 
   /* ── 입력 드롭다운 (즉시 채점) ── */
@@ -423,11 +430,12 @@
     hideAction();
     enterArrangeChunk();
   }
+  function isReadingLine() { return ac < aChunks.length && !aChunks[ac].parts; }
   function enterArrangeChunk() {
     var els = asol.querySelectorAll('.aline');
     els.forEach(function (el, i) { el.classList.toggle('is-unread', i > ac); });
     asol.querySelectorAll('.aline .chunk').forEach(function (sg) { sg.classList.remove('is-current'); });
-    if (ac >= aChunks.length) { tray.hidden = true; arrangeComplete(); return; }
+    if (ac >= aChunks.length) { asol.classList.remove('is-reading'); tray.hidden = true; arrangeComplete(); return; }
     var c = aChunks[ac];
     if (c.parts) {
       aCorrect = c.parts.filter(function (p) { return typeof p !== 'string'; }).map(function (p) { return p.slot; });
@@ -445,6 +453,7 @@
       if (cur) cur.classList.add('is-current');
       tray.hidden = true;
     }
+    asol.classList.toggle('is-reading', isReadingLine());
   }
   function renderArrangeChunk() {
     var slots = asol.querySelectorAll('.slot[data-ac="' + ac + '"]');
@@ -469,9 +478,10 @@
     renderArrangeChunk();
     if (aAllFilled()) { aChecking = true; setTimeout(aCheck, 460); }
   });
+  /* 글 줄 차례면 아무 데나 눌러(스페이스바도) 다음 줄로. 슬롯 줄 차례면 블록을 놓아야 넘어간다 */
+  function stepArrange() { if (isReadingLine()) { ac++; enterArrangeChunk(); } }
   asol.addEventListener('click', function (e) {
-    var tap = e.target.closest('.aline .chunk.is-current');
-    if (tap) { ac++; enterArrangeChunk(); return; }
+    if (isReadingLine()) { stepArrange(); return; }
     if (aChecking) return;
     var s = e.target.closest('.slot.is-filled[data-si]');
     if (s && +s.dataset.ac === ac) { var i = +s.dataset.si; aPool.push(aPlaced[i]); aPlaced[i] = null; renderArrangeChunk(); }
@@ -522,6 +532,20 @@
   if (themeBtn) themeBtn.addEventListener('click', function () {
     var c = document.documentElement.getAttribute('data-theme');
     document.documentElement.setAttribute('data-theme', c === 'dark' ? 'light' : 'dark');
+  });
+
+  /* 스페이스바 = 지문 누르기. 꾹 눌러도 한 칸, 버튼에 남은 포커스는 뗀다(그 버튼이 같이 눌리지 않게).
+     입력 팝오버 · 연습장이 떠 있을 때는 넘기지 않는다 */
+  document.addEventListener('keydown', function (e) {
+    if (e.code !== 'Space' && e.key !== ' ') return;
+    if (pop.classList.contains('is-open') || document.querySelector('.scratch.is-open')) return;
+    if (e.target.closest && e.target.closest('input, textarea, [contenteditable]')) return;
+    e.preventDefault();
+    if (e.repeat) return;
+    if (document.activeElement && document.activeElement !== document.body) document.activeElement.blur();
+    if (rmodal.classList.contains('is-open')) advanceRead();
+    else if (phase === 'fill') stepFill();
+    else if (phase === 'arrange') stepArrange();
   });
 
   /* ---- 검수용 디버그 훅 (?debug=1일 때만 패널에 뜸) ---- */

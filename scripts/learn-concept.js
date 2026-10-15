@@ -1,8 +1,9 @@
 /* =========================================================================
    개념 학습 · 끊어읽기 인터랙션
-   - 안 읽은 구간: blur + opacity
-   - 현재 구간을 클릭하면 한 칸씩 읽어나감 (커서 전진)
-   - 이미지 보유 용어: 읽으면 점선 밑줄, 누르면 활성(파란 밑줄) + 우측 이미지
+   - 안 읽은 구간: blur + opacity. 지금 구간은 읽은 곳과 같은 평문
+   - 지문 아무 데나 누르기 · 스페이스바(꾹 눌러도 한 칸) = 한 칸 전진, 읽는 곳을 따라 스크롤
+   - 그림 구간: 닿으면 그 그림이 켜진다(굵게 + 계열색 · 우측 이미지).
+     왼쪽 알약 [아이콘 + 번호들]로 다시 켜고 끈다. 안 읽은 줄의 알약은 없다
    - 빈칸 도달 시 근처에 정답 선택 팝오버(토글)
    - 이미지 클릭 시 확대 레이어(라이트박스)
    ========================================================================= */
@@ -20,6 +21,7 @@
   var imgTerms = [].slice.call(document.querySelectorAll('.chunk--img'))
     .sort(function (a, b) { return (+a.dataset.img) - (+b.dataset.img); });
   var cursor = 0;
+  var ICON = '<svg class="img-tag__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="1.8"/><path d="M21 16l-5-5-9 9"/></svg>';
 
   var summaryBtn = document.getElementById('summaryBtn');
 
@@ -30,25 +32,26 @@
       s.classList.toggle('is-current', i === cursor);
       s.classList.toggle('is-unread', i > cursor);
     });
+    article.classList.toggle('is-done', cursor >= segs.length);
     // 마지막 구간까지 모두 읽으면 '개념 요약하기' 활성화
     if (summaryBtn && cursor >= segs.length) summaryBtn.disabled = false;
+    renderTags();
   }
 
   /* ---- 이미지 뷰어 ---- */
   function activeImg() { return document.querySelector('.chunk--img.is-active'); }
+  function reachedImgs() { return imgTerms.filter(function (x) { return segs.indexOf(x) <= cursor; }); }
   function setActiveImg(el) {
     imgTerms.forEach(function (x) { x.classList.toggle('is-active', x === el); });
     updateViewer();
+    renderTags();
   }
-  function clearImg() {
-    imgTerms.forEach(function (x) { x.classList.remove('is-active'); });
-    updateViewer();
-  }
+  function clearImg() { setActiveImg(null); }
   function updateViewer() {
     var a = activeImg();
     if (!a) {
       viewer.dataset.state = 'empty';
-      vLabel.textContent = '용어를 누르면\n이미지가 여기에 표시돼요';
+      vLabel.textContent = '이미지가 있는 구간에 닿으면\n여기에 표시돼요';
       vPager.textContent = '– / ' + imgTerms.length;
       return;
     }
@@ -57,11 +60,36 @@
     vLabel.textContent = '이미지 ' + a.dataset.img;
     vPager.textContent = a.dataset.img + ' / ' + imgTerms.length;
   }
+  /* 페이저는 읽은 데까지의 그림만 오간다 (뒤 그림에 앞 문제의 답이 보일 수 있다) */
   function stepImg(dir) {
-    var a = activeImg();
-    var idx = a ? imgTerms.indexOf(a) : -1;
-    idx = (idx + dir + imgTerms.length) % imgTerms.length;
-    setActiveImg(imgTerms[idx]);
+    var r = reachedImgs(); if (!r.length) return;
+    var idx = r.indexOf(activeImg());
+    idx = idx < 0 ? r.length - 1 : (idx + dir + r.length) % r.length;
+    setActiveImg(r[idx]);
+    r[idx].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+
+  /* ---- 그림 번호 알약 — 위치(top)만 계산해서 넣는다. 모양은 CSS(.img-tag) ---- */
+  function renderTags() {
+    [].forEach.call(article.querySelectorAll('.img-tag'), function (g) { g.remove(); });
+    var base = article.getBoundingClientRect().top - article.scrollTop, rows = [];
+    var on = activeImg();
+    reachedImgs().forEach(function (x) {
+      var r = [].filter.call(x.getClientRects(), function (q) { return q.width > 1; })[0]; if (!r) return;
+      var mid = r.top - base + r.height / 2;
+      var row = rows.filter(function (w) { return Math.abs(w.mid - mid) < 8; })[0];   // 같은 줄이면 한 알약에
+      if (row) row.imgs.push(x); else rows.push({ mid: mid, imgs: [x] });
+    });
+    rows.forEach(function (w) {
+      var g = document.createElement('div');
+      g.className = 'img-tag';
+      g.innerHTML = '<span class="img-tag__pill' + (w.imgs.length === 1 ? ' is-one' : '') + '">' + ICON +
+        w.imgs.map(function (x) {
+          return '<span class="img-tag__num' + (x === on ? ' is-on' : '') + '" data-img="' + x.dataset.img + '">' + x.dataset.img + '</span>';
+        }).join('') + '</span>';
+      article.appendChild(g);
+      g.style.top = (w.mid - g.offsetHeight / 2) + 'px';
+    });
   }
 
   /* ---- 정답 팝오버 ---- */
@@ -92,23 +120,37 @@
   function openLightbox(n) { lbLabel.textContent = '이미지 ' + n; lightbox.classList.add('is-open'); }
   function closeLightbox() { lightbox.classList.remove('is-open'); }
 
-  /* ---- 클릭 처리 ---- */
-  segs.forEach(function (s, i) {
-    s.addEventListener('click', function () {
-      if (i > cursor) return;                 // 아직 못 읽는 앞 구간
-      if (i === cursor) {                      // 현재 구간 → 전진
-        if (s.classList.contains('chunk--blank')) { togglePop(); return; }  // 빈칸은 답해야 전진
-        if (s.classList.contains('chunk--img')) { setActiveImg(s); }
-        cursor++; render();
-        return;
-      }
-      // 이미 읽은 구간
-      if (s.classList.contains('chunk--img')) {
-        s.classList.contains('is-active') ? clearImg() : setActiveImg(s);
-      } else if (s.classList.contains('chunk--blank')) {
-        togglePop();
-      }
-    });
+  /* ---- 전진 ---- */
+  function advance() {
+    var cur = segs[cursor]; if (!cur) return;
+    if (cur === blank && !blank.classList.contains('is-filled')) { if (!pop.classList.contains('is-open')) openPop(); return; }  // 빈칸은 답해야 전진
+    cursor++;
+    if (segs[cursor] && segs[cursor].classList.contains('chunk--img')) setActiveImg(segs[cursor]);
+    render();
+    if (segs[cursor]) segs[cursor].scrollIntoView({ block: 'nearest', behavior: 'smooth' });  // 읽는 곳이 화면 밖으로 안 나가게
+  }
+
+  /* ---- 클릭 처리 — 알약 번호는 그 그림을 켜고 끄고, 나머지는 어디를 눌러도 한 칸 ---- */
+  article.addEventListener('click', function (e) {
+    var t = e.target.closest('.img-tag__num, .img-tag__pill.is-one');
+    if (t) {
+      var n = (t.dataset.img || t.querySelector('.img-tag__num').dataset.img);
+      var x = imgTerms.filter(function (q) { return q.dataset.img === n; })[0];
+      x && x.classList.contains('is-active') ? clearImg() : setActiveImg(x);
+      return;
+    }
+    if (e.target.closest('.chunk--blank') === blank && segs.indexOf(blank) <= cursor) { togglePop(); return; }
+    advance();
+  });
+  /* 스페이스바 = 지문 누르기. 꾹 누르고 있어도 한 칸, 버튼에 남은 포커스는 뗀다(그 버튼이 같이 눌리지 않게).
+     위에 레이어(요약 · 영상 · 확대 · 연습장)가 떠 있으면 지문은 넘기지 않는다 */
+  document.addEventListener('keydown', function (e) {
+    if (e.code !== 'Space' && e.key !== ' ') return;
+    if (document.querySelector('.monitor.is-open, .scratch.is-open')) return;
+    e.preventDefault();
+    if (e.repeat) return;
+    if (document.activeElement && document.activeElement !== document.body) document.activeElement.blur();
+    advance();
   });
 
   /* 선지 선택 → 정답이면 채우고 전진 / 오답이면 빨간 표시 + 흔들림, 팝오버 유지(재시도)
@@ -141,8 +183,7 @@
         o.classList.remove('is-correct');
         blank.classList.remove('is-just-correct');
         closePop();
-        var bi = segs.indexOf(blank);
-        if (cursor === bi) { cursor++; render(); }
+        if (cursor === segs.indexOf(blank)) advance();
       }, 500);
     });
   });
@@ -163,6 +204,9 @@
   });
   article.addEventListener('scroll', function () { if (pop.classList.contains('is-open')) positionPop(); });
   window.addEventListener('resize', function () { if (pop.classList.contains('is-open')) positionPop(); });
+  /* 줄이 바뀌면(창 크기 · 글자 크기 · 웹폰트 도착) 알약 위치를 다시 잡는다 */
+  if (window.ResizeObserver) new ResizeObserver(renderTags).observe(article);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(renderTags);
 
   /* 라이트/다크 토글 */
   var themeBtn = document.getElementById('themeToggle');
@@ -198,6 +242,7 @@
     ]
   });
 
+  if (segs[0] && segs[0].classList.contains('chunk--img')) setActiveImg(segs[0]);
   render();
   updateViewer();
 })();
@@ -237,6 +282,7 @@
     });
     var cur = segs[cursor];
     var isBlank = cur && cur.classList.contains('sblank') && !cur.classList.contains('is-filled');
+    box.classList.toggle('is-done', cursor >= segs.length);
     renderOptions(isBlank ? cur : null);         // 현재 구간이 빈칸일 때만 선지
     nextBtn.hidden = cursor < segs.length;       // 끝까지 읽기 전엔 아예 비노출
   }
@@ -258,15 +304,24 @@
     b.classList.add('is-filled');
     if (kind === 'image') b.innerHTML = '<span class="sblank__thumb"></span>';
     else b.textContent = val;
-    cursor++; render();                          // 빈칸 채우면 다음 구간으로
+    advance();                                   // 빈칸 채우면 다음 구간으로
   }
 
-  segs.forEach(function (s, i) {
-    s.addEventListener('click', function () {
-      if (i !== cursor) return;                              // 현재 구간만 클릭 가능
-      if (s.classList.contains('sblank')) return;            // 빈칸은 선지로만 채움(클릭 전진 X)
-      cursor++; render();
-    });
+  /* 아무 데나 누르기 · 스페이스바 = 한 칸. 빈칸 차례에는 선지로만 채운다 */
+  function advance() {
+    var cur = segs[cursor]; if (!cur) return;
+    if (cur.classList.contains('sblank') && !cur.classList.contains('is-filled')) return;
+    cursor++; render();
+    if (segs[cursor]) segs[cursor].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+  box.addEventListener('click', advance);
+  document.addEventListener('keydown', function (e) {
+    if (e.code !== 'Space' && e.key !== ' ') return;
+    if (!modal.classList.contains('is-open') || document.querySelector('.scratch.is-open')) return;
+    e.preventDefault();
+    if (e.repeat) return;
+    if (document.activeElement && document.activeElement !== document.body) document.activeElement.blur();
+    advance();
   });
 
   openBtn.addEventListener('click', function () {

@@ -1,7 +1,7 @@
 /* =========================================================================
    개념 정리하기 — 정독 뷰 (인터랙션 없음)
    - 지문은 처음부터 온전히 다 보인다 (끊어읽기/blur/클릭 전진 없음)
-   - 핵심 문장(seg--key)·용어(seg--img)는 정적 강조만
+   - 지문은 평문 한 벌 — 핵심 문장(key)·그림 구간(img) 데이터는 남기되 화면에 표시하지 않는다
    - 우측 노트의 '요약하기' 버튼 → '개념 요약하기'에서 완성한 요약본(빈칸 채움)을 표시
    - 요약을 확인하면 콘솔 '개념 다지기로' 활성
    ========================================================================= */
@@ -65,7 +65,7 @@
       para.className = 'para';
       p.segs.forEach(function (s) {
         var el = document.createElement('span');
-        el.className = 'chunk' + (s.key ? ' chunk--key' : '') + (s.img ? ' chunk--img' : '');
+        el.className = 'chunk';
         el.textContent = s.t;
         para.appendChild(el);
         para.appendChild(document.createTextNode(' '));

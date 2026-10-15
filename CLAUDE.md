@@ -189,7 +189,7 @@ styleguide/foundations.html   색 3단 · 칠면 셋 · 글자/간격/모서리/
 styleguide/components.html    버튼 · 상태 타일 · 빈칸 · 선택지 · 계기판 · 토스트 (화면이 쓰는 것만)
 styleguide/shells.html        GNB/서랍 · 학습 헤더 · 콘솔바 · 보조 모니터 · 키패드 · 연습장
 styleguide/patterns.html      목록 네 상태 · 유틸 예외 체계 · JS가 넣는 변수 · 검수 스위치 · 남긴 예외
-styleguide/rules.html         규칙 색인 — RM-영역-번호 51개의 정본 (2026-10-14)
+styleguide/rules.html         규칙 색인 — RM-영역-번호 55개의 정본 (2026-10-14 · 끊어읽기 READ 2026-10-15)
 styleguide/screens.html       화면 지도 — 화면마다 부품 · 토큰 · 규칙 (data/screens.json 을 그린다)
 styleguide/data/              개발자용 tokens.json(DTCG) · rules.json · screens.json — 스크립트가 만든다
 styleguide/sg.css · sg.js     여섯 장이 공유하는 뼈대 (목록 · 액자 · 배지 · 규칙 카드 · 본문의 RM-번호 링크)
@@ -305,6 +305,11 @@ tools/screen-diff.py /tmp/rm-before /tmp/rm-after
   - `RM-SURF-03` 해설 박스는 면 없이 왼쪽 4px 계열색 띠 (눈)
   - `RM-SURF-04` 보기 박스와 선지는 같은 테두리 한 벌 — 보기가 선지보다 진하면 안 된다 (눈)
   - `RM-SURF-05` 프레임은 계열 600(서술형·시험 700) — 그 위에 반투명을 덧칠하지 않는다 (눈)
+- **READ** 끊어읽기
+  - `RM-READ-01` 안 읽은 곳만 흐리게 — 지금 구간은 읽은 곳과 같은 평문 (눈)
+  - `RM-READ-02` 진행은 지문 아무 데나 누르기와 스페이스바 — 꾹 눌러도 한 칸 (눈)
+  - `RM-READ-03` 그림 구간은 왼쪽 알약 `[그림 아이콘 + 번호들]`로만 알린다 (눈)
+  - `RM-READ-04` 행간은 2.1, 분수가 든 줄은 위아래 0.35em 더 (눈)
 - **UTIL** 유틸 4화면
   - `RM-UTIL-01` 면은 뉴트럴-쿨 램프 하나로 쌓고, 파랑은 점·선·글자로만 (눈)
   - `RM-UTIL-02` 유틸에는 초록·앰버를 쓰지 않는다 (눈)

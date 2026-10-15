@@ -1503,6 +1503,18 @@
    "exam/home.html": "markup",
    "exam/solve.html": "markup"
   },
+  "img-tag": {
+   "concept/learn.html": "js"
+  },
+  "img-tag__ico": {
+   "concept/learn.html": "js"
+  },
+  "img-tag__num": {
+   "concept/learn.html": "js"
+  },
+  "img-tag__pill": {
+   "concept/learn.html": "js"
+  },
   "inner": {
    "assignment/home.html": "markup"
   },
@@ -1586,6 +1598,7 @@
   },
   "is-done": {
    "assignment/solve.html": "js",
+   "concept/learn.html": "js",
    "essay/basics-v2.html": "markup",
    "essay/basics.html": "markup",
    "essay/drill-review.html": "js",
@@ -1783,6 +1796,9 @@
   },
   "is-read": {
    "concept/learn.html": "js",
+   "essay/drill-v2.html": "js"
+  },
+  "is-reading": {
    "essay/drill-v2.html": "js"
   },
   "is-ready": {
