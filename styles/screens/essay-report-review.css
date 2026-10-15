@@ -6,8 +6,8 @@
 /* ============ 서술형(과학) 보고서 해설 = 퍼플 테마 ============ */
 .content {
   flex-direction: column; padding: clamp(12px, 1.6vw, 16px) clamp(12px, 1.6vw, 16px) 0;
-  --guide: color-mix(in srgb, var(--violet-050) 92%, transparent);
-  --rt-line: var(--n-500); --rt-head: var(--surface-1); --rt-cell: var(--surface-1); --rt-fg: color-mix(in srgb, var(--violet-050) 90%, transparent);
+  --guide: color-mix(in srgb, var(--text-on-frame) 92%, transparent);
+  --rt-line: var(--surface-hover); --rt-head: var(--surface-1); --rt-cell: var(--surface-1); --rt-fg: color-mix(in srgb, var(--text-on-frame) 90%, transparent);
   /* 채점 색 (다크) — 면 없음 · 선 = 500 · 글자 = 밝힌 단계. 전역 --ok-ink/--no-ink 는 덮어쓰지 않는다 (예전엔 자기 참조라 라이트 글자색이 무효였다) */
   --ok-bg: transparent; --ok-br: var(--ok-solid); --ok-fg: var(--ok-on-dark);
   --no-bg: transparent; --no-br: var(--no-solid); --no-fg: var(--no-on-dark);
@@ -15,8 +15,8 @@
 :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
 :root[data-theme="light"] .content {
   background: var(--th-panel); border-color: var(--th-static);
-  --guide: var(--n-650);
-  --rt-line: var(--border); --rt-head: var(--n-050); --rt-cell: var(--n-000); --rt-fg: var(--n-650);
+  --guide: var(--text);
+  --rt-line: var(--border); --rt-head: var(--surface-2); --rt-cell: var(--surface-1); --rt-fg: var(--text);
   --ok-fg: var(--ok-ink); --no-fg: var(--no-ink);
 }
 
@@ -67,5 +67,5 @@
 .fillin { font-family: var(--font-serif); font-weight: var(--fw-bold); color: var(--ok-ink); border-bottom: var(--bw-1_5) solid var(--ok-solid); padding: 0 var(--sp-4); }
 :root[data-theme="dark"] .fillin { color: var(--ok-on-dark); }   /* 전역 --ok-ink(600)는 다크 면에서 묻힌다 */
 
-.toolbtn--primary { background: var(--th-solid); box-shadow: 0 var(--depth-4) 0 color-mix(in srgb, var(--th-accent) 62%, var(--n-950)); }
+.toolbtn--primary { background: var(--th-solid); box-shadow: 0 var(--depth-4) 0 color-mix(in srgb, var(--th-accent) 62%, var(--shade-deep)); }
 @media (max-width: 620px) { .report { grid-template-columns: 80px 1fr; } }

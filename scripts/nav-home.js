@@ -96,7 +96,7 @@
 
   /* ── 오브젝트 세우기 ─────────────────────────────────────────────── */
   var units = UNITS[key] || UNITS_FALLBACK;
-  var SEG = subject === 'science' ? 'var(--teal-500)' : 'var(--blue-500)';
+  var SEG = subject === 'science' ? 'var(--subject-sci-bar)' : 'var(--subject-math-bar)';
   var objs = [];
 
   function isDone(u){ return u.subs.every(function(x){ return x === 'done'; }); }

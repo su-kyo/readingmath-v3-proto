@@ -8,17 +8,17 @@
 .content {
   padding: clamp(12px, 1.8vw, 16px) clamp(12px, 1.8vw, 16px) 96px;
   gap: var(--sp-16); align-items: stretch;
-  --guide: color-mix(in srgb, var(--violet-050) 92%, transparent); --box-bg: var(--n-900); --box-br: var(--white-a10);
-  --qa-bg: var(--surface-3); --qa-fg: color-mix(in srgb, var(--violet-050) 92%, transparent); --qa-soft: var(--white-a06); --qa-sub: var(--n-100);
-  --bl-next: color-mix(in srgb, var(--violet-450) 85%, transparent);
+  --guide: color-mix(in srgb, var(--text-on-frame) 92%, transparent); --box-bg: var(--bg); --box-br: var(--white-a10);
+  --qa-bg: var(--surface-3); --qa-fg: color-mix(in srgb, var(--text-on-frame) 92%, transparent); --qa-soft: var(--white-a06); --qa-sub: var(--text-on-frame-sub);
+  --bl-next: color-mix(in srgb, var(--th-vivid) 85%, transparent);
 }
 :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
 :root[data-theme="light"] .content {
   /* 제일 뒤(베이스) = 흰색에 가까운 톤. 층위: 베이스(near-white) → 문제카드(흰색) → 수식박스(연라벤더 인셋) */
   background: var(--th-panel); border-color: var(--th-static);
-  --guide: var(--n-650); --box-bg: var(--n-050); --box-br: color-mix(in srgb, var(--violet-600) 12%, transparent);
-  --qa-bg: var(--n-000); --qa-fg: var(--n-650); --qa-soft: color-mix(in srgb, var(--violet-600) 5.5%, transparent); --qa-sub: var(--text-meta);
-  --bl-next: color-mix(in srgb, var(--violet-500) 70%, transparent);
+  --guide: var(--text); --box-bg: var(--surface-2); --box-br: color-mix(in srgb, var(--th-ink-accent) 12%, transparent);
+  --qa-bg: var(--surface-1); --qa-fg: var(--text); --qa-soft: color-mix(in srgb, var(--th-ink-accent) 5.5%, transparent); --qa-sub: var(--text-meta);
+  --bl-next: color-mix(in srgb, var(--th-accent) 70%, transparent);
 }
 
 /* ============ 좌: 문제 영역 (더 좁게) ============ */
@@ -27,7 +27,7 @@
   background: var(--qa-bg); color: var(--qa-fg);
   border-radius: var(--r-22); padding: clamp(16px, 2vw, 24px); overflow: hidden;
 }
-:root[data-theme="light"] .qa { border: var(--bw-1) solid var(--n-050); box-shadow: 0 10px 24px -18px color-mix(in srgb, var(--violet-800) 32%, transparent); }
+:root[data-theme="light"] .qa { border: var(--bw-1) solid var(--surface-2); box-shadow: 0 10px 24px -18px color-mix(in srgb, var(--th-shadow) 32%, transparent); }
 .qa__top { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-8); flex: none; }
 .qtabs { display: flex; align-items: center; gap: var(--sp-4); }
 /* 문제 진행 인디케이터: 미완료(흐림) → 완료(중간 채움+✓) → 현재(진한 채움+링) */
@@ -46,11 +46,11 @@
 .qtext { color: var(--qa-fg); font-size: clamp(15px, 1.35vw, 18px); line-height: 1.7; }
 .qref { background: var(--qa-soft); border-radius: var(--r-16); padding: var(--sp-8); display: flex; flex-direction: column; gap: var(--sp-8); }
 .qref__img { width: 100%; aspect-ratio: 20 / 9; border-radius: var(--r-8);
-  background: linear-gradient(110deg, var(--n-500) 25%, var(--n-500) 40%, var(--n-500) 55%); background-size: 220% 100%;
+  background: linear-gradient(110deg, var(--surface-hover) 25%, var(--surface-hover) 40%, var(--surface-hover) 55%); background-size: 220% 100%;
   animation: shimmer 1.8s ease-in-out infinite; display: flex; align-items: center; justify-content: center; }
-:root[data-theme="light"] .qref__img { background: linear-gradient(110deg, var(--n-100) 25%, var(--n-050) 40%, var(--n-100) 55%); background-size: 220% 100%; }
+:root[data-theme="light"] .qref__img { background: linear-gradient(110deg, var(--surface-3) 25%, var(--surface-2) 40%, var(--surface-3) 55%); background-size: 220% 100%; }
 .qref__img span { color: var(--white-a50); font-weight: var(--fw-bold); font-size: var(--fs-13); }
-:root[data-theme="light"] .qref__img span { color: color-mix(in srgb, var(--violet-700) 55%, transparent); }
+:root[data-theme="light"] .qref__img span { color: color-mix(in srgb, var(--th-accent-strong) 55%, transparent); }
 
 .qref__words { color: var(--qa-sub); font-size: clamp(14px, 1.25vw, 17px); line-height: 1.75; white-space: pre-line; }
 
@@ -58,7 +58,7 @@
 .qa__body::-webkit-scrollbar, .expl::-webkit-scrollbar { width: 9px; }
 .qa__body::-webkit-scrollbar-thumb, .expl::-webkit-scrollbar-thumb {
   background: var(--white-a20); border-radius: var(--r-full); border: var(--bw-2) solid transparent; background-clip: padding-box; }
-:root[data-theme="light"] .expl::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--violet-700) 28%, transparent); background-clip: padding-box; }
+:root[data-theme="light"] .expl::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--th-accent-strong) 28%, transparent); background-clip: padding-box; }
 
 /* ============ 우: 풀이 가이드 ============ */
 .expl {

@@ -7,19 +7,19 @@
 /* 페이지 고유 토큰만 (--bl-* 코어 / .blank / .qpop / 하단바 = essay.css) */
 .content {
   flex-direction: column; padding: clamp(12px, 1.6vw, 16px) clamp(12px, 1.6vw, 16px) 0;
-  --guide: color-mix(in srgb, var(--violet-050) 94%, transparent); --card: var(--surface-1); --card-br: var(--white-a08); --card-sh: none;
+  --guide: color-mix(in srgb, var(--text-on-frame) 94%, transparent); --card: var(--surface-1); --card-br: var(--white-a08); --card-sh: none;
   --chip-bg: var(--white-a06); --chip-br: var(--white-a16); --chip-hover: var(--white-a10);
-  --lock-bg: color-mix(in srgb, var(--teal-450) 16%, transparent); --lock-br: color-mix(in srgb, var(--teal-450) 50%, transparent); --lock-ck: var(--ok-solid);
+  --lock-bg: color-mix(in srgb, var(--essay-lock) 16%, transparent); --lock-br: color-mix(in srgb, var(--essay-lock) 50%, transparent); --lock-ck: var(--ok-solid);
   --step-bg: var(--white-a06); --step-fg: var(--text-muted);
 }
 :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
 :root[data-theme="light"] .content {
   background: var(--th-panel); border-color: var(--th-static);
-  --guide: var(--n-650); --card: var(--n-000); --card-br: var(--n-050); --card-sh: 0 12px 30px -22px color-mix(in srgb, var(--violet-800) 50%, transparent);
-  --chip-bg: var(--n-050); --chip-br: color-mix(in srgb, var(--violet-600) 24%, transparent); --chip-hover: var(--n-050);
-  --bl-fill: var(--n-050);   /* drill 고유: 슬롯 겹침 때문에 라이트 fill은 불투명 */
-  --lock-bg: color-mix(in srgb, var(--teal-500) 10%, transparent); --lock-br: color-mix(in srgb, var(--teal-500) 40%, transparent); --lock-ck: var(--ok-ink);
-  --step-bg: var(--n-100); --step-fg: var(--text-meta);
+  --guide: var(--text); --card: var(--surface-1); --card-br: var(--surface-2); --card-sh: 0 12px 30px -22px color-mix(in srgb, var(--th-shadow) 50%, transparent);
+  --chip-bg: var(--surface-2); --chip-br: color-mix(in srgb, var(--th-ink-accent) 24%, transparent); --chip-hover: var(--surface-2);
+  --bl-fill: var(--surface-2);   /* drill 고유: 슬롯 겹침 때문에 라이트 fill은 불투명 */
+  --lock-bg: color-mix(in srgb, var(--essay-lock) 10%, transparent); --lock-br: color-mix(in srgb, var(--essay-lock) 40%, transparent); --lock-ck: var(--ok-ink);
+  --step-bg: var(--surface-3); --step-fg: var(--text-meta);
 }
 
 
@@ -64,7 +64,7 @@
 .stage-action__btn { width: 100%; height: 54px; border-radius: var(--r-12); border: 0; cursor: pointer;
   display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-8);
   background: var(--primary); color: var(--text-on-accent); font-family: var(--font-sans); font-size: var(--fs-19); font-weight: var(--fw-heavy);
-  box-shadow: inset 0 var(--bw-1) 0 var(--white-a24), 0 var(--depth-4) 0 var(--primary-deep), 0 8px 18px -8px color-mix(in srgb, var(--n-950) 50%, transparent); transition: background .15s; }
+  box-shadow: inset 0 var(--bw-1) 0 var(--white-a24), 0 var(--depth-4) 0 var(--primary-deep), 0 8px 18px -8px color-mix(in srgb, var(--shade-deep) 50%, transparent); transition: background .15s; }
 .stage-action__btn:hover { background: var(--primary-hover); }
 
 
@@ -107,6 +107,6 @@
 
 /* 입력 드롭다운(즉시 채점)·키패드·객관식 세로보기 = essay.css */
 /* 토스트 면색만 이 화면 것 */
-.toast { --toast-bg: color-mix(in srgb, var(--n-700) 94%, transparent); }
+.toast { --toast-bg: color-mix(in srgb, var(--hw-raised) 94%, transparent); }
 /* 가로 안(킵) — 스크롤 영역 위에 여백이 있다 */
 .stage-scroll { padding-top: clamp(6px, 1.2vw, 12px); }

@@ -12,17 +12,17 @@
 /* ============ 빈칸 상태 토큰 (테마별) ============
    .content 에 실린다. 화면 고유 토큰(--guide 등)은 styles/screens/essay-*.css 에서 선언.  */
 .content {
-  --bl-bg: var(--white-a06); --bl-line: color-mix(in srgb, var(--n-200) 42%, transparent);
-  --bl-bgh: var(--white-a12); --bl-lineh: color-mix(in srgb, var(--n-200) 72%, transparent);
+  --bl-bg: var(--white-a06); --bl-line: color-mix(in srgb, var(--line-on-frame) 42%, transparent);
+  --bl-bgh: var(--white-a12); --bl-lineh: color-mix(in srgb, var(--line-on-frame) 72%, transparent);
   /* 선택 = 계열색(보라). 주황은 CTA 전용 (2026-10-14) · 번호 = 약한 글자(--text-meta) — 힌트지만 읽혀야 한다 */
   --bl-selbadge: var(--th-accent-hi);
-  --bl-badge: var(--text-meta); --bl-fill: color-mix(in srgb, var(--n-200) 22%, transparent); --bl-ans: var(--n-000);
+  --bl-badge: var(--text-meta); --bl-fill: color-mix(in srgb, var(--line-on-frame) 22%, transparent); --bl-ans: var(--text-on-accent);
 }
 :root[data-theme="light"] .content {
-  --bl-bg: color-mix(in srgb, var(--n-400) 7%, transparent); --bl-line: color-mix(in srgb, var(--violet-600) 30%, transparent);
-  --bl-bgh: color-mix(in srgb, var(--n-400) 13%, transparent); --bl-lineh: color-mix(in srgb, var(--violet-600) 50%, transparent);
+  --bl-bg: color-mix(in srgb, var(--text-meta) 7%, transparent); --bl-line: color-mix(in srgb, var(--th-ink-accent) 30%, transparent);
+  --bl-bgh: color-mix(in srgb, var(--text-meta) 13%, transparent); --bl-lineh: color-mix(in srgb, var(--th-ink-accent) 50%, transparent);
   --bl-selbadge: var(--th-ink-accent);
-  --bl-badge: var(--text-meta); --bl-fill: color-mix(in srgb, var(--violet-600) 12%, transparent); --bl-ans: var(--n-650);
+  --bl-badge: var(--text-meta); --bl-fill: color-mix(in srgb, var(--th-ink-accent) 12%, transparent); --bl-ans: var(--text);
 }
 
 /* ============ 빈칸 pill ============ */
@@ -77,8 +77,8 @@
 /* 연습장 등 비-primary 툴버튼 = 바이올렛 — 양 테마 공통.
    램프: 헤더 --th-static → 툴버튼 --th-accent-strong → 트레이 #C6BFEA(에셋) → mid --n-100 → 패널 --n-050.
    셸은 한 톤으로 묶이고, 오렌지 CTA·활성 빈칸만 도드라짐. */
-.toolbtn:not(.toolbtn--primary) { background: var(--th-accent-strong); box-shadow: 0 var(--depth-4) 0 var(--n-500); }
-.toolbtn:not(.toolbtn--primary):active { box-shadow: 0 var(--depth-2) 0 var(--n-500); }
+.toolbtn:not(.toolbtn--primary) { background: var(--th-accent-strong); box-shadow: 0 var(--depth-4) 0 var(--hw-key); }
+.toolbtn:not(.toolbtn--primary):active { box-shadow: 0 var(--depth-2) 0 var(--hw-key); }
 
 /* =========================================================================
    서술형 본문 공용 (Phase 10-③) — 다섯 화면이 각자 복사해 갖고 있던 것
@@ -136,23 +136,23 @@
 
 .line { font-size: clamp(15px, 1.4vw, 18px); line-height: 2.0; letter-spacing: -0.02em; }
 
-.pmodal__paper { max-width: 680px; margin: 0 auto; background: var(--n-000); padding: var(--sp-32) var(--sp-32); border-radius: var(--r-4);
-  box-shadow: 0 2px 12px var(--black-a10); font-family: var(--font-sans); color: var(--n-650); }
+.pmodal__paper { max-width: 680px; margin: 0 auto; background: var(--paper-bg); padding: var(--sp-32) var(--sp-32); border-radius: var(--r-4);
+  box-shadow: 0 2px 12px var(--black-a10); font-family: var(--font-sans); color: var(--paper-ink); }
 
 .box__row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--sp-4) var(--sp-6);
   font-family: var(--font-sans); font-size: clamp(16px, 1.55vw, 19px); font-weight: var(--fw-semibold); }
 
-.rp-title { font-size: var(--fs-19); font-weight: var(--fw-heavy); text-align: center; margin-bottom: var(--sp-6); color: var(--n-650); }
+.rp-title { font-size: var(--fs-19); font-weight: var(--fw-heavy); text-align: center; margin-bottom: var(--sp-6); color: var(--paper-ink); }
 
-.rp-sub { text-align: center; font-size: var(--fs-12); color: var(--n-400); margin-bottom: var(--sp-20); }
+.rp-sub { text-align: center; font-size: var(--fs-12); color: var(--paper-ink-meta); margin-bottom: var(--sp-20); }
 
-.rp-table { display: grid; grid-template-columns: 116px 1fr; gap: 1px; background: var(--n-100); border: var(--bw-1) solid var(--n-100); border-radius: var(--r-8); overflow: hidden; }
+.rp-table { display: grid; grid-template-columns: 116px 1fr; gap: 1px; background: var(--paper-tint); border: var(--bw-1) solid var(--paper-line); border-radius: var(--r-8); overflow: hidden; }
 
-.rp-label { background: var(--n-050); padding: var(--sp-12) var(--sp-8); display: flex; align-items: center; justify-content: center; text-align: center;
-  font-weight: var(--fw-bold); font-size: var(--fs-13); color: var(--n-650); word-break: keep-all; }
+.rp-label { background: var(--paper-sunken); padding: var(--sp-12) var(--sp-8); display: flex; align-items: center; justify-content: center; text-align: center;
+  font-weight: var(--fw-bold); font-size: var(--fs-13); color: var(--paper-ink); word-break: keep-all; }
 
-.rp-cell { background: var(--n-000); padding: var(--sp-12) var(--sp-16); display: flex; flex-direction: column; gap: var(--sp-8); justify-content: center;
-  font-size: var(--fs-13); line-height: 1.7; color: var(--n-650); }
+.rp-cell { background: var(--paper-bg); padding: var(--sp-12) var(--sp-16); display: flex; flex-direction: column; gap: var(--sp-8); justify-content: center;
+  font-size: var(--fs-13); line-height: 1.7; color: var(--paper-ink); }
 
 .rp-img { max-width: 300px; border-radius: var(--r-4); overflow: hidden; align-self: flex-start; }
 
@@ -178,7 +178,7 @@
 .stepbar__i.is-done + .stepbar__track { background: var(--th-accent); opacity: 1; }
 
 /* ----- 화면 공용으로 올림 (2026-10-14 · RM-FILE-03) — essay-advanced · essay-basics-v2 · essay-drill · essay-drill-review · essay-drill-v2 ----- */
-:root[data-theme="light"] .stage-scroll::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--violet-600) 28%, transparent); background-clip: padding-box; }
+:root[data-theme="light"] .stage-scroll::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--th-ink-accent) 28%, transparent); background-clip: padding-box; }
 .card { max-width: 760px; margin: 0 auto; background: var(--card); border: var(--bw-1) solid var(--card-br); border-radius: var(--r-22); box-shadow: var(--card-sh); }
 .card + .card { margin-top: 14px; }
 :root[data-theme="light"] .sec-label--sol { background: color-mix(in srgb, var(--th-accent) 10%, transparent); color: var(--th-accent-strong); }
@@ -203,9 +203,9 @@
 
 /* ----- 화면 공용으로 올림 (2026-10-14 · RM-FILE-03) — essay-report · essay-report-review ----- */
 .report-wrap::-webkit-scrollbar { width: 10px; }
-:root[data-theme="light"] .report-wrap::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--violet-600) 28%, transparent); background-clip: padding-box; }
+:root[data-theme="light"] .report-wrap::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--th-ink-accent) 28%, transparent); background-clip: padding-box; }
 .rt-img img { display: block; width: 100%; height: auto; }
-.pmodal .monitor__screen { background: var(--n-050); padding: var(--sp-24); }
+.pmodal .monitor__screen { background: var(--paper-sunken); padding: var(--sp-24); }
 .pmodal .monitor__tool svg { width: 16px; height: 16px; }
 .pmodal__paper .rt-text { white-space: pre-line; word-break: keep-all; }
 .rp-img img { display: block; width: 100%; height: auto; }

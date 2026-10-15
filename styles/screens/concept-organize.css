@@ -26,10 +26,10 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 .pstep__bar { width: clamp(26px,5vw,56px); height: 2px; border-radius: var(--r-4); background: color-mix(in srgb, var(--th-accent) 35%, transparent); transition: background .2s; }
 .pstep__bar.is-done { background: var(--th-accent); }
 :root[data-theme="dark"] .pstep__item { color: var(--text-muted); }
-:root[data-theme="dark"] .pstep__item .n { box-shadow: inset 0 0 0 var(--bw-1_5) var(--n-500); color: var(--text-muted); }
+:root[data-theme="dark"] .pstep__item .n { box-shadow: inset 0 0 0 var(--bw-1_5) var(--surface-hover); color: var(--text-muted); }
 :root[data-theme="dark"] .pstep__item.is-done { color: var(--th-accent-hi); } :root[data-theme="dark"] .pstep__item.is-done .n { background: var(--th-solid); color: var(--text-on-accent); }
 :root[data-theme="dark"] .pstep__item.is-current { color: var(--th-accent-hi); } :root[data-theme="dark"] .pstep__item.is-current .n { background: var(--th-solid); color: var(--text-on-accent); }
-:root[data-theme="dark"] .pstep__bar { background: var(--n-500); } :root[data-theme="dark"] .pstep__bar.is-done { background: var(--th-accent); }
+:root[data-theme="dark"] .pstep__bar { background: var(--surface-hover); } :root[data-theme="dark"] .pstep__bar.is-done { background: var(--th-accent); }
 
 .content__inner { flex: 1; display: flex; justify-content: center; gap: clamp(22px, 3.4vw, 42px); padding: 0 clamp(24px, 5vw, 64px) clamp(90px,10vh,110px); min-height: 0; }
 
@@ -45,10 +45,10 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 
 /* ===== 개념 요약 노트 (우측 · 레이아웃 통합, 모달 아님) ===== */
 .note { width: clamp(288px, 33vw, 408px); flex: none; align-self: stretch; overflow: auto;
-  background: var(--surface-1); border-radius: var(--r-22); box-shadow: inset 0 0 0 var(--bw-1_5) var(--th-tint), 0 8px 24px -16px color-mix(in srgb, var(--blue-900) 40%, transparent);
+  background: var(--surface-1); border-radius: var(--r-22); box-shadow: inset 0 0 0 var(--bw-1_5) var(--th-tint), 0 8px 24px -16px color-mix(in srgb, var(--th-shadow) 40%, transparent);
   padding: clamp(18px,2vw,24px); display: flex; flex-direction: column; gap: var(--sp-12); }
 /* 읽기 배경이 흰색이라 노트는 살짝 틴트 카드로 분리 (흰 위 흰색 방지) */
-:root[data-theme="light"] .note { background: var(--surface-2); box-shadow: inset 0 0 0 var(--bw-1_5) var(--border), 0 10px 26px -18px color-mix(in srgb, var(--blue-900) 50%, transparent); }
+:root[data-theme="light"] .note { background: var(--surface-2); box-shadow: inset 0 0 0 var(--bw-1_5) var(--border), 0 10px 26px -18px color-mix(in srgb, var(--th-shadow) 50%, transparent); }
 .note__title { display: inline-flex; align-items: center; gap: var(--sp-8); font-family: var(--font-sans); font-weight: var(--fw-heavy); font-size: clamp(15px,1.5vw,17px); color: var(--text); flex: none; }
 .note__title .ico { width: 26px; height: 26px; border-radius: var(--r-8); background: var(--th-solid); color: var(--text-on-accent); display: inline-flex; align-items: center; justify-content: center; flex: none; }
 .note__title .ico svg { width: 15px; height: 15px; }
@@ -78,7 +78,7 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 :root[data-theme="dark"] .nfill { background: color-mix(in srgb, var(--th-accent) 24%, transparent); color: var(--th-accent-hi); }
 
 /* ===== 라이트박스 (이미지 용어 클릭 시) ===== */
-.lightbox { position: fixed; inset: 0; z-index: var(--z-overlay); background: color-mix(in srgb, var(--n-900) 74%, transparent); display: none; align-items: center; justify-content: center; padding: var(--sp-40); }
+.lightbox { position: fixed; inset: 0; z-index: var(--z-overlay); background: color-mix(in srgb, var(--shade) 74%, transparent); display: none; align-items: center; justify-content: center; padding: var(--sp-40); }
 .lightbox.is-open { display: flex; }
 .lightbox__img { width: min(760px, 82vw); aspect-ratio: 4 / 3; background: var(--th-tint); border-radius: var(--r-22); display: flex; align-items: center; justify-content: center; font-size: var(--fs-22); font-weight: var(--fw-bold); color: var(--text-muted); box-shadow: 0 40px 90px var(--black-a50); }
 .lightbox__close { position: absolute; top: 22px; right: 28px; width: 44px; height: 44px; border-radius: 50%; background: var(--white-a16); color: var(--text-on-accent); font-size: var(--fs-22); display: flex; align-items: center; justify-content: center; }

@@ -15,8 +15,8 @@
   };
   var CHIP = {
     '미진행':{bg:'transparent',fg:'var(--text-muted)',dash:true}, '미판정':{bg:'var(--surface-2)',fg:'var(--text-muted)',dash:true},
-    '재학습':{bg:'var(--no-solid)',fg:'var(--n-000)'}, '보충':{bg:'var(--warn-solid)',fg:'var(--n-900)'},
-    '이해':{bg:'var(--ok-solid)',fg:'var(--n-000)'}, '정복':{bg:'var(--ok-ink)',fg:'var(--green-100)'}
+    '재학습':{bg:'var(--no-solid)',fg:'var(--text-on-accent)'}, '보충':{bg:'var(--warn-solid)',fg:'var(--text-on-bright)'},
+    '이해':{bg:'var(--ok-solid)',fg:'var(--text-on-accent)'}, '정복':{bg:'var(--ok-ink)',fg:'var(--ok-on-ink)'}
   };
   var STEPS = {
     concept:[['STEP 1','개념 학습','concept/learn.html'],['STEP 2','개념 확인하기','concept/drill.html']],
@@ -79,7 +79,7 @@
   function miniStar(g){
     var c = g ? (g==='s' ? 'url(#rmPrism)' : GCOL[g]) : '';
     return '<svg viewBox="2 2 20 20" width="19" height="19" '
-      + (g ? 'fill="'+c+'" stroke="'+c+'" stroke-width="2.8"' : 'fill="none" stroke="var(--n-500)" stroke-width="2.4"')
+      + (g ? 'fill="'+c+'" stroke="'+c+'" stroke-width="2.8"' : 'fill="none" stroke="var(--hw-key)" stroke-width="2.4"')
       + ' stroke-linejoin="round" stroke-linecap="round" role="img" aria-label="'+(g?g.toUpperCase()+'등급':'미획득')
       + '"><path d="M12 4.2 14.7 8.7 19.8 9.6 16.3 13.4 16.9 18.6 12 16.4 7.1 18.6 7.7 13.4 4.2 9.6 9.3 8.7Z"/></svg>';
   }

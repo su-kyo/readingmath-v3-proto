@@ -6,10 +6,10 @@
   <title>기초 — 리딩수학과학 디자인 시스템</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
   <base href="../" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261015-8" />
-  <link rel="stylesheet" href="styles/base.css?v=20261015-8" />
-  <link rel="stylesheet" href="styles/components.css?v=20261015-8" />
-  <link rel="stylesheet" href="styleguide/sg.css?v=20261015-8" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261015-9" />
+  <link rel="stylesheet" href="styles/base.css?v=20261015-9" />
+  <link rel="stylesheet" href="styles/components.css?v=20261015-9" />
+  <link rel="stylesheet" href="styleguide/sg.css?v=20261015-9" />
 </head>
 <body data-sg-css="tokens,base,components">
 <div class="sg">
@@ -34,13 +34,15 @@
               <td>실제 색값이 있는 유일한 층. 색 램프, 알파 램프, 에셋 연동색. 램프는 <code>tools/palette-gen.py</code>가 만들고 손으로 고치지 않는다.</td></tr>
           <tr><td>2단 역할</td><td><code>--text</code> <code>--surface-1</code> <code>--ok-solid</code></td>
               <td>뜻으로 부르는 이름. 라이트·다크가 뒤집히는 층은 여기뿐이다.</td></tr>
+          <tr><td>2단 부품 토큰</td><td><code>--hw-bg</code> <code>--paper-ink</code> <code>--util-paper</code></td>
+              <td>2단 역할에 맞는 뜻이 없는 자리의 이름. 고정 다크 <code>--hw-*</code>(하드웨어) · 고정 라이트 <code>--paper-*</code>(종이) · 그늘 <code>--shade*</code> · 화면군 <code>--util-*</code>·<code>--exam-*</code>·<code>--assign-*</code>. 화면군 토큰은 라이트·다크 값을 둘 다 가진다.</td></tr>
           <tr><td>3단 계열</td><td><code>--th-static</code> <code>--th-vivid</code></td>
               <td>계열마다 값이 바뀌는 칸. <code>data-section</code> 하나로 개념·유형·서술형·과제·시험이 바뀐다.</td></tr>
         </tbody>
       </table>
-      <div class="sg-rule sg-rule--dont">화면 CSS·JS에 색값(hex · rgb)과 눈금에 있는 px를 직접 적지 않는다. 필요한 값이 없으면 눈금이 맞는지부터 본다. <code>RM-COL-01</code> · <code>RM-SIZE-01</code></div>
+      <div class="sg-rule sg-rule--dont">화면 CSS·JS에 색값(hex · rgb), 1단 팔레트, 눈금에 있는 px를 직접 적지 않는다. 필요한 값이 없으면 눈금이 맞는지부터 본다. <code>RM-COL-01</code> · <code>RM-COL-05</code> · <code>RM-SIZE-01</code></div>
       <p class="sg-lead">토큰 하나의 값을 찾을 때는 <a href="styleguide/foundations.html#sheet">토큰 시트</a>를 봅니다. 1단 hex, 2단 라이트·다크 값, 3단 계열 7벌 값이 표 하나씩에 있습니다.</p>
-      <p class="sg-lead">1단을 직접 부르는 곳은 아직 남아 있습니다. 계기판·콘솔처럼 테마와 무관한 고정 면은 1단이 맞고, 테마를 따라야 하는 색은 2단으로 옮깁니다(<code>RM-COL-05</code>). 개수는 <code>tools/style-audit.py</code>의 「1단(팔레트) 직접 사용」이 셉니다.</p>
+      <p class="sg-lead">화면은 1단을 직접 부르지 않습니다. 계기판·콘솔처럼 테마와 무관한 고정 면도 <code>--hw-*</code>·<code>--paper-*</code> 이름으로 받습니다(<code>RM-COL-05</code>). <code>tools/style-audit.py</code>의 「1단(팔레트) 직접 사용」이 0인지 잽니다.</p>
     </section>
 
     <!-- ===================================================== 색 램프 -->
@@ -411,7 +413,7 @@
   </main>
 </div>
 
-<script src="styleguide/foundations.js?v=20261015-8"></script>
-<script src="styleguide/sg.js?v=20261015-8"></script>
+<script src="styleguide/foundations.js?v=20261015-9"></script>
+<script src="styleguide/sg.js?v=20261015-9"></script>
 </body>
 </html>

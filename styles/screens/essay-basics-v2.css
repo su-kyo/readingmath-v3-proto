@@ -8,20 +8,20 @@
 /* 동작(빈칸/팝오버/채점/결과)은 essay-basics.js 와 동일 — essay-basics-v2.js */
 .content {
   flex-direction: column; padding: 0 clamp(12px, 1.6vw, 16px) 0;
-  --guide: color-mix(in srgb, var(--violet-050) 94%, transparent); --card: var(--surface-1); --card-br: var(--white-a08); --card-sh: none;
+  --guide: color-mix(in srgb, var(--text-on-frame) 94%, transparent); --card: var(--surface-1); --card-br: var(--white-a08); --card-sh: none;
   --step-fg: var(--text-muted);
-  --box-bg: var(--n-900); --box-br: var(--white-a10);
+  --box-bg: var(--bg); --box-br: var(--white-a10);
   /* 문제 카드 = 프레임 테두리색(th-static)과 면 공유 · 라이트/다크 동일 */
-  --pc-text: color-mix(in srgb, var(--violet-050) 92%, transparent); --pc-chev: var(--white-a60);
+  --pc-text: color-mix(in srgb, var(--text-on-frame) 92%, transparent); --pc-chev: var(--white-a60);
   --qtab-bg: var(--white-a10); --qtab-fg: var(--white-a90);   /* 안 푼 번호 — 흐림은 바닥(10%)으로, 글자는 4.5 이상 (프레임 600·700 위) */
   --qtab-done-bg: color-mix(in srgb, var(--th-accent) 52%, transparent); --qtab-done-fg: var(--text-on-accent);
 }
 :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
 :root[data-theme="light"] .content {
   background: var(--th-panel); border-color: var(--th-static);
-  --guide: var(--n-650); --card: var(--n-000); --card-br: var(--border); --card-sh: none;
+  --guide: var(--text); --card: var(--surface-1); --card-br: var(--border); --card-sh: none;
   --step-fg: var(--text-meta);
-  --box-bg: var(--n-050); --box-br: color-mix(in srgb, var(--violet-600) 12%, transparent);
+  --box-bg: var(--surface-2); --box-br: color-mix(in srgb, var(--th-ink-accent) 12%, transparent);
 }
 
 /* ============ 진행 인디케이터 (문제 번호탭) = 문제 카드 헤더에 통합 ============ */
@@ -40,7 +40,7 @@
 
 /* ============ 문제 카드 (번호탭 헤더 + 접이식 · 프레임에 붙음 · ref 655-27959/29414) ============ */
 .problem { position: sticky; top: 0; z-index: 20; overflow: hidden;
-  background: var(--th-static); border: 0; border-radius: 0 0 var(--r-16) var(--r-16); margin: 0 auto; box-shadow: 0 10px 24px color-mix(in srgb, var(--n-950) 28%, transparent); }
+  background: var(--th-static); border: 0; border-radius: 0 0 var(--r-16) var(--r-16); margin: 0 auto; box-shadow: 0 10px 24px color-mix(in srgb, var(--shade-deep) 28%, transparent); }
 .problem__head { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--sp-8);
   padding: var(--sp-8) var(--sp-16); background: transparent; border: 0; text-align: left; }
 .problem.is-collapsible .problem__head { cursor: pointer; }
@@ -52,7 +52,7 @@
 .problem.is-collapsed .problem__body { max-height: 0; opacity: 0; overflow: hidden; padding-top: 0; padding-bottom: 0; }
 .problem__body::-webkit-scrollbar { width: 8px; }
 .problem__body::-webkit-scrollbar-thumb { background: var(--white-a20); border-radius: var(--r-full); border: var(--bw-2) solid transparent; background-clip: padding-box; }
-:root[data-theme="light"] .problem__body::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--violet-600) 28%, transparent); background-clip: padding-box; }
+:root[data-theme="light"] .problem__body::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--th-ink-accent) 28%, transparent); background-clip: padding-box; }
 
 /* 문제 본문 (텍스트 좌 + 참고자료 우) */
 .qtext { flex: 1 1 auto; min-width: 0; color: var(--pc-text); font-size: clamp(15px, 1.35vw, 17.5px); line-height: 1.75; }

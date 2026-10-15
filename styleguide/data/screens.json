@@ -84,10 +84,6 @@
      "count": 5
     },
     {
-     "name": "--n-000",
-     "count": 4
-    },
-    {
      "name": "--opt",
      "count": 4
     },
@@ -116,11 +112,15 @@
      "count": 2
     },
     {
-     "name": "--n-050",
+     "name": "--ok-on-dark",
      "count": 2
     },
     {
-     "name": "--text-muted",
+     "name": "--line",
+     "count": 2
+    },
+    {
+     "name": "--ink",
      "count": 2
     }
    ],
@@ -185,11 +185,7 @@
      "count": 8
     },
     {
-     "name": "--n-650",
-     "count": 7
-    },
-    {
-     "name": "--n-200",
+     "name": "--shade-soft",
      "count": 6
     },
     {
@@ -209,11 +205,15 @@
      "count": 4
     },
     {
-     "name": "--n-100",
+     "name": "--paper-line",
      "count": 4
     },
     {
-     "name": "--n-900",
+     "name": "--text-on-accent",
+     "count": 4
+    },
+    {
+     "name": "--sub",
      "count": 4
     }
    ],
@@ -315,19 +315,19 @@
      "count": 2
     },
     {
-     "name": "--n-100",
-     "count": 2
-    },
-    {
-     "name": "--n-200",
-     "count": 2
-    },
-    {
-     "name": "--border",
-     "count": 2
-    },
-    {
      "name": "--ok-on-dark",
+     "count": 2
+    },
+    {
+     "name": "--panel",
+     "count": 2
+    },
+    {
+     "name": "--bad",
+     "count": 2
+    },
+    {
+     "name": "--th-tint",
      "count": 2
     }
    ],
@@ -446,15 +446,11 @@
      "count": 5
     },
     {
-     "name": "--n-050",
-     "count": 4
-    },
-    {
-     "name": "--n-200",
-     "count": 4
-    },
-    {
      "name": "--th-ink-accent",
+     "count": 3
+    },
+    {
+     "name": "--info-solid",
      "count": 3
     },
     {
@@ -462,15 +458,19 @@
      "count": 3
     },
     {
-     "name": "--n-000",
-     "count": 3
-    },
-    {
-     "name": "--n-500",
-     "count": 3
-    },
-    {
      "name": "--th-accent-hi",
+     "count": 3
+    },
+    {
+     "name": "--th-accent",
+     "count": 3
+    },
+    {
+     "name": "--opt-hover",
+     "count": 3
+    },
+    {
+     "name": "--yellow",
      "count": 3
     }
    ],
@@ -604,6 +604,14 @@
      "count": 6
     },
     {
+     "name": "--surface-1",
+     "count": 3
+    },
+    {
+     "name": "--text",
+     "count": 3
+    },
+    {
      "name": "--border-strong",
      "count": 3
     },
@@ -616,15 +624,7 @@
      "count": 2
     },
     {
-     "name": "--text",
-     "count": 2
-    },
-    {
-     "name": "--n-000",
-     "count": 2
-    },
-    {
-     "name": "--n-050",
+     "name": "--surface-2",
      "count": 2
     },
     {
@@ -771,24 +771,24 @@
      "count": 4
     },
     {
+     "name": "--surface-1",
+     "count": 3
+    },
+    {
+     "name": "--text",
+     "count": 3
+    },
+    {
      "name": "--border-strong",
      "count": 3
     },
     {
-     "name": "--violet-050",
+     "name": "--text-on-frame",
      "count": 3
     },
     {
      "name": "--opt-bg",
      "count": 3
-    },
-    {
-     "name": "--fade",
-     "count": 2
-    },
-    {
-     "name": "--text",
-     "count": 2
     }
    ],
    "rules": [
@@ -887,6 +887,10 @@
    "tokens": [
     {
      "name": "--text-muted",
+     "count": 9
+    },
+    {
+     "name": "--text",
      "count": 8
     },
     {
@@ -894,7 +898,7 @@
      "count": 8
     },
     {
-     "name": "--text",
+     "name": "--text-on-accent",
      "count": 7
     },
     {
@@ -902,8 +906,8 @@
      "count": 6
     },
     {
-     "name": "--text-on-accent",
-     "count": 6
+     "name": "--surface-1",
+     "count": 5
     },
     {
      "name": "--th-ink-accent",
@@ -914,7 +918,7 @@
      "count": 4
     },
     {
-     "name": "--n-000",
+     "name": "--surface-2",
      "count": 4
     },
     {
@@ -923,10 +927,6 @@
     },
     {
      "name": "--ok-solid",
-     "count": 3
-    },
-    {
-     "name": "--surface-2",
      "count": 3
     },
     {
@@ -1043,11 +1043,11 @@
      "count": 3
     },
     {
-     "name": "--n-500",
+     "name": "--surface-hover",
      "count": 2
     },
     {
-     "name": "--blue-900",
+     "name": "--th-shadow",
      "count": 2
     },
     {
@@ -1151,15 +1151,15 @@
    ],
    "tokens": [
     {
+     "name": "--surface-1",
+     "count": 3
+    },
+    {
      "name": "--th-static",
      "count": 3
     },
     {
-     "name": "--violet-050",
-     "count": 2
-    },
-    {
-     "name": "--surface-1",
+     "name": "--text-on-frame",
      "count": 2
     },
     {
@@ -1175,7 +1175,7 @@
      "count": 2
     },
     {
-     "name": "--violet-600",
+     "name": "--th-ink-accent",
      "count": 2
     },
     {
@@ -1299,6 +1299,10 @@
    ],
    "tokens": [
     {
+     "name": "--surface-1",
+     "count": 3
+    },
+    {
      "name": "--text-on-accent",
      "count": 3
     },
@@ -1307,11 +1311,7 @@
      "count": 3
     },
     {
-     "name": "--violet-050",
-     "count": 2
-    },
-    {
-     "name": "--surface-1",
+     "name": "--text-on-frame",
      "count": 2
     },
     {
@@ -1323,7 +1323,7 @@
      "count": 2
     },
     {
-     "name": "--violet-600",
+     "name": "--th-ink-accent",
      "count": 2
     },
     {
@@ -1446,15 +1446,19 @@
    ],
    "tokens": [
     {
-     "name": "--n-100",
-     "count": 3
-    },
-    {
-     "name": "--n-050",
-     "count": 3
-    },
-    {
      "name": "--th-accent",
+     "count": 4
+    },
+    {
+     "name": "--surface-3",
+     "count": 3
+    },
+    {
+     "name": "--surface-2",
+     "count": 3
+    },
+    {
+     "name": "--th-ink-accent",
      "count": 3
     },
     {
@@ -1462,11 +1466,15 @@
      "count": 3
     },
     {
-     "name": "--n-500",
+     "name": "--surface-hover",
      "count": 3
     },
     {
-     "name": "--violet-050",
+     "name": "--text-on-frame",
+     "count": 2
+    },
+    {
+     "name": "--surface-1",
      "count": 2
     },
     {
@@ -1474,11 +1482,7 @@
      "count": 2
     },
     {
-     "name": "--n-650",
-     "count": 2
-    },
-    {
-     "name": "--violet-600",
+     "name": "--text",
      "count": 2
     },
     {
@@ -1487,10 +1491,6 @@
     },
     {
      "name": "--white-a50",
-     "count": 2
-    },
-    {
-     "name": "--th-solid",
      "count": 2
     }
    ],
@@ -1577,7 +1577,11 @@
      "count": 4
     },
     {
-     "name": "--violet-050",
+     "name": "--text-on-frame",
+     "count": 3
+    },
+    {
+     "name": "--surface-1",
      "count": 3
     },
     {
@@ -1595,10 +1599,6 @@
     {
      "name": "--ok-br",
      "count": 3
-    },
-    {
-     "name": "--surface-1",
-     "count": 2
     },
     {
      "name": "--ok-solid",
@@ -1730,6 +1730,14 @@
      "count": 5
     },
     {
+     "name": "--surface-1",
+     "count": 4
+    },
+    {
+     "name": "--essay-lock",
+     "count": 4
+    },
+    {
      "name": "--th-static",
      "count": 4
     },
@@ -1738,20 +1746,20 @@
      "count": 4
     },
     {
-     "name": "--violet-050",
+     "name": "--text-on-frame",
      "count": 3
     },
     {
-     "name": "--n-050",
+     "name": "--surface-2",
      "count": 3
     },
     {
-     "name": "--n-950",
+     "name": "--th-ink-accent",
      "count": 3
     },
     {
-     "name": "--surface-1",
-     "count": 2
+     "name": "--shade-deep",
+     "count": 3
     },
     {
      "name": "--white-a06",
@@ -1759,14 +1767,6 @@
     },
     {
      "name": "--white-a10",
-     "count": 2
-    },
-    {
-     "name": "--teal-450",
-     "count": 2
-    },
-    {
-     "name": "--text-muted",
      "count": 2
     }
    ],
@@ -1878,23 +1878,23 @@
      "count": 6
     },
     {
-     "name": "--n-050",
+     "name": "--essay-lock",
      "count": 4
+    },
+    {
+     "name": "--surface-2",
+     "count": 4
+    },
+    {
+     "name": "--surface-1",
+     "count": 3
     },
     {
      "name": "--th-accent",
      "count": 3
     },
     {
-     "name": "--surface-1",
-     "count": 2
-    },
-    {
      "name": "--white-a06",
-     "count": 2
-    },
-    {
-     "name": "--teal-450",
      "count": 2
     },
     {
@@ -1902,7 +1902,7 @@
      "count": 2
     },
     {
-     "name": "--teal-500",
+     "name": "--th-ink-accent",
      "count": 2
     },
     {
@@ -2003,7 +2003,7 @@
    "tokens": [
     {
      "name": "--surface-1",
-     "count": 3
+     "count": 4
     },
     {
      "name": "--ok-solid",
@@ -2026,7 +2026,7 @@
      "count": 3
     },
     {
-     "name": "--violet-050",
+     "name": "--text-on-frame",
      "count": 2
     },
     {
@@ -2042,7 +2042,7 @@
      "count": 2
     },
     {
-     "name": "--n-650",
+     "name": "--text",
      "count": 2
     },
     {
@@ -2155,10 +2155,10 @@
    "tokens": [
     {
      "name": "--surface-1",
-     "count": 3
+     "count": 4
     },
     {
-     "name": "--violet-050",
+     "name": "--text-on-frame",
      "count": 2
     },
     {
@@ -2166,11 +2166,11 @@
      "count": 2
     },
     {
-     "name": "--n-650",
+     "name": "--text",
      "count": 2
     },
     {
-     "name": "--n-500",
+     "name": "--surface-hover",
      "count": 1
     },
     {
@@ -2182,11 +2182,7 @@
      "count": 1
     },
     {
-     "name": "--n-050",
-     "count": 1
-    },
-    {
-     "name": "--n-000",
+     "name": "--surface-2",
      "count": 1
     },
     {
@@ -2199,6 +2195,10 @@
     },
     {
      "name": "--th-ink-accent",
+     "count": 1
+    },
+    {
+     "name": "--th-accent-hi",
      "count": 1
     }
    ],
@@ -2292,7 +2292,7 @@
      "count": 3
     },
     {
-     "name": "--n-050",
+     "name": "--hw-text",
      "count": 2
     },
     {
@@ -2312,15 +2312,15 @@
      "count": 1
     },
     {
-     "name": "--n-900",
+     "name": "--hw-bg",
      "count": 1
     },
     {
-     "name": "--n-300",
+     "name": "--hw-text-muted",
      "count": 1
     },
     {
-     "name": "--violet-400",
+     "name": "--th-rate",
      "count": 1
     },
     {
@@ -2421,11 +2421,11 @@
      "count": 6
     },
     {
-     "name": "--violet-400",
+     "name": "--th-rate",
      "count": 2
     },
     {
-     "name": "--n-900",
+     "name": "--hw-bg",
      "count": 1
     },
     {
@@ -2433,7 +2433,7 @@
      "count": 1
     },
     {
-     "name": "--n-050",
+     "name": "--hw-text",
      "count": 1
     }
    ],
@@ -2509,16 +2509,16 @@
      "count": 9
     },
     {
-     "name": "--n-900",
-     "count": 8
+     "name": "--text-on-accent",
+     "count": 9
     },
     {
      "name": "--muted",
      "count": 8
     },
     {
-     "name": "--text-on-accent",
-     "count": 8
+     "name": "--warn-solid",
+     "count": 7
     },
     {
      "name": "--ok-solid",
@@ -2533,7 +2533,7 @@
      "count": 6
     },
     {
-     "name": "--warn-solid",
+     "name": "--line-strong",
      "count": 6
     }
    ],
@@ -2619,16 +2619,16 @@
      "count": 8
     },
     {
+     "name": "--th-accent",
+     "count": 7
+    },
+    {
      "name": "--ink2",
      "count": 7
     },
     {
      "name": "--good",
      "count": 7
-    },
-    {
-     "name": "--th-accent",
-     "count": 6
     },
     {
      "name": "--muted",
@@ -2639,7 +2639,7 @@
      "count": 6
     },
     {
-     "name": "--n-050",
+     "name": "--text-on-accent",
      "count": 5
     }
    ],
@@ -2771,7 +2771,7 @@
      "count": 3
     },
     {
-     "name": "--teal-300",
+     "name": "--subject-sci-hi",
      "count": 2
     },
     {
@@ -2783,7 +2783,7 @@
      "count": 2
     },
     {
-     "name": "--n-950",
+     "name": "--text-on-bright-deep",
      "count": 2
     }
    ],
@@ -2877,11 +2877,11 @@
      "count": 2
     },
     {
-     "name": "--n-650",
+     "name": "--surface-2",
      "count": 2
     },
     {
-     "name": "--surface-2",
+     "name": "--text",
      "count": 2
     }
    ],
@@ -2951,10 +2951,6 @@
      "count": 5
     },
     {
-     "name": "--n-650",
-     "count": 5
-    },
-    {
      "name": "--border",
      "count": 5
     },
@@ -2968,6 +2964,10 @@
     },
     {
      "name": "--surface-2",
+     "count": 4
+    },
+    {
+     "name": "--hw-frame",
      "count": 4
     },
     {
@@ -3036,15 +3036,15 @@
    ],
    "tokens": [
     {
-     "name": "--n-650",
-     "count": 5
-    },
-    {
      "name": "--m",
      "count": 4
     },
     {
-     "name": "--n-000",
+     "name": "--shade-soft",
+     "count": 3
+    },
+    {
+     "name": "--paper-bg",
      "count": 3
     },
     {
@@ -3052,7 +3052,7 @@
      "count": 3
     },
     {
-     "name": "--n-600",
+     "name": "--shade-mid",
      "count": 2
     },
     {
@@ -3060,7 +3060,11 @@
      "count": 2
     },
     {
-     "name": "--n-200",
+     "name": "--paper-ink",
+     "count": 2
+    },
+    {
+     "name": "--paper-line-strong",
      "count": 2
     },
     {
@@ -3072,16 +3076,12 @@
      "count": 2
     },
     {
-     "name": "--n-950",
+     "name": "--shade-deep",
      "count": 2
     },
     {
      "name": "--white-a30",
      "count": 2
-    },
-    {
-     "name": "--bg",
-     "count": 1
     }
    ],
    "rules": [
@@ -3160,7 +3160,7 @@
    ],
    "tokens": [
     {
-     "name": "--cyan-200",
+     "name": "--accent-cyan-soft",
      "count": 3
     },
     {
@@ -3168,7 +3168,7 @@
      "count": 3
     },
     {
-     "name": "--n-050",
+     "name": "--hw-text",
      "count": 2
     },
     {
@@ -3188,15 +3188,15 @@
      "count": 1
     },
     {
-     "name": "--n-900",
+     "name": "--hw-bg",
      "count": 1
     },
     {
-     "name": "--n-300",
+     "name": "--hw-text-muted",
      "count": 1
     },
     {
-     "name": "--cyan-400",
+     "name": "--th-rate",
      "count": 1
     },
     {
@@ -3292,19 +3292,19 @@
    ],
    "tokens": [
     {
-     "name": "--cyan-200",
+     "name": "--accent-cyan-soft",
      "count": 2
     },
     {
-     "name": "--cyan-300",
+     "name": "--accent-cyan",
      "count": 2
     },
     {
-     "name": "--cyan-400",
+     "name": "--accent-blue",
      "count": 2
     },
     {
-     "name": "--n-900",
+     "name": "--hw-bg",
      "count": 1
     },
     {
@@ -3312,11 +3312,11 @@
      "count": 1
     },
     {
-     "name": "--n-050",
+     "name": "--hw-text",
      "count": 1
     },
     {
-     "name": "--n-800",
+     "name": "--hw-surface",
      "count": 1
     }
    ],
@@ -3431,19 +3431,15 @@
      "count": 5
     },
     {
-     "name": "--n-650",
+     "name": "--surface-1",
      "count": 4
     },
     {
+     "name": "--type-panel-dark",
+     "count": 3
+    },
+    {
      "name": "--th-static",
-     "count": 3
-    },
-    {
-     "name": "--n-000",
-     "count": 3
-    },
-    {
-     "name": "--n-050",
      "count": 3
     },
     {
@@ -3451,7 +3447,7 @@
      "count": 2
     },
     {
-     "name": "--n-500",
+     "name": "--text",
      "count": 2
     },
     {
@@ -3464,6 +3460,10 @@
     },
     {
      "name": "--opt-bg",
+     "count": 2
+    },
+    {
+     "name": "--th-accent-strong",
      "count": 2
     }
    ],
@@ -3563,11 +3563,7 @@
      "count": 3
     },
     {
-     "name": "--n-900",
-     "count": 2
-    },
-    {
-     "name": "--n-050",
+     "name": "--hw-text",
      "count": 2
     },
     {
@@ -3583,19 +3579,23 @@
      "count": 1
     },
     {
-     "name": "--n-300",
+     "name": "--hw-bg",
      "count": 1
     },
     {
-     "name": "--teal-300",
+     "name": "--hw-text-muted",
      "count": 1
     },
     {
-     "name": "--red-400",
+     "name": "--th-rate",
      "count": 1
     },
     {
-     "name": "--no-vivid",
+     "name": "--text-on-bright",
+     "count": 1
+    },
+    {
+     "name": "--hw-no",
      "count": 1
     }
    ],
@@ -3696,6 +3696,10 @@
      "count": 7
     },
     {
+     "name": "--surface-1",
+     "count": 6
+    },
+    {
      "name": "--text-on-accent",
      "count": 6
     },
@@ -3708,19 +3712,11 @@
      "count": 5
     },
     {
-     "name": "--n-650",
-     "count": 4
-    },
-    {
      "name": "--th-static",
      "count": 4
     },
     {
-     "name": "--n-000",
-     "count": 4
-    },
-    {
-     "name": "--n-500",
+     "name": "--text",
      "count": 3
     },
     {
@@ -3736,7 +3732,11 @@
      "count": 3
     },
     {
-     "name": "--n-050",
+     "name": "--type-panel-dark",
+     "count": 2
+    },
+    {
+     "name": "--fade",
      "count": 2
     }
    ],
@@ -3833,11 +3833,7 @@
      "count": 8
     },
     {
-     "name": "--teal-300",
-     "count": 2
-    },
-    {
-     "name": "--n-900",
+     "name": "--th-rate",
      "count": 2
     },
     {
@@ -3845,11 +3841,19 @@
      "count": 2
     },
     {
-     "name": "--n-300",
+     "name": "--hw-bg",
      "count": 1
     },
     {
-     "name": "--red-400",
+     "name": "--hw-text-muted",
+     "count": 1
+    },
+    {
+     "name": "--text-on-bright",
+     "count": 1
+    },
+    {
+     "name": "--hw-no",
      "count": 1
     },
     {
@@ -3857,7 +3861,7 @@
      "count": 1
     },
     {
-     "name": "--teal-900",
+     "name": "--th-night",
      "count": 1
     }
    ],

@@ -203,7 +203,7 @@
   function miniStar(g){
     var c = g ? (g==='s' ? 'url(#rmPrism)' : GCOL[g]) : '';
     return '<svg viewBox="2 2 20 20" width="19" height="19" '
-      + (g ? 'fill="'+c+'" stroke="'+c+'" stroke-width="2.8"' : 'fill="none" stroke="var(--n-500)" stroke-width="2.4"')
+      + (g ? 'fill="'+c+'" stroke="'+c+'" stroke-width="2.8"' : 'fill="none" stroke="var(--hw-key)" stroke-width="2.4"')
       + ' stroke-linejoin="round" stroke-linecap="round" role="img" aria-label="'+(g?g.toUpperCase()+'등급':'미획득')
       + '"><path d="M12 4.2 14.7 8.7 19.8 9.6 16.3 13.4 16.9 18.6 12 16.4 7.1 18.6 7.7 13.4 4.2 9.6 9.3 8.7Z"/></svg>';
   }

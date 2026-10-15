@@ -184,6 +184,7 @@
   --ok-line:   var(--green-400);
   --ok-glow:      var(--teal-500);
   --ok-glow-dark: var(--teal-400);
+  --ok-on-ink:    var(--green-100);   /* 진한 초록 칠(--ok-ink) 위 글자 — 커리큘럼 「정복」 배지 */
 
   /* 현재 위치 마커 (섹션 액센트와 역할 분리 — "지금 여기") */
   --current: var(--amber-300);
@@ -238,6 +239,25 @@
   --subject-sci:      var(--teal-400);
   --subject-sci-hi:   var(--teal-300);
   --subject-sci-ink:  var(--teal-600);
+  --subject-math-bar: var(--blue-500);   /* 홈 명패의 진행 막대 */
+  --subject-sci-bar:  var(--teal-500);
+
+  /* 진한 프레임(문제 카드 · 서술형 패널) 위 글자 · 선 — 프레임은 테마를 따라 안 뒤집히므로 이것도 고정 */
+  --text-on-frame:     var(--violet-050);   /* 본문 — 보라빛이 도는 흰색, 화면이 85~94%로 섞어 쓴다 */
+  --text-on-frame-sub: var(--n-100);
+  --line-on-frame:     var(--n-200);        /* 빈칸 밑줄 · 채움의 바탕 */
+  --ink-read:          var(--n-700);        /* 읽기 모달 본문(라이트) — 본문 먹색보다 한 칸 진함 */
+
+  /* 시작 페이지(index) 그룹 점 — 계열 식별색 */
+  --index-dot-concept: var(--blue-700);
+  --index-dot-type:    var(--teal-700);
+  --index-dot-essay:   var(--violet-800);
+  --index-dot-assign:  var(--blue-600);
+  --index-dot-exam:    var(--violet-700);
+  --index-dot-nav:     var(--blue-400);
+  --index-dot-util:    var(--blue-500);
+  --index-dot-base:    var(--n-300);
+  --index-dot-later:   var(--n-200);
 
   /* 시험 액센트 — 시험 계열 밖에서 시험을 가리키는 칩 (커리큘럼의 시험 대비 칩) */
   --exam-accent: var(--violet-500);
@@ -283,6 +303,9 @@
   --hw-accent-solid: var(--blue-600);  /* 하드웨어 위 파랑 칠 (서랍 탭) */
   --hw-card:        var(--n-650);   /* 우주 화면 카드 면 */
   --hw-no:          var(--red-400);   /* 계기판 오답 글자 */
+  --hw-screen:      var(--n-950);   /* 영상 화면 바탕 · 검수 패널 */
+  --hw-control:     var(--n-600);   /* 검수 패널 버튼 */
+  --type-panel-dark: var(--n-650);  /* 유형 풀이 · 해설의 다크 콘텐츠 면과 입력칸 (다크 자리에서만 쓴다) */
 
   /* 고정 라이트 = 종이 — 보고서 미리보기 · 밝은 GNB · 과제 차트 · 행성 홈 명패와 말풍선.
      테마를 따라 뒤집히지 않는다. 사다리는 라이트 테마 2단과 같다. */
@@ -343,6 +366,9 @@
   --assign-dash:      var(--n-350);
   --assign-score-bg:  var(--n-600);
   --assign-seg-track: var(--n-500);
+
+  /* 서술형 잠금칸 — 이미 정해진 답을 보여 주는 칸의 틸 (라이트 값은 아래) */
+  --essay-lock: var(--teal-450);
 
   /* =======================================================================
      3단 · THEME SLOT 기본값 (data-section 미지정 시 fallback = concept/blue)
@@ -516,6 +542,8 @@
   --assign-dash:      var(--n-200);
   --assign-score-bg:  var(--n-100);
   --assign-seg-track: var(--n-200);
+
+  --essay-lock: var(--teal-500);
 }
 /* 다크에서 포커스 링은 밝힌 액센트 + 틴트는 더 진하게 (v1.6)
    — 라이트용 8/15% 틴트는 다크 표면에서 식별 불가(끊어읽기 하이라이트·빈칸 채움이

@@ -7,15 +7,15 @@
 /* 페이지 고유 토큰만 (--bl-* / .blank / .qpop / 하단바 = essay.css) */
 .content {
   flex-direction: column; padding: clamp(12px, 1.6vw, 16px) clamp(12px, 1.6vw, 16px) 0;
-  --guide: color-mix(in srgb, var(--violet-050) 92%, transparent);
-  --rt-line: var(--n-500); --rt-head: var(--surface-1); --rt-cell: var(--surface-1); --rt-fg: color-mix(in srgb, var(--violet-050) 90%, transparent);
+  --guide: color-mix(in srgb, var(--text-on-frame) 92%, transparent);
+  --rt-line: var(--surface-hover); --rt-head: var(--surface-1); --rt-cell: var(--surface-1); --rt-fg: color-mix(in srgb, var(--text-on-frame) 90%, transparent);
 }
 :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
 :root[data-theme="light"] .content {
   /* 제일 뒤(베이스) = 흰색에 가까운 톤 */
   background: var(--th-panel); border-color: var(--th-static);
-  --guide: var(--n-650);
-  --rt-line: var(--border); --rt-head: var(--n-050); --rt-cell: var(--n-000); --rt-fg: var(--n-650);
+  --guide: var(--text);
+  --rt-line: var(--border); --rt-head: var(--surface-2); --rt-cell: var(--surface-1); --rt-fg: var(--text);
 }
 
 

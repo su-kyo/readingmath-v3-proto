@@ -15,8 +15,12 @@
 
 **② 색은 `styles/tokens.css`의 변수로만 쓴다.** (`RM-COL-01`·`02`·`05`)
 화면 CSS·JS에 색값(hex·rgb)을 직접 쓰지 않는다(지금 0곳 — `tools/style-audit.py`가 잰다).
+**1단 팔레트(`--n-650`·`--blue-500` 등)도 화면에서 부르지 않는다(2026-10-15부터 지킬 것 · 0곳).**
+2단 역할(`--text`·`--surface-*`·`--divider*`) → 계열 슬롯(`--th-*`) → 부품 토큰
+(고정 다크 `--hw-*` · 고정 라이트 `--paper-*` · 그늘 `--shade*` · 화면군 `--util-*`·`--exam-*`·`--assign-*`) 순서로 찾고,
+없으면 `tokens.css`에 이름을 만든다. 화면 안 지역 변수의 라이트·다크 두 벌도 토큰 쪽에서 전환한다.
 반투명은 알파 램프(`--white-a10` · `--black-a30`), 색이 섞인 반투명은
-`color-mix(in srgb, var(--가족-스텝) N%, transparent)`로 쓴다. 마스크의 흑백은 색이 아니라 예외다.
+`color-mix(in srgb, var(--토큰) N%, transparent)`로 쓴다. 마스크의 흑백은 색이 아니라 예외다.
 예외 목록은 스토리북 「패턴 › 남긴 예외」와 `style-audit.py`의 `EXCEPT`가 같다.
 
 **②-1 대비 잣대는 하나가 아니다 (v1.6 · 스토리북 「기초 › 칠면 셋」 · `RM-FILL-01`~`08`).**
@@ -112,7 +116,7 @@ index의 그룹 분류는 같은 단위다 — 둘이 어긋나게 두지 않는
 - **치수 (`RM-SIZE-01`~`03`, 2026-10-14 A안)** — 눈금에 있는 값(글자·간격·모서리·선 굵기 `--bw-1/1_5/2/3/4`·볼록 두께 `--depth-2/4`)은 px로 쓰지 않는다(검사 0).
   부품 고유 치수·위치 미세조정·`clamp()` 끝값·@media 조건은 px 허용. 눈금 밖 간격·글자·모서리는 「지켜볼 것」 — 맞추면 화면이 바뀌니 디자인 판단 때.
 - 공용 파일로 규칙을 올릴 때 **`url()` 경로를 그 파일 기준으로 다시 쓴다** — `screens/`는 `../../assets`, `styles/`는 `../assets` (`RM-FILE-08`).
-- 고치고 나면: `python3 tools/style-audit.py`(지킬 것 10개 전부 ✓) → `tools/color-audit.html` → `tools/usage-scan.py`
+- 고치고 나면: `python3 tools/style-audit.py`(지킬 것 11개 전부 ✓) → `tools/color-audit.html` → `tools/usage-scan.py`
   → `tools/screens-build.py` · `tools/tokens-build.py` · `tools/rules-build.py`(개발자 파일) → `?v=` 올리기.
 
 ## 조심할 것
@@ -238,7 +242,7 @@ iframe 두 개(`srcdoc`)에 넣고 `styles/`의 **진짜 CSS**를 불러 그린�
 `planet-ref.py`(캐릭터 생성용 행성 자료 뽑기) · `char-on-bg.py`(캐릭터를 홈 배경에 올려
 대비 판정 — 몸 대비·자체 대비를 숫자로 찍는다) ·
 `usage-scan.py`(부품별 쓰는 화면 집계 → 스토리북) ·
-`style-audit.py`(스타일 규칙 검사 — 지킬 것 10 · 지켜볼 것 5, 줄마다 규칙 번호, `--strict`면 실패 시 종료 코드 1) ·
+`style-audit.py`(스타일 규칙 검사 — 지킬 것 11 · 지켜볼 것 4, 줄마다 규칙 번호, `--strict`면 실패 시 종료 코드 1) ·
 `rules-build.py`(규칙 색인 → `rules.json` · CLAUDE.md 색인 + 번호 대조) · `tokens-build.py`(`tokens.css` → `tokens.json`) ·
 `screens-build.py`(화면 → `screens.json`, usage-scan 다음에) ·
 `dark-shot.html`(다크 모드 화면을 헤드리스로 찍는 액자 — `screen-shot.sh`는 라이트만 찍힌다) ·
@@ -297,10 +301,10 @@ tools/screen-diff.py /tmp/rm-before /tmp/rm-after
 
 - **COL** 색
   - `RM-COL-01` 색은 `tokens.css`의 변수로만 쓴다
-  - `RM-COL-02` 반투명은 알파 램프 또는 「가족 스텝을 N% 섞기」 두 문법만
+  - `RM-COL-02` 반투명은 알파 램프 또는 「토큰을 N% 섞기」 두 문법만
   - `RM-COL-03` 팔레트 hex는 손으로 고치지 않는다 — 생성기로 다시 만든다
   - `RM-COL-04` 상태색 `--*-vivid`를 일괄 치환하지 않는다 (눈)
-  - `RM-COL-05` 화면은 2단 역할 토큰부터 찾는다
+  - `RM-COL-05` 화면은 팔레트를 직접 부르지 않는다 — 2단 역할 · 부품 토큰으로 받는다
 - **FILL** 칠면
   - `RM-FILL-01` 작은 글자가 올라가는 칠면은 600 스텝 · 4.5:1
   - `RM-FILL-02` 정체성 칠면은 450 스텝 · 3:1 · 라벨 19px w700 이상

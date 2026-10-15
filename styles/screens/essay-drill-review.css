@@ -6,7 +6,7 @@
 /* ============ 서술형 = 퍼플 (essay-drill 셸 재사용) ============ */
 .content {
   flex-direction: column; padding: clamp(12px, 1.6vw, 16px) clamp(12px, 1.6vw, 16px) 0;
-  --guide: color-mix(in srgb, var(--violet-050) 94%, transparent); --card: var(--surface-1); --card-br: var(--white-a08); --card-sh: none;
+  --guide: color-mix(in srgb, var(--text-on-frame) 94%, transparent); --card: var(--surface-1); --card-br: var(--white-a08); --card-sh: none;
   --step-bg: var(--white-a06); --step-fg: var(--text-muted);
   /* 채점 색 (다크) — 면 없음 · 선 = 500 · 글자 = 밝힌 단계. 전역 --ok-ink/--no-ink 는 덮어쓰지 않는다 (예전엔 자기 참조라 라이트 글자색이 무효였다) */
   --ok-bg: transparent; --ok-br: var(--ok-solid); --ok-fg: var(--ok-on-dark);
@@ -15,8 +15,8 @@
 :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
 :root[data-theme="light"] .content {
   background: var(--th-panel); border-color: var(--th-static);
-  --guide: var(--n-650); --card: var(--n-000); --card-br: var(--border); --card-sh: 0 12px 30px -22px color-mix(in srgb, var(--violet-800) 50%, transparent);
-  --step-bg: var(--n-100); --step-fg: var(--text-meta);
+  --guide: var(--text); --card: var(--surface-1); --card-br: var(--border); --card-sh: 0 12px 30px -22px color-mix(in srgb, var(--th-shadow) 50%, transparent);
+  --step-bg: var(--surface-3); --step-fg: var(--text-meta);
   --ok-fg: var(--ok-ink); --no-fg: var(--no-ink);
 }
 
@@ -57,15 +57,15 @@
 
 /* 문제 카드 (읽기전용, 접기) = 세로 확정안 drill-v2와 같은 스티키 패널 */
 .problem { position: sticky; top: 0; z-index: 20; overflow: hidden; max-width: none; margin: 0 auto;
-  background: var(--th-static); border: 0; border-radius: 0 0 var(--r-16) var(--r-16); box-shadow: 0 10px 24px color-mix(in srgb, var(--n-950) 28%, transparent); }
+  background: var(--th-static); border: 0; border-radius: 0 0 var(--r-16) var(--r-16); box-shadow: 0 10px 24px color-mix(in srgb, var(--shade-deep) 28%, transparent); }
 .problem__head { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--sp-12);
   padding: var(--sp-8) var(--sp-16); background: transparent; border: 0; text-align: left; cursor: pointer; }
 .problem__chev { width: 22px; height: 22px; color: var(--white-a60); transition: transform .25s; flex: none; transform: rotate(180deg); }
 .problem.is-collapsed .problem__chev { transform: rotate(0); }
-.problem__body { padding: var(--sp-6) var(--sp-16) var(--sp-16); overflow: hidden; max-height: 1600px; color: color-mix(in srgb, var(--violet-050) 92%, transparent);
+.problem__body { padding: var(--sp-6) var(--sp-16) var(--sp-16); overflow: hidden; max-height: 1600px; color: color-mix(in srgb, var(--text-on-frame) 92%, transparent);
   transition: max-height .32s ease, opacity .25s ease, padding .32s ease; }
 .problem.is-collapsed .problem__body { max-height: 0; opacity: 0; padding-top: 0; padding-bottom: 0; }
-.problem__body .rline { color: color-mix(in srgb, var(--violet-050) 92%, transparent); }
+.problem__body .rline { color: color-mix(in srgb, var(--text-on-frame) 92%, transparent); }
 
 
 /* ============ 다음 단계 진입 버튼 (drill-v2와 동일 · 콘텐츠 하단) ============ */
@@ -119,6 +119,6 @@
 .rblank.is-wrong.show-ans::after, .rslot.is-wrong.show-ans::after { content: none; }
 
 /* 하단 결과 버튼 (윗면·아랫면 모두 바이올렛으로 일치) */
-.toolbtn--primary { background: var(--th-solid); box-shadow: 0 var(--depth-4) 0 color-mix(in srgb, var(--th-accent) 62%, var(--n-950)); }
+.toolbtn--primary { background: var(--th-solid); box-shadow: 0 var(--depth-4) 0 color-mix(in srgb, var(--th-accent) 62%, var(--shade-deep)); }
 /* 이 화면만 워크시트가 위로 떨어져 있다 */
 .worksheet { margin-top: 14px; }

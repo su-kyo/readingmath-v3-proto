@@ -30,18 +30,18 @@
 }
 :root[data-theme="light"] .ops {
   --qtext: var(--text);
-  --opt-bg: var(--n-000); --opt-hover: var(--n-050);
-  --input-bg: var(--n-000); --input-br: var(--border-strong);
+  --opt-bg: var(--surface-1); --opt-hover: var(--surface-2);
+  --input-bg: var(--surface-1); --input-br: var(--border-strong);
   --st-ok: var(--ok-ink); --st-no: var(--no-ink);
 }
 /* 스크롤바 확실히 보이게 */
 
-:root[data-theme="light"] .ops::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--n-650) 22%, transparent); background-clip: padding-box; }
+:root[data-theme="light"] .ops::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--text) 22%, transparent); background-clip: padding-box; }
 
 
 /* ===== 문제 카드 (번호탭 헤더 + 접이식 · 프레임 테두리색과 면 공유 · 상단 부착) ===== */
 .problem { flex: none; width: min(1040px, calc(100% - 2 * clamp(24px, 5vw, 56px))); margin: 0 auto;
-  overflow: hidden; background: var(--th-static); border-radius: 0 0 var(--r-16) var(--r-16); box-shadow: 0 10px 24px color-mix(in srgb, var(--n-950) 28%, transparent); }
+  overflow: hidden; background: var(--th-static); border-radius: 0 0 var(--r-16) var(--r-16); box-shadow: 0 10px 24px color-mix(in srgb, var(--shade-deep) 28%, transparent); }
 .problem__head { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--sp-8); padding: var(--sp-8) var(--sp-16); background: transparent; border: 0; }
 .problem.is-collapsible .problem__head { cursor: pointer; }
 .qtabs { display: inline-flex; align-items: center; gap: var(--sp-6); flex-wrap: wrap; }
@@ -59,12 +59,12 @@
 .problem__chev { width: 22px; height: 22px; color: var(--white-a60); transition: transform .25s; flex: none; transform: rotate(180deg); }
 .problem.is-collapsed .problem__chev { transform: rotate(0); }
 /* 본문 = 문제문(좌) + 참고자료(우) 한 행 · 밝은 톤(어두운 패널) */
-.problem__body { padding: var(--sp-6) var(--sp-16) var(--sp-16); overflow: hidden; max-height: 1200px; color: color-mix(in srgb, var(--violet-050) 92%, transparent);
+.problem__body { padding: var(--sp-6) var(--sp-16) var(--sp-16); overflow: hidden; max-height: 1200px; color: color-mix(in srgb, var(--text-on-frame) 92%, transparent);
   display: flex; gap: var(--sp-20); align-items: flex-start; transition: max-height .32s ease, opacity .25s ease, padding .32s ease; }
 .problem.is-collapsed .problem__body { max-height: 0; opacity: 0; padding-top: 0; padding-bottom: 0; }
-.problem__body .q__text { flex: 1 1 auto; min-width: 0; margin-bottom: 0; color: color-mix(in srgb, var(--violet-050) 94%, transparent); }
+.problem__body .q__text { flex: 1 1 auto; min-width: 0; margin-bottom: 0; color: color-mix(in srgb, var(--text-on-frame) 94%, transparent); }
 .problem__body .ex { flex: none; width: clamp(200px, 36%, 340px); margin: 0; --ex-br: var(--white-a20); }   /* 진한 문제 카드 위 — 흰 선 */
-.problem__body .ex__list { color: color-mix(in srgb, var(--violet-050) 85%, transparent); }
+.problem__body .ex__list { color: color-mix(in srgb, var(--text-on-frame) 85%, transparent); }
 .problem__body .ex__skel { color: var(--white-a60); }
 
 
@@ -135,7 +135,7 @@
 /* ===== 하단 고정 채점 버튼 ===== */
 .ops__foot { flex: none; display: flex; justify-content: center; padding: var(--sp-8) 0 var(--sp-4); }
    /* 정체성 칠면 450 */
-.btn-grade:disabled { background: var(--n-500); color: var(--n-050); box-shadow: none; cursor: not-allowed; }
+.btn-grade:disabled { background: var(--hw-key); color: var(--hw-text); box-shadow: none; cursor: not-allowed; }
 .btn-grade--next:hover:not(:disabled) { background: var(--primary-hover); }
 
 /* 하단바 다음으로 비활성 */

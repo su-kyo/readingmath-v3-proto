@@ -27,12 +27,12 @@
 }
 :root[data-theme="light"] .ops {
   --qtext: var(--text);
-  --opt-bg: var(--n-000); --opt-hover: var(--n-050);
-  --input-bg: var(--n-000); --input-br: var(--border-strong);
+  --opt-bg: var(--surface-1); --opt-hover: var(--surface-2);
+  --input-bg: var(--surface-1); --input-br: var(--border-strong);
 }
 /* 스크롤바 확실히 보이게 */
 
-:root[data-theme="light"] .ops::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--n-650) 22%, transparent); background-clip: padding-box; }
+:root[data-theme="light"] .ops::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--text) 22%, transparent); background-clip: padding-box; }
 
 
 /* ===== 상단 프로그레스 (박스 최상단 중앙에 탭처럼 붙음. 색=테두리색, 테마 무관) ===== */
@@ -126,7 +126,7 @@
 /* ===== 하단 고정 채점 버튼 ===== */
 .ops__foot { flex: none; display: flex; justify-content: center; padding: var(--sp-8) 0 var(--sp-4); }
    /* 정체성 칠면 450 */
-.btn-grade:disabled { background: var(--n-500); color: var(--n-050); box-shadow: none; cursor: not-allowed; }
+.btn-grade:disabled { background: var(--hw-key); color: var(--hw-text); box-shadow: none; cursor: not-allowed; }
 .btn-grade--next:hover:not(:disabled) { background: var(--primary-hover); }
 
 /* 하단바 다음으로 비활성 */

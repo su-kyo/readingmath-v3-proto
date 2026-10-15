@@ -80,7 +80,7 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 .viewer[data-state="filled"] .viewer__ph { animation: skel 1.6s ease-in-out infinite; }
 @keyframes skel { 0%,100% { opacity: 1; } 50% { opacity: .55; } }
 .viewer__label { color: var(--text-muted); font-size: var(--fs-14); font-weight: var(--fw-semibold); text-align: center; white-space: pre-line; padding: 0 var(--sp-16); }
-.viewer__zoom { position: absolute; bottom: 10px; right: 12px; font-size: var(--fs-12); font-weight: var(--fw-bold); color: var(--text-muted); background: var(--n-000); padding: var(--sp-4) var(--sp-8); border-radius: var(--r-full); box-shadow: 0 2px 6px color-mix(in srgb, var(--blue-900) 12%, transparent); display: none; }
+.viewer__zoom { position: absolute; bottom: 10px; right: 12px; font-size: var(--fs-12); font-weight: var(--fw-bold); color: var(--text-muted); background: var(--surface-1); padding: var(--sp-4) var(--sp-8); border-radius: var(--r-full); box-shadow: 0 2px 6px color-mix(in srgb, var(--th-shadow) 12%, transparent); display: none; }
 .viewer[data-state="filled"] .viewer__zoom { display: block; }
 .viewer__pager { display: flex; align-items: center; gap: var(--sp-16); color: var(--text-muted); font-weight: var(--fw-bold); }
 .viewer__pager button { width: 34px; height: 34px; border-radius: 50%; background: var(--th-tint); color: var(--th-ink-accent); font-size: var(--fs-15); }
@@ -135,8 +135,8 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 
 /* ===== 개념 영상 레이어 — 프레임은 공용 monitor, 안은 16:9 영상뿐 ===== */
 #videobox { --mon-w: 900px; }
-#videobox .monitor__screen { background: var(--n-950); }
-.videobox__frame { position: relative; width: 100%; aspect-ratio: 16 / 9; background: var(--n-950); }
+#videobox .monitor__screen { background: var(--hw-screen); }
+.videobox__frame { position: relative; width: 100%; aspect-ratio: 16 / 9; background: var(--hw-screen); }
 .videobox__frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 .videobox__fallback { position: absolute; inset: 0; display: none; flex-direction: column; align-items: center; justify-content: center; gap: var(--sp-12); color: var(--th-accent-hi); text-align: center; padding: var(--sp-24); font-family: var(--font-sans); }
 .videobox__fallback a { color: var(--th-accent-hi); font-weight: var(--fw-bold); }
@@ -145,17 +145,17 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 .summary {
   --mon-w: 820px;
   /* 라이트 기본 토큰 */
-  --sm-card: var(--n-000); --sm-text: var(--text);
+  --sm-card: var(--surface-1); --sm-text: var(--text);
   --sm-blank-muted: var(--text-muted);
   /* 선지 = 박스(연블루)와 구분되는 흰 버튼 + 진한 글자 + 파란 입체 그림자 (기존엔 박스와 같은 8% 틴트라 흐릿) */
-  --sm-opt: var(--n-000); --sm-opt-text: var(--text); --sm-opt-sh: var(--th-accent-hi);
+  --sm-opt: var(--surface-1); --sm-opt-text: var(--text); --sm-opt-sh: var(--th-accent-hi);
 }
 /* 다크 = 위에 뜨는 레이어가 더 밝다. 화면부는 dim(scrim)보다 확실히 밝은 면(n-600),
    선지는 그보다 한 단계 더 밝은 면(n-500)으로 층을 만든다. */
 :root[data-theme="dark"] .summary {
-  --sm-card: var(--n-600); --sm-text: var(--n-050);
-  --sm-blank-muted: var(--n-300);
-  --sm-opt: var(--n-500); --sm-opt-text: var(--n-000); --sm-opt-sh: var(--n-700);
+  --sm-card: var(--surface-3); --sm-text: var(--text);
+  --sm-blank-muted: var(--text-muted);
+  --sm-opt: var(--surface-hover); --sm-opt-text: var(--text-on-accent); --sm-opt-sh: var(--surface-2);
 }
 .summary .monitor__screen { background: var(--sm-card); padding: var(--sp-16) var(--sp-24) var(--sp-20); }
 .summary__box { background: transparent; border: 0; padding: 0; max-height: 42vh; overflow: auto; display: flex; flex-direction: column; gap: var(--sp-8);

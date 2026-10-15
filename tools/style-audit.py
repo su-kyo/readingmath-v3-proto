@@ -20,8 +20,9 @@ style-audit.py — 「사람이 지키는 규칙」을 기계가 잰다 (마감 
     깨진 경로                    CSS url() · HTML href/src 가 가리키는 파일이 없는 것
     캐시 번호 종류               ?v= 는 날짜 하나로 통일한다 (1 이어야 한다)
     CSS 주석 짝                  주석을 걷은 뒤 */ · /* 가 남으면 뒷줄 선언이 사라진 것이다
+    1단 직접 사용                CSS · JS · HTML(인라인 style)이 팔레트 램프를 var() 로 바로 부르는 것.
+                                 값은 tokens.css 의 2단 역할 · 부품 토큰 · 계열 슬롯으로만 받는다 (2026-10-15 0 달성)
   ■ 지켜보는 것 (줄면 좋다)
-    1단 직접 사용                화면 CSS 가 팔레트 램프를 바로 부르는 횟수 — 2단 역할로 옮길 대상
     화면 간 똑같은 규칙          styles/screens/ 끼리 글자 하나 안 틀리고 같은 규칙
     원시 px 글자 크기            clamp() 반응형 값 포함
     안 쓰는 토큰                 팔레트 램프 스텝은 제외(생성기 출력이라 중간이 비면 안 된다)
@@ -45,7 +46,7 @@ EXCEPT = {
 # 안 써도 남기는 토큰 — 상태색 매트릭스(4역할 × 6변형)의 빈칸을 만들지 않는다
 KEEP = {'--warn-vivid'}
 JS_VARS = {'--bpop-caret-x', '--d', '--delay', '--hero-w', '--m', '--o', '--pct', '--seg'}
-PALETTE = r'(?:n|blue|cyan|teal|green|amber|orange|red|violet)-\d+'
+PALETTE = r'(?:n|blue|cyan|teal|green|amber|orange|red|violet|gold|bronze)-\d+'
 
 
 def files(ext):
@@ -140,11 +141,15 @@ for f in HTML: vers.update(re.findall(r'(?:href|src)="(?:styles|scripts|stylegui
 row('지킬 것', '캐시 번호 종류(1 이어야) [RM-FILE-06]', len(vers), ' '.join(sorted(vers)))
 
 # ── 지켜보는 것 ─────────────────────────────────────────────────────────
-prim = 0
-for f in CSS:
+prim = 0; prim_where = []
+for f in CSS + JS + HTML:
     if f == 'styles/tokens.css' or f.startswith('styleguide/'): continue
-    prim += len(re.findall(r'var\(--' + PALETTE + r'\)', strip_comments(open(f, encoding='utf-8').read())))
-row('지켜볼 것', '1단(팔레트) 직접 사용 [RM-COL-05]', prim, '화면 지역 별칭·고정 물건 포함 — 같은 값·같은 뜻의 역할이 있으면 옮긴다')
+    t = open(f, encoding='utf-8').read()
+    if f.endswith('.html'): t = ' '.join(re.findall(r'style="([^"]*)"', t))
+    elif f.endswith('.css'): t = strip_comments(t)
+    n = len(re.findall(r'var\(--' + PALETTE + r'\)', t))
+    if n: prim += n; prim_where.append(f'{f}({n})')
+row('지킬 것', '1단(팔레트) 직접 사용 [RM-COL-05]', prim, ', '.join(prim_where[:3]))
 
 rules = collections.defaultdict(set)
 for f in glob.glob('styles/screens/*.css'):
