@@ -56,7 +56,12 @@
       var txt = b.lastChild;
       if (typeof c === 'object' && c.tex && window.katex) window.katex.render(c.tex, txt, { throwOnError: false });
       else if (typeof c === 'object' && c.html) txt.innerHTML = c.html;   // 글 + 수식이 섞인 선지(서술형) — 부른 쪽이 만든 마크업
-      else if (typeof c === 'object' && c.img) { var im = document.createElement('img'); im.src = c.img; im.alt = c.label || '선지 그림'; txt.appendChild(im); }   // 그림 선지(서술형)
+      else if (typeof c === 'object' && c.img) {   // 그림 선지(서술형)
+        var im = document.createElement('img'); im.alt = c.label || '선지 그림';
+        // 그림이 늦게 들어오면 창이 길어진다 — 들어온 뒤 자리를 다시 잡는다(모자라면 스크롤까지)
+        im.addEventListener('load', function () { if (cur) place(true); });
+        im.src = c.img; txt.appendChild(im);
+      }
       else txt.textContent = typeof c === 'object' ? (c.label || val) : val;
       opts.appendChild(b);
     });
@@ -86,7 +91,7 @@
   function follow() {
     if (!cur) return;
     var r = cur.getBoundingClientRect();
-    var key = Math.round(r.left) + ',' + Math.round(r.top) + ',' + window.innerWidth + ',' + window.innerHeight;
+    var key = Math.round(r.left) + ',' + Math.round(r.top) + ',' + window.innerWidth + ',' + window.innerHeight + ',' + el.offsetHeight;   // 창 높이가 바뀌어도 다시 잡는다
     if (key !== last) { last = key; place(); }
     raf = requestAnimationFrame(follow);
   }
