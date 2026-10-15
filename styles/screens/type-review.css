@@ -19,7 +19,7 @@
   --qtext: var(--n-050); --opt-bg: var(--n-800); 
   --input-bg: var(--n-800); --input-br: var(--n-500);
 }
-:root[data-theme="light"] .ops { --qtext: var(--n-650); --opt-bg: var(--n-000); --input-bg: var(--n-000); --input-br: var(--n-200); }
+:root[data-theme="light"] .ops { --qtext: var(--n-650); --opt-bg: var(--n-000); --input-bg: var(--n-000); --input-br: var(--border-strong); }
 
 
 /* ===== 프로그레스 캡 (정오답 o/x + 오답 점프) ===== */

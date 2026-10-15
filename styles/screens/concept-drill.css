@@ -29,7 +29,7 @@
   --st-ok: var(--ok-on-dark); --st-no: var(--no-on-dark);
 }
 :root[data-theme="light"] .ops {
-  --qtext: var(--n-600);
+  --qtext: var(--text);
   --opt-bg: var(--n-000); --opt-hover: var(--n-050);
   --input-bg: var(--n-000); --input-br: var(--border-strong);
   --st-ok: var(--ok-ink); --st-no: var(--no-ink);

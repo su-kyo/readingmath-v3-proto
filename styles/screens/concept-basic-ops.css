@@ -26,7 +26,7 @@
   --input-bg: var(--surface-2); --input-br: var(--border-strong);
 }
 :root[data-theme="light"] .ops {
-  --qtext: var(--n-600);
+  --qtext: var(--text);
   --opt-bg: var(--n-000); --opt-hover: var(--n-050);
   --input-bg: var(--n-000); --input-br: var(--border-strong);
 }

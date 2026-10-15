@@ -16,7 +16,7 @@
 :root[data-theme="light"] .content {
   background: var(--th-panel); border-color: var(--th-static);
   --guide: var(--n-650);
-  --rt-line: var(--n-100); --rt-head: var(--n-050); --rt-cell: var(--n-000); --rt-fg: var(--n-650);
+  --rt-line: var(--border); --rt-head: var(--n-050); --rt-cell: var(--n-000); --rt-fg: var(--n-650);
   --ok-fg: var(--ok-ink); --no-fg: var(--no-ink);
 }
 

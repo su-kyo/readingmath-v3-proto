@@ -21,7 +21,7 @@
 :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
 :root[data-theme="light"] .content {
   background: var(--th-panel); border-color: var(--th-static);
-  --guide: var(--n-650); --card: var(--n-000); --card-br: var(--n-100); --card-sh: none;
+  --guide: var(--n-650); --card: var(--n-000); --card-br: var(--border); --card-sh: none;
   --chip-bg: var(--n-050); --chip-br: color-mix(in srgb, var(--violet-600) 24%, transparent); --chip-hover: var(--n-050);
   --bl-fill: var(--n-050);   /* drill 고유: 슬롯 겹침 때문에 라이트 fill은 불투명 */
   --lock-bg: color-mix(in srgb, var(--teal-500) 10%, transparent); --lock-br: color-mix(in srgb, var(--teal-500) 40%, transparent); --lock-ck: var(--ok-ink);

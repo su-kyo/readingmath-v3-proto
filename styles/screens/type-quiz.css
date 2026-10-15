@@ -22,7 +22,7 @@
   --qtext: var(--n-050); --opt-bg: var(--n-800); --opt-hover: var(--n-600);
   --input-bg: var(--n-650); --input-br: var(--n-500);
 }
-:root[data-theme="light"] .ops { --qtext: var(--n-650); --opt-bg: var(--n-000); --opt-hover: var(--n-050); --input-bg: var(--n-000); --input-br: var(--n-200); }
+:root[data-theme="light"] .ops { --qtext: var(--n-650); --opt-bg: var(--n-000); --opt-hover: var(--n-050); --input-bg: var(--n-000); --input-br: var(--border-strong); }
 
 :root[data-theme="light"] .ops::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--teal-800) 22%, transparent); background-clip: padding-box; }
 

@@ -616,6 +616,10 @@
      "count": 2
     },
     {
+     "name": "--text",
+     "count": 2
+    },
+    {
      "name": "--n-000",
      "count": 2
     },
@@ -625,10 +629,6 @@
     },
     {
      "name": "--white-a30",
-     "count": 2
-    },
-    {
-     "name": "--text-muted",
      "count": 2
     }
    ],
@@ -787,7 +787,7 @@
      "count": 2
     },
     {
-     "name": "--n-000",
+     "name": "--text",
      "count": 2
     }
    ],
@@ -875,6 +875,10 @@
    ],
    "tokens": [
     {
+     "name": "--text",
+     "count": 12
+    },
+    {
      "name": "--text-muted",
      "count": 12
     },
@@ -895,19 +899,11 @@
      "count": 8
     },
     {
-     "name": "--n-600",
-     "count": 7
-    },
-    {
      "name": "--warn-solid",
      "count": 6
     },
     {
      "name": "--text-on-accent",
-     "count": 6
-    },
-    {
-     "name": "--text",
      "count": 6
     },
     {
@@ -920,6 +916,10 @@
     },
     {
      "name": "--th-solid",
+     "count": 4
+    },
+    {
+     "name": "--ok-solid",
      "count": 4
     }
    ],
@@ -1007,6 +1007,10 @@
      "count": 6
     },
     {
+     "name": "--text",
+     "count": 6
+    },
+    {
      "name": "--th-ink-accent",
      "count": 5
     },
@@ -1019,14 +1023,6 @@
      "count": 4
     },
     {
-     "name": "--n-600",
-     "count": 3
-    },
-    {
-     "name": "--text",
-     "count": 3
-    },
-    {
      "name": "--surface-1",
      "count": 3
     },
@@ -1036,6 +1032,10 @@
     },
     {
      "name": "--blue-900",
+     "count": 2
+    },
+    {
+     "name": "--surface-2",
      "count": 2
     }
    ],
@@ -2108,7 +2108,7 @@
      "count": 1
     },
     {
-     "name": "--n-100",
+     "name": "--border",
      "count": 1
     },
     {
@@ -3383,7 +3383,7 @@
      "count": 2
     },
     {
-     "name": "--n-200",
+     "name": "--border-strong",
      "count": 2
     },
     {

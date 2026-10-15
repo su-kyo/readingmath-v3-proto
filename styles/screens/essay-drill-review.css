@@ -15,7 +15,7 @@
 :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
 :root[data-theme="light"] .content {
   background: var(--th-panel); border-color: var(--th-static);
-  --guide: var(--n-650); --card: var(--n-000); --card-br: var(--n-050); --card-sh: 0 12px 30px -22px color-mix(in srgb, var(--violet-800) 50%, transparent);
+  --guide: var(--n-650); --card: var(--n-000); --card-br: var(--border); --card-sh: 0 12px 30px -22px color-mix(in srgb, var(--violet-800) 50%, transparent);
   --step-bg: var(--n-100); --step-fg: var(--text-meta);
   --ok-fg: var(--ok-ink); --no-fg: var(--no-ink);
 }

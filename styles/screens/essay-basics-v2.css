@@ -19,7 +19,7 @@
 :root[data-theme="dark"] .content { background: var(--surface-1); border-color: var(--th-static); }
 :root[data-theme="light"] .content {
   background: var(--th-panel); border-color: var(--th-static);
-  --guide: var(--n-650); --card: var(--n-000); --card-br: var(--n-100); --card-sh: none;
+  --guide: var(--n-650); --card: var(--n-000); --card-br: var(--border); --card-sh: none;
   --step-fg: var(--text-meta);
   --box-bg: var(--n-050); --box-br: color-mix(in srgb, var(--violet-600) 12%, transparent);
 }
