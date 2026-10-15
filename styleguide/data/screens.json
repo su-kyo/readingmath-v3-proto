@@ -3730,19 +3730,15 @@
    ],
    "tokens": [
     {
-     "name": "--ok-solid",
-     "count": 7
-    },
-    {
      "name": "--surface-1",
      "count": 6
     },
     {
-     "name": "--text-on-accent",
-     "count": 5
+     "name": "--ok-solid",
+     "count": 6
     },
     {
-     "name": "--no-solid",
+     "name": "--text-on-accent",
      "count": 5
     },
     {
@@ -3751,6 +3747,10 @@
     },
     {
      "name": "--th-static",
+     "count": 4
+    },
+    {
+     "name": "--no-solid",
      "count": 4
     },
     {

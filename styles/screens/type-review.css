@@ -62,8 +62,8 @@
 
 .answer-row { display: flex; align-items: center; justify-content: center; gap: var(--sp-12); flex-wrap: wrap; }
 .sfield { display: flex; align-items: center; gap: var(--sp-8); } .sinput { height: 54px; min-width: 200px; padding: 0 var(--sp-16); text-align: center; background: var(--input-bg); border: var(--bw-1_5) solid var(--input-br); border-radius: var(--r-12); color: var(--qtext); font-size: var(--fs-19); font-weight: var(--fw-bold); font-family: var(--font-sans); }
-.sinput.is-correct { border-color: var(--ok-solid); color: var(--ok-solid); }
-.sinput.is-wrong { border-color: var(--no-solid); color: var(--no-solid); }
+.sinput.is-correct { border-color: var(--ok-solid); color: var(--ok-ink); }   /* 글자는 600 — 빈칸 · 단답 공통 (2026-10-15) */
+.sinput.is-wrong { border-color: var(--no-solid); color: var(--no-ink); }
 .fraction .sinput { min-width: 96px; width: 96px; height: 50px; padding: 0 var(--sp-8); } .ans-correct { display: none; margin-top: 18px; padding: var(--sp-8) var(--sp-20); border-radius: var(--r-12); background: none; box-shadow: inset 0 0 0 var(--bw-1_5) var(--ok-solid); color: var(--text-muted); font-weight: var(--fw-bold); font-size: var(--fs-16); align-items: center; gap: var(--sp-8); }
 .ans-correct.show { display: inline-flex; } .ans-correct b { color: var(--ok-solid); font-size: var(--fs-19); }
 
