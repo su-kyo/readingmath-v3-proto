@@ -1,7 +1,7 @@
 {
  "_읽는 법": "class 이름 → {화면 경로: markup|js}. markup 은 HTML 에 직접, js 는 스크립트가 붙인다.",
  "_만든 도구": "tools/usage-scan.py",
- "_화면 수": 36,
+ "_화면 수": 38,
  "usage": {
   "aline": {
    "essay/drill-v2.html": "js"
@@ -17,11 +17,13 @@
   },
   "ans-correct": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
    "type/review.html": "js"
   },
   "answer-row": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
    "type/quiz.html": "js",
    "type/review.html": "js"
@@ -32,8 +34,13 @@
    "nav/freemode.html": "markup"
   },
   "article": {
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "concept/organize.html": "markup"
+  },
+  "article__gap": {
+   "concept/learn-math.html": "markup",
+   "concept/learn.html": "markup"
   },
   "asol": {
    "essay/drill-v2.html": "markup",
@@ -74,7 +81,9 @@
    "assignment/result.html": "markup",
    "assignment/solve.html": "markup",
    "concept/basic-ops.html": "markup",
+   "concept/check.html": "markup",
    "concept/drill.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "concept/organize.html": "markup",
    "essay/advanced.html": "markup",
@@ -109,7 +118,9 @@
    "assignment/result.html": "markup",
    "assignment/solve.html": "markup",
    "concept/basic-ops.html": "markup",
+   "concept/check.html": "markup",
    "concept/drill.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "concept/organize.html": "markup",
    "essay/advanced.html": "markup",
@@ -134,7 +145,9 @@
    "assignment/result.html": "markup",
    "assignment/solve.html": "markup",
    "concept/basic-ops.html": "markup",
+   "concept/check.html": "markup",
    "concept/drill.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "concept/organize.html": "markup",
    "essay/advanced.html": "markup",
@@ -159,7 +172,9 @@
    "assignment/result.html": "markup",
    "assignment/solve.html": "markup",
    "concept/basic-ops.html": "markup",
+   "concept/check.html": "markup",
    "concept/drill.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "concept/organize.html": "markup",
    "essay/advanced.html": "markup",
@@ -186,7 +201,9 @@
    "assignment/explain.html": "markup",
    "assignment/solve.html": "markup",
    "concept/basic-ops.html": "markup",
+   "concept/check.html": "markup",
    "concept/drill.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "concept/organize.html": "markup",
    "essay/advanced.html": "markup",
@@ -211,7 +228,9 @@
    "assignment/result.html": "markup",
    "assignment/solve.html": "markup",
    "concept/basic-ops.html": "markup",
+   "concept/check.html": "markup",
    "concept/drill.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "concept/organize.html": "markup",
    "essay/advanced.html": "markup",
@@ -236,7 +255,9 @@
    "assignment/result.html": "markup",
    "assignment/solve.html": "markup",
    "concept/basic-ops.html": "markup",
+   "concept/check.html": "markup",
    "concept/drill.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "concept/organize.html": "markup",
    "essay/advanced.html": "markup",
@@ -303,6 +324,7 @@
    "essay/basics.html": "js"
   },
   "bpop": {
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "essay/advanced.html": "js",
    "essay/basics-v2.html": "js",
@@ -312,6 +334,7 @@
    "essay/report.html": "js"
   },
   "bpop__caret": {
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "essay/advanced.html": "js",
    "essay/basics-v2.html": "js",
@@ -321,6 +344,7 @@
    "essay/report.html": "js"
   },
   "bpop__mark": {
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "essay/advanced.html": "js",
    "essay/basics-v2.html": "js",
@@ -330,6 +354,7 @@
    "essay/report.html": "js"
   },
   "bpop__opt": {
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "essay/advanced.html": "js",
    "essay/basics-v2.html": "js",
@@ -339,6 +364,7 @@
    "essay/report.html": "js"
   },
   "bpop__opts": {
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "essay/advanced.html": "js",
    "essay/basics-v2.html": "js",
@@ -348,6 +374,7 @@
    "essay/report.html": "js"
   },
   "bpop__txt": {
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "essay/advanced.html": "js",
    "essay/basics-v2.html": "js",
@@ -367,7 +394,9 @@
    "assignment/result.html": "markup",
    "assignment/solve.html": "markup",
    "concept/basic-ops.html": "markup",
+   "concept/check.html": "markup",
    "concept/drill.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "concept/organize.html": "markup",
    "essay/advanced.html": "markup",
@@ -556,18 +585,22 @@
    "nav/bridge.html": "markup"
   },
   "chunk": {
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "concept/organize.html": "js",
    "essay/drill-v2.html": "js",
    "essay/drill.html": "js"
   },
   "chunk--blank": {
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup"
   },
   "chunk--blank__text": {
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup"
   },
   "chunk--img": {
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "essay/drill-v2.html": "js"
   },
@@ -587,7 +620,9 @@
    "assignment/result.html": "markup",
    "assignment/solve.html": "markup",
    "concept/basic-ops.html": "markup",
+   "concept/check.html": "markup",
    "concept/drill.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "concept/organize.html": "markup",
    "essay/advanced.html": "markup",
@@ -610,6 +645,7 @@
    "assignment/solve.html": "markup"
   },
   "content__inner": {
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "concept/organize.html": "markup"
   },
@@ -618,7 +654,9 @@
   },
   "crumb": {
    "concept/basic-ops.html": "markup",
+   "concept/check.html": "markup",
    "concept/drill.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "concept/organize.html": "markup",
    "essay/advanced.html": "markup",
@@ -640,7 +678,9 @@
   },
   "crumb--clip": {
    "concept/basic-ops.html": "markup",
+   "concept/check.html": "markup",
    "concept/drill.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "concept/organize.html": "markup",
    "essay/advanced.html": "markup",
@@ -662,7 +702,9 @@
   },
   "crumb--hide": {
    "concept/basic-ops.html": "markup",
+   "concept/check.html": "markup",
    "concept/drill.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "concept/organize.html": "markup",
    "essay/advanced.html": "markup",
@@ -684,7 +726,9 @@
   },
   "crumb--strong": {
    "concept/basic-ops.html": "markup",
+   "concept/check.html": "markup",
    "concept/drill.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "concept/organize.html": "markup",
    "essay/advanced.html": "markup",
@@ -858,23 +902,27 @@
   },
   "ex": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
    "type/quiz.html": "js",
    "type/review.html": "js"
   },
   "ex__list": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
    "type/quiz.html": "js",
    "type/review.html": "js"
   },
   "ex__shape": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "type/quiz.html": "js",
    "type/review.html": "js"
   },
   "ex__skel": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
    "type/quiz.html": "js",
    "type/review.html": "js"
@@ -965,6 +1013,7 @@
   },
   "frac": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
    "type/review.html": "js"
   },
@@ -973,22 +1022,26 @@
   },
   "frac__d": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
    "type/review.html": "js"
   },
   "frac__n": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
    "type/review.html": "js"
   },
   "fraction": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
    "type/quiz.html": "js",
    "type/review.html": "js"
   },
   "fraction__bar": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
    "type/quiz.html": "js",
    "type/review.html": "js"
@@ -1124,7 +1177,9 @@
   },
   "guide": {
    "concept/basic-ops.html": "markup",
+   "concept/check.html": "markup",
    "concept/drill.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "essay/advanced.html": "markup",
    "essay/basics-v2.html": "markup",
@@ -1137,7 +1192,9 @@
   },
   "guide__lamp": {
    "concept/basic-ops.html": "markup",
+   "concept/check.html": "markup",
    "concept/drill.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "essay/advanced.html": "markup",
    "essay/basics-v2.html": "markup",
@@ -1150,7 +1207,9 @@
   },
   "guide__text": {
    "concept/basic-ops.html": "markup",
+   "concept/check.html": "markup",
    "concept/drill.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "essay/advanced.html": "markup",
    "essay/basics-v2.html": "markup",
@@ -1428,14 +1487,20 @@
   "h-ties": {
    "util/history.html": "js"
   },
+  "has-img": {
+   "concept/learn-math.html": "js",
+   "concept/learn.html": "js"
+  },
   "has-more": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
    "type/quiz.html": "js",
    "type/review.html": "js"
   },
   "has-more-top": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
    "type/quiz.html": "js",
    "type/review.html": "js"
@@ -1574,15 +1639,19 @@
    "exam/solve.html": "markup"
   },
   "img-tag": {
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js"
   },
   "img-tag__ico": {
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js"
   },
   "img-tag__num": {
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js"
   },
   "img-tag__pill": {
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js"
   },
   "inner": {
@@ -1591,6 +1660,7 @@
   "is-active": {
    "assignment/home.html": "markup",
    "assignment/solve.html": "markup",
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "essay/basics-v2.html": "markup",
    "essay/basics.html": "markup",
@@ -1604,6 +1674,7 @@
   },
   "is-active-input": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
    "type/quiz.html": "js"
   },
@@ -1640,7 +1711,9 @@
   },
   "is-correct": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "essay/advanced.html": "js",
    "essay/basics-v2.html": "js",
@@ -1659,6 +1732,8 @@
   },
   "is-current": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "essay/drill-v2.html": "js",
    "shared/step-result.html": "markup",
@@ -1667,6 +1742,7 @@
    "type/review.html": "js"
   },
   "is-dead": {
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "essay/advanced.html": "js",
    "essay/basics-v2.html": "js",
@@ -1680,6 +1756,7 @@
   },
   "is-done": {
    "assignment/solve.html": "js",
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "essay/basics-v2.html": "markup",
    "essay/basics.html": "markup",
@@ -1703,6 +1780,7 @@
   },
   "is-filled": {
    "concept/drill.html": "js",
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "essay/advanced.html": "js",
    "essay/basics-v2.html": "js",
@@ -1716,6 +1794,7 @@
   },
   "is-graded": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js"
   },
   "is-hidden": {
@@ -1734,7 +1813,9 @@
    "assignment/explain.html": "js",
    "assignment/solve.html": "js",
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "concept/organize.html": "js",
    "essay/advanced.html": "js",
@@ -1749,6 +1830,7 @@
    "type/review.html": "js"
   },
   "is-just-correct": {
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js"
   },
   "is-linked": {
@@ -1756,6 +1838,7 @@
   },
   "is-live": {
    "assignment/solve.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "essay/drill-v2.html": "markup",
    "essay/report-review.html": "markup",
@@ -1775,7 +1858,9 @@
   },
   "is-no": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "essay/advanced.html": "js",
    "essay/basics-v2.html": "js",
@@ -1797,7 +1882,9 @@
   },
   "is-ok": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "essay/advanced.html": "js",
    "essay/basics-v2.html": "js",
@@ -1815,7 +1902,9 @@
    "assignment/result.html": "js",
    "assignment/solve.html": "js",
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "concept/organize.html": "js",
    "essay/advanced.html": "js",
@@ -1850,7 +1939,9 @@
    "assignment/home.html": "js",
    "assignment/solve.html": "js",
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "concept/organize.html": "js",
    "essay/advanced.html": "js",
@@ -1895,7 +1986,8 @@
    "type/review.html": "js"
   },
   "is-partial": {
-   "concept/basic-ops.html": "js"
+   "concept/basic-ops.html": "js",
+   "concept/check.html": "js"
   },
   "is-paused": {
    "essay/drill-review.html": "markup",
@@ -1914,6 +2006,7 @@
    "nav/home.html": "js"
   },
   "is-read": {
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "essay/drill-v2.html": "js"
   },
@@ -1926,6 +2019,7 @@
   },
   "is-reveal": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
    "type/review.html": "js"
   },
@@ -1939,6 +2033,7 @@
   },
   "is-selected": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
    "exam/solve.html": "js",
    "type/quiz.html": "js"
@@ -1959,12 +2054,15 @@
    "essay/drill.html": "js"
   },
   "is-unread": {
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "essay/drill-v2.html": "js"
   },
   "is-up": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "essay/advanced.html": "js",
    "essay/basics-v2.html": "js",
@@ -1979,7 +2077,9 @@
   },
   "is-wrong": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "essay/advanced.html": "js",
    "essay/basics-v2.html": "js",
@@ -2000,18 +2100,21 @@
   "keypad": {
    "assignment/solve.html": "js",
    "concept/basic-ops.html": "markup",
+   "concept/check.html": "markup",
    "concept/drill.html": "markup",
    "exam/solve.html": "js",
    "type/quiz.html": "markup"
   },
   "keypad--float": {
    "concept/basic-ops.html": "markup",
+   "concept/check.html": "markup",
    "concept/drill.html": "markup",
    "type/quiz.html": "markup"
   },
   "keypad__display": {
    "assignment/solve.html": "js",
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
    "essay/advanced.html": "js",
    "essay/basics-v2.html": "js",
@@ -2025,6 +2128,7 @@
   "keypad__grid": {
    "assignment/solve.html": "js",
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
    "essay/advanced.html": "js",
    "essay/basics-v2.html": "js",
@@ -2038,6 +2142,7 @@
   "keypad__key": {
    "assignment/solve.html": "js",
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
    "essay/advanced.html": "js",
    "essay/basics-v2.html": "js",
@@ -2070,7 +2175,9 @@
   },
   "learn-body": {
    "concept/basic-ops.html": "markup",
+   "concept/check.html": "markup",
    "concept/drill.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "concept/organize.html": "markup",
    "essay/advanced.html": "markup",
@@ -2099,7 +2206,9 @@
   },
   "lheader": {
    "concept/basic-ops.html": "markup",
+   "concept/check.html": "markup",
    "concept/drill.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "concept/organize.html": "markup",
    "essay/advanced.html": "markup",
@@ -2121,7 +2230,9 @@
   },
   "lheader__actions": {
    "concept/basic-ops.html": "markup",
+   "concept/check.html": "markup",
    "concept/drill.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "concept/organize.html": "markup",
    "essay/advanced.html": "markup",
@@ -2198,9 +2309,11 @@
    "type/review.html": "js"
   },
   "lightbox": {
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup"
   },
   "lightbox__img": {
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup"
   },
   "line": {
@@ -2286,6 +2399,7 @@
   },
   "monitor": {
    "assignment/solve.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "essay/drill-v2.html": "markup",
    "essay/report-review.html": "markup",
@@ -2302,10 +2416,12 @@
    "assignment/solve.html": "markup"
   },
   "monitor__below": {
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup"
   },
   "monitor__chin": {
    "assignment/solve.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "essay/drill-v2.html": "markup",
    "essay/report-review.html": "markup",
@@ -2317,6 +2433,7 @@
   },
   "monitor__dim": {
    "assignment/solve.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "essay/drill-v2.html": "markup",
    "essay/report-review.html": "markup",
@@ -2328,6 +2445,7 @@
   },
   "monitor__frame": {
    "assignment/solve.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "essay/drill-v2.html": "markup",
    "essay/report-review.html": "markup",
@@ -2339,6 +2457,7 @@
   },
   "monitor__hd": {
    "assignment/solve.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "essay/drill-v2.html": "markup",
    "essay/report-review.html": "markup",
@@ -2350,6 +2469,7 @@
   },
   "monitor__lamps": {
    "assignment/solve.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "essay/drill-v2.html": "markup",
    "essay/report-review.html": "markup",
@@ -2361,6 +2481,7 @@
   },
   "monitor__mount": {
    "assignment/solve.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "essay/drill-v2.html": "markup",
    "essay/report-review.html": "markup",
@@ -2372,6 +2493,7 @@
   },
   "monitor__rig": {
    "assignment/solve.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "essay/drill-v2.html": "markup",
    "essay/report-review.html": "markup",
@@ -2383,6 +2505,7 @@
   },
   "monitor__screen": {
    "assignment/solve.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "essay/drill-v2.html": "markup",
    "essay/report-review.html": "markup",
@@ -2399,6 +2522,7 @@
   },
   "monitor__slit": {
    "assignment/solve.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "essay/drill-v2.html": "markup",
    "essay/report-review.html": "markup",
@@ -2418,6 +2542,7 @@
   },
   "monitor__ttl": {
    "assignment/solve.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "essay/drill-v2.html": "markup",
    "essay/report-review.html": "markup",
@@ -2429,6 +2554,7 @@
   },
   "monitor__x": {
    "assignment/solve.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "essay/report-review.html": "markup",
    "essay/report.html": "markup",
@@ -2438,10 +2564,13 @@
    "type/training-result.html": "markup"
   },
   "mono": {
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup"
   },
   "mord": {
-   "concept/drill.html": "js"
+   "concept/drill.html": "js",
+   "concept/learn-math.html": "js",
+   "concept/learn.html": "js"
   },
   "more": {
    "assignment/home.html": "js"
@@ -2516,7 +2645,9 @@
    "assignment/result.html": "markup",
    "assignment/solve.html": "markup",
    "concept/basic-ops.html": "markup",
+   "concept/check.html": "markup",
    "concept/drill.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "concept/organize.html": "markup",
    "essay/advanced.html": "markup",
@@ -2616,12 +2747,14 @@
   },
   "ops": {
    "concept/basic-ops.html": "markup",
+   "concept/check.html": "markup",
    "concept/drill.html": "markup",
    "type/quiz.html": "markup",
    "type/review.html": "markup"
   },
   "ops-wrap": {
    "concept/basic-ops.html": "markup",
+   "concept/check.html": "markup",
    "concept/drill.html": "markup",
    "type/quiz.html": "markup",
    "type/review.html": "markup"
@@ -2665,6 +2798,7 @@
   },
   "pcap__count": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "type/quiz.html": "js"
   },
   "pcard": {
@@ -2681,6 +2815,7 @@
   },
   "pcirc": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "type/quiz.html": "js",
    "type/review.html": "js"
   },
@@ -2819,17 +2954,28 @@
   },
   "progress-cap": {
    "concept/basic-ops.html": "markup",
+   "concept/check.html": "markup",
    "type/quiz.html": "markup",
    "type/review.html": "markup"
   },
   "q": {
    "concept/basic-ops.html": "markup",
+   "concept/check.html": "markup",
    "concept/drill.html": "markup",
    "type/quiz.html": "markup",
    "type/review.html": "markup"
   },
+  "q__img": {
+   "concept/basic-ops.html": "js",
+   "concept/check.html": "js"
+  },
+  "q__lines": {
+   "concept/basic-ops.html": "js",
+   "concept/check.html": "js"
+  },
   "q__text": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
    "type/quiz.html": "js",
    "type/review.html": "js"
@@ -2892,36 +3038,42 @@
   },
   "qopt": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
    "type/quiz.html": "js",
    "type/review.html": "js"
   },
   "qopt--img": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
    "type/quiz.html": "js",
    "type/review.html": "js"
   },
   "qopt--num": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
    "type/quiz.html": "js",
    "type/review.html": "js"
   },
   "qopt--text": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
    "type/quiz.html": "js",
    "type/review.html": "js"
   },
   "qopt__img": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
    "type/quiz.html": "js",
    "type/review.html": "js"
   },
   "qopt__num": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
    "type/quiz.html": "js",
    "type/review.html": "js"
@@ -3558,7 +3710,9 @@
   "rmdbg": {
    "assignment/solve.html": "js",
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "essay/basics-v2.html": "js",
    "essay/drill-review.html": "js",
@@ -3573,7 +3727,9 @@
   "rmdbg__body": {
    "assignment/solve.html": "js",
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "essay/basics-v2.html": "js",
    "essay/drill-review.html": "js",
@@ -3588,7 +3744,9 @@
   "rmdbg__btn": {
    "assignment/solve.html": "js",
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "essay/basics-v2.html": "js",
    "essay/drill-review.html": "js",
@@ -3603,7 +3761,9 @@
   "rmdbg__dot": {
    "assignment/solve.html": "js",
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "essay/basics-v2.html": "js",
    "essay/drill-review.html": "js",
@@ -3618,7 +3778,9 @@
   "rmdbg__foot": {
    "assignment/solve.html": "js",
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "essay/basics-v2.html": "js",
    "essay/drill-review.html": "js",
@@ -3633,7 +3795,9 @@
   "rmdbg__list": {
    "assignment/solve.html": "js",
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "essay/basics-v2.html": "js",
    "essay/drill-review.html": "js",
@@ -3648,7 +3812,9 @@
   "rmdbg__row": {
    "assignment/solve.html": "js",
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "essay/basics-v2.html": "js",
    "essay/drill-review.html": "js",
@@ -3663,7 +3829,9 @@
   "rmdbg__sec": {
    "assignment/solve.html": "js",
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "essay/basics-v2.html": "js",
    "essay/drill-review.html": "js",
@@ -3678,7 +3846,9 @@
   "rmdbg__tab": {
    "assignment/solve.html": "js",
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "essay/basics-v2.html": "js",
    "essay/drill-review.html": "js",
@@ -3693,7 +3863,9 @@
   "rmdbg__title": {
    "assignment/solve.html": "js",
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "essay/basics-v2.html": "js",
    "essay/drill-review.html": "js",
@@ -3849,9 +4021,11 @@
    "exam/solve.html": "markup"
   },
   "sblank": {
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup"
   },
   "sblank__thumb": {
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js"
   },
   "sblock": {
@@ -3895,7 +4069,9 @@
    "assignment/explain.html": "js",
    "assignment/solve.html": "js",
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "concept/organize.html": "js",
    "essay/advanced.html": "js",
@@ -3913,7 +4089,9 @@
    "assignment/explain.html": "js",
    "assignment/solve.html": "js",
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "concept/organize.html": "js",
    "essay/advanced.html": "js",
@@ -3931,7 +4109,9 @@
    "assignment/explain.html": "js",
    "assignment/solve.html": "js",
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "concept/organize.html": "js",
    "essay/advanced.html": "js",
@@ -3949,7 +4129,9 @@
    "assignment/explain.html": "js",
    "assignment/solve.html": "js",
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "concept/organize.html": "js",
    "essay/advanced.html": "js",
@@ -3967,7 +4149,9 @@
    "assignment/explain.html": "js",
    "assignment/solve.html": "js",
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "concept/organize.html": "js",
    "essay/advanced.html": "js",
@@ -3985,7 +4169,9 @@
    "assignment/explain.html": "js",
    "assignment/solve.html": "js",
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "concept/organize.html": "js",
    "essay/advanced.html": "js",
@@ -4003,7 +4189,9 @@
    "assignment/explain.html": "js",
    "assignment/solve.html": "js",
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "concept/organize.html": "js",
    "essay/advanced.html": "js",
@@ -4021,7 +4209,9 @@
    "assignment/explain.html": "js",
    "assignment/solve.html": "js",
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "concept/organize.html": "js",
    "essay/advanced.html": "js",
@@ -4039,7 +4229,9 @@
    "assignment/explain.html": "js",
    "assignment/solve.html": "js",
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "concept/organize.html": "js",
    "essay/advanced.html": "js",
@@ -4057,7 +4249,9 @@
    "assignment/explain.html": "js",
    "assignment/solve.html": "js",
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "concept/organize.html": "js",
    "essay/advanced.html": "js",
@@ -4075,7 +4269,9 @@
    "assignment/explain.html": "js",
    "assignment/solve.html": "js",
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "concept/organize.html": "js",
    "essay/advanced.html": "js",
@@ -4093,7 +4289,9 @@
    "assignment/explain.html": "js",
    "assignment/solve.html": "js",
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js",
    "concept/organize.html": "js",
    "essay/advanced.html": "js",
@@ -4113,7 +4311,9 @@
    "assignment/result.html": "markup",
    "assignment/solve.html": "markup",
    "concept/basic-ops.html": "markup",
+   "concept/check.html": "markup",
    "concept/drill.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "concept/organize.html": "markup",
    "essay/advanced.html": "markup",
@@ -4138,7 +4338,9 @@
    "assignment/result.html": "markup",
    "assignment/solve.html": "markup",
    "concept/basic-ops.html": "markup",
+   "concept/check.html": "markup",
    "concept/drill.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "concept/organize.html": "markup",
    "essay/advanced.html": "markup",
@@ -4160,7 +4362,9 @@
   },
   "screen__container": {
    "concept/basic-ops.html": "markup",
+   "concept/check.html": "markup",
    "concept/drill.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "concept/organize.html": "markup",
    "essay/advanced.html": "markup",
@@ -4247,7 +4451,9 @@
   "sep": {
    "assignment/home.html": "js",
    "concept/basic-ops.html": "markup",
+   "concept/check.html": "markup",
    "concept/drill.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "concept/organize.html": "markup",
    "essay/advanced.html": "markup",
@@ -4269,21 +4475,28 @@
   },
   "sfield": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
    "type/quiz.html": "js",
    "type/review.html": "js"
   },
   "sfield__ans": {
-   "concept/basic-ops.html": "js"
+   "concept/basic-ops.html": "js",
+   "concept/check.html": "js"
   },
   "sfield__row": {
-   "concept/basic-ops.html": "js"
+   "concept/basic-ops.html": "js",
+   "concept/check.html": "js"
   },
   "sfield__tag": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
    "type/quiz.html": "js",
    "type/review.html": "js"
+  },
+  "sfig": {
+   "concept/learn-math.html": "markup"
   },
   "sfoot": {
    "exam/solve.html": "markup"
@@ -4357,6 +4570,7 @@
   },
   "show": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
    "exam/solve.html": "js",
    "type/review.html": "js"
@@ -4383,13 +4597,18 @@
   },
   "sinput": {
    "concept/basic-ops.html": "js",
+   "concept/check.html": "js",
    "concept/drill.html": "js",
    "type/quiz.html": "js",
    "type/review.html": "js"
   },
   "sline": {
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "essay/drill-v2.html": "js"
+  },
+  "sline--title": {
+   "concept/learn-math.html": "markup"
   },
   "slink": {
    "exam/solve.html": "markup"
@@ -4468,9 +4687,11 @@
    "index.html": "markup"
   },
   "sopt": {
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js"
   },
   "sopt__img": {
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js"
   },
   "spacebg": {
@@ -4490,6 +4711,11 @@
    "exam/home.html": "markup"
   },
   "sseg": {
+   "concept/learn-math.html": "markup",
+   "concept/learn.html": "markup"
+  },
+  "sseg--tail": {
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup"
   },
   "stage": {
@@ -4698,18 +4924,23 @@
   "summary": {
    "assignment/home.html": "markup",
    "assignment/result.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup"
   },
   "summary__box": {
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup"
   },
   "summary__foot": {
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup"
   },
   "summary__next": {
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup"
   },
   "summary__options": {
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup"
   },
   "svg-defs": {
@@ -4785,7 +5016,9 @@
   },
   "theme-toggle": {
    "concept/basic-ops.html": "markup",
+   "concept/check.html": "markup",
    "concept/drill.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "concept/organize.html": "markup",
    "essay/advanced.html": "markup",
@@ -4801,7 +5034,9 @@
   },
   "theme-toggle__knob": {
    "concept/basic-ops.html": "markup",
+   "concept/check.html": "markup",
    "concept/drill.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "concept/organize.html": "markup",
    "essay/advanced.html": "markup",
@@ -4877,7 +5112,9 @@
    "assignment/result.html": "markup",
    "assignment/solve.html": "markup",
    "concept/basic-ops.html": "markup",
+   "concept/check.html": "markup",
    "concept/drill.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "concept/organize.html": "markup",
    "essay/advanced.html": "markup",
@@ -4902,7 +5139,9 @@
    "assignment/result.html": "markup",
    "assignment/solve.html": "markup",
    "concept/basic-ops.html": "markup",
+   "concept/check.html": "markup",
    "concept/drill.html": "markup",
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup",
    "concept/organize.html": "markup",
    "essay/advanced.html": "markup",
@@ -4980,24 +5219,31 @@
    "type/training-result.html": "markup"
   },
   "tsize": {
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup"
   },
   "tsize__btn": {
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup"
   },
   "tsize__dot": {
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js"
   },
   "tsize__dots": {
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js"
   },
   "tsize__pop": {
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup"
   },
   "tsize__step": {
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js"
   },
   "tsize__step--lg": {
+   "concept/learn-math.html": "js",
    "concept/learn.html": "js"
   },
   "tst": {
@@ -5400,30 +5646,43 @@
    "concept/learn.html": "markup"
   },
   "viewer": {
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup"
   },
   "viewer__frame": {
+   "concept/learn-math.html": "markup",
+   "concept/learn.html": "markup"
+  },
+  "viewer__img": {
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup"
   },
   "viewer__label": {
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup"
   },
   "viewer__next": {
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup"
   },
   "viewer__pager": {
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup"
   },
   "viewer__pager__num": {
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup"
   },
   "viewer__ph": {
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup"
   },
   "viewer__prev": {
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup"
   },
   "viewer__zoom": {
+   "concept/learn-math.html": "markup",
    "concept/learn.html": "markup"
   },
   "viewport": {

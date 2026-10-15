@@ -1,7 +1,7 @@
 {
  "_읽는 법": "화면마다 무엇으로 지어졌나. tools/screens-build.py 가 만든다(손으로 고치지 않는다). parts = 스토리북 부품 카드(doc 으로 간다) · tokens = 화면 CSS 가 많이 부르는 색·역할 토큰(눈금 제외) · rules = 이 화면에 특히 걸리는 규칙(전 화면 공통 규칙은 뺐다 — styleguide/data/rules.json).",
  "_만든 도구": "tools/screens-build.py",
- "count": 36,
+ "count": 38,
  "screens": [
   {
    "path": "assignment/explain.html",
@@ -595,7 +595,168 @@
     },
     {
      "name": "--qtext",
-     "count": 8
+     "count": 9
+    },
+    {
+     "name": "--no-solid",
+     "count": 7
+    },
+    {
+     "name": "--opt-bg",
+     "count": 6
+    },
+    {
+     "name": "--surface-1",
+     "count": 3
+    },
+    {
+     "name": "--text",
+     "count": 3
+    },
+    {
+     "name": "--border-strong",
+     "count": 3
+    },
+    {
+     "name": "--th-accent",
+     "count": 3
+    },
+    {
+     "name": "--fade",
+     "count": 2
+    },
+    {
+     "name": "--surface-2",
+     "count": 2
+    },
+    {
+     "name": "--white-a30",
+     "count": 2
+    }
+   ],
+   "rules": [
+    "RM-SURF-05",
+    "RM-FILL-06",
+    "RM-PART-05",
+    "RM-SURF-02",
+    "RM-SURF-04",
+    "RM-FILL-05",
+    "RM-FILL-02",
+    "RM-PART-01",
+    "RM-PART-03",
+    "RM-ASSET-03"
+   ]
+  },
+  {
+   "path": "concept/check.html",
+   "title": "개념 확인하기 · 개념 훈련",
+   "family": "concept",
+   "familyKo": "개념",
+   "section": "concept",
+   "theme": "light+dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/components.css",
+    "styles/learn-shell.css",
+    "styles/keypad.css",
+    "styles/screens/concept-basic-ops.css",
+    "styles/scratchpad.css"
+   ],
+   "js": [
+    "scripts/keypad.js",
+    "scripts/scratchpad.js",
+    "scripts/debug-panel.js",
+    "scripts/pop-place.js",
+    "scripts/keypad.js",
+    "scripts/keypad-input.js",
+    "scripts/learn-guide.js",
+    "scripts/concept-check-data.js",
+    "scripts/learn-basic-ops.js",
+    "scripts/learn-exit.js"
+   ],
+   "parts": [
+    {
+     "name": "콘솔 도구 버튼",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "타일형 선택지",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "유형 해설 — 보기 · 타일형 선지 · 해설 띠",
+     "group": "부품 › 해설 화면의 면",
+     "doc": "styleguide/components.html#surf"
+    },
+    {
+     "name": "수식 표기",
+     "group": "부품 › 그 밖에",
+     "doc": "styleguide/components.html#misc"
+    },
+    {
+     "name": "더미 이미지 자리",
+     "group": "부품 › 그 밖에",
+     "doc": "styleguide/components.html#misc"
+    },
+    {
+     "name": "배경 사진과 다크 막",
+     "group": "기초 › 색 3단 · 계열 슬롯",
+     "doc": "styleguide/foundations.html#section"
+    },
+    {
+     "name": "학습 헤더",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 안내",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 — 계열 넷",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘텐츠 패널 — 변형 둘",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "숫자 키패드",
+     "group": "셸 › 키패드",
+     "doc": "styleguide/shells.html#keypad"
+    },
+    {
+     "name": "같은 키패드, 계열만 유형",
+     "group": "셸 › 키패드",
+     "doc": "styleguide/shells.html#keypad"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/concept-basic-ops.css"
+   ],
+   "tokens": [
+    {
+     "name": "--text-on-accent",
+     "count": 10
+    },
+    {
+     "name": "--ok-solid",
+     "count": 10
+    },
+    {
+     "name": "--qtext",
+     "count": 9
     },
     {
      "name": "--no-solid",
@@ -815,6 +976,160 @@
    ]
   },
   {
+   "path": "concept/learn-math.html",
+   "title": "개념 학습(수학) · 개념 훈련",
+   "family": "concept",
+   "familyKo": "개념",
+   "section": "concept",
+   "theme": "light+dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/learn-shell.css",
+    "styles/base.css",
+    "styles/components.css",
+    "styles/monitor.css",
+    "styles/screens/concept-learn.css",
+    "styles/scratchpad.css"
+   ],
+   "js": [
+    "scripts/scratchpad.js",
+    "scripts/debug-panel.js",
+    "scripts/pop-place.js",
+    "scripts/blank-pop.js",
+    "scripts/learn-guide.js",
+    "scripts/vendor/katex/katex.min.js",
+    "scripts/learn-concept.js",
+    "scripts/concept-learn-textsize.js",
+    "scripts/learn-exit.js"
+   ],
+   "parts": [
+    {
+     "name": "콘솔 도구 버튼",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "빈칸 — 칸형",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "빈칸 선지 창",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "끊어읽기 구간 · 그림 번호 알약",
+     "group": "부품 › 끊어읽기",
+     "doc": "styleguide/components.html#read"
+    },
+    {
+     "name": "더미 이미지 자리",
+     "group": "부품 › 그 밖에",
+     "doc": "styleguide/components.html#misc"
+    },
+    {
+     "name": "배경 사진과 다크 막",
+     "group": "기초 › 색 3단 · 계열 슬롯",
+     "doc": "styleguide/foundations.html#section"
+    },
+    {
+     "name": "학습 헤더",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 안내",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 — 계열 넷",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘텐츠 패널 — 변형 둘",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "보조 모니터",
+     "group": "셸 › 보조 모니터",
+     "doc": "styleguide/shells.html#monitor"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/concept-learn.css"
+   ],
+   "tokens": [
+    {
+     "name": "--text-on-accent",
+     "count": 7
+    },
+    {
+     "name": "--text-muted",
+     "count": 7
+    },
+    {
+     "name": "--th-accent-hi",
+     "count": 7
+    },
+    {
+     "name": "--text",
+     "count": 5
+    },
+    {
+     "name": "--th-tint",
+     "count": 5
+    },
+    {
+     "name": "--surface-1",
+     "count": 5
+    },
+    {
+     "name": "--surface-2",
+     "count": 4
+    },
+    {
+     "name": "--th-ink-accent",
+     "count": 3
+    },
+    {
+     "name": "--paper-bg",
+     "count": 3
+    },
+    {
+     "name": "--th-solid",
+     "count": 2
+    },
+    {
+     "name": "--hw-screen",
+     "count": 2
+    },
+    {
+     "name": "--sm-opt-sh",
+     "count": 2
+    }
+   ],
+   "rules": [
+    "RM-SURF-05",
+    "RM-FILL-06",
+    "RM-PART-05",
+    "RM-FILL-02",
+    "RM-SURF-01",
+    "RM-PART-02",
+    "RM-PART-01",
+    "RM-ASSET-03",
+    "RM-PART-04"
+   ]
+  },
+  {
    "path": "concept/learn.html",
    "title": "개념 학습 · 개념 훈련",
    "family": "concept",
@@ -836,6 +1151,7 @@
     "scripts/pop-place.js",
     "scripts/blank-pop.js",
     "scripts/learn-guide.js",
+    "scripts/vendor/katex/katex.min.js",
     "scripts/learn-concept.js",
     "scripts/concept-learn-video.js",
     "scripts/concept-learn-textsize.js",
@@ -940,6 +1256,10 @@
      "count": 3
     },
     {
+     "name": "--paper-bg",
+     "count": 3
+    },
+    {
      "name": "--th-solid",
      "count": 2
     },
@@ -949,10 +1269,6 @@
     },
     {
      "name": "--sm-opt-sh",
-     "count": 2
-    },
-    {
-     "name": "--shade",
      "count": 2
     }
    ],
@@ -964,7 +1280,8 @@
     "RM-SURF-01",
     "RM-PART-02",
     "RM-PART-01",
-    "RM-ASSET-03"
+    "RM-ASSET-03",
+    "RM-PART-04"
    ]
   },
   {

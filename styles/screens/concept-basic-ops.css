@@ -59,6 +59,9 @@
 .q__text { align-self: stretch; font-size: clamp(16px, 1.5vw, 20px); font-weight: var(--fw-bold); color: var(--qtext); line-height: 1.6; margin-bottom: var(--sp-20); }
 /* 보기 박스 = 면 없이 테두리만 (2026-10-14) — 선지 테두리와 같은 굵기 · 공용 --border-strong */
 .ex__list { display: flex; flex-direction: column; gap: var(--sp-8); font-size: clamp(15px,1.4vw,18px); color: var(--qtext); line-height: 1.5; }
+/* 문제 아래 ㄱ·ㄴ·ㄷ 줄 · 문제 그림 (과학 개념 확인하기 concept/check.html) — 그림은 흰 바탕이라 다크에서도 종이 면 위 */
+.q__lines { align-self: stretch; display: flex; flex-direction: column; gap: var(--sp-6); margin: calc(-1 * var(--sp-8)) 0 var(--sp-20); font-size: clamp(15px,1.4vw,18px); color: var(--qtext); line-height: 1.5; }
+.q__img { display: block; width: min(100%, 360px); height: auto; margin: 0 auto var(--sp-20); padding: var(--sp-8); border-radius: var(--r-12); background: var(--paper-bg); box-sizing: border-box; }
 .ex__skel { min-height: 140px; display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-weight: var(--fw-bold); }
 
 /* 객관식 */

@@ -15,8 +15,14 @@
 
   // 기초 연산 결과(?step=ops) — 행 막대 대신 문항 번호 타일 (2026-10-15 판단 보드 7 · 유형 스텝 결과와 같은 문법)
   // ※ concept-training-result.js 의 STAGES[기초 연산] 과 같은 숫자(11/14)를 유지할 것
-  var OPS = new URLSearchParams(location.search).get('step') === 'ops';
-  var OPS_RESULTS = [true, true, false, true, true, true, false, true, true, true, true, false, true, true];
+  // 과학 개념 확인하기 결과(?step=check) — 기초 연산과 같은 타일 문법, 10문항(training 978 STEP 2 · concept/check.html)
+  // 과학의 STEP 2 는 「개념 확인하기」다(수학은 「기초 연산」). 개념 학습 결과에서도 과목을 보고 STEP 2 카드를 바꾼다
+  var STEP = new URLSearchParams(location.search).get('step');
+  var CHECK = STEP === 'check';
+  var OPS = STEP === 'ops' || CHECK;
+  var SCI = CHECK || (STEP !== 'ops' && (function () { try { return localStorage.getItem('rm-subject') === 'science'; } catch (e) { return false; } })());
+  var OPS_RESULTS = CHECK ? [true, true, true, false, true, true, true, false, true, true]
+    : [true, true, false, true, true, true, false, true, true, true, true, false, true, true];
 
   var total = 0, correct = 0;
   if (OPS) { total = OPS_RESULTS.length; correct = OPS_RESULTS.filter(Boolean).length; }
@@ -33,13 +39,24 @@
   // 사이드 패널의 스텝 등급은 행용 육각 뱃지(grade-step-*)를 쓴다
   document.getElementById('sideBadge').src = 'assets/img/grade/grade-step-' + gradeOf(rate) + '.webp';
 
+  var opsCard = document.getElementById('opsCard');
+  if (SCI) {   // 과학 STEP 2 = 개념 확인하기
+    opsCard.querySelector('.step-card__name').textContent = '개념 확인하기';
+    opsCard.dataset.go = 'concept/check.html';
+  }
+  if (CHECK) {   // 머리줄 = 개념 확인하기 화면과 같은 소단원 (실서비스 표기)
+    var crumbs = document.querySelectorAll('.breadcrumb .crumb');
+    ['중등 2-1', '1단원-물질의 특성', '(2) 밀도와 용해도'].forEach(function (t, i) { if (crumbs[i]) crumbs[i].textContent = t; });
+    document.querySelector('.runit').textContent = '(2) 밀도와 용해도';
+  }
+
   if (OPS) {
-    document.getElementById('stepTitle').textContent = '기초 연산 완료!';
-    document.getElementById('stepCrumb').textContent = '기초 연산';
+    var STEP2 = CHECK ? '개념 확인하기' : '기초 연산';
+    document.getElementById('stepTitle').textContent = STEP2 + ' 완료!';
+    document.getElementById('stepCrumb').textContent = STEP2;
     document.getElementById('rows').hidden = true;
     // 사이드: 개념 학습은 완료(B 예시), 기초 연산이 지금 단계
     var learnCard = document.querySelector('.step-card.is-current');
-    var opsCard = document.getElementById('opsCard');
     learnCard.classList.remove('is-current');
     document.getElementById('sideBadge').src = 'assets/img/grade/grade-step-b.webp';
     opsCard.classList.remove('is-open'); opsCard.classList.add('is-current', 'is-done');

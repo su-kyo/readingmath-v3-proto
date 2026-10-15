@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ko" data-section="concept" data-theme="light">
+<head>
+  <base href="../">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>개념 학습(수학) · 개념 훈련 — 리딩수학과학</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
+  <link rel="stylesheet" href="scripts/vendor/katex/katex.min.css?v=20261015-44" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261015-44" />
+  <link rel="stylesheet" href="styles/learn-shell.css?v=20261015-44" />
+  <link rel="stylesheet" href="styles/base.css?v=20261015-44" />
+  <link rel="stylesheet" href="styles/components.css?v=20261015-44" />
+  <link rel="stylesheet" href="styles/monitor.css?v=20261015-44" />
+  <link rel="stylesheet" href="styles/screens/concept-learn.css?v=20261015-44" />
+  <link rel="stylesheet" href="styles/scratchpad.css?v=20261015-44" />
+</head>
+<body class="learn-body">
+  <div class="screen">
+    <div class="screen__bg"></div>
+
+    <div class="screen__container">
+      <header class="lheader">
+        <nav class="breadcrumb">
+          <span class="crumb crumb--strong">중등 3-2</span>
+          <svg class="sep" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <span class="crumb crumb--strong crumb--clip crumb--hide">1단원-삼각비</span>
+          <svg class="sep crumb--hide" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <span class="crumb crumb--hide">(1) 삼각비</span>
+          <svg class="sep crumb--hide" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <span class="crumb">개념 훈련</span>
+          <svg class="sep" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <span class="crumb crumb--strong">개념 학습</span>
+        </nav>
+        <div class="lheader__actions">
+          <button class="theme-toggle" id="themeToggle" title="라이트/다크 전환">
+            <span class="theme-toggle__knob"></span>
+          </button>
+          <button class="nav-ico" title="알림"><img src="assets/icons/ico-siren.svg" alt="알림" /></button>
+          <button class="nav-ico" title="나가기"><img src="assets/icons/ico-exit.svg" alt="나가기" /></button>
+        </div>
+      </header>
+
+      <main class="content">
+        <div class="content__inner">
+          <article class="article" id="article">
+            <span class="chunk">삼각비란 무엇일까요?</span>
+            <br>
+            <span class="chunk">직각삼각형에서 직각이 아닌 두 내각 중</span>
+            <span class="chunk">한 내각의 크기가 같으면</span>
+            <span class="chunk">나머지 한 내각의 크기도 같습니다.</span>
+            <span class="chunk">그러므로 한 예각의 크기가 같은 모든 직각삼각형은</span>
+            <span class="chunk">서로 닮은 도형입니다.</span>
+            <span class="article__gap" aria-hidden="true"></span>
+            <span class="chunk chunk--img" data-img="1" data-src="assets/img/concept/math-trig/fig-01.webp">예를 들어, 다음 그림에서 $\triangle ABC$, $\triangle ADE$, $\triangle AFG$는</span>
+            <span class="chunk">모두 $\angle A$의 크기가 같은 <span class="chunk--blank" data-choices="[&quot;정삼각형&quot;, &quot;직각삼각형&quot;]" data-answer="직각삼각형"><span class="chunk--blank__text">?</span></span>이므로</span>
+            <span class="chunk chunk--img" data-img="2" data-src="assets/img/concept/math-trig/fig-02.webp">서로 닮은 도형입니다.</span>
+            <span class="chunk">이때, 닮은 도형은 대응변의 길이의 비가 일정하므로</span>
+            <span class="chunk">$\dfrac{(\text{높이})}{(\text{빗변의길이})}=$</span>
+            <span class="chunk">$\dfrac{\overline{BC}}{\overline{AC}}=\dfrac{\overline{DE}}{\overline{AE}}=\dfrac{\overline{FG}}{\overline{AG}}=\dfrac{3}{5}$,</span>
+            <span class="chunk">$\dfrac{(\text{밑변의길이})}{(\text{빗변의길이})}=$</span>
+            <span class="chunk">$\dfrac{\overline{AB}}{\overline{AC}}=\dfrac{\overline{AD}}{\overline{AE}}=\dfrac{\overline{AF}}{\overline{AG}}=\dfrac{4}{5}$,</span>
+            <span class="chunk">$\dfrac{(\text{높이})}{(\text{밑변의길이})}=$</span>
+            <span class="chunk">$\dfrac{\overline{BC}}{\overline{AB}}=\dfrac{\overline{DE}}{\overline{AD}}=\dfrac{\overline{FG}}{\overline{AF}}=\dfrac{3}{4}$이 성립합니다.</span>
+            <span class="article__gap" aria-hidden="true"></span>
+            <span class="chunk">이와 같이 $\angle B=$<span class="chunk--blank" data-choices="[&quot;$90^\\circ$&quot;, &quot;$180^\\circ$&quot;]" data-answer="$90^\circ$"><span class="chunk--blank__text">?</span></span>인 직각삼각형 $ABC$에서</span>
+            <span class="chunk">$\angle A$의 크기가 정해지면</span>
+            <span class="chunk">삼각형의 크기에 관계없이 $\dfrac{\overline{BC}}{AC}$, $\dfrac{\overline{AB}}{AC}$, $\dfrac{\overline{BC}}{AB}$의 값은</span>
+            <span class="chunk">각각 일정함을 알 수 있습니다.</span>
+            <span class="chunk chunk--img" data-img="3" data-src="assets/img/concept/math-trig/fig-03.webp">이때, 일정한 비의 값 $\dfrac{(\text{높이})}{(\text{빗변의길이})}=\dfrac{\overline{BC}}{\overline{AC}}$를</span>
+            <span class="chunk">$\angle A$의 사인이라 하고</span>
+            <span class="chunk">이것을 기호로 $\sin A$와 같이 나타냅니다.</span>
+            <span class="chunk chunk--img" data-img="4" data-src="assets/img/concept/math-trig/fig-04.webp">이때 $\sin A$의 $A$는 $\angle A$의 크기를 말합니다.</span>
+            <br>
+            <span class="chunk chunk--img" data-img="5" data-src="assets/img/concept/math-trig/fig-05.webp">또 $\dfrac{(\text{밑변의길이})}{(\text{빗변의길이})}=\dfrac{\overline{AB}}{\overline{AC}}$를</span>
+            <span class="chunk">$\angle A$의 코사인이라 하고</span>
+            <span class="chunk chunk--img" data-img="6" data-src="assets/img/concept/math-trig/fig-06.webp">이것을 기호로 $\cos A$와 같이 나타냅니다.</span>
+            <br>
+            <span class="chunk chunk--img" data-img="7" data-src="assets/img/concept/math-trig/fig-07.webp">그리고 $\dfrac{(\text{높이})}{(\text{밑변의길이})}=\dfrac{\overline{BC}}{\overline{AB}}$를</span>
+            <span class="chunk">$\angle A$의 탄젠트라 하고</span>
+            <span class="chunk chunk--img" data-img="8" data-src="assets/img/concept/math-trig/fig-08.webp">이것을 기호로 $\tan A$와 같이 나타냅니다.</span>
+            <br>
+            <span class="chunk">위의 $\sin A$, $\cos A$, $\tan A$를 통틀어 $\angle A$의 삼각비라고 합니다.</span>
+            <span class="article__gap" aria-hidden="true"></span>
+            <span class="chunk chunk--img" data-img="9" data-src="assets/img/concept/math-trig/fig-09.webp">이상을 정리하면 $\angle B=90^\circ$인 직각삼각형 $ABC$에서</span>
+            <span class="chunk">$\angle A$, $\angle B$, $\angle C$의 대변의 길이를</span>
+            <span class="chunk">각각 $a,b,c$라고 하면</span>
+            <span class="chunk">$\sin A=\dfrac{(\text{높이})}{(\text{빗변의길이})}=\dfrac{a}{b}$,</span>
+            <span class="chunk">$\cos A=\dfrac{(\text{밑변의길이})}{(\text{빗변의길이})}=\dfrac{c}{b}$,</span>
+            <span class="chunk chunk--img" data-img="10" data-src="assets/img/concept/math-trig/fig-10.webp">$\tan A=\dfrac{(\text{높이})}{(\text{밑변의길이})}=\dfrac{a}{c}$입니다.</span>
+            <br>
+            <span class="chunk">한편, $\sin A$, $\cos A$, $\tan A$를 구할 때</span>
+            <span class="chunk">기준이 되는 각인 $\angle A$를 ‘기준각’이라고 하며,</span>
+            <span class="chunk">이 기준각에 따라 높이와 밑변은 바뀔 수 있습니다.</span>
+            <span class="article__gap" aria-hidden="true"></span>
+            <span class="chunk chunk--img" data-img="11" data-src="assets/img/concept/math-trig/fig-11.webp">예를 들어, 다음 그림과 같은 직각삼각형 $ABC$에서</span>
+            <span class="chunk chunk--img" data-img="12" data-src="assets/img/concept/math-trig/fig-12.webp">$\angle A$와 $\angle B$의 삼각비의 값을 각각 구해봅시다.</span>
+            <br>
+            <span class="chunk">$\angle A$에 대한 삼각비는 $\sin A=\dfrac{\overline{BC}}{\overline{AB}}=\dfrac{8}{17}$,</span>
+            <span class="chunk">$\cos A=\dfrac{\overline{AC}}{\overline{AB}}=$<span class="chunk--blank" data-choices="[&quot;$\\dfrac{8}{15}$&quot;, &quot;$\\dfrac{15}{17}$&quot;]" data-answer="$\dfrac{15}{17}$"><span class="chunk--blank__text">?</span></span>,</span>
+            <span class="chunk">$\tan A=\dfrac{\overline{BC}}{\overline{AC}}=\dfrac{8}{15}$이고,</span>
+            <span class="chunk">$\angle B$에 대한 삼각비는 $\sin B=\dfrac{\overline{AC}}{\overline{AB}}=\dfrac{15}{17}$,</span>
+            <span class="chunk">$\cos B=\dfrac{\overline{BC}}{\overline{AB}}=\dfrac{8}{17}$,</span>
+            <span class="chunk">$\tan B=\dfrac{\overline{AC}}{\overline{BC}}=\dfrac{15}{8}$입니다.</span>
+            <span class="chunk">이와 같이 기준각에 따라 삼각비의 값은 달라집니다.</span>
+          </article>
+
+          <aside class="viewer" data-state="empty">
+            <div class="viewer__frame">
+              <img class="viewer__img" alt="" hidden />
+              <div class="viewer__ph">🖼</div>
+              <div class="viewer__label">이미지가 있는 구간에 닿으면
+여기에 표시돼요</div>
+              <div class="viewer__zoom">🔍 크게 보기</div>
+            </div>
+            <div class="viewer__pager">
+              <button class="viewer__prev" aria-label="이전 이미지">←</button>
+              <span class="viewer__pager__num mono">– / 12</span>
+              <button class="viewer__next" aria-label="다음 이미지">→</button>
+            </div>
+          </aside>
+        </div>
+      </main>
+    </div>
+
+    <!-- 라이트박스 (공용 보조 모니터 프레임) -->
+    <div class="lightbox monitor" id="lightbox" role="dialog" aria-label="이미지 크게 보기">
+      <div class="monitor__dim"></div>
+      <div class="monitor__rig">
+        <div class="monitor__mount"><i></i><i></i></div>
+        <div class="monitor__frame">
+          <div class="monitor__hd">
+            <span class="monitor__lamps"><i class="is-live"></i><i></i><i></i></span>
+            <span class="monitor__ttl">이미지 크게 보기</span>
+            <button class="monitor__x" aria-label="닫기"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>
+          </div>
+          <div class="monitor__screen">
+            <div class="lightbox__img">이미지</div>
+          </div>
+          <div class="monitor__chin"><span class="monitor__slit"></span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 하단 콘솔 바 -->
+    <div class="bar">
+      <img class="bar__deco bar__deco--l" src="assets/icons/console/console-right.svg" alt="" />
+      <div class="bar__mid">
+        <div class="bar__tray">
+          <div class="bar__group">
+            <button class="toolbtn"><img src="assets/icons/ico-note.svg" alt="" /><span>연습장</span></button>
+            <span class="tsize" id="tsize">
+              <button class="toolbtn tsize__btn" aria-haspopup="dialog" aria-expanded="false"><img src="assets/icons/ico-text.svg" alt="" /><span>글자</span></button>
+              <div class="tsize__pop" role="dialog" aria-label="글자 크기"></div>
+            </span>
+          </div>
+          <div class="bar__group">
+            <p class="guide" role="status" aria-live="polite" hidden><i class="guide__lamp"></i><span class="guide__text"></span></p>
+            <button class="toolbtn toolbtn--primary" id="summaryBtn" disabled title="끊어읽기를 모두 끝내면 활성화돼요"><img src="assets/icons/ico-summary.svg" alt="" /><span>개념 요약하기</span></button>
+          </div>
+        </div>
+      </div>
+      <img class="bar__deco bar__deco--r" src="assets/icons/console/console-left.svg" alt="" />
+    </div>
+
+    <!-- 개념 요약하기 (공용 보조 모니터 프레임 · 선지는 프레임 밖 아래 슬롯) -->
+    <div class="summary monitor" id="summary">
+      <div class="monitor__dim"></div>
+      <div class="monitor__rig">
+        <div class="monitor__mount"><i></i><i></i></div>
+        <div class="monitor__frame">
+          <div class="monitor__hd">
+            <span class="monitor__lamps"><i class="is-live"></i><i></i><i></i></span>
+            <span class="monitor__ttl">개념 요약하기</span>
+            <button class="monitor__x" id="summaryClose" aria-label="닫기"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>
+          </div>
+          <div class="monitor__screen">
+            <div class="summary__box" id="summaryBox">
+          <p class="sline sline--title"><span class="sseg">삼각비의 뜻</span></p>
+          <p class="sline"><span class="sseg">▶ 삼각비란 직각삼각형에서 두 변의 </span><span class="sseg sblank" data-blank="1" data-choices="[&quot;각&quot;, &quot;길이&quot;]"></span><span class="sseg">의 비를 뜻합니다.</span></p>
+          <p class="sline"><span class="sseg">▶ $\angle B=90^\circ$인 직각삼각형 $ABC$에서</span><span class="sseg sfig"><img src="assets/img/concept/math-trig/summary.webp" alt="직각삼각형 ABC 그림" /></span><span class="sseg">$\sin A=$</span><span class="sseg sblank" data-blank="2" data-choices="[&quot;$\\dfrac{b}{a}$&quot;, &quot;$\\dfrac{a}{b}$&quot;]"></span><span class="sseg sseg--tail">, </span><span class="sseg">$\cos A=$</span><span class="sseg sblank" data-blank="3" data-choices="[&quot;$\\dfrac{c}{b}$&quot;, &quot;$\\dfrac{b}{c}$&quot;]"></span><span class="sseg sseg--tail">, </span><span class="sseg">$\tan A=$</span><span class="sseg sblank" data-blank="4" data-choices="[&quot;$\\dfrac{c}{a}$&quot;, &quot;$\\dfrac{a}{c}$&quot;]"></span><span class="sseg">입니다.</span></p>
+            </div>
+          </div>
+          <div class="monitor__chin"><span class="monitor__slit"></span></div>
+        </div>
+        <div class="monitor__below summary__foot">
+          <div class="summary__options" id="summaryOptions"></div>
+          <button class="summary__next" id="summaryNext" hidden>다음으로 <span aria-hidden="true">→</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+
+  <!-- 검수용 디버그 패널 (?debug=1 일 때만 보임) -->
+  <!-- 연습장 캔버스 (공용) -->
+  <script src="scripts/scratchpad.js?v=20261015-44"></script>
+  <script src="scripts/debug-panel.js?v=20261015-44"></script>
+  <script src="scripts/pop-place.js?v=20261015-44"></script>
+  <script src="scripts/blank-pop.js?v=20261015-44"></script>
+  <script src="scripts/learn-guide.js?v=20261015-44"></script>
+  <script src="scripts/vendor/katex/katex.min.js?v=20261015-44"></script>
+  <script src="scripts/learn-concept.js?v=20261015-44"></script>
+  <script src="scripts/concept-learn-textsize.js?v=20261015-44"></script>
+  <script src="scripts/learn-exit.js?v=20261015-44"></script>
+</body>
+</html>

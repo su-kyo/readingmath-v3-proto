@@ -39,8 +39,8 @@
 
 | 계열 | 파일 · 배열 |
 | --- | --- |
-| 개념 학습 · 정리 | `concept/learn.html`(지문 마크업이 직접 들어 있다) · `scripts/learn-concept.js` `DATA` · `scripts/concept-organize.js` `PASSAGES` · 영상 `scripts/concept-learn-video.js` `SRC` + `concept/learn.html`의 「유튜브에서 열기」 링크 |
-| 개념 다지기 · 기초 연산 | `scripts/learn-drill.js` · `scripts/learn-basic-ops.js` `PROBLEMS` |
+| 개념 학습 · 정리 | 과학판 `concept/learn.html` · 수학판 `concept/learn-math.html` — 지문 · 빈칸 선지(`data-choices` · `data-answer`) · 그림(`data-src`) · 요약 창 선지가 모두 HTML 마크업에 있다(2026-10-15 실서비스 콘텐츠로 교체) · `scripts/concept-organize.js` `PASSAGES` · 영상 `scripts/concept-learn-video.js` `SRC` + `concept/learn.html`의 「유튜브에서 열기」 링크 |
+| 개념 다지기 · 기초 연산 · 개념 확인하기 | `scripts/learn-drill.js` · `scripts/learn-basic-ops.js` `PROBLEMS`(수학 기초 연산) · `scripts/concept-check-data.js` `RMOpsSet`(과학 개념 확인하기 — 같은 엔진, 2026-10-15 실서비스 10문항) |
 | 유형 훈련 · 해설 | `scripts/type-quiz.js` · `scripts/type-review.js` `PROBLEMS` · `scripts/type-result.js` |
 | 서술형 | `scripts/essay-basics(-v2).js` · `essay-advanced.js` `ANSWERS`/`PARAS` · `essay-drill(-v2).js` · `essay-drill-review.js` `PROBLEMS` · `essay-report(-review).js` `ANSWERS`/`ROWS` · 각 HTML의 문단 |
 | 결과 화면 | `scripts/step-result.js` `ACTIVITIES` · `*-training-result.js` `STAGES` · `essay-step-result.js` |

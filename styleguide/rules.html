@@ -6,10 +6,10 @@
   <title>규칙 색인 — 리딩수학과학 디자인 시스템</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
   <base href="../" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261015-41" />
-  <link rel="stylesheet" href="styles/base.css?v=20261015-41" />
-  <link rel="stylesheet" href="styles/components.css?v=20261015-41" />
-  <link rel="stylesheet" href="styleguide/sg.css?v=20261015-41" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261015-44" />
+  <link rel="stylesheet" href="styles/base.css?v=20261015-44" />
+  <link rel="stylesheet" href="styles/components.css?v=20261015-44" />
+  <link rel="stylesheet" href="styleguide/sg.css?v=20261015-44" />
 </head>
 <body>
 <div class="sg">
@@ -319,14 +319,15 @@
       </article>
 
       <article class="sg-rulecard" id="RM-READ-04" data-check="eye" data-since="2026-10-15">
-        <h3>행간은 2.1, 분수가 든 줄은 위아래 0.35em 더</h3>
-        <p class="sg-rulecard__do">끊어읽기 지문의 행간은 2.1이다. KaTeX 분수가 든 줄(<code>.katex .base:has(.mfrac)</code>)은 위아래에 <code>.35em</code>을 더 띄운다.</p>
+        <h3>행간은 2.1, 분수가 든 줄과 문단 사이는 0.35em 더</h3>
+        <p class="sg-rulecard__do">끊어읽기 지문의 행간은 2.1이다. KaTeX 분수가 든 줄(<code>.katex .base:has(.mfrac)</code>)은 위아래에 <code>.35em</code>을 더 띄운다. 문단 사이(<code>.article__gap</code> · 실서비스의 빈 줄과 [문단 나누기])도 같은 <code>.35em</code>이다. 줄바꿈 하나는 간격 없이 줄만 바꾼다.</p>
         <dl>
           <dt>검사</dt><dd>눈 · 분수가 연달아 든 줄에서 위아래 분수가 맞닿지 않는지 본다</dd>
           <dt>예외</dt><dd>원래 더 넓은 서술형 풀이(2.25)는 줄이지 않는다.</dd>
         </dl>
         <details class="sg-why"><summary>근거</summary>
           <p>전체 행간만 올리면 분수 줄끼리의 틈은 0px 그대로였다. 글과 수식을 둘 다 넓혀야 했다.</p>
+          <p>문단 간격은 2026-10-15 실서비스 콘텐츠를 넣으며 정했다. 실서비스는 빈 줄 한 줄(2.1em)이라 문단이 크게 갈라져, 분수 줄에 더하는 여유와 같은 값으로 맞췄다(사용자 결정).</p>
         </details>
       </article>
     </section>
@@ -857,6 +858,6 @@
 
   </main>
 </div>
-<script src="styleguide/sg.js?v=20261015-41"></script>
+<script src="styleguide/sg.js?v=20261015-44"></script>
 </body>
 </html>

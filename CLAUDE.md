@@ -65,7 +65,7 @@
 유틸에 테마 토글 버튼은 없다.
 
 **③ 이미지는 쓰임 기준으로 분류한다.** (`RM-ASSET-01`~`05`)
-- 그림(webp) → `assets/img/` (bg·home·planets·strands·grade·misc)
+- 그림(webp) → `assets/img/` (bg·home·planets·strands·grade·misc·concept — `concept/`는 개념 학습 실서비스 그림, 원본은 `_source/RM/concept-learn/`)
 - 아이콘(svg) → `assets/icons/` — 색은 파일 복제가 아니라 코드로 바꾼다
 - PNG 등 원본은 프로젝트에 넣지 않는다. `~/Documents/_source/RM/`에 둔다
   (깃 없음 — 삭제·덮어쓰기 전 반드시 사용자 확인)
@@ -342,7 +342,7 @@ tools/screen-diff.py /tmp/rm-before /tmp/rm-after
   - `RM-READ-01` 안 읽은 곳만 흐리게 — 지금 구간은 읽은 곳과 같은 평문 (눈)
   - `RM-READ-02` 진행은 지문 아무 데나 누르기와 스페이스바 — 꾹 눌러도 한 칸 (눈)
   - `RM-READ-03` 그림 구간은 왼쪽 알약 `[그림 아이콘 + 번호들]`로만 알린다 (눈)
-  - `RM-READ-04` 행간은 2.1, 분수가 든 줄은 위아래 0.35em 더 (눈)
+  - `RM-READ-04` 행간은 2.1, 분수가 든 줄과 문단 사이는 0.35em 더 (눈)
 - **UTIL** 유틸 4화면
   - `RM-UTIL-01` 면은 뉴트럴-쿨 램프 하나로 쌓고, 파랑은 점·선·글자로만 (눈)
   - `RM-UTIL-02` 유틸에는 초록·앰버를 쓰지 않는다 (눈)

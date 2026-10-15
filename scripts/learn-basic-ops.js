@@ -3,6 +3,9 @@
    유형: 객관식(번호만/텍스트/그림), 주관식(1개/2개/분수), 보기(텍스트/표/그림/도형/없음)
    채점하기 → 즉시 채점(정오답 하이라이트) → 상단 프로그레스 갱신 → 다음 문제
    마지막 문제까지 채점하면 하단 '다음으로'(스텝 결과로) 활성화
+   문항 세트: 기본은 아래 PROBLEMS(수학 기초 연산). 화면이 엔진보다 먼저 window.RMOpsSet 을 부르면
+   그 문항과 다음 화면으로 바뀐다 — 과학 개념 확인하기(concept/check.html · scripts/concept-check-data.js).
+   문항에 img(그림 주소) · lines(문제 아래 ㄱ·ㄴ·ㄷ 같은 줄)를 더 둘 수 있다.
    ========================================================================= */
 (function () {
   var TRAP = '<svg viewBox="0 0 320 200" width="300" xmlns="http://www.w3.org/2000/svg"><polygon points="40,170 220,170 300,40 40,40" fill="#C7D3E6"/></svg>';
@@ -10,7 +13,8 @@
   function exSkel(label) { return { kind: 'skel', label: label }; }
   function exShape(svg) { return { kind: 'shape', svg: svg }; }
 
-  var PROBLEMS = [
+  var SET = window.RMOpsSet;
+  var PROBLEMS = (SET && SET.problems) || [
     { type: 'mc-num', q: '다음은 순물질과 혼합물에 대한 설명이다. 옳은 것을 고르시오.',
       ex: exText(['㉠ 물질마다 성질이 다양하다.', '㉡ 소금물은 혼합물이다.', '㉢ 모든 물질은 순물질이다.', '㉣ 공기는 순물질이다.', '㉤ 증류수는 순물질이다.']),
       options: 5, answer: 1 },
@@ -150,6 +154,8 @@
     var p = PROBLEMS[idx];
 
     qEl.appendChild(el('div', 'q__text', p.q));
+    if (p.lines) { var ln = el('div', 'q__lines'); p.lines.forEach(function (t) { ln.appendChild(el('div', null, t)); }); qEl.appendChild(ln); }
+    if (p.img) { var im = el('img', 'q__img'); im.src = p.img; im.alt = p.imgAlt || ''; qEl.appendChild(im); }
     var exb = renderEx(p.ex); if (exb) qEl.appendChild(exb);
 
     if (p.type === 'mc-num' || p.type === 'mc-text' || p.type === 'mc-image') qEl.appendChild(renderMC(p));
@@ -308,7 +314,7 @@
   }
 
   /* 하단 '결과보기' → 스텝 결과 화면 (마지막 문제 채점 시 활성) */
-  nextStepBtn.addEventListener('click', function () { if (nextStepBtn.disabled) return; window.location.href = 'shared/step-result.html?step=ops'; });
+  nextStepBtn.addEventListener('click', function () { if (nextStepBtn.disabled) return; window.location.href = (SET && SET.next) || 'shared/step-result.html?step=ops'; });
 
   /* 라이트/다크 토글 */
   var themeBtn = document.getElementById('themeToggle');
@@ -344,7 +350,7 @@
     }
   }
   if (window.RMDebug) window.RMDebug.register({
-    title: '기초 연산 · 현재 문제',
+    title: (SET ? '개념 확인하기' : '기초 연산') + ' · 현재 문제',
     actions: [
       { label: '정답 처리', tone: 'ok', run: function () { dbgAnswer(true); } },
       { label: '오답 처리', tone: 'no', run: function () { dbgAnswer(false); } },

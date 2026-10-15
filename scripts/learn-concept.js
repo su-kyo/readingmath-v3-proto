@@ -5,15 +5,48 @@
    - 그림 구간: 닿으면 그 그림이 켜진다(굵게 + 계열색 · 우측 이미지).
      왼쪽 알약 [아이콘 + 번호들]로 다시 켜고 끈다. 안 읽은 줄의 알약은 없다
    - 빈칸 도달 시 근처에 빈칸 선지 창(토글) — 공용 부품 scripts/blank-pop.js
-   - 이미지 클릭 시 확대 레이어(라이트박스)
+     빈칸은 구간 안에 몇 개든 둔다(구간 하나에 하나). 선지 · 정답은 빈칸의 data-choices · data-answer
+   - 이미지 클릭 시 확대 레이어(라이트박스). 그림 주소는 그림 구간의 data-src
+   - 콘텐츠(지문 · 선지 · 요약)는 HTML 에 있다 — 수학판 concept/learn-math.html · 과학판 concept/learn.html
    ========================================================================= */
+
+/* ---- 수식 — 글 속 $…$ 를 KaTeX 로 그린다 (지문 · 요약 창). 알약 위치를 재기 전에 먼저 ---- */
+window.RMTex = (function () {
+  function draw(tex, el) {
+    if (window.katex) window.katex.render(tex, el, { throwOnError: false });
+    else el.textContent = tex;
+  }
+  function inText(root) {
+    var w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null), nodes = [];
+    while (w.nextNode()) if (w.currentNode.nodeValue.indexOf('$') >= 0) nodes.push(w.currentNode);
+    nodes.forEach(function (n) {
+      var parts = n.nodeValue.split('$'); if (parts.length < 3) return;
+      var frag = document.createDocumentFragment();
+      parts.forEach(function (p, i) {
+        if (i % 2 === 0) { if (p) frag.appendChild(document.createTextNode(p)); return; }
+        var s = document.createElement('span'); draw(p, s); frag.appendChild(s);
+      });
+      n.parentNode.replaceChild(frag, n);
+    });
+  }
+  /* 선지 한 개 — '$\dfrac{1}{2}$' 는 수식, 나머지는 글자 */
+  function choice(c) { var m = /^\$(.+)\$$/.exec(c); return m ? { tex: m[1], val: c } : c; }
+  function fill(el, val) { var m = /^\$(.+)\$$/.exec(val); if (m) draw(m[1], el); else el.textContent = val; }
+  return { inText: inText, choice: choice, fill: fill };
+})();
+
 (function () {
   var article = document.querySelector('.article');
+  window.RMTex.inText(article);
   var segs = [].slice.call(document.querySelectorAll('.chunk'));
-  var blank = document.querySelector('.chunk--blank');
+  var blanks = [].slice.call(article.querySelectorAll('.chunk--blank'));
+  function segOf(b) { return b.closest('.chunk'); }
+  function blankIn(seg) { return seg && seg.querySelector('.chunk--blank'); }
+  function isOpenBlank(b) { return b && !b.classList.contains('is-filled'); }
   var viewer = document.querySelector('.viewer');
   var vLabel = viewer.querySelector('.viewer__label');
   var vPager = viewer.querySelector('.viewer__pager__num');
+  var vImg = viewer.querySelector('.viewer__img');
   var lightbox = document.querySelector('.lightbox');
   var lbLabel = lightbox.querySelector('.lightbox__img');
 
@@ -31,6 +64,7 @@
       s.classList.toggle('is-current', i === cursor);
       s.classList.toggle('is-unread', i > cursor);
     });
+    blanks.forEach(function (b) { b.classList.toggle('is-current', segs.indexOf(segOf(b)) === cursor && isOpenBlank(b)); });
     article.classList.toggle('is-done', cursor >= segs.length);
     // 마지막 구간까지 모두 읽으면 '개념 요약하기' 활성화
     if (summaryBtn && cursor >= segs.length) summaryBtn.disabled = false;
@@ -55,9 +89,11 @@
       viewer.dataset.state = 'empty';
       vLabel.textContent = '이미지가 있는 구간에 닿으면\n여기에 표시돼요';
       vPager.textContent = '– / ' + imgTerms.length;
+      if (vImg) vImg.hidden = true;
       return;
     }
-    viewer.dataset.state = 'filled';
+    viewer.dataset.state = a.dataset.src && vImg ? 'image' : 'filled';   // 실제 그림이 있으면 그림, 없으면 자리표시
+    if (vImg && a.dataset.src) { vImg.src = a.dataset.src; vImg.hidden = false; }
     viewer.dataset.img = a.dataset.img;
     vLabel.textContent = '이미지 ' + a.dataset.img;
     vPager.textContent = a.dataset.img + ' / ' + imgTerms.length;
@@ -97,36 +133,45 @@
   /* ---- 빈칸 선지 창 (공용 · scripts/blank-pop.js) ----
      오답 → 빨간 표시 0.5초 뒤 비활성(다시 못 고름) · 빈칸도 같이 흔든다
      정답 → 빈칸을 바로 채우고 초록 0.5초를 보여 준 뒤 창이 닫히며 다음 구간으로 */
-  var CHOICES = ['성질', '무게', '온도', '개수'], ANSWER = '성질';
   function isPopOpen() { return window.RMBlankPop.isOpen(); }
-  function openPop() {
-    blank.classList.add('is-open');
-    window.RMBlankPop.open(blank, {
-      choices: CHOICES, answer: ANSWER,
+  function choicesOf(b) { try { return JSON.parse(b.dataset.choices || '[]'); } catch (e) { return []; } }
+  function fillBlank(b, val) { window.RMTex.fill(b.querySelector('.chunk--blank__text'), val); b.classList.add('is-filled'); }
+  function openPop(b) {
+    b.classList.add('is-open');
+    window.RMBlankPop.open(b, {
+      choices: choicesOf(b).map(window.RMTex.choice), answer: b.dataset.answer,
       onPick: function (val, ok) {
-        if (!ok) { blank.classList.remove('is-wrong'); void blank.offsetWidth; blank.classList.add('is-wrong'); return; }
-        blank.querySelector('.chunk--blank__text').textContent = val;
-        blank.classList.remove('is-wrong');
-        blank.classList.add('is-filled', 'is-just-correct');
+        if (!ok) { b.classList.remove('is-wrong'); void b.offsetWidth; b.classList.add('is-wrong'); return; }
+        fillBlank(b, val);
+        b.classList.remove('is-wrong', 'is-current');
+        b.classList.add('is-just-correct');
       },
       onDone: function () {
-        blank.classList.remove('is-just-correct');
-        if (cursor === segs.indexOf(blank)) advance();
+        b.classList.remove('is-just-correct');
+        if (cursor === segs.indexOf(segOf(b))) advance();
       },
-      onClose: function () { blank.classList.remove('is-open'); }
+      onClose: function () { b.classList.remove('is-open'); }
     });
   }
   function closePop() { window.RMBlankPop.close(); }
-  function togglePop() { isPopOpen() ? closePop() : openPop(); }
+  function togglePop(b) { isPopOpen() && window.RMBlankPop.anchor() === b ? closePop() : openPop(b); }
 
   /* ---- 라이트박스 ---- */
-  function openLightbox(n) { lbLabel.textContent = '이미지 ' + n; lightbox.classList.add('is-open'); }
+  function openLightbox(n) {
+    var x = imgTerms.filter(function (q) { return q.dataset.img === String(n); })[0];
+    lbLabel.textContent = '';
+    lbLabel.classList.toggle('has-img', !!(x && x.dataset.src));
+    if (x && x.dataset.src) { var im = document.createElement('img'); im.src = x.dataset.src; im.alt = '그림 ' + n; lbLabel.appendChild(im); }
+    else lbLabel.textContent = '이미지 ' + n;
+    lightbox.classList.add('is-open');
+  }
   function closeLightbox() { lightbox.classList.remove('is-open'); }
 
   /* ---- 전진 ---- */
   function advance() {
     var cur = segs[cursor]; if (!cur) return;
-    if (cur === blank && !blank.classList.contains('is-filled')) { if (!isPopOpen()) openPop(); return; }  // 빈칸은 답해야 전진
+    var b = blankIn(cur);
+    if (isOpenBlank(b)) { if (!isPopOpen()) openPop(b); return; }  // 빈칸은 답해야 전진
     cursor++;
     if (segs[cursor] && segs[cursor].classList.contains('chunk--img')) setActiveImg(segs[cursor]);
     render();
@@ -142,7 +187,8 @@
       x && x.classList.contains('is-active') ? clearImg() : setActiveImg(x);
       return;
     }
-    if (e.target.closest('.chunk--blank') === blank && segs.indexOf(blank) <= cursor) { togglePop(); return; }
+    var hit = e.target.closest('.chunk--blank');
+    if (hit && segs.indexOf(segOf(hit)) <= cursor) { togglePop(hit); return; }
     advance();
   });
   /* 스페이스바 = 지문 누르기. 꾹 누르고 있어도 한 칸, 버튼에 남은 포커스는 뗀다(그 버튼이 같이 눌리지 않게).
@@ -157,11 +203,11 @@
   });
 
   /* 빈칸 흔들림은 0.4초 뒤 거둔다 (선지 쪽 0.5초는 blank-pop.js 몫) */
-  blank.addEventListener('animationend', function () { blank.classList.remove('is-wrong'); });
+  article.addEventListener('animationend', function (e) { if (e.target.classList.contains('chunk--blank')) e.target.classList.remove('is-wrong'); });
 
   /* 뷰어 · 페이저 · 라이트박스 */
   viewer.querySelector('.viewer__frame').addEventListener('click', function () {
-    if (viewer.dataset.state === 'filled') openLightbox(viewer.dataset.img);
+    if (viewer.dataset.state !== 'empty') openLightbox(viewer.dataset.img);
   });
   viewer.querySelector('.viewer__prev').addEventListener('click', function (e) { e.stopPropagation(); stepImg(-1); });
   viewer.querySelector('.viewer__next').addEventListener('click', function (e) { e.stopPropagation(); stepImg(1); });
@@ -188,20 +234,23 @@
   }
 
   /* ---- 검수용 디버그 훅 (?debug=1일 때만 패널에 뜸) ---- */
+  /* 다음 빈칸 = 지금 읽는 곳부터 처음 나오는 안 채운 빈칸 */
+  function nextBlank() {
+    return blanks.filter(function (b) { return isOpenBlank(b) && segs.indexOf(segOf(b)) >= cursor; })[0] ||
+      blanks.filter(isOpenBlank)[0];
+  }
   function dbgBlank(ok) {
-    var bi = segs.indexOf(blank);
-    if (cursor < bi) { cursor = bi; render(); blank.scrollIntoView({ block: 'center' }); }   // 빈칸 차례까지 먼저 읽는다 — 주소(&do=)로 바로 열 수 있게
-    if (!isPopOpen()) openPop();
+    var b = nextBlank(); if (!b) return;
+    var bi = segs.indexOf(segOf(b));
+    if (cursor < bi) { cursor = bi; render(); b.scrollIntoView({ block: 'center' }); }   // 빈칸 차례까지 먼저 읽는다 — 주소(&do=)로 바로 열 수 있게
+    if (!isPopOpen() || window.RMBlankPop.anchor() !== b) openPop(b);
     var o = [].filter.call(document.querySelectorAll('.bpop__opt:not(.is-dead)'), function (x) {
-      return (x.dataset.val === ANSWER) === ok;
+      return (x.dataset.val === b.dataset.answer) === ok;
     })[0];
     if (o) o.click();
   }
   function dbgReadAll() {
-    if (!blank.classList.contains('is-filled')) {
-      blank.querySelector('.chunk--blank__text').textContent = ANSWER;
-      blank.classList.add('is-filled');
-    }
+    blanks.forEach(function (b) { if (isOpenBlank(b)) fillBlank(b, b.dataset.answer); });
     closePop();
     cursor = segs.length; render();
   }
@@ -236,14 +285,16 @@
   var closeBtn = document.getElementById('summaryClose');
   // 요약 다음 = 개념 다지기 (실서비스 순서: 학습 → 요약 → 다지기 → 정리, 2026-10-15)
   if (nextBtn) nextBtn.addEventListener('click', function () { window.location.href = 'concept/drill.html'; });
+  window.RMTex.inText(box);
   var segs = [].slice.call(box.querySelectorAll('.sseg'));   // 모달 내 끊어읽기 구간
   var cursor = 0;
 
-  // 빈칸별 선지 (kind: text | image, 2~5개)
-  var DATA = {
-    '1': { kind: 'text', options: ['1', '10', '100', '1000'] },
-    '2': { kind: 'image', options: ['이미지 1', '이미지 2'] }
-  };
+  /* 빈칸별 선지 = 빈칸의 data-choices (2~5개, 글자 · 수식). data-kind="image" 면 그림 선지.
+     요약 창은 채점하지 않는다(실서비스도 정답이 없다) — 고른 값이 그대로 들어간다 */
+  function dataOf(b) {
+    var o = []; try { o = JSON.parse(b.dataset.choices || '[]'); } catch (e) {}
+    return { kind: b.dataset.kind === 'image' ? 'image' : 'text', options: o };
+  }
 
   function render() {
     segs.forEach(function (s, i) {
@@ -263,12 +314,12 @@
   function renderOptions(cur) {
     optsWrap.innerHTML = '';
     if (!cur) return;                            // 빈칸 아닐 땐 비움 (공간은 CSS로 예약)
-    var d = DATA[cur.dataset.blank];
+    var d = dataOf(cur);
     d.options.forEach(function (o) {
       var btn = document.createElement('button');
       btn.className = 'sopt' + (d.kind === 'image' ? ' sopt--img' : '');
       if (d.kind === 'image') btn.innerHTML = '<span class="sopt__img"></span>';
-      else btn.textContent = o;
+      else window.RMTex.fill(btn, o);
       btn.addEventListener('click', function () { fill(cur, d.kind, o); });
       optsWrap.appendChild(btn);
     });
@@ -277,7 +328,7 @@
     b.classList.remove('is-active');
     b.classList.add('is-filled');
     if (kind === 'image') b.innerHTML = '<span class="sblank__thumb"></span>';
-    else b.textContent = val;
+    else window.RMTex.fill(b, val);
     advance();                                   // 빈칸 채우면 다음 구간으로
   }
 
@@ -285,7 +336,9 @@
   function advance() {
     var cur = segs[cursor]; if (!cur) return;
     if (cur.classList.contains('sblank') && !cur.classList.contains('is-filled')) return;
-    cursor++; render();
+    cursor++;
+    while (segs[cursor] && segs[cursor].classList.contains('sseg--tail')) cursor++;   // 빈칸 뒤 쉼표 · 마침표는 따로 누르지 않는다
+    render();
     if (segs[cursor]) segs[cursor].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
   }
   box.addEventListener('click', advance);
@@ -312,7 +365,7 @@
     while (cursor < segs.length && guard++ < 200) {
       var cur = segs[cursor];
       if (cur.classList.contains('sblank') && !cur.classList.contains('is-filled')) {
-        var d = DATA[cur.dataset.blank];
+        var d = dataOf(cur);
         fill(cur, d.kind, d.options[0]);
       } else { cursor++; render(); }
     }

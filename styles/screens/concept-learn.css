@@ -36,6 +36,12 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 .article.is-done { cursor: default; }
 /* 분수가 든 줄은 위아래로 조금 더 띄운다 (전체 행간만 올리면 분수 줄끼리 맞닿는다) */
 .article .katex .base:has(.mfrac) { margin-block: .35em; }
+/* 수식 속 한글(\text{높이})은 지문 글꼴로 — KaTeX 글꼴에는 한글이 없다 */
+.article .katex .text, .sline .katex .text { font-family: "Noto Serif KR", serif; }
+/* 줄바꿈 · 문단 — 실서비스 지문의 ⏎ 는 <br>, ⏎⏎ 와 [문단 나누기] 는 .article__gap 하나.
+   간격은 분수 줄에 더하는 여유와 같은 .35em(RM-READ-04 · 사용자 결정) — em 이라 「글자」 3단계에서 같이 커진다 */
+.article { --para-gap: .35em; }
+.article__gap { display: block; height: var(--para-gap); }
 /* 구간(어절) — 지금 구간도 읽은 곳과 같은 평문. 안 읽은 곳만 흐리게.
    넘길 때 읽는 곳을 따라 스크롤하되, 아래 콘솔바 뒤로 숨지 않게 위아래 여유 */
 .chunk { border-radius: var(--r-4); padding: 1px 0; box-decoration-break: clone; -webkit-box-decoration-break: clone;
@@ -58,6 +64,8 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 /* 빈칸 — 모양 · 상태는 공용 빈칸(components.css · RM-PART-08). .chunk 의 모서리 · 여백을 칸 쪽으로 되돌리고 글꼴만 정한다 */
 .chunk--blank { padding: 0 var(--sp-12); border-radius: var(--r-8); font-family: var(--font-sans); }
 .chunk--blank.is-current, .chunk--blank.is-open { cursor: pointer; }
+/* 답이 분수면 칸이 분수 높이만큼 자란다 (공용 빈칸은 32px 고정) */
+.chunk--blank:has(.mfrac), .sblank:has(.mfrac) { height: auto; min-height: 32px; padding-block: var(--sp-4); }
 /* 오답 흔들림 */
 .chunk--blank.is-wrong { animation: blankShake .4s; }
 @keyframes blankShake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-4px)} 40%,80%{transform:translateX(4px)} }
@@ -71,13 +79,17 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 /* ===== 이미지 뷰어 (스켈레톤) ===== */
 .viewer { width: clamp(240px, 26vw, 340px); flex: none; display: flex; flex-direction: column; gap: var(--sp-12); align-items: center; justify-content: center; }
 .viewer__frame { width: 100%; aspect-ratio: 4 / 3; border-radius: var(--r-16); background: var(--th-tint); box-shadow: inset 0 0 0 var(--bw-2) var(--th-tint); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--sp-12); position: relative; overflow: hidden; cursor: default; }
-.viewer[data-state="filled"] .viewer__frame { cursor: zoom-in; }
+.viewer:is([data-state="filled"], [data-state="image"]) .viewer__frame { cursor: zoom-in; }
+/* 실제 그림 — 그림은 흰 바탕 · 투명 바탕이 섞여 있어 종이 면 위에 둔다(다크에서도 종이 그대로) */
+.viewer__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; padding: var(--sp-12); box-sizing: border-box; background: var(--paper-bg); }
+.viewer__img[hidden] { display: none; }
+.viewer[data-state="image"] :is(.viewer__ph, .viewer__label) { display: none; }
 .viewer__ph { width: 60px; height: 60px; border-radius: var(--r-12); background: var(--th-tint); display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: var(--fs-26); }
 .viewer[data-state="filled"] .viewer__ph { animation: skel 1.6s ease-in-out infinite; }
 @keyframes skel { 0%,100% { opacity: 1; } 50% { opacity: .55; } }
 .viewer__label { color: var(--text-muted); font-size: var(--fs-14); font-weight: var(--fw-semibold); text-align: center; white-space: pre-line; padding: 0 var(--sp-16); }
 .viewer__zoom { position: absolute; bottom: 10px; right: 12px; font-size: var(--fs-12); font-weight: var(--fw-bold); color: var(--text-muted); background: var(--surface-1); padding: var(--sp-4) var(--sp-8); border-radius: var(--r-full); box-shadow: 0 2px 6px color-mix(in srgb, var(--th-shadow) 12%, transparent); display: none; }
-.viewer[data-state="filled"] .viewer__zoom { display: block; }
+.viewer:is([data-state="filled"], [data-state="image"]) .viewer__zoom { display: block; }
 .viewer__pager { display: flex; align-items: center; gap: var(--sp-16); color: var(--text-muted); font-weight: var(--fw-bold); }
 .viewer__pager button { width: 34px; height: 34px; border-radius: 50%; background: var(--th-tint); color: var(--th-ink-accent); font-size: var(--fs-15); }
 .viewer__pager button:hover { background: var(--th-tint-strong); }
@@ -88,6 +100,10 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 .lightbox__img { position: relative; overflow: hidden; width: 100%; aspect-ratio: 4 / 3; display: flex; align-items: center; justify-content: center; font-size: var(--fs-19); font-weight: var(--fw-heavy); letter-spacing: .02em; color: var(--white-a90);
   background: linear-gradient(135deg, #4a80e6 0%, #2456c4 46%, #16307a 100%); }
 .lightbox__img::after { content: ""; position: absolute; inset: 0; background: radial-gradient(120% 90% at 22% 18%, var(--white-a30), transparent 55%); pointer-events: none; }
+/* 실제 그림이 있으면 더미 대신 종이 면 위 그림 (비율은 그림을 따른다) */
+.lightbox__img.has-img { aspect-ratio: auto; background: var(--paper-bg); padding: var(--sp-16); }
+.lightbox__img.has-img::after { content: none; }
+.lightbox__img img { display: block; max-width: 100%; max-height: 64vh; margin: 0 auto; object-fit: contain; }
 
 /* ===== 하단 콘솔 바 ===== */
 /* 하단 콘솔 = 일러스트(우주선). 좌우 console SVG와 이어지는 고정색, 토큰/테마 영향 없음.
@@ -155,6 +171,11 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 .sblank { min-width: 84px; padding: 0 var(--sp-12); }
 .sblank.is-active::before { content: "?"; }
 .sblank__thumb { width: 24px; height: 18px; border-radius: var(--r-4); }
+/* 요약 창 속 그림 — 한 구간으로 읽고, 종이 면 위에 둔다 */
+.sfig { display: block; width: fit-content; margin: var(--sp-4) 0; padding: var(--sp-8); border-radius: var(--r-8); background: var(--paper-bg); }
+.sfig img { display: block; width: 220px; height: auto; }
+/* 요약 창 첫 줄 제목 (실서비스 「삼각비의 뜻」) */
+.sline--title { font-weight: var(--fw-bold); }
 /* 선지 — 현재 구간이 빈칸일 때만 채우고, 공간은 항상 예약(박스 안 흔들림) */
 /* 선지 & '다음으로'를 같은 고정 슬롯에 (번갈아 표시 → 총 높이 불변, 안 밀림/안 벙벙) */
 .summary__foot { min-height: 96px; display: flex; align-items: center; justify-content: center; }

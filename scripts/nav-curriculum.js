@@ -19,7 +19,8 @@
     '이해':{bg:'var(--ok-solid)',fg:'var(--text-on-accent)'}, '정복':{bg:'var(--ok-ink)',fg:'var(--ok-on-ink)'}
   };
   var STEPS = {
-    concept:[['STEP 1','개념 학습','concept/learn.html'],['STEP 2','개념 확인하기','concept/drill.html']],
+    concept:[['STEP 1','개념 학습', subject==='science' ? 'concept/learn.html' : 'concept/learn-math.html'],   /* 실서비스 STEP 2 = 수학 기초 연산 · 과학 개념 확인하기 */
+            subject==='science' ? ['STEP 2','개념 확인하기','concept/check.html'] : ['STEP 2','기초 연산','concept/basic-ops.html']],
     type:[['STEP 1','1차 유형·유사','type/quiz.html'],['STEP 2','2차 유형·유사','type/quiz.html']],
     essay:[['STEP 1','기초 기르기','essay/basics-v2.html'],['STEP 2','기본 다지기','essay/drill-v2.html'],['STEP 3','실력 키우기','essay/advanced.html']]
   };
