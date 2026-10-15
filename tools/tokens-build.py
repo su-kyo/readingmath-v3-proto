@@ -85,7 +85,8 @@ def resolve(v, e, depth=0):
     if m and depth < 12 and m.group(1) in e:
         name = m.group(1)
         r, val = resolve(e[name], e, depth + 1)
-        if re.fullmatch(r'--%s-\d+' % FAMILY, name) or name.startswith(('--white-a', '--black-a', '--asset-', '--art-')):
+        # 값을 직접 가진 1단 이름에서 멈춘다. 계열이 갈아 끼우는 에셋 칸(--asset-bar-rim 등)은 그 너머까지 따라간다
+        if r is None and (re.fullmatch(r'--%s-\d+' % FAMILY, name) or name.startswith(('--white-a', '--black-a', '--asset-', '--art-'))):
             return name, val
         return r, val
     m = re.fullmatch(r'color-mix\(in srgb,\s*(.+?)\s+(\d+(?:\.\d+)?)%,\s*(.+)\)', v)
@@ -183,7 +184,7 @@ def build():
             leaf['$value'] = val
         if note: leaf['$description'] = note
         ext = {'css': name}
-        if g in ('semantic', 'asset') and k in ('color', 'image'):
+        if g in ('semantic', 'asset') and k in ('color', 'image', 'shadow'):
             for t in ('light', 'dark'):
                 r, v = resolve('var(%s)' % name, env(t, 'concept'))
                 ext[t] = {'ref': r, 'value': v}

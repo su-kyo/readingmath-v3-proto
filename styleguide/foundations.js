@@ -54,35 +54,9 @@
     alphaRow('white', ['04','06','08','10','12','14','16','20','24','30','40','50','60','80','90','95'], 'var(--n-900)', '흰 — 다크 면 위 덧칠 · 트랙 · 헤어라인') +
     alphaRow('black', ['10','20','25','30','40','50','60','70'], 'var(--n-000)', '검정 — 그림자 · 딤 · 눌림');
 
-  /* ---- 계열 슬롯 ---- */
-  var SECTIONS = [
-    ['concept', '개념', '파랑 700'], ['type', '유형', '틸 700'],
-    ['essay', '서술형', '바이올렛 800 — 가장 깊은 프레임'], ['exam', '시험대비', '바이올렛 700'],
-    ['assign', '과제센터', '파랑 600'], ['util', '유틸', '중성 900 — 색 체계가 따로다'],
-    ['space', 'A층 우주', '중성 900 · 항상 다크 · 토글 없음']
-  ];
   // 계열 블록은 :root[data-section=...] 이라 <html> 에만 걸린다. 가짜 div 로는 못 읽는다 —
-  // 실제로 그렇게 재서 일곱 계열이 전부 같은 색으로 찍힌 적이 있다.
   // 그래서 <html> 의 data-section 을 잠깐 갈아끼우고 읽은 뒤 되돌린다.
   var root = document.documentElement;
-  var keep = root.getAttribute('data-section');
-  document.getElementById('sections').innerHTML =
-    '<table class="sg-table"><thead><tr><th style="width:120px">계열</th>' +
-    '<th style="width:150px">프레임 static</th><th style="width:130px">정체성 vivid</th>' +
-    '<th style="width:130px">텍스트 solid</th><th>메모</th></tr></thead><tbody>' +
-    SECTIONS.map(function (s) {
-      root.setAttribute('data-section', s[0]);
-      var p = getComputedStyle(root);
-      function chip(name) {
-        var c = p.getPropertyValue(name).trim();
-        return '<span style="display:inline-block;width:14px;height:14px;border-radius:4px;' +
-               'vertical-align:-2px;margin-right:6px;background:' + c + '"></span><code>' + c + '</code>';
-      }
-      return '<tr><td><strong>' + s[1] + '</strong><br><code>' + s[0] + '</code></td>' +
-             '<td>' + chip('--th-static') + '</td><td>' + chip('--th-vivid') + '</td>' +
-             '<td>' + chip('--th-solid') + '</td><td>' + s[2] + '</td></tr>';
-    }).join('') + '</tbody></table>';
-  root.setAttribute('data-section', keep);
 
   /* ---- 배경 사진 + 다크 막 견본 ----
      계열 토큰은 <html> 에만 걸리므로 여기서 값을 꺼내 타일에 직접 심는다. */
@@ -109,6 +83,135 @@
     }).join('') + '</div>' +
     '<style>:root[data-theme="light"] [data-veil]{display:none}</style>';
   root.setAttribute('data-section', keep2);
+
+  /* ---- 토큰 시트 (2026-10-15) ----
+     styleguide/data/tokens.json 을 읽어 표 셋을 그린다. 그 파일은 tools/tokens-build.py 가 tokens.css 에서 만든다.
+     브라우저 계산값으로 그리지 않는 이유 — color-mix 가 어느 원색을 섞었는지는 계산값에 남지 않는다. */
+  function esc(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); }
+  function sw(c, mod) { return '<i class="sg-sw' + (mod ? ' ' + mod : '') + '" style="--c:' + esc(c) + '"></i>'; }
+  function pct(o) {   // 원색을 투명과 섞은 값이면 그 비율. 알파 램프는 이름이 곧 비율이라 뺀다
+    if (!o.ref || /^--(white|black)-a/.test(o.ref)) return '';
+    var m = /rgba\([^)]*,\s*([\d.]+)\)$/.exec(o.value || '');
+    return m ? ' <span class="sg-sheet__pct">' + Math.round(parseFloat(m[1]) * 100) + '%</span>' : '';
+  }
+  function ref(o) { return o.ref ? '<code>' + o.ref + '</code>' + pct(o) : '<span class="sg-sheet__raw">직접 값</span>'; }
+  // 값 칸 하나 — 칩 · 1단 이름 · 최종 값. tag 는 3단의 「라」·「다」 머리.
+  // 3단(narrow)은 칸이 일곱이라 반투명의 rgba 줄을 뺀다 — 원색 이름과 퍼센트로 값이 정해진다
+  function val(o, type, base, tag, narrow) {
+    var chip = type === 'color' ? sw(o.value, base === 'd' ? 'sg-sw--d' : '') : '';
+    var raw = narrow && pct(o) ? '' : '<small>' + esc(o.value) + '</small>';
+    return '<div class="sg-val">' + (tag ? '<span class="sg-val__t">' + tag + '</span>' : '') + chip +
+           '<span>' + ref(o) + raw + '</span></div>';
+  }
+  function table(cls, head, body) {
+    return '<table class="sg-table sg-table--sheet ' + cls + '"><thead><tr>' +
+      head.map(function (h) { return '<th' + (h[1] ? ' style="width:' + h[1] + '"' : '') + '>' + h[0] + '</th>'; }).join('') +
+      '</tr></thead><tbody>' + body + '</tbody></table>';
+  }
+  function grp(label, span) { return '<tr class="sg-sheet__grp"><th colspan="' + span + '">' + label + '</th></tr>'; }
+  // 이름 규칙으로 묶는다. 어느 묶음에도 안 맞는 토큰은 「그 밖」으로 — 조용히 빠지지 않게
+  function grouped(names, groups) {
+    var out = groups.map(function (g) { return [g[0], []]; }).concat([['그 밖', []]]);
+    names.forEach(function (n) {
+      for (var i = 0; i < groups.length; i++) if (groups[i][1].test(n)) { out[i][1].push(n); return; }
+      out[out.length - 1][1].push(n);
+    });
+    return out.filter(function (g) { return g[1].length; });
+  }
+
+  function drawSheet(d) {
+    var C = d.primitive.color, X = function (t) { return t.$extensions.rm; };
+
+    /* 1단 · 가족 램프 — 줄 = 가족, 칸 = 스텝 */
+    var famSteps = STEPS, fam = FAMILIES.filter(function (f) { return f[2] !== 'n'; }).concat([['골드', '별 · 등급 그림과 세트', 'gold', null]]);
+    function rampCell(f, s) {
+      var t = C[f] && C[f][s];
+      return t ? '<td title="--' + f + '-' + s + '">' + sw(t.$value, 'sg-sw--block') + '<code>' + t.$value + '</code></td>' : '<td></td>';
+    }
+    document.getElementById('sheetRamp').innerHTML = table('sg-table--ramp',
+      [['가족', '']].concat(famSteps.map(function (s) { return [s, '']; })),
+      fam.map(function (f) {
+        return '<tr><td><strong>' + f[0] + '</strong><br><code>--' + f[2] + '-*</code></td>' +
+               famSteps.map(function (s) { return rampCell(f[2], s); }).join('') + '</tr>';
+      }).join(''));
+    // 순서는 위 FAMILIES 의 뉴트럴 줄을 따른다 — Object.keys 는 '100' 같은 숫자 이름을 앞으로 당겨 000 · 050 이 맨 뒤로 간다
+    var nSteps = FAMILIES[0][3];
+    document.getElementById('sheetNeutral').innerHTML = table('sg-table--ramp',
+      [['', '']].concat(nSteps.map(function (s) { return [s, '']; })),
+      '<tr><td><strong>뉴트럴</strong><br><code>--n-*</code></td>' + nSteps.map(function (s) { return rampCell('n', s); }).join('') + '</tr>');
+
+    /* 1단 · 알파 램프 — 흰 · 검정 나란히 */
+    function alphaTable(prefix, base) {
+      return table('', [['토큰', '45%'], ['값', '']], Object.keys(C.alpha).filter(function (k) { return k.indexOf(prefix) === 0; })
+        .map(function (k) {
+          return '<tr><td><code>--' + k + '</code></td><td><div class="sg-val">' + sw(C.alpha[k].$value, base) +
+                 '<code>' + C.alpha[k].$value + '</code></div></td></tr>';
+        }).join(''));
+    }
+    document.getElementById('sheetAlpha').innerHTML = alphaTable('white-', 'sg-sw--d') + alphaTable('black-', '');
+
+    /* 1단 · 에셋 연동색 — 계열을 따라 갈아 끼우는 칸(sections 가 있는 것)은 3단 표로 보낸다 */
+    var assetRaw = Object.keys(d.asset).filter(function (k) { return !X(d.asset[k]).sections; });
+    document.getElementById('sheetAsset').innerHTML = table('', [['토큰', '40%'], ['값', '']],
+      grouped(assetRaw, [['콘솔바 트레이 · 립 · 몸통', /^asset-console-/], ['우주 배경 · 별', /^art-(space|star)/],
+        ['등급 칩', /^art-grade-/], ['행성 링', /^art-planet-/], ['개념 학습 형광펜(다크)', /^art-mark-/]])
+      .map(function (g) {
+        return grp(g[0], 2) + g[1].map(function (k) {
+          var v = d.asset[k].$value;
+          return '<tr><td><code>--' + k + '</code></td><td><div class="sg-val">' + sw(v) + '<code>' + v + '</code></div></td></tr>';
+        }).join('');
+      }).join(''));
+
+    /* 2단 · 역할 — 토큰 | 라이트 | 다크 */
+    var sem = Object.keys(d.semantic).filter(function (k) { return X(d.semantic[k]).light; });
+    document.getElementById('sheetSemantic').innerHTML = table('', [['토큰', '30%'], ['라이트', '35%'], ['다크', '35%']],
+      grouped(sem, [['표면', /^(bg|surface-)/], ['글자', /^text/], ['테두리 · 딤 · 그림자', /^(border|scrim|shadow)/],
+        ['상태 · 정답', /^ok-/], ['상태 · 오답', /^no-/], ['상태 · 주의', /^warn-/], ['상태 · 안내', /^info-/],
+        ['현재 위치', /^current$/], ['CTA', /^primary/], ['모드색', /^mode-/], ['브랜드', /^brand$/],
+        ['과목 계통', /^subj-/], ['우주 액센트', /^accent-/]])
+      .map(function (g) {
+        return grp(g[0], 3) + g[1].map(function (k) {
+          var t = d.semantic[k], r = X(t);
+          return '<tr><td><code>--' + k + '</code>' + (r.flipsWithTheme ? '<span class="sg-flip">뒤집힘</span>' : '') + '</td>' +
+                 '<td>' + val(r.light, t.$type, 'l') + '</td><td>' + val(r.dark, t.$type, 'd') + '</td></tr>';
+        }).join('');
+      }).join(''));
+
+    /* 3단 · 계열 슬롯 — 줄 = 슬롯, 칸 = 계열 7벌 */
+    var SEC = Object.keys(d.$extensions.rm.sections);
+    var SEC_KO = { concept: '개념', type: '유형', essay: '서술형', exam: '시험', assign: '과제', util: '유틸', space: '우주(A층)' };
+    function themeRow(k, t, long) {   // long — 이름이 긴 에셋 칸. 칸 안에서 줄을 바꿔 표가 화면 밖으로 밀리지 않게 한다
+      var secs = X(t).sections;
+      return '<tr' + (long ? ' class="sg-sheet__long"' : '') + '><td><code>--' + k + '</code></td>' + SEC.map(function (s) {
+        var l = secs[s].light, dk = secs[s].dark;
+        if (t.$type !== 'color') {   // 배경 사진 — 파일 이름만
+          return '<td><small>' + esc(l.value.replace(/^url\("?.*\/([^/"]+)"?\)$/, '$1')) + '</small></td>';
+        }
+        return '<td>' + (l.value === dk.value ? val(l, 'color', 'l', '', true)
+          : val(l, 'color', 'l', '라', true) + val(dk, 'color', 'd', '다', true)) + '</td>';
+      }).join('') + '</tr>';
+    }
+    var slotAsset = Object.keys(d.asset).filter(function (k) { return X(d.asset[k]).sections; });
+    document.getElementById('sheetTheme').innerHTML = table('sg-table--theme',
+      [['슬롯', '']].concat(SEC.map(function (s) { return [SEC_KO[s] || s, '']; })),
+      grp('<code>--th-*</code> 슬롯', SEC.length + 1) +
+      Object.keys(d.theme).map(function (k) { return themeRow(k, d.theme[k]); }).join('') +
+      grp('계열을 따르는 에셋 칸', SEC.length + 1) +
+      slotAsset.map(function (k) { return themeRow(k, d.asset[k], true); }).join(''));
+  }
+
+  // tokens.json 도 문서의 ?v= 를 따른다 — 안 붙이면 브라우저가 옛 파일을 계속 쓴다(RM-FILE-06)
+  var sgLink = document.querySelector('link[href*="sg.css"]');
+  var ver = sgLink && /\?v=([\w-]+)/.exec(sgLink.getAttribute('href'));
+  fetch('styleguide/data/tokens.json' + (ver ? '?v=' + ver[1] : ''))
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(drawSheet)
+    .catch(function () {
+      ['sheetRamp', 'sheetNeutral', 'sheetAlpha', 'sheetAsset', 'sheetSemantic', 'sheetTheme'].forEach(function (id) {
+        document.getElementById(id).innerHTML = '<p class="sg-sheet__err">tokens.json을 읽지 못했습니다. ' +
+          '파일을 직접 열면 읽지 못합니다. 미리보기 서버로 엽니다.</p>';
+      });
+    });
 
   /* ---- 글자 눈금 ---- */
   var SAMPLE = '우주 탐험 학습 Reading Math 0123';

@@ -201,3 +201,49 @@ a.sg-chip:hover { color: var(--text); border-color: var(--border-strong); }
 .sg-pending { display: block; padding: var(--sp-12) var(--sp-16); margin-bottom: var(--sp-16); border-radius: var(--r-8);
   border: var(--bw-1_5) dashed var(--border-strong); font-size: var(--fs-13); line-height: 1.7; color: var(--text-muted); }
 .sg-pending strong { color: var(--text); }
+
+/* ===== 토큰 시트 (foundations · 2026-10-15) — foundations.js 가 tokens.json 을 읽어 표를 그린다 ===== */
+.sg-sheet__h { font-size: var(--fs-16); margin: var(--sp-32) 0 var(--sp-8); scroll-margin-top: var(--sp-24); }
+.sg-sheet__h small { margin-left: var(--sp-8); font-size: var(--fs-12); font-weight: var(--fw-regular); color: var(--text-meta); }
+.sg-sheet__note { max-width: 76ch; margin-bottom: var(--sp-12); font-size: var(--fs-13); line-height: 1.75; color: var(--text-muted); }
+.sg-sheet__scroll { overflow-x: auto; margin-bottom: var(--sp-8); }
+.sg-sheet__scroll > .sg-table { margin-bottom: 0; }
+.sg-sheet__pair { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-24); align-items: start; }
+.sg-sheet__pair .sg-table { margin-bottom: 0; }
+@media (max-width: 900px) { .sg-sheet__pair { grid-template-columns: 1fr; } }
+.sg-sheet__err { padding: var(--sp-12) var(--sp-16); border-radius: var(--r-8); border: var(--bw-1_5) dashed var(--border-strong);
+  font-size: var(--fs-13); color: var(--text-muted); }
+
+/* 표 — 묶음 머리 줄 · 램프 격자 · 3단 계열 칸 */
+.sg-table--sheet td { vertical-align: middle; }
+.sg-table--sheet tr.sg-sheet__grp > th { padding-top: var(--sp-20); font-size: var(--fs-12); letter-spacing: 0; text-transform: none;
+  color: var(--text); border-bottom-color: var(--border-strong); }
+.sg-table--sheet tr.sg-sheet__grp:hover { background: none; }
+.sg-table--ramp th, .sg-table--ramp td { padding: var(--sp-6); text-align: center; }
+.sg-table--ramp th:first-child, .sg-table--ramp td:first-child { padding-left: 0; text-align: left; white-space: nowrap; }
+.sg-table--ramp td code { font-size: var(--fs-11); }
+.sg-table--theme th, .sg-table--theme td { padding: var(--sp-8) var(--sp-6); }
+.sg-table--theme td code { font-size: var(--fs-11); white-space: nowrap; }
+.sg-table--theme tr.sg-sheet__long td code { white-space: normal; overflow-wrap: anywhere; }
+.sg-table--theme td:first-child { white-space: nowrap; }
+
+/* 칩 — 값(--c)을 테마 바탕(--sw-base) 위에 얹는다. 반투명 값도 그 테마에서 보이는 대로 나온다 */
+.sg-sw { display: inline-block; flex: none; width: 18px; height: 18px; border-radius: var(--r-4); vertical-align: -4px;
+  background: linear-gradient(var(--c), var(--c)), var(--sw-base, var(--n-000));
+  box-shadow: inset 0 0 0 var(--bw-1) var(--border); }
+.sg-sw--d { --sw-base: var(--n-900); }
+.sg-sw--block { display: block; width: 100%; min-width: 60px; height: 28px; margin-bottom: var(--sp-4); }
+
+/* 값 칸 — 칩 + 1단 이름 + 최종 값 */
+.sg-val { display: flex; align-items: center; gap: var(--sp-8); }
+.sg-val + .sg-val { margin-top: var(--sp-6); }
+.sg-val > span { min-width: 0; }
+.sg-val small { display: block; font-family: var(--font-mono); font-size: var(--fs-11); color: var(--text-meta); white-space: nowrap; }
+.sg-val__t { flex: none; width: 14px; font-size: var(--fs-11); font-weight: var(--fw-bold); color: var(--text-meta); }
+.sg-sheet__pct { font-family: var(--font-mono); font-size: var(--fs-11); color: var(--text-meta); }
+
+/* 딱지 — 테마에 따라 값이 바뀌는 줄 · 1단을 거치지 않은 값 */
+.sg-flip { display: inline-block; margin-left: var(--sp-6); padding: 1px var(--sp-6); border-radius: var(--r-full);
+  font-size: var(--fs-11); font-weight: var(--fw-bold); color: var(--th-ink-accent); background: var(--th-tint-strong); white-space: nowrap; }
+.sg-sheet__raw { display: inline-block; padding: 0 var(--sp-6); border-radius: var(--r-full); border: var(--bw-1) dashed var(--border-strong);
+  font-size: var(--fs-11); font-weight: var(--fw-bold); color: var(--text-muted); white-space: nowrap; }

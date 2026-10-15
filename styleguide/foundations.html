@@ -6,10 +6,10 @@
   <title>기초 — 리딩수학과학 디자인 시스템</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
   <base href="../" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261015" />
-  <link rel="stylesheet" href="styles/base.css?v=20261015" />
-  <link rel="stylesheet" href="styles/components.css?v=20261015" />
-  <link rel="stylesheet" href="styleguide/sg.css?v=20261015" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261015-2" />
+  <link rel="stylesheet" href="styles/base.css?v=20261015-2" />
+  <link rel="stylesheet" href="styles/components.css?v=20261015-2" />
+  <link rel="stylesheet" href="styleguide/sg.css?v=20261015-2" />
 </head>
 <body data-sg-css="tokens,base,components">
 <div class="sg">
@@ -39,6 +39,7 @@
         </tbody>
       </table>
       <div class="sg-rule sg-rule--dont">화면 CSS·JS에 색값(hex · rgb)과 눈금에 있는 px를 직접 적지 않는다. 필요한 값이 없으면 눈금이 맞는지부터 본다. <code>RM-COL-01</code> · <code>RM-SIZE-01</code></div>
+      <p class="sg-lead">토큰 하나의 값을 찾을 때는 <a href="styleguide/foundations.html#sheet">토큰 시트</a>를 봅니다. 1단 hex, 2단 라이트·다크 값, 3단 계열 7벌 값이 표 하나씩에 있습니다.</p>
       <p class="sg-lead">1단을 직접 부르는 곳은 아직 남아 있습니다. 계기판·콘솔처럼 테마와 무관한 고정 면은 1단이 맞고, 테마를 따라야 하는 색은 2단으로 옮깁니다(<code>RM-COL-05</code>). 개수는 <code>tools/style-audit.py</code>의 「1단(팔레트) 직접 사용」이 셉니다.</p>
     </section>
 
@@ -70,7 +71,7 @@
         예를 들어 콘솔바는 양끝이 SVG 그림이고 가운데 트레이를 CSS가 칠하므로, 트레이는 그림 속 색을 그대로 씁니다. 우주 배경 · 별 · 등급 칩 · 행성 링 · 형광펜도 같은 이유로 이름만 붙여 둡니다.</p>
       <div class="sg-rule sg-rule--do">그림과 맞닿는 CSS 면은 <code>--asset-*</code> · <code>--art-*</code> 이름으로만 쓴다. hex를 직접 쓰지 않는다. <code>RM-ASSET-05</code></div>
       <div class="sg-rule sg-rule--dont">새 UI의 색으로 고르지 않는다. 그림과 상관없는 자리에 그림 색이 퍼진다. 새 화면의 색은 2단 역할 토큰에서 찾는다. <code>RM-COL-05</code></div>
-      <p class="sg-lead">값은 <code>styles/tokens.css</code>와 개발자 파일 <a href="styleguide/data/tokens.json"><code>styleguide/data/tokens.json</code></a>(계열별 값 포함)에 있습니다.
+      <p class="sg-lead">값은 <a href="styleguide/foundations.html#sheet-asset">토큰 시트</a>와 개발자 파일 <a href="styleguide/data/tokens.json"><code>styleguide/data/tokens.json</code></a>(계열별 값 포함)에 있습니다.
         그림을 다시 그리지 않는 한 값이 고정이라 램프 대비 규칙을 적용하지 않습니다.</p>
       <div class="sg-rule sg-rule--do">SVG에 토큰 색을 줄 때는 <code>style="fill:var(…)"</code>로 쓴다. 프레젠테이션 속성 <code>fill="var(…)"</code>는 무시된다.</div>
       <p class="sg-lead">좌표 그래프는 그림이 아니라 데이터를 그리는 UI라서 토큰 검사에 넣습니다.</p>
@@ -161,7 +162,7 @@
       <p class="sg-lead">개념(파랑) · 유형(틸) · 서술형(보라) · 과제(파랑 600) · 시험(보라 700) · 유틸(중성) · A층 우주.
         부품은 <code>data-section</code>만 바뀌면 그 계열 색을 입습니다.</p>
       <div class="sg-rule sg-rule--dont">부품에 <code>.bar--concept</code> 같은 계열 변형 클래스를 만들지 않는다.</div>
-      <div id="sections"></div>
+      <p class="sg-lead">슬롯마다 계열 7벌에 들어가는 값은 <a href="styleguide/foundations.html#sheet-theme">토큰 시트의 3단 계열표</a>에 있습니다.</p>
 
       <div class="sg-item" data-pad="0" data-uses="screen__bg">
         <div class="sg-item__hd"><h3>배경 사진과 다크 막</h3><span class="sg-item__cls">--art-screen-bg · --art-screen-veil</span>
@@ -173,6 +174,41 @@
         </details>
         <template class="sg-src" id="veilTpl"></template>
       </div>
+    </section>
+
+    <!-- ===================================================== 토큰 시트 -->
+    <section class="sg-sec" id="sheet">
+      <h2>토큰 시트 <small><code>styleguide/data/tokens.json</code>을 그린다 · 1단 · 2단 · 3단</small></h2>
+      <p class="sg-lead">색 토큰 전부를 이름과 값으로 펼친 표입니다. Figma Variables처럼 한 장에서 찾습니다.
+        값은 개발자 파일 <a href="styleguide/data/tokens.json"><code>tokens.json</code></a>을 그대로 읽어 그립니다.</p>
+      <div class="sg-rule sg-rule--do"><code>tokens.css</code>를 고쳤으면 <code>tools/tokens-build.py</code>를 돌린다. 안 돌리면 이 표와 개발자 파일이 옛 값에 머문다.</div>
+      <details class="sg-why"><summary>근거</summary>
+        <p>위의 견본은 색을 보여 주지만 값을 읽기 어렵다. 실서버로 옮기는 개발자에게는 토큰마다 「라이트에서 무엇, 다크에서 무엇, 어느 원색」이 필요하다.</p>
+        <p>값을 브라우저에서 계산하지 않고 <code>tokens.json</code>을 읽는 이유는 둘이다. 계산값으로는 <code>color-mix</code>가 어느 원색을 섞었는지 알 수 없고, 개발자가 받는 파일과 이 표가 같은 출처여야 어긋나지 않는다.</p>
+      </details>
+
+      <h3 class="sg-sheet__h" id="sheet-ramp">1단 · 원시 램프 <small>가족 8벌 × 11스텝 · 골드 1</small></h3>
+      <div class="sg-sheet__scroll" id="sheetRamp"></div>
+      <h3 class="sg-sheet__h">1단 · 뉴트럴 <small>14스텝</small></h3>
+      <div class="sg-sheet__scroll" id="sheetNeutral"></div>
+
+      <h3 class="sg-sheet__h" id="sheet-alpha">1단 · 알파 램프 <small>흰 16 · 검정 8</small></h3>
+      <p class="sg-sheet__note">흰 칩은 어두운 바탕(<code>--n-900</code>) 위에, 검정 칩은 흰 바탕 위에 얹었습니다.</p>
+      <div class="sg-sheet__pair" id="sheetAlpha"></div>
+
+      <h3 class="sg-sheet__h" id="sheet-asset">1단 · 에셋 연동색 <small>그림과 이어 붙는 값</small></h3>
+      <div class="sg-sheet__scroll" id="sheetAsset"></div>
+
+      <h3 class="sg-sheet__h" id="sheet-semantic">2단 · 역할 <small>라이트 | 다크</small></h3>
+      <p class="sg-sheet__note">칸마다 가리키는 1단 이름, 최종 값, 칩 순서입니다. 칩은 그 테마의 기본 바탕(라이트 흰색 · 다크 <code>--n-900</code>) 위에 얹었습니다.
+        <span class="sg-flip">뒤집힘</span> 표시가 붙은 줄만 테마에 따라 값이 바뀝니다.
+        <span class="sg-sheet__raw">직접 값</span>은 1단을 거치지 않고 <code>tokens.css</code>에 값을 바로 적은 칸입니다. 퍼센트는 그 원색을 투명과 섞은 비율입니다.</p>
+      <div class="sg-sheet__scroll" id="sheetSemantic"></div>
+
+      <h3 class="sg-sheet__h" id="sheet-theme">3단 · 계열 슬롯 <small>슬롯 × 계열 7벌</small></h3>
+      <p class="sg-sheet__note">칸에는 가리키는 1단 이름과 최종 값을 적었습니다. 칸이 위아래로 나뉜 슬롯은 테마에 따라 값이 다릅니다(라 = 라이트 · 다 = 다크).
+        아래 묶음의 에셋 칸 셋은 <code>--th-*</code>는 아니지만 <code>data-section</code>을 따라 값이 바뀌어 함께 싣습니다.</p>
+      <div class="sg-sheet__scroll" id="sheetTheme"></div>
     </section>
 
     <!-- ===================================================== 칠면 셋 -->
@@ -375,7 +411,7 @@
   </main>
 </div>
 
-<script src="styleguide/foundations.js?v=20261015"></script>
-<script src="styleguide/sg.js?v=20261015"></script>
+<script src="styleguide/foundations.js?v=20261015-2"></script>
+<script src="styleguide/sg.js?v=20261015-2"></script>
 </body>
 </html>
