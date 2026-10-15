@@ -5,7 +5,7 @@
 개발 서버(test.readingmath.co.kr)에서 개념 · 유형 · 서술형 훈련을 끝까지 풀어 보고, 프로토타입과 다른 곳을 모았습니다. 수학은 전부 봤고, 과학은 서술형에서 수학과 다른 곳만 봤습니다.
 작업해 주신 덕분에 새 디자인이 거의 다 살아 있습니다. 아래는 「디자인을 이렇게 가져가고 싶다」는 부탁입니다. 구현 방식과 파일 구조는 편하신 대로 해 주세요.
 
-- **기준 버전**: 프로토타입 저장소 태그 `qa-base-2` (2026-10-15)와, 그 뒤 이 문서와 함께 올린 커밋까지. 이 문서의 값과 링크는 배포본 기준입니다.
+- **기준**: 2026-10-15 마지막 배포본입니다. 이 문서의 값과 링크는 모두 아래 프로토타입 주소 기준입니다.
 - **프로토타입**: [readingmath-v3-proto.vercel.app](https://readingmath-v3-proto.vercel.app/)
 - **범위**: 수학 · 과학의 개념 · 유형 · 서술형 훈련 — 학습 화면, 스텝 결과, 훈련 결과. 과제 · 시험은 이번 범위가 아닙니다.
 - **테마**: 라이트만 봅니다. 결과 화면(스텝 · 훈련)은 말씀 주신 대로 다크 고정 그대로 좋습니다.
@@ -59,6 +59,7 @@
 | 11 | 해설 문항 칩은 정답 확인 뒤에도 ✕ | 유형 · 서술형 해설 | 보통 |
 | 12 | 개념 학습 「글자」 버튼 자리 | 개념 학습 | 낮음 |
 | 13 | 과학 보고서 미리보기 창 | 서술형 3단계(과학) | 보통 |
+| 14 | 결과 화면 배경 막 | 스텝 결과 · 훈련 결과 | 낮음 |
 
 ---
 
@@ -418,7 +419,25 @@
 
 ---
 
-## 15. 받아온 것 · 그대로 두실 것
+## 15. 요청 14 — 결과 화면 배경 막
+
+**지금** 결과 화면(다크 고정)의 배경 사진 위 막이 학습 화면 다크와 같은 세기라, 우주선 벽이 밝게 남아 계기판에 눈이 덜 갑니다.
+
+**원하는 모습** 결과 화면 6장만 계열 막 위에 남색 #060E20 35% 막을 한 겹 더 얹습니다. 학습 화면의 막은 그대로입니다.
+
+| 계열 | 지금 막 | 한 겹 더 얹은 뒤(합쳐서) |
+|---|---|---|
+| 개념 | #060E20 45% | 약 64% |
+| 유형 | #060E20 55% | 약 71% |
+| 서술형 | #060E20 25% | 약 51% |
+
+**확인 링크** [type/result.html?snap=1](https://readingmath-v3-proto.vercel.app/type/result.html?snap=1) · [essay/step-result.html?snap=1](https://readingmath-v3-proto.vercel.app/essay/step-result.html?snap=1) · [shared/training-result.html?snap=1](https://readingmath-v3-proto.vercel.app/shared/training-result.html?snap=1)
+
+**완료 기준** 결과 화면에서 계기판 바깥 배경이 한 단계 어둡다.
+
+---
+
+## 16. 받아온 것 · 그대로 두실 것
 
 **프로토타입에 받아왔습니다** — 이미 만들어 주신 것이라 실서버는 그대로 두시면 됩니다.
 - 콘솔바 안내 문구 전부(모양만 요청 7)
@@ -439,21 +458,12 @@
 - 확인 창: 「학습을 시작하시겠어요?」 · 「학습을 이어서 진행하시겠어요?」 · 「복습을 시작하시겠어요?」 · 「해설 보기를 종료하실 거예요?」
 - 훈련 완료 축하 화면(「○○ 훈련을 완료했어요!」 + 「자세히 보기」)
 - 개념 학습의 지문 진행 막대(「지문 ▬▭」), 스크롤하면 접히는 문제 프레임, 해설의 좌우 화살표
-- 요약 버튼 주의 애니메이션 · 객관식 선지 등장 연출(값은 13절 질문)
-- 「유형 도전」 버튼(서술형 결과의 것만 13절 질문)
+- 요약 버튼 주의 애니메이션 · 객관식 선지 등장 연출
+- 「유형 도전」 버튼
+- 빈칸 자리표시의 「1-1」 「2-1」 번호(프로토타입은 간단히 그리려고 번호를 뺐을 뿐입니다)
+- 물리 키보드로 계산기 입력
 - 과학 보고서 스텝 결과의 「추천보고서」 · 「새로운 탐구활동 보고서 만들기」
 - 서술형 2단계 단계 버튼(「순서 맞추기」 · 「다음 문제」) 위치 — 프로토타입은 본문 아래이고, 지금 위치도 괜찮습니다
-
----
-
-## 16. 확인하고 싶은 것
-
-1. 빈칸 자리표시에 보이는 「1-1」 「2-1」은 콘텐츠 데이터인가요, 화면이 붙인 번호인가요? 프로토타입은 번호 없이 빈 칸입니다.
-2. 서술형 훈련 결과에 있는 「유형 도전」 버튼은 의도하신 건가요?
-3. 연습장 지우개 아이콘이 Font Awesome **Regular** `eraser`입니다. 회사 라이선스로 공개 프로토타입(Vercel)에 같은 아이콘을 써도 되는지 알려 주세요. 안 되면 같은 모양으로 다시 그리겠습니다.
-4. 서술형 2단계 해설이 「처음 고른 답」을 기록합니다(다시 골라 맞혀도 오답으로 남음). 의도하신 채점 규칙인가요?
-5. 정답률이 7~10%일 때 계기판 아크 시작 끝이 깃발 모양 조각처럼 보입니다. 의도된 모양인지 봐 주세요.
-6. 요약 버튼 주의 애니메이션 · 객관식 선지 등장 연출의 시간 · 곡선 값을 알려 주세요. 프로토타입 문서에 기록해 두겠습니다. 선지 등장은 기초 연산처럼 연달아 풀 때 답답하지 않은 길이면 좋겠습니다.
 
 ---
 
@@ -467,17 +477,16 @@
   - 화면 지도: [styleguide/data/screens.json](https://readingmath-v3-proto.vercel.app/styleguide/data/screens.json) — 화면마다 쓰는 부품 · 토큰 · 규칙
 - **화면 단위로 옮기기.** 한 화면 안에서 옛 스타일과 새 스타일이 섞이면 「반쯤 새 것」이 오래 남습니다. 학습 셸(머리줄 · 콘텐츠 패널 · 콘솔바) → 화면 본문 순서로, 화면 하나씩 통째로 옮기시면 검수가 쉽습니다.
 - **색은 hex 대신 역할 이름으로.** 「면 · 글자 · 선 · 상태」 역할로 이름을 두면 이번 같은 색 조정이 한 곳에서 끝납니다. 진한 칠면(버튼 · 배지 · 프레임) 위 글자는 늘 흰색입니다.
-- **공용 부품 하나로.** 빈칸 선지 창 · 콘솔바 안내 · 타이머 · 계산기 · 연습장은 화면마다 다시 만들지 않고 하나를 부르는 구조입니다. 프로토타입 기준 파일은 아래와 같습니다.
+- **공용 부품 하나로.** 빈칸 선지 창 · 콘솔바 안내 · 타이머 · 계산기 · 연습장은 화면마다 다시 만들지 않고 하나를 부르는 구조입니다. 프로토타입 기준 파일은 아래와 같습니다(배포본에서 바로 열립니다).
 
 | 부품 | 모양 | 동작 |
 |---|---|---|
-| 빈칸 선지 창 | `styles/components.css` `.bpop` | `scripts/blank-pop.js` |
-| 콘솔바 안내 | `styles/learn-shell.css` `.guide` | `scripts/learn-guide.js` |
-| 타이머 | `styles/learn-shell.css` `.lheader__timer` | `scripts/learn-timer.js` |
-| 계산기 | `styles/keypad.css` | `scripts/keypad.js` · `scripts/keypad-input.js`(물리 키보드) |
-| 연습장 | `styles/scratchpad.css` | `scripts/scratchpad.js` |
+| 빈칸 선지 창 | [styles/components.css](https://readingmath-v3-proto.vercel.app/styles/components.css) `.bpop` | [scripts/blank-pop.js](https://readingmath-v3-proto.vercel.app/scripts/blank-pop.js) |
+| 콘솔바 안내 | [styles/learn-shell.css](https://readingmath-v3-proto.vercel.app/styles/learn-shell.css) `.guide` | [scripts/learn-guide.js](https://readingmath-v3-proto.vercel.app/scripts/learn-guide.js) |
+| 타이머 | [styles/learn-shell.css](https://readingmath-v3-proto.vercel.app/styles/learn-shell.css) `.lheader__timer` | [scripts/learn-timer.js](https://readingmath-v3-proto.vercel.app/scripts/learn-timer.js) |
+| 계산기 | [styles/keypad.css](https://readingmath-v3-proto.vercel.app/styles/keypad.css) | [scripts/keypad.js](https://readingmath-v3-proto.vercel.app/scripts/keypad.js) |
+| 연습장 | [styles/scratchpad.css](https://readingmath-v3-proto.vercel.app/styles/scratchpad.css) | [scripts/scratchpad.js](https://readingmath-v3-proto.vercel.app/scripts/scratchpad.js) |
 
-- **물리 키보드로 계산기 입력.** 지금 개발 서버 계산기는 키보드 숫자가 안 들어갑니다. 프로토타입은 눌린 키에 해당하는 화면 키를 대신 눌러 주는 방식(`keypad-input.js`)이라 붙이기 쉽습니다.
 - **주황 CTA는 한 화면에 하나.** 과학 보고서 스텝 결과에 「새로운 탐구활동 보고서 만들기」와 「훈련 결과 보기」가 둘 다 주황이라, 무엇이 다음 단계인지 흐립니다. 하나를 보조 버튼(진한 회색)으로 내려 주시면 좋겠습니다.
 - **검수 스위치.** 프로토타입 주소 끝에 붙여 상태를 바로 엽니다.
   - `?debug=1` — 왼쪽 아래 검수 패널(정답 · 오답 · 시간 초과 등)

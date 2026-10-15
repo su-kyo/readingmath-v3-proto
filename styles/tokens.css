@@ -329,6 +329,7 @@
   /* 그늘 — 그림자 · 딤 · 막의 바탕색. color-mix(in srgb, var(--shade) N%, transparent) 로 섞어 쓴다 */
   --shade:       var(--n-900);
   --shade-deep:  var(--n-950);
+  --result-veil: color-mix(in srgb, var(--n-900) 35%, transparent);   /* 결과 화면 6장 — 계열 막 위에 한 겹 더 (2026-10-15 사용자: 더 진하게) */
   --shade-soft:  var(--n-650);   /* 밝은 면 위 카드 그림자 */
   --shade-mid:   var(--n-600);   /* 행성 홈 오브젝트 · 캐릭터 바닥 그림자 */
 

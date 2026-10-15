@@ -16,6 +16,12 @@
    크기는 두 벌이다 — 기본(스텝 결과)과 --sm(훈련 결과, 옆에 판독계가 더 붙는다).
    ========================================================================= */
 
+/* ===== 배경 막 — 결과 화면은 계열 막 위에 한 겹 더 덮는다 =====
+   결과는 다크 고정이라 learn-shell.css 의 다크 막이 늘 깔린다. 계열 세기(--art-screen-veil)는
+   그대로 두고 그 위에 --result-veil 을 겹쳐 사진을 더 누른다. */
+:root[data-theme="dark"] .screen__bg::after {
+  background: linear-gradient(var(--result-veil), var(--result-veil)), var(--art-screen-veil); }
+
 /* ===== 원형 게이지 ===== */
 .dial { position: relative; width: clamp(190px,20vw,230px); aspect-ratio: 1; flex: none;
   transition: --pct 1s cubic-bezier(.3,.8,.3,1); }
