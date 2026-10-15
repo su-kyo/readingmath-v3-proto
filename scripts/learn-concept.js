@@ -233,6 +233,8 @@
   var optsWrap = document.getElementById('summaryOptions');
   var nextBtn = document.getElementById('summaryNext');
   var closeBtn = document.getElementById('summaryClose');
+  // 요약 다음 = 개념 다지기 (실서비스 순서: 학습 → 요약 → 다지기 → 정리, 2026-10-15)
+  if (nextBtn) nextBtn.addEventListener('click', function () { window.location.href = 'concept/drill.html'; });
   var segs = [].slice.call(box.querySelectorAll('.sseg'));   // 모달 내 끊어읽기 구간
   var cursor = 0;
 

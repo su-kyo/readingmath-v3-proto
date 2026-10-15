@@ -537,12 +537,10 @@
   },
   "chip--in": {
    "essay/training-result.html": "markup",
-   "shared/training-result.html": "markup",
    "type/training-result.html": "markup"
   },
   "chip--over": {
    "essay/training-result.html": "markup",
-   "shared/training-result.html": "markup",
    "type/training-result.html": "markup"
   },
   "chip--round": {
@@ -1747,14 +1745,8 @@
    "essay/drill.html": "js",
    "essay/report-review.html": "js",
    "essay/report.html": "js",
-   "essay/step-result.html": "js",
-   "essay/training-result.html": "js",
-   "shared/step-result.html": "js",
-   "shared/training-result.html": "js",
    "type/quiz.html": "js",
-   "type/result.html": "js",
-   "type/review.html": "js",
-   "type/training-result.html": "js"
+   "type/review.html": "js"
   },
   "is-just-correct": {
    "concept/learn.html": "js"
@@ -1901,6 +1893,9 @@
    "type/quiz.html": "js",
    "type/result.html": "js",
    "type/review.html": "js"
+  },
+  "is-partial": {
+   "concept/basic-ops.html": "js"
   },
   "is-paused": {
    "essay/drill-review.html": "markup",
@@ -2613,9 +2608,7 @@
   "on": {
    "essay/step-result.html": "js",
    "essay/training-result.html": "js",
-   "shared/step-result.html": "markup",
    "shared/training-result.html": "js",
-   "type/result.html": "markup",
    "type/training-result.html": "js"
   },
   "ops": {
@@ -2860,6 +2853,7 @@
    "concept/drill.html": "js"
   },
   "qcell": {
+   "shared/step-result.html": "js",
    "type/result.html": "js",
    "type/training-result.html": "js"
   },
@@ -2871,6 +2865,7 @@
    "essay/drill-v2.html": "js"
   },
   "qgrid": {
+   "shared/step-result.html": "markup",
    "type/result.html": "markup",
    "type/training-result.html": "markup"
   },
@@ -3788,11 +3783,6 @@
    "shared/step-result.html": "markup",
    "type/result.html": "markup"
   },
-  "rside__prog": {
-   "essay/step-result.html": "markup",
-   "shared/step-result.html": "markup",
-   "type/result.html": "markup"
-  },
   "rside__title": {
    "essay/step-result.html": "markup",
    "shared/step-result.html": "markup",
@@ -3913,14 +3903,8 @@
    "essay/drill.html": "js",
    "essay/report-review.html": "js",
    "essay/report.html": "js",
-   "essay/step-result.html": "js",
-   "essay/training-result.html": "js",
-   "shared/step-result.html": "js",
-   "shared/training-result.html": "js",
    "type/quiz.html": "js",
-   "type/result.html": "js",
-   "type/review.html": "js",
-   "type/training-result.html": "js"
+   "type/review.html": "js"
   },
   "scratch-anim": {
    "assignment/explain.html": "js",
@@ -3937,14 +3921,8 @@
    "essay/drill.html": "js",
    "essay/report-review.html": "js",
    "essay/report.html": "js",
-   "essay/step-result.html": "js",
-   "essay/training-result.html": "js",
-   "shared/step-result.html": "js",
-   "shared/training-result.html": "js",
    "type/quiz.html": "js",
-   "type/result.html": "js",
-   "type/review.html": "js",
-   "type/training-result.html": "js"
+   "type/review.html": "js"
   },
   "scratch-away": {
    "assignment/explain.html": "js",
@@ -3961,14 +3939,8 @@
    "essay/drill.html": "js",
    "essay/report-review.html": "js",
    "essay/report.html": "js",
-   "essay/step-result.html": "js",
-   "essay/training-result.html": "js",
-   "shared/step-result.html": "js",
-   "shared/training-result.html": "js",
    "type/quiz.html": "js",
-   "type/result.html": "js",
-   "type/review.html": "js",
-   "type/training-result.html": "js"
+   "type/review.html": "js"
   },
   "scratch__canvas": {
    "assignment/explain.html": "js",
@@ -3985,14 +3957,8 @@
    "essay/drill.html": "js",
    "essay/report-review.html": "js",
    "essay/report.html": "js",
-   "essay/step-result.html": "js",
-   "essay/training-result.html": "js",
-   "shared/step-result.html": "js",
-   "shared/training-result.html": "js",
    "type/quiz.html": "js",
-   "type/result.html": "js",
-   "type/review.html": "js",
-   "type/training-result.html": "js"
+   "type/review.html": "js"
   },
   "scratch__dim": {
    "assignment/explain.html": "js",
@@ -4009,14 +3975,8 @@
    "essay/drill.html": "js",
    "essay/report-review.html": "js",
    "essay/report.html": "js",
-   "essay/step-result.html": "js",
-   "essay/training-result.html": "js",
-   "shared/step-result.html": "js",
-   "shared/training-result.html": "js",
    "type/quiz.html": "js",
-   "type/result.html": "js",
-   "type/review.html": "js",
-   "type/training-result.html": "js"
+   "type/review.html": "js"
   },
   "scratch__done": {
    "assignment/explain.html": "js",
@@ -4033,14 +3993,8 @@
    "essay/drill.html": "js",
    "essay/report-review.html": "js",
    "essay/report.html": "js",
-   "essay/step-result.html": "js",
-   "essay/training-result.html": "js",
-   "shared/step-result.html": "js",
-   "shared/training-result.html": "js",
    "type/quiz.html": "js",
-   "type/result.html": "js",
-   "type/review.html": "js",
-   "type/training-result.html": "js"
+   "type/review.html": "js"
   },
   "scratch__hole": {
    "assignment/explain.html": "js",
@@ -4057,14 +4011,8 @@
    "essay/drill.html": "js",
    "essay/report-review.html": "js",
    "essay/report.html": "js",
-   "essay/step-result.html": "js",
-   "essay/training-result.html": "js",
-   "shared/step-result.html": "js",
-   "shared/training-result.html": "js",
    "type/quiz.html": "js",
-   "type/result.html": "js",
-   "type/review.html": "js",
-   "type/training-result.html": "js"
+   "type/review.html": "js"
   },
   "scratch__sep": {
    "assignment/explain.html": "js",
@@ -4081,14 +4029,8 @@
    "essay/drill.html": "js",
    "essay/report-review.html": "js",
    "essay/report.html": "js",
-   "essay/step-result.html": "js",
-   "essay/training-result.html": "js",
-   "shared/step-result.html": "js",
-   "shared/training-result.html": "js",
    "type/quiz.html": "js",
-   "type/result.html": "js",
-   "type/review.html": "js",
-   "type/training-result.html": "js"
+   "type/review.html": "js"
   },
   "scratch__swatch": {
    "assignment/explain.html": "js",
@@ -4105,14 +4047,8 @@
    "essay/drill.html": "js",
    "essay/report-review.html": "js",
    "essay/report.html": "js",
-   "essay/step-result.html": "js",
-   "essay/training-result.html": "js",
-   "shared/step-result.html": "js",
-   "shared/training-result.html": "js",
    "type/quiz.html": "js",
-   "type/result.html": "js",
-   "type/review.html": "js",
-   "type/training-result.html": "js"
+   "type/review.html": "js"
   },
   "scratch__tool": {
    "assignment/explain.html": "js",
@@ -4129,14 +4065,8 @@
    "essay/drill.html": "js",
    "essay/report-review.html": "js",
    "essay/report.html": "js",
-   "essay/step-result.html": "js",
-   "essay/training-result.html": "js",
-   "shared/step-result.html": "js",
-   "shared/training-result.html": "js",
    "type/quiz.html": "js",
-   "type/result.html": "js",
-   "type/review.html": "js",
-   "type/training-result.html": "js"
+   "type/review.html": "js"
   },
   "scratch__tool--ico": {
    "assignment/explain.html": "js",
@@ -4153,14 +4083,8 @@
    "essay/drill.html": "js",
    "essay/report-review.html": "js",
    "essay/report.html": "js",
-   "essay/step-result.html": "js",
-   "essay/training-result.html": "js",
-   "shared/step-result.html": "js",
-   "shared/training-result.html": "js",
    "type/quiz.html": "js",
-   "type/result.html": "js",
-   "type/review.html": "js",
-   "type/training-result.html": "js"
+   "type/review.html": "js"
   },
   "scratch__tools": {
    "assignment/explain.html": "js",
@@ -4177,14 +4101,8 @@
    "essay/drill.html": "js",
    "essay/report-review.html": "js",
    "essay/report.html": "js",
-   "essay/step-result.html": "js",
-   "essay/training-result.html": "js",
-   "shared/step-result.html": "js",
-   "shared/training-result.html": "js",
    "type/quiz.html": "js",
-   "type/result.html": "js",
-   "type/review.html": "js",
-   "type/training-result.html": "js"
+   "type/review.html": "js"
   },
   "screen": {
    "assignment/explain.html": "markup",
@@ -4992,12 +4910,9 @@
    "essay/drill.html": "js",
    "essay/report-review.html": "markup",
    "essay/report.html": "markup",
-   "essay/step-result.html": "js",
    "essay/training-result.html": "markup",
-   "shared/step-result.html": "js",
    "shared/training-result.html": "markup",
    "type/quiz.html": "markup",
-   "type/result.html": "js",
    "type/review.html": "markup",
    "type/training-result.html": "markup"
   },

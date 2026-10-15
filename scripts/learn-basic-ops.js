@@ -128,6 +128,7 @@
       var c = el('span', 'pcirc');
       if (results[i] === 'correct') c.classList.add('is-correct');
       else if (results[i] === 'wrong') c.classList.add('is-wrong');
+      else if (results[i] === 'partial') c.classList.add('is-partial');
       else if (i === idx) c.classList.add('is-current');
       progressEl.appendChild(c);
     }
@@ -275,7 +276,9 @@
     }
 
     graded = true;
-    results[idx] = ok ? 'correct' : 'wrong';
+    // 칸이 여럿인 문항에서 일부만 맞으면 「일부」(△) — 채점 · 「다음」 잠금은 오답과 같다
+    var some = qEl.querySelectorAll('.sinput.is-correct').length > 0;
+    results[idx] = ok ? 'correct' : some ? 'partial' : 'wrong';
     renderProgress();
 
     if (ok) { guide.set('정답이에요!', 'ok'); settle(); }
@@ -315,7 +318,7 @@
   }
 
   /* 하단 '결과보기' → 스텝 결과 화면 (마지막 문제 채점 시 활성) */
-  nextStepBtn.addEventListener('click', function () { if (nextStepBtn.disabled) return; window.location.href = 'shared/step-result.html'; });
+  nextStepBtn.addEventListener('click', function () { if (nextStepBtn.disabled) return; window.location.href = 'shared/step-result.html?step=ops'; });
 
   /* 라이트/다크 토글 */
   var themeBtn = document.getElementById('themeToggle');

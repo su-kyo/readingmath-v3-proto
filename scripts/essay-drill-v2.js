@@ -145,7 +145,7 @@
   // 콘텐츠 하단 진입 버튼 = 단계 완료 시에만 노출 (콘솔바 아님)
   function showAction(label) { primaryLabel.textContent = label; stageAction.classList.add('is-ready'); }
   function hideAction() { stageAction.classList.remove('is-ready'); }
-  // 콘솔바 안내(RM-PART-07) — 단계마다 「지금 무엇을」 한 줄
+  // 콘솔바 안내(RM-PART-07) — 단계마다 「지금 무엇을」 한 줄. 단계 끝 · 선지 오답 토스트는 이 안내와 선지 창이 대신한다(2026-10-15 판단 보드 15 · 16)
   function guide(t, tone) { if (window.RMGuide) window.RMGuide.set(t, tone); }
 
   // 문제 번호탭 렌더 (헤더) — 현재 문제 강조, 지난 문제는 done
@@ -237,6 +237,7 @@
       el.classList.toggle('is-unread', i > readCur);
     });
     rmHint.textContent = readCur < last ? '글을 누르면 이어 읽어요' : '문제를 다 읽었어요';
+    rmGo.disabled = readCur < last;   // 다 읽어야 풀이로 (잠금형 — 개발 서버 동작을 받아옴, 2026-10-15)
     keepInView(els[readCur]);
   }
   /* 지금 구간이 화면 밖으로 밀리지 않게 (이미지 구간이 끼면 본문이 길어진다).
@@ -319,7 +320,6 @@
     pillFill.classList.remove('is-on'); pillFill.classList.add('is-done');
     showAction('순서 맞추기');
     guide('순서 맞추기 문제로 이동해 주세요!');
-    showToast('빈칸을 모두 맞혔어요! 순서 맞추기로 이동해요.');
   }
   /* 진행 = 풀이 아무 데나 누르기 · 스페이스바. 답할 빈칸이 남은 구간에서는 그 빈칸을 눌러야 한다 */
   function stepFill() {
@@ -366,7 +366,6 @@
     if (slot.type === 'choice') {   // 객관식 = 공용 빈칸 선지 창(scripts/blank-pop.js) · 즉시 채점, 고른 오답은 비활성으로 남는다
       window.RMBlankPop.open(anchor, {
         choices: slot.choices, answer: slot.ans,
-        onPick: function (val, ok) { if (!ok) showToast('오답이에요. 다시 골라 볼까요?', true); },
         onDone: function (val) { fillBlank(anchor, val); },
         onClose: closePop
       });
@@ -507,7 +506,6 @@
     pillArrange.classList.remove('is-on'); pillArrange.classList.add('is-done');
     showAction(pi < N - 1 ? '다음 문제' : '결과 보기');
     guide('');
-    showToast(pi < N - 1 ? '풀이를 완성했어요! 다음 문제로 넘어가요.' : '모든 문제를 완성했어요! 🎉');
   }
 
   /* ── 진행 표시 / primary ── */
@@ -550,7 +548,10 @@
   });
 
   /* ---- 검수용 디버그 훅 (?debug=1일 때만 패널에 뜸) ---- */
-  function dbgSkipRead() { if (rmodal.classList.contains('is-open')) rmGo.click(); }
+  function dbgSkipRead() {
+    if (!rmodal.classList.contains('is-open')) return;
+    readCur = rmRead.querySelectorAll('.chunk').length - 1; renderReadModal(); rmGo.click();
+  }
   function dbgFillAll() {
     dbgSkipRead();
     if (phase !== 'fill') return;

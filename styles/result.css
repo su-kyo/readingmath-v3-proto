@@ -112,6 +112,7 @@
 .tsum { display: flex; align-items: center; gap: clamp(20px,3vw,40px); }
 
 .rrows { display: flex; flex-direction: column; gap: var(--sp-8); }
+.rrows[hidden] { display: none; }
 
 .rrow { display: flex; align-items: center; gap: clamp(16px,2.2vw,28px); padding: 14px clamp(18px,2vw,26px); border-radius: var(--r-12); background: var(--row-bg); }
 
@@ -136,7 +137,6 @@
 
 .thead .tcell { color: var(--hw-text-muted); font-size: var(--fs-13); font-weight: var(--fw-semibold); }
 
-.rside__prog { margin-left: auto; display: flex; align-items: center; gap: var(--sp-8); }
 
 .trow--data { background: var(--white-a04); border-radius: var(--r-12); }
 
@@ -189,7 +189,6 @@
 
 .score__val b { font-family: var(--font-mono); font-size: clamp(46px,5vw,58px); font-weight: var(--fw-bold); line-height: 1; }
 
-.rside__prog b { font-family: var(--font-mono); font-size: var(--fs-14); font-weight: var(--fw-bold); color: var(--accent); }
 
 .trow--total { background: var(--white-a08); border-radius: var(--r-12); }
 
@@ -204,7 +203,6 @@
 .rmain::-webkit-scrollbar, .rside__list::-webkit-scrollbar { width: 10px; height: 10px; }
 .rmain::-webkit-scrollbar-track, .rside__list::-webkit-scrollbar-track { background: transparent; }
 .rhead { display: flex; flex-direction: column; gap: var(--sp-8); }
-.rside__prog b small { color: var(--lmuted); font-size: var(--fs-12); }
 .rside__list { display: flex; flex-direction: column; gap: var(--sp-12); margin-top: 21px;
   overflow-y: auto; min-height: 0; padding-bottom: var(--sp-4); }
 .step-card { display: flex; align-items: center; gap: var(--sp-16); min-height: 88px; padding: var(--sp-16) var(--sp-20); flex: none;
@@ -243,3 +241,13 @@
 /* ----- 화면 공용으로 올림 (2026-10-14 · RM-FILE-03) — essay-training-result · shared-training-result ----- */
 .mact__name svg { width: 18px; height: 18px; color: var(--th-accent-hi); flex: none; }
 .mact__stat > b { font-family: var(--font-mono); font-weight: var(--fw-bold); font-size: var(--fs-16); color: var(--th-accent-hi); }
+
+/* ----- 문항 판독 — 한 칸이 한 문항. 켜진 칸 = 정답, 링 = 오답 (유형 스텝 결과 · 기초 연산 결과, 2026-10-15 공용으로) ----- */
+.qgrid[hidden] { display: none; }
+.qgrid { display: grid; grid-template-columns: repeat(10, 1fr); gap: clamp(7px,.9vw,11px); }
+.qcell { display: flex; align-items: center; justify-content: center; aspect-ratio: 1 / 1.04;
+  border-radius: var(--r-12); font-family: var(--font-mono); font-size: clamp(16px,1.7vw,20px); font-weight: var(--fw-bold);
+  background: var(--white-a04); color: var(--lmuted); transition: background var(--t-fast); }
+.qcell.ok { background: var(--rate); color: var(--text-on-bright);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--rate) 32%, transparent); }
+.qcell.no { color: var(--hw-no); box-shadow: inset 0 0 0 var(--bw-1_5) var(--no-vivid); }

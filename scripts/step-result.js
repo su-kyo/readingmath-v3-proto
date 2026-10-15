@@ -13,8 +13,14 @@
     { name: '개념 다지기',   correct: 7, total: 9 }
   ];
 
+  // 기초 연산 결과(?step=ops) — 행 막대 대신 문항 번호 타일 (2026-10-15 판단 보드 7 · 유형 스텝 결과와 같은 문법)
+  // ※ concept-training-result.js 의 STAGES[기초 연산] 과 같은 숫자(11/14)를 유지할 것
+  var OPS = new URLSearchParams(location.search).get('step') === 'ops';
+  var OPS_RESULTS = [true, true, false, true, true, true, false, true, true, true, true, false, true, true];
+
   var total = 0, correct = 0;
-  ACTIVITIES.forEach(function (a) { total += a.total; correct += a.correct; });
+  if (OPS) { total = OPS_RESULTS.length; correct = OPS_RESULTS.filter(Boolean).length; }
+  else ACTIVITIES.forEach(function (a) { total += a.total; correct += a.correct; });
   var rate = Math.round((correct / total) * 100);
 
   function gradeOf(r) { return r >= 95 ? 's' : r >= 80 ? 'a' : r >= 70 ? 'b' : 'c'; }
@@ -26,6 +32,31 @@
   document.getElementById('summaryBadge').src = badgeSrc;
   // 사이드 패널의 스텝 등급은 행용 육각 뱃지(grade-step-*)를 쓴다
   document.getElementById('sideBadge').src = 'assets/img/grade/grade-step-' + gradeOf(rate) + '.webp';
+
+  if (OPS) {
+    document.getElementById('stepTitle').textContent = '기초 연산 완료!';
+    document.getElementById('stepCrumb').textContent = '기초 연산';
+    document.getElementById('rows').hidden = true;
+    // 사이드: 개념 학습은 완료(B 예시), 기초 연산이 지금 단계
+    var learnCard = document.querySelector('.step-card.is-current');
+    var opsCard = document.getElementById('opsCard');
+    learnCard.classList.remove('is-current');
+    document.getElementById('sideBadge').src = 'assets/img/grade/grade-step-b.webp';
+    opsCard.classList.remove('is-open'); opsCard.classList.add('is-current', 'is-done');
+    var key = opsCard.querySelector('.key'); if (key) key.remove();
+    var img = document.createElement('img');
+    img.className = 'step-card__grade'; img.alt = '등급';
+    img.src = 'assets/img/grade/grade-step-' + gradeOf(rate) + '.webp';
+    opsCard.appendChild(img);
+    var grid = document.getElementById('qgrid');
+    grid.hidden = false;
+    OPS_RESULTS.forEach(function (ok, i) {
+      var cell = document.createElement('div');
+      cell.className = 'qcell ' + (ok ? 'is-ok' : 'no');
+      cell.textContent = i + 1;
+      grid.appendChild(cell);
+    });
+  }
 
   // 검수용 ?done=1(전 스텝 완료) 처리는 공용 step-progress.js 가 담당한다
 
@@ -55,9 +86,10 @@
       '<div class="rrow__stat"><span>정답률</span><b>' + pr + '%</b></div>';
     rows.appendChild(row);
   });
-  var cells = rows.querySelectorAll('.led i[data-on="1"]');
+  var cells = OPS ? document.querySelectorAll('#qgrid .qcell.is-ok') : rows.querySelectorAll('.led i[data-on="1"]');
   [].forEach.call(cells, function (c, i) {
-    if (SNAP) c.classList.add('on');
-    else setTimeout(function () { c.classList.add('on'); }, 200 + i * 45);
+    var on = OPS ? 'ok' : 'on';
+    if (SNAP) c.classList.add(on);
+    else setTimeout(function () { c.classList.add(on); }, 200 + i * 45);
   });
 })();

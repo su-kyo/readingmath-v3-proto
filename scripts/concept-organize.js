@@ -102,12 +102,12 @@
     noteHint.classList.add('is-off');
     noteBody.classList.add('is-on');
     doneBtn.disabled = false;
-    doneBtn.title = '개념 다지기로 이동';
+    doneBtn.title = '스텝 결과로 이동';
   });
 
-  /* ---------- 콘솔: 개념 다지기로 ---------- */
+  /* ---------- 콘솔: 다 읽었어요 → 스텝 결과 (실서비스 순서: 정리가 개념 학습의 마지막, 2026-10-15) ---------- */
   doneBtn.addEventListener('click', function () {
-    if (!doneBtn.disabled) window.location.href = 'concept/drill.html';
+    if (!doneBtn.disabled) window.location.href = 'shared/step-result.html';
   });
 
   /* ---------- 라이트/다크 토글 ---------- */

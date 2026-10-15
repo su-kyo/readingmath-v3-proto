@@ -71,12 +71,12 @@
 
   /* ---------- 학습 진행 현황 (조작 패널 카드) ---------- */
   var stepList = document.getElementById('stepList');
-  var doneCount = 0;
+
   STEPS.forEach(function (s, i) {
     var card = document.createElement('div');
     var cls = 'step-card';
     if (s.state === 'current') cls += ' is-current';
-    if (s.grade) { cls += ' is-done'; doneCount++; }
+    if (s.grade) cls += ' is-done';
     else cls += ' is-open';                              // 미학습 → 시작 모달
     card.className = cls;
     if (s.go) card.setAttribute('data-go', s.go);
@@ -90,11 +90,7 @@
       '<span class="step-card__name">' + s.name + '</span></div>' + right;
     stepList.appendChild(card);
   });
-  /* 진행 게이지 — 한 칸이 한 스텝 (?done=1 검수는 step-progress.js가 채운다) */
-  var prog = document.getElementById('sideProg');
-  var cells = '';
-  STEPS.forEach(function (s, i) { cells += '<i' + (i < doneCount ? ' class="on"' : '') + '></i>'; });
-  prog.innerHTML = cells + '<b>' + doneCount + '<small>/' + STEPS.length + '</small></b>';
+  /* 진행 게이지 「n/전체」는 지웠다 — 아래 단계 목록이 같은 정보를 보여 준다 (2026-10-15 판단 보드 13) */
 
   /* ---------- 액션 (후속 화면 전 토스트) ---------- */
   var toast = document.getElementById('toast'), tt;

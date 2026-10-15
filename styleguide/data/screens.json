@@ -2271,11 +2271,9 @@
     "styles/learn-shell.css",
     "styles/result.css",
     "styles/essay.css",
-    "styles/screens/essay-step-result.css",
-    "styles/scratchpad.css"
+    "styles/screens/essay-step-result.css"
    ],
    "js": [
-    "scripts/scratchpad.js",
     "scripts/essay-step-result.js",
     "scripts/step-progress.js",
     "scripts/learn-timer.js",
@@ -2328,10 +2326,6 @@
    ],
    "tokens": [
     {
-     "name": "--rate",
-     "count": 4
-    },
-    {
      "name": "--black-a30",
      "count": 3
     },
@@ -2345,6 +2339,10 @@
     },
     {
      "name": "--th-accent-hi",
+     "count": 2
+    },
+    {
+     "name": "--rate",
      "count": 2
     },
     {
@@ -2368,11 +2366,11 @@
      "count": 1
     },
     {
-     "name": "--white-a10",
+     "name": "--white-a06",
      "count": 1
     },
     {
-     "name": "--white-a06",
+     "name": "--accent",
      "count": 1
     }
    ],
@@ -2380,8 +2378,6 @@
     "RM-SURF-05",
     "RM-FILL-06",
     "RM-PART-05",
-    "RM-FILL-02",
-    "RM-PART-01",
     "RM-PART-03"
    ]
   },
@@ -2400,11 +2396,9 @@
     "styles/result.css",
     "styles/essay.css",
     "styles/monitor.css",
-    "styles/screens/essay-training-result.css",
-    "styles/scratchpad.css"
+    "styles/screens/essay-training-result.css"
    ],
    "js": [
-    "scripts/scratchpad.js",
     "scripts/debug-panel.js",
     "scripts/essay-training-result.js",
     "scripts/learn-exit.js"
@@ -2487,7 +2481,6 @@
     "RM-PART-05",
     "RM-FILL-02",
     "RM-PART-02",
-    "RM-PART-01",
     "RM-PART-03"
    ]
   },
@@ -3148,11 +3141,9 @@
     "styles/components.css",
     "styles/learn-shell.css",
     "styles/result.css",
-    "styles/screens/shared-step-result.css",
-    "styles/scratchpad.css"
+    "styles/screens/shared-step-result.css"
    ],
    "js": [
-    "scripts/scratchpad.js",
     "scripts/step-result.js",
     "scripts/step-progress.js",
     "scripts/learn-exit.js"
@@ -3244,11 +3235,11 @@
      "count": 1
     },
     {
-     "name": "--white-a10",
+     "name": "--white-a06",
      "count": 1
     },
     {
-     "name": "--rate",
+     "name": "--accent",
      "count": 1
     }
    ],
@@ -3256,8 +3247,6 @@
     "RM-SURF-05",
     "RM-FILL-06",
     "RM-PART-05",
-    "RM-FILL-02",
-    "RM-PART-01",
     "RM-PART-03"
    ]
   },
@@ -3275,11 +3264,9 @@
     "styles/learn-shell.css",
     "styles/result.css",
     "styles/monitor.css",
-    "styles/screens/shared-training-result.css",
-    "styles/scratchpad.css"
+    "styles/screens/shared-training-result.css"
    ],
    "js": [
-    "scripts/scratchpad.js",
     "scripts/debug-panel.js",
     "scripts/concept-training-result.js",
     "scripts/learn-exit.js"
@@ -3370,7 +3357,6 @@
     "RM-PART-05",
     "RM-FILL-02",
     "RM-PART-02",
-    "RM-PART-01",
     "RM-PART-03"
    ]
   },
@@ -3544,11 +3530,9 @@
     "styles/learn-shell.css",
     "styles/result.css",
     "styles/type.css",
-    "styles/screens/type-result.css",
-    "styles/scratchpad.css"
+    "styles/screens/type-result.css"
    ],
    "js": [
-    "scripts/scratchpad.js",
     "scripts/type-result.js",
     "scripts/step-progress.js",
     "scripts/learn-timer.js",
@@ -3601,14 +3585,6 @@
    ],
    "tokens": [
     {
-     "name": "--rate",
-     "count": 6
-    },
-    {
-     "name": "--white-a04",
-     "count": 3
-    },
-    {
      "name": "--black-a30",
      "count": 3
     },
@@ -3617,11 +3593,15 @@
      "count": 2
     },
     {
+     "name": "--white-a04",
+     "count": 2
+    },
+    {
      "name": "--th-accent-hi",
      "count": 2
     },
     {
-     "name": "--lmuted",
+     "name": "--rate",
      "count": 2
     },
     {
@@ -3641,11 +3621,15 @@
      "count": 1
     },
     {
-     "name": "--text-on-bright",
+     "name": "--white-a06",
      "count": 1
     },
     {
-     "name": "--hw-no",
+     "name": "--accent",
+     "count": 1
+    },
+    {
+     "name": "--ltext",
      "count": 1
     }
    ],
@@ -3653,8 +3637,6 @@
     "RM-SURF-05",
     "RM-FILL-06",
     "RM-PART-05",
-    "RM-FILL-02",
-    "RM-PART-01",
     "RM-PART-03"
    ]
   },
@@ -3824,11 +3806,9 @@
     "styles/result.css",
     "styles/type.css",
     "styles/monitor.css",
-    "styles/screens/type-training-result.css",
-    "styles/scratchpad.css"
+    "styles/screens/type-training-result.css"
    ],
    "js": [
-    "scripts/scratchpad.js",
     "scripts/debug-panel.js",
     "scripts/type-training-result.js",
     "scripts/learn-exit.js"
@@ -3927,7 +3907,6 @@
     "RM-PART-05",
     "RM-FILL-02",
     "RM-PART-02",
-    "RM-PART-01",
     "RM-PART-03"
    ]
   },

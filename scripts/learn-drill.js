@@ -141,12 +141,14 @@
   /* ---- 문제 번호탭 (헤더) — 현재/정답/오답 상태. 정오답은 아이콘(색맹 접근성) ---- */
   var ICO_OK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>';
   var ICO_NO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+  var ICO_PART = '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3l5.5 9.5h-11z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>';   // 일부만 맞음 (개발 서버에서 받아옴, 2026-10-15)
   function renderTabs() {
     qtabs.innerHTML = '';
     for (var i = 0; i < TOTAL; i++) {
       var cls = 'qtab', label = String(i + 1);
       if (results[i] === 'correct') { cls += ' is-correct'; label = ICO_OK; }
       else if (results[i] === 'wrong') { cls += ' is-wrong'; label = ICO_NO; }
+      else if (results[i] === 'partial') { cls += ' is-partial'; label = ICO_PART; }
       else if (i === idx) cls += ' is-active';
       else if (i < idx) cls += ' is-done';
       qtabs.appendChild(el('span', cls, label));
@@ -328,7 +330,9 @@
     }
 
     graded = true;
-    results[idx] = ok ? 'correct' : 'wrong';
+    // 칸이 여럿인 문항에서 일부만 맞으면 「일부」(△) — 채점 · 「다음」 잠금은 오답과 같다
+    var some = qEl.querySelectorAll('.dblank.is-correct, .sinput.is-correct').length > 0;
+    results[idx] = ok ? 'correct' : some ? 'partial' : 'wrong';
     renderTabs();
 
     if (ok) { guide.set('정답이에요!', 'ok'); settle(); }
@@ -362,7 +366,7 @@
   function mark(inp, ok) { inp.classList.add(ok ? 'is-correct' : 'is-wrong'); }
   function norm(s) { return String(s).replace(/\s+/g, '').toLowerCase(); }
 
-  nextStepBtn.addEventListener('click', function () { if (nextStepBtn.disabled) return; /* → 개념 정리하기 / 스텝 결과 (추후) */ });
+  nextStepBtn.addEventListener('click', function () { if (nextStepBtn.disabled) return; window.location.href = 'concept/organize.html'; });   // 다지기 다음 = 개념 정리
 
   var themeBtn = document.getElementById('themeToggle');
   if (themeBtn) themeBtn.addEventListener('click', function () {
@@ -380,7 +384,7 @@
       if (opts[pick]) opts[pick].click();
     } else if (p.type === 'blank') {
       qEl.querySelectorAll('.dblank').forEach(function (b, i) {
-        setV(b, ok ? p.answers[i] : '0');
+        setV(b, ok === true || (ok === 'part' && i === 0) ? p.answers[i] : '0');   // 'part' = 첫 칸만 정답
       });
       checkFilled();
     } else if (p.type === 'short-1') {
@@ -407,6 +411,7 @@
       { label: '정답 처리', tone: 'ok', run: function () { dbgAnswer(true); } },
       { label: '오답 처리', tone: 'no', run: function () { dbgAnswer(false); } },
       { label: '정답 공개', run: function () { if (revealPending) reveal(); } },
+      { label: '일부 정답', run: function () { dbgAnswer('part'); } },
       { label: '전부 풀기', run: dbgSolveAll },
       { label: '키패드 열기', run: function () { var f = qEl.querySelector('.sinput, .dblank'); if (f) openPad(f); } }
     ]

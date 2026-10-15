@@ -9,14 +9,14 @@
   /* 결과 화면은 항상 다크 계기판 — 테마 토글·저장 테마 적용 없음 (Phase 7 사용자 결정).
      학습 화면으로 돌아가면 rm-theme에 저장된 유저 테마가 그대로 적용된다. */
 
-  /* ---------- 데이터 (개념 훈련 3단계 · 활동까지 한 벌) ----------
+  /* ---------- 데이터 (개념 훈련 2단계 · 활동까지 한 벌) ----------
+     실서비스 구성에 맞춤(2026-10-15): 개념 학습 · 기초 연산(과학은 「개념 확인하기」).
      스텝의 정답·등급은 활동(acts)에서 집계한다.
      ※ 개념 학습의 acts는 shared/step-result.html(step-result.js)과 같은 숫자를 유지할 것 */
   var STAGES = [
     { no: 1, name: '개념 학습',    acts: [ { name: '개념 요약하기', correct: 4, total: 5 },
                                            { name: '개념 다지기',   correct: 7, total: 9 } ] },
-    { no: 2, name: '개념 다지기',  acts: [ { name: '개념 다지기',   correct: 5, total: 5 } ] },
-    { no: 3, name: '개념 확인하기', acts: [ { name: '개념 확인하기', correct: 12, total: 14 } ] }
+    { no: 2, name: '기초 연산',    acts: [ { name: '기초 연산',     correct: 11, total: 14 } ] }
   ];
   function gradeOf(r) { return r >= 95 ? 's' : r >= 80 ? 'a' : r >= 70 ? 'b' : 'c'; }
   function stepBadge(g) { return 'assets/img/grade/grade-step-' + g.toLowerCase() + '.webp'; }
@@ -28,13 +28,11 @@
     s.grade = gradeOf(s.rate).toUpperCase();
   });
 
-  /* 시간 초과 감점(10점) 여부 — 검수 패널에서 토글할 수 있다 */
-  var BASE_SCORE = 88, PENALTY = 10;
-  var overtime = false;
-  var SCORE = BASE_SCORE - (overtime ? PENALTY : 0);
+  /* 개념 훈련에는 타이머 · 제한 시간이 없다 — 소요 시간 · 시간 초과 감점도 없다 (2026-10-15 판단 보드 14) */
+  var SCORE = 88;
   var COMMENT =
     '진방울님의 개념 훈련 결과는 100점 만점 중 ' + SCORE + '점입니다.\n' +
-    '개념 다지기와 확인하기는 탄탄하게 이해했지만, 개념 학습에서 몇 문제를 놓쳤어요.\n' +
+    '기초 연산은 탄탄하게 풀었지만, 개념 학습에서 몇 문제를 놓쳤어요.\n' +
     '오답노트를 확인한 뒤 개념 학습을 한 번 더 복습해 보세요.';
 
   /* ?snap=1 이면 애니메이션 생략하고 최종 상태로 (검수·스크린샷용) */
@@ -161,33 +159,4 @@
   var homeBtn = document.getElementById('homeBtn');
   if (homeBtn) homeBtn.addEventListener('click', function () { window.location.href = 'index.html'; });
 
-  /* ---------- 시간 초과 상태 토글 (검수용) ---------- */
-  var overPill = document.getElementById('overPill');
-  var inPill = document.getElementById('inPill');
-  var durVal = document.getElementById('durVal');
-  var overLamp = document.getElementById('overLamp');
-  var commentEl = document.getElementById('comment');
-  function setOvertime(on, initial) {
-    overtime = on;
-    SCORE = BASE_SCORE - (on ? PENALTY : 0);
-    // 최초 1회는 점수 카운트업 애니메이션을 살려 둔다(SCORE를 읽어 올라간다)
-    if (!initial) { clearInterval(sTimer); scoreEl.textContent = SCORE; }
-    document.getElementById('totalStar').src = 'assets/icons/star/star-' + gradeOf(SCORE) + '.svg';
-    if (overPill) overPill.hidden = !on;
-    if (inPill) inPill.hidden = on;
-    // 소요 시간도 상태에 맞춘다 — 감점이면 제한(60:00)보다 길게
-    if (durVal) durVal.textContent = on ? durVal.dataset.over : durVal.dataset.in;
-    if (overLamp) overLamp.style.display = on ? '' : 'none';
-    if (commentEl) commentEl.textContent = commentEl.textContent
-      .replace(/100점 만점 중 \d+점/, '100점 만점 중 ' + SCORE + '점');
-  }
-  setOvertime(overtime, true);
-
-  if (window.RMDebug) window.RMDebug.register({
-    title: '개념 훈련 결과 · 시간',
-    actions: [
-      { label: '시간 초과', tone: 'no', run: function () { setOvertime(true); } },
-      { label: '제한 시간 내', tone: 'ok', run: function () { setOvertime(false); } }
-    ]
-  });
 })();

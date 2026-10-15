@@ -48,6 +48,9 @@
 .pcirc.is-correct::after { content: ""; position: absolute; inset: 0; background: center / 15px no-repeat url("../../assets/icons/ico-progress-correct.svg"); }
 .pcirc.is-wrong { background: var(--no-solid); }
 .pcirc.is-wrong::after { content: ""; position: absolute; inset: 0; background: center / 15px no-repeat url("../../assets/icons/ico-progress-wrong.svg"); }
+/* 일부만 맞음 — 앰버 칠 + 어두운 △ (RM-FILL-04) */
+.pcirc.is-partial { background: var(--warn-solid); }
+.pcirc.is-partial::after { content: ""; position: absolute; inset: 5px 4px 6px; background: var(--hw-bg); clip-path: polygon(50% 0, 100% 100%, 0 100%); }
 
 
 /* ===== 문제 ===== */

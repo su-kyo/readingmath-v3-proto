@@ -26,13 +26,6 @@
       img.alt = g.toUpperCase();
       card.appendChild(img);
     });
-    var prog = document.querySelector('[data-prog]');
-    if (prog) {
-      var cells = prog.querySelectorAll('i');
-      [].forEach.call(cells, function (s) { s.classList.add('on'); });
-      var b = prog.querySelector('b');
-      if (b) b.innerHTML = cells.length + '<small>/' + cells.length + '</small>';
-    }
   }
 
   var ICON = {

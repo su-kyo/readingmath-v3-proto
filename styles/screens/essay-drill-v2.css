@@ -176,6 +176,8 @@
 .rmodal__go { display: inline-flex; align-items: center; gap: var(--sp-8); padding: var(--sp-12) var(--sp-20); border-radius: var(--r-12); border: 0; cursor: pointer;
   background: var(--primary); color: var(--text-on-accent); font-family: var(--font-sans); font-size: var(--fs-19); font-weight: var(--fw-heavy);
   box-shadow: 0 var(--depth-4) 0 color-mix(in srgb, var(--primary) 62%, var(--shade-deep)); transition: transform .12s, box-shadow .12s, background .15s; }
-.rmodal__go:hover { background: var(--primary-hover); }
-.rmodal__go:active { transform: translateY(3px); box-shadow: 0 1px 0 color-mix(in srgb, var(--primary) 62%, var(--shade-deep)); }
+.rmodal__go:hover:not(:disabled) { background: var(--primary-hover); }
+/* 다 읽기 전 — 콘솔 버튼의 비활성과 같은 문법 */
+.rmodal__go:disabled { opacity: .5; filter: grayscale(.5); cursor: not-allowed; transform: none; }
+.rmodal__go:active:not(:disabled) { transform: translateY(3px); box-shadow: 0 1px 0 color-mix(in srgb, var(--primary) 62%, var(--shade-deep)); }
 .rmodal__go svg { width: 18px; height: 18px; }
