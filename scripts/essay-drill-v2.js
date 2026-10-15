@@ -447,6 +447,23 @@
       else advanceSeg();
     }
   }
+  /* 지금 칸만 정답 — 빈칸 맞추기는 활성 빈칸 하나(활성 칸이 없으면 다음 빈칸까지 읽고 그 칸),
+     순서 맞추기는 지금 문장 하나를 맞춘다 (2026-10-15 검수 요청) */
+  function dbgFillCurrent() {
+    dbgSkipRead();
+    if (phase === 'fill') {
+      while (curSeg < segEls.length && !pendingBlank(segEls[curSeg])) advanceSeg();
+      var pending = curSeg < segEls.length && pendingBlank(segEls[curSeg]);
+      if (pending) { closePop(); fillBlank(pending, blankMap[pending.dataset.blank].answer); }
+      return;
+    }
+    if (phase !== 'arrange' || ac >= aChunks.length) return;
+    while (ac < aChunks.length && !aChunks[ac].parts) { ac++; enterArrangeChunk(); }
+    if (ac >= aChunks.length) return;
+    for (var i = 0; i < aCorrect.length; i++) { aPlaced[i] = aCorrect[i]; aLocked[i] = true; }
+    aPool = []; aChecking = false; renderArrangeChunk();
+    ac++; enterArrangeChunk();
+  }
   function dbgArrangeAll() {
     if (phase === 'read' || phase === 'fill') { dbgFillAll(); startArrange(); }   // 읽기 모달이 떠 있어도 건너뛰고 간다
     if (phase !== 'arrange') return;
@@ -463,6 +480,7 @@
     title: D.title + ' (세로)',
     actions: [
       { label: '읽기 건너뛰기', run: dbgSkipRead },
+      { label: '지금 칸 정답', tone: 'ok', run: dbgFillCurrent },
       { label: '빈칸 전부 맞추기', tone: 'ok', run: dbgFillAll },
       { label: '순서까지 전부', tone: 'ok', run: dbgArrangeAll }
     ]
