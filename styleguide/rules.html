@@ -6,10 +6,10 @@
   <title>규칙 색인 — 리딩수학과학 디자인 시스템</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
   <base href="../" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261015-7" />
-  <link rel="stylesheet" href="styles/base.css?v=20261015-7" />
-  <link rel="stylesheet" href="styles/components.css?v=20261015-7" />
-  <link rel="stylesheet" href="styleguide/sg.css?v=20261015-7" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261015-8" />
+  <link rel="stylesheet" href="styles/base.css?v=20261015-8" />
+  <link rel="stylesheet" href="styles/components.css?v=20261015-8" />
+  <link rel="stylesheet" href="styleguide/sg.css?v=20261015-8" />
 </head>
 <body>
 <div class="sg">
@@ -688,13 +688,14 @@
 
       <article class="sg-rulecard" id="RM-PART-03" data-check="eye" data-since="2026-08-20">
         <h3>계산기와 결과 계기판은 정적 하드웨어 — 테마를 따라가지 않는다</h3>
-        <p class="sg-rulecard__do">키패드는 라이트·다크에서 같은 모습이다. 결과 화면 6장과 서랍(GNB에 딸린 면)은 항상 다크다. 이 자리의 색은 테마를 따라 뒤집히는 역할 토큰(<code>--text</code>·<code>--surface-*</code>)이 아니라 고정색으로 쓴다.</p>
+        <p class="sg-rulecard__do">키패드는 라이트·다크에서, 어느 계열에서나 같은 회색 한 벌(<code>--kp-*</code>)이다. 계열색은 확인 키에만 난다. 결과 화면 6장과 서랍(GNB에 딸린 면)은 항상 다크다. 이 자리의 색은 테마를 따라 뒤집히는 역할 토큰(<code>--text</code>·<code>--surface-*</code>)이 아니라 고정색으로 쓴다.</p>
         <dl>
           <dt>검사</dt><dd>눈 · <code>color-audit.html</code>은 테마 토글이 없는 결과 화면을 그 테마 하나로만 잰다</dd>
           <dt>예외</dt><dd>없음</dd>
         </dl>
         <details class="sg-why"><summary>근거</summary>
           <p>우주선 안의 물건이라, 조명(테마)이 바뀌어도 색은 그대로다.</p>
+          <p>2026-10-15까지 키패드 몸통은 계열 050 틴트였다. 유형(틸)에서 형광 민트로 읽히고 베이지 콘솔바와 부딪쳐 회색 몸통으로 바꿨다. 기능키의 「흰색에 계열색 8% 섞기」도 이때 걷었다(RM-SURF-01).</p>
           <p>2026-10-14 정리 때 결과 계기판 글자를 역할 토큰으로 바꿨다가, 라이트를 적용하면 글자가 어두워지는 것이 검수에서 잡혀 고정색으로 되돌렸다. 실서버는 라이트만 쓰므로 그대로 옮기면 실제로 생길 수 있는 문제였다.</p>
         </details>
       </article>
@@ -832,6 +833,6 @@
 
   </main>
 </div>
-<script src="styleguide/sg.js?v=20261015-7"></script>
+<script src="styleguide/sg.js?v=20261015-8"></script>
 </body>
 </html>

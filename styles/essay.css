@@ -51,13 +51,13 @@
    주관식 키패드의 안쪽(디스플레이·키)은 keypad.css가 담당, 마크업은 scripts/keypad.js. */
 .qpop { position: fixed; z-index: var(--z-toast); width: max-content; max-width: 320px; display: none; }
 .qpop.is-open { display: block; }
-.qpop__inner { position: relative; background: var(--th-chip); border: var(--bw-1_5) solid var(--border-strong); border-radius: var(--r-22);
-  padding: var(--sp-8); box-shadow: 0 18px 42px -14px color-mix(in srgb, var(--n-700) 45%, transparent), inset 0 0 0 3.5px var(--n-050);
+.qpop__inner { position: relative; background: var(--kp-body); border: var(--bw-1_5) solid var(--kp-edge); border-radius: var(--r-22);
+  padding: var(--sp-8); box-shadow: 0 18px 42px -14px var(--kp-float-shadow), inset 0 0 0 3.5px var(--kp-bezel);
   font-family: var(--font-sans); animation: qpop .13s ease; }
 @keyframes qpop { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .qpop__inner { animation: none; } }
 /* 캐럿 */
-.qpop__caret { position: absolute; width: 12px; height: 12px; background: var(--th-chip); border: var(--bw-1_5) solid var(--border-strong); transform: rotate(45deg); }
+.qpop__caret { position: absolute; width: 12px; height: 12px; background: var(--kp-body); border: var(--bw-1_5) solid var(--kp-edge); transform: rotate(45deg); }
 .qpop:not(.qpop--up) .qpop__caret { border-right: 0; border-bottom: 0; }   /* 위쪽 화살표(아래로 열림) */
 .qpop.qpop--up .qpop__caret { border-left: 0; border-top: 0; }             /* 아래쪽 화살표(위로 열림) */
 /* 객관식 = 공용 빈칸 선지 창 .bpop (components.css · scripts/blank-pop.js) — 이 틀은 주관식 키패드만 담는다 */

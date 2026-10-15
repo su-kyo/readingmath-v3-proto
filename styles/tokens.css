@@ -212,6 +212,22 @@
   --accent-cyan: var(--cyan-300);
   --accent-blue: var(--cyan-400);
 
+  /* 계산기 — 정적 하드웨어(RM-PART-03). 테마도 계열도 따라가지 않는 회색 한 벌이고,
+     계열색은 확인 키(--th-vivid)에만 남긴다. 라이트 테마 블록에서 덮지 않는다. */
+  --kp-body:        var(--n-100);
+  --kp-bezel:       var(--n-050);
+  --kp-edge:        var(--n-200);
+  --kp-key:         var(--n-000);
+  --kp-key-hover:   var(--n-050);
+  --kp-key-ink:     var(--n-650);
+  --kp-fn:          var(--n-050);
+  --kp-fn-hover:    var(--n-200);
+  --kp-fn-ink:      var(--n-500);
+  --kp-display:     var(--n-700);
+  --kp-display-ink: var(--n-050);
+  --kp-shadow:      color-mix(in srgb, var(--n-600) 10%, transparent);
+  --kp-float-shadow: color-mix(in srgb, var(--n-800) 40%, transparent);
+
   /* =======================================================================
      3단 · THEME SLOT 기본값 (data-section 미지정 시 fallback = concept/blue)
      실제 값은 아래 [data-section="..."] 블록에서 교체됨.
@@ -230,7 +246,6 @@
   --th-vivid:         var(--blue-450);
   --th-tint:          color-mix(in srgb, var(--th-accent) 8%, transparent);
   --th-tint-strong:   color-mix(in srgb, var(--th-accent) 15%, transparent);
-  --th-chip:          var(--blue-050);
   --th-panel:         var(--n-100);
   --th-focus:         var(--th-accent);
   --asset-bar-rim:    var(--asset-console-concept-rim);
@@ -372,7 +387,6 @@
   --th-ink-accent: var(--blue-600);
   --th-solid: var(--blue-600);   /* 흰 글자 받침 */
   --th-vivid: var(--blue-450);   /* 정체성 버튼(≥19px w700 흰 라벨) */
-  --th-chip: var(--blue-050);
   --th-panel: var(--n-000);   /* 콘텐츠 패널 = 라이트에서 흰색 (다크는 .content 규칙이 surface-1로 덮음) */
   --asset-bar-rim:  var(--asset-console-concept-rim);   /* 하단 콘솔 바 — 립 */
   --asset-bar-tray: var(--asset-console-concept-tray);
@@ -390,7 +404,6 @@
   --th-ink-accent: var(--teal-600);
   --th-solid: var(--teal-600);   /* 흰 글자 받침 */
   --th-vivid: var(--teal-450);   /* 정체성 버튼(≥19px w700 흰 라벨) */
-  --th-chip: var(--teal-050);
   --th-panel: var(--n-000);   /* 콘텐츠 패널 = 라이트에서 흰색 */
   --asset-bar-rim:  var(--amber-050);   /* 하단 콘솔 바 — 립 */
   --asset-bar-tray: var(--asset-console-type-tray);
@@ -408,7 +421,6 @@
   --th-ink-accent: var(--violet-600);
   --th-solid: var(--violet-600);   /* 흰 글자 받침 */
   --th-vivid: var(--violet-450);   /* 정체성 버튼(≥19px w700 흰 라벨) */
-  --th-chip: var(--violet-050);
   --th-panel: var(--n-000);   /* 콘텐츠 패널 = 라이트에서 흰색 */
   --asset-bar-rim:  var(--asset-console-essay-rim);   /* 하단 콘솔 바 — 립 */
   --asset-bar-tray: var(--asset-console-essay-tray);
@@ -426,7 +438,6 @@
   --th-ink-accent: var(--violet-600);
   --th-solid: var(--violet-600);   /* 흰 글자 받침 */
   --th-vivid: var(--violet-450);   /* 정체성 버튼(≥19px w700 흰 라벨) */
-  --th-chip: var(--violet-050);
   --th-panel: var(--n-050);
   --asset-bar-rim:  var(--n-100);   /* 하단 콘솔 바 — 립 */
   --asset-bar-tray: var(--n-100);
@@ -444,7 +455,6 @@
   --th-ink-accent: var(--blue-600);
   --th-solid: var(--blue-600);   /* 흰 글자 받침 */
   --th-vivid: var(--blue-450);   /* 정체성 버튼(≥19px w700 흰 라벨) */
-  --th-chip: var(--blue-050);
   --th-panel: var(--n-100);
   --asset-bar-rim:  var(--asset-console-task-rim);   /* 하단 콘솔 바 — 립 */
   --asset-bar-tray: var(--asset-console-task-tray);
@@ -462,7 +472,6 @@
   --th-ink-accent: var(--blue-600);
   --th-solid: var(--blue-600);   /* 흰 글자 받침 */
   --th-vivid: var(--blue-450);   /* 정체성 버튼(≥19px w700 흰 라벨) */
-  --th-chip: var(--blue-050);
   --th-panel: var(--n-100);
   --asset-bar-rim:  var(--n-100);   /* 하단 콘솔 바 — 립 */
   --asset-bar-tray: var(--n-100);
@@ -480,7 +489,6 @@
   --th-ink-accent: var(--blue-300);
   --th-solid: var(--cyan-600);   /* 흰 글자 받침 */
   --th-vivid: var(--blue-450);   /* A층 정체성(기본모드 블루) */
-  --th-chip: var(--n-800);
   --th-panel: var(--surface-1);
   --asset-bar-rim:  var(--n-100);   /* 하단 콘솔 바 — 립 */
   --asset-bar-tray: var(--n-100);
