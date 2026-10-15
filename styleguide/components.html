@@ -6,10 +6,10 @@
   <title>부품 — 리딩수학과학 디자인 시스템</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
   <base href="../" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261015-32" />
-  <link rel="stylesheet" href="styles/base.css?v=20261015-32" />
-  <link rel="stylesheet" href="styles/components.css?v=20261015-32" />
-  <link rel="stylesheet" href="styleguide/sg.css?v=20261015-32" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261015-41" />
+  <link rel="stylesheet" href="styles/base.css?v=20261015-41" />
+  <link rel="stylesheet" href="styles/components.css?v=20261015-41" />
+  <link rel="stylesheet" href="styleguide/sg.css?v=20261015-41" />
 </head>
 <body data-sg-css="tokens,base,components,learn-shell">
 <div class="sg">
@@ -105,7 +105,7 @@
             <span class="sg-cap">많은 개수 — 한 단원 18칸, 줄바꿈으로 흐른다</span>
             <div class="grid" style="max-width:420px" data-tiles="m e e* r b e m j u r* e b m e u u j e"></div>
           </div>
-          <script src="scripts/exam-tile.js?v=20261015-32"></script>
+          <script src="scripts/exam-tile.js?v=20261015-41"></script>
           <script>
             document.querySelectorAll('[data-tiles]').forEach(function (box) {
               box.innerHTML = box.dataset.tiles.split(' ').map(function (t) {
@@ -189,7 +189,7 @@
         <div class="sg-item__hd"><h3>빈칸 선지 창</h3>
           <span class="sg-item__cls">.bpop · .is-open · .is-up · __caret · __opt · __mark · .is-wrong · .is-dead · .is-correct</span>
           <span class="sg-item__file">components.css · scripts/blank-pop.js</span></div>
-        <p class="sg-note">빈칸을 누르면 그 아래에 뜨는 「선지 고르기」 창입니다. 개념 학습과 서술형 6장이 같은 창을 씁니다. 마크업 · 열림 위치 · 채점 동작은 <code>blank-pop.js</code>가 만들고, 화면은 <code>RMBlankPop.open(빈칸, {choices, answer, onPick, onDone})</code>만 부릅니다.
+        <p class="sg-note">빈칸을 누르면 그 아래에 뜨는 「선지 고르기」 창입니다. 개념 학습과 서술형 6장이 같은 창을 씁니다. 마크업 · 채점 동작은 <code>blank-pop.js</code>가, 열림 위치는 키패드와 같은 <code>pop-place.js</code>가 정합니다(머리줄 아래 ~ 콘솔바 위, 빈칸 아래 12px · 모자라면 위). 화면은 <code>RMBlankPop.open(빈칸, {choices, answer, onPick, onDone})</code>만 부릅니다.
           계열에 따라 바뀌는 것은 왼쪽 원의 색(<code>--th-accent</code>, 다크 <code>--th-accent-hi</code>)뿐입니다. 창은 테마를 따라 뒤집히는 카드입니다(라이트 <code>--surface-1</code> · 다크 <code>--surface-2</code>).</p>
         <table class="sg-table">
           <thead><tr><th style="width:150px">상태</th><th>모양</th><th style="width:200px">언제</th></tr></thead>
@@ -560,6 +560,6 @@
 
   </main>
 </div>
-<script src="styleguide/sg.js?v=20261015-32"></script>
+<script src="styleguide/sg.js?v=20261015-41"></script>
 </body>
 </html>

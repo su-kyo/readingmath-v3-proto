@@ -6,10 +6,10 @@
   <title>셸 — 리딩수학과학 디자인 시스템</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
   <base href="../" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261015-32" />
-  <link rel="stylesheet" href="styles/base.css?v=20261015-32" />
-  <link rel="stylesheet" href="styles/components.css?v=20261015-32" />
-  <link rel="stylesheet" href="styleguide/sg.css?v=20261015-32" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261015-41" />
+  <link rel="stylesheet" href="styles/base.css?v=20261015-41" />
+  <link rel="stylesheet" href="styles/components.css?v=20261015-41" />
+  <link rel="stylesheet" href="styleguide/sg.css?v=20261015-41" />
 </head>
 <body data-sg-css="tokens,base,components,learn-shell">
 <div class="sg">
@@ -293,7 +293,8 @@
     <section class="sg-sec" id="keypad">
       <h2>키패드 <small>keypad.css + keypad.js · 마크업까지 한 벌 · 테마와 무관</small></h2>
       <p class="sg-lead">키 구성은 한 벌로 고정입니다(7~0 · ⌫ · C · − · . · 확인). 마크업은 <code>RMKeypad.html()</code>이 만들고, 값 편집은 <code>RMKeypad.apply()</code>가 합니다.
-        「확인」이 하는 일은 화면이 정합니다. 개념·유형은 닫기, 서술형은 채점, 과제 좌측은 다음 문제, 답안표는 접기, 시험은 제출입니다.</p>
+        「확인」이 하는 일은 화면이 정합니다. 개념·유형은 닫기, 서술형은 채점, 과제 좌측은 다음 문제, 답안표는 접기, 시험은 제출입니다.
+        빈칸에서 여는 자리는 빈칸 선지 창과 같은 <code>scripts/pop-place.js</code>입니다. 머리줄 아래 ~ 콘솔바 위 영역의 가장자리 8px 안에서만 열고, 입력칸 아래 12px가 기본입니다. 모자라면 위로, 둘 다 모자라면 문제 영역을 스크롤한 뒤 엽니다. 스크롤로도 안 되면 입력칸 옆에 엽니다. 분수 칸은 처음부터 옆에 엽니다(위아래로 열면 짝 칸을 덮는다).</p>
 
       <div class="sg-item" data-uses="keypad__key" data-pad="20px"
            data-css="tokens,base,components,keypad" data-bg="var(--bg)">
@@ -305,7 +306,7 @@
           물리 키보드도 됩니다. <code>keypad-input.js</code>가 누른 키에 해당하는 화면 버튼을 대신 클릭하므로, 입력 로직은 한 벌입니다.</p>
         <template class="sg-src">
           <div class="keypad" id="kp"></div>
-          <script src="scripts/keypad.js?v=20261015-32"></script>
+          <script src="scripts/keypad.js?v=20261015-41"></script>
           <script>
             /* 키 구성의 정본은 keypad.js 의 KEYS 배열 하나뿐이다.
                문서가 그걸 옮겨 적으면 키가 바뀔 때 문서만 옛것이 된다. */
@@ -321,7 +322,7 @@
         <p class="sg-note">마크업과 CSS가 위와 같고, 견본의 <code>data-section</code>만 <code>type</code>입니다. 트레이 틴트와 LCD 글자색이 틸로 바뀝니다.</p>
         <template class="sg-src">
           <div class="keypad" id="kp2"></div>
-          <script src="scripts/keypad.js?v=20261015-32"></script>
+          <script src="scripts/keypad.js?v=20261015-41"></script>
           <script>document.getElementById('kp2').innerHTML = RMKeypad.html();</script>
         </template>
       </div>
@@ -354,7 +355,7 @@
 
   </main>
 </div>
-<script src="styleguide/shells.js?v=20261015-32"></script>
-<script src="styleguide/sg.js?v=20261015-32"></script>
+<script src="styleguide/shells.js?v=20261015-41"></script>
+<script src="styleguide/sg.js?v=20261015-41"></script>
 </body>
 </html>

@@ -175,6 +175,7 @@
   });
   /* 줄이 바뀌면(창 크기 · 글자 크기 · 웹폰트 도착) 알약 위치를 다시 잡는다 */
   if (window.ResizeObserver) new ResizeObserver(renderTags).observe(article);
+  article.addEventListener('rm:textsize', renderTags);   // 「글자」 크기를 바꾸면 줄 위치가 달라진다 (concept-learn-textsize.js)
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(renderTags);
 
   /* 라이트/다크 토글 */

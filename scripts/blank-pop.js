@@ -15,17 +15,17 @@
      RMBlankPop.close();  RMBlankPop.isOpen();  RMBlankPop.anchor();
 
    동작 규칙 (두 계열 공통):
-   · 빈칸 아래로 열고, 아래 공간이 모자라면 위로 뒤집는다(.is-up). 화면 가장자리 8px 안으로 민다.
-     꼬리는 빈칸 가운데를 가리킨다(--bpop-caret-x).
+   · 자리는 scripts/pop-place.js — 머리줄 아래 ~ 콘솔바 위 영역의 가장자리 8px 안. 빈칸 아래 12px,
+     모자라면 위로 뒤집고(.is-up), 둘 다 모자라면 문제 영역을 스크롤한 뒤 연다. 꼬리는 빈칸 가운데(--bpop-caret-x).
    · 오답 → .is-wrong 0.5초(흔들림) → .is-dead (그 빈칸에서는 다시 열어도 비활성 그대로)
    · 정답 → .is-correct 0.5초 → 닫고 onDone. 그 0.5초 동안은 다른 선지를 못 누른다
    · 바깥을 누르거나 Esc → 닫힘. 빈칸 자신을 누르는 것은 화면이 정한다(토글 등)
-   · 빈칸이 움직이면(스크롤 · 창 크기 · 위 칸이 접힘) 따라간다. 빈칸이 화면 밖으로 나가면 닫는다
+   · 빈칸이 움직이면(스크롤 · 창 크기 · 위 칸이 접힘) 따라간다. 빈칸이 영역 밖으로 나가면 닫는다
    ============================================================ */
 (function () {
   'use strict';
 
-  var GAP = 12, EDGE = 8, CARET_MIN = 22, HOLD = 500;
+  var GAP = 12, CARET_MIN = 22, HOLD = 500;
   var el, opts, cur = null, cfg = {}, busy = false, timers = [], pending = null, raf = 0, last = '';
 
   function build() {
@@ -60,21 +60,13 @@
     });
   }
 
-  function place() {
+  /* 자리 = scripts/pop-place.js (머리줄 아래 ~ 콘솔바 위, 가장자리 8px 안 · 아래 12px 기본 · 모자라면 위 · 둘 다 모자라면 스크롤) */
+  function place(reveal) {
     if (!cur) return;
-    var r = cur.getBoundingClientRect();
-    var vw = window.innerWidth, vh = window.innerHeight;
-    if (r.bottom < 0 || r.top > vh) { close(); return; }        // 빈칸이 화면 밖으로 나갔다
-    var w = el.offsetWidth, h = el.offsetHeight;
-    var cx = r.left + r.width / 2;
-    var left = Math.min(Math.max(EDGE, cx - w / 2), vw - w - EDGE);
-    var up = r.bottom + GAP + h > vh - EDGE && r.top - GAP - h >= EDGE;
-    var top = up ? r.top - GAP - h : r.bottom + GAP;
-    top = Math.max(EDGE, Math.min(top, vh - h - EDGE));
-    el.classList.toggle('is-up', up);
-    el.style.left = Math.round(left) + 'px';
-    el.style.top = Math.round(top) + 'px';
-    el.style.setProperty('--bpop-caret-x', Math.round(Math.min(Math.max(CARET_MIN, cx - left), w - CARET_MIN)) + 'px');
+    var at = window.RMPopPlace.place(el, cur, { gap: GAP, reveal: reveal });
+    if (!at) { close(); return; }                                // 빈칸이 영역 밖으로 나갔다
+    el.classList.toggle('is-up', at.up);
+    el.style.setProperty('--bpop-caret-x', Math.round(Math.min(Math.max(CARET_MIN, at.caretX), at.width - CARET_MIN)) + 'px');
   }
 
   function open(anchor, o) {
@@ -82,7 +74,8 @@
     if (cur) close();
     cur = anchor; cfg = o || {};
     render();
-    place();
+    place(true);
+    if (!cur) return;
     el.classList.add('is-open');
     last = ''; follow();
   }
@@ -97,7 +90,7 @@
   }
 
   function close() {
-    if (!el || !el.classList.contains('is-open')) return;
+    if (!el || !cur) return;
     clearTimers();
     cancelAnimationFrame(raf);
     el.classList.remove('is-open');

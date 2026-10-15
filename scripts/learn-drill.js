@@ -105,22 +105,15 @@
   pad.innerHTML = window.RMKeypad.html();          /* 키 구성 정본 = scripts/keypad.js */
   var kpDisplay = pad.querySelector('.keypad__display');
   var activeInput = null;
-  function positionPad(input) {
-    var r = input.getBoundingClientRect();
-    var w = pad.offsetWidth || 244, h = pad.offsetHeight || 340;
-    var left, top;
-    if (r.right + 14 + w < window.innerWidth - 8) { left = r.right + 14; top = r.top + r.height / 2 - h / 2; }
-    else { left = r.left + r.width / 2 - w / 2; top = r.bottom + 10; if (top + h > window.innerHeight - 8) top = r.top - h - 10; }
-    left = Math.min(Math.max(left, 8), window.innerWidth - w - 8);
-    top = Math.min(Math.max(top, 8), window.innerHeight - h - 8);
-    pad.style.left = left + 'px'; pad.style.top = top + 'px';
+  function positionPad(input, reveal) {   /* 자리 = scripts/pop-place.js — 머리줄 아래 ~ 콘솔바 위, 입력칸 아래 12px 기본 · 분수 칸은 옆 먼저 */
+    if (!window.RMPopPlace.place(pad, input, { reveal: reveal, side: true, sideFirst: !!input.closest('.fraction, .mfrac') })) closePad();
   }
   function openPad(node) {
     activeInput = node;
     kpDisplay.textContent = getV(node) || '0';
     qEl.querySelectorAll('.sinput, .dblank').forEach(function (x) { x.classList.remove('is-active-input'); });
     node.classList.add('is-active-input');
-    pad.classList.add('is-open'); positionPad(node);
+    pad.classList.add('is-open'); positionPad(node, true);
   }
   function closePad() { pad.classList.remove('is-open'); if (activeInput) activeInput.classList.remove('is-active-input'); activeInput = null; }
   pad.addEventListener('click', function (e) { e.stopPropagation(); });
@@ -137,6 +130,7 @@
     if (pad.classList.contains('is-open') && !e.target.closest('.sinput') && !e.target.closest('.dblank')) closePad();
   });
   window.addEventListener('resize', function () { if (activeInput) positionPad(activeInput); });
+  document.addEventListener('scroll', function () { if (activeInput) positionPad(activeInput); }, true);   // 문제 영역을 스크롤하면 따라가고, 입력칸이 영역 밖으로 나가면 닫는다
 
   /* ---- 문제 번호탭 (헤더) — 현재/정답/오답 상태. 정오답은 아이콘(색맹 접근성) ---- */
   var ICO_OK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>';

@@ -507,6 +507,7 @@
     "scripts/keypad.js",
     "scripts/scratchpad.js",
     "scripts/debug-panel.js",
+    "scripts/pop-place.js",
     "scripts/keypad.js",
     "scripts/keypad-input.js",
     "scripts/learn-guide.js",
@@ -667,6 +668,7 @@
     "scripts/scratchpad.js",
     "scripts/debug-panel.js",
     "scripts/vendor/katex/katex.min.js",
+    "scripts/pop-place.js",
     "scripts/keypad.js",
     "scripts/keypad-input.js",
     "scripts/learn-guide.js",
@@ -831,10 +833,12 @@
    "js": [
     "scripts/scratchpad.js",
     "scripts/debug-panel.js",
+    "scripts/pop-place.js",
     "scripts/blank-pop.js",
     "scripts/learn-guide.js",
     "scripts/learn-concept.js",
     "scripts/concept-learn-video.js",
+    "scripts/concept-learn-textsize.js",
     "scripts/learn-exit.js"
    ],
    "parts": [
@@ -904,6 +908,10 @@
    ],
    "tokens": [
     {
+     "name": "--text-on-accent",
+     "count": 7
+    },
+    {
      "name": "--text-muted",
      "count": 7
     },
@@ -924,16 +932,16 @@
      "count": 5
     },
     {
-     "name": "--text-on-accent",
-     "count": 4
-    },
-    {
      "name": "--surface-2",
      "count": 4
     },
     {
      "name": "--th-ink-accent",
      "count": 3
+    },
+    {
+     "name": "--th-solid",
+     "count": 2
     },
     {
      "name": "--hw-screen",
@@ -944,12 +952,8 @@
      "count": 2
     },
     {
-     "name": "--bg",
-     "count": 1
-    },
-    {
-     "name": "--th-static-deep",
-     "count": 1
+     "name": "--shade",
+     "count": 2
     }
    ],
    "rules": [
@@ -1100,6 +1104,7 @@
    ],
    "js": [
     "scripts/scratchpad.js",
+    "scripts/pop-place.js",
     "scripts/keypad.js",
     "scripts/blank-pop.js",
     "scripts/keypad-input.js",
@@ -1259,6 +1264,7 @@
    "js": [
     "scripts/scratchpad.js",
     "scripts/debug-panel.js",
+    "scripts/pop-place.js",
     "scripts/keypad.js",
     "scripts/blank-pop.js",
     "scripts/keypad-input.js",
@@ -1417,6 +1423,7 @@
    ],
    "js": [
     "scripts/scratchpad.js",
+    "scripts/pop-place.js",
     "scripts/keypad.js",
     "scripts/blank-pop.js",
     "scripts/keypad-input.js",
@@ -1694,6 +1701,7 @@
    "js": [
     "scripts/scratchpad.js",
     "scripts/debug-panel.js",
+    "scripts/pop-place.js",
     "scripts/keypad.js",
     "scripts/blank-pop.js",
     "scripts/keypad-input.js",
@@ -1857,6 +1865,7 @@
    ],
    "js": [
     "scripts/scratchpad.js",
+    "scripts/pop-place.js",
     "scripts/keypad.js",
     "scripts/blank-pop.js",
     "scripts/keypad-input.js",
@@ -2148,6 +2157,7 @@
    ],
    "js": [
     "scripts/scratchpad.js",
+    "scripts/pop-place.js",
     "scripts/keypad.js",
     "scripts/blank-pop.js",
     "scripts/keypad-input.js",
@@ -3412,6 +3422,7 @@
     "scripts/keypad.js",
     "scripts/scratchpad.js",
     "scripts/debug-panel.js",
+    "scripts/pop-place.js",
     "scripts/keypad.js",
     "scripts/keypad-input.js",
     "scripts/learn-guide.js",

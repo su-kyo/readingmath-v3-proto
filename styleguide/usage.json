@@ -1963,13 +1963,16 @@
    "essay/drill-v2.html": "js"
   },
   "is-up": {
+   "concept/basic-ops.html": "js",
+   "concept/drill.html": "js",
    "concept/learn.html": "js",
    "essay/advanced.html": "js",
    "essay/basics-v2.html": "js",
    "essay/basics.html": "js",
    "essay/drill-v2.html": "js",
    "essay/drill.html": "js",
-   "essay/report.html": "js"
+   "essay/report.html": "js",
+   "type/quiz.html": "js"
   },
   "is-warn": {
    "util/report.html": "js"
@@ -4975,6 +4978,27 @@
    "essay/training-result.html": "markup",
    "shared/training-result.html": "markup",
    "type/training-result.html": "markup"
+  },
+  "tsize": {
+   "concept/learn.html": "markup"
+  },
+  "tsize__btn": {
+   "concept/learn.html": "markup"
+  },
+  "tsize__dot": {
+   "concept/learn.html": "js"
+  },
+  "tsize__dots": {
+   "concept/learn.html": "js"
+  },
+  "tsize__pop": {
+   "concept/learn.html": "markup"
+  },
+  "tsize__step": {
+   "concept/learn.html": "js"
+  },
+  "tsize__step--lg": {
+   "concept/learn.html": "js"
   },
   "tst": {
    "essay/training-result.html": "js",

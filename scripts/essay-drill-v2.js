@@ -342,21 +342,12 @@
     clearTimeout(wrongT);
     wrongT = setTimeout(function () { if (el) el.classList.remove('is-wrong'); }, delay || 1300);
   }
-  function place(anchor) {
-    var r = anchor.getBoundingClientRect();
-    var pw = pop.offsetWidth, ph = pop.offsetHeight;
-    var vw = window.innerWidth, vh = window.innerHeight, gap = 9, pad = 8;
-    var cx = r.left + r.width / 2;
-    var left = Math.min(Math.max(pad, cx - pw / 2), vw - pw - pad);
-    var up = false, top;
-    if (r.bottom + gap + ph <= vh - pad) top = r.bottom + gap;
-    else if (r.top - gap - ph >= pad) { top = r.top - gap - ph; up = true; }
-    else top = r.bottom + gap;
-    top = Math.max(pad, Math.min(top, vh - ph - pad));
-    pop.style.left = Math.round(left) + 'px'; pop.style.top = Math.round(top) + 'px';
-    pop.classList.toggle('qpop--up', up);
-    var caretX = Math.min(Math.max(14, cx - left), pw - 14);
-    caret.style.left = (caretX - 6) + 'px'; caret.style.top = up ? (ph - 6) + 'px' : '-6px';
+  function place(anchor, reveal) {   /* 자리 = scripts/pop-place.js — 머리줄 아래 ~ 콘솔바 위, 빈칸 아래 12px · 모자라면 위(꼬리도 아래로) */
+    var at = window.RMPopPlace.place(pop, anchor, { reveal: reveal });
+    if (!at) { closePop(); return; }
+    pop.classList.toggle('qpop--up', at.up);
+    caret.style.left = (Math.min(Math.max(14, at.caretX), at.width - 14) - 6) + 'px';
+    caret.style.top = at.up ? (at.height - 6) + 'px' : '-6px';
   }
   function openPop(anchor) {
     closePop();   // 열린 창(객관식 · 키패드)부터 닫는다
@@ -376,7 +367,7 @@
       var disp = popBody.querySelector('.keypad__display');
       disp.id = 'popDisp'; disp.textContent = buffer || '0';   /* 키패드 정본 = scripts/keypad.js */
     }
-    pop.classList.add('is-open'); place(anchor);
+    pop.classList.add('is-open'); place(anchor, true);
   }
   function closePop() { pop.classList.remove('is-open'); window.RMBlankPop.close(); activeId = null; }
   function norm(s) { return String(s).replace(/\s+/g, '').trim(); }
@@ -402,7 +393,7 @@
     closePop();
   });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && pop.classList.contains('is-open')) closePop(); });
-  document.querySelector('.stage-scroll').addEventListener('scroll', function () { if (pop.classList.contains('is-open')) closePop(); }, true);
+  document.querySelector('.stage-scroll').addEventListener('scroll', function () { if (pop.classList.contains('is-open') && selEl) place(selEl); }, true);
   window.addEventListener('resize', function () { if (pop.classList.contains('is-open')) closePop(); });
 
   /* ===================== ③ 순서 맞추기 (문장 끊어읽기 + 배치) ===================== */
