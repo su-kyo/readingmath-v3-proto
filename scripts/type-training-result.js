@@ -11,15 +11,15 @@
 
   /* ---------- 데이터 (유형 훈련 4단계 · 문항 결과까지 한 벌) ----------
      스텝의 정답·등급은 results 배열에서 집계한다. 칸 수 = 과목의 유형 문항 수(수학 10 · 과학 5).
-     3단계(2차 유형 문제)의 results 는 스텝 결과 화면(type-result.js)과 같은 곳 — 유형 데이터의 데모 오답(pick)에서 읽는다.
-     나머지 세 단계는 데모 값이다(평균 85점이 되게: 수학 100 · 90 · 70 · 80 / 과학 100 · 80 · 80 · 80). */
+     1단계(1차 유형 문제)의 results 는 스텝 결과 화면(type-result.js)과 같은 곳 — 유형 데이터의 데모 오답(pick)에서 읽는다.
+     나머지 세 단계는 데모 값이다(평균 85점이 되게: 수학 70 · 90 · 100 · 80 / 과학 80 · 80 · 100 · 80). */
   var T = true, F = false;
   var SET = window.RMTypeData[window.RMSubject.id];
-  var STEP3 = SET.problems.map(function (p) { return !('pick' in p); });
+  var STEP1 = SET.problems.map(function (p) { return !('pick' in p); });
   var STAGES = [
-    { no: 1, name: '1차 유형 문제', results: window.RMSubject.pick([T,T,T,T,T,T,T,T,T,T], [T,T,T,T,T]) },
+    { no: 1, name: '1차 유형 문제', results: STEP1 },
     { no: 2, name: '1차 유사 문제', results: window.RMSubject.pick([T,T,T,T,T,T,F,T,T,T], [T,T,F,T,T]) },
-    { no: 3, name: '2차 유형 문제', results: STEP3 },
+    { no: 3, name: '2차 유형 문제', results: window.RMSubject.pick([T,T,T,T,T,T,T,T,T,T], [T,T,T,T,T]) },
     { no: 4, name: '2차 유사 문제', results: window.RMSubject.pick([T,T,F,T,T,F,T,T,T,T], [T,F,T,T,T]) }
   ];
   function gradeOf(r) { return r >= 95 ? 's' : r >= 80 ? 'a' : r >= 70 ? 'b' : 'c'; }
@@ -38,8 +38,8 @@
   var SCORE = BASE_SCORE - (overtime ? PENALTY : 0);
   var COMMENT =
     '진방울님의 유형 훈련 결과는 100점 만점 중 ' + SCORE + '점입니다.\n' +
-    '1차 유형은 완벽했지만, 2차 유형 문제에서 조금 흔들렸어요.\n' +
-    '오답노트를 확인한 뒤 2차 유형 문제를 한 번 더 복습해 보세요.';
+    '2차 유형은 완벽했지만, 1차 유형 문제에서 조금 흔들렸어요.\n' +
+    '오답노트를 확인한 뒤 1차 유형 문제를 한 번 더 복습해 보세요.';
 
   /* ?snap=1 이면 애니메이션 생략하고 최종 상태로 (검수·스크린샷용) */
   var SNAP = new URLSearchParams(location.search).get('snap') === '1';
