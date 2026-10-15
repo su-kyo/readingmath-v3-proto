@@ -26,32 +26,33 @@ html,body{ height:100%; }
 
 /* ── 기본 = 다크 ────────────────────────────────────────────────────────── */
 .u-body{
-  --paper:var(--n-900);        /* 바탕 */
-  --surface:var(--n-800);      /* 시트 · 타일 면 */
-  --inset:var(--n-800);        /* 요약 패널 · 세그먼트 트랙 */
-  --wash:var(--n-700);         /* 호버 = 사다리 한 칸 */
-  --rule:var(--border);        /* 헤어라인 · 시트 테두리 */
-  --rule-2:var(--border-strong);
-  --ink:var(--n-050);          /* 본문 */
-  --ink-2:var(--n-300);        /* 보조 (다크 8.4) */
-  --ink-3:var(--n-350);        /* 메타 (다크 4.9) */
-  --ph:var(--n-400);           /* 빈 값 자리(—) */
-  --icon-mute:var(--n-500);    /* 화살표 · 빈 상태 아이콘 */
-  --sk:var(--n-700);           /* 스켈레톤 바 */
-  --sb-thumb:var(--n-600);     /* 스크롤바 */
+  /* 값은 tokens.css 의 시스템 토큰 — 라이트·다크 전환도 거기서 한다 */
+  --paper:var(--util-paper);       /* 바탕 */
+  --surface:var(--surface-1);      /* 시트 · 타일 면 */
+  --inset:var(--surface-inset);    /* 요약 패널 · 세그먼트 트랙 */
+  --wash:var(--surface-2);         /* 호버 = 사다리 한 칸 */
+  --rule:var(--divider);              /* 헤어라인 · 시트 테두리 */
+  --rule-2:var(--divider-strong);
+  --ink:var(--text);               /* 본문 */
+  --ink-2:var(--text-muted);       /* 보조 */
+  --ink-3:var(--text-meta);        /* 메타 */
+  --ph:var(--util-ph);             /* 빈 값 자리(—) */
+  --icon-mute:var(--util-icon-mute); /* 화살표 · 빈 상태 아이콘 */
+  --sk:var(--util-skeleton);       /* 스켈레톤 바 */
+  --sb-thumb:var(--scroll-thumb);  /* 스크롤바 */
 
-  --sel-bg:var(--n-050);       /* 선택 칠 — 다크에서는 밝게 뒤집는다 */
-  --sel-fg:var(--n-900);
+  --sel-bg:var(--text);            /* 선택 칠 — 다크에서는 밝게, 라이트에서는 먹색으로 뒤집힌다 */
+  --sel-fg:var(--util-sel-fg);
 
-  --brand:var(--blue-300);     /* 점 · 마커 (다크면에서 밝은 스텝) */
-  --brand-ink:var(--blue-300); /* 작은 글자 */
-  --brand-fg:var(--n-900);     /* 브랜드 칠 위 글자 (N 배지) */
-  --brand-on-sel:var(--blue-600); /* 선택(밝은) 칠면 위 브랜드색 */
+  --brand:var(--util-brand);       /* 점 · 마커 */
+  --brand-ink:var(--util-brand-ink); /* 작은 글자 */
+  --brand-fg:var(--util-sel-fg);   /* 브랜드 칠 위 글자 (N 배지) */
+  --brand-on-sel:var(--util-brand-on-sel); /* 선택 칠면 위 브랜드색 */
 
   --cta:var(--primary);        /* 450 IDENTITY — 유일한 난색 */
   --err:var(--no-on-dark);     /* 빨강은 오류에만 (다크에서 읽히는 스텝) */
-  --dis-bg:var(--n-700);       /* CTA 비활성 */
-  --dis-fg:var(--n-350);
+  --dis-bg:var(--util-dis-bg);     /* CTA 비활성 */
+  --dis-fg:var(--text-meta);
 
   background:var(--paper); color:var(--ink);
   font-family:var(--font-sans); letter-spacing:-.03em;
@@ -60,31 +61,7 @@ html,body{ height:100%; }
 
 /* ── 라이트 ─────────────────────────────────────────────────────────────── */
 :root[data-theme="light"] .u-body{
-  --paper:var(--n-000);
-  --surface:var(--n-000);
-  --inset:var(--n-050);
-  --wash:var(--n-050);
-  --rule:var(--n-100);
-  --rule-2:var(--n-200);
-  --ink:var(--n-650);          /* 흰 배경 14.6 */
-  --ink-2:var(--n-500);        /* 9.3 */
-  --ink-3:var(--n-400);        /* 5.4 */
-  --ph:var(--n-300);
-  --icon-mute:var(--n-200);
-  --sk:var(--n-100);
-  --sb-thumb:var(--n-200);
-
-  --sel-bg:var(--n-650);       /* 선택 칠 — 라이트에서는 먹색 */
-  --sel-fg:var(--n-000);
-
-  --brand:var(--blue-500);
-  --brand-ink:var(--blue-600); /* A부류 텍스트 칠면 · 흰 배경 7.0 */
-  --brand-fg:var(--n-000);
-  --brand-on-sel:var(--blue-300); /* 선택(먹색) 칠면 위 */
-
   --err:var(--no-ink);
-  --dis-bg:var(--n-100);
-  --dis-fg:var(--n-400);
 }
 
 /* GNB는 두 테마에서 모두 다크 하드웨어다 — 경계선을 테마에 맡기지 않는다 */

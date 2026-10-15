@@ -13,14 +13,11 @@
   /* 정오답 — 선·아이콘(--good/--bad) · 글자(--good-text) · 칠면은 규칙에서 --ok-solid/--no-solid.
      (예전엔 다크용 300 스텝을 라이트에도 써서 오답 칸이 분홍, 정답 숫자가 연두로 날아갔다) */
   --good: var(--ok-solid); --good-text: var(--ok-ink); --bad: var(--no-solid);
-  /* 라이트 표면 — content 거터(살짝틴트) → qpanel 흰색 / omr 살짝틴트 */
-  --content: var(--n-000); --qpanel: var(--n-000); --panel: var(--n-050); --ink: var(--n-650); --sub: var(--text-muted);
-  --line: var(--n-200); --opt: var(--n-000); --track: var(--n-100); --dash: var(--n-200);
+  /* 표면 · 글자 · 선은 tokens.css 의 시스템 토큰 — 라이트·다크 전환도 거기서 한다 */
+  --content: var(--assign-content); --qpanel: var(--surface-1); --panel: var(--surface-inset); --ink: var(--text); --sub: var(--text-muted);
+  --line: var(--divider-strong); --opt: var(--assign-opt); --track: var(--assign-track); --dash: var(--assign-dash);
 }
 :root[data-theme="dark"] {
-  /* 다크 표면 — 뉴트럴 램프 단조증가(bg n-900 < 패널 n-800 < 카드 n-600)로 대비 확보 */
-  --content: var(--n-900); --qpanel: var(--n-800); --panel: var(--n-800); --ink: var(--n-050); --sub: var(--text-muted);
-  --line: var(--border-strong); --opt: var(--n-600); --track: var(--n-900); --dash: var(--n-350);
   --good: var(--ok-on-dark); --good-text: var(--ok-on-dark); --bad: var(--no-on-dark);
 }
 body { font-family: var(--font-sans); background: var(--asset-console-task-body); overflow: hidden; -webkit-font-smoothing: antialiased; }
@@ -86,14 +83,14 @@ body { font-family: var(--font-sans); background: var(--asset-console-task-body)
 .cell--correct { background: var(--ok-solid); }
 .cell--wrong { background: var(--no-solid); }
 .cell.is-cur { border: var(--bw-3) solid var(--current); }
-.cell__mark { position: absolute; top: 3px; right: 3px; width: 16px; height: 16px; border-radius: 50%; background: var(--n-000); display: grid; place-items: center; box-shadow: 0 1px 2px var(--black-a25); }
+.cell__mark { position: absolute; top: 3px; right: 3px; width: 16px; height: 16px; border-radius: 50%; background: var(--paper-bg); display: grid; place-items: center; box-shadow: 0 1px 2px var(--black-a25); }
 .cell__mark svg { width: 10px; height: 10px; }
 .cell--correct .cell__mark { color: var(--good); }
 .cell--wrong .cell__mark { color: var(--bad); }
 
 /* 하단 콘솔 바 */
 
-:root[data-theme="dark"] .qpanel::-webkit-scrollbar-thumb { background: var(--n-500); background-clip: padding-box; }
+:root[data-theme="dark"] .qpanel::-webkit-scrollbar-thumb { background: var(--scroll-thumb-dark-strong); background-clip: padding-box; }
 :focus-visible { outline: var(--bw-3) solid var(--yellow); outline-offset: 2px; }
 
 @media (max-width: 900px) {

@@ -122,6 +122,8 @@
   --art-star-halo-big:  rgba(190, 210, 255, .50);
   --art-star-flare:     rgba(214, 228, 255, .90);
 
+  --art-star-gold: var(--gold-500);   /* 시험 홈 중요 유형 별 (별 PNG와 같은 금색) */
+
   /* 등급 칩 (커리큘럼·자유모드의 별 아이콘과 세트) */
   --art-grade-s: #12BEC6;
   --art-grade-a: #FFB000;
@@ -150,6 +152,7 @@
   --surface-3:      var(--n-600);
   --surface-hover:  var(--n-500);
   --surface-sunken: var(--n-950);
+  --surface-inset:  var(--n-800);   /* 패널 안에 들어간 면 · 레일 (라이트 050) */
 
   /* 글자 — 다크 기본. 대비 4.5 이상 (스토리북 「기초 › 칠면 셋」 · RM-FILL-01) */
   --text:       var(--n-050);
@@ -160,6 +163,10 @@
   /* 테두리 · 오버레이 · 그림자 */
   --border:        var(--white-a08);
   --border-strong: var(--white-a16);
+  /* 선 — 라이트에서 반투명이 아니라 불투명 회색이 필요한 자리(유틸 시트 · 과제 패널) */
+  --divider:        var(--border);
+  --divider-strong: var(--border-strong);
+  --scroll-thumb:  var(--n-600);
   --scrim:  rgba(6, 10, 22, 0.82);   /* Phase 7: 딤은 항상 진하게 (사용자 결정) */
   --shadow-2: 0 8px 24px rgba(0, 0, 0, 0.36);
 
@@ -171,6 +178,12 @@
   --no-solid: var(--red-500);   --no-vivid: var(--red-450);   --no-on-dark: var(--red-300);   --no-ink: var(--red-600);   --no-tint: color-mix(in srgb, var(--red-300) 16%, transparent); --no-on-tint: var(--red-300);
   --warn-solid: var(--amber-300); --warn-vivid: var(--amber-300); --warn-on-dark: var(--amber-300); --warn-ink: var(--amber-600); --warn-tint: color-mix(in srgb, var(--amber-300) 16%, transparent); --warn-on-tint: var(--amber-300);
   --info-solid: var(--blue-500);  --info-vivid: var(--blue-450);  --info-on-dark: var(--blue-300);  --info-ink: var(--blue-600);  --info-tint: color-mix(in srgb, var(--blue-300) 16%, transparent); --info-on-tint: var(--blue-300);
+
+  /* 상태색 보조 — 앰버 칠의 호버 · 다크 면의 정답 테두리 · 정답 타일의 그림자(시험 홈) */
+  --warn-soft: var(--amber-200);
+  --ok-line:   var(--green-400);
+  --ok-glow:      var(--teal-500);
+  --ok-glow-dark: var(--teal-400);
 
   /* 현재 위치 마커 (섹션 액센트와 역할 분리 — "지금 여기") */
   --current: var(--amber-300);
@@ -228,6 +241,8 @@
 
   /* 시험 액센트 — 시험 계열 밖에서 시험을 가리키는 칩 (커리큘럼의 시험 대비 칩) */
   --exam-accent: var(--violet-500);
+  --exam-accent-soft: var(--violet-400);
+  --exam-accent-tint: var(--violet-050);
 
   /* 계산기 — 정적 하드웨어(RM-PART-03). 테마도 계열도 따라가지 않는 회색 한 벌이고,
      계열색은 확인 키(--th-vivid)에만 남긴다. 라이트 테마 블록에서 덮지 않는다. */
@@ -297,6 +312,37 @@
   --scratch-ink-1: var(--text);
   --scratch-ink-2: var(--red-300);
   --scratch-ink-3: var(--blue-300);
+
+  /* 유틸 4화면 (RM-UTIL-01~06) — 다크 기본, 라이트 값은 아래 라이트 블록 */
+  --util-paper:        var(--n-900);
+  --util-ph:           var(--n-400);   /* 빈 값 자리(—) */
+  --util-icon-mute:    var(--n-500);
+  --util-skeleton:     var(--n-700);
+  --util-sel-fg:       var(--n-900);   /* 반전 칠 위 글자 */
+  --util-brand:        var(--blue-300);
+  --util-brand-ink:    var(--blue-300);
+  --util-brand-on-sel: var(--blue-600);
+  --util-dis-bg:       var(--n-700);
+
+  /* 시험 2화면 (홈 · 풀이) — 다크 값, 라이트 값은 아래 라이트 블록 */
+  --exam-canvas:      var(--n-900);
+  --exam-ink:         var(--n-050);
+  --exam-ink-2:       var(--n-200);
+  --exam-muted:       var(--n-300);
+  --exam-line:        var(--border-strong);
+  --exam-line-2:      var(--border);
+  --exam-line-strong: var(--n-500);
+  --exam-accent-line: color-mix(in srgb, var(--violet-500) 40%, transparent);
+  --exam-tile-mute:   var(--n-300);   /* 아직 안 푼 · 판정 전 타일 글자 */
+
+  /* 과제 3화면 (풀이 · 해설 · 결과) — 다크 값, 라이트 값은 아래 라이트 블록 */
+  --assign-content:   var(--n-900);
+  --assign-opt:       var(--n-600);
+  --assign-opt-hover: var(--n-500);
+  --assign-track:     var(--n-900);
+  --assign-dash:      var(--n-350);
+  --assign-score-bg:  var(--n-600);
+  --assign-seg-track: var(--n-500);
 
   /* =======================================================================
      3단 · THEME SLOT 기본값 (data-section 미지정 시 fallback = concept/blue)
@@ -438,6 +484,38 @@
   --scratch-dim:   color-mix(in srgb, var(--n-700) 80%, transparent);
   --scratch-ink-2: var(--red-500);
   --scratch-ink-3: var(--blue-450);
+
+  --surface-inset: var(--n-050);
+  --divider:        var(--n-100);
+  --divider-strong: var(--n-200);
+  --scroll-thumb:  var(--n-200);
+
+  --util-paper:        var(--n-000);
+  --util-ph:           var(--n-300);
+  --util-icon-mute:    var(--n-200);
+  --util-skeleton:     var(--n-100);
+  --util-sel-fg:       var(--n-000);
+  --util-brand:        var(--blue-500);
+  --util-brand-ink:    var(--blue-600);
+  --util-brand-on-sel: var(--blue-300);
+  --util-dis-bg:       var(--n-100);
+
+  --exam-canvas:      var(--n-050);
+  --exam-ink:         var(--n-900);
+  --exam-ink-2:       var(--n-500);
+  --exam-muted:       var(--n-400);
+  --exam-line:        var(--n-100);
+  --exam-line-2:      var(--n-050);
+  --exam-line-strong: var(--n-200);
+  --exam-accent-line: var(--violet-200);
+
+  --assign-content:   var(--n-000);
+  --assign-opt:       var(--n-000);
+  --assign-opt-hover: var(--n-050);
+  --assign-track:     var(--n-100);
+  --assign-dash:      var(--n-200);
+  --assign-score-bg:  var(--n-100);
+  --assign-seg-track: var(--n-200);
 }
 /* 다크에서 포커스 링은 밝힌 액센트 + 틴트는 더 진하게 (v1.6)
    — 라이트용 8/15% 틴트는 다크 표면에서 식별 불가(끊어읽기 하이라이트·빈칸 채움이
@@ -521,6 +599,7 @@
   --th-ink-accent: var(--violet-600);
   --th-solid: var(--violet-600);   /* 흰 글자 받침 */
   --th-vivid: var(--violet-450);   /* 정체성 버튼(≥19px w700 흰 라벨) */
+  --th-shadow: var(--violet-600);   /* 시험 홈 타일 · 말풍선 그림자 */
   --th-panel: var(--n-050);
   --asset-bar-rim:  var(--n-100);   /* 하단 콘솔 바 — 립 */
   --asset-bar-tray: var(--n-100);

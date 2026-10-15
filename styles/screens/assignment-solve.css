@@ -10,15 +10,10 @@
    · 객관식/주관식(키패드) 혼합, 라이트·다크 토글
    ========================================================================= */
 :root {
-  --hd: var(--th-static); --blue: var(--th-ink-accent); --blue-d: var(--blue-500); --yellow: var(--current);
-  /* 라이트 표면 — content 거터(살짝틴트) → qpanel 흰색 / omr 살짝틴트 */
-  --content: var(--n-000); --qpanel: var(--n-000); --panel: var(--n-050); --ink: var(--n-650); --sub: var(--text-muted);
-  --line: var(--n-200); --opt: var(--n-000); --opt-hover: var(--n-050); --track: var(--n-100); --dash: var(--n-200);
-}
-:root[data-theme="dark"] {
-  /* 다크 표면 — 뉴트럴 램프 단조증가(bg n-900 < 패널 n-800 < 카드 n-600)로 대비 확보 */
-  --content: var(--n-900); --qpanel: var(--n-800); --panel: var(--n-800); --ink: var(--n-050); --sub: var(--text-muted);
-  --line: var(--border-strong); --opt: var(--n-600); --opt-hover: var(--n-500); --track: var(--n-900); --dash: var(--n-350);
+  --hd: var(--th-static); --blue: var(--th-ink-accent); --blue-d: var(--info-solid); --yellow: var(--current);
+  /* 표면 · 글자 · 선은 tokens.css 의 시스템 토큰 — 라이트·다크 전환도 거기서 한다 */
+  --content: var(--assign-content); --qpanel: var(--surface-1); --panel: var(--surface-inset); --ink: var(--text); --sub: var(--text-muted);
+  --line: var(--divider-strong); --opt: var(--assign-opt); --opt-hover: var(--assign-opt-hover); --track: var(--assign-track); --dash: var(--assign-dash);
 }
 body { font-family: var(--font-sans); background: var(--asset-console-task-body); overflow: hidden; -webkit-font-smoothing: antialiased; }
 
@@ -61,9 +56,8 @@ body { font-family: var(--font-sans); background: var(--asset-console-task-body)
 /* 키패드 = 공용 styles/keypad.css (마크업·키 구성은 scripts/keypad.js) */
 
 /* ===== OMR 사이드바 ===== */
-.segmented { flex: none; display: flex; gap: var(--sp-4); padding: var(--sp-4); background: var(--n-200); border-radius: var(--r-full); }
-:root[data-theme="dark"] .segmented { background: var(--n-500); }
-.segmented__btn { flex: 1; padding: var(--sp-8) var(--sp-8); border: 0; background: transparent; border-radius: var(--r-full); font-family: inherit; font-size: var(--fs-15); font-weight: var(--fw-bold); color: var(--n-050); cursor: pointer; transition: .14s; }
+.segmented { flex: none; display: flex; gap: var(--sp-4); padding: var(--sp-4); background: var(--assign-seg-track); border-radius: var(--r-full); }
+.segmented__btn { flex: 1; padding: var(--sp-8) var(--sp-8); border: 0; background: transparent; border-radius: var(--r-full); font-family: inherit; font-size: var(--fs-15); font-weight: var(--fw-bold); color: var(--hw-text); cursor: pointer; transition: .14s; }
 /* is-active는 accent 배경 위 흰 글자로 고정(라이트·다크 공통). 다크 규칙이 active까지 덮지 않게 :not */
 :root[data-theme="dark"] .segmented__btn:not(.is-active) { color: var(--text); }
 .segmented__btn.is-active { background: var(--th-solid); color: var(--text-on-accent); }
@@ -81,7 +75,7 @@ body { font-family: var(--font-sans); background: var(--asset-console-task-body)
 
 /* ===== 답안표 입력 — 프레임은 공용 monitor(우측 도킹 변형), 안(OMR)은 그대로 ===== */
 .sheet { --mon-w: 600px; }
-:root[data-theme="dark"] .sheet .monitor__screen { background: var(--n-650); }
+:root[data-theme="dark"] .sheet .monitor__screen { background: var(--hw-frame); }
 .sheet .monitor__screen { display: flex; flex-direction: column; }
 .sheet__head { flex: none; padding: var(--sp-20) 28px 0; }
 .sheet__sub { margin: 0; font-size: var(--fs-14); color: var(--sub); line-height: 1.55; max-width: 44ch; }
@@ -110,14 +104,14 @@ body { font-family: var(--font-sans); background: var(--asset-console-task-body)
 @keyframes padDrop { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .qrow__pad { animation: none; } }
 .sheet__list::-webkit-scrollbar { width: 10px; }
-.sheet__list::-webkit-scrollbar-thumb { background: var(--n-200); border-radius: var(--r-full); border: var(--bw-3) solid var(--panel); background-clip: padding-box; }
+.sheet__list::-webkit-scrollbar-thumb { background: var(--scroll-thumb-light); border-radius: var(--r-full); border: var(--bw-3) solid var(--panel); background-clip: padding-box; }
 
 /* ===== 하단 콘솔 바 ===== */
 /* 하단 콘솔 = 일러스트(좌우 console-task SVG와 이어지는 고정색, 토큰/테마 무관).
    #eef0f6 = 콘솔 상단 립, #e0e6ef = 콘솔 본체 밴드 (SVG 실측 seam 색) */
 
 /* 스크롤바 */
-:root[data-theme="dark"] .qpanel::-webkit-scrollbar-thumb { background: var(--n-500); background-clip: padding-box; }
+:root[data-theme="dark"] .qpanel::-webkit-scrollbar-thumb { background: var(--scroll-thumb-dark-strong); background-clip: padding-box; }
 :focus-visible { outline: var(--bw-3) solid var(--yellow); outline-offset: 2px; }
 
 @media (max-width: 900px) {
