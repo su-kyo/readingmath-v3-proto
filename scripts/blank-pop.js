@@ -65,6 +65,8 @@
       else txt.textContent = typeof c === 'object' ? (c.label || val) : val;
       opts.appendChild(b);
     });
+    // 그림 선지면 정사각 칸 가로 한 줄(components.css .bpop.is-img)
+    el.classList.toggle('is-img', cfg.choices.some(function (c) { return c && typeof c === 'object' && c.img; }));
   }
 
   /* 자리 = scripts/pop-place.js (머리줄 아래 ~ 콘솔바 위, 가장자리 8px 안 · 아래 12px 기본 · 모자라면 위 · 둘 다 모자라면 스크롤) */

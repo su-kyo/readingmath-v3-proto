@@ -80,7 +80,8 @@
 .sec-label--sol { background: color-mix(in srgb, var(--th-accent) 15%, transparent); color: var(--th-accent-hi); }
 
 /* 단일 스크롤 영역 — padding-top 0 이라 스티키 문제 카드가 스크롤포트 상단에 밀착한다 */
-.stage-scroll { flex: 1; min-height: 0; overflow-y: auto; padding: 0 clamp(10px, 2vw, 22px) 96px; }
+/* 아래 여유 200 = 빈칸 선지 창 높이(그림 선지 약 160) + 간격 — 글이 짧아도 창을 빈칸 아래로 열 만큼 스크롤할 수 있게 (2026-10-15) */
+.stage-scroll { flex: 1; min-height: 0; overflow-y: auto; padding: 0 clamp(10px, 2vw, 22px) 200px; }
 .stage-scroll::-webkit-scrollbar { width: 10px; }
 .stage-scroll::-webkit-scrollbar-thumb { background: var(--white-a20); border-radius: var(--r-full); border: var(--bw-2) solid transparent; background-clip: padding-box; }
 

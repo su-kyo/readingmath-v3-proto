@@ -2050,6 +2050,20 @@
   "is-hot": {
    "nav/home.html": "js"
   },
+  "is-img": {
+   "concept/drill-math.html": "js",
+   "concept/drill-sci.html": "js",
+   "concept/learn-math.html": "js",
+   "concept/learn-sci.html": "js",
+   "essay/advanced.html": "js",
+   "essay/basics-math.html": "js",
+   "essay/basics-sci.html": "js",
+   "essay/basics.html": "js",
+   "essay/drill-math.html": "js",
+   "essay/drill-sci.html": "js",
+   "essay/drill.html": "js",
+   "essay/report.html": "js"
+  },
   "is-in": {
    "assignment/explain.html": "js",
    "assignment/solve.html": "js",

@@ -161,8 +161,15 @@
 }
 .bpop__opt:hover { background: var(--th-tint); }
 .bpop__opt .katex { font-size: 1.15em; }
-/* 그림 선지 (서술형 — 실서비스 선지가 그림인 문항) */
-.bpop__txt img { display: block; width: 96px; height: auto; border-radius: var(--r-8); }
+/* 그림 선지 (서술형 — 실서비스 선지가 그림인 문항 · 2026-10-15 간단안)
+   규칙 하나 — 같은 크기의 정사각 칸(120)에 넣어 가로 한 줄. 그림은 칸 안에 비율 그대로 들어간다(세로 · 가로로 길어도 칸은 같다).
+   칸이 고정이라 그림이 불러와지기 전에도 창 크기(약 440 × 160)가 정해져 처음부터 맞는 자리에 뜬다.
+   흰 바탕 원본이라 다크에서도 종이 면(--paper-bg) 위에 둔다. 고르기 표시는 칸 왼쪽 위 모서리. .is-img 는 blank-pop.js 가 붙인다 */
+.bpop.is-img { max-width: calc(100vw - 16px); }
+.bpop.is-img .bpop__opts { flex-direction: row; gap: var(--sp-8); }
+.bpop.is-img .bpop__opt { position: relative; width: auto; padding: var(--sp-8); }
+.bpop.is-img .bpop__mark { position: absolute; left: var(--sp-12); top: var(--sp-12); background: var(--paper-bg); }
+.bpop__txt img { display: block; width: 120px; height: 120px; object-fit: contain; padding: var(--sp-4); box-sizing: border-box; border-radius: var(--r-8); background: var(--paper-bg); }
 /* 왼쪽 원 = 고르기 표시이자 정오답 배지 (RM-FILL-05 · 500 채움 + 흰 ✓·✕ · 진행 원과 같은 아이콘) */
 .bpop__mark { width: 20px; height: 20px; border-radius: 50%; flex: none; box-shadow: inset 0 0 0 var(--bw-2) var(--bpop-dot); }
 .bpop__opt.is-wrong { color: var(--bpop-no); box-shadow: inset 0 0 0 var(--bw-2) var(--no-solid); animation: bpopShake .4s; }
