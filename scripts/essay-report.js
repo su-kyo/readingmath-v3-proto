@@ -113,16 +113,15 @@
   var buffer = '';
 
   function openPop(anchor) {
+    closePop();   // 열린 창(객관식 · 키패드)부터 닫는다
     var id = anchor.dataset.blank;
     activeId = id;
-    if (selEl) selEl.classList.remove('is-sel');
     selEl = anchor; selEl.classList.add('is-sel');
 
     var slot = ANSWERS[id];
-    if (slot.type === 'choice') {
-      popBody.innerHTML = '<div class="qpop__opts">' + slot.choices.map(function (c) {
-        return '<button class="pop-opt" data-val="' + c + '">' + c + '</button>';
-      }).join('') + '</div>';
+    if (slot.type === 'choice') {   // 객관식 = 공용 빈칸 선지 창(scripts/blank-pop.js) · 채점 없이 고른 값을 그대로 넣는다
+      window.RMBlankPop.open(anchor, { choices: slot.choices, onDone: function (v) { fill(id, v); }, onClose: closePop });
+      return;
     } else {
       buffer = answers[id] || '';
       popBody.innerHTML = '<div class="qpop__pad">' + window.RMKeypad.html() + '</div>';
@@ -135,6 +134,7 @@
 
   function closePop() {
     pop.classList.remove('is-open');
+    window.RMBlankPop.close();
     if (selEl) { selEl.classList.remove('is-sel'); selEl = null; }
     activeId = null;
   }
@@ -155,8 +155,6 @@
     openPop(el);
   });
   popBody.addEventListener('click', function (e) {
-    var opt = e.target.closest('.pop-opt');
-    if (opt) { submit(opt.dataset.val); return; }
     var key = e.target.closest('.keypad__key');
     if (key) handleKey(key.dataset.k);
   });

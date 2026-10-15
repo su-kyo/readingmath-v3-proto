@@ -66,33 +66,11 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 .chunk--blank.is-wrong { animation: blankShake .4s; }
 @keyframes blankShake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-4px)} 40%,80%{transform:translateX(4px)} }
 
-/* ===== 정답 선택 팝오버 (신규 패턴) ===== */
-.answer-pop {
-  position: fixed; z-index: var(--z-float); transform: translateX(-50%);
-  min-width: 210px; background: var(--n-000); border-radius: var(--r-16); padding: var(--sp-8);
-  box-shadow: 0 18px 44px color-mix(in srgb, var(--blue-900) 22%, transparent), 0 3px 10px color-mix(in srgb, var(--blue-900) 10%, transparent);
-  opacity: 0; visibility: hidden; translate: 0 4px; transition: opacity .14s ease, translate .14s ease, visibility .14s;
-}
-.answer-pop.is-open { opacity: 1; visibility: visible; translate: 0 0; }
-.answer-pop::before { content: ""; position: absolute; top: -6px; left: var(--caret-x, 50%); transform: translateX(-50%) rotate(45deg); width: 13px; height: 13px; background: var(--n-000); border-radius: var(--r-4); }
-/* 위로 뒤집힌 경우 = 꼬리를 아래 모서리로 */
-.answer-pop.is-above::before { top: auto; bottom: -6px; }
-.answer-pop__hint { font-size: var(--fs-12); font-weight: var(--fw-bold); color: var(--text-muted); padding: var(--sp-4) var(--sp-8) var(--sp-6); }
-.answer-opt { display: flex; align-items: center; gap: var(--sp-8); padding: var(--sp-12) var(--sp-12); border-radius: var(--r-12); cursor: pointer; font-weight: var(--fw-semibold); font-size: var(--fs-15); color: var(--text); }
-.answer-opt__dot { width: 18px; height: 18px; border-radius: 50%; flex: none; box-shadow: inset 0 0 0 var(--bw-2) var(--th-accent-hi); transition: box-shadow .12s; }
-.answer-opt:hover { background: var(--th-tint); }
-.answer-opt.is-selected { background: var(--th-solid); color: var(--text-on-accent); }
-.answer-opt.is-selected .answer-opt__dot { box-shadow: inset 0 0 0 5px var(--n-000); }
-/* 오답: 빨간 톤 + 흔들림, 팝오버는 열린 채로 재시도 유도 */
-.answer-opt.is-wrong { background: none; box-shadow: inset 0 0 0 var(--bw-1_5) var(--no-solid); color: var(--no-ink); animation: blankShake .4s; }
-.answer-opt.is-wrong .answer-opt__dot { box-shadow: inset 0 0 0 var(--bw-2) var(--no-ink); }
-/* 정답: 초록 톤 — 0.5초 보여주고 나서 팝오버가 닫히며 다음 구간으로 (오답과 대칭) */
-.answer-opt.is-correct { background: none; box-shadow: inset 0 0 0 var(--bw-1_5) var(--ok-solid); color: var(--ok-ink); font-weight: var(--fw-bold); }
-.answer-opt.is-correct .answer-opt__dot { box-shadow: inset 0 0 0 5px var(--ok-ink); }
+/* 빈칸 선지 창 = 공용 .bpop (components.css · scripts/blank-pop.js) */
 /* 방금 맞힌 빈칸도 같은 0.5초 동안 초록으로 (효과를 보고 나서 넘어간다) */
 .chunk--blank.is-just-correct, .chunk--blank.is-just-correct.is-read,
 .chunk--blank.is-just-correct:hover { background: var(--ok-solid); color: var(--text-on-accent); box-shadow: none; }
-@media (prefers-reduced-motion: reduce) { .answer-opt.is-wrong, .chunk--blank.is-wrong { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .chunk--blank.is-wrong { animation: none; } }
 
 /* ===== 이미지 뷰어 (스켈레톤) ===== */
 .viewer { width: clamp(240px, 26vw, 340px); flex: none; display: flex; flex-direction: column; gap: var(--sp-12); align-items: center; justify-content: center; }
@@ -154,16 +132,6 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 :root[data-theme="dark"] .viewer__pager button { background: var(--surface-2); color: var(--th-accent-hi); }
 :root[data-theme="dark"] .viewer__zoom { background: var(--surface-1); color: var(--text-muted); box-shadow: none; }
 /* 다크: 팝오버가 패널(surface-1)과 같은 색이라 안 떠 보임 → 더 밝은 surface-3 + 테두리로 floating 강조 */
-:root[data-theme="dark"] .answer-pop { background: var(--surface-3); border: var(--bw-1) solid var(--white-a12); box-shadow: 0 20px 48px var(--black-a60); }
-:root[data-theme="dark"] .answer-pop::before { background: var(--surface-3); }
-:root[data-theme="dark"] .answer-pop__hint { color: var(--text-muted); }
-:root[data-theme="dark"] .answer-opt { color: var(--text); }
-:root[data-theme="dark"] .answer-opt:hover { background: var(--surface-hover); }
-:root[data-theme="dark"] .answer-opt.is-selected { background: var(--th-accent); }
-:root[data-theme="dark"] .answer-opt__dot { box-shadow: inset 0 0 0 var(--bw-2) var(--th-accent); }
-:root[data-theme="dark"] .answer-opt.is-selected .answer-opt__dot { box-shadow: inset 0 0 0 5px var(--n-000); }
-:root[data-theme="dark"] .answer-opt.is-wrong { color: var(--no-on-dark); }
-:root[data-theme="dark"] .answer-opt.is-wrong .answer-opt__dot { box-shadow: inset 0 0 0 var(--bw-2) var(--no-on-dark); }
 
 /* ===== 개념 영상 레이어 — 프레임은 공용 monitor, 안은 16:9 영상뿐 ===== */
 #videobox { --mon-w: 900px; }

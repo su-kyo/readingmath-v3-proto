@@ -50,7 +50,7 @@
 .blank.is-sel { background: var(--th-tint-strong); box-shadow: inset 0 0 0 var(--bw-1_5) var(--th-focus); }
 .blank.is-sel .blank__badge { color: var(--bl-selbadge); }
 
-/* ============ 빈칸 입력 드롭다운 (팝오버) ============ */
+/* ============ 빈칸 키패드 팝오버 (주관식) ============ */
 /* Phase 6: 껍데기를 공용 키패드 트레이(keypad.css)와 같은 정적 하드웨어 톤으로 통일.
    계산기처럼 라이트·다크 어디서나 같은 모습 — 모드 분기 없음.
    주관식 키패드의 안쪽(디스플레이·키)은 keypad.css가 담당, 마크업은 scripts/keypad.js. */
@@ -65,17 +65,9 @@
 .qpop__caret { position: absolute; width: 12px; height: 12px; background: var(--th-chip); border: var(--bw-1_5) solid var(--border-strong); transform: rotate(45deg); }
 .qpop:not(.qpop--up) .qpop__caret { border-right: 0; border-bottom: 0; }   /* 위쪽 화살표(아래로 열림) */
 .qpop.qpop--up .qpop__caret { border-left: 0; border-top: 0; }             /* 아래쪽 화살표(위로 열림) */
-/* 객관식 옵션 = 세로 1열로 쌓기 (긴 수식도 수용) */
-.qpop__opts { display: flex; flex-direction: column; gap: var(--sp-6); min-width: 168px; }
-.pop-opt { width: 100%; text-align: center; padding: var(--sp-8) var(--sp-12); border-radius: var(--r-8); border: var(--bw-1_5) solid var(--n-100);
-  background: var(--n-000); color: var(--n-650); font-family: var(--font-serif); font-size: var(--fs-16); font-weight: var(--fw-bold);
-  line-height: 1.35; white-space: normal; word-break: keep-all; cursor: pointer; transition: border-color .12s, background .12s, opacity .2s; }
-.pop-opt:hover { border-color: var(--th-accent); background: var(--th-tint); }
-.pop-opt.is-wrong { border-color: var(--no-solid); background: var(--n-000); animation: qShake .3s; }
-/* 이미 쓴 선지 = 흐리게만. 취소선은 긋지 않는다(내용을 읽기 어렵게 만든다) */
-.pop-opt.is-dead { opacity: .34; filter: grayscale(.5); pointer-events: none; }
+/* 객관식 = 공용 빈칸 선지 창 .bpop (components.css · scripts/blank-pop.js) — 이 틀은 주관식 키패드만 담는다 */
+/* 오답 흔들림 — 훈련 화면의 순서 맞추기 칸(.slot.is-wrong)이 쓴다 */
 @keyframes qShake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-4px)} 75%{transform:translateX(4px)} }
-@media (prefers-reduced-motion: reduce) { .pop-opt.is-wrong { animation: none; } }
 
 /* 주관식 = 공용 숫자 키패드 (keypad.css) — 폭만 여기서 잡는다 */
 .qpop__pad { width: 208px; }

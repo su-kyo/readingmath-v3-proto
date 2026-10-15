@@ -112,6 +112,69 @@
 
 
 /* =========================================================================
+   빈칸 선지 창 (.bpop) — 빈칸을 누르면 뜨는 「선지 고르기」 창 (2026-10-15 · 개념 · 서술형)
+   -------------------------------------------------------------------------
+   마크업 · 열림 위치 · 채점 동작은 scripts/blank-pop.js 하나가 만든다. 화면은 부르기만 한다.
+   테마를 따라 뒤집히는 카드다(다크 = surface-2). 계열에 따라 바뀌는 것은 점 색(--th-*)뿐이다.
+   선지 상태: 기본 · 호버 · .is-wrong(0.5초 · 빨간 선 + ✕ 배지 + 흔들림) → .is-dead(회색 ✕ · 흐림 · 못 누름)
+            · .is-correct(0.5초 · 초록 선 + ✓ 배지, 그 뒤 닫힘). 면은 칠하지 않는다(RM-SURF-02).
+   서술형 주관식 키패드 창(.qpop · essay.css)은 계산기와 같은 정적 하드웨어라 따로 둔다(RM-PART-03).
+   ========================================================================= */
+.bpop {
+  --bpop-dot: var(--th-accent);
+  --bpop-ok: var(--ok-ink);
+  --bpop-no: var(--no-ink);
+  position: fixed; left: 0; top: 0; z-index: var(--z-float);
+  width: max-content; min-width: 176px; max-width: min(320px, calc(100vw - 16px)); box-sizing: border-box;
+  padding: var(--sp-8); border: var(--bw-1) solid var(--border); border-radius: var(--r-16);
+  background: var(--surface-1); color: var(--text); font-family: var(--font-sans);
+  box-shadow: 0 18px 40px -14px color-mix(in srgb, var(--n-900) 30%, transparent),
+              0 3px 10px color-mix(in srgb, var(--n-900) 8%, transparent);
+  opacity: 0; visibility: hidden; translate: 0 4px;
+  transition: opacity .14s ease, translate .14s ease, visibility .14s;
+}
+.bpop.is-up { translate: 0 -4px; }
+.bpop.is-open { opacity: 1; visibility: visible; translate: 0 0; }
+:root:not([data-theme="light"]) .bpop {
+  --bpop-dot: var(--th-accent-hi);
+  --bpop-ok: var(--ok-on-dark);
+  --bpop-no: var(--no-on-dark);
+  background: var(--surface-2); border-color: var(--border-strong);
+  box-shadow: 0 20px 48px var(--black-a60);
+}
+/* 꼬리 — 빈칸 가운데를 가리킨다. 가로 자리는 JS가 --bpop-caret-x 로 준다 */
+.bpop__caret {
+  position: absolute; left: var(--bpop-caret-x, 50%); top: -7px; width: 12px; height: 12px;
+  transform: translateX(-50%) rotate(45deg);
+  background: inherit; border-style: solid; border-color: inherit;
+  border-width: var(--bw-1) 0 0 var(--bw-1); border-radius: 3px 0 0 0;
+}
+.bpop.is-up .bpop__caret { top: auto; bottom: -7px; border-width: 0 var(--bw-1) var(--bw-1) 0; border-radius: 0 0 3px 0; }
+
+.bpop__opts { display: flex; flex-direction: column; gap: 2px; }
+.bpop__opt {
+  display: flex; align-items: center; gap: var(--sp-8); width: 100%;
+  padding: var(--sp-12); border: 0; border-radius: var(--r-12); background: none;
+  font: inherit; font-size: var(--fs-16); font-weight: var(--fw-semibold); line-height: 1.4;
+  color: inherit; text-align: left; word-break: keep-all; cursor: pointer;
+  transition: background .12s, box-shadow .12s, opacity .2s;
+}
+.bpop__opt:hover { background: var(--th-tint); }
+.bpop__opt .katex { font-size: 1.15em; }
+/* 왼쪽 원 = 고르기 표시이자 정오답 배지 (RM-FILL-05 · 500 채움 + 흰 ✓·✕ · 진행 원과 같은 아이콘) */
+.bpop__mark { width: 20px; height: 20px; border-radius: 50%; flex: none; box-shadow: inset 0 0 0 var(--bw-2) var(--bpop-dot); }
+.bpop__opt.is-wrong { color: var(--bpop-no); box-shadow: inset 0 0 0 var(--bw-2) var(--no-solid); animation: bpopShake .4s; }
+.bpop__opt.is-wrong .bpop__mark { box-shadow: none; background: var(--no-solid) center / 13px no-repeat url("../assets/icons/ico-progress-wrong.svg"); }
+/* 오답 뒤 비활성 — ✕는 남기되 회색으로 내린다 */
+.bpop__opt.is-dead { opacity: .34; pointer-events: none; }
+.bpop__opt.is-dead .bpop__mark { box-shadow: none; background: var(--text-meta) center / 13px no-repeat url("../assets/icons/ico-progress-wrong.svg"); }
+.bpop__opt.is-correct { color: var(--bpop-ok); font-weight: var(--fw-bold); box-shadow: inset 0 0 0 var(--bw-2) var(--ok-solid); }
+.bpop__opt.is-correct .bpop__mark { box-shadow: none; background: var(--ok-solid) center / 13px no-repeat url("../assets/icons/ico-progress-check.svg"); }
+@keyframes bpopShake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-4px); } 40%, 80% { transform: translateX(4px); } }
+@media (prefers-reduced-motion: reduce) { .bpop, .bpop__opt { transition: none; } .bpop__opt.is-wrong { animation: none; } }
+
+
+/* =========================================================================
    화면에서 올라온 공용 규칙 (마감 회차 2026-10-12)
    이 부품을 쓰는 화면 전부가 글자 하나 안 틀리고 똑같이 갖고 있던 것이다.
    화면마다 다른 부분은 styles/screens/ 에 남아 있다.

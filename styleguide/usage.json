@@ -20,18 +20,6 @@
    "concept/drill.html": "js",
    "type/review.html": "js"
   },
-  "answer-opt": {
-   "concept/learn.html": "markup"
-  },
-  "answer-opt__dot": {
-   "concept/learn.html": "markup"
-  },
-  "answer-pop": {
-   "concept/learn.html": "markup"
-  },
-  "answer-pop__hint": {
-   "concept/learn.html": "markup"
-  },
   "answer-row": {
    "concept/basic-ops.html": "js",
    "concept/drill.html": "js",
@@ -313,6 +301,60 @@
    "essay/advanced.html": "js",
    "essay/basics-v2.html": "js",
    "essay/basics.html": "js"
+  },
+  "bpop": {
+   "concept/learn.html": "js",
+   "essay/advanced.html": "js",
+   "essay/basics-v2.html": "js",
+   "essay/basics.html": "js",
+   "essay/drill-v2.html": "js",
+   "essay/drill.html": "js",
+   "essay/report.html": "js"
+  },
+  "bpop__caret": {
+   "concept/learn.html": "js",
+   "essay/advanced.html": "js",
+   "essay/basics-v2.html": "js",
+   "essay/basics.html": "js",
+   "essay/drill-v2.html": "js",
+   "essay/drill.html": "js",
+   "essay/report.html": "js"
+  },
+  "bpop__mark": {
+   "concept/learn.html": "js",
+   "essay/advanced.html": "js",
+   "essay/basics-v2.html": "js",
+   "essay/basics.html": "js",
+   "essay/drill-v2.html": "js",
+   "essay/drill.html": "js",
+   "essay/report.html": "js"
+  },
+  "bpop__opt": {
+   "concept/learn.html": "js",
+   "essay/advanced.html": "js",
+   "essay/basics-v2.html": "js",
+   "essay/basics.html": "js",
+   "essay/drill-v2.html": "js",
+   "essay/drill.html": "js",
+   "essay/report.html": "js"
+  },
+  "bpop__opts": {
+   "concept/learn.html": "js",
+   "essay/advanced.html": "js",
+   "essay/basics-v2.html": "js",
+   "essay/basics.html": "js",
+   "essay/drill-v2.html": "js",
+   "essay/drill.html": "js",
+   "essay/report.html": "js"
+  },
+  "bpop__txt": {
+   "concept/learn.html": "js",
+   "essay/advanced.html": "js",
+   "essay/basics-v2.html": "js",
+   "essay/basics.html": "js",
+   "essay/drill-v2.html": "js",
+   "essay/drill.html": "js",
+   "essay/report.html": "js"
   },
   "brand": {
    "nav/bridge.html": "markup"
@@ -1518,9 +1560,6 @@
   "inner": {
    "assignment/home.html": "markup"
   },
-  "is-above": {
-   "concept/learn.html": "js"
-  },
   "is-active": {
    "assignment/home.html": "markup",
    "assignment/solve.html": "markup",
@@ -1575,8 +1614,14 @@
    "concept/basic-ops.html": "js",
    "concept/drill.html": "js",
    "concept/learn.html": "js",
+   "essay/advanced.html": "js",
+   "essay/basics-v2.html": "js",
+   "essay/basics.html": "js",
    "essay/drill-review.html": "js",
+   "essay/drill-v2.html": "js",
+   "essay/drill.html": "js",
    "essay/report-review.html": "js",
+   "essay/report.html": "js",
    "exam/solve.html": "js",
    "type/review.html": "js"
   },
@@ -1592,6 +1637,15 @@
    "type/quiz.html": "js",
    "type/result.html": "markup",
    "type/review.html": "js"
+  },
+  "is-dead": {
+   "concept/learn.html": "js",
+   "essay/advanced.html": "js",
+   "essay/basics-v2.html": "js",
+   "essay/basics.html": "js",
+   "essay/drill-v2.html": "js",
+   "essay/drill.html": "js",
+   "essay/report.html": "js"
   },
   "is-detail": {
    "nav/freemode.html": "js"
@@ -1816,7 +1870,6 @@
   "is-selected": {
    "concept/basic-ops.html": "js",
    "concept/drill.html": "js",
-   "concept/learn.html": "js",
    "exam/solve.html": "js",
    "type/quiz.html": "js"
   },
@@ -1839,6 +1892,15 @@
    "concept/learn.html": "js",
    "essay/drill-v2.html": "js"
   },
+  "is-up": {
+   "concept/learn.html": "js",
+   "essay/advanced.html": "js",
+   "essay/basics-v2.html": "js",
+   "essay/basics.html": "js",
+   "essay/drill-v2.html": "js",
+   "essay/drill.html": "js",
+   "essay/report.html": "js"
+  },
   "is-warn": {
    "util/report.html": "js"
   },
@@ -1846,10 +1908,14 @@
    "concept/basic-ops.html": "js",
    "concept/drill.html": "js",
    "concept/learn.html": "js",
+   "essay/advanced.html": "js",
+   "essay/basics-v2.html": "js",
+   "essay/basics.html": "js",
    "essay/drill-review.html": "js",
    "essay/drill-v2.html": "js",
    "essay/drill.html": "js",
    "essay/report-review.html": "js",
+   "essay/report.html": "js",
    "exam/solve.html": "js",
    "type/review.html": "js"
   },
@@ -2591,14 +2657,6 @@
    "essay/drill-v2.html": "markup",
    "essay/drill.html": "markup"
   },
-  "pop-opt": {
-   "essay/advanced.html": "js",
-   "essay/basics-v2.html": "js",
-   "essay/basics.html": "js",
-   "essay/drill-v2.html": "js",
-   "essay/drill.html": "js",
-   "essay/report.html": "js"
-  },
   "problem": {
    "concept/drill.html": "markup",
    "essay/advanced.html": "markup",
@@ -2806,14 +2864,6 @@
    "essay/drill-v2.html": "markup",
    "essay/drill.html": "markup",
    "essay/report.html": "markup"
-  },
-  "qpop__opts": {
-   "essay/advanced.html": "js",
-   "essay/basics-v2.html": "js",
-   "essay/basics.html": "js",
-   "essay/drill-v2.html": "js",
-   "essay/drill.html": "js",
-   "essay/report.html": "js"
   },
   "qpop__pad": {
    "essay/advanced.html": "js",

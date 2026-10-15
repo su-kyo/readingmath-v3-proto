@@ -4,13 +4,12 @@
    - 지문 아무 데나 누르기 · 스페이스바(꾹 눌러도 한 칸) = 한 칸 전진, 읽는 곳을 따라 스크롤
    - 그림 구간: 닿으면 그 그림이 켜진다(굵게 + 계열색 · 우측 이미지).
      왼쪽 알약 [아이콘 + 번호들]로 다시 켜고 끈다. 안 읽은 줄의 알약은 없다
-   - 빈칸 도달 시 근처에 정답 선택 팝오버(토글)
+   - 빈칸 도달 시 근처에 빈칸 선지 창(토글) — 공용 부품 scripts/blank-pop.js
    - 이미지 클릭 시 확대 레이어(라이트박스)
    ========================================================================= */
 (function () {
   var article = document.querySelector('.article');
   var segs = [].slice.call(document.querySelectorAll('.chunk'));
-  var pop = document.querySelector('.answer-pop');
   var blank = document.querySelector('.chunk--blank');
   var viewer = document.querySelector('.viewer');
   var vLabel = viewer.querySelector('.viewer__label');
@@ -92,29 +91,30 @@
     });
   }
 
-  /* ---- 정답 팝오버 ---- */
-  function positionPop() {
-    var r = blank.getBoundingClientRect();
-    var w = pop.offsetWidth || 210;
-    var h = pop.offsetHeight || 220;
-    var M = 8;                              // 화면 가장자리 여백
-    // 가로: 화면 밖으로 안 나가게 클램프 (pop 중심 기준)
-    var left = r.left + r.width / 2;
-    left = Math.max(w / 2 + M, Math.min(left, window.innerWidth - w / 2 - M));
-    // 세로: 아래 공간이 부족하면 빈칸 위로 뒤집어 띄운다
-    var spaceBelow = window.innerHeight - r.bottom;
-    var placeAbove = spaceBelow < h + 12 + M && r.top > spaceBelow;
-    var top = placeAbove ? (r.top - 12 - h) : (r.bottom + 12);
-    top = Math.max(M, Math.min(top, window.innerHeight - h - M));
-    pop.classList.toggle('is-above', placeAbove);
-    pop.style.left = left + 'px';
-    pop.style.top = top + 'px';
-    // 캐럿(말풍선 꼬리) = 빈칸 중심을 가리키게, pop 좌측 기준 상대 x
-    pop.style.setProperty('--caret-x', (r.left + r.width / 2 - (left - w / 2)) + 'px');
+  /* ---- 빈칸 선지 창 (공용 · scripts/blank-pop.js) ----
+     오답 → 빨간 표시 0.5초 뒤 비활성(다시 못 고름) · 빈칸도 같이 흔든다
+     정답 → 빈칸을 바로 채우고 초록 0.5초를 보여 준 뒤 창이 닫히며 다음 구간으로 */
+  var CHOICES = ['성질', '무게', '온도', '개수'], ANSWER = '성질';
+  function isPopOpen() { return window.RMBlankPop.isOpen(); }
+  function openPop() {
+    blank.classList.add('is-open');
+    window.RMBlankPop.open(blank, {
+      choices: CHOICES, answer: ANSWER,
+      onPick: function (val, ok) {
+        if (!ok) { blank.classList.remove('is-wrong'); void blank.offsetWidth; blank.classList.add('is-wrong'); return; }
+        blank.querySelector('.chunk--blank__text').textContent = val;
+        blank.classList.remove('is-wrong');
+        blank.classList.add('is-filled', 'is-just-correct');
+      },
+      onDone: function () {
+        blank.classList.remove('is-just-correct');
+        if (cursor === segs.indexOf(blank)) advance();
+      },
+      onClose: function () { blank.classList.remove('is-open'); }
+    });
   }
-  function openPop() { pop.classList.add('is-open'); blank.classList.add('is-open'); positionPop(); }
-  function closePop() { pop.classList.remove('is-open'); blank.classList.remove('is-open'); }
-  function togglePop() { pop.classList.contains('is-open') ? closePop() : openPop(); }
+  function closePop() { window.RMBlankPop.close(); }
+  function togglePop() { isPopOpen() ? closePop() : openPop(); }
 
   /* ---- 라이트박스 ---- */
   function openLightbox(n) { lbLabel.textContent = '이미지 ' + n; lightbox.classList.add('is-open'); }
@@ -123,7 +123,7 @@
   /* ---- 전진 ---- */
   function advance() {
     var cur = segs[cursor]; if (!cur) return;
-    if (cur === blank && !blank.classList.contains('is-filled')) { if (!pop.classList.contains('is-open')) openPop(); return; }  // 빈칸은 답해야 전진
+    if (cur === blank && !blank.classList.contains('is-filled')) { if (!isPopOpen()) openPop(); return; }  // 빈칸은 답해야 전진
     cursor++;
     if (segs[cursor] && segs[cursor].classList.contains('chunk--img')) setActiveImg(segs[cursor]);
     render();
@@ -153,40 +153,8 @@
     advance();
   });
 
-  /* 선지 선택 → 정답이면 채우고 전진 / 오답이면 빨간 표시 + 흔들림, 팝오버 유지(재시도)
-     정답일 때는 초록 표시를 0.5초 보여준 뒤 팝오버를 닫고 다음 구간으로 간다
-     (바로 닫으면 맞혔다는 신호를 볼 새가 없다). 그 0.5초 동안은 다시 못 누른다. */
-  var wrongT, okT, advancing = false;
-  pop.querySelectorAll('.answer-opt').forEach(function (o) {
-    o.addEventListener('click', function () {
-      if (advancing) return;
-      var isCorrect = o.hasAttribute('data-correct');
-      if (!isCorrect) {                                    // 오답
-        o.classList.remove('is-wrong');                    // 재트리거를 위해 리셋
-        void o.offsetWidth;                                // reflow → 애니메이션 재시작
-        o.classList.add('is-wrong');
-        blank.classList.remove('is-wrong'); void blank.offsetWidth; blank.classList.add('is-wrong');
-        clearTimeout(wrongT);
-        wrongT = setTimeout(function () { o.classList.remove('is-wrong'); blank.classList.remove('is-wrong'); }, 500);
-        return;                                            // 전진하지 않음
-      }
-      // 정답
-      pop.querySelectorAll('.answer-opt').forEach(function (x) { x.classList.remove('is-selected', 'is-wrong', 'is-correct'); });
-      o.classList.add('is-selected', 'is-correct');
-      blank.querySelector('.chunk--blank__text').textContent = o.dataset.value;
-      blank.classList.remove('is-wrong');
-      blank.classList.add('is-filled', 'is-just-correct');
-      advancing = true;
-      clearTimeout(okT);
-      okT = setTimeout(function () {
-        advancing = false;
-        o.classList.remove('is-correct');
-        blank.classList.remove('is-just-correct');
-        closePop();
-        if (cursor === segs.indexOf(blank)) advance();
-      }, 500);
-    });
-  });
+  /* 빈칸 흔들림은 0.4초 뒤 거둔다 (선지 쪽 0.5초는 blank-pop.js 몫) */
+  blank.addEventListener('animationend', function () { blank.classList.remove('is-wrong'); });
 
   /* 뷰어 · 페이저 · 라이트박스 */
   viewer.querySelector('.viewer__frame').addEventListener('click', function () {
@@ -202,8 +170,6 @@
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') { closePop(); closeLightbox(); }
   });
-  article.addEventListener('scroll', function () { if (pop.classList.contains('is-open')) positionPop(); });
-  window.addEventListener('resize', function () { if (pop.classList.contains('is-open')) positionPop(); });
   /* 줄이 바뀌면(창 크기 · 글자 크기 · 웹폰트 도착) 알약 위치를 다시 잡는다 */
   if (window.ResizeObserver) new ResizeObserver(renderTags).observe(article);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(renderTags);
@@ -219,15 +185,15 @@
 
   /* ---- 검수용 디버그 훅 (?debug=1일 때만 패널에 뜸) ---- */
   function dbgBlank(ok) {
-    if (!pop.classList.contains('is-open')) openPop();
-    var o = ok ? pop.querySelector('.answer-opt[data-correct]')
-               : pop.querySelector('.answer-opt:not([data-correct])');
+    if (!isPopOpen()) openPop();
+    var o = [].filter.call(document.querySelectorAll('.bpop__opt:not(.is-dead)'), function (x) {
+      return (x.dataset.val === ANSWER) === ok;
+    })[0];
     if (o) o.click();
   }
   function dbgReadAll() {
-    var o = pop.querySelector('.answer-opt[data-correct]');
-    if (o && !blank.classList.contains('is-filled')) {
-      blank.querySelector('.chunk--blank__text').textContent = o.dataset.value;
+    if (!blank.classList.contains('is-filled')) {
+      blank.querySelector('.chunk--blank__text').textContent = ANSWER;
       blank.classList.add('is-filled');
     }
     closePop();

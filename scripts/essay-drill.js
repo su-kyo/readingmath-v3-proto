@@ -252,14 +252,18 @@
     caret.style.left = (caretX - 6) + 'px'; caret.style.top = up ? (ph - 6) + 'px' : '-6px';
   }
   function openPop(anchor) {
+    closePop();   // 열린 창(객관식 · 키패드)부터 닫는다
     activeId = anchor.dataset.blank;
     if (selEl) selEl.classList.remove('is-sel'); selEl = anchor;
     var slot = blankMap[activeId];
-    if (slot.type === 'choice') {
-      if (!anchor._dead) anchor._dead = {};
-      popBody.innerHTML = '<div class="qpop__opts">' + slot.choices.map(function (c) {
-        return '<button class="pop-opt' + (anchor._dead[c] ? ' is-dead' : '') + '" data-val="' + c + '">' + c + '</button>';
-      }).join('') + '</div>';
+    if (slot.type === 'choice') {   // 객관식 = 공용 빈칸 선지 창(scripts/blank-pop.js) · 즉시 채점, 고른 오답은 비활성으로 남는다
+      window.RMBlankPop.open(anchor, {
+        choices: slot.choices, answer: slot.ans,
+        onPick: function (val, ok) { if (!ok) showToast('오답이에요. 다시 골라 볼까요?', true); },
+        onDone: function (val) { fillBlank(anchor, val); },
+        onClose: closePop
+      });
+      return;
     } else {
       buffer = '';
       popBody.innerHTML = '<div class="qpop__pad">' + window.RMKeypad.html() + '</div>';
@@ -268,17 +272,9 @@
     }
     pop.classList.add('is-open'); place(anchor);
   }
-  function closePop() { pop.classList.remove('is-open'); activeId = null; }
+  function closePop() { pop.classList.remove('is-open'); window.RMBlankPop.close(); activeId = null; }
   function norm(s) { return String(s).replace(/\s+/g, '').trim(); }
   popBody.addEventListener('click', function (e) {
-    var opt = e.target.closest('.pop-opt');
-    if (opt) {
-      var val = opt.dataset.val, ans = blankMap[activeId].ans;
-      if (val === ans) { var el = selEl; closePop(); fillBlank(el, val); return; }
-      selEl._dead[val] = true;
-      opt.classList.remove('is-wrong'); void opt.offsetWidth; opt.classList.add('is-wrong', 'is-dead');
-      showToast('오답이에요. 다시 골라 볼까요?', true); return;
-    }
     var key = e.target.closest('.keypad__key'); if (key) handleKey(key.dataset.k);
   });
   function handleKey(k) {

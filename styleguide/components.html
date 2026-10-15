@@ -6,10 +6,10 @@
   <title>부품 — 리딩수학과학 디자인 시스템</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
   <base href="../" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261015-5" />
-  <link rel="stylesheet" href="styles/base.css?v=20261015-5" />
-  <link rel="stylesheet" href="styles/components.css?v=20261015-5" />
-  <link rel="stylesheet" href="styleguide/sg.css?v=20261015-5" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261015-6" />
+  <link rel="stylesheet" href="styles/base.css?v=20261015-6" />
+  <link rel="stylesheet" href="styles/components.css?v=20261015-6" />
+  <link rel="stylesheet" href="styleguide/sg.css?v=20261015-6" />
 </head>
 <body data-sg-css="tokens,base,components,learn-shell">
 <div class="sg">
@@ -119,7 +119,7 @@
             <span class="sg-cap">많은 개수 — 한 단원 18칸, 줄바꿈으로 흐른다</span>
             <div class="grid" style="max-width:420px" data-tiles="m e e* r b e m j u r* e b m e u u j e"></div>
           </div>
-          <script src="scripts/exam-tile.js?v=20261015-5"></script>
+          <script src="scripts/exam-tile.js?v=20261015-6"></script>
           <script>
             document.querySelectorAll('[data-tiles]').forEach(function (box) {
               box.innerHTML = box.dataset.tiles.split(' ').map(function (t) {
@@ -136,10 +136,11 @@
 
     <!-- ===================================================== 입력 -->
     <section class="sg-sec" id="input">
-      <h2>답 입력 <small>서술형 빈칸 · 목록형 선택지 · 타일형 선택지</small></h2>
-      <div class="sg-pending"><strong>아직 정하지 않은 부품입니다.</strong>
-        개념·유형·서술형의 빈칸·객관식 UI가 셋 다 다릅니다. 한 벌로 통일할지, 틀은 하나로 두고 계열 색만 입힐지를 다음 작업에서 정합니다.
-        아래 카드는 지금 화면의 모습을 기록한 것이라 개발 기준으로 쓰지 않습니다. 정오답 표시 규칙(<code>RM-SURF-02</code>·<code>RM-FILL-05</code>)은 그대로 지킵니다.</div>
+      <h2>답 입력 <small>서술형 빈칸 · 빈칸 선지 창 · 목록형 선택지 · 타일형 선택지</small></h2>
+      <div class="sg-pending"><strong>빈칸 선지 창 말고는 아직 정하지 않은 부품입니다.</strong>
+        빈칸을 누르면 뜨는 선지 창은 개념 · 서술형이 한 벌(<code>.bpop</code>)을 씁니다(<code>RM-PART-06</code>).
+        빈칸 자체와 목록형 · 타일형 선택지는 계열마다 모양이 다르고, 아래 카드는 지금 화면의 모습을 기록한 것이라 개발 기준으로 쓰지 않습니다.
+        정오답 표시 규칙(<code>RM-SURF-02</code>·<code>RM-FILL-05</code>)은 그대로 지킵니다.</div>
 
       <div class="sg-item" data-uses="blank" data-pad="0" data-section="essay"
            data-css="tokens,base,learn-shell,essay,screens/essay-basics-v2">
@@ -170,6 +171,59 @@
                 <span class="blank"><span class="blank__ans"></span><span class="blank__badge">3</span></span>입니다.
               </p>
             </div>
+          </div>
+        </template>
+      </div>
+
+      <div class="sg-item" data-uses="bpop, bpop__opt" data-pad="20px" data-section="concept" data-stack="1"
+           data-css="tokens,base,components">
+        <div class="sg-item__hd"><h3>빈칸 선지 창</h3>
+          <span class="sg-item__cls">.bpop · .is-open · .is-up · __caret · __opt · __mark · .is-wrong · .is-dead · .is-correct</span>
+          <span class="sg-item__file">components.css · scripts/blank-pop.js</span></div>
+        <p class="sg-note">빈칸을 누르면 그 아래에 뜨는 「선지 고르기」 창입니다. 개념 학습과 서술형 6장이 같은 창을 씁니다. 마크업 · 열림 위치 · 채점 동작은 <code>blank-pop.js</code>가 만들고, 화면은 <code>RMBlankPop.open(빈칸, {choices, answer, onPick, onDone})</code>만 부릅니다.
+          계열에 따라 바뀌는 것은 왼쪽 원의 색(<code>--th-accent</code>, 다크 <code>--th-accent-hi</code>)뿐입니다. 창은 테마를 따라 뒤집히는 카드입니다(라이트 <code>--surface-1</code> · 다크 <code>--surface-2</code>).</p>
+        <table class="sg-table">
+          <thead><tr><th style="width:150px">상태</th><th>모양</th><th style="width:200px">언제</th></tr></thead>
+          <tbody>
+            <tr><td>기본 · 호버</td><td>계열색 빈 원 · 호버는 옅은 계열색 면(<code>--th-tint</code>)</td><td>창이 열려 있을 때</td></tr>
+            <tr><td><code>.is-wrong</code></td><td>빨간 2px 선 · 빨간 글자 · 원에 흰 ✕(500 채움) · 흔들림</td><td>오답을 누른 뒤 0.5초</td></tr>
+            <tr><td><code>.is-dead</code></td><td>회색 원에 흰 ✕ · 줄 전체 34% · 누를 수 없음</td><td>그 뒤 계속. 그 빈칸을 다시 열어도 남는다</td></tr>
+            <tr><td><code>.is-correct</code></td><td>초록 2px 선 · 초록 굵은 글자 · 원에 흰 ✓(500 채움)</td><td>정답을 누른 뒤 0.5초. 그 뒤 닫히고 빈칸이 채워진다</td></tr>
+          </tbody>
+        </table>
+        <p class="sg-note">열림 위치: 빈칸 아래 12px. 아래 공간이 모자라면 위로 뒤집습니다(<code>.is-up</code>, 꼬리도 아래로). 화면 가장자리 8px 안으로 밀고, 꼬리는 빈칸 가운데를 가리킵니다(<code>--bpop-caret-x</code>).
+          빈칸이 움직이면 따라가고, 화면 밖으로 나가면 닫힙니다. 바깥을 누르거나 Esc를 누르면 닫힙니다.
+          채점하지 않는 화면(서술형 기초 · 심화 · 보고서)은 고른 값을 바로 빈칸에 넣고 닫습니다. 선지는 글자 또는 수식(KaTeX, 글자의 1.15배)입니다. 안내 문구는 두지 않습니다.
+          서술형 주관식의 키패드 창(<code>.qpop</code>)은 계산기와 같은 정적 하드웨어라 이 창과 따로 둡니다(<code>RM-PART-03</code>).</p>
+        <details class="sg-why"><summary>근거</summary>
+          <p>2026-10-15 전에는 개념(<code>.answer-pop</code> · 점 목록 · 0.5초 뒤 재시도)과 서술형(<code>.qpop</code> + <code>.pop-opt</code> · 연보라 버튼 · 훈련 2장만 오답 비활성)이 모양 · 동작 · 다크 처리가 모두 달랐다. 서술형 선지는 테마와 무관한 밝은 물건이라 다크에서 바깥 선이 사라졌고, 개념은 다크에서 정답이 초록이 아닌 파란 채움으로 보였다.</p>
+          <p>시안 네 개(카드 · 부품 × 목록 · 버튼) 중 「카드 · 목록」을 골랐다. 왼쪽 원을 정오답 배지로 바꾸고, 비활성 ✕는 빨강에서 회색으로 내렸다. 고른 오답을 비활성으로 남기는 것과 정답 0.5초 표시는 두 계열 공통 동작으로 정했다.</p>
+        </details>
+        <template class="sg-src">
+          <div class="sg-row" style="align-items:flex-start;gap:28px;flex-wrap:wrap;padding:14px 0 6px">
+            <div class="sg-col"><span class="sg-cap">기본</span>
+              <div class="bpop is-open" style="position:relative;--bpop-caret-x:40px"><span class="bpop__caret"></span><div class="bpop__opts">
+                <button class="bpop__opt"><span class="bpop__mark"></span><span class="bpop__txt">성질</span></button>
+                <button class="bpop__opt"><span class="bpop__mark"></span><span class="bpop__txt">무게</span></button>
+                <button class="bpop__opt"><span class="bpop__mark"></span><span class="bpop__txt">온도</span></button>
+                <button class="bpop__opt"><span class="bpop__mark"></span><span class="bpop__txt">개수</span></button></div></div></div>
+            <div class="sg-col"><span class="sg-cap">오답을 누른 순간 (0.5초)</span>
+              <div class="bpop is-open" style="position:relative;--bpop-caret-x:40px"><span class="bpop__caret"></span><div class="bpop__opts">
+                <button class="bpop__opt"><span class="bpop__mark"></span><span class="bpop__txt">성질</span></button>
+                <button class="bpop__opt is-wrong"><span class="bpop__mark"></span><span class="bpop__txt">무게</span></button>
+                <button class="bpop__opt"><span class="bpop__mark"></span><span class="bpop__txt">온도</span></button>
+                <button class="bpop__opt"><span class="bpop__mark"></span><span class="bpop__txt">개수</span></button></div></div></div>
+            <div class="sg-col"><span class="sg-cap">한 번 틀린 뒤 정답 (0.5초 뒤 닫힘)</span>
+              <div class="bpop is-open" style="position:relative;--bpop-caret-x:40px"><span class="bpop__caret"></span><div class="bpop__opts">
+                <button class="bpop__opt is-correct"><span class="bpop__mark"></span><span class="bpop__txt">성질</span></button>
+                <button class="bpop__opt is-dead"><span class="bpop__mark"></span><span class="bpop__txt">무게</span></button>
+                <button class="bpop__opt"><span class="bpop__mark"></span><span class="bpop__txt">온도</span></button>
+                <button class="bpop__opt"><span class="bpop__mark"></span><span class="bpop__txt">개수</span></button></div></div></div>
+            <div class="sg-col"><span class="sg-cap">위로 열림 · 긴 선지</span>
+              <div class="bpop is-open is-up" style="position:relative;--bpop-caret-x:calc(100% - 28px);max-width:240px"><span class="bpop__caret"></span><div class="bpop__opts">
+                <button class="bpop__opt"><span class="bpop__mark"></span><span class="bpop__txt">그대로 유지됩니다.</span></button>
+                <button class="bpop__opt"><span class="bpop__mark"></span><span class="bpop__txt">서로 섞여서 모두 사라져 버립니다.</span></button>
+                <button class="bpop__opt"><span class="bpop__mark"></span><span class="bpop__txt">새로운 물질이 생겨나 무게가 늘어납니다.</span></button></div></div></div>
           </div>
         </template>
       </div>
@@ -497,6 +551,6 @@
 
   </main>
 </div>
-<script src="styleguide/sg.js?v=20261015-5"></script>
+<script src="styleguide/sg.js?v=20261015-6"></script>
 </body>
 </html>

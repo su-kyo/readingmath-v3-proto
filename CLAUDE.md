@@ -168,6 +168,11 @@ Phase 6에서 키패드가 한 벌(`.keypad__key`)로 합쳐져 이 파일도 �
 「확인」이 무엇을 하는지는 화면이 정한다 — 개념·유형은 닫기, 서술형은 채점,
 과제 좌측은 다음 문제, 답안표는 접기, 시험은 제출.
 
+**빈칸 선지 창 — `scripts/blank-pop.js` + `components.css`의 `.bpop` (2026-10-15 · `RM-PART-06`).** 빈칸을 눌러 선지를 고르는 창은
+개념 학습 · 서술형 6장이 이 한 벌을 쓴다. 화면은 `RMBlankPop.open(빈칸, {choices, answer, onPick, onDone, onClose})`만 부른다.
+테마를 따라 뒤집히는 카드이고 계열색은 왼쪽 원에만. 오답 → 빨간 ✕ 0.5초 → 회색 ✕ 비활성, 정답 → 초록 ✓ 0.5초 뒤 닫힘. `answer`가 없으면 채점 없이 바로 넣는다.
+서술형 주관식 키패드 창(`.qpop`)은 정적 하드웨어라 따로다. 판단은 `docs/blank-pop-1015.md`.
+
 **연습장 — `scripts/scratchpad.js` + `styles/scratchpad.css`.** 둘을 부르면(CSS는 화면 CSS 바로 뒤) 그 화면의 「연습장」 버튼에 알아서
 붙는다(22개 화면). 화면 위를 덮는 투명 캔버스에 바로 필기하고, 딤은 필기 뒤에 깔리되
 **문제 영역(`.content`/`.rframe`)과 콘솔바는 딤에서 빠진다.**
@@ -189,7 +194,7 @@ styleguide/foundations.html   색 3단 · 칠면 셋 · 글자/간격/모서리/
 styleguide/components.html    버튼 · 상태 타일 · 빈칸 · 선택지 · 계기판 · 토스트 (화면이 쓰는 것만)
 styleguide/shells.html        GNB/서랍 · 학습 헤더 · 콘솔바 · 보조 모니터 · 키패드 · 연습장
 styleguide/patterns.html      목록 네 상태 · 유틸 예외 체계 · JS가 넣는 변수 · 검수 스위치 · 남긴 예외
-styleguide/rules.html         규칙 색인 — RM-영역-번호 55개의 정본 (2026-10-14 · 끊어읽기 READ 2026-10-15)
+styleguide/rules.html         규칙 색인 — RM-영역-번호 56개의 정본 (2026-10-14 · 끊어읽기 READ · 빈칸 선지 창 PART-06 2026-10-15)
 styleguide/screens.html       화면 지도 — 화면마다 부품 · 토큰 · 규칙 (data/screens.json 을 그린다)
 styleguide/data/              개발자용 tokens.json(DTCG) · rules.json · screens.json — 스크립트가 만든다
 styleguide/sg.css · sg.js     여섯 장이 공유하는 뼈대 (목록 · 액자 · 배지 · 규칙 카드 · 본문의 RM-번호 링크)
@@ -346,6 +351,7 @@ tools/screen-diff.py /tmp/rm-before /tmp/rm-after
   - `RM-PART-03` 계산기와 결과 계기판은 정적 하드웨어 — 테마를 따라가지 않는다 (눈)
   - `RM-PART-04` 수식은 KaTeX — 분수는 `\dfrac`, 슬래시로 적지 않는다 (눈)
   - `RM-PART-05` 새 학습 화면에는 검수 스위치를 붙인다 (눈)
+  - `RM-PART-06` 빈칸 선지는 공용 창 하나 — 오답은 회색 ✕로 남고 정답은 0.5초 뒤 닫힌다 (눈)
 - **JS** 스크립트
   - `RM-JS-01` JS는 스타일을 만들지 않는다
   - `RM-JS-02` JS가 심는 변수는 목록에 올린다

@@ -186,7 +186,7 @@
         audit(d, win, sc, th, '처음');
         var labels = [].slice.call(d.querySelectorAll('.rmdbg__btn')).map(function (b) { return b.textContent.trim(); }).filter(function (l) { return !SKIP_DBG.test(l); });
         // 선택 상태 — 첫 선택지를 눌러 본다
-        var opt = d.querySelector('.qopt:not(.is-selected), .opt:not(.is-selected), .pop-opt');
+        var opt = d.querySelector('.qopt:not(.is-selected), .opt:not(.is-selected), .bpop__opt');
         if (opt) { opt.click(); await wait(300); audit(d, win, sc, th, '선택'); }
         for (var k = 0; k < labels.length; k++) {
           d = await load(sc, th); win = f.contentWindow;

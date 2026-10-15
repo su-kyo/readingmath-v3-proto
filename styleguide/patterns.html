@@ -6,10 +6,10 @@
   <title>패턴 — 리딩수학과학 디자인 시스템</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
   <base href="../" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261015-5" />
-  <link rel="stylesheet" href="styles/base.css?v=20261015-5" />
-  <link rel="stylesheet" href="styles/components.css?v=20261015-5" />
-  <link rel="stylesheet" href="styleguide/sg.css?v=20261015-5" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261015-6" />
+  <link rel="stylesheet" href="styles/base.css?v=20261015-6" />
+  <link rel="stylesheet" href="styles/components.css?v=20261015-6" />
+  <link rel="stylesheet" href="styleguide/sg.css?v=20261015-6" />
 </head>
 <body data-sg-css="tokens,base,components,util" data-sg-section="util">
 <div class="sg">
@@ -161,7 +161,7 @@
         <tbody>
           <tr><td><code>--pct</code></td><td>결과 화면 엔진</td><td>정답률 0~100. 게이지 각도와 바늘이 이걸 읽는다</td></tr>
           <tr><td><code>--hero-w</code></td><td>행성 홈</td><td>캐릭터 칸 폭. 수학 31.25% · 과학 25%로 과목마다 다르다</td></tr>
-          <tr><td><code>--caret-x</code></td><td>개념 학습 (<code>learn-concept.js</code>)</td><td>빈칸 팝오버의 꼬리 위치</td></tr>
+          <tr><td><code>--bpop-caret-x</code></td><td>빈칸 선지 창 (<code>blank-pop.js</code>) · 개념 · 서술형</td><td>창의 꼬리 가로 위치. 창이 화면 끝에서 밀려도 꼬리는 빈칸 가운데를 가리킨다</td></tr>
           <tr><td><code>--seg</code></td><td>행성 홈 (<code>nav-home.js</code>)</td><td>명판 진행칸 색. 과목(수학 파랑 · 과학 틸)이 정한다. 말풍선 강조색은 스크립트가 <code>data-subject</code>만 붙이고 CSS가 고른다</td></tr>
           <tr><td><code>--tag-c</code></td><td>커리큘럼 · 자유 모드</td><td>단원 과목 태그의 색 하나. 섞는 비율(면 22% · 글자 72% · 테두리 42%)은 <code>nav.css</code>가 정한다. CSS에 기본값이 있어서 정의 없는 변수로 세지 않는다</td></tr>
           <tr><td><code>--m</code></td><td>행성 홈</td><td>소품의 그늘·빛줄기가 몸체 모양을 따라가게 하는 마스크 그림 주소</td></tr>
@@ -241,6 +241,6 @@
 
   </main>
 </div>
-<script src="styleguide/sg.js?v=20261015-5"></script>
+<script src="styleguide/sg.js?v=20261015-6"></script>
 </body>
 </html>

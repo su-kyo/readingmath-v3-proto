@@ -44,7 +44,7 @@ EXCEPT = {
 # JS 가 style 로 심는 변수 — 정의가 CSS 에 없는 게 정상이다 (스토리북 「패턴 › JS가 넣는 변수」)
 # 안 써도 남기는 토큰 — 상태색 매트릭스(4역할 × 6변형)의 빈칸을 만들지 않는다
 KEEP = {'--warn-vivid'}
-JS_VARS = {'--caret-x', '--d', '--delay', '--hero-w', '--m', '--o', '--pct', '--seg'}
+JS_VARS = {'--bpop-caret-x', '--d', '--delay', '--hero-w', '--m', '--o', '--pct', '--seg'}
 PALETTE = r'(?:n|blue|cyan|teal|green|amber|orange|red|violet)-\d+'
 
 
