@@ -1,57 +1,40 @@
 /* =========================================================================
-   개념 다지기 · 문항 엔진 (기초 연산 엔진 포크)
-   유형이 섞여 있음: 빈칸(인라인 채우기) · 객관식(번호/텍스트) · 주관식(1개/분수)
-   빈칸/주관식은 계산기 키패드로 입력. 채점하기 → 즉시 채점 → 다음 문제.
+   개념 다지기 · 문항 엔진 (기초 연산 엔진 포크) — concept/drill-math.html · drill-sci.html
+   유형: 빈칸(인라인 채우기) · 객관식(번호/텍스트) · 주관식(1개/분수)
+   빈칸은 둘 — 계산기 키패드로 입력하는 칸, 선지를 고르는 칸(choices · 공용 빈칸 선지 창 scripts/blank-pop.js, 채점 없이 넣기).
+   채점하기 → 즉시 채점 → 다음 문제.
+   문항 = 과목별 데이터 파일(scripts/concept-drill-data-math.js · -sci.js → window.RMDrillSet). 엔진보다 먼저 부른다.
+   문항 필드: q 발문(글 속 $…$ 는 KaTeX) · img 그림(문제 카드 오른쪽) · ex 보기 ·
+     blank → html(빈칸 = <span class="dblank"></span>) · choices[빈칸 차례] = 선지 배열(없으면 키패드) · answers[빈칸 차례]
+     tex → 수식 줄(빈칸 = \htmlClass{dblank}{?}) · short-1 / fraction → answer
    ========================================================================= */
 (function () {
-  function exText(items) { return { kind: 'text', items: items }; }
-  function exSkel(label) { return { kind: 'skel', label: label }; }
+  var SET = window.RMDrillSet || { problems: [] };
+  var PROBLEMS = SET.problems;
 
-  // 개념 다지기 = 빈칸·객관식·주관식 혼합 (세 자리 수의 뺄셈)
-  var PROBLEMS = [
-    { type: 'blank',
-      q: '752 − 238을 여러 가지 방법으로 계산하려고 합니다. 빈칸에 알맞은 수를 써넣으세요.',
-      html:
-        '<p class="qstep"><span class="qstep__no">(1)</span> 각 수를 몇백 몇십으로 어림하면 752는 750, 238은 <span class="dblank"></span> 이므로 두 수의 차는 약 <span class="dblank"></span> 입니다.</p>' +
-        '<p class="qstep"><span class="qstep__no">(2)</span> 일의 자리부터 계산하면 12 − 8 = <span class="dblank"></span>, 40 − 30 = 10, 700 − 200 = 500 이므로 752 − 238 = <span class="dblank"></span> 입니다.</p>' +
-        '<p class="qstep"><span class="qstep__no">(3)</span> 700 − 200 = 500, 52 − 38 = <span class="dblank"></span> 이므로 752 − 238 = <span class="dblank"></span> 입니다.</p>',
-      answers: ['240', '510', '4', '514', '14', '514'] },
-
-    { type: 'mc-text',
-      q: '752 − 238을 어림셈으로 구할 때 가장 알맞은 식을 고르세요.',
-      ex: null, options: ['750 − 240', '760 − 240', '750 − 230'], answer: 0 },
-
-    { type: 'short-1',
-      q: '752 − 238 을 계산하면 얼마입니까?',
-      ex: null, answer: '514' },
-
-    { type: 'mc-num',
-      q: '다음 계산 중 값이 가장 큰 것의 번호를 고르세요.',
-      ex: exText(['① 823 − 214', '② 645 − 158', '③ 700 − 236', '④ 512 − 129']),
-      options: 4, answer: 0 },
-
-    { type: 'blank',
-      q: '세로셈에서 빈칸에 알맞은 수를 써넣으세요. (462 − 247)',
-      html:
-        '<div class="vsub">' +
-        '<span></span><span>4</span><span>6</span><span>2</span>' +
-        '<span class="vsub__op">−</span><span>2</span><span>4</span><span>7</span>' +
-        '<div class="vsub__line"></div>' +
-        '<span></span><span class="dblank"></span><span class="dblank"></span><span class="dblank"></span>' +
-        '</div>',
-      answers: ['2', '1', '5'] },
-
-    /* 수식 라이브러리(KaTeX) 본보기 — Phase 6-④.
-       검증 포인트: ① 온전한 세로 분수 ② 미지수·루트·지수 ③ 수식 '안'에 빈칸을 심고
-       공용 키패드로 입력 → 기존 blank 채점이 그대로 동작. */
-    { type: 'blank',
-      q: '수식의 빈칸에 알맞은 수를 써넣으세요. (수식 렌더 본보기 — 분수·미지수·루트·지수)',
-      tex: [
-        'x^{2} = \\sqrt{81} + 7 \\quad\\Rightarrow\\quad x = 4',
-        '\\dfrac{\\htmlClass{dblank}{?}}{8} + \\dfrac{3}{8} = \\dfrac{5}{8}'
-      ],
-      answers: ['2'] }
-  ];
+  /* 글 속 $…$ 를 KaTeX 로 (빈칸 · 입력칸 안은 건드리지 않는다) */
+  function texIn(root) {
+    if (!window.katex) return;
+    var w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null), nodes = [];
+    while (w.nextNode()) if (w.currentNode.nodeValue.indexOf('$') >= 0) nodes.push(w.currentNode);
+    nodes.forEach(function (n) {
+      var parts = n.nodeValue.split('$'); if (parts.length < 3) return;
+      var frag = document.createDocumentFragment();
+      parts.forEach(function (t, i) {
+        if (i % 2 === 0) { if (t) frag.appendChild(document.createTextNode(t)); return; }
+        var m = document.createElement('span'); window.katex.render(t, m, { throwOnError: false, strict: 'ignore' }); frag.appendChild(m);
+      });
+      n.parentNode.replaceChild(frag, n);
+    });
+  }
+  /* 값 하나를 칸에 — '$\dfrac{1}{2}$' 는 수식, 나머지는 글자 */
+  function showVal(node, v) {
+    var m = /^\$(.+)\$$/.exec(v || '');
+    if (m && window.katex) { node.textContent = ''; window.katex.render(m[1], node, { throwOnError: false }); }
+    else node.textContent = v || '';
+  }
+  /* 선지 한 개 → 빈칸 선지 창 형식 */
+  function toChoice(c) { var m = /^\$(.+)\$$/.exec(c); return m ? { tex: m[1], val: c } : c; }
 
   var TOTAL = PROBLEMS.length;
   var results = new Array(TOTAL);
@@ -97,7 +80,28 @@
   function getV(node) { return node.tagName === 'INPUT' ? node.value : (node.dataset.val || ''); }
   function setV(node, v) {
     if (node.tagName === 'INPUT') { node.value = v; }
-    else { node.dataset.val = v; node.textContent = v; node.classList.toggle('is-filled', !!v); }
+    else { node.dataset.val = v; showVal(node, v); node.classList.toggle('is-filled', !!v); }
+  }
+  /* 선지 빈칸이면 그 선지 배열, 키패드 칸이면 null */
+  function choicesOf(node) {
+    var p = PROBLEMS[idx], i = +node.dataset.i;
+    return node.classList.contains('dblank') && p.choices && p.choices[i] ? p.choices[i] : null;
+  }
+
+  /* ---- 선지 빈칸 — 공용 빈칸 선지 창(RM-PART-06). 채점 없이 고른 값을 넣고, 채점은 「채점하기」에서 ---- */
+  function openChoices(node) {
+    closePad();
+    node.classList.add('is-active-input');
+    window.RMBlankPop.open(node, {
+      choices: choicesOf(node).map(toChoice),
+      onDone: function (v) { setV(node, v); checkFilled(); },
+      onClose: function () { node.classList.remove('is-active-input'); }
+    });
+  }
+  function openField(node) {
+    if (graded) return;
+    if (choicesOf(node)) { if (window.RMBlankPop.isOpen() && window.RMBlankPop.anchor() === node) window.RMBlankPop.close(); else openChoices(node); }
+    else openPad(node);
   }
 
   /* ---- 주관식/빈칸 숫자 키패드 ---- */
@@ -152,6 +156,11 @@
   /* ---- 보기 ---- */
   function renderEx(ex) {
     if (!ex) return null;
+    if (ex.kind === 'img') {   // 그림 (문항의 img) — 진한 문제 카드 위라 그림은 종이 면에 얹는다
+      var fig = el('div', 'ex ex--img'), im = el('img', 'ex__img');
+      im.src = ex.src; im.alt = ex.alt || ''; fig.appendChild(im);
+      return fig;
+    }
     var box = el('div', 'ex');
     if (ex.kind === 'text') { var list = el('div', 'ex__list'); ex.items.forEach(function (t) { list.appendChild(el('div', null, t)); }); box.appendChild(list); }
     else { box.appendChild(el('div', 'ex__skel', ex.label || '이미지')); }
@@ -161,7 +170,7 @@
   /* ---- 문제 렌더 ---- */
   function renderQ() {
     selected = null; graded = false;
-    closePad();
+    closePad(); window.RMBlankPop.close();
     qEl.innerHTML = '';
     problemBody.innerHTML = '';
     problem.classList.remove('is-collapsed');   // 새 문제 = 문제 카드 열림
@@ -170,7 +179,8 @@
 
     // 문제 카드 본문 = 지시문 + 보기
     problemBody.appendChild(el('div', 'q__text', p.q));
-    var exb = renderEx(p.ex); if (exb) problemBody.appendChild(exb);
+    var exb = renderEx(p.img ? { kind: 'img', src: p.img, alt: p.imgAlt } : p.ex); if (exb) problemBody.appendChild(exb);
+    texIn(problemBody);
 
     // 풀이 영역 = 입력(빈칸/객관식/주관식)
     if (p.type === 'mc-num' || p.type === 'mc-text' || p.type === 'mc-image') qEl.appendChild(renderMC(p));
@@ -225,9 +235,10 @@
         box.appendChild(line);
       });
     }
+    texIn(box);   // 글 속 수식 — 빈칸은 비어 있어 건드리지 않는다
     box.querySelectorAll('.dblank').forEach(function (b, i) {
       b.dataset.i = i;
-      b.addEventListener('click', function () { if (!graded) openPad(this); });
+      b.addEventListener('click', function () { openField(this); });
     });
     return box;
   }
@@ -273,7 +284,7 @@
     if (revealPending) { reveal(); return; }
     if (!w.classList.contains('dblank')) return;
     var showAns = w.classList.toggle('show-ans');
-    w.textContent = showAns ? w.dataset.ans : w.dataset.my;
+    showVal(w, showAns ? w.dataset.ans : w.dataset.my);
     w.title = showAns ? '눌러서 내 답 보기' : '눌러서 정답 보기';
   });
 
@@ -312,7 +323,7 @@
     }
     // 오답 칸은 눌러야 정답이 열리므로 잠그지 않는다(.is-reveal) — 나머지만 잠근다
     qEl.querySelectorAll('.sinput').forEach(function (x) { if (x.classList.contains('is-wrong')) x.classList.add('is-reveal'); else x.disabled = true; });
-    closePad();
+    closePad(); window.RMBlankPop.close();
 
     // 주관식 오답 → 정답 표시 (분수는 온전한 분수 형태)
     if (!ok && (p.type === 'short-1' || p.type === 'short-2' || p.type === 'fraction')) {
@@ -344,7 +355,7 @@
     revealPending = false;
     var row = qEl.querySelector('.qopts-row, .qopts-grid');
     if (row) { row.classList.remove('is-reveal'); var c = row.querySelectorAll('.qopt')[p.answer]; if (c) c.classList.add('is-correct'); }
-    qEl.querySelectorAll('.dblank.is-wrong').forEach(function (b) { b.classList.add('show-ans'); b.textContent = b.dataset.ans; b.title = '눌러서 내 답 보기'; });
+    qEl.querySelectorAll('.dblank.is-wrong').forEach(function (b) { b.classList.add('show-ans'); showVal(b, b.dataset.ans); b.title = '눌러서 내 답 보기'; });
     qEl.querySelectorAll('.sinput.is-wrong').forEach(function (x) { x.classList.remove('is-reveal'); x.disabled = true; });
     var ac = qEl.querySelector('.ans-correct'); if (ac && ac.innerHTML) ac.classList.add('show');
     guide.set('');
@@ -360,7 +371,7 @@
   function mark(inp, ok) { inp.classList.add(ok ? 'is-correct' : 'is-wrong'); }
   function norm(s) { return String(s).replace(/\s+/g, '').toLowerCase(); }
 
-  nextStepBtn.addEventListener('click', function () { if (nextStepBtn.disabled) return; window.location.href = 'concept/organize.html'; });   // 다지기 다음 = 개념 정리
+  nextStepBtn.addEventListener('click', function () { if (nextStepBtn.disabled) return; window.location.href = SET.next || 'concept/organize-math.html'; });   // 다지기 다음 = 개념 정리 (과목별 데이터의 next)
 
   var themeBtn = document.getElementById('themeToggle');
   if (themeBtn) themeBtn.addEventListener('click', function () {
@@ -378,7 +389,8 @@
       if (opts[pick]) opts[pick].click();
     } else if (p.type === 'blank') {
       qEl.querySelectorAll('.dblank').forEach(function (b, i) {
-        setV(b, ok === true || (ok === 'part' && i === 0) ? p.answers[i] : '0');   // 'part' = 첫 칸만 정답
+        var c = choicesOf(b), bad = c ? c.filter(function (x) { return norm(x) !== norm(p.answers[i]); })[0] : '0';   // 오답 = 선지 빈칸은 다른 선지, 키패드 칸은 0
+        setV(b, ok === true || (ok === 'part' && i === 0) ? p.answers[i] : bad);   // 'part' = 첫 칸만 정답
       });
       checkFilled();
     } else if (p.type === 'short-1') {
@@ -407,7 +419,7 @@
       { label: '정답 공개', run: function () { if (revealPending) reveal(); } },
       { label: '일부 정답', run: function () { dbgAnswer('part'); } },
       { label: '전부 풀기', run: dbgSolveAll },
-      { label: '키패드 열기', run: function () { var f = qEl.querySelector('.sinput, .dblank'); if (f) openPad(f); } }
+      { label: '입력 열기', run: function () { var f = qEl.querySelector('.sinput, .dblank'); if (f) openField(f); } }
     ]
   });
 

@@ -41,7 +41,8 @@
 .step-card.is-current, .step-card.is-current:hover { box-shadow: 0 var(--depth-4) 0 var(--black-a30), inset 0 0 0 2.5px var(--accent); }
 
 
-.step-card__name { font-size: var(--fs-19); font-weight: var(--fw-heavy); color: var(--ltext); white-space: nowrap; }
+.step-card__name { font-size: var(--fs-19); font-weight: var(--fw-heavy); color: var(--ltext); word-break: keep-all; }   /* 과학 「탐구활동 보고서 만들기」는 두 줄로 접힌다 */
+.step-card .key { flex: none; white-space: nowrap; }
 .step-card.is-open .step-card__name { color: var(--lmuted); }
 
 /* 훈련 결과 버튼 — 모든 스텝 완료 시 리스트 끝에 등장 */

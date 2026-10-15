@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light" data-section="essay" data-subject="math">
+<head>
+  <base href="../">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>서술형 훈련 · 기본 다지기 (수학) — 리딩수학과학</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
+  <link rel="stylesheet" href="scripts/vendor/katex/katex.min.css?v=20261015-45" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261015-45" />
+  <link rel="stylesheet" href="styles/base.css?v=20261015-45" />
+  <link rel="stylesheet" href="styles/components.css?v=20261015-45" />
+  <link rel="stylesheet" href="styles/learn-shell.css?v=20261015-45" />
+  <link rel="stylesheet" href="styles/essay.css?v=20261015-45" />
+  <link rel="stylesheet" href="styles/keypad.css?v=20261015-45" />
+  <link rel="stylesheet" href="styles/monitor.css?v=20261015-45" />
+  <link rel="stylesheet" href="styles/screens/essay-drill-v2.css?v=20261015-45" />
+  <link rel="stylesheet" href="styles/scratchpad.css?v=20261015-45" />
+</head>
+<body class="learn-body">
+  <div class="screen">
+    <div class="screen__bg"></div>
+
+    <div class="screen__container">
+      <header class="lheader">
+        <nav class="breadcrumb">
+          <span class="crumb crumb--strong">수학 중등 3-2</span>
+          <svg class="sep" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <span class="crumb crumb--strong crumb--clip crumb--hide">1단원 삼각비</span>
+          <svg class="sep crumb--hide" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <span class="crumb crumb--hide">(1) 삼각비</span>
+          <svg class="sep crumb--hide" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <span class="crumb">서술형 훈련</span>
+          <svg class="sep" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <span class="crumb crumb--strong">기본 다지기</span>
+        </nav>
+        <div class="lheader__actions">
+          <div class="lheader__timer" id="hdrTimer"><img src="assets/icons/ico-stopwatch.svg" alt="경과 시간" /><span class="lheader__time" id="timer">00:00</span><span class="lheader__limit">/ 60:00</span></div>
+          <button class="theme-toggle" id="themeToggle" title="라이트/다크 전환"><span class="theme-toggle__knob"></span></button>
+          <button class="nav-ico" title="알림"><img src="assets/icons/ico-siren.svg" alt="알림" /></button>
+          <button class="nav-ico" title="나가기"><img src="assets/icons/ico-exit.svg" alt="나가기" /></button>
+        </div>
+      </header>
+
+      <main class="content">
+        <div class="stage-scroll">
+          <!-- 문제 카드 (상단 프레임에 붙음 · 번호탭+단계 헤더 · 스크롤 시 상단 스티키) -->
+          <section class="card problem" id="problem">
+            <div class="problem__head" id="problemHead" role="button" tabindex="0" aria-label="문제 펼치기/접기">
+              <span class="phead__lead">
+                <span class="qtabs" id="qtabs"></span>
+                <span class="phead__div"></span>
+                <span class="stepbar">
+                  <span class="stepbar__i is-on" id="pillFill"><i class="stepbar__dot"></i>빈칸 맞추기</span>
+                  <span class="stepbar__track"></span>
+                  <span class="stepbar__i" id="pillArrange"><i class="stepbar__dot"></i>순서 맞추기</span>
+                </span>
+              </span>
+              <svg class="problem__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            </div>
+            <div class="problem__body" id="readBody"></div>
+          </section>
+
+          <!-- 풀이 카드 (빈칸 맞추기 / 순서 맞추기 공용) -->
+          <section class="card worksheet" id="worksheet" hidden>
+            <span class="sec-label sec-label--sol worksheet__label" id="wsLabel">풀이</span>
+            <div id="fillView"><div class="sol" id="sol"></div></div>
+            <div id="arrangeView" hidden><div class="asol" id="asol"></div></div>
+          </section>
+
+          <!-- 블록 서랍 (순서 맞추기 · 배치 문장에서만) -->
+          <section class="card tray" id="tray" hidden>
+            <span class="tray__label">블록을 눌러 알맞은 자리에 넣어요</span>
+            <div class="pool" id="pool"></div>
+          </section>
+
+          <!-- 단계 완료 시 다음 단계 진입 (콘솔바 대신 콘텐츠 하단) -->
+          <div class="stage-action" id="stageAction">
+            <button class="stage-action__btn" id="primaryBtn">
+              <span id="primaryLabel">순서 맞추기</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <div class="bar">
+      <img class="bar__deco bar__deco--l" src="assets/icons/console/console-essay-right.svg" alt="" />
+      <div class="bar__mid">
+        <div class="bar__tray">
+          <div class="bar__group">
+            <button class="toolbtn"><img src="assets/icons/ico-note-edit.svg" alt="" /><span>연습장</span></button>
+          </div>
+          <div class="bar__group">
+            <p class="guide" role="status" aria-live="polite" hidden><i class="guide__lamp"></i><span class="guide__text"></span></p>
+          </div>
+        </div>
+      </div>
+      <img class="bar__deco bar__deco--r" src="assets/icons/console/console-essay-left.svg" alt="" />
+    </div>
+  </div>
+
+  <!-- 문제 끊어읽기 (공용 보조 모니터 프레임 · 잠금형 — 다 읽어야 나갈 수 있음) -->
+  <div class="rmodal monitor monitor--lock" id="rmodal" aria-hidden="true">
+    <div class="monitor__dim"></div>
+    <div class="monitor__rig" role="dialog" aria-modal="true" aria-label="문제 읽기">
+      <div class="monitor__mount"><i></i><i></i></div>
+      <div class="monitor__frame">
+        <div class="monitor__hd">
+          <span class="monitor__lamps"><i class="is-live"></i><i></i><i></i></span>
+          <span class="monitor__ttl" id="rmTitle">문제 1</span>
+        </div>
+        <div class="monitor__screen">
+          <div class="rmodal__read" id="rmRead"></div>
+          <div class="rmodal__foot">
+            <span class="rmodal__hint" id="rmHint"></span>
+            <button class="rmodal__go" id="rmGo" type="button">문제 풀기
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="monitor__chin"><span class="monitor__slit"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="qpop" id="qpop" role="dialog" aria-label="빈칸 입력">
+    <div class="qpop__inner">
+      <span class="qpop__caret"></span>
+      <div class="qpop__body" id="qpopBody"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- 검수용 디버그 패널 (?debug=1 일 때만 보임) -->
+  <!-- 연습장 캔버스 (공용) -->
+  <script src="scripts/subject.js?v=20261015-45"></script>
+  <script src="scripts/vendor/katex/katex.min.js?v=20261015-45"></script>
+  <script src="scripts/scratchpad.js?v=20261015-45"></script>
+  <script src="scripts/debug-panel.js?v=20261015-45"></script>
+  <!-- 키패드 물리 키보드 입력 (공용) -->
+  <script src="scripts/pop-place.js?v=20261015-45"></script>
+  <script src="scripts/keypad.js?v=20261015-45"></script>
+  <script src="scripts/blank-pop.js?v=20261015-45"></script>
+  <script src="scripts/keypad-input.js?v=20261015-45"></script>
+  <script src="scripts/learn-guide.js?v=20261015-45"></script>
+  <script src="scripts/essay-sol.js?v=20261015-45"></script>
+  <script src="scripts/essay-drill-data-math.js?v=20261015-45"></script>
+  <script src="scripts/essay-drill-v2.js?v=20261015-45"></script>
+  <script src="scripts/learn-timer.js?v=20261015-45"></script>
+  <script src="scripts/learn-exit.js?v=20261015-45"></script>
+</body>
+</html>

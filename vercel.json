@@ -1,7 +1,49 @@
 {
   "redirects": [
-    { "source": "/styleguide.html", "destination": "/styleguide/foundations.html", "permanent": true },
-    { "source": "/styleguide", "destination": "/styleguide/foundations.html", "permanent": true },
-    { "source": "/styleguide/", "destination": "/styleguide/foundations.html", "permanent": true }
+    {
+      "source": "/styleguide.html",
+      "destination": "/styleguide/foundations.html",
+      "permanent": true
+    },
+    {
+      "source": "/styleguide",
+      "destination": "/styleguide/foundations.html",
+      "permanent": true
+    },
+    {
+      "source": "/styleguide/",
+      "destination": "/styleguide/foundations.html",
+      "permanent": true
+    },
+    {
+      "source": "/concept/learn.html",
+      "destination": "/concept/learn-sci.html",
+      "permanent": false
+    },
+    {
+      "source": "/concept/drill.html",
+      "destination": "/concept/drill-math.html",
+      "permanent": false
+    },
+    {
+      "source": "/concept/organize.html",
+      "destination": "/concept/organize-sci.html",
+      "permanent": false
+    },
+    {
+      "source": "/essay/basics-v2.html",
+      "destination": "/essay/basics-math.html",
+      "permanent": false
+    },
+    {
+      "source": "/essay/drill-v2.html",
+      "destination": "/essay/drill-math.html",
+      "permanent": false
+    },
+    {
+      "source": "/essay/drill-review.html",
+      "destination": "/essay/drill-review-math.html",
+      "permanent": false
+    }
   ]
 }

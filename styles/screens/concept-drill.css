@@ -1,5 +1,5 @@
 /* =========================================================================
-   concept/drill.html 전용 스타일 — 이 화면에만 있는 규칙.
+   concept/drill-math.html · drill-sci.html 전용 스타일 — 이 화면에만 있는 규칙.
    여러 화면이 같이 쓰는 부품은 styles/ 의 공용 파일에 있다 (스토리북 참고).
    ========================================================================= */
 
@@ -68,6 +68,9 @@
 .problem__body .ex { flex: none; width: clamp(200px, 36%, 340px); margin: 0; --ex-br: var(--white-a20); }   /* 진한 문제 카드 위 — 흰 선 */
 .problem__body .ex__list { color: color-mix(in srgb, var(--text-on-frame) 85%, transparent); }
 .problem__body .ex__skel { color: var(--white-a60); }
+/* 문항 그림 — 진한 카드 위에 종이 면으로 얹는다(그림 바탕이 흰색이라). 기초 연산 .q__img 와 같은 방식 */
+.problem__body .ex--img { padding: var(--sp-8); box-shadow: none; background: var(--paper-bg); border-radius: var(--r-12); }
+.ex__img { display: block; max-width: 100%; max-height: clamp(150px, 26vh, 240px); width: auto; height: auto; margin: 0 auto; }   /* 세로로 긴 그림이 풀이 칸을 밀어내지 않게 */
 
 
 /* ===== 문제 (풀이 영역) ===== */
@@ -157,12 +160,8 @@
 .dblank.is-correct::after { content: '✓'; background: var(--ok-solid); }
 .dblank.is-wrong::after { content: '✕'; background: var(--no-solid); }
 .dblank.is-wrong.show-ans::after { content: none; }
-/* 세로셈 */
-.vsub { display: inline-grid; grid-template-columns: 26px repeat(3, 42px); gap: var(--sp-6) var(--sp-8); align-items: center; justify-items: center;
-  font-family: var(--font-mono); font-size: var(--fs-32); color: var(--qtext); margin: var(--sp-4) auto 2px; }
-.vsub__op { color: var(--text-muted); font-size: var(--fs-26); }
-.vsub__line { grid-column: 1 / -1; height: 2px; background: var(--qtext); opacity: .55; margin: 3px 0; }
-.vsub .dblank { min-width: 42px; height: 42px; font-family: var(--font-sans); margin: 0; }
+/* 선지 빈칸에 수식(분수 · 루트)이 들면 칸 높이를 풀어 준다 */
+.dblank:has(.katex) { height: auto; min-height: 32px; padding-block: var(--sp-4); }
 
 @media (max-width: 900px) { .qopts-row .qopt { min-width: 44%; } }
 /* 아주 좁아져 양옆에 닿을 때만 프로그레스 줄바꿈 */

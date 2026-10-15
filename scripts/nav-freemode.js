@@ -24,7 +24,9 @@
     '문자와 식':'var(--subj-num)','함수':'var(--subj-rel)','기하':'var(--subj-geo)','확률과 통계':'var(--subj-data)','변화와 관계':'var(--subj-num)','도형과 측정':'var(--subj-geo)',
     '물리':'var(--subj-phys)','화학':'var(--subj-chem)','지구과학':'var(--subj-data)','생명과학':'var(--subj-bio)' };
   var F_TNAME = { concept:'개념 훈련', type:'유형 훈련', essay:'서술형 훈련' };
-  var F_TGO   = { concept:'concept/learn.html', type:'type/quiz.html', essay:'essay/basics-v2.html' };
+  var F_SCI   = (function(){ try{ return localStorage.getItem('rm-subject')==='science'; }catch(e){ return false; } })();
+  var F_TGO   = { concept: F_SCI ? 'concept/learn-sci.html' : 'concept/learn-math.html', type:'type/quiz.html',
+                  essay: F_SCI ? 'essay/basics-sci.html' : 'essay/basics-math.html' };   /* 과목별 화면 (2026-10-15) */
   var CHAL_GO = 'type/quiz.html';
 
   // 소단원 = { no, title, done, t:{concept,type,essay}, challenge:[6칩] }

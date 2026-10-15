@@ -6,7 +6,7 @@
 
    쓰는 법:
      RMBlankPop.open(빈칸요소, {
-       choices: ['성질', '무게', { tex: '\\dfrac{1}{2}', val: '1/2' }],   // 글자 또는 수식(KaTeX)
+       choices: ['성질', '무게', { tex: '\\dfrac{1}{2}', val: '1/2' }],   // 글자 또는 수식(KaTeX) · { html, val } 글+수식 · { img, val } 그림
        answer:  '성질',            // 있으면 채점한다. 없으면 고른 값을 바로 넘기고 닫는다
        onPick:  function (val, ok) {},   // 누른 순간 (채점할 때만) — 빈칸 흔들기 · 토스트 등
        onDone:  function (val) {},       // 정답 0.5초 뒤 닫히고 나서 / 채점 없음이면 바로
@@ -55,6 +55,8 @@
       b.innerHTML = '<span class="bpop__mark"></span><span class="bpop__txt"></span>';
       var txt = b.lastChild;
       if (typeof c === 'object' && c.tex && window.katex) window.katex.render(c.tex, txt, { throwOnError: false });
+      else if (typeof c === 'object' && c.html) txt.innerHTML = c.html;   // 글 + 수식이 섞인 선지(서술형) — 부른 쪽이 만든 마크업
+      else if (typeof c === 'object' && c.img) { var im = document.createElement('img'); im.src = c.img; im.alt = c.label || '선지 그림'; txt.appendChild(im); }   // 그림 선지(서술형)
       else txt.textContent = typeof c === 'object' ? (c.label || val) : val;
       opts.appendChild(b);
     });

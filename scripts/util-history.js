@@ -85,8 +85,8 @@ var MAX_RECORDS = [
 ];
 
 /* 훈련 종류 → 이어서 할 화면. 확정 진입 화면만 연결한다 */
-var ENTRY = { '개념':'concept/learn-math.html',   /* 과학이면 아래(SUBJ)에서 concept/learn.html 로 */
-              '유형':'type/quiz.html', '서술형':'essay/basics-v2.html' };
+var ENTRY = { '개념':'concept/learn-math.html',   /* 과학이면 아래(SUBJ)에서 과학판으로 */
+              '유형':'type/quiz.html', '서술형':'essay/basics-math.html' };
 var KINDS = ['개념','유형','서술형'];
 
 /* ═══════════════════════════════════════════════════════════════════════
@@ -116,7 +116,7 @@ var FORCE = new URLSearchParams(location.search).get('state') || '';
 /* 기록 범위 = 현재 과목만(GNB 과목 모드를 따라감). 학기는 전체 — brief §4 */
 var SUBJ = 'math';
 try{ SUBJ = localStorage.getItem('rm-subject')==='science' ? 'science' : 'math'; }catch(e){}
-if(SUBJ==='science') ENTRY['개념']='concept/learn.html';   /* 개념 학습은 과목마다 한 장 — 수학 삼각비 · 과학 밀도와 용해도 */
+if(SUBJ==='science'){ ENTRY['개념']='concept/learn-sci.html'; ENTRY['서술형']='essay/basics-sci.html'; }   /* 개념 · 서술형은 과목마다 한 벌 — 수학 삼각비 · 과학 밀도와 용해도 */
 var SUBJ_KO = SUBJ==='science' ? '과학' : '수학';
 function ofSubj(a){ return a.filter(function(r){ return r.subj===SUBJ; }); }
 var DATA = FORCE==='first' ? [] : ofSubj(FORCE==='max' ? MAX_RECORDS : RECORDS);

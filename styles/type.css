@@ -18,3 +18,10 @@
 .learn-body .toolbtn:not(.toolbtn--primary) { background: var(--th-solid); box-shadow: 0 var(--depth-4) 0 var(--th-accent-strong); }
 .learn-body .toolbtn:not(.toolbtn--primary):hover { filter: brightness(1.1); }
 .learn-body .toolbtn:not(.toolbtn--primary):active { box-shadow: 0 var(--depth-2) 0 var(--th-accent-strong); }
+
+/* ===== 문항 그림 · 단위 · 수식 — 풀이(type-quiz) · 해설(type-review) 공용 (2026-10-15 과목 두 벌) =====
+   그림은 흰 바탕 원본이라 다크에서도 종이 면(--paper-bg) 위에 둔다. 크기는 원본 비율 그대로, 높이로 묶는다. */
+.q__img { display: block; max-width: 100%; max-height: 260px; width: auto; height: auto; margin: 0 auto var(--sp-20); padding: var(--sp-8); border-radius: var(--r-12); background: var(--paper-bg); box-sizing: border-box; }
+.sfield__unit { font-size: var(--fs-19); font-weight: var(--fw-heavy); color: var(--qtext); }
+.q__text .katex, .qopt .katex { font-size: 1.1em; }
+.q .katex .text { font-family: var(--font-sans); }   /* 수식 속 한글(밀도 · 질량 · 부피)은 본문 글꼴로 */

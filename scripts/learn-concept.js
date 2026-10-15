@@ -7,7 +7,7 @@
    - 빈칸 도달 시 근처에 빈칸 선지 창(토글) — 공용 부품 scripts/blank-pop.js
      빈칸은 구간 안에 몇 개든 둔다(구간 하나에 하나). 선지 · 정답은 빈칸의 data-choices · data-answer
    - 이미지 클릭 시 확대 레이어(라이트박스). 그림 주소는 그림 구간의 data-src
-   - 콘텐츠(지문 · 선지 · 요약)는 HTML 에 있다 — 수학판 concept/learn-math.html · 과학판 concept/learn.html
+   - 콘텐츠(지문 · 선지 · 요약)는 HTML 에 있다 — 수학판 concept/learn-math.html · 과학판 concept/learn-sci.html
    ========================================================================= */
 
 /* ---- 수식 — 글 속 $…$ 를 KaTeX 로 그린다 (지문 · 요약 창). 알약 위치를 재기 전에 먼저 ---- */
@@ -283,8 +283,10 @@ window.RMTex = (function () {
   var optsWrap = document.getElementById('summaryOptions');
   var nextBtn = document.getElementById('summaryNext');
   var closeBtn = document.getElementById('summaryClose');
-  // 요약 다음 = 개념 다지기 (실서비스 순서: 학습 → 요약 → 다지기 → 정리, 2026-10-15)
-  if (nextBtn) nextBtn.addEventListener('click', function () { window.location.href = 'concept/drill.html'; });
+  // 요약 다음 = 개념 다지기 (실서비스 순서: 학습 → 요약 → 다지기 → 정리, 2026-10-15) · 과목은 scripts/subject.js
+  if (nextBtn) nextBtn.addEventListener('click', function () {
+    window.location.href = window.RMSubject ? window.RMSubject.pick('concept/drill-math.html', 'concept/drill-sci.html') : 'concept/drill-math.html';
+  });
   window.RMTex.inText(box);
   var segs = [].slice.call(box.querySelectorAll('.sseg'));   // 모달 내 끊어읽기 구간
   var cursor = 0;

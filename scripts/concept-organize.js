@@ -3,52 +3,26 @@
    - 지문은 처음부터 온전히 다 보인다 (끊어읽기/blur/클릭 전진 없음)
    - 지문은 평문 한 벌 — 핵심 문장(key)·그림 구간(img) 데이터는 남기되 화면에 표시하지 않는다
    - 우측 노트의 '요약하기' 버튼 → '개념 요약하기'에서 완성한 요약본(빈칸 채움)을 표시
-   - 요약을 확인하면 콘솔 '개념 다지기로' 활성
+   - 요약을 확인하면 콘솔 「다 읽었어요」 활성 → 스텝 결과
+   - 콘텐츠는 과목별 데이터 파일(window.RMOrganizeSet) — 수학 지문 2개 · 과학 지문 1개.
+     지문 수만큼 차례로 쌓고(넘김 단계 없음), 요약도 지문 차례대로 잇는다
    ========================================================================= */
 (function () {
   'use strict';
 
-  /* ---------- 데이터 (지문 2개) ---------- */
-  var PASSAGES = [
-    {
-      segs: [
-        { t: '우리가 주변에서 보는 여러 가지 액체, 즉 용액은' },
-        { t: '색깔이나 냄새, 투명한 정도가 서로 다르다.', key: true },
-        { t: '식초는 연한 노란색이고 투명하며' },
-        { t: '냄새가 나지만 거품은 오래 가지 않는다.' },
-        { t: '유리 세정제는', img: 1 },
-        { t: '연한 푸른색으로 투명하고 냄새가 나며,' },
-        { t: '흔들면 거품이 3초 이상 유지된다.', key: true },
-        { t: '탄산수는', img: 2 },
-        { t: '무색이고 투명하며 냄새는 없고' },
-        { t: '거품도 오래 가지 않는다.' }
-      ],
-      recap: {
-        lines: [
-          [ { t: '▶ 여러 가지 용액은 색깔·냄새·' }, { fill: '투명한 정도' }, { t: '가 서로 다르다.' } ],
-          [ { t: '▶ 유리 세정제는 흔들면 거품이 ' }, { fill: '3초 이상' }, { t: ' 유지된다.' } ],
-          [ { t: '▶ 탄산수는 ' }, { fill: '무색' }, { t: '이고 거품이 오래 가지 않는다.' } ]
-        ]
-      }
-    },
-    {
-      segs: [
-        { t: '용액의 성질은 지시약으로도 구분할 수 있다.' },
-        { t: '리트머스 종이는', img: 1 },
-        { t: '산성 용액에서 푸른 종이가 붉게 변하고,', key: true },
-        { t: '염기성 용액에서 붉은 종이가 푸르게 변한다.' },
-        { t: '페놀프탈레인 용액은' },
-        { t: '산성에서는 색이 변하지 않지만,' },
-        { t: '염기성에서는 붉은색으로 변한다.', key: true }
-      ],
-      recap: {
-        lines: [
-          [ { t: '▶ 리트머스 종이는 산성에서 ' }, { fill: '붉게' }, { t: ', 염기성에서 ' }, { fill: '푸르게' }, { t: ' 변한다.' } ],
-          [ { t: '▶ 페놀프탈레인 용액은 ' }, { fill: '염기성' }, { t: '에서 붉은색으로 변한다.' } ]
-        ]
-      }
-    }
-  ];
+  /* ---------- 데이터 = 과목별 파일 (scripts/concept-organize-data-math.js · -sci.js → window.RMOrganizeSet) ---------- */
+  var SET = window.RMOrganizeSet || { passages: [] };
+  var PASSAGES = SET.passages;
+
+  /* 글 속 $…$ 를 KaTeX 로 — 한 덩이 글을 글자 · 수식 조각으로 붙인다 */
+  function appendTex(parent, text) {
+    String(text).split('$').forEach(function (p, i) {
+      if (i % 2 === 0) { if (p) parent.appendChild(document.createTextNode(p)); return; }
+      var m = document.createElement('span');
+      if (window.katex) window.katex.render(p, m, { throwOnError: false, strict: 'ignore' }); else m.textContent = p;
+      parent.appendChild(m);
+    });
+  }
 
   var article    = document.getElementById('article');
   var doneBtn    = document.getElementById('doneBtn');
@@ -57,20 +31,26 @@
   var noteBody   = document.getElementById('noteBody');
   var summaryBtn = document.getElementById('summaryBtn');
 
-  /* ---------- 지문 렌더 (전체 · 정적) ---------- */
+  /* ---------- 지문 렌더 (전체 · 정적) ----------
+     지문 하나 = .passage. 그 안에서 { gap } 은 문단 나눔, { br } 은 줄바꿈. 지문이 하나면 나눔 줄이 없다 */
   function renderArticle() {
     article.innerHTML = '';
     PASSAGES.forEach(function (p) {
-      var para = document.createElement('p');
-      para.className = 'para';
+      var sec = document.createElement('section');
+      sec.className = 'passage';
+      var para = null;
+      function newPara() { para = document.createElement('p'); para.className = 'para'; sec.appendChild(para); }
+      newPara();
       p.segs.forEach(function (s) {
+        if (s.gap) { newPara(); return; }
+        if (s.br) { para.appendChild(document.createElement('br')); return; }
         var el = document.createElement('span');
         el.className = 'chunk';
-        el.textContent = s.t;
+        appendTex(el, s.t);
         para.appendChild(el);
         para.appendChild(document.createTextNode(' '));
       });
-      article.appendChild(para);
+      article.appendChild(sec);
     });
   }
 
@@ -78,6 +58,12 @@
   function buildSummary() {
     noteBody.innerHTML = '';
     PASSAGES.forEach(function (p) {
+      if (p.recap.title) {
+        var t = document.createElement('p');
+        t.className = 'nline nline--title';
+        appendTex(t, p.recap.title);
+        noteBody.appendChild(t);
+      }
       p.recap.lines.forEach(function (line) {
         var pl = document.createElement('p');
         pl.className = 'nline';
@@ -85,10 +71,10 @@
           if (part.fill !== undefined) {
             var b = document.createElement('span');
             b.className = 'nfill';
-            b.textContent = part.fill;
+            appendTex(b, part.fill);
             pl.appendChild(b);
           } else {
-            pl.appendChild(document.createTextNode(part.t));
+            appendTex(pl, part.t);
           }
         });
         noteBody.appendChild(pl);

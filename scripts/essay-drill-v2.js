@@ -1,121 +1,24 @@
 /* =========================================================================
-   서술형 훈련 2단계 — 기본 다지기 · 레이아웃 v2 (essay-drill-v2)
-   기능은 essay-drill.js 와 동일. 차이 = ③ 순서 맞추기에서 블록 트레이(#tray)를
+   서술형 훈련 2단계 — 기본 다지기(수학) · 답안 완성하기(과학) · 레이아웃 v2 (essay-drill-v2)
+   essay/drill-math.html · drill-sci.html 이 같이 쓴다. 콘텐츠 = window.RMEssayDrill
+   (scripts/essay-drill-data-math|sci.js) · 글 · 빈칸 읽기 = scripts/essay-sol.js.
+   기능은 essay-drill.js(가로 킵안)와 동일. 차이 = ③ 순서 맞추기에서 블록 트레이(#tray)를
    화면 하단 고정 카드가 아니라 **현재 채워야 할 문장 바로 아래**로 이동시켜
    블록과 빈칸(슬롯)이 멀어지지 않게 함.
-   끊어읽기(.chunk) = 개념 학습(concept/learn.html)과 같은 문법.
-   구간은 인라인이고 끊는 위치는 콘텐츠 등록 쪽 자유다 — 문장 단위가 아니다.
-   데이터는 [문단[구간, 구간, …], …] 2단 배열. 빈칸은 보통 앞뒤 어구와 함께 한 구간에
-   들어간다('저는 / [ ]를 먹었습니다. / 맛있었고,' 처럼). 빈칸만 따로 끊어도 동작한다.
-   문제문의 { img } 문단 = 본문에 그냥 들어간 이미지 — 텍스트 구간과 똑같이 읽기 차례를 차지한다.
-   한 문제 = ① 문제 끊어읽기(상단 카드, 읽은 뒤 접힘·상주)
-            → ② 빈칸 맞추기(해설 끊어읽기 + 즉시 채점)
-            → ③ 순서 맞추기(여러 문장 끊어읽기: 읽기전용 문장 + 배치 문장[고정텍스트+슬롯])
+   끊어읽기(.chunk) = 개념 학습과 같은 문법.
+   구간은 인라인이고 끊는 위치는 콘텐츠 등록 쪽 자유다 — 실서비스의 // 가 구간 경계, 줄바꿈(\n)이 문단.
+   빈칸은 보통 앞뒤 어구와 함께 한 구간에 들어간다. 한 구간에 빈칸이 여럿이면 차례로 묻는다.
+   문제문의 그림 · 표 = 본문에 그냥 들어간 것 — 텍스트 구간과 똑같이 읽기 차례를 차지한다.
+   한 문제 = ① 문제 끊어읽기(모달, 읽은 뒤 상단 카드에 접혀 상주)
+            → ② 빈칸 맞추기(풀이 앞부분 끊어읽기 + 즉시 채점)
+            → ③ 순서 맞추기(풀이 뒷부분: 읽기전용 줄 + 배치 줄[고정 글 + 슬롯])
             → 다음 문제
-   · 배치 문장 = 슬롯을 전부 채우면 채점 → 정답 자리만 잠기고 오답은 튕겨나감.
+   · 풀이를 가르는 곳 = 순서 맞추기 빈칸(order)이 처음 나오는 문단.
+   · 배치 줄 = 슬롯을 전부 채우면 채점 → 정답 자리만 잠기고 오답은 튕겨나감.
    ========================================================================= */
 (function () {
-  /* arrange 문장: {text} = 읽기전용 / {parts:[...], blocks:[...]} = 배치.
-     parts 원소: 문자열 = 고정 텍스트, {slot:'정답'} = 채울 슬롯. blocks = 이 문장의 보기(정답+오답, 셔플). */
-  var PROBLEMS = [
-    {
-      statement: [
-        ['학급 문고에 책이', '178권이 있었습니다.'],
-        ['어제까지 29권의 책을 빌려갔고,', '오늘은 어제까지 빌린 책 중', '17권을 학급 문고에 반납하였습니다.'],
-        ['오후에 책장을 보니', '오늘은 35권의 책을 빌려갔습니다.'],
-        ['지금 학급 문고에 남아 있는 책은', '몇 권인지 구해 보세요.']
-      ],
-      image: null,
-      chunks: [
-        ['(남아 있는 책의 수) =', '(학급 문고의 책의 수) −', '(어제까지 빌려간 책의 수) +', '(오늘 반납한 책의 수) −', '(오늘 빌려간 책의 수) 입니다.'],
-        ['따라서 남아 있는 책의 수는', '178 − {b1} + 17 − 35 ='],
-        ['149 + 17 − 35 =', '{b2} − 35 ='],
-        ['{b3} (권) 입니다.']
-      ],
-      blanks: {
-        b1: { type: 'choice', ans: '29', choices: ['17', '29', '35', '12'] },
-        b2: { type: 'short', ans: '166' },
-        b3: { type: 'short', ans: '131' }
-      },
-      arrange: [
-        { text: '먼저 남아 있는 책의 수를 구하는 식을 세워 볼까요?' },
-        {
-          parts: ['(남아 있는 책의 수) =', { slot: '(학급 문고의 책의 수) −' }, { slot: '(어제까지 빌려간 책의 수) +' }, { slot: '(오늘 반납한 책의 수) −' }, { slot: '(오늘 빌려간 책의 수)' }],
-          blocks: ['(학급 문고의 책의 수) −', '(어제까지 빌려간 책의 수) +', '(오늘 반납한 책의 수) −', '(오늘 빌려간 책의 수)']
-        },
-        { text: '이제 각 항에 알맞은 수를 넣어 차례대로 계산하면 됩니다.' },
-        {
-          parts: ['따라서 남아 있는 책은 모두', { slot: '131권' }, '입니다.'],
-          blocks: ['131권', '149권', '166권']
-        }
-      ]
-    },
-    {
-      statement: [
-        ['과일 가게에 사과가', '240개 있었습니다.'],
-        ['오전에 85개를 팔았고,', '낮에는 상자로', '60개를 새로 들여왔습니다.'],
-        ['오후에는', '사과 47개를 더 팔았습니다.'],
-        { img: null },
-        ['지금 가게에 남아 있는 사과는', '몇 개인지 구해 보세요.']
-      ],
-      image: null,
-      chunks: [
-        ['(남아 있는 사과 수) =', '(처음 사과 수) −', '(오전에 판 사과 수) +', '(새로 들여온 사과 수) −', '(오후에 판 사과 수) 입니다.'],
-        ['따라서 남아 있는 사과 수는', '240 − {b1} + 60 − 47 ='],
-        ['155 + 60 − 47 =', '{b2} − 47 ='],
-        ['{b3} (개) 입니다.']
-      ],
-      blanks: {
-        b1: { type: 'choice', ans: '85', choices: ['47', '60', '85', '95'] },
-        b2: { type: 'short', ans: '215' },
-        b3: { type: 'short', ans: '168' }
-      },
-      arrange: [
-        { text: '남아 있는 사과 수를 구하는 식을 먼저 세워 봅니다.' },
-        {
-          parts: ['(남아 있는 사과 수) =', { slot: '(처음 사과 수) −' }, { slot: '(오전에 판 사과 수) +' }, { slot: '(새로 들여온 사과 수) −' }, { slot: '(오후에 판 사과 수)' }],
-          blocks: ['(처음 사과 수) −', '(오전에 판 사과 수) +', '(새로 들여온 사과 수) −', '(오후에 판 사과 수)']
-        },
-        { text: '식의 각 항에 수를 넣어 계산해 보겠습니다.' },
-        {
-          parts: ['따라서 남아 있는 사과는 모두', { slot: '168개' }, '입니다.'],
-          blocks: ['168개', '155개', '215개']
-        }
-      ]
-    },
-    {
-      statement: [
-        ['주차장에 자동차가', '156대 있었습니다.'],
-        ['오전에 48대가 빠져나갔고,', '점심때 다시', '23대가 들어왔습니다.'],
-        ['오후에는', '37대가 더 빠져나갔습니다.'],
-        ['지금 주차장에 남아 있는 자동차는', '몇 대인지 구해 보세요.']
-      ],
-      image: null,
-      chunks: [
-        ['(남아 있는 자동차 수) =', '(처음 자동차 수) −', '(오전에 나간 자동차 수) +', '(점심때 들어온 자동차 수) −', '(오후에 나간 자동차 수) 입니다.'],
-        ['따라서 남아 있는 자동차 수는', '156 − {b1} + 23 − 37 ='],
-        ['108 + 23 − 37 =', '{b2} − 37 ='],
-        ['{b3} (대) 입니다.']
-      ],
-      blanks: {
-        b1: { type: 'choice', ans: '48', choices: ['23', '37', '48', '52'] },
-        b2: { type: 'short', ans: '131' },
-        b3: { type: 'short', ans: '94' }
-      },
-      arrange: [
-        { text: '남아 있는 자동차 수를 구하는 식부터 세워 봅니다.' },
-        {
-          parts: ['(남아 있는 자동차 수) =', { slot: '(처음 자동차 수) −' }, { slot: '(오전에 나간 자동차 수) +' }, { slot: '(점심때 들어온 자동차 수) −' }, { slot: '(오후에 나간 자동차 수)' }],
-          blocks: ['(처음 자동차 수) −', '(오전에 나간 자동차 수) +', '(점심때 들어온 자동차 수) −', '(오후에 나간 자동차 수)']
-        },
-        { text: '각 항에 수를 넣어 차례로 계산합니다.' },
-        {
-          parts: ['따라서 남아 있는 자동차는 모두', { slot: '94대' }, '입니다.'],
-          blocks: ['94대', '108대', '131대']
-        }
-      ]
-    }
-  ];
+  var D = window.RMEssayDrill, E = window.RMEssay;
+  var PROBLEMS = D.problems.map(function (p) { return E.drill(p); });   // 문항 → 문제문 · 빈칸 맞추기 · 순서 맞추기 조각 (essay-sol.js)
   var N = PROBLEMS.length;
 
   // ── DOM ──
@@ -172,35 +75,28 @@
     toast.textContent = msg; toast.classList.toggle('is-err', !!isErr); toast.classList.add('is-on');
     clearTimeout(toastT); toastT = setTimeout(function () { toast.classList.remove('is-on'); }, 1900);
   }
-  function blankHTML(id, isSeg) {
-    return '<span class="' + (isSeg ? 'chunk blank' : 'blank') + '" data-blank="' + id + '"><span class="blank__ans"></span><span class="blank__badge">' + id.replace('b', '') + '</span></span>';
-  }
-  /* 구간 하나 → 인라인 span.
-     보통은 빈칸이 앞뒤 어구와 묶여 한 구간 안에 들어온다('{b1} (권) 입니다.').
-     빈칸만 따로 끊은 구간('{b1}')도 그대로 동작한다 — 어느 쪽이든 등록 쪽 자유. */
-  function segHTML(text) {
-    var solo = /^\s*\{(b\d+)\}\s*$/.exec(text);
-    if (solo) return blankHTML(solo[1], true);
-    var t = text.replace(/\{(b\d+)\}/g, function (_, id) { return blankHTML(id, false); });
-    return '<span class="chunk">' + t + '</span>';
+  /* 구간 하나 → 인라인 span. 빈칸은 essay-sol.js 가 구간 HTML 안에 이미 그려 두었다.
+     그림 · 표 구간({ media })은 줄 하나를 차지하는 블록 구간이다. */
+  function segHTML(seg) {
+    if (seg && seg.media != null) return '<span class="chunk chunk--img">' + seg.media + '</span>';
+    return '<span class="chunk">' + seg + '</span>';
   }
   function lineHTML(segs) { return '<div class="sline">' + segs.map(segHTML).join(' ') + '</div>'; }
-  /* 문제문 한 문단 → 텍스트 줄 또는 이미지 줄.
-     본문 이미지는 '이미지 참조 구간'(눌러서 옆에 띄우는 것)이 아니라 본문에 그냥 놓인 그림이라
-     다른 텍스트 구간과 똑같이 읽기 차례를 차지한다. */
+  /* 문제문 한 문단 → 글 줄 · 그림(표) 줄. 본문 그림은 다른 글 구간과 똑같이 읽기 차례를 차지한다 */
   function statementLineHTML(para) {
-    if (para && para.img !== undefined) {
-      var body = para.img ? '<img src="' + para.img + '" alt="문제 이미지" />' : '<span class="dummy-img"></span>';
-      return '<div class="rline rline--img"><span class="chunk chunk--img">' + body + '</span></div>';
-    }
-    return '<p class="rline">' + para.map(function (t) { return '<span class="chunk">' + t + '</span>'; }).join(' ') + '</p>';
+    var out = '', run = [];
+    function flush() { if (run.length) out += '<p class="rline">' + run.map(segHTML).join(' ') + '</p>'; run = []; }
+    para.forEach(function (seg) {
+      if (seg.media != null) { flush(); out += '<div class="rline rline--img">' + segHTML(seg) + '</div>'; }
+      else run.push(seg);
+    });
+    flush();
+    return out;
   }
-  function statementText(para) { return (para && para.img !== undefined) ? null : para.join(' '); }
   /* 현재 구간이 아직 답해야 할 빈칸을 품고 있으면 그 빈칸을 돌려준다 */
   function pendingBlank(seg) {
     if (!seg) return null;
-    if (seg.classList.contains('blank')) return seg.classList.contains('is-filled') ? null : seg;
-    return seg.querySelector('.blank:not(.is-filled)');
+    return seg.querySelector('.blank[data-blank]:not(.is-filled)');
   }
 
   /* ===================== ① 문제 끊어읽기 (모달) ===================== */
@@ -212,12 +108,9 @@
     guide('');   // 읽기 모달은 제 안내(rmHint)를 쓴다
     // 상단 카드 = 다시보기용 전체 문제문(접힘 상태로 상주)
     problem.classList.add('is-collapsible', 'is-collapsed');
-    var texts = P.statement.map(statementText).filter(Boolean);
-    var imgs = P.statement.filter(function (x) { return x && x.img !== undefined; });
-    readBody.innerHTML = '<div class="problem__qtext">' + texts.map(function (t) { return '<p class="qfull">' + t + '</p>'; }).join('') + '</div>' +
-      (imgs.length ? '<div class="problem__img">' + imgs.map(function (x) {
-        return x.img ? '<img src="' + x.img + '" alt="문제 이미지" />' : '<span class="dummy-img"></span>';
-      }).join('') + '</div>' : '');
+    var st = E.statement(D.problems[pi]);
+    readBody.innerHTML = '<div class="problem__qtext">' + st.text.map(function (t) { return '<p class="qfull">' + t + '</p>'; }).join('') + '</div>' +
+      (st.media.length ? '<div class="problem__img">' + st.media.join('') + '</div>' : '');
     worksheet.hidden = true; tray.hidden = true; fillView.hidden = false; arrangeView.hidden = true;
     openReadModal();
   }
@@ -284,7 +177,7 @@
     worksheet.hidden = false; tray.hidden = true;
     fillView.hidden = false; arrangeView.hidden = true;
     wsLabel.textContent = '풀이';
-    blankMap = P.blanks || {};
+    blankMap = P.fields;
     sol.innerHTML = P.chunks.map(lineHTML).join('');
     segEls = [].slice.call(sol.querySelectorAll('.chunk'));
     curSeg = 0;
@@ -311,8 +204,8 @@
     else { curSeg = segEls.length; renderFill(); fillComplete(); }
   }
   function fillBlank(el, value) {
-    el.querySelector('.blank__ans').textContent = value;
-    el.classList.remove('is-active', 'is-sel'); el.classList.add('is-filled');
+    E.setVal(el, value);
+    el.classList.remove('is-active', 'is-sel');
     if (pendingBlank(segEls[curSeg])) { renderFill(); return; }   // 한 구간에 빈칸이 둘 이상일 때
     advanceSeg();
   }
@@ -356,7 +249,7 @@
     var slot = blankMap[activeId];
     if (slot.type === 'choice') {   // 객관식 = 공용 빈칸 선지 창(scripts/blank-pop.js) · 즉시 채점, 고른 오답은 비활성으로 남는다
       window.RMBlankPop.open(anchor, {
-        choices: slot.choices, answer: slot.ans,
+        choices: slot.choices.map(E.choice), answer: slot.answer,
         onDone: function (val) { fillBlank(anchor, val); },
         onClose: closePop
       });
@@ -382,7 +275,7 @@
   }
   function checkShort() {
     if (buffer === '') return;
-    if (norm(buffer) === norm(blankMap[activeId].ans)) { var el = selEl; closePop(); fillBlank(el, buffer); return; }
+    if (norm(buffer) === norm(blankMap[activeId].answer)) { var el = selEl; closePop(); fillBlank(el, buffer); return; }
     var d = document.getElementById('popDisp');
     if (d) { d.classList.remove('is-wrong'); void d.offsetWidth; d.classList.add('is-wrong'); clearWrongLater(d, 1300); }
     showToast('오답이에요. 다시 계산해 볼까요?', true);
@@ -414,7 +307,8 @@
           if (typeof p === 'string') return p;
           return '<span class="slot is-empty" data-ac="' + ci + '" data-si="' + (si++) + '"></span>';
         }).join(' ');
-      } else inner = '<span class="chunk">' + c.text + '</span>';
+      } else if (c.media != null) inner = '<span class="chunk chunk--img">' + c.media + '</span>';
+      else inner = '<span class="chunk">' + c.text + '</span>';
       return '<div class="aline" data-ac="' + ci + '">' + inner + '</div>';
     }).join('');
     ac = 0;
@@ -451,11 +345,11 @@
     var slots = asol.querySelectorAll('.slot[data-ac="' + ac + '"]');
     slots.forEach(function (el, si) {
       el.className = 'slot';
-      if (aLocked[si]) { el.classList.add('is-locked'); el.innerHTML = aCorrect[si] + '<span class="slot__ck">✓</span>'; }
-      else if (aPlaced[si] !== null) { el.classList.add('is-filled'); el.textContent = aPlaced[si]; }
+      if (aLocked[si]) { el.classList.add('is-locked'); el.innerHTML = E.value(aCorrect[si]) + '<span class="slot__ck">✓</span>'; }
+      else if (aPlaced[si] !== null) { el.classList.add('is-filled'); el.innerHTML = E.value(aPlaced[si]); }
       else { el.classList.add('is-empty'); el.textContent = ''; }
     });
-    poolEl.innerHTML = aPool.map(function (b) { return '<button class="block is-in" data-val="' + encodeURIComponent(b) + '">' + b + '</button>'; }).join('');
+    poolEl.innerHTML = aPool.map(function (b) { return '<button class="block is-in" data-val="' + encodeURIComponent(b) + '">' + E.value(b) + '</button>'; }).join('');
   }
   function aFirstEmpty() { for (var i = 0; i < aCorrect.length; i++) if (!aLocked[i] && aPlaced[i] === null) return i; return -1; }
   function aAllFilled() { for (var i = 0; i < aCorrect.length; i++) if (!aLocked[i] && aPlaced[i] === null) return false; return true; }
@@ -507,7 +401,7 @@
   }
   primaryBtn.addEventListener('click', function () {
     if (phase === 'fill') startArrange();
-    else if (phase === 'arrange') { if (pi < N - 1) startProblem(pi + 1); else window.location.href = 'essay/step-result.html'; }
+    else if (phase === 'arrange') { if (pi < N - 1) startProblem(pi + 1); else window.location.href = D.next; }
   });
   function startProblem(idx) {
     pi = idx; P = PROBLEMS[idx];
@@ -549,12 +443,12 @@
     var guard = 0;
     while (guard++ < 400 && curSeg < segEls.length) {
       var pending = pendingBlank(segEls[curSeg]);
-      if (pending) { closePop(); fillBlank(pending, blankMap[pending.dataset.blank].ans); }
+      if (pending) { closePop(); fillBlank(pending, blankMap[pending.dataset.blank].answer); }
       else advanceSeg();
     }
   }
   function dbgArrangeAll() {
-    if (phase === 'fill') { dbgFillAll(); startArrange(); }
+    if (phase === 'read' || phase === 'fill') { dbgFillAll(); startArrange(); }   // 읽기 모달이 떠 있어도 건너뛰고 간다
     if (phase !== 'arrange') return;
     var guard = 0;
     while (guard++ < 100 && ac < aChunks.length) {
@@ -566,7 +460,7 @@
     }
   }
   if (window.RMDebug) window.RMDebug.register({
-    title: '기본 다지기 (세로)',
+    title: D.title + ' (세로)',
     actions: [
       { label: '읽기 건너뛰기', run: dbgSkipRead },
       { label: '빈칸 전부 맞추기', tone: 'ok', run: dbgFillAll },

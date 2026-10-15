@@ -1,247 +1,217 @@
 /* =========================================================================
-   서술형 훈련 — 기초 기르기 (essay-basics) · 레이아웃 v2
-   좌우 2분할 → 세로 단일 스크롤(문제 위 · 풀이 아래). 문제 카드는 열고 접기 +
-   스크롤 시 상단 스티키. 빈칸/팝오버/채점/결과 동작은 essay-basics.js 와 동일.
-   · 빈칸을 누르면 입력 드롭다운(주관식 키패드 / 객관식 보기)이 뜸.
-   · 여기서는 즉답 채점 없음 — 입력한 답이 그대로 빈칸에 들어감(오답이어도).
-     같은 번호 = 같은 답 → 입력값이 같은 번호 칸에 함께 들어감. 채워진 칸은 다시 눌러 수정 가능.
-   · 모든 빈칸을 채우면 하단 '결과보기'(제출) 활성화.
+   서술형 훈련 — 빈칸 채우기 엔진 (essay-basics-v2)
+   1단계 기초 기르기 · 문장 완성하기(essay/basics-math · basics-sci.html)와
+   3단계 실력 키우기(essay/advanced.html)가 같이 쓴다 — 셋 다 「풀이 문장 안의 빈칸」을 채우고 제출하는 화면이다.
+   콘텐츠 = window.RMEssayFill (scripts/essay-basics-data-math|sci.js · essay-advanced-data-math.js).
+   글 · 빈칸 읽기 = scripts/essay-sol.js.
+
+   · 세로 단일 스크롤(문제 위 · 풀이 아래). 문제 카드는 열고 접기 + 스크롤 시 상단 스티키.
+     카드 머리의 번호탭으로 문제를 오간다(실서비스 「1 · 2」 탭). 입력은 문제마다 따로 남는다.
+   · 빈칸을 누르면 고르기 = 공용 빈칸 선지 창(blank-pop.js) · 숫자 = 서술형 키패드 창(.qpop).
+     분수 칸은 분자 · 분모를 따로 넣는다. 여기서는 즉답 채점 없음 — 고른 값 · 입력한 값이 그대로 들어간다.
+     채운 칸도 다시 눌러 고칠 수 있다. #{[n-k]} 자리는 그 칸의 값을 따라 보여 준다.
+   · 한 문제를 다 채우면 아래 「다음 문제」, 모든 문제를 다 채우면 콘솔바 「결과보기」(제출) 활성화.
    ========================================================================= */
 (function () {
-  /* 슬롯 정의: 번호 → { 유형, 정답(채점용), (객관식 보기) }
-     같은 번호가 여러 번 나오면 입력값이 같이 들어감 (은근한 힌트)
-     · choice = 객관식(세로 1열 보기) · short = 주관식(숫자 키패드, 숫자만) */
-  var ANSWERS = {
-    '1': { type: 'choice', ans: '봉지의 수',    choices: ['고등어의 수', '봉지의 수', '한 손의 수', '남는 마리 수'] },
-    '2': { type: 'choice', ans: '6',          choices: ['4', '5', '6', '8'] },
-    '3': { type: 'choice', ans: '고등어의 수',  choices: ['봉지의 수', '고등어의 수', '손의 수', '마리의 수'] },
-    '4': { type: 'choice', ans: '2',          choices: ['1', '2', '3', '4'] },
-    '5': { type: 'short',  ans: '12' },
-    '6': { type: 'choice', ans: '3',          choices: ['2', '3', '4', '6'] },
-    '7': { type: 'short',  ans: '4' }
-  };
-
-  // 빈칸 pill — id=번호(플레이스홀더). 정답 미리 넣지 않음(학생 입력값이 들어감).
-  function b(id) {
-    return '<span class="blank" data-blank="' + id + '">' +
-      '<span class="blank__ans"></span>' +
-      '<span class="blank__badge">' + id + '</span></span>';
-  }
-  // 예시(주어진 값) — 처음부터 채워진 상태, 상호작용 없음
-  function given(ans) {
-    return '<span class="blank blank--given"><span class="blank__ans">' + ans + '</span></span>';
-  }
-
-  // ── 풀이 가이드 본문 ──────────────────────────────────────────────
-  var PARAS = [
-    // 1. 문제 파악
-    '<div class="para">' +
-      '<div class="line para__head">이 문제를 어떻게 해결할까요?</div>' +
-      '<div class="line">' + given('고등어 6손을 3마리씩 나눠요.') + '</div>' +
-      '<div class="line">이 문제는 고등어를 나누어 담은 ' + b('1') + '를 구하는 문제예요.</div>' +
-    '</div>',
-
-    // 2. 계획 세우기
-    '<div class="para">' +
-      '<div class="line">' + b('1') + '는 고등어 ' + b('2') + '손이 모두 몇 마리인지 구하고,</div>' +
-      '<div class="line">한 봉지에 나누어 담은 ' + b('3') + '로 나누어 구할 수 있어요.</div>' +
-      '<div class="box"><div class="box__row">' +
-        '고등어 ' + b('2') + '손 ÷ 한 봉지에 담은 ' + b('3') + ' = ' + b('1') +
-      '</div></div>' +
-    '</div>',
-
-    // 3. 6손이 몇 마리인지
-    '<div class="para">' +
-      '<div class="line">고등어 ' + b('2') + '손은 몇 마리일까요?</div>' +
-      '<div class="line">고등어 한 손은 ' + b('4') + '마리이므로 ' + b('2') + '손은 ' + b('4') + '씩 ' + b('2') + '묶음이 있는 것과 같아요.</div>' +
-      '<div class="box"><div class="box__row">' +
-        b('2') + ' × ' + b('4') + ' = ' + b('5') + '(마리)' +
-      '</div></div>' +
-    '</div>',
-
-    // 4. 두 가지 곱셈식
-    '<div class="para">' +
-      '<div class="line">고등어 ' + b('5') + '마리를 한 봉지에 ' + b('6') + '마리씩 담은 ' + b('1') + '를 두 가지 곱셈식으로 나타내요.</div>' +
-      '<div class="box">' +
-        '<div class="box__row">' + b('6') + ' × ' + b('7') + ' = ' + b('5') + '(마리)</div>' +
-        '<div class="box__row">' + b('7') + ' × ' + b('6') + ' = ' + b('5') + '(마리)</div>' +
-      '</div>' +
-    '</div>',
-
-    // 5. 나눗셈식으로
-    '<div class="para">' +
-      '<div class="line">곱셈식을 나눗셈식으로 바꾸어 나타내 볼까요?</div>' +
-      '<div class="box"><div class="box__row">' +
-        b('5') + ' ÷ ' + b('6') + ' = ' + b('7') +
-      '</div></div>' +
-    '</div>',
-
-    // 6. 결론
-    '<div class="para">' +
-      '<div class="line">따라서 고등어 ' + b('2') + '손을 한 봉지에 ' + b('6') + '마리씩 담으면 ' + b('7') + '봉지에 나누어 담을 수 있어요.</div>' +
-    '</div>'
-  ];
+  var D = window.RMEssayFill, E = window.RMEssay;
+  var N = D.problems.length;
+  var PS = D.problems.map(function (p) { return E.parse(p); });
 
   var expl = document.getElementById('expl');
-  expl.innerHTML = '<div class="expl__doc">' + PARAS.join('') + '</div>';
-
-  // ── 문제 카드 열고 접기 (v2 신규) ────────────────────────────────
+  var readBody = document.getElementById('readBody');
+  var qtabs = document.getElementById('qtabs');
   var problem = document.getElementById('problem');
   var problemHead = document.getElementById('problemHead');
-  if (problemHead) problemHead.addEventListener('click', function () {
-    if (!problem.classList.contains('is-collapsible')) return;
-    problem.classList.toggle('is-collapsed');
-  });
-
-  // ── 상태 ──────────────────────────────────────────────────────────
-  var order = [];          // 고유 번호의 첫 등장 순서 (권장 풀이 순서)
-  var byId = {};           // id → [elements]
-  var filled = {};         // id → true(채워짐)
-  expl.querySelectorAll('.blank[data-blank]').forEach(function (el) {
-    var id = el.dataset.blank;
-    if (!byId[id]) { byId[id] = []; order.push(id); }
-    byId[id].push(el);
-  });
-
   var resultBtn = document.getElementById('resultBtn');
-  var answers = {};   // 학생이 입력한 답 (id → 값) — 최종 제출 시 채점용
+  var stageAction = document.getElementById('stageAction');
+  var primaryBtn = document.getElementById('primaryBtn');
+  var scroller = document.querySelector('.stage-scroll');
 
-  // 전부 채웠는지 확인 → 결과보기(제출) 활성화
-  function refreshNext() {
-    var done = order.every(function (id) { return filled[id]; });
-    if (done) { resultBtn.disabled = false; resultBtn.removeAttribute('title'); }
-    if (window.RMGuide) window.RMGuide.set(done ? '' : '모든 답안을 입력해 주세요!');   // 콘솔바 안내(RM-PART-07)
+  /* ── 풀이 문단 묶기 ──
+     빈칸이 없고 「…요.」「…요?」로 끝나는 줄 = 단계 소제목(굵게) → 새 문단을 연다.
+     그림만 있는 줄은 그림 줄. 그 밖의 줄은 앞 문단에 이어 붙는다. */
+  function isHead(line) {
+    var hasBlank = line.some(function (c) { return c.some(function (t) { return t.t === 'blank'; }); });
+    if (hasBlank) return false;
+    var last = line[line.length - 1], tail = '';
+    for (var i = last.length - 1; i >= 0 && !tail; i--) if (last[i].t === 'html') tail = last[i].h.replace(/<[^>]+>/g, '').trim();
+    return /요[.?]$/.test(tail);
   }
-
-  // 입력값을 그대로 빈칸에 넣음 (즉답 채점 없음). 같은 번호 칸에 함께 들어감.
-  function fill(id, value) {
-    filled[id] = true;
-    answers[id] = value;
-    byId[id].forEach(function (el) {
-      el.querySelector('.blank__ans').textContent = value;
-      el.classList.add('is-filled');
+  function lineHTML(line, P) {
+    var flat = [];
+    line.forEach(function (c, i) { if (i) flat.push({ t: 'html', h: '<br>' }); flat = flat.concat(c); });
+    var onlyImg = flat.every(function (t) { return t.t === 'img' || (t.t === 'html' && !t.h.replace(/<br>|\s|&nbsp;|​/g, '')); });
+    return '<div class="line' + (onlyImg ? ' line--img' : '') + (isHead(line) ? ' para__head' : '') + '">' + E.html(flat, P) + '</div>';
+  }
+  function docHTML(P) {
+    var paras = [], cur = null;
+    P.lines.forEach(function (line) {
+      if (!cur || isHead(line)) { cur = []; paras.push(cur); }
+      cur.push(lineHTML(line, P));
     });
-    refreshNext();
+    return paras.map(function (p) { return '<div class="para">' + p.join('') + '</div>'; }).join('');
   }
 
-  // ── 빈칸 입력 드롭다운(팝오버) ────────────────────────────────────
+  expl.innerHTML = PS.map(function (P, i) {
+    return '<div class="expl__doc" data-p="' + i + '"' + (i ? ' hidden' : '') + '>' + docHTML(P) + '</div>';
+  }).join('');
+  var docs = [].slice.call(expl.querySelectorAll('.expl__doc'));
+
+  /* ── 상태 ── 칸 하나 = 빈칸 요소 하나(분수는 분자 · 분모 둘) */
+  var pi = 0;
+  var answers = PS.map(function () { return {}; });   // 문제별: 'id' 또는 'id|n' · 'id|d' → 값
+  function keyOf(el) { return el.dataset.blank + (el.dataset.part ? '|' + el.dataset.part : ''); }
+  function inputs(i) { return [].slice.call(docs[i].querySelectorAll('.blank[data-blank]')); }
+  function isDone(i) { return inputs(i).every(function (el) { return answers[i][keyOf(el)] != null; }); }
+
+  function renderTabs() {
+    var html = '';
+    for (var i = 0; i < N; i++) {
+      var cls = 'qtab' + (i === pi ? ' is-active' : (isDone(i) ? ' is-done' : ''));
+      html += '<button type="button" class="' + cls + '" data-i="' + i + '" aria-label="' + (i + 1) + '번 문제">' + (i + 1) + '</button>';
+    }
+    qtabs.innerHTML = html;
+  }
+  function renderProblem() {
+    var st = E.statement(D.problems[pi]);
+    readBody.innerHTML = '<div class="qtext">' + st.text.map(function (t) { return '<p>' + t + '</p>'; }).join('') + '</div>' +
+      (st.media.length ? '<div class="qref">' + st.media.join('') + '</div>' : '');
+  }
+  function refresh() {
+    renderTabs();
+    var all = true; for (var i = 0; i < N; i++) if (!isDone(i)) all = false;
+    resultBtn.disabled = !all;
+    if (all) resultBtn.removeAttribute('title'); else resultBtn.title = '모든 빈칸을 채우면 활성화돼요';
+    var showNext = isDone(pi) && pi < N - 1;
+    stageAction.classList.toggle('is-ready', showNext);
+    if (window.RMGuide) window.RMGuide.set(all ? '' : '모든 답안을 입력해 주세요!');   // 콘솔바 안내(RM-PART-07)
+  }
+  function go(i) {
+    closePop();
+    pi = i;
+    docs.forEach(function (d, j) { d.hidden = j !== i; });
+    renderProblem();
+    refresh();
+    if (scroller) scroller.scrollTop = 0;
+  }
+
+  /* 칸에 값 넣기 — 같은 칸을 다시 보여 주는 자리(#{[n-k]})도 따라 바뀐다 */
+  function fill(el, value) {
+    var i = +el.closest('.expl__doc').dataset.p;
+    answers[i][keyOf(el)] = value;
+    E.setVal(el, value);
+    var id = el.dataset.blank, ev = value;
+    if (el.dataset.part) {   // 분수 — 분자 · 분모가 다 있어야 다시 보여 준다
+      var a = answers[i];
+      ev = (a[id + '|n'] != null && a[id + '|d'] != null) ? [a[id + '|n'], a[id + '|d']] : null;
+    }
+    if (ev != null) E.syncEcho(docs[i], id, ev);
+    refresh();
+  }
+
+  /* ── 빈칸 입력 창 ── */
   var pop = document.getElementById('qpop');
   var popBody = document.getElementById('qpopBody');
   var caret = pop.querySelector('.qpop__caret');
-  var activeId = null;    // 현재 열린 슬롯 번호
-  var selEl = null;       // 현재 선택된(주황) 빈칸 엘리먼트
+  var selEl = null, buffer = '';
 
-  function place(anchor, reveal) {   /* 자리 = scripts/pop-place.js — 머리줄 아래 ~ 콘솔바 위, 빈칸 아래 12px · 모자라면 위(꼬리도 아래로) */
-    var at = window.RMPopPlace.place(pop, anchor, { reveal: reveal });
+  function place(anchor, reveal) {   /* 자리 = scripts/pop-place.js — 분수 칸은 처음부터 옆(짝 칸을 덮지 않게) */
+    var at = window.RMPopPlace.place(pop, anchor, { reveal: reveal, side: true, sideFirst: !!anchor.closest('.efrac') });
     if (!at) { closePop(); return; }
     pop.classList.toggle('qpop--up', at.up);
+    pop.classList.toggle('qpop--side', !!at.side);
     caret.style.left = (Math.min(Math.max(14, at.caretX), at.width - 14) - 6) + 'px';
     caret.style.top = at.up ? (at.height - 6) + 'px' : '-6px';
   }
-
-  var buffer = '';
+  function fieldOf(el) { return PS[+el.closest('.expl__doc').dataset.p].fields[el.dataset.blank]; }
 
   function openPop(anchor) {
-    closePop();   // 열린 창(객관식 · 키패드)부터 닫는다
-    var id = anchor.dataset.blank;
-    activeId = id;
+    closePop();   // 열린 창(고르기 · 키패드)부터 닫는다
     selEl = anchor; selEl.classList.add('is-sel');
-
-    var slot = ANSWERS[id];
-    if (slot.type === 'choice') {   // 객관식 = 공용 빈칸 선지 창(scripts/blank-pop.js) · 채점 없이 고른 값을 그대로 넣는다
-      window.RMBlankPop.open(anchor, { choices: slot.choices, onDone: function (v) { fill(id, v); }, onClose: closePop });
+    var f = fieldOf(anchor);
+    if (f.type === 'choice') {   // 고르기 = 공용 빈칸 선지 창 · 채점 없이 고른 값을 그대로 넣는다
+      window.RMBlankPop.open(anchor, { choices: f.choices.map(E.choice), onDone: function (v) { fill(anchor, v); }, onClose: closePop });
       return;
-    } else {
-      buffer = answers[id] || '';   // 이미 입력한 값이 있으면 이어서 수정
-      popBody.innerHTML = '<div class="qpop__pad">' + window.RMKeypad.html() + '</div>';
-      var disp = popBody.querySelector('.keypad__display');
-      disp.id = 'popDisp'; disp.textContent = buffer || '0';   /* 키패드 정본 = scripts/keypad.js */
     }
-
+    var i = +anchor.closest('.expl__doc').dataset.p;
+    buffer = answers[i][keyOf(anchor)] || '';   // 이미 넣은 값이 있으면 이어서 고친다
+    popBody.innerHTML = '<div class="qpop__pad">' + window.RMKeypad.html() + '</div>';
+    var disp = popBody.querySelector('.keypad__display');
+    disp.id = 'popDisp'; disp.textContent = buffer || '0';   /* 키패드 정본 = scripts/keypad.js */
     pop.classList.add('is-open');
     place(anchor, true);
   }
-
   function closePop() {
     pop.classList.remove('is-open');
     window.RMBlankPop.close();
     if (selEl) { selEl.classList.remove('is-sel'); selEl = null; }
-    activeId = null;
   }
-
-  // 입력값을 그대로 넣고 닫기 (채점 없음)
-  function submit(value) {
-    var id = activeId;
-    closePop();
-    if (id != null) fill(id, value);
-  }
-
-  // 키패드 입력 처리
   function handleKey(k) {
-    if (k === 'ok') { if (buffer !== '') submit(buffer); return; }
+    if (k === 'ok') { if (buffer !== '' && selEl) { var el = selEl, v = buffer; closePop(); fill(el, v); } return; }
     buffer = window.RMKeypad.apply(buffer, k);   /* 값 편집 규칙 = 공용 */
     var d = document.getElementById('popDisp');
     if (d) d.textContent = buffer || '0';
   }
 
-  // 빈칸 클릭 → 드롭다운 열기 (원하는 칸부터, 채워진 칸도 다시 눌러 수정 가능)
   expl.addEventListener('click', function (e) {
-    var el = e.target.closest('.blank');
-    if (!el || el.classList.contains('blank--given')) return;
+    var el = e.target.closest('.blank[data-blank]');
+    if (!el) return;
     if (selEl === el) { closePop(); return; }   // 같은 칸 다시 누르면 닫기(토글)
     openPop(el);
   });
-
-  // 팝오버 내부 클릭 = 키패드 키 (객관식은 blank-pop.js 몫)
   popBody.addEventListener('click', function (e) {
     var key = e.target.closest('.keypad__key');
     if (key) handleKey(key.dataset.k);
   });
-
-  // 바깥 클릭 / Esc / 스크롤·리사이즈 → 닫기
   document.addEventListener('click', function (e) {
     if (!pop.classList.contains('is-open')) return;
     if (e.target.closest('#qpop') || e.target.closest('.blank')) return;
     closePop();
   });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && pop.classList.contains('is-open')) closePop();
-  });
-  // v2: 스크롤 컨테이너가 .stage-scroll 로 바뀜 (기존 #expl 자체 스크롤 → 단일 스크롤)
-  var scroller = document.querySelector('.stage-scroll');
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && pop.classList.contains('is-open')) closePop(); });
   if (scroller) scroller.addEventListener('scroll', function () { if (pop.classList.contains('is-open') && selEl) place(selEl); }, true);
   window.addEventListener('resize', function () { if (pop.classList.contains('is-open')) closePop(); });
 
-  refreshNext();
+  /* ── 문제 카드 · 번호탭 · 다음 문제 ── */
+  if (problemHead) problemHead.addEventListener('click', function (e) {
+    var t = e.target.closest('.qtab');
+    if (t) { e.stopPropagation(); if (+t.dataset.i !== pi) go(+t.dataset.i); return; }
+    if (!problem.classList.contains('is-collapsible')) return;
+    problem.classList.toggle('is-collapsed');
+  });
+  primaryBtn.addEventListener('click', function () { if (pi < N - 1) go(pi + 1); });
 
   // 머리줄 타이머 = scripts/learn-timer.js
-
-  // 결과보기 → 서술형 스텝 결과
   resultBtn.addEventListener('click', function () {
     if (resultBtn.disabled) return;
-    window.location.href = 'essay/step-result.html';
+    window.location.href = D.next;
   });
 
   /* ---- 검수용 디버그 훅 (?debug=1일 때만 패널에 뜸) ---- */
-  function dbgWrongOf(slot) {
-    if (slot.type !== 'choice') return '0';
-    for (var i = 0; i < slot.choices.length; i++) if (slot.choices[i] !== slot.ans) return slot.choices[i];
-    return '0';
+  function answerOf(el, ok) {
+    var f = fieldOf(el);
+    if (f.type === 'choice') {
+      if (ok) return f.answer;
+      for (var i = 0; i < f.choices.length; i++) if (f.choices[i] !== f.answer) return f.choices[i];
+      return f.answer;
+    }
+    if (!ok) return '0';
+    var a = f.answer;
+    return Array.isArray(a) ? (el.dataset.part === 'd' ? a[1] : a[0]) : a;
   }
-  function dbgFillAll(ok) {
+  function dbgFill(ok, all) {
     closePop();
-    order.forEach(function (id, i) {
-      var slot = ANSWERS[id];
-      // 오답 모드에서는 홀수번째 칸만 틀리게 (정·오답이 섞인 화면을 보기 위함)
-      var wrong = !ok && (i % 2 === 0);
-      fill(id, wrong ? dbgWrongOf(slot) : slot.ans);
+    (all ? docs.map(function (d, i) { return i; }) : [pi]).forEach(function (i) {
+      inputs(i).forEach(function (el, j) { fill(el, answerOf(el, ok || j % 2 === 1)); });   // 섞기 = 짝수째 칸만 틀리게
     });
   }
   if (window.RMDebug) window.RMDebug.register({
-    title: '기초 기르기 (세로)',
+    title: D.title + ' (세로)',
     actions: [
-      { label: '전부 정답', tone: 'ok', run: function () { dbgFillAll(true); } },
-      { label: '정오답 섞기', tone: 'no', run: function () { dbgFillAll(false); } }
+      { label: '이 문제 정답', tone: 'ok', run: function () { dbgFill(true, false); } },
+      { label: '전부 정답', tone: 'ok', run: function () { dbgFill(true, true); } },
+      { label: '정오답 섞기', tone: 'no', run: function () { dbgFill(false, true); } },
+      { label: '다음 문제', run: function () { go((pi + 1) % N); } }
     ]
   });
 
@@ -251,4 +221,6 @@
     var c = document.documentElement.getAttribute('data-theme');
     document.documentElement.setAttribute('data-theme', c === 'dark' ? 'light' : 'dark');
   });
+
+  go(0);
 })();

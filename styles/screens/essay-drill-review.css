@@ -1,5 +1,5 @@
 /* =========================================================================
-   essay/drill-review.html 전용 스타일 — 이 화면에만 있는 규칙.
+   essay/drill-review-math.html · drill-review-sci.html 스타일 — 두 화면이 같은 엔진(essay-drill-review.js)을 쓴다.
    여러 화면이 같이 쓰는 부품은 styles/ 의 공용 파일에 있다 (스토리북 참고).
    ========================================================================= */
 
@@ -68,13 +68,7 @@
 .problem__body .rline { color: color-mix(in srgb, var(--text-on-frame) 92%, transparent); }
 
 
-/* ============ 다음 단계 진입 버튼 (drill-v2와 동일 · 콘텐츠 하단) ============ */
-.stage-action { max-width: 760px; margin: var(--sp-16) auto 0; }
-.stage-action__btn { width: 100%; height: 54px; border-radius: var(--r-12); border: 0; cursor: pointer;
-  display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-8);
-  background: var(--primary); color: var(--text-on-accent); font-family: var(--font-sans); font-size: var(--fs-19); font-weight: var(--fw-heavy);
-  box-shadow: inset 0 var(--bw-1) 0 var(--white-a24); transition: background .15s; }
-.stage-action__btn:hover { background: var(--primary-hover); }
+/* 다음 단계 진입 버튼(.stage-action) = essay.css */
 
 
 /* 지문 라인 */
@@ -118,3 +112,6 @@
 .toolbtn--primary { background: var(--th-solid); box-shadow: 0 var(--depth-4) 0 color-mix(in srgb, var(--th-accent) 62%, var(--shade-deep)); }
 /* 이 화면만 워크시트가 위로 떨어져 있다 */
 .worksheet { margin-top: 14px; }
+/* 그림 줄 · 표 — 문제 카드와 풀이에 그냥 놓인 그림(2026-10-15 실서비스 콘텐츠) */
+.rline--img { margin-block: var(--sp-8); }
+.rline--img img { display: block; width: min(100%, 300px); height: auto; border-radius: var(--r-12); }

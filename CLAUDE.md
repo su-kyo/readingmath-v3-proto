@@ -65,7 +65,7 @@
 유틸에 테마 토글 버튼은 없다.
 
 **③ 이미지는 쓰임 기준으로 분류한다.** (`RM-ASSET-01`~`05`)
-- 그림(webp) → `assets/img/` (bg·home·planets·strands·grade·misc·concept — `concept/`는 개념 학습 실서비스 그림, 원본은 `_source/RM/concept-learn/`)
+- 그림(webp) → `assets/img/` (bg·home·planets·strands·grade·misc·concept — `concept/<단원>/`은 실서비스 콘텐츠 그림. 개념 학습 `fig-*` · 다지기 `drill-*` · 기초 연산 `ops-*` · 유형 `type-*` · 서술형 `essay1~3-*`(뒤 숫자는 문항 id), 원본은 `_source/RM/concept-learn/` · `_source/RM/subject-split-1015/`)
 - 아이콘(svg) → `assets/icons/` — 색은 파일 복제가 아니라 코드로 바꾼다
 - PNG 등 원본은 프로젝트에 넣지 않는다. `~/Documents/_source/RM/`에 둔다
   (깃 없음 — 삭제·덮어쓰기 전 반드시 사용자 확인)
@@ -123,6 +123,10 @@ index의 그룹 분류는 같은 단위다 — 둘이 어긋나게 두지 않는
 
 - **조립식 경로**: 이미지·화면 경로가 `'star-'+g` 처럼 코드에서 조립되는 곳이 많다.
   경로를 옮길 때 문자열 검색만 믿으면 빠뜨린다 — 서버 띄워 전 화면 404 검사로 검증한다.
+- **과목 두 벌 (2026-10-15)**: 개념 · 서술형은 과목마다 화면 파일이 따로다(`-math` 수학 중3-2 삼각비 · `-sci` 과학 중2-1 밀도와 용해도 · 한 과목에만 있는 basic-ops · check · advanced · report 는 이름 그대로).
+  유형 4장 · 결과 화면은 한 벌이고 과목에 따라 데이터 · 머리줄만 바뀐다. 과목 판정은 `scripts/subject.js` 하나 — 과목별 화면은 `<html data-subject>`,
+  공용 화면은 머리줄 칸에 `data-crumb`. 화면 JS에 과목 판정을 새로 만들지 않는다(`RMSubject.pick`). 콘텐츠는 엔진 한 벌 + `<계열>-<화면>-data-<math|sci>.js`.
+  옛 주소(learn · drill · organize · basics-v2 · drill-v2 · drill-review)는 `vercel.json`이 넘긴다 — 개발자 요청서 링크가 살아 있게.
 - **공용 JS**: `gnb-drawer.js`(9개 화면 공유)·`step-progress.js`·`learn-exit.js`(학습 23화면의 「나가기」) 안에 화면 이동 경로가 있다.
 - `essay/basics·drill`의 **가로 안(basics.html·drill.html)은 '킵'** — 확정안은 v2(세로)다.
   index에서 킵 그룹으로 분리해 뒀다. 어느 쪽도 지우지 않는다.
@@ -208,7 +212,7 @@ Phase 6에서 키패드가 한 벌(`.keypad__key`)로 합쳐져 이 파일도 �
 
 **수식 — `scripts/vendor/katex/` (동봉, 592KB).** CDN을 쓰지 않는다.
 **수식 안에 빈칸을 넣을 수 있다** — `\htmlClass{dblank}{?}`가 분수 분자 같은 자리에
-실제 입력 빈칸을 만든다(`trust` 콜백 필요). 본보기는 개념 다지기 6번 문제.
+실제 입력 빈칸을 만든다(`trust` 콜백 필요). 기능은 `learn-drill.js`의 `tex` 문항에 남아 있다 — 2026-10-15 콘텐츠 교체로 지금 쓰는 문항은 없다.
 슬래시 분수(`a/b`)로 적지 않는다 — `\dfrac`을 쓴다.
 
 ## 세미 스토리북 (Phase 10-④ 신설 · 배포 포함)

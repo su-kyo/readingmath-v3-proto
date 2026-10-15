@@ -6,6 +6,7 @@
    answer = 0부터 센 번호(④ → 3)
    ========================================================================= */
 window.RMOpsSet = {
+  title: '개념 확인하기',
   next: 'shared/step-result.html?step=check',
   problems: [
     { type: 'mc-num', q: '질량이 100g, 부피가 50㎤인 물질 A의 밀도는 얼마인가?',

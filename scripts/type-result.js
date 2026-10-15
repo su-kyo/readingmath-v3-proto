@@ -6,9 +6,14 @@
 (function () {
   // 결과 화면은 항상 다크 계기판 — 테마 토글·강제 없음 (Phase 7 사용자 결정)
 
-  // 2차 유형 문제 10문항 결과 (5·8·9 오답 → 7/10 → 70% → B)
-  // ※ type-training-result.js 의 STAGES[3].results 와 같은 배열을 유지할 것
-  var RESULTS = [true, true, true, true, false, true, true, false, false, true];
+  // 문항 결과 = 과목별 유형 데이터의 데모 오답(pick)에서 읽는다 — 수학 10문항(5·8·9 오답 → 7/10 → 70% → B) · 과학 5문항(4 오답 → 4/5 → 80% → A)
+  // 훈련 결과(type-training-result.js)의 2차 유형 문제 행도 같은 곳에서 읽는다
+  var SET = window.RMTypeData[window.RMSubject.id];
+  var RESULTS = SET.problems.map(function (p) { return !('pick' in p); });
+
+  // 제한 시간 — 머리줄 글자가 정본(scripts/learn-timer.js 가 읽는다. 이 스크립트가 먼저 돈다)
+  var limEl = document.querySelector('.lheader__limit');
+  if (limEl && SET.limit) limEl.textContent = '/ ' + SET.limit;
 
   var total = RESULTS.length;
   var correct = RESULTS.filter(Boolean).length;

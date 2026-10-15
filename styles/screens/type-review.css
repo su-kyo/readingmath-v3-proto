@@ -88,3 +88,11 @@
 
 /* 좁은 폭에서도 화살표 유지(사라지지 않음) — 크기만 축소 */
 @media (max-width: 900px) { .qopts-row .qopt { min-width: 44%; } .nav-arrow { width: 40px; height: 40px; font-size: var(--fs-19); } .nav-arrow--prev { left: 4px; } .nav-arrow--next { right: 4px; } .ops { padding-left: clamp(48px, 7vw, 96px); padding-right: clamp(48px, 7vw, 96px); } }
+
+/* 해설 — 한 줄이 한 덩이(서버 줄바꿈 그대로) · 해설 그림은 문항 그림과 같은 종이 면 */
+.explain__line { margin: 0; }
+.explain__line + .explain__line { margin-top: var(--sp-4); }
+.explain__line .katex .base:has(.mfrac) { margin-block: .35em; }   /* 분수가 든 줄은 위아래로 띄운다 — 개념 학습 · 서술형과 같은 값 */
+.explain__img { display: block; max-width: 100%; max-height: 240px; width: auto; height: auto; margin: var(--sp-8) 0; padding: var(--sp-8); border-radius: var(--r-12); background: var(--paper-bg); box-sizing: border-box; }
+/* 틀린 주관식 — 답 칸 아래 「정답」 줄 */
+.ans-wrap { display: flex; flex-direction: column; align-items: center; }

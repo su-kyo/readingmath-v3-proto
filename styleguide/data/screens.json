@@ -1,7 +1,7 @@
 {
  "_읽는 법": "화면마다 무엇으로 지어졌나. tools/screens-build.py 가 만든다(손으로 고치지 않는다). parts = 스토리북 부품 카드(doc 으로 간다) · tokens = 화면 CSS 가 많이 부르는 색·역할 토큰(눈금 제외) · rules = 이 화면에 특히 걸리는 규칙(전 화면 공통 규칙은 뺐다 — styleguide/data/rules.json).",
  "_만든 도구": "tools/screens-build.py",
- "count": 38,
+ "count": 43,
  "screens": [
   {
    "path": "assignment/explain.html",
@@ -505,12 +505,15 @@
    ],
    "js": [
     "scripts/keypad.js",
+    "scripts/subject.js",
     "scripts/scratchpad.js",
     "scripts/debug-panel.js",
     "scripts/pop-place.js",
     "scripts/keypad.js",
     "scripts/keypad-input.js",
     "scripts/learn-guide.js",
+    "scripts/vendor/katex/katex.min.js",
+    "scripts/concept-basic-ops-data-math.js",
     "scripts/learn-basic-ops.js",
     "scripts/learn-exit.js"
    ],
@@ -644,7 +647,8 @@
     "RM-FILL-02",
     "RM-PART-01",
     "RM-PART-03",
-    "RM-ASSET-03"
+    "RM-ASSET-03",
+    "RM-PART-04"
    ]
   },
   {
@@ -665,6 +669,7 @@
    ],
    "js": [
     "scripts/keypad.js",
+    "scripts/subject.js",
     "scripts/scratchpad.js",
     "scripts/debug-panel.js",
     "scripts/pop-place.js",
@@ -809,8 +814,8 @@
    ]
   },
   {
-   "path": "concept/drill.html",
-   "title": "개념 다지기 · 개념 훈련",
+   "path": "concept/drill-math.html",
+   "title": "개념 다지기(수학) · 개념 훈련",
    "family": "concept",
    "familyKo": "개념",
    "section": "concept",
@@ -826,13 +831,16 @@
    ],
    "js": [
     "scripts/keypad.js",
+    "scripts/subject.js",
     "scripts/scratchpad.js",
     "scripts/debug-panel.js",
     "scripts/vendor/katex/katex.min.js",
     "scripts/pop-place.js",
+    "scripts/blank-pop.js",
     "scripts/keypad.js",
     "scripts/keypad-input.js",
     "scripts/learn-guide.js",
+    "scripts/concept-drill-data-math.js",
     "scripts/learn-drill.js",
     "scripts/learn-exit.js"
    ],
@@ -844,6 +852,11 @@
     },
     {
      "name": "빈칸 — 칸형",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "빈칸 선지 창",
      "group": "부품 › 답 입력",
      "doc": "styleguide/components.html#input"
     },
@@ -918,15 +931,11 @@
     },
     {
      "name": "--qtext",
-     "count": 9
+     "count": 7
     },
     {
      "name": "--ok-solid",
      "count": 5
-    },
-    {
-     "name": "--text-muted",
-     "count": 4
     },
     {
      "name": "--no-solid",
@@ -946,6 +955,185 @@
     },
     {
      "name": "--text-on-frame",
+     "count": 3
+    },
+    {
+     "name": "--text-muted",
+     "count": 3
+    },
+    {
+     "name": "--opt-bg",
+     "count": 3
+    },
+    {
+     "name": "--st-ok",
+     "count": 3
+    },
+    {
+     "name": "--fade",
+     "count": 2
+    }
+   ],
+   "rules": [
+    "RM-SURF-05",
+    "RM-FILL-06",
+    "RM-PART-05",
+    "RM-SURF-02",
+    "RM-SURF-04",
+    "RM-FILL-05",
+    "RM-FILL-02",
+    "RM-PART-01",
+    "RM-PART-03",
+    "RM-ASSET-03",
+    "RM-PART-04"
+   ]
+  },
+  {
+   "path": "concept/drill-sci.html",
+   "title": "개념 다지기(과학) · 개념 훈련",
+   "family": "concept",
+   "familyKo": "개념",
+   "section": "concept",
+   "theme": "light+dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/components.css",
+    "styles/learn-shell.css",
+    "styles/keypad.css",
+    "styles/screens/concept-drill.css",
+    "styles/scratchpad.css"
+   ],
+   "js": [
+    "scripts/keypad.js",
+    "scripts/subject.js",
+    "scripts/scratchpad.js",
+    "scripts/debug-panel.js",
+    "scripts/vendor/katex/katex.min.js",
+    "scripts/pop-place.js",
+    "scripts/blank-pop.js",
+    "scripts/keypad.js",
+    "scripts/keypad-input.js",
+    "scripts/learn-guide.js",
+    "scripts/concept-drill-data-sci.js",
+    "scripts/learn-drill.js",
+    "scripts/learn-exit.js"
+   ],
+   "parts": [
+    {
+     "name": "콘솔 도구 버튼",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "빈칸 — 칸형",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "빈칸 선지 창",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "타일형 선택지",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "유형 해설 — 보기 · 타일형 선지 · 해설 띠",
+     "group": "부품 › 해설 화면의 면",
+     "doc": "styleguide/components.html#surf"
+    },
+    {
+     "name": "수식 표기",
+     "group": "부품 › 그 밖에",
+     "doc": "styleguide/components.html#misc"
+    },
+    {
+     "name": "더미 이미지 자리",
+     "group": "부품 › 그 밖에",
+     "doc": "styleguide/components.html#misc"
+    },
+    {
+     "name": "배경 사진과 다크 막",
+     "group": "기초 › 색 3단 · 계열 슬롯",
+     "doc": "styleguide/foundations.html#section"
+    },
+    {
+     "name": "학습 헤더",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 안내",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 — 계열 넷",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘텐츠 패널 — 변형 둘",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "숫자 키패드",
+     "group": "셸 › 키패드",
+     "doc": "styleguide/shells.html#keypad"
+    },
+    {
+     "name": "같은 키패드, 계열만 유형",
+     "group": "셸 › 키패드",
+     "doc": "styleguide/shells.html#keypad"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/concept-drill.css"
+   ],
+   "tokens": [
+    {
+     "name": "--text-on-accent",
+     "count": 12
+    },
+    {
+     "name": "--qtext",
+     "count": 7
+    },
+    {
+     "name": "--ok-solid",
+     "count": 5
+    },
+    {
+     "name": "--no-solid",
+     "count": 4
+    },
+    {
+     "name": "--surface-1",
+     "count": 3
+    },
+    {
+     "name": "--text",
+     "count": 3
+    },
+    {
+     "name": "--border-strong",
+     "count": 3
+    },
+    {
+     "name": "--text-on-frame",
+     "count": 3
+    },
+    {
+     "name": "--text-muted",
      "count": 3
     },
     {
@@ -992,6 +1180,7 @@
     "styles/scratchpad.css"
    ],
    "js": [
+    "scripts/subject.js",
     "scripts/scratchpad.js",
     "scripts/debug-panel.js",
     "scripts/pop-place.js",
@@ -1130,8 +1319,8 @@
    ]
   },
   {
-   "path": "concept/learn.html",
-   "title": "개념 학습 · 개념 훈련",
+   "path": "concept/learn-sci.html",
+   "title": "개념 학습(과학) · 개념 훈련",
    "family": "concept",
    "familyKo": "개념",
    "section": "concept",
@@ -1146,6 +1335,7 @@
     "styles/scratchpad.css"
    ],
    "js": [
+    "scripts/subject.js",
     "scripts/scratchpad.js",
     "scripts/debug-panel.js",
     "scripts/pop-place.js",
@@ -1285,8 +1475,8 @@
    ]
   },
   {
-   "path": "concept/organize.html",
-   "title": "개념 정리하기 · 개념 훈련",
+   "path": "concept/organize-math.html",
+   "title": "개념 정리하기(수학) · 개념 훈련",
    "family": "concept",
    "familyKo": "개념",
    "section": "concept",
@@ -1300,7 +1490,10 @@
     "styles/scratchpad.css"
    ],
    "js": [
+    "scripts/subject.js",
     "scripts/scratchpad.js",
+    "scripts/vendor/katex/katex.min.js",
+    "scripts/concept-organize-data-math.js",
     "scripts/concept-organize.js",
     "scripts/learn-exit.js"
    ],
@@ -1399,35 +1592,31 @@
     "RM-FILL-06",
     "RM-PART-05",
     "RM-FILL-02",
-    "RM-PART-01"
+    "RM-PART-01",
+    "RM-PART-04"
    ]
   },
   {
-   "path": "essay/advanced.html",
-   "title": "서술형 훈련 · 실력 키우기",
-   "family": "essay",
-   "familyKo": "서술형",
-   "section": "essay",
+   "path": "concept/organize-sci.html",
+   "title": "개념 정리하기(과학) · 개념 훈련",
+   "family": "concept",
+   "familyKo": "개념",
+   "section": "concept",
    "theme": "light+dark",
    "css": [
     "styles/tokens.css",
+    "styles/learn-shell.css",
     "styles/base.css",
     "styles/components.css",
-    "styles/learn-shell.css",
-    "styles/essay.css",
-    "styles/keypad.css",
-    "styles/screens/essay-advanced.css",
+    "styles/screens/concept-organize.css",
     "styles/scratchpad.css"
    ],
    "js": [
+    "scripts/subject.js",
     "scripts/scratchpad.js",
-    "scripts/pop-place.js",
-    "scripts/keypad.js",
-    "scripts/blank-pop.js",
-    "scripts/keypad-input.js",
-    "scripts/learn-guide.js",
-    "scripts/essay-advanced.js",
-    "scripts/learn-timer.js",
+    "scripts/vendor/katex/katex.min.js",
+    "scripts/concept-organize-data-sci.js",
+    "scripts/concept-organize.js",
     "scripts/learn-exit.js"
    ],
    "parts": [
@@ -1437,24 +1626,9 @@
      "doc": "styleguide/components.html#btn"
     },
     {
-     "name": "빈칸 — 칸형",
-     "group": "부품 › 답 입력",
-     "doc": "styleguide/components.html#input"
-    },
-    {
-     "name": "빈칸 — 서술형 속",
-     "group": "부품 › 답 입력",
-     "doc": "styleguide/components.html#input"
-    },
-    {
-     "name": "빈칸 선지 창",
-     "group": "부품 › 답 입력",
-     "doc": "styleguide/components.html#input"
-    },
-    {
-     "name": "과제 해설 — 목록형 선지 · 해설 띠",
-     "group": "부품 › 해설 화면의 면",
-     "doc": "styleguide/components.html#surf"
+     "name": "끊어읽기 구간 · 그림 번호 알약",
+     "group": "부품 › 끊어읽기",
+     "doc": "styleguide/components.html#read"
     },
     {
      "name": "배경 사진과 다크 막",
@@ -1472,11 +1646,6 @@
      "doc": "styleguide/shells.html#learn"
     },
     {
-     "name": "콘솔바 안내",
-     "group": "셸 › 학습 화면 셸",
-     "doc": "styleguide/shells.html#learn"
-    },
-    {
      "name": "콘솔바 — 계열 넷",
      "group": "셸 › 학습 화면 셸",
      "doc": "styleguide/shells.html#learn"
@@ -1485,85 +1654,73 @@
      "name": "콘텐츠 패널 — 변형 둘",
      "group": "셸 › 학습 화면 셸",
      "doc": "styleguide/shells.html#learn"
-    },
-    {
-     "name": "숫자 키패드",
-     "group": "셸 › 키패드",
-     "doc": "styleguide/shells.html#keypad"
-    },
-    {
-     "name": "같은 키패드, 계열만 유형",
-     "group": "셸 › 키패드",
-     "doc": "styleguide/shells.html#keypad"
     }
    ],
    "tokensFrom": [
-    "styles/screens/essay-advanced.css"
+    "styles/screens/concept-organize.css"
    ],
    "tokens": [
+    {
+     "name": "--text-muted",
+     "count": 10
+    },
+    {
+     "name": "--text-on-accent",
+     "count": 7
+    },
+    {
+     "name": "--th-solid",
+     "count": 6
+    },
+    {
+     "name": "--text",
+     "count": 6
+    },
+    {
+     "name": "--th-tint",
+     "count": 5
+    },
+    {
+     "name": "--th-accent-hi",
+     "count": 4
+    },
+    {
+     "name": "--th-accent",
+     "count": 4
+    },
+    {
+     "name": "--th-ink-accent",
+     "count": 3
+    },
     {
      "name": "--surface-1",
      "count": 3
     },
     {
-     "name": "--th-static",
-     "count": 3
-    },
-    {
-     "name": "--text-on-frame",
+     "name": "--surface-hover",
      "count": 2
     },
     {
-     "name": "--white-a10",
+     "name": "--th-shadow",
      "count": 2
     },
     {
-     "name": "--white-a60",
+     "name": "--surface-2",
      "count": 2
-    },
-    {
-     "name": "--text-on-accent",
-     "count": 2
-    },
-    {
-     "name": "--th-ink-accent",
-     "count": 2
-    },
-    {
-     "name": "--pc-text",
-     "count": 2
-    },
-    {
-     "name": "--white-a20",
-     "count": 2
-    },
-    {
-     "name": "--white-a12",
-     "count": 2
-    },
-    {
-     "name": "--white-a08",
-     "count": 1
-    },
-    {
-     "name": "--text-muted",
-     "count": 1
     }
    ],
    "rules": [
     "RM-SURF-05",
     "RM-FILL-06",
     "RM-PART-05",
-    "RM-SURF-03",
     "RM-FILL-02",
-    "RM-SURF-01",
     "RM-PART-01",
-    "RM-PART-03"
+    "RM-PART-04"
    ]
   },
   {
-   "path": "essay/basics-v2.html",
-   "title": "서술형 훈련 · 기초 기르기 (레이아웃 v2)",
+   "path": "essay/advanced.html",
+   "title": "서술형 훈련 · 실력 키우기 (수학)",
    "family": "essay",
    "familyKo": "서술형",
    "section": "essay",
@@ -1579,6 +1736,8 @@
     "styles/scratchpad.css"
    ],
    "js": [
+    "scripts/subject.js",
+    "scripts/vendor/katex/katex.min.js",
     "scripts/scratchpad.js",
     "scripts/debug-panel.js",
     "scripts/pop-place.js",
@@ -1586,6 +1745,8 @@
     "scripts/blank-pop.js",
     "scripts/keypad-input.js",
     "scripts/learn-guide.js",
+    "scripts/essay-sol.js",
+    "scripts/essay-advanced-data-math.js",
     "scripts/essay-basics-v2.js",
     "scripts/learn-timer.js",
     "scripts/learn-exit.js"
@@ -1718,7 +1879,338 @@
     "RM-FILL-02",
     "RM-SURF-01",
     "RM-PART-01",
-    "RM-PART-03"
+    "RM-PART-03",
+    "RM-PART-04"
+   ]
+  },
+  {
+   "path": "essay/basics-math.html",
+   "title": "서술형 훈련 · 기초 기르기 (수학)",
+   "family": "essay",
+   "familyKo": "서술형",
+   "section": "essay",
+   "theme": "light+dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/components.css",
+    "styles/learn-shell.css",
+    "styles/essay.css",
+    "styles/keypad.css",
+    "styles/screens/essay-basics-v2.css",
+    "styles/scratchpad.css"
+   ],
+   "js": [
+    "scripts/subject.js",
+    "scripts/vendor/katex/katex.min.js",
+    "scripts/scratchpad.js",
+    "scripts/debug-panel.js",
+    "scripts/pop-place.js",
+    "scripts/keypad.js",
+    "scripts/blank-pop.js",
+    "scripts/keypad-input.js",
+    "scripts/learn-guide.js",
+    "scripts/essay-sol.js",
+    "scripts/essay-basics-data-math.js",
+    "scripts/essay-basics-v2.js",
+    "scripts/learn-timer.js",
+    "scripts/learn-exit.js"
+   ],
+   "parts": [
+    {
+     "name": "콘솔 도구 버튼",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "빈칸 — 칸형",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "빈칸 — 서술형 속",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "빈칸 선지 창",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "과제 해설 — 목록형 선지 · 해설 띠",
+     "group": "부품 › 해설 화면의 면",
+     "doc": "styleguide/components.html#surf"
+    },
+    {
+     "name": "배경 사진과 다크 막",
+     "group": "기초 › 색 3단 · 계열 슬롯",
+     "doc": "styleguide/foundations.html#section"
+    },
+    {
+     "name": "학습 헤더",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 안내",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 — 계열 넷",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘텐츠 패널 — 변형 둘",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "숫자 키패드",
+     "group": "셸 › 키패드",
+     "doc": "styleguide/shells.html#keypad"
+    },
+    {
+     "name": "같은 키패드, 계열만 유형",
+     "group": "셸 › 키패드",
+     "doc": "styleguide/shells.html#keypad"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/essay-basics-v2.css"
+   ],
+   "tokens": [
+    {
+     "name": "--surface-1",
+     "count": 3
+    },
+    {
+     "name": "--text-on-accent",
+     "count": 3
+    },
+    {
+     "name": "--th-static",
+     "count": 3
+    },
+    {
+     "name": "--text-on-frame",
+     "count": 2
+    },
+    {
+     "name": "--white-a10",
+     "count": 2
+    },
+    {
+     "name": "--white-a60",
+     "count": 2
+    },
+    {
+     "name": "--th-ink-accent",
+     "count": 2
+    },
+    {
+     "name": "--pc-text",
+     "count": 2
+    },
+    {
+     "name": "--white-a20",
+     "count": 2
+    },
+    {
+     "name": "--white-a12",
+     "count": 2
+    },
+    {
+     "name": "--white-a08",
+     "count": 1
+    },
+    {
+     "name": "--text-muted",
+     "count": 1
+    }
+   ],
+   "rules": [
+    "RM-SURF-05",
+    "RM-FILL-06",
+    "RM-PART-05",
+    "RM-SURF-03",
+    "RM-FILL-02",
+    "RM-SURF-01",
+    "RM-PART-01",
+    "RM-PART-03",
+    "RM-PART-04"
+   ]
+  },
+  {
+   "path": "essay/basics-sci.html",
+   "title": "서술형 훈련 · 문장 완성하기 (과학)",
+   "family": "essay",
+   "familyKo": "서술형",
+   "section": "essay",
+   "theme": "light+dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/components.css",
+    "styles/learn-shell.css",
+    "styles/essay.css",
+    "styles/keypad.css",
+    "styles/screens/essay-basics-v2.css",
+    "styles/scratchpad.css"
+   ],
+   "js": [
+    "scripts/subject.js",
+    "scripts/vendor/katex/katex.min.js",
+    "scripts/scratchpad.js",
+    "scripts/debug-panel.js",
+    "scripts/pop-place.js",
+    "scripts/keypad.js",
+    "scripts/blank-pop.js",
+    "scripts/keypad-input.js",
+    "scripts/learn-guide.js",
+    "scripts/essay-sol.js",
+    "scripts/essay-basics-data-sci.js",
+    "scripts/essay-basics-v2.js",
+    "scripts/learn-timer.js",
+    "scripts/learn-exit.js"
+   ],
+   "parts": [
+    {
+     "name": "콘솔 도구 버튼",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "빈칸 — 칸형",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "빈칸 — 서술형 속",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "빈칸 선지 창",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "과제 해설 — 목록형 선지 · 해설 띠",
+     "group": "부품 › 해설 화면의 면",
+     "doc": "styleguide/components.html#surf"
+    },
+    {
+     "name": "배경 사진과 다크 막",
+     "group": "기초 › 색 3단 · 계열 슬롯",
+     "doc": "styleguide/foundations.html#section"
+    },
+    {
+     "name": "학습 헤더",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 안내",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 — 계열 넷",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘텐츠 패널 — 변형 둘",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "숫자 키패드",
+     "group": "셸 › 키패드",
+     "doc": "styleguide/shells.html#keypad"
+    },
+    {
+     "name": "같은 키패드, 계열만 유형",
+     "group": "셸 › 키패드",
+     "doc": "styleguide/shells.html#keypad"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/essay-basics-v2.css"
+   ],
+   "tokens": [
+    {
+     "name": "--surface-1",
+     "count": 3
+    },
+    {
+     "name": "--text-on-accent",
+     "count": 3
+    },
+    {
+     "name": "--th-static",
+     "count": 3
+    },
+    {
+     "name": "--text-on-frame",
+     "count": 2
+    },
+    {
+     "name": "--white-a10",
+     "count": 2
+    },
+    {
+     "name": "--white-a60",
+     "count": 2
+    },
+    {
+     "name": "--th-ink-accent",
+     "count": 2
+    },
+    {
+     "name": "--pc-text",
+     "count": 2
+    },
+    {
+     "name": "--white-a20",
+     "count": 2
+    },
+    {
+     "name": "--white-a12",
+     "count": 2
+    },
+    {
+     "name": "--white-a08",
+     "count": 1
+    },
+    {
+     "name": "--text-muted",
+     "count": 1
+    }
+   ],
+   "rules": [
+    "RM-SURF-05",
+    "RM-FILL-06",
+    "RM-PART-05",
+    "RM-SURF-03",
+    "RM-FILL-02",
+    "RM-SURF-01",
+    "RM-PART-01",
+    "RM-PART-03",
+    "RM-PART-04"
    ]
   },
   {
@@ -1875,131 +2367,8 @@
    ]
   },
   {
-   "path": "essay/drill-review.html",
-   "title": "서술형 훈련 · 기본 다지기 해설",
-   "family": "essay",
-   "familyKo": "서술형",
-   "section": "essay",
-   "theme": "light+dark",
-   "css": [
-    "styles/tokens.css",
-    "styles/base.css",
-    "styles/components.css",
-    "styles/learn-shell.css",
-    "styles/essay.css",
-    "styles/screens/essay-drill-review.css",
-    "styles/scratchpad.css"
-   ],
-   "js": [
-    "scripts/scratchpad.js",
-    "scripts/debug-panel.js",
-    "scripts/learn-guide.js",
-    "scripts/essay-drill-review.js",
-    "scripts/learn-timer.js",
-    "scripts/learn-exit.js"
-   ],
-   "parts": [
-    {
-     "name": "콘솔 도구 버튼",
-     "group": "부품 › 버튼",
-     "doc": "styleguide/components.html#btn"
-    },
-    {
-     "name": "배경 사진과 다크 막",
-     "group": "기초 › 색 3단 · 계열 슬롯",
-     "doc": "styleguide/foundations.html#section"
-    },
-    {
-     "name": "학습 헤더",
-     "group": "셸 › 학습 화면 셸",
-     "doc": "styleguide/shells.html#learn"
-    },
-    {
-     "name": "하단 콘솔바",
-     "group": "셸 › 학습 화면 셸",
-     "doc": "styleguide/shells.html#learn"
-    },
-    {
-     "name": "콘솔바 안내",
-     "group": "셸 › 학습 화면 셸",
-     "doc": "styleguide/shells.html#learn"
-    },
-    {
-     "name": "콘솔바 — 계열 넷",
-     "group": "셸 › 학습 화면 셸",
-     "doc": "styleguide/shells.html#learn"
-    },
-    {
-     "name": "콘텐츠 패널 — 변형 둘",
-     "group": "셸 › 학습 화면 셸",
-     "doc": "styleguide/shells.html#learn"
-    }
-   ],
-   "tokensFrom": [
-    "styles/screens/essay-drill-review.css"
-   ],
-   "tokens": [
-    {
-     "name": "--text-on-accent",
-     "count": 6
-    },
-    {
-     "name": "--th-static",
-     "count": 4
-    },
-    {
-     "name": "--th-accent-hi",
-     "count": 4
-    },
-    {
-     "name": "--text-on-frame",
-     "count": 3
-    },
-    {
-     "name": "--surface-1",
-     "count": 3
-    },
-    {
-     "name": "--ok-bg",
-     "count": 3
-    },
-    {
-     "name": "--ok-br",
-     "count": 3
-    },
-    {
-     "name": "--ok-solid",
-     "count": 2
-    },
-    {
-     "name": "--no-solid",
-     "count": 2
-    },
-    {
-     "name": "--step-fg",
-     "count": 2
-    },
-    {
-     "name": "--th-ink-accent",
-     "count": 2
-    },
-    {
-     "name": "--th-accent",
-     "count": 2
-    }
-   ],
-   "rules": [
-    "RM-SURF-05",
-    "RM-FILL-06",
-    "RM-PART-05",
-    "RM-FILL-02",
-    "RM-SURF-01",
-    "RM-PART-01"
-   ]
-  },
-  {
-   "path": "essay/drill-v2.html",
-   "title": "서술형 훈련 · 기본 다지기 (레이아웃 v2)",
+   "path": "essay/drill-math.html",
+   "title": "서술형 훈련 · 기본 다지기 (수학)",
    "family": "essay",
    "familyKo": "서술형",
    "section": "essay",
@@ -2016,6 +2385,8 @@
     "styles/scratchpad.css"
    ],
    "js": [
+    "scripts/subject.js",
+    "scripts/vendor/katex/katex.min.js",
     "scripts/scratchpad.js",
     "scripts/debug-panel.js",
     "scripts/pop-place.js",
@@ -2023,6 +2394,8 @@
     "scripts/blank-pop.js",
     "scripts/keypad-input.js",
     "scripts/learn-guide.js",
+    "scripts/essay-sol.js",
+    "scripts/essay-drill-data-math.js",
     "scripts/essay-drill-v2.js",
     "scripts/learn-timer.js",
     "scripts/learn-exit.js"
@@ -2032,6 +2405,16 @@
      "name": "콘솔 도구 버튼",
      "group": "부품 › 버튼",
      "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "빈칸 — 칸형",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "빈칸 — 서술형 속",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
     },
     {
      "name": "빈칸 선지 창",
@@ -2047,11 +2430,6 @@
      "name": "끊어읽기 구간 · 그림 번호 알약",
      "group": "부품 › 끊어읽기",
      "doc": "styleguide/components.html#read"
-    },
-    {
-     "name": "더미 이미지 자리",
-     "group": "부품 › 그 밖에",
-     "doc": "styleguide/components.html#misc"
     },
     {
      "name": "배경 사진과 다크 막",
@@ -2105,7 +2483,7 @@
    "tokens": [
     {
      "name": "--text-on-accent",
-     "count": 6
+     "count": 5
     },
     {
      "name": "--th-accent-hi",
@@ -2121,10 +2499,6 @@
     },
     {
      "name": "--th-static",
-     "count": 4
-    },
-    {
-     "name": "--primary",
      "count": 4
     },
     {
@@ -2144,6 +2518,10 @@
      "count": 3
     },
     {
+     "name": "--primary",
+     "count": 3
+    },
+    {
      "name": "--white-a06",
      "count": 2
     },
@@ -2157,10 +2535,463 @@
     "RM-FILL-06",
     "RM-PART-05",
     "RM-FILL-02",
+    "RM-SURF-01",
     "RM-PART-01",
     "RM-PART-03",
     "RM-PART-02",
-    "RM-ASSET-03"
+    "RM-PART-04"
+   ]
+  },
+  {
+   "path": "essay/drill-review-math.html",
+   "title": "서술형 훈련 · 기본 다지기 해설 (수학)",
+   "family": "essay",
+   "familyKo": "서술형",
+   "section": "essay",
+   "theme": "light+dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/components.css",
+    "styles/learn-shell.css",
+    "styles/essay.css",
+    "styles/screens/essay-drill-review.css",
+    "styles/scratchpad.css"
+   ],
+   "js": [
+    "scripts/subject.js",
+    "scripts/vendor/katex/katex.min.js",
+    "scripts/scratchpad.js",
+    "scripts/debug-panel.js",
+    "scripts/learn-guide.js",
+    "scripts/essay-sol.js",
+    "scripts/essay-drill-data-math.js",
+    "scripts/essay-drill-review.js",
+    "scripts/learn-timer.js",
+    "scripts/learn-exit.js"
+   ],
+   "parts": [
+    {
+     "name": "콘솔 도구 버튼",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "빈칸 — 칸형",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "빈칸 — 서술형 속",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "배경 사진과 다크 막",
+     "group": "기초 › 색 3단 · 계열 슬롯",
+     "doc": "styleguide/foundations.html#section"
+    },
+    {
+     "name": "학습 헤더",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 안내",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 — 계열 넷",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘텐츠 패널 — 변형 둘",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/essay-drill-review.css"
+   ],
+   "tokens": [
+    {
+     "name": "--text-on-accent",
+     "count": 5
+    },
+    {
+     "name": "--th-static",
+     "count": 4
+    },
+    {
+     "name": "--th-accent-hi",
+     "count": 4
+    },
+    {
+     "name": "--text-on-frame",
+     "count": 3
+    },
+    {
+     "name": "--surface-1",
+     "count": 3
+    },
+    {
+     "name": "--ok-bg",
+     "count": 3
+    },
+    {
+     "name": "--ok-br",
+     "count": 3
+    },
+    {
+     "name": "--ok-solid",
+     "count": 2
+    },
+    {
+     "name": "--no-solid",
+     "count": 2
+    },
+    {
+     "name": "--step-fg",
+     "count": 2
+    },
+    {
+     "name": "--th-ink-accent",
+     "count": 2
+    },
+    {
+     "name": "--th-accent",
+     "count": 2
+    }
+   ],
+   "rules": [
+    "RM-SURF-05",
+    "RM-FILL-06",
+    "RM-PART-05",
+    "RM-FILL-02",
+    "RM-SURF-01",
+    "RM-PART-01",
+    "RM-PART-04"
+   ]
+  },
+  {
+   "path": "essay/drill-review-sci.html",
+   "title": "서술형 훈련 · 답안 완성하기 해설 (과학)",
+   "family": "essay",
+   "familyKo": "서술형",
+   "section": "essay",
+   "theme": "light+dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/components.css",
+    "styles/learn-shell.css",
+    "styles/essay.css",
+    "styles/screens/essay-drill-review.css",
+    "styles/scratchpad.css"
+   ],
+   "js": [
+    "scripts/subject.js",
+    "scripts/vendor/katex/katex.min.js",
+    "scripts/scratchpad.js",
+    "scripts/debug-panel.js",
+    "scripts/learn-guide.js",
+    "scripts/essay-sol.js",
+    "scripts/essay-drill-data-sci.js",
+    "scripts/essay-drill-review.js",
+    "scripts/learn-timer.js",
+    "scripts/learn-exit.js"
+   ],
+   "parts": [
+    {
+     "name": "콘솔 도구 버튼",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "빈칸 — 칸형",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "빈칸 — 서술형 속",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "배경 사진과 다크 막",
+     "group": "기초 › 색 3단 · 계열 슬롯",
+     "doc": "styleguide/foundations.html#section"
+    },
+    {
+     "name": "학습 헤더",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 안내",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 — 계열 넷",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘텐츠 패널 — 변형 둘",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/essay-drill-review.css"
+   ],
+   "tokens": [
+    {
+     "name": "--text-on-accent",
+     "count": 5
+    },
+    {
+     "name": "--th-static",
+     "count": 4
+    },
+    {
+     "name": "--th-accent-hi",
+     "count": 4
+    },
+    {
+     "name": "--text-on-frame",
+     "count": 3
+    },
+    {
+     "name": "--surface-1",
+     "count": 3
+    },
+    {
+     "name": "--ok-bg",
+     "count": 3
+    },
+    {
+     "name": "--ok-br",
+     "count": 3
+    },
+    {
+     "name": "--ok-solid",
+     "count": 2
+    },
+    {
+     "name": "--no-solid",
+     "count": 2
+    },
+    {
+     "name": "--step-fg",
+     "count": 2
+    },
+    {
+     "name": "--th-ink-accent",
+     "count": 2
+    },
+    {
+     "name": "--th-accent",
+     "count": 2
+    }
+   ],
+   "rules": [
+    "RM-SURF-05",
+    "RM-FILL-06",
+    "RM-PART-05",
+    "RM-FILL-02",
+    "RM-SURF-01",
+    "RM-PART-01",
+    "RM-PART-04"
+   ]
+  },
+  {
+   "path": "essay/drill-sci.html",
+   "title": "서술형 훈련 · 답안 완성하기 (과학)",
+   "family": "essay",
+   "familyKo": "서술형",
+   "section": "essay",
+   "theme": "light+dark",
+   "css": [
+    "styles/tokens.css",
+    "styles/base.css",
+    "styles/components.css",
+    "styles/learn-shell.css",
+    "styles/essay.css",
+    "styles/keypad.css",
+    "styles/monitor.css",
+    "styles/screens/essay-drill-v2.css",
+    "styles/scratchpad.css"
+   ],
+   "js": [
+    "scripts/subject.js",
+    "scripts/vendor/katex/katex.min.js",
+    "scripts/scratchpad.js",
+    "scripts/debug-panel.js",
+    "scripts/pop-place.js",
+    "scripts/keypad.js",
+    "scripts/blank-pop.js",
+    "scripts/keypad-input.js",
+    "scripts/learn-guide.js",
+    "scripts/essay-sol.js",
+    "scripts/essay-drill-data-sci.js",
+    "scripts/essay-drill-v2.js",
+    "scripts/learn-timer.js",
+    "scripts/learn-exit.js"
+   ],
+   "parts": [
+    {
+     "name": "콘솔 도구 버튼",
+     "group": "부품 › 버튼",
+     "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "빈칸 — 칸형",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "빈칸 — 서술형 속",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "빈칸 선지 창",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "토스트",
+     "group": "부품 › 토스트",
+     "doc": "styleguide/components.html#toast"
+    },
+    {
+     "name": "끊어읽기 구간 · 그림 번호 알약",
+     "group": "부품 › 끊어읽기",
+     "doc": "styleguide/components.html#read"
+    },
+    {
+     "name": "배경 사진과 다크 막",
+     "group": "기초 › 색 3단 · 계열 슬롯",
+     "doc": "styleguide/foundations.html#section"
+    },
+    {
+     "name": "학습 헤더",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "하단 콘솔바",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 안내",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘솔바 — 계열 넷",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "콘텐츠 패널 — 변형 둘",
+     "group": "셸 › 학습 화면 셸",
+     "doc": "styleguide/shells.html#learn"
+    },
+    {
+     "name": "보조 모니터",
+     "group": "셸 › 보조 모니터",
+     "doc": "styleguide/shells.html#monitor"
+    },
+    {
+     "name": "숫자 키패드",
+     "group": "셸 › 키패드",
+     "doc": "styleguide/shells.html#keypad"
+    },
+    {
+     "name": "같은 키패드, 계열만 유형",
+     "group": "셸 › 키패드",
+     "doc": "styleguide/shells.html#keypad"
+    }
+   ],
+   "tokensFrom": [
+    "styles/screens/essay-drill-v2.css"
+   ],
+   "tokens": [
+    {
+     "name": "--text-on-accent",
+     "count": 5
+    },
+    {
+     "name": "--th-accent-hi",
+     "count": 5
+    },
+    {
+     "name": "--surface-1",
+     "count": 4
+    },
+    {
+     "name": "--essay-lock",
+     "count": 4
+    },
+    {
+     "name": "--th-static",
+     "count": 4
+    },
+    {
+     "name": "--text-on-frame",
+     "count": 3
+    },
+    {
+     "name": "--surface-2",
+     "count": 3
+    },
+    {
+     "name": "--th-ink-accent",
+     "count": 3
+    },
+    {
+     "name": "--shade-deep",
+     "count": 3
+    },
+    {
+     "name": "--primary",
+     "count": 3
+    },
+    {
+     "name": "--white-a06",
+     "count": 2
+    },
+    {
+     "name": "--white-a10",
+     "count": 2
+    }
+   ],
+   "rules": [
+    "RM-SURF-05",
+    "RM-FILL-06",
+    "RM-PART-05",
+    "RM-FILL-02",
+    "RM-SURF-01",
+    "RM-PART-01",
+    "RM-PART-03",
+    "RM-PART-02",
+    "RM-PART-04"
    ]
   },
   {
@@ -2322,7 +3153,7 @@
   },
   {
    "path": "essay/report-review.html",
-   "title": "서술형 훈련 · 탐구활동 보고서 해설",
+   "title": "서술형 훈련 · 탐구활동 보고서 해설 (과학)",
    "family": "essay",
    "familyKo": "서술형",
    "section": "essay",
@@ -2338,8 +3169,11 @@
     "styles/scratchpad.css"
    ],
    "js": [
+    "scripts/subject.js",
     "scripts/scratchpad.js",
     "scripts/learn-guide.js",
+    "scripts/essay-sol.js",
+    "scripts/essay-report-data-sci.js",
     "scripts/essay-report-review.js",
     "scripts/learn-timer.js",
     "scripts/learn-exit.js"
@@ -2349,6 +3183,16 @@
      "name": "콘솔 도구 버튼",
      "group": "부품 › 버튼",
      "doc": "styleguide/components.html#btn"
+    },
+    {
+     "name": "빈칸 — 칸형",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
+    },
+    {
+     "name": "빈칸 — 서술형 속",
+     "group": "부품 › 답 입력",
+     "doc": "styleguide/components.html#input"
     },
     {
      "name": "토스트",
@@ -2456,7 +3300,7 @@
   },
   {
    "path": "essay/report.html",
-   "title": "서술형 훈련 · 탐구활동 보고서 만들기",
+   "title": "서술형 훈련 · 탐구활동 보고서 만들기 (과학)",
    "family": "essay",
    "familyKo": "서술형",
    "section": "essay",
@@ -2473,12 +3317,16 @@
     "styles/scratchpad.css"
    ],
    "js": [
+    "scripts/subject.js",
     "scripts/scratchpad.js",
+    "scripts/debug-panel.js",
     "scripts/pop-place.js",
     "scripts/keypad.js",
     "scripts/blank-pop.js",
     "scripts/keypad-input.js",
     "scripts/learn-guide.js",
+    "scripts/essay-sol.js",
+    "scripts/essay-report-data-sci.js",
     "scripts/essay-report.js",
     "scripts/learn-timer.js",
     "scripts/learn-exit.js"
@@ -2632,6 +3480,7 @@
     "styles/screens/essay-step-result.css"
    ],
    "js": [
+    "scripts/subject.js",
     "scripts/essay-step-result.js",
     "scripts/step-progress.js",
     "scripts/learn-timer.js",
@@ -2757,6 +3606,7 @@
     "styles/screens/essay-training-result.css"
    ],
    "js": [
+    "scripts/subject.js",
     "scripts/debug-panel.js",
     "scripts/essay-training-result.js",
     "scripts/learn-exit.js"
@@ -3502,6 +4352,7 @@
     "styles/screens/shared-step-result.css"
    ],
    "js": [
+    "scripts/subject.js",
     "scripts/step-result.js",
     "scripts/step-progress.js",
     "scripts/learn-exit.js"
@@ -3625,6 +4476,7 @@
     "styles/screens/shared-training-result.css"
    ],
    "js": [
+    "scripts/subject.js",
     "scripts/debug-panel.js",
     "scripts/concept-training-result.js",
     "scripts/learn-exit.js"
@@ -3737,12 +4589,16 @@
    ],
    "js": [
     "scripts/keypad.js",
+    "scripts/subject.js",
     "scripts/scratchpad.js",
     "scripts/debug-panel.js",
     "scripts/pop-place.js",
     "scripts/keypad.js",
     "scripts/keypad-input.js",
     "scripts/learn-guide.js",
+    "scripts/vendor/katex/katex.min.js",
+    "scripts/type-quiz-data-math.js",
+    "scripts/type-quiz-data-sci.js",
     "scripts/type-quiz.js",
     "scripts/learn-timer.js",
     "scripts/learn-exit.js"
@@ -3872,7 +4728,8 @@
     "RM-FILL-02",
     "RM-PART-01",
     "RM-PART-03",
-    "RM-ASSET-03"
+    "RM-ASSET-03",
+    "RM-PART-04"
    ]
   },
   {
@@ -3892,6 +4749,9 @@
     "styles/screens/type-result.css"
    ],
    "js": [
+    "scripts/subject.js",
+    "scripts/type-quiz-data-math.js",
+    "scripts/type-quiz-data-sci.js",
     "scripts/type-result.js",
     "scripts/step-progress.js",
     "scripts/learn-timer.js",
@@ -4016,8 +4876,12 @@
     "styles/scratchpad.css"
    ],
    "js": [
+    "scripts/subject.js",
     "scripts/scratchpad.js",
     "scripts/learn-guide.js",
+    "scripts/vendor/katex/katex.min.js",
+    "scripts/type-quiz-data-math.js",
+    "scripts/type-quiz-data-sci.js",
     "scripts/type-review.js",
     "scripts/learn-timer.js",
     "scripts/learn-exit.js"
@@ -4147,7 +5011,8 @@
     "RM-SURF-03",
     "RM-FILL-02",
     "RM-PART-01",
-    "RM-ASSET-03"
+    "RM-ASSET-03",
+    "RM-PART-04"
    ]
   },
   {
@@ -4168,7 +5033,10 @@
     "styles/screens/type-training-result.css"
    ],
    "js": [
+    "scripts/subject.js",
     "scripts/debug-panel.js",
+    "scripts/type-quiz-data-math.js",
+    "scripts/type-quiz-data-sci.js",
     "scripts/type-training-result.js",
     "scripts/learn-exit.js"
    ],

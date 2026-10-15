@@ -34,13 +34,17 @@ RM/
 │  ├─ freemode.html        자유 모드 (학기별 · 계통별)
 │  ├─ curriculum.html      커리큘럼 레이어
 │  └─ bridge.html          과목 선택 브릿지
-├─ concept/              개념 훈련
-│  ├─ learn.html           끊어읽기
-│  ├─ organize.html        개념 정리하기
-│  ├─ drill.html           다지기
-│  └─ basic-ops.html       기초 연산
-├─ type/                 유형 훈련 (quiz · review · result · training-result)
-├─ essay/                서술형 훈련 (basics · drill · advanced · report · 결과)
+├─ concept/              개념 훈련 — 과목마다 한 벌 (-math 수학 삼각비 · -sci 과학 밀도와 용해도)
+│  ├─ learn-math · learn-sci        개념 학습 (끊어읽기 · 요약 창)
+│  ├─ drill-math · drill-sci        개념 다지기
+│  ├─ organize-math · organize-sci  개념 정리하기
+│  ├─ basic-ops.html       STEP 2 기초 연산 (수학)
+│  └─ check.html           STEP 2 개념 확인하기 (과학)
+├─ type/                 유형 훈련 (quiz · review · result · training-result) — 한 벌, 과목에 따라 문항 데이터만 바뀐다
+├─ essay/                서술형 훈련 — 과목마다 한 벌
+│                          수학 basics-math · drill-math(+drill-review-math) · advanced
+│                          과학 basics-sci · drill-sci(+drill-review-sci) · report(+report-review)
+│                          결과(step-result · training-result)는 한 벌
 ├─ assignment/           과제 센터 (home · solve · explain · result)
 ├─ exam/                 시험 대비 (home · solve)
 ├─ util/                 공지 · 월간보고서 · 결제
@@ -105,6 +109,12 @@ RM/
 `shared/`에 있는 두 장은 **개념·유형·서술형이 모두 부르는 화면**이라 어느 계열에도
 넣지 않았습니다. 계열 폴더 안에 두면 이름과 실제가 어긋납니다.
 
+**과목 두 벌 (2026-10-15).** 개념 · 서술형 화면은 과목마다 파일이 따로 있고(`-math` · `-sci`),
+유형 4장과 결과 화면은 한 벌을 두 과목이 같이 씁니다. 과목은 `scripts/subject.js`가 정합니다 —
+과목별 화면이 열리면 과목을 기억하고, 공용 화면은 그 기억을 읽습니다. 공용 화면을 바로 열 때는
+주소 끝에 `?subject=science`(또는 `math`)를 붙입니다. 옛 주소(`concept/learn.html` 등)는
+`vercel.json`이 새 화면으로 넘겨 줍니다.
+
 ### 화면을 새로 만들 때 — 첫 줄에 이것 하나
 
 하위 폴더에 있는 화면은 `<head>` 바로 아래에 이 한 줄이 있어야 합니다.
@@ -125,14 +135,14 @@ RM/
 정답·오답·전부 풀기·시간 초과 같은 상태를 버튼으로 오갈 수 있습니다.
 
 ```
-concept/drill.html?debug=1
+concept/drill-math.html?debug=1
 ```
 
 **주소만으로 특정 상태를 바로 열 수도 있습니다.** 스크린샷을 찍거나
 "이 상태 좀 봐 주세요"라고 공유할 때 씁니다.
 
 ```
-concept/drill.html?debug=1&theme=dark&do=오답 처리
+concept/drill-math.html?debug=1&theme=dark&do=오답 처리
 ```
 
 - `theme` — `light` / `dark`
@@ -199,11 +209,11 @@ brew install webp
 
 두 쌍이 남아 있습니다. **둘 다 살아 있고, 어느 쪽을 쓸지는 미정입니다.**
 
-- `essay/basics.html` / `essay/basics-v2.html`
-- `essay/drill.html` / `essay/drill-v2.html`
+- `essay/basics.html` / `essay/basics-math.html`(옛 basics-v2)
+- `essay/drill.html` / `essay/drill-math.html`(옛 drill-v2)
 
-지금은 자유 모드가 `essay/basics-v2.html`을 부릅니다. 정리를 빠뜨린 게 아니라
-**결정을 미뤄둔 상태**입니다.
+확정안은 세로(v2)이고, 2026-10-15에 과목 두 벌로 나누면서 세로 안만 과학판을 만들었습니다.
+가로 안 두 장은 옛 콘텐츠 그대로 킵입니다.
 
 ### 화면이 아직 안 부르는 이미지 6장
 

@@ -1,29 +1,26 @@
 /* =========================================================================
-   유형 훈련 · 10문제 (타이머, 전부 풀고 제출)
+   유형 훈련 · 1차 유형 문제 (타이머, 전부 풀고 제출) — 문항 수는 과목 데이터를 따른다(수학 10 · 과학 5)
    - 즉시 채점 없음: 답만 저장하고 '다음 문제'로 진행
    - 프로그레스 캡: 풀었다(체크)/현재(링)/미풀이(점) + 타이머
    - 마지막까지 다 풀면 하단 '제출하기' 활성화
    ========================================================================= */
 (function () {
-  var TRAP = '<svg viewBox="0 0 320 200" width="300" xmlns="http://www.w3.org/2000/svg"><polygon points="40,170 220,170 300,40 40,40" fill="#C7D3E6"/></svg>';
-  function exText(items) { return { kind: 'text', items: items }; }
-  function exSkel(label) { return { kind: 'skel', label: label }; }
-  function exShape(svg) { return { kind: 'shape', svg: svg }; }
+  /* 문항은 과목별 데이터 파일 — scripts/type-quiz-data-math.js · type-quiz-data-sci.js (과목 = scripts/subject.js) */
+  var SET = window.RMTypeData[window.RMSubject.id];
+  var PROBLEMS = SET.problems;
 
-  var PROBLEMS = [
-    { type: 'mc-num', q: '다음은 순물질과 혼합물에 대한 설명이다. 옳은 것을 고르시오.',
-      ex: exText(['㉠ 물질마다 성질이 다양하다.', '㉡ 소금물은 혼합물이다.', '㉢ 모든 물질은 순물질이다.', '㉣ 공기는 순물질이다.', '㉤ 증류수는 순물질이다.']), options: 5, answer: 1 },
-    { type: 'mc-text', q: '물체를 미는 모습과 당기는 모습 중 무엇인지 고르시오.', ex: exSkel('이미지 (유모차 / 휠체어)'), options: ['미는 모습', '당기는 모습'], answer: 1 },
-    { type: 'mc-text', grid: true, q: '다음 도형은 직사각형이 아닙니다. 그 이유로 바른 것을 고르세요.', ex: exShape(TRAP),
-      options: ['네 각이 모두 직각이어야 하는데 직각인 각이 하나도 없기 때문입니다.', '네 각이 모두 직각이어야 하는데 직각인 각이 한 개밖에 없기 때문입니다.', '네 각이 모두 직각이어야 하는데 직각인 각이 두 개밖에 없기 때문입니다.', '네 각이 모두 직각이어야 하는데 직각인 각이 세 개 있기 때문입니다.'], answer: 1 },
-    { type: 'short-2', q: '마을별 신문 구독 수 그림그래프에서 ㉠, ㉡에 알맞은 수를 구하시오.', ex: exSkel('표 · 마을별 신문 구독 수'), tags: ['㉠', '㉡'], answer: ['10', '1'] },
-    { type: 'mc-num', q: '752 − 238 을 바르게 계산한 것은? (① 504  ② 514  ③ 524  ④ 526  ⑤ 534)', ex: null, options: 5, answer: 1 },
-    { type: 'mc-text', q: '받아올림이 있는 덧셈에 대한 설명으로 옳은 것을 고르세요.', ex: null, options: ['자리 수가 10을 넘으면 윗자리로 1을 올린다.', '항상 일의 자리부터 빼서 계산한다.', '받아올림은 큰 수에서만 생긴다.'], answer: 0 },
-    { type: 'mc-image', q: '다음 중 삼각형인 것을 고르세요.', ex: null, options: [{ img: true }, { img: true }, { img: true }, { img: true }], answer: 2 },
-    { type: 'short-1', q: '46 × 3 을 계산하면 얼마입니까?', ex: null, answer: '138' },
-    { type: 'fraction', q: '색칠한 부분을 분수로 나타내면 얼마입니까?', ex: null, answer: { num: '3', den: '4' } },
-    { type: 'short-2', q: '63 ÷ 9 의 몫(㉠)과 84 ÷ 7 의 몫(㉡)을 각각 구하시오.', ex: null, tags: ['㉠', '㉡'], answer: ['7', '12'] }
-  ];
+  /* 제한 시간 — 머리줄 글자가 정본이다(scripts/learn-timer.js 가 이 글자를 읽는다. 이 스크립트가 먼저 돈다) */
+  var limEl = document.querySelector('.lheader__limit');
+  if (limEl && SET.limit) limEl.textContent = '/ ' + SET.limit;
+
+  /* 글 속 $…$ → KaTeX. 서버 수식의 기호 글자(△ ∴ ∵ ⊥ ∽)는 KaTeX 명령으로 바꿔 그린다 */
+  var SYM = { '△': '\\triangle ', '∴': '\\therefore ', '∵': '\\because ', '⊥': '\\perp ', '∽': '\\backsim ' };
+  function tex(s) {
+    return String(s).split('$').map(function (part, i) {
+      if (i % 2 === 0 || !window.katex) return part;
+      return window.katex.renderToString(part.replace(/[△∴∵⊥∽]/g, function (c) { return SYM[c]; }), { throwOnError: false, strict: false });
+    }).join('');
+  }
 
   var TOTAL = PROBLEMS.length;
   var answers = new Array(TOTAL);   // 저장된 답 (채점은 제출 후)
@@ -65,7 +62,7 @@
   function renderEx(ex) {
     if (!ex) return null;
     var box = el('div', 'ex');
-    if (ex.kind === 'text') { var list = el('div', 'ex__list'); ex.items.forEach(function (t) { list.appendChild(el('div', null, t)); }); box.appendChild(list); }
+    if (ex.kind === 'text') { var list = el('div', 'ex__list'); ex.items.forEach(function (t) { list.appendChild(el('div', null, tex(t))); }); box.appendChild(list); }
     else if (ex.kind === 'shape') box.appendChild(el('div', 'ex__shape', ex.svg));
     else box.appendChild(el('div', 'ex__skel', ex.label || '이미지'));
     return box;
@@ -77,7 +74,8 @@
     qEl.innerHTML = '';
     opsScroll.scrollTop = 0;
     var p = PROBLEMS[idx];
-    qEl.appendChild(el('div', 'q__text', p.q));
+    qEl.appendChild(el('div', 'q__text', tex(p.q)));
+    if (p.img) { var im = el('img', 'q__img'); im.src = p.img; im.alt = '문제 그림'; qEl.appendChild(im); }
     var exb = renderEx(p.ex); if (exb) qEl.appendChild(exb);
     if (p.type === 'mc-num' || p.type === 'mc-text' || p.type === 'mc-image') qEl.appendChild(renderMC(p));
     else if (p.type === 'short-1') qEl.appendChild(renderShort(p, 1));
@@ -95,7 +93,7 @@
       var opt = el('button', 'qopt');
       if (p.type === 'mc-num') { opt.classList.add('qopt--num'); opt.appendChild(el('span', 'qopt__num', String(i + 1))); }
       else if (p.type === 'mc-image') { opt.classList.add('qopt--img'); opt.appendChild(el('span', 'qopt__img')); opt.appendChild(el('span', 'qopt__num', String(i + 1))); }
-      else { opt.classList.add('qopt--text'); opt.appendChild(el('span', 'qopt__num', String(i + 1))); opt.appendChild(el('span', null, p.options[i])); }
+      else { opt.classList.add('qopt--text'); opt.appendChild(el('span', 'qopt__num', String(i + 1))); opt.appendChild(el('span', null, tex(p.options[i]))); }
       if (answers[idx] === i) opt.classList.add('is-selected');
       (function (i, opt) {
         opt.addEventListener('click', function () {
@@ -120,7 +118,9 @@
       var field = el('div', 'sfield');
       if (p.tags) field.appendChild(el('span', 'sfield__tag', p.tags[i]));
       var v = n === 2 ? (stored ? stored[i] : '') : (typeof stored === 'string' ? stored : '');
-      field.appendChild(makeInput('답 입력', v)); row.appendChild(field);
+      field.appendChild(makeInput('답 입력', v));
+      if (p.unit) field.appendChild(el('span', 'sfield__unit', p.unit));
+      row.appendChild(field);
     }
     return row;
   }

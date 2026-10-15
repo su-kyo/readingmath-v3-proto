@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html lang="ko" data-section="concept" data-theme="light">
+<html lang="ko" data-section="concept" data-subject="math" data-theme="light">
 <head>
   <base href="../">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>기초 연산 · 개념 훈련 — 리딩수학과학</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261015-44" />
-  <link rel="stylesheet" href="styles/base.css?v=20261015-44" />
-  <link rel="stylesheet" href="styles/components.css?v=20261015-44" />
-  <link rel="stylesheet" href="styles/learn-shell.css?v=20261015-44" />
-  <link rel="stylesheet" href="styles/keypad.css?v=20261015-44" />
-  <link rel="stylesheet" href="styles/screens/concept-basic-ops.css?v=20261015-44" />
-  <link rel="stylesheet" href="styles/scratchpad.css?v=20261015-44" />
+  <link rel="stylesheet" href="scripts/vendor/katex/katex.min.css?v=20261015-45" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261015-45" />
+  <link rel="stylesheet" href="styles/base.css?v=20261015-45" />
+  <link rel="stylesheet" href="styles/components.css?v=20261015-45" />
+  <link rel="stylesheet" href="styles/learn-shell.css?v=20261015-45" />
+  <link rel="stylesheet" href="styles/keypad.css?v=20261015-45" />
+  <link rel="stylesheet" href="styles/screens/concept-basic-ops.css?v=20261015-45" />
+  <link rel="stylesheet" href="styles/scratchpad.css?v=20261015-45" />
 </head>
 <body class="learn-body">
   <div class="screen">
@@ -21,11 +22,11 @@
     <div class="screen__container">
       <header class="lheader">
         <nav class="breadcrumb">
-          <span class="crumb crumb--strong">수학 초등 4-1</span>
+          <span class="crumb crumb--strong">수학 중등 3-2</span>
           <svg class="sep" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
-          <span class="crumb crumb--strong crumb--clip crumb--hide">3단원 곱셈과 나눗셈</span>
+          <span class="crumb crumb--strong crumb--clip crumb--hide">1단원 삼각비</span>
           <svg class="sep crumb--hide" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
-          <span class="crumb crumb--hide">(2) 세 자리 수의 계산</span>
+          <span class="crumb crumb--hide">(1) 삼각비</span>
           <svg class="sep crumb--hide" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
           <span class="crumb">개념 훈련</span>
           <svg class="sep" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
@@ -72,14 +73,17 @@
 
   <!-- 검수용 디버그 패널 (?debug=1 일 때만 보임) -->
   <!-- 연습장 캔버스 (공용) -->
-  <script src="scripts/scratchpad.js?v=20261015-44"></script>
-  <script src="scripts/debug-panel.js?v=20261015-44"></script>
+  <script src="scripts/subject.js?v=20261015-45"></script>
+  <script src="scripts/scratchpad.js?v=20261015-45"></script>
+  <script src="scripts/debug-panel.js?v=20261015-45"></script>
   <!-- 키패드 물리 키보드 입력 (공용) -->
-  <script src="scripts/pop-place.js?v=20261015-44"></script>
-  <script src="scripts/keypad.js?v=20261015-44"></script>
-  <script src="scripts/keypad-input.js?v=20261015-44"></script>
-  <script src="scripts/learn-guide.js?v=20261015-44"></script>
-  <script src="scripts/learn-basic-ops.js?v=20261015-44"></script>
-  <script src="scripts/learn-exit.js?v=20261015-44"></script>
+  <script src="scripts/pop-place.js?v=20261015-45"></script>
+  <script src="scripts/keypad.js?v=20261015-45"></script>
+  <script src="scripts/keypad-input.js?v=20261015-45"></script>
+  <script src="scripts/learn-guide.js?v=20261015-45"></script>
+  <script src="scripts/vendor/katex/katex.min.js?v=20261015-45"></script>
+  <script src="scripts/concept-basic-ops-data-math.js?v=20261015-45"></script>
+  <script src="scripts/learn-basic-ops.js?v=20261015-45"></script>
+  <script src="scripts/learn-exit.js?v=20261015-45"></script>
 </body>
 </html>

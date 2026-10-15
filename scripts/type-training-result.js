@@ -10,14 +10,17 @@
      학습 화면으로 돌아가면 rm-theme에 저장된 유저 테마가 그대로 적용된다. */
 
   /* ---------- 데이터 (유형 훈련 4단계 · 문항 결과까지 한 벌) ----------
-     스텝의 정답·등급은 results 배열에서 집계한다.
-     ※ 3단계(2차 유형 문제)의 results는 type/result.html(type-result.js)과 같은 배열을 유지할 것 */
+     스텝의 정답·등급은 results 배열에서 집계한다. 칸 수 = 과목의 유형 문항 수(수학 10 · 과학 5).
+     3단계(2차 유형 문제)의 results 는 스텝 결과 화면(type-result.js)과 같은 곳 — 유형 데이터의 데모 오답(pick)에서 읽는다.
+     나머지 세 단계는 데모 값이다(평균 85점이 되게: 수학 100 · 90 · 70 · 80 / 과학 100 · 80 · 80 · 80). */
   var T = true, F = false;
+  var SET = window.RMTypeData[window.RMSubject.id];
+  var STEP3 = SET.problems.map(function (p) { return !('pick' in p); });
   var STAGES = [
-    { no: 1, name: '1차 유형 문제', results: [T,T,T,T,T,T,T,T,T,T] },
-    { no: 2, name: '1차 유사 문제', results: [T,T,T,T,T,T,F,T,T,T] },
-    { no: 3, name: '2차 유형 문제', results: [T,T,T,T,F,T,T,F,F,T] },
-    { no: 4, name: '2차 유사 문제', results: [T,T,F,T,T,F,T,T,T,T] }
+    { no: 1, name: '1차 유형 문제', results: window.RMSubject.pick([T,T,T,T,T,T,T,T,T,T], [T,T,T,T,T]) },
+    { no: 2, name: '1차 유사 문제', results: window.RMSubject.pick([T,T,T,T,T,T,F,T,T,T], [T,T,F,T,T]) },
+    { no: 3, name: '2차 유형 문제', results: STEP3 },
+    { no: 4, name: '2차 유사 문제', results: window.RMSubject.pick([T,T,F,T,T,F,T,T,T,T], [T,F,T,T,T]) }
   ];
   function gradeOf(r) { return r >= 95 ? 's' : r >= 80 ? 'a' : r >= 70 ? 'b' : 'c'; }
   function stepBadge(g) { return 'assets/img/grade/grade-step-' + g.toLowerCase() + '.webp'; }
@@ -159,6 +162,8 @@
   var overPill = document.getElementById('overPill');
   var inPill = document.getElementById('inPill');
   var durVal = document.getElementById('durVal');
+  // 소요 시간 데모 — 제한 시간(유형 데이터 limit)의 안 · 밖. 수학은 HTML 값(41:20 · 62:10 / 60분), 과학은 30분 제한이라 따로
+  if (durVal && window.RMSubject.id === 'science') { durVal.dataset.in = '21:40'; durVal.dataset.over = '32:10'; }
   var commentEl = document.getElementById('comment');
   function setOvertime(on, initial) {
     overtime = on;
@@ -168,7 +173,7 @@
     document.getElementById('totalStar').src = 'assets/icons/star/star-' + gradeOf(SCORE) + '.svg';
     if (overPill) overPill.hidden = !on;
     if (inPill) inPill.hidden = on;
-    // 소요 시간도 상태에 맞춘다 — 감점이면 제한(60:00)보다 길게
+    // 소요 시간도 상태에 맞춘다 — 감점이면 제한 시간보다 길게
     if (durVal) durVal.textContent = on ? durVal.dataset.over : durVal.dataset.in;
     if (commentEl) commentEl.textContent = commentEl.textContent
       .replace(/100점 만점 중 \d+점/, '100점 만점 중 ' + SCORE + '점');

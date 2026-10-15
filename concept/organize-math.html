@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html lang="ko" data-section="concept" data-theme="light">
+<html lang="ko" data-section="concept" data-subject="math" data-theme="light">
 <head>
   <base href="../">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>개념 정리하기 · 개념 훈련 — 리딩수학과학</title>
+  <title>개념 정리하기(수학) · 개념 훈련 — 리딩수학과학</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261015-44" />
-  <link rel="stylesheet" href="styles/learn-shell.css?v=20261015-44" />
-  <link rel="stylesheet" href="styles/base.css?v=20261015-44" />
-  <link rel="stylesheet" href="styles/components.css?v=20261015-44" />
-  <link rel="stylesheet" href="styles/screens/concept-organize.css?v=20261015-44" />
-  <link rel="stylesheet" href="styles/scratchpad.css?v=20261015-44" />
+  <link rel="stylesheet" href="scripts/vendor/katex/katex.min.css?v=20261015-45" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261015-45" />
+  <link rel="stylesheet" href="styles/learn-shell.css?v=20261015-45" />
+  <link rel="stylesheet" href="styles/base.css?v=20261015-45" />
+  <link rel="stylesheet" href="styles/components.css?v=20261015-45" />
+  <link rel="stylesheet" href="styles/screens/concept-organize.css?v=20261015-45" />
+  <link rel="stylesheet" href="styles/scratchpad.css?v=20261015-45" />
 </head>
 <body class="learn-body">
   <div class="screen">
@@ -20,11 +21,11 @@
     <div class="screen__container">
       <header class="lheader">
         <nav class="breadcrumb">
-          <span class="crumb crumb--strong">과학 중등 1-1</span>
+          <span class="crumb crumb--strong">수학 중등 3-2</span>
           <svg class="sep" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
-          <span class="crumb crumb--strong crumb--clip crumb--hide">2단원 물질의 특성</span>
+          <span class="crumb crumb--strong crumb--clip crumb--hide">1단원 삼각비</span>
           <svg class="sep crumb--hide" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
-          <span class="crumb crumb--hide">(1) 물질의 성질</span>
+          <span class="crumb crumb--hide">(1) 삼각비</span>
           <svg class="sep crumb--hide" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
           <span class="crumb">개념 훈련</span>
           <svg class="sep" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
@@ -78,8 +79,11 @@
   </div>
 
   <!-- 연습장 캔버스 (공용) -->
-  <script src="scripts/scratchpad.js?v=20261015-44"></script>
-  <script src="scripts/concept-organize.js?v=20261015-44"></script>
-  <script src="scripts/learn-exit.js?v=20261015-44"></script>
+  <script src="scripts/subject.js?v=20261015-45"></script>
+  <script src="scripts/scratchpad.js?v=20261015-45"></script>
+  <script src="scripts/vendor/katex/katex.min.js?v=20261015-45"></script>
+  <script src="scripts/concept-organize-data-math.js?v=20261015-45"></script>
+  <script src="scripts/concept-organize.js?v=20261015-45"></script>
+  <script src="scripts/learn-exit.js?v=20261015-45"></script>
 </body>
 </html>

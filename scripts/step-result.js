@@ -6,22 +6,29 @@
 (function () {
   // 결과 화면은 항상 다크 계기판 — 테마 토글·강제 없음 (Phase 7 사용자 결정)
 
-  // 개념 학습의 채점 활동 결과 (전체 = 11/14 → 79% → B)
+  // 과목 = scripts/subject.js (머리줄 앞 세 칸 · 소단원 제목은 data-crumb 로 채운다)
+  var SCI = window.RMSubject.id === 'science';
+
+  // 개념 학습의 채점 활동 결과 — total 은 과목별 실제 채점 단위 수, 정답 수는 데모
+  //   요약은 빈칸마다 채점, 다지기는 문제마다 채점(정답 · 일부 정답 · 오답 — learn-drill.js)
+  //   수학: 요약 빈칸 5(34562 4칸 + 34574 1칸) · 다지기 3문제(34576 · 34575 · 34612) → 6/8 → 75% → B
+  //   과학: 요약 빈칸 12(22384) · 다지기 6문제(22389~22394) → 14/18 → 78% → B
   // ※ concept-training-result.js 의 STAGES[개념 학습].acts 와 같은 숫자를 유지할 것
-  var ACTIVITIES = [
+  var ACTIVITIES = SCI ? [
+    { name: '개념 요약하기', correct: 9, total: 12 },
+    { name: '개념 다지기',   correct: 5, total: 6 }
+  ] : [
     { name: '개념 요약하기', correct: 4, total: 5 },
-    { name: '개념 다지기',   correct: 7, total: 9 }
+    { name: '개념 다지기',   correct: 2, total: 3 }
   ];
 
-  // 기초 연산 결과(?step=ops) — 행 막대 대신 문항 번호 타일 (2026-10-15 판단 보드 7 · 유형 스텝 결과와 같은 문법)
-  // ※ concept-training-result.js 의 STAGES[기초 연산] 과 같은 숫자(11/14)를 유지할 것
-  // 과학 개념 확인하기 결과(?step=check) — 기초 연산과 같은 타일 문법, 10문항(training 978 STEP 2 · concept/check.html)
-  // 과학의 STEP 2 는 「개념 확인하기」다(수학은 「기초 연산」). 개념 학습 결과에서도 과목을 보고 STEP 2 카드를 바꾼다
+  // STEP 2 결과(?step=ops · ?step=check) — 행 막대 대신 문항 번호 타일 (2026-10-15 판단 보드 7 · 유형 스텝 결과와 같은 문법)
+  // STEP 2 는 과목을 따른다: 수학 「기초 연산」 14문항(11/14) · 과학 「개념 확인하기」 10문항(8/10, training 978 · concept/check.html)
+  // ※ concept-training-result.js 의 STAGES[STEP 2] 와 같은 숫자를 유지할 것
   var STEP = new URLSearchParams(location.search).get('step');
-  var CHECK = STEP === 'check';
-  var OPS = STEP === 'ops' || CHECK;
-  var SCI = CHECK || (STEP !== 'ops' && (function () { try { return localStorage.getItem('rm-subject') === 'science'; } catch (e) { return false; } })());
-  var OPS_RESULTS = CHECK ? [true, true, true, false, true, true, true, false, true, true]
+  var OPS = STEP === 'ops' || STEP === 'check';
+  var STEP2 = SCI ? '개념 확인하기' : '기초 연산';
+  var OPS_RESULTS = SCI ? [true, true, true, false, true, true, true, false, true, true]
     : [true, true, false, true, true, true, false, true, true, true, true, false, true, true];
 
   var total = 0, correct = 0;
@@ -39,26 +46,20 @@
   // 사이드 패널의 스텝 등급은 행용 육각 뱃지(grade-step-*)를 쓴다
   document.getElementById('sideBadge').src = 'assets/img/grade/grade-step-' + gradeOf(rate) + '.webp';
 
+  // STEP 2 카드 — 과목에 맞는 이름 · 주소
   var opsCard = document.getElementById('opsCard');
-  if (SCI) {   // 과학 STEP 2 = 개념 확인하기
-    opsCard.querySelector('.step-card__name').textContent = '개념 확인하기';
-    opsCard.dataset.go = 'concept/check.html';
-  }
-  if (CHECK) {   // 머리줄 = 개념 확인하기 화면과 같은 소단원 (실서비스 표기)
-    var crumbs = document.querySelectorAll('.breadcrumb .crumb');
-    ['중등 2-1', '1단원-물질의 특성', '(2) 밀도와 용해도'].forEach(function (t, i) { if (crumbs[i]) crumbs[i].textContent = t; });
-    document.querySelector('.runit').textContent = '(2) 밀도와 용해도';
-  }
+  opsCard.querySelector('.step-card__name').textContent = STEP2;
+  opsCard.dataset.go = SCI ? 'concept/check.html' : 'concept/basic-ops.html';
 
   if (OPS) {
-    var STEP2 = CHECK ? '개념 확인하기' : '기초 연산';
     document.getElementById('stepTitle').textContent = STEP2 + ' 완료!';
     document.getElementById('stepCrumb').textContent = STEP2;
     document.getElementById('rows').hidden = true;
-    // 사이드: 개념 학습은 완료(B 예시), 기초 연산이 지금 단계
+    // 사이드: 개념 학습은 완료(등급은 위 ACTIVITIES 로 셈), STEP 2 가 지금 단계
     var learnCard = document.querySelector('.step-card.is-current');
     learnCard.classList.remove('is-current');
-    document.getElementById('sideBadge').src = 'assets/img/grade/grade-step-b.webp';
+    var lc = 0, lt = 0; ACTIVITIES.forEach(function (a) { lc += a.correct; lt += a.total; });
+    document.getElementById('sideBadge').src = 'assets/img/grade/grade-step-' + gradeOf(Math.round((lc / lt) * 100)) + '.webp';
     opsCard.classList.remove('is-open'); opsCard.classList.add('is-current', 'is-done');
     var key = opsCard.querySelector('.key'); if (key) key.remove();
     var img = document.createElement('img');

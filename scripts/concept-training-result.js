@@ -10,13 +10,16 @@
      학습 화면으로 돌아가면 rm-theme에 저장된 유저 테마가 그대로 적용된다. */
 
   /* ---------- 데이터 (개념 훈련 2단계 · 활동까지 한 벌) ----------
-     실서비스 구성에 맞춤(2026-10-15): 개념 학습 · 기초 연산(과학은 「개념 확인하기」).
+     실서비스 구성에 맞춤(2026-10-15): 개념 학습 · STEP 2(수학 「기초 연산」 · 과학 「개념 확인하기」). 과목 = scripts/subject.js
      스텝의 정답·등급은 활동(acts)에서 집계한다.
-     ※ 개념 학습의 acts는 shared/step-result.html(step-result.js)과 같은 숫자를 유지할 것 */
+     ※ 숫자는 shared/step-result.html(step-result.js)의 ACTIVITIES · OPS_RESULTS 와 같게 유지할 것 */
+  var SCI = window.RMSubject.id === 'science';
+  var STEP2 = SCI ? '개념 확인하기' : '기초 연산';
   var STAGES = [
-    { no: 1, name: '개념 학습',    acts: [ { name: '개념 요약하기', correct: 4, total: 5 },
-                                           { name: '개념 다지기',   correct: 7, total: 9 } ] },
-    { no: 2, name: '기초 연산',    acts: [ { name: '기초 연산',     correct: 11, total: 14 } ] }
+    { no: 1, name: '개념 학습', acts: SCI
+      ? [ { name: '개념 요약하기', correct: 9, total: 12 }, { name: '개념 다지기', correct: 5, total: 6 } ]
+      : [ { name: '개념 요약하기', correct: 4, total: 5 },  { name: '개념 다지기', correct: 2, total: 3 } ] },
+    { no: 2, name: STEP2, acts: [ SCI ? { name: STEP2, correct: 8, total: 10 } : { name: STEP2, correct: 11, total: 14 } ] }
   ];
   function gradeOf(r) { return r >= 95 ? 's' : r >= 80 ? 'a' : r >= 70 ? 'b' : 'c'; }
   function stepBadge(g) { return 'assets/img/grade/grade-step-' + g.toLowerCase() + '.webp'; }
@@ -32,7 +35,7 @@
   var SCORE = 88;
   var COMMENT =
     '진방울님의 개념 훈련 결과는 100점 만점 중 ' + SCORE + '점입니다.\n' +
-    '기초 연산은 탄탄하게 풀었지만, 개념 학습에서 몇 문제를 놓쳤어요.\n' +
+    (SCI ? '개념 확인하기는' : '기초 연산은') + ' 탄탄하게 풀었지만, 개념 학습에서 몇 문제를 놓쳤어요.\n' +
     '오답노트를 확인한 뒤 개념 학습을 한 번 더 복습해 보세요.';
 
   /* ?snap=1 이면 애니메이션 생략하고 최종 상태로 (검수·스크린샷용) */

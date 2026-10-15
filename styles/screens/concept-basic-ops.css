@@ -61,7 +61,8 @@
 .ex__list { display: flex; flex-direction: column; gap: var(--sp-8); font-size: clamp(15px,1.4vw,18px); color: var(--qtext); line-height: 1.5; }
 /* 문제 아래 ㄱ·ㄴ·ㄷ 줄 · 문제 그림 (과학 개념 확인하기 concept/check.html) — 그림은 흰 바탕이라 다크에서도 종이 면 위 */
 .q__lines { align-self: stretch; display: flex; flex-direction: column; gap: var(--sp-6); margin: calc(-1 * var(--sp-8)) 0 var(--sp-20); font-size: clamp(15px,1.4vw,18px); color: var(--qtext); line-height: 1.5; }
-.q__img { display: block; width: min(100%, 360px); height: auto; margin: 0 auto var(--sp-20); padding: var(--sp-8); border-radius: var(--r-12); background: var(--paper-bg); box-sizing: border-box; }
+.q__img { display: block; width: auto; max-width: min(100%, 360px); max-height: clamp(200px, 40vh, 330px); height: auto;   /* 작은 그림(수학 삼각형)을 늘리지 않고, 세로로 긴 그림이 입력칸을 밀어내지 않게 */
+  margin: 0 auto var(--sp-20); padding: var(--sp-8); border-radius: var(--r-12); background: var(--paper-bg); box-sizing: border-box; }
 .ex__skel { min-height: 140px; display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-weight: var(--fw-bold); }
 
 /* 객관식 */

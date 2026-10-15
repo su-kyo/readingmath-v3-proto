@@ -7,13 +7,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>2차 유형 문제 완료 · 스텝 결과 — 리딩수학과학</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261015-44" />
-  <link rel="stylesheet" href="styles/base.css?v=20261015-44" />
-  <link rel="stylesheet" href="styles/components.css?v=20261015-44" />
-  <link rel="stylesheet" href="styles/learn-shell.css?v=20261015-44" />
-  <link rel="stylesheet" href="styles/result.css?v=20261015-44" />
-  <link rel="stylesheet" href="styles/type.css?v=20261015-44" />
-  <link rel="stylesheet" href="styles/screens/type-result.css?v=20261015-44" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261015-45" />
+  <link rel="stylesheet" href="styles/base.css?v=20261015-45" />
+  <link rel="stylesheet" href="styles/components.css?v=20261015-45" />
+  <link rel="stylesheet" href="styles/learn-shell.css?v=20261015-45" />
+  <link rel="stylesheet" href="styles/result.css?v=20261015-45" />
+  <link rel="stylesheet" href="styles/type.css?v=20261015-45" />
+  <link rel="stylesheet" href="styles/screens/type-result.css?v=20261015-45" />
 </head>
 <body class="learn-body" style="--subj:var(--th-accent)">
   <div class="screen">
@@ -22,11 +22,11 @@
     <div class="screen__container">
       <header class="lheader">
         <nav class="breadcrumb">
-          <span class="crumb crumb--strong">과학 중등 1-1</span>
+          <span class="crumb crumb--strong" data-crumb="sem">수학 중등 3-2</span>
           <svg class="sep" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
-          <span class="crumb crumb--strong crumb--clip crumb--hide">2단원 생물의 구성과 다양성</span>
+          <span class="crumb crumb--strong crumb--clip crumb--hide" data-crumb="unit">1단원 삼각비</span>
           <svg class="sep crumb--hide" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
-          <span class="crumb crumb--hide">(1) 생물의 구성</span>
+          <span class="crumb crumb--hide" data-crumb="sub">(1) 삼각비</span>
           <svg class="sep crumb--hide" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
           <span class="crumb">유형 훈련</span>
           <svg class="sep" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
@@ -53,7 +53,7 @@
             <div class="rinfo">
               <div class="rhead">
                 <h1 class="rtitle">2차 유형 문제 완료!</h1>
-                <h2 class="runit">(1) 생물의 구성</h2>
+                <h2 class="runit" data-crumb="sub">(1) 삼각비</h2>
               </div>
               <div class="rmeters">
                 <div class="win"><span class="win__lb">등급</span><img id="summaryBadge" src="assets/img/grade/grade-b.webp" alt="등급" /></div>
@@ -110,9 +110,13 @@
       <img class="bar__deco bar__deco--r" src="assets/icons/console/console-type-left.svg" alt="" />
     </div>
   </div>
-  <script src="scripts/type-result.js?v=20261015-44"></script>
-  <script src="scripts/step-progress.js?v=20261015-44"></script>
-  <script src="scripts/learn-timer.js?v=20261015-44"></script>
-  <script src="scripts/learn-exit.js?v=20261015-44"></script>
+  <script src="scripts/subject.js?v=20261015-45"></script>
+  <!-- 데모 정오답 · 제한 시간 = 과목별 유형 데이터(풀이 · 해설과 같은 파일) -->
+  <script src="scripts/type-quiz-data-math.js?v=20261015-45"></script>
+  <script src="scripts/type-quiz-data-sci.js?v=20261015-45"></script>
+  <script src="scripts/type-result.js?v=20261015-45"></script>
+  <script src="scripts/step-progress.js?v=20261015-45"></script>
+  <script src="scripts/learn-timer.js?v=20261015-45"></script>
+  <script src="scripts/learn-exit.js?v=20261015-45"></script>
 </body>
 </html>

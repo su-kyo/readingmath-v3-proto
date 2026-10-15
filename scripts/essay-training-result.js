@@ -9,20 +9,29 @@
   /* 결과 화면은 항상 다크 계기판 — 테마 토글·저장 테마 적용 없음 (Phase 7 사용자 결정).
      학습 화면으로 돌아가면 rm-theme에 저장된 유저 테마가 그대로 적용된다. */
 
-  /* ---------- 데이터 (서술형 훈련 3단계 · 문제까지 한 벌) ----------
-     서술형은 문제마다 빈칸이 여러 개다. 스텝의 정답·등급은 probs에서 집계한다.
-     ※ 기초 기르기의 probs는 essay/step-result.html(essay-step-result.js)과 같은 숫자를 유지할 것 */
-  var STAGES = [
-    { no: 1, name: '기초 기르기', probs: [ { no: 1, correct: 6, total: 8 },
-                                           { no: 2, correct: 5, total: 8 },
+  /* ---------- 데이터 (서술형 훈련 3단계 · 문제까지 한 벌 · 과목 분기 = scripts/subject.js) ----------
+     서술형은 문제마다 빈칸이 여러 개다. total = 그 문제의 빈칸 수(실서비스 「풀이답안 문제수」). 스텝의 정답·등급은 probs에서 집계한다.
+     수학: 기초 기르기 2문항(빈칸 10 · 12) · 기본 다지기 3문항(8 · 8 · 8) · 실력 키우기 3문항(6 · 6 · 4)
+     과학: 문장 완성하기 2문항(4 · 4) · 답안 완성하기 2문항(5 · 6) · 탐구활동 보고서 1편(7)
+     ※ 1단계 probs는 essay/step-result.html(essay-step-result.js)과 같은 숫자를 유지할 것.
+       2 · 3단계 정답 수는 해설 화면의 데모 학생 답(essay-drill-data-*.js · essay-report-data-sci.js 의 my)과 맞춘다. */
+  var S = window.RMSubject;
+  var STAGES = S.pick([
+    { no: 1, name: '기초 기르기', probs: [ { no: 1, correct: 7, total: 10 },
+                                           { no: 2, correct: 10, total: 12 } ] },
+    { no: 2, name: '기본 다지기', probs: [ { no: 1, correct: 6, total: 8 },
+                                           { no: 2, correct: 8, total: 8 },
                                            { no: 3, correct: 7, total: 8 } ] },
-    { no: 2, name: '기본 다지기', probs: [ { no: 1, correct: 7, total: 8 },
-                                           { no: 2, correct: 8, total: 8 },
-                                           { no: 3, correct: 6, total: 8 } ] },
-    { no: 3, name: '실력 키우기', probs: [ { no: 1, correct: 8, total: 8 },
-                                           { no: 2, correct: 8, total: 8 },
-                                           { no: 3, correct: 7, total: 8 } ] }
-  ];
+    { no: 3, name: '실력 키우기', probs: [ { no: 1, correct: 6, total: 6 },
+                                           { no: 2, correct: 6, total: 6 },
+                                           { no: 3, correct: 3, total: 4 } ] }
+  ], [
+    { no: 1, name: '문장 완성하기',          probs: [ { no: 1, correct: 3, total: 4 },
+                                                      { no: 2, correct: 3, total: 4 } ] },
+    { no: 2, name: '답안 완성하기',          probs: [ { no: 1, correct: 3, total: 5 },
+                                                      { no: 2, correct: 6, total: 6 } ] },
+    { no: 3, name: '탐구활동 보고서 만들기', probs: [ { no: 1, correct: 6, total: 7 } ] }
+  ]);
   function gradeOf(r) { return r >= 95 ? 's' : r >= 80 ? 'a' : r >= 70 ? 'b' : 'c'; }
   function stepBadge(g) { return 'assets/img/grade/grade-step-' + g.toLowerCase() + '.webp'; }
   function bigBadge(g)  { return 'assets/img/grade/grade-' + g.toLowerCase() + '.webp'; }
@@ -39,8 +48,10 @@
   var SCORE = BASE_SCORE - (overtime ? PENALTY : 0);
   var COMMENT =
     '진방울님의 서술형 훈련 결과는 100점 만점 중 ' + SCORE + '점입니다.\n' +
-    '실력 키우기는 거의 완벽했지만, 기초 기르기에서 계산 과정과 서술의 정확성이 흔들렸어요.\n' +
-    '오답노트를 확인한 뒤 기초 기르기를 한 번 더 복습해 보세요.';
+    S.pick('실력 키우기는 거의 완벽했지만, 기초 기르기에서 계산 과정과 서술의 정확성이 흔들렸어요.\n' +
+           '오답노트를 확인한 뒤 기초 기르기를 한 번 더 복습해 보세요.',
+           '탐구활동 보고서는 안정적이었지만, 문장 완성하기에서 알맞은 말을 고르는 정확성이 흔들렸어요.\n' +
+           '오답노트를 확인한 뒤 문장 완성하기를 한 번 더 복습해 보세요.');
 
   /* ?snap=1 이면 애니메이션 생략하고 최종 상태로 (검수·스크린샷용) */
   var SNAP = new URLSearchParams(location.search).get('snap') === '1';
@@ -78,7 +89,7 @@
     rows.appendChild(row);
   });
 
-  /* ---------- 전체 행 (빈칸 72칸은 뭉개져서 비워 둔다 — 수치로 읽는다) ---------- */
+  /* ---------- 전체 행 (빈칸 전체는 뭉개져서 비워 둔다 — 수치로 읽는다) ---------- */
   var totalRate = sumTotal ? Math.round((sumCorrect / sumTotal) * 100) : 0;
   document.getElementById('totalRow').innerHTML =
     '<div class="tcell tcell--name"><span class="tname">전체</span></div>' +

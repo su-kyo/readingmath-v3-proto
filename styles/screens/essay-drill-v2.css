@@ -1,11 +1,11 @@
 /* =========================================================================
-   essay/drill-v2.html 전용 스타일 — 이 화면에만 있는 규칙.
+   essay/drill-math.html · drill-sci.html 스타일 — 두 화면이 같은 엔진(essay-drill-v2.js)을 쓴다.
    여러 화면이 같이 쓰는 부품은 styles/ 의 공용 파일에 있다 (스토리북 참고).
    ========================================================================= */
 
 /* ============ 서술형 훈련 = 퍼플 테마 (공통은 essay.css) ============ */
 /* 레이아웃 v2 : 기존 세로 단일 스크롤 유지 + 문제 카드 상단 스티키 추가 */
-/* 동작(끊어읽기/빈칸/순서맞추기)은 essay-drill.js 그대로 재사용 */
+/* 동작(끊어읽기/빈칸/순서맞추기) = essay-drill-v2.js · 글 · 빈칸 읽기 = essay-sol.js */
 .content {
   flex-direction: column; padding: 0 clamp(12px, 1.6vw, 16px) 0;
   --guide: color-mix(in srgb, var(--text-on-frame) 94%, transparent); --card: var(--surface-1); --card-br: var(--white-a08); --card-sh: none;
@@ -87,19 +87,13 @@
 .qfull { font-family: var(--font-serif); color: var(--pc-text); font-size: clamp(15px, 1.4vw, 17.5px); line-height: 1.95; letter-spacing: -0.01em; }
 .qfull + .qfull { margin-top: var(--sp-6); }
 
-/* ============ 콘텐츠 하단 진입 버튼 (단계 완료 시에만 노출) ============ */
-.stage-action { max-width: 760px; margin: var(--sp-16) auto 0; display: none; }
+/* ============ 콘텐츠 하단 진입 버튼 — 모양은 essay.css · 여기서는 단계 완료 시에만 노출 ============ */
+.stage-action { display: none; }
 .stage-action.is-ready { display: block; animation: saIn .28s ease; }
-
 @media (prefers-reduced-motion: reduce) { .stage-action.is-ready { animation: none; } }
-.stage-action__btn { width: 100%; height: 54px; border-radius: var(--r-12); border: 0; cursor: pointer;
-  display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-8);
-  background: var(--primary); color: var(--text-on-accent); font-family: var(--font-sans); font-size: var(--fs-19); font-weight: var(--fw-heavy);
-  box-shadow: inset 0 var(--bw-1) 0 var(--white-a24); transition: background .15s; }
-.stage-action__btn:hover { background: var(--primary-hover); }
 
 
-/* ============ 끊어읽기 구간(seg) — 문법은 개념 학습(concept/learn.html)과 한 벌 ============
+/* ============ 끊어읽기 구간(seg) — 문법은 개념 학습(concept/learn-math.html · learn-sci.html)과 한 벌 ============
    구간은 인라인이다. 어디서 끊을지는 콘텐츠 등록 쪽 자유라 문장 블록으로 만들 수 없다.
    지금 구간도 읽은 곳과 같은 평문이고 안 읽은 곳만 흐리다. 지문 아무 데나 누르거나 스페이스바로 나아간다.
    그래서 지문에서는 글자 선택(연달아 누를 때 생기는 파란 블록)을 막는다. */

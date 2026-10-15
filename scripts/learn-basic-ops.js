@@ -1,57 +1,32 @@
 /* =========================================================================
-   기초 연산 · 14문제 엔진
+   기초 연산 · 문항 엔진 — 수학 기초 연산(concept/basic-ops.html) · 과학 개념 확인하기(concept/check.html)
    유형: 객관식(번호만/텍스트/그림), 주관식(1개/2개/분수), 보기(텍스트/표/그림/도형/없음)
    채점하기 → 즉시 채점(정오답 하이라이트) → 상단 프로그레스 갱신 → 다음 문제
-   마지막 문제까지 채점하면 하단 '다음으로'(스텝 결과로) 활성화
-   문항 세트: 기본은 아래 PROBLEMS(수학 기초 연산). 화면이 엔진보다 먼저 window.RMOpsSet 을 부르면
-   그 문항과 다음 화면으로 바뀐다 — 과학 개념 확인하기(concept/check.html · scripts/concept-check-data.js).
+   마지막 문제까지 채점하면 하단 '결과보기'(스텝 결과로) 활성화
+   문항 = 화면별 데이터 파일 → window.RMOpsSet { title, next, problems }. 엔진보다 먼저 부른다.
+     수학 기초 연산 scripts/concept-basic-ops-data-math.js · 과학 개념 확인하기 scripts/concept-check-data.js
    문항에 img(그림 주소) · lines(문제 아래 ㄱ·ㄴ·ㄷ 같은 줄)를 더 둘 수 있다.
+   발문 · 보기 속 $…$ 는 KaTeX 로 그린다(화면이 katex 를 부를 때만).
    ========================================================================= */
 (function () {
-  var TRAP = '<svg viewBox="0 0 320 200" width="300" xmlns="http://www.w3.org/2000/svg"><polygon points="40,170 220,170 300,40 40,40" fill="#C7D3E6"/></svg>';
-  function exText(items) { return { kind: 'text', items: items }; }
-  function exSkel(label) { return { kind: 'skel', label: label }; }
-  function exShape(svg) { return { kind: 'shape', svg: svg }; }
+  var SET = window.RMOpsSet || { problems: [] };
+  var PROBLEMS = SET.problems;
 
-  var SET = window.RMOpsSet;
-  var PROBLEMS = (SET && SET.problems) || [
-    { type: 'mc-num', q: '다음은 순물질과 혼합물에 대한 설명이다. 옳은 것을 고르시오.',
-      ex: exText(['㉠ 물질마다 성질이 다양하다.', '㉡ 소금물은 혼합물이다.', '㉢ 모든 물질은 순물질이다.', '㉣ 공기는 순물질이다.', '㉤ 증류수는 순물질이다.']),
-      options: 5, answer: 1 },
-    { type: 'mc-text', q: '다음은 생활 속에서 볼 수 있는 모습입니다. 물체를 미는 모습과 당기는 모습 중 무엇인지 고르시오.',
-      ex: exSkel('이미지 (유모차 / 휠체어)'), options: ['미는 모습', '당기는 모습'], answer: 1 },
-    { type: 'mc-text', grid: true, q: '다음 도형은 직사각형이 아닙니다. 그 이유로 바른 것을 고르세요.',
-      ex: exShape(TRAP),
-      options: ['네 각이 모두 직각이어야 하는데 직각인 각이 하나도 없기 때문입니다.',
-                '네 각이 모두 직각이어야 하는데 직각인 각이 한 개밖에 없기 때문입니다.',
-                '네 각이 모두 직각이어야 하는데 직각인 각이 두 개밖에 없기 때문입니다.',
-                '네 각이 모두 직각이어야 하는데 직각인 각이 세 개 있기 때문입니다.'],
-      answer: 1 },
-    { type: 'short-2', q: '마을별 신문 구독 수를 그림그래프로 나타낸 것입니다. ㉠, ㉡에 알맞은 수를 구하시오.',
-      ex: exSkel('표 · 마을별 신문 구독 수'), tags: ['㉠', '㉡'], answer: ['10', '1'] },
-    { type: 'mc-num', q: '752 − 238 을 바르게 계산한 것은? (① 504  ② 514  ③ 524  ④ 526  ⑤ 534)',
-      ex: null, options: 5, answer: 1 },
-    { type: 'mc-text', q: '받아올림이 있는 덧셈에 대한 설명으로 옳은 것을 고르세요.',
-      ex: null, options: ['자리 수가 10을 넘으면 윗자리로 1을 올린다.', '항상 일의 자리부터 빼서 계산한다.', '받아올림은 큰 수에서만 생긴다.'],
-      answer: 0 },
-    { type: 'mc-image', q: '다음 중 삼각형인 것을 고르세요.',
-      ex: null, options: [{ img: true }, { img: true }, { img: true }, { img: true }], answer: 2 },
-    { type: 'short-1', q: '46 × 3 을 계산하면 얼마입니까?',
-      ex: null, answer: '138' },
-    { type: 'short-1', q: '그림을 보고 사과가 모두 몇 개인지 수를 써 넣으시오.',
-      ex: exSkel('이미지 · 사과 묶음'), answer: '24' },
-    { type: 'fraction', q: '색칠한 부분을 분수로 나타내면 얼마입니까?',
-      ex: null, answer: { num: '3', den: '4' } },
-    { type: 'fraction', q: '조건을 보고 알맞은 분수를 구하시오.',
-      ex: exText(['㉠ 전체를 똑같이 8로 나눈다.', '㉡ 그중 5칸을 색칠한다.']), answer: { num: '5', den: '8' } },
-    { type: 'mc-num', q: '그림에서 가장 무거운 물건의 번호를 고르세요.',
-      ex: exSkel('이미지 · 저울'), options: 4, answer: 2 },
-    { type: 'short-2', q: '63 ÷ 9 의 몫(㉠)과 84 ÷ 7 의 몫(㉡)을 각각 구하시오.',
-      ex: null, tags: ['㉠', '㉡'], answer: ['7', '12'] },
-    { type: 'mc-text', grid: true, q: '나눗셈의 몫과 나머지에 대한 설명으로 옳은 것을 고르세요.',
-      ex: null, options: ['나머지는 항상 나누는 수보다 작다.', '나머지는 항상 나누는 수보다 크다.', '몫은 항상 나누어지는 수보다 크다.', '나머지는 0이 될 수 없다.'],
-      answer: 0 }
-  ];
+  /* 글 속 $…$ 를 KaTeX 로 */
+  function texIn(root) {
+    if (!window.katex) return;
+    var w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null), nodes = [];
+    while (w.nextNode()) if (w.currentNode.nodeValue.indexOf('$') >= 0) nodes.push(w.currentNode);
+    nodes.forEach(function (n) {
+      var parts = n.nodeValue.split('$'); if (parts.length < 3) return;
+      var frag = document.createDocumentFragment();
+      parts.forEach(function (t, i) {
+        if (i % 2 === 0) { if (t) frag.appendChild(document.createTextNode(t)); return; }
+        var m = document.createElement('span'); window.katex.render(t, m, { throwOnError: false, strict: 'ignore' }); frag.appendChild(m);
+      });
+      n.parentNode.replaceChild(frag, n);
+    });
+  }
 
   var TOTAL = PROBLEMS.length;
   var results = new Array(TOTAL);
@@ -157,6 +132,7 @@
     if (p.lines) { var ln = el('div', 'q__lines'); p.lines.forEach(function (t) { ln.appendChild(el('div', null, t)); }); qEl.appendChild(ln); }
     if (p.img) { var im = el('img', 'q__img'); im.src = p.img; im.alt = p.imgAlt || ''; qEl.appendChild(im); }
     var exb = renderEx(p.ex); if (exb) qEl.appendChild(exb);
+    texIn(qEl);
 
     if (p.type === 'mc-num' || p.type === 'mc-text' || p.type === 'mc-image') qEl.appendChild(renderMC(p));
     else if (p.type === 'short-1') qEl.appendChild(renderShort(p, 1));
@@ -314,7 +290,7 @@
   }
 
   /* 하단 '결과보기' → 스텝 결과 화면 (마지막 문제 채점 시 활성) */
-  nextStepBtn.addEventListener('click', function () { if (nextStepBtn.disabled) return; window.location.href = (SET && SET.next) || 'shared/step-result.html?step=ops'; });
+  nextStepBtn.addEventListener('click', function () { if (nextStepBtn.disabled) return; window.location.href = SET.next || 'shared/step-result.html?step=ops'; });
 
   /* 라이트/다크 토글 */
   var themeBtn = document.getElementById('themeToggle');
@@ -350,7 +326,7 @@
     }
   }
   if (window.RMDebug) window.RMDebug.register({
-    title: (SET ? '개념 확인하기' : '기초 연산') + ' · 현재 문제',
+    title: (SET.title || '기초 연산') + ' · 현재 문제',
     actions: [
       { label: '정답 처리', tone: 'ok', run: function () { dbgAnswer(true); } },
       { label: '오답 처리', tone: 'no', run: function () { dbgAnswer(false); } },

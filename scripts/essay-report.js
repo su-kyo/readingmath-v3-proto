@@ -6,49 +6,27 @@
    · 모든 빈칸을 채우면 '결과보기' + '보고서 미리보기' 활성화.
    · 미리보기 = 학생 입력대로 완성된 보고서를 보여주고 인쇄/저장 버튼 제공(데모).
    ========================================================================= */
+/* =========================================================================
+   서술형 훈련 3단계 — 탐구활동 보고서 만들기 (essay-report, 과학 전용)
+   콘텐츠 = window.RMEssayReport (scripts/essay-report-data-sci.js) · 글 · 빈칸 읽기 = scripts/essay-sol.js.
+   · 2열 n행 표 형태 보고서. 셀 안에는 텍스트·이미지·표·빈칸 등이 들어감.
+   · 빈칸을 눌러 답 입력(주관식 키패드 / 고르기 = 공용 빈칸 선지 창).
+     즉답 채점 없음 — 입력값 그대로 들어가고 채워진 칸도 다시 눌러 수정 가능.
+   · 모든 빈칸을 채우면 '결과보기' + '보고서 미리보기' 활성화.
+   · 미리보기 = 학생 입력대로 완성된 보고서를 보여주고 인쇄/저장 버튼 제공(데모).
+   ========================================================================= */
 (function () {
-  /* 빈칸 슬롯: 이 보고서의 빈칸은 문장형 답 → 전부 객관식(choice).
-     (엔진은 주관식 키패드도 지원 — 숫자 답이면 type:'short') */
-  var ANSWERS = {
-    '1': { type: 'choice', ans: '그대로 유지됩니다.', choices: ['그대로 유지됩니다.', '완전히 변합니다.', '서로 섞여 사라집니다.', '새로운 물질로 바뀝니다.'] },
-    '2': { type: 'choice', ans: '변하지 않았기 때문에', choices: ['변하지 않았기 때문에', '완전히 변했기 때문에', '모두 사라졌기 때문에', '새로 생겨났기 때문에'] },
-    '3': { type: 'choice', ans: '있습니다.', choices: ['있습니다.', '없습니다.', '어렵습니다.'] },
-    '4': { type: 'choice', ans: '유지된', choices: ['유지된', '사라진', '변화된', '섞여 없어진'] }
-  };
+  var D = window.RMEssayReport, E = window.RMEssay, R = D.report;
+  var proc = E.reportCell(R, R.process), res = E.reportCell(R, R.result);
+  var ANSWERS = res.fields;   // 칸 id('1-1' …) → { type, choices, answer }
 
-  // 빈칸 pill — 정답 미리 안 넣음(학생 입력값이 들어감)
-  function b(id) {
-    return '<span class="blank" data-blank="' + id + '">' +
-      '<span class="blank__ans"></span><span class="blank__badge">' + id + '</span></span>';
-  }
-
-  /* ── 보고서 데이터 (2열 표) ─────────────────────────────────────── */
+  /* ── 보고서 (2열 표) ─────────────────────────────────────── */
   var ROWS = [
-    { label: '단원', cell: '<div class="rt-text">1단원 - 힘과 우리 생활</div>' },
-    { label: '주제', cell: '<div class="rt-text">오곡밥 재료 섞기 실험을 통한 혼합물의 의미 이해하기</div>' },
-    { label: '관찰 목표', cell: '<div class="rt-text">물질들을 섞기 전과 후의 성질(모양, 색깔, 크기)을 비교하여 혼합물의 특징을 알아보기</div>' },
-    {
-      label: '과정',
-      cell:
-        '<div class="rt-text">[준비물]\n  - 오곡밥 재료 (찹쌀, 조, 팥, 수수, 검은콩), 빈 그릇, 실험용 장갑, 실험복\n\n' +
-        '[실험 방법]\n1. 탐구 과정\n' +
-        '① 섞기 전 찹쌀, 조, 팥, 수수, 검은콩이 각각 어떤 성질(모양, 색깔, 크기)을 가졌는지 꼼꼼히 관찰합니다.\n' +
-        '② 준비한 다섯 가지 재료를 빈 그릇에 모두 넣고 골고루 섞어 줍니다.\n' +
-        '③ 그릇 안에서 서로 섞여 있는 물질들의 상태와 성질을 다시 한번 살펴봅니다.\n' +
-        '④ 섞기 전의 성질과 섞인 후의 성질을 서로 비교하며 친구들과 이야기해 봅니다.</div>' +
-        '<div class="rt-img"><img src="assets/img/misc/report-process.webp" alt="실험 과정 이미지" /></div>' +
-        '<div class="rt-text">2. 관찰 및 측정\n' +
-        '① 섞기 전: 검은콩은 크고 검은색이며, 조는 아주 작고 노란색인 것처럼 각 물질은 고유한 모양과 색깔을 가집니다.\n' +
-        '② 섞은 후: 여러 재료가 한데 모여 있지만, 검은콩은 여전히 크고 검으며 조는 여전히 작고 노란색입니다.</div>'
-    },
-    {
-      label: '결과 및 정리',
-      cell:
-        '<div class="rt-text">◎ 탐구 정리\n  - 여러 가지 물질들을 섞어도 혼합물은 각 물질의 모양, 색깔, 크기 등 고유한 성질은 변하지 않습니다.</div>' +
-        '<div class="rt-span">① 혼합물은 재료들을 섞기 전과 후에 각 물질이 가진 고유한 성질(맛, 색깔, 모양 등)이 ' + b('1') + '</div>' +
-        '<div class="rt-span">② 성질이 ' + b('2') + ' , 알갱이 크기 차이 등을 이용하면 섞여 있는 물질들을 다시 각각의 재료로 나눌 수 ' + b('3') + '</div>' +
-        '<div class="rt-span">③ 우리가 먹는 오곡밥, 미역국, 우유 등은 모두 각 재료의 성질이 ' + b('4') + ' 채 섞여 있는 대표적인 혼합물입니다.</div>'
-    }
+    { label: '단원', cell: '<div class="rt-text">' + E.esc(R.unit) + '</div>' },
+    { label: '주제', cell: '<div class="rt-text">' + E.inline(R.q) + '</div>' },
+    { label: '관찰 목표', cell: '<div class="rt-text">' + E.inline(R.opt) + '</div>' },
+    { label: '과정', cell: proc.html },
+    { label: '결과 및 정리', cell: res.html }
   ];
 
   var report = document.getElementById('report');
@@ -79,10 +57,7 @@
   // 입력값을 그대로 빈칸에 넣음 (즉답 채점 없음, 같은 번호 함께)
   function fill(id, value) {
     filled[id] = true; answers[id] = value;
-    byId[id].forEach(function (el) {
-      el.querySelector('.blank__ans').textContent = value;
-      el.classList.add('is-filled');
-    });
+    byId[id].forEach(function (el) { E.setVal(el, value); });
     refreshDone();
   }
 
@@ -110,7 +85,7 @@
 
     var slot = ANSWERS[id];
     if (slot.type === 'choice') {   // 객관식 = 공용 빈칸 선지 창(scripts/blank-pop.js) · 채점 없이 고른 값을 그대로 넣는다
-      window.RMBlankPop.open(anchor, { choices: slot.choices, onDone: function (v) { fill(id, v); }, onClose: closePop });
+      window.RMBlankPop.open(anchor, { choices: slot.choices.map(E.choice), onDone: function (v) { fill(id, v); }, onClose: closePop });
       return;
     } else {
       buffer = answers[id] || '';
@@ -173,7 +148,7 @@
     clone.querySelectorAll('.blank').forEach(function (bl) {
       var span = document.createElement('span');
       span.className = 'fillin';
-      span.textContent = answers[bl.dataset.blank] || '';
+      span.innerHTML = E.value(answers[bl.dataset.blank] || '');
       bl.replaceWith(span);
     });
     var table = document.createElement('div');
@@ -187,7 +162,7 @@
       table.appendChild(ch);
     });
     pPaper.innerHTML = '<div class="rp-title">탐구활동 보고서</div>' +
-      '<div class="rp-sub">과학 중등 1-1 · 2단원 생물의 구성과 다양성 · 서술형 훈련</div>';
+      '<div class="rp-sub">' + D.sub + '</div>';
     pPaper.appendChild(table);
   }
 
@@ -212,11 +187,29 @@
   }
   document.getElementById('printBtn').addEventListener('click', function () { showToast('인쇄 기능은 준비 중이에요.'); });
   document.getElementById('dlBtn').addEventListener('click', function () { showToast('저장(다운로드) 기능은 준비 중이에요.'); });
-  resultBtn.addEventListener('click', function () { if (resultBtn.disabled) return; showToast('제출되었습니다. 결과 화면은 준비 중이에요.'); });
+  resultBtn.addEventListener('click', function () { if (resultBtn.disabled) return; window.location.href = D.next; });
 
   refreshDone();
 
   /* 머리줄 타이머 = scripts/learn-timer.js */
+
+  /* ---- 검수용 디버그 훅 (?debug=1일 때만 패널에 뜸) ---- */
+  function dbgFill(ok) {
+    closePop();
+    order.forEach(function (id, i) {
+      var f = ANSWERS[id], v = f.answer;
+      if (!ok && i % 2 === 0) v = f.choices.filter(function (c) { return c !== f.answer; })[0] || v;   // 섞기 = 홀수째 칸만 틀리게
+      fill(id, v);
+    });
+  }
+  if (window.RMDebug) window.RMDebug.register({
+    title: '탐구활동 보고서',
+    actions: [
+      { label: '전부 정답', tone: 'ok', run: function () { dbgFill(true); } },
+      { label: '정오답 섞기', tone: 'no', run: function () { dbgFill(false); } },
+      { label: '미리보기', run: function () { openPreview(); } }
+    ]
+  });
 
   /* ── 라이트/다크 토글 (essay-basics와 동일: 인라인) ─────────────── */
   var themeBtn = document.getElementById('themeToggle');

@@ -1,11 +1,11 @@
 /* =========================================================================
-   essay/basics-v2.html 전용 스타일 — 이 화면에만 있는 규칙.
+   essay/basics-math.html · basics-sci.html · advanced.html 스타일 — 세 화면이 같은 엔진(essay-basics-v2.js)을 쓴다.
    여러 화면이 같이 쓰는 부품은 styles/ 의 공용 파일에 있다 (스토리북 참고).
    ========================================================================= */
 
 /* ============ 서술형 훈련 = 퍼플 테마 (공통은 essay.css) ============ */
 /* 레이아웃 v2 : 좌우 2분할 → 세로 단일 스크롤 (문제 위 · 풀이 아래) */
-/* 동작(빈칸/팝오버/채점/결과)은 essay-basics.js 와 동일 — essay-basics-v2.js */
+/* 동작(빈칸/팝오버/결과) = essay-basics-v2.js · 글 · 빈칸 읽기 = essay-sol.js */
 .content {
   flex-direction: column; padding: 0 clamp(12px, 1.6vw, 16px) 0;
   --guide: color-mix(in srgb, var(--text-on-frame) 94%, transparent); --card: var(--surface-1); --card-br: var(--white-a08); --card-sh: none;
@@ -26,8 +26,8 @@
 
 /* ============ 진행 인디케이터 (문제 번호탭) = 문제 카드 헤더에 통합 ============ */
 .qsteps { display: inline-flex; align-items: center; gap: var(--sp-8); }
-.qtab { min-width: 28px; height: 28px; padding: 0 var(--sp-6); border-radius: var(--r-8); display: inline-flex;
-  align-items: center; justify-content: center; cursor: default;
+.qtab { min-width: 28px; height: 28px; padding: 0 var(--sp-6); border: 0; border-radius: var(--r-8); display: inline-flex;
+  align-items: center; justify-content: center; cursor: pointer;
   font-family: var(--font-sans); font-weight: var(--fw-heavy); font-size: var(--fs-13); text-align: center;
   background: var(--qtab-bg); color: var(--qtab-fg); transition: background .16s, color .16s, box-shadow .16s; }
 .qtab.is-done { background: var(--qtab-done-bg); color: var(--qtab-done-fg); }
@@ -62,11 +62,14 @@
   animation: shimmer 1.8s ease-in-out infinite; display: flex; align-items: center; justify-content: center; }
 .qref__img span { color: var(--white-a60); font-weight: var(--fw-bold); font-size: var(--fs-13); }
 
+.qref img { display: block; max-width: 100%; max-height: calc(34vh - 48px); width: auto; height: auto; margin: 0 auto; border-radius: var(--r-8); }   /* 카드(34vh) 안에 그림이 다 보이게 */
+.qtext p + p { margin-top: var(--sp-6); }
 .qref__words { color: var(--white-a80); font-size: clamp(13px, 1.15vw, 15px); line-height: 1.7; white-space: pre-line; }
 @media (prefers-reduced-motion: reduce) { .qref__img { animation: none; } }
 
 .expl { display: flex; flex-direction: column; align-items: center; font-family: var(--font-serif); color: var(--guide); }
 .expl__doc { width: 100%; max-width: 760px; display: flex; flex-direction: column; gap: clamp(24px, 2.8vw, 38px); padding-top: var(--sp-6); }
+.expl__doc[hidden] { display: none; }   /* 문제마다 한 장 — 지금 문제만 보인다 */
 
 
 /* 빈칸: 항상 클릭 가능(재편집) + 예시(given) 변형 — 코어는 essay.css */
@@ -75,3 +78,12 @@
 /* 이 화면만 워크시트 여백이 좁고 라벨이 붙어 있다 */
 .worksheet { padding: clamp(16px, 2.2vw, 26px) clamp(14px, 2.4vw, 30px) clamp(20px, 2.4vw, 28px); }
 .worksheet__label { display: inline-flex; margin-bottom: var(--sp-8); }
+
+/* 풀이 줄 — 그림만 있는 줄 · 단계 소제목(빈칸 없이 「…요.」로 끝나는 줄, essay-basics-v2.js 가 가른다) */
+.line--img .eimg--block { margin: var(--sp-4) 0; }
+.para__head { font-family: var(--font-sans); }
+
+/* 한 문제를 다 채우면 아래 「다음 문제」 (모양은 essay.css) */
+.stage-action { display: none; }
+.stage-action.is-ready { display: block; animation: saIn .28s ease; }
+@media (prefers-reduced-motion: reduce) { .stage-action.is-ready { animation: none; } }
