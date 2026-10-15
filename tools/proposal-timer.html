@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>시안 — 학습 타이머</title>
+<!-- =========================================================================
+     2026-10-15 시안 — 결론이 나면 지운다 (CLAUDE.md 「tools/ 정리 규칙」).
+     액자는 iframe(srcdoc)이고 styles/ 의 진짜 머리줄 CSS(learn-shell.css)를 부른다.
+     ========================================================================= -->
+<link rel="stylesheet" href="../styles/tokens.css">
+<style>
+  body { margin: 0; background: var(--n-100); color: var(--n-650); font-family: var(--font-sans); letter-spacing: var(--tracking); }
+  main { max-width: 1400px; margin: 0 auto; padding: var(--sp-32) var(--sp-24) 80px; }
+  h1 { font-size: var(--fs-26); margin: 0 0 var(--sp-8); }
+  .lead { font-size: var(--fs-15); color: var(--n-500); margin: 0 0 var(--sp-32); line-height: 1.6; }
+  .row { background: var(--n-000); border-radius: var(--r-16); padding: var(--sp-16) var(--sp-20) var(--sp-20); margin-bottom: var(--sp-16); }
+  .row__hd { display: flex; align-items: baseline; gap: var(--sp-12); margin-bottom: var(--sp-12); flex-wrap: wrap; }
+  .row__k { font-family: var(--font-mono); font-weight: var(--fw-bold); font-size: var(--fs-16); color: var(--n-000); background: var(--n-650); border-radius: var(--r-8); padding: 2px var(--sp-8); }
+  .row__t { font-weight: var(--fw-heavy); font-size: var(--fs-19); }
+  .row__d { font-size: var(--fs-14); color: var(--n-400); }
+  .frames { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-12); }
+  .fr__cap { font-size: var(--fs-13); color: var(--n-400); margin: 0 0 var(--sp-6); font-weight: var(--fw-semibold); }
+  .fr iframe { width: 100%; border: 0; border-radius: var(--r-8); box-shadow: inset 0 0 0 1px var(--n-200); display: block; }
+  .fr--narrow iframe { width: 480px; max-width: 100%; }
+  @media (max-width: 1000px) { .frames { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body><main>
+  <h1>시안 — 학습 타이머</h1>
+  <p class="lead">유형 · 서술형 머리줄 타이머를 「진행 시간 / 제한 시간」으로 바꿉니다. 제한 시간(60분)은 연하게, 넘으면 빨강, 넘은 뒤에도 계속 올라갑니다.<br>
+  가르는 축은 하나 — <b>넘었을 때 무엇이 빨개지나.</b> 머리줄은 테마를 따라 바뀌지 않는 칠면이라 라이트 · 다크가 같습니다.</p>
+  <div id="rows"></div>
+</main>
+<script>
+(function () {
+  var ROOT = new URL('../', location.href).href, V = '?v=' + Date.now();
+  var P = [
+    { k: 'A', t: '칩 전체를 빨강으로', d: '넘는 순간 칩 면이 빨강 600(흰 글자 4.5:1). 가장 강하다. 머리줄 오른쪽 끝에서 눈에 확 띈다' },
+    { k: 'B', t: '숫자만 빨강', d: '칩은 계열의 진한 색 그대로, 진행 시간 숫자만 밝은 빨강(300). 머리줄이 덜 요란하다' },
+    { k: 'C', t: '칩에 빨간 테두리 + 점', d: '칩 면 · 숫자는 그대로, 2px 빨간 테두리와 시계 아이콘 자리에 빨간 점. 아이콘이 빠지는 대신 상태 점이 생긴다' },
+    { k: 'B2', t: 'B + 빨간 테두리', d: '숫자는 밝은 빨강(300), 칩에 2px 빨간 테두리(500). 칩 면 · 아이콘은 그대로' }
+  ];
+  P.unshift(P.pop());   // 새 안을 맨 위에
+  var CSS = [
+    /* 공통 — 제한 시간은 연하게 */
+    '.lheader__limit{font-weight:var(--fw-semibold)!important;font-size:var(--fs-14)!important;color:var(--white-a60);margin-left:-2px}',
+    /* A */
+    '.tA.is-over{background:var(--no-ink)}.tA.is-over .lheader__limit{color:var(--white-a80)}',
+    /* B */
+    '.tB.is-over .lheader__time{color:var(--no-on-dark)}',
+    '.tB2.is-over .lheader__time{color:var(--no-on-dark)}.tB2.is-over{box-shadow:inset 0 0 0 var(--bw-2) var(--no-solid)}',
+    /* C */
+    '.tC.is-over{box-shadow:inset 0 0 0 var(--bw-2) var(--no-solid)}',
+    '.tC.is-over img{display:none}.tC.is-over::after{content:"";order:-1;width:10px;height:10px;margin:0 4px;border-radius:50%;background:var(--no-solid)}',
+    '.tC.is-over.is-paused::after{display:none}',
+    /* 데모 틀 */
+    'body{margin:0;padding:16px;background:var(--n-200);font-family:var(--font-sans)}',
+    '.stack{display:flex;flex-direction:column;gap:12px}.lab{font:600 12px/1 var(--font-sans);color:var(--n-500);margin:4px 0 -4px 8px}'
+  ].join('');
+  var CRUMB = function (sec) {
+    return '<nav class="breadcrumb"><span class="crumb crumb--strong">과학 중등 1-1</span>' +
+      '<svg class="sep" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>' +
+      '<span class="crumb crumb--hide">(1) 생물의 구성</span>' +
+      '<svg class="sep crumb--hide" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>' +
+      '<span class="crumb crumb--strong">' + (sec === 'type' ? '1차 유형 문제' : '기본 다지기') + '</span></nav>';
+  };
+  function header(p, sec, time, cls, lab) {
+    return '<span class="lab">' + lab + '</span><header class="lheader">' + CRUMB(sec) + '<div class="lheader__actions">' +
+      '<div class="lheader__timer t' + p + ' ' + cls + '"><img src="assets/icons/ico-stopwatch.svg" alt=""><span class="lheader__time">' + time + '</span><span class="lheader__limit">/ 60:00</span></div>' +
+      '<button class="theme-toggle"><span class="theme-toggle__knob"></span></button>' +
+      '<button class="nav-ico"><img src="assets/icons/ico-siren.svg" alt=""></button><button class="nav-ico"><img src="assets/icons/ico-exit.svg" alt=""></button>' +
+      '</div></header>';
+  }
+  function frame(host, o) {
+    var css = ['styles/tokens.css', 'styles/base.css', 'styles/learn-shell.css'].map(function (h) { return '<link rel="stylesheet" href="' + h + V + '">'; }).join('');
+    var doc = '<!doctype html><html lang="ko" data-theme="' + o.theme + '" data-section="' + o.sec + '"><head><meta charset="utf-8"><base href="' + ROOT + '">' + css +
+      '<style>' + CSS + '</style></head><body><div class="stack">' + o.html + '</div>' +
+      '<script>addEventListener("load",function(){parent.postMessage({h:document.querySelector(".stack").getBoundingClientRect().bottom+16,id:' + JSON.stringify(o.id) + '},"*")});<\/script></body></html>';
+    var w = document.createElement('div'); w.className = 'fr' + (o.narrow ? ' fr--narrow' : '');
+    w.innerHTML = '<p class="fr__cap">' + o.cap + '</p>';
+    var f = document.createElement('iframe'); f.dataset.id = o.id; f.srcdoc = doc; f.style.height = '300px';
+    w.appendChild(f); host.appendChild(w);
+  }
+  addEventListener('message', function (e) { var f = document.querySelector('iframe[data-id="' + (e.data && e.data.id) + '"]'); if (f) f.style.height = e.data.h + 'px'; });
+
+  var rows = document.getElementById('rows');
+  P.forEach(function (p) {
+    var r = document.createElement('div'); r.className = 'row';
+    r.innerHTML = '<div class="row__hd"><span class="row__k">' + p.k + '</span><span class="row__t">' + p.t + '</span><span class="row__d">' + p.d + '</span></div><div class="frames"></div>';
+    rows.appendChild(r);
+    var host = r.querySelector('.frames');
+    ['type', 'essay'].forEach(function (sec) {
+      frame(host, { id: p.k + sec, cap: sec === 'type' ? '유형 (틸)' : '서술형 (보라)', theme: 'light', sec: sec,
+        html: header(p.k, sec, '24:37', '', '평소') + header(p.k, sec, '59:58', '', '넘기 2초 전') + header(p.k, sec, '62:10', 'is-over', '넘음 — 계속 올라간다') +
+              header(p.k, sec, '41:20', 'is-paused', '해설 · 결과 화면 (정지)') + header(p.k, sec, '62:10', 'is-over is-paused', '넘은 채 정지') });
+    });
+    frame(host, { id: p.k + 'n', cap: '좁은 화면 (480px) · 서술형', theme: 'dark', sec: 'essay', narrow: true,
+      html: header(p.k, 'essay', '24:37', '', '평소') + header(p.k, 'essay', '1:02:10', 'is-over', '넘음 · 한 시간 넘김(1:02:10)') });
+  });
+})();
+</script>
+</body></html>
