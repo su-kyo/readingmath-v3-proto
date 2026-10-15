@@ -24,7 +24,6 @@
 
 /* ===== 프로그레스 캡 (정오답 o/x + 오답 점프) ===== */
 .progress-cap { position: absolute; top: 0; left: 50%; transform: translateX(-50%); z-index: 4; display: inline-flex; align-items: center; gap: var(--sp-8); background: var(--th-static); border-radius: 0 0 var(--r-16) var(--r-16); padding: 0 var(--sp-12) var(--sp-6); max-width: calc(100% - 48px); flex-wrap: nowrap; }
-.cap-timer { display: inline-flex; align-items: center; gap: var(--sp-6); background: var(--n-900); border-radius: var(--r-full); padding: var(--sp-4) var(--sp-12) var(--sp-4) var(--sp-8); margin-right: 2px; opacity: .7; }
 .pcirc { width: 22px; height: 22px; border-radius: 50%; flex: none; position: relative; background: var(--white-a20); cursor: pointer; font-size: var(--fs-11); font-weight: var(--fw-heavy); color: var(--text-on-accent); display: flex; align-items: center; justify-content: center; }
 .pcirc.is-current { box-shadow: 0 0 0 var(--bw-2) var(--text-on-accent); }
 .pcirc.is-correct { background: var(--ok-solid); }

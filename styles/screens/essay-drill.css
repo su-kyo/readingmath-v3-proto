@@ -4,7 +4,7 @@
    ========================================================================= */
 
 /* ============ 서술형 훈련 = 퍼플 테마 (공통은 essay.css) ============ */
-/* 페이지 고유 토큰만 (--bl-* 코어 / .blank / .qpop / 하단바 / .htimer = essay.css) */
+/* 페이지 고유 토큰만 (--bl-* 코어 / .blank / .qpop / 하단바 = essay.css) */
 .content {
   flex-direction: column; padding: clamp(12px, 1.6vw, 16px) clamp(12px, 1.6vw, 16px) 0;
   --guide: color-mix(in srgb, var(--violet-050) 94%, transparent); --card: var(--surface-1); --card-br: var(--white-a08); --card-sh: none;

@@ -28,7 +28,6 @@
   var TOTAL = PROBLEMS.length;
   var answers = new Array(TOTAL);   // 저장된 답 (채점은 제출 후)
   var idx = 0;
-  var elapsed = 0;
 
   var progressEl = document.getElementById('progress');
   var qEl = document.getElementById('q');
@@ -37,8 +36,6 @@
   var opsScroll = document.getElementById('opsScroll');
 
   function el(tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
-  function pad2(n) { return (n < 10 ? '0' : '') + n; }
-  function fmtTime(s) { return pad2(Math.floor(s / 60)) + ':' + pad2(s % 60); }
 
   /* ---- 풀이 여부 ---- */
   function isAnswered(i) {
@@ -198,9 +195,7 @@
   var themeBtn = document.getElementById('themeToggle');
   if (themeBtn) themeBtn.addEventListener('click', function () { var c = document.documentElement.getAttribute('data-theme'); document.documentElement.setAttribute('data-theme', c === 'dark' ? 'light' : 'dark'); });
 
-  /* 타이머 (경과 시간 카운트업) */
-  var hdrTimerSpan = document.getElementById('timer');
-  setInterval(function () { elapsed++; if (hdrTimerSpan) hdrTimerSpan.textContent = fmtTime(elapsed); }, 1000);
+  /* 머리줄 타이머 = scripts/learn-timer.js */
 
   /* ---- 검수용 디버그 훅 (?debug=1일 때만 패널에 뜸) ---- */
   function dbgFill(i, ok) {

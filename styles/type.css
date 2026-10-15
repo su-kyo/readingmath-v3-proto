@@ -18,7 +18,3 @@
 .learn-body .toolbtn:not(.toolbtn--primary) { background: var(--th-solid); box-shadow: 0 var(--depth-4) 0 var(--th-accent-strong); }
 .learn-body .toolbtn:not(.toolbtn--primary):hover { filter: brightness(1.1); }
 .learn-body .toolbtn:not(.toolbtn--primary):active { box-shadow: 0 var(--depth-2) 0 var(--th-accent-strong); }
-
-/* ----- 화면 공용으로 올림 (2026-10-14 · RM-FILE-03) — type-quiz · type-review ----- */
-.cap-timer img { width: 17px; height: 17px; }
-.cap-timer span { font-family: var(--font-mono); font-weight: var(--fw-bold); color: var(--text-on-accent); font-size: var(--fs-15); }

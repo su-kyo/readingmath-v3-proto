@@ -215,15 +215,7 @@
 
   refreshNext();
 
-  // ── 타이머 (카운트업) ─────────────────────────────────────────────
-  var timerEl = document.getElementById('timer');
-  var sec = 0;
-  setInterval(function () {
-    sec++;
-    var m = String(Math.floor(sec / 60)).padStart(2, '0');
-    var s = String(sec % 60).padStart(2, '0');
-    timerEl.textContent = m + ':' + s;
-  }, 1000);
+  // 머리줄 타이머 = scripts/learn-timer.js
 
   // 결과보기 → 서술형 스텝 결과
   resultBtn.addEventListener('click', function () {

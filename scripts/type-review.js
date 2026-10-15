@@ -26,7 +26,6 @@
 
   var TOTAL = PROBLEMS.length;
   var idx = 0;
-  var FROZEN_TIME = '12:45';   // 제출 시점 (타이머 정지)
 
   var progressEl = document.getElementById('progress');
   var qEl = document.getElementById('q');
@@ -48,9 +47,7 @@
   }
 
   /* ---- 캡 (o/x + 오답 점프) ---- */
-  // 헤더 타이머 = 제출 시점(정지)
-  var hdrTimerSpan = document.getElementById('timer');
-  if (hdrTimerSpan) hdrTimerSpan.textContent = FROZEN_TIME;
+  // 헤더 타이머 = 제출 시점(정지) — 값은 HTML, 동작은 scripts/learn-timer.js
 
   function renderProgress() {
     progressEl.innerHTML = '';

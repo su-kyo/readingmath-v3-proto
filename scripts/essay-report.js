@@ -226,13 +226,7 @@
 
   refreshDone();
 
-  /* ── 타이머 (카운트업) ──────────────────────────────────────────── */
-  var timerEl = document.getElementById('timer');
-  var sec = 0;
-  setInterval(function () {
-    sec++;
-    timerEl.textContent = String(Math.floor(sec / 60)).padStart(2, '0') + ':' + String(sec % 60).padStart(2, '0');
-  }, 1000);
+  /* 머리줄 타이머 = scripts/learn-timer.js */
 
   /* ── 라이트/다크 토글 (essay-basics와 동일: 인라인) ─────────────── */
   var themeBtn = document.getElementById('themeToggle');

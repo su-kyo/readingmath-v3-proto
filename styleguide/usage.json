@@ -549,6 +549,11 @@
    "shared/training-result.html": "markup",
    "type/training-result.html": "markup"
   },
+  "chip--over": {
+   "essay/training-result.html": "markup",
+   "shared/training-result.html": "markup",
+   "type/training-result.html": "markup"
+  },
   "chip--round": {
    "essay/training-result.html": "markup",
    "shared/training-result.html": "markup",
@@ -556,11 +561,6 @@
   },
   "chip--train": {
    "nav/bridge.html": "markup"
-  },
-  "chip--warn": {
-   "essay/training-result.html": "markup",
-   "shared/training-result.html": "markup",
-   "type/training-result.html": "markup"
   },
   "chips": {
    "exam/home.html": "markup",
@@ -1834,7 +1834,23 @@
    "util/payment.html": "js",
    "util/report.html": "js"
   },
+  "is-over": {
+   "essay/advanced.html": "js",
+   "essay/basics-v2.html": "js",
+   "essay/basics.html": "js",
+   "essay/drill-review.html": "js",
+   "essay/drill-v2.html": "js",
+   "essay/drill.html": "js",
+   "essay/report-review.html": "js",
+   "essay/report.html": "js",
+   "essay/step-result.html": "js",
+   "type/quiz.html": "js",
+   "type/result.html": "js",
+   "type/review.html": "js"
+  },
   "is-paused": {
+   "essay/drill-review.html": "markup",
+   "essay/report-review.html": "markup",
    "essay/step-result.html": "markup",
    "type/result.html": "markup",
    "type/review.html": "markup"
@@ -2068,7 +2084,7 @@
    "type/review.html": "markup",
    "type/training-result.html": "markup"
   },
-  "lheader__timer": {
+  "lheader__limit": {
    "essay/advanced.html": "markup",
    "essay/basics-v2.html": "markup",
    "essay/basics.html": "markup",
@@ -2082,9 +2098,33 @@
    "type/result.html": "markup",
    "type/review.html": "markup"
   },
-  "lheader__timer--pause": {
+  "lheader__time": {
+   "essay/advanced.html": "markup",
+   "essay/basics-v2.html": "markup",
+   "essay/basics.html": "markup",
    "essay/drill-review.html": "markup",
-   "essay/report-review.html": "markup"
+   "essay/drill-v2.html": "markup",
+   "essay/drill.html": "markup",
+   "essay/report-review.html": "markup",
+   "essay/report.html": "markup",
+   "essay/step-result.html": "markup",
+   "type/quiz.html": "markup",
+   "type/result.html": "markup",
+   "type/review.html": "markup"
+  },
+  "lheader__timer": {
+   "essay/advanced.html": "markup",
+   "essay/basics-v2.html": "markup",
+   "essay/basics.html": "markup",
+   "essay/drill-review.html": "markup",
+   "essay/drill-v2.html": "markup",
+   "essay/drill.html": "markup",
+   "essay/report-review.html": "markup",
+   "essay/report.html": "markup",
+   "essay/step-result.html": "markup",
+   "type/quiz.html": "markup",
+   "type/result.html": "markup",
+   "type/review.html": "markup"
   },
   "lightbox": {
    "concept/learn.html": "markup"

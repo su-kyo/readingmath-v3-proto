@@ -6,10 +6,10 @@
   <title>셸 — 리딩수학과학 디자인 시스템</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
   <base href="../" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261015-6" />
-  <link rel="stylesheet" href="styles/base.css?v=20261015-6" />
-  <link rel="stylesheet" href="styles/components.css?v=20261015-6" />
-  <link rel="stylesheet" href="styleguide/sg.css?v=20261015-6" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261015-7" />
+  <link rel="stylesheet" href="styles/base.css?v=20261015-7" />
+  <link rel="stylesheet" href="styles/components.css?v=20261015-7" />
+  <link rel="stylesheet" href="styleguide/sg.css?v=20261015-7" />
 </head>
 <body data-sg-css="tokens,base,components,learn-shell">
 <div class="sg">
@@ -99,14 +99,21 @@
         <p>다섯 화면이 이 셸 전체를 각자 복사해 쓰고 있었다. Phase 10-③에서 공용 파일 링크로 바꿨다.</p>
       </details>
 
-      <div class="sg-item" data-uses="lheader, breadcrumb, nav-ico, theme-toggle" data-pad="16px"
+      <div class="sg-item" data-uses="lheader, breadcrumb, lheader__timer, nav-ico, theme-toggle" data-pad="16px"
            data-bg="var(--n-200)">
         <div class="sg-item__hd"><h3>학습 헤더</h3>
-          <span class="sg-item__cls">.lheader · .breadcrumb · .lheader__timer · .nav-ico · .theme-toggle</span>
+          <span class="sg-item__cls">.lheader · .breadcrumb · .lheader__timer · __time · __limit · .is-over · .is-paused · .nav-ico · .theme-toggle</span>
           <span class="sg-item__file">learn-shell.css</span></div>
         <p class="sg-note">면색은 <code>--th-static</code>입니다. 계열의 진한 톤이고 라이트·다크에서 값이 같습니다. 그래서 두 견본의 헤더 색이 같습니다.
           경로가 길면 마지막 조각만 말줄임합니다(<code>.crumb--clip</code>). 앞쪽 학년·단원이 먼저 잘리면 현재 위치를 알 수 없기 때문입니다.
-          타이머는 <code>.is-paused</code>일 때 흐려지고 앞에 정지 표시가 붙습니다.</p>
+          타이머(유형 · 서술형)는 「진행 시간 / 제한 시간」입니다. 제한 시간은 흰색 80% · 한 단계 작은 글자입니다(60%는 틸 칩에서 4.37로 작은 글자 기준 4.5에 못 미친다).
+          넘으면(<code>.is-over</code>) 진행 시간이 밝은 빨강(<code>--no-on-dark</code>)이 되고 칩에 2px 빨간 테두리(<code>--no-solid</code>)가 둘리며, 숫자는 계속 올라갑니다. 분은 60을 넘어도 분으로 셉니다(<code>62:10 / 60:00</code>).
+          해설 · 결과 화면은 <code>.is-paused</code>로 흐려지고 앞에 정지 표시가 붙습니다. 넘은 채 멈췄으면 빨강도 그대로 남습니다.
+          세는 동작과 넘었는지 판정은 <code>scripts/learn-timer.js</code>가 하고, 제한 시간은 <code>.lheader__limit</code>의 글자가 정본입니다.</p>
+        <details class="sg-why"><summary>근거</summary>
+          <p>2026-10-15 전에는 진행 시간만 보였고 제한을 넘었는지 알 수 없었다. 결과 화면의 「시간 초과 감점」은 앰버였는데, 타이머와 같은 빨강으로 맞췄다(<code>.chip--over</code>). 넘었을 때의 표현은 칩 전체 빨강 · 숫자만 빨강 · 테두리와 점 세 안에서 「숫자 빨강 + 테두리」로 정했다.</p>
+          <p>세는 코드는 화면 7곳에 복사돼 있었고, 서술형 해설 2장은 정지 이름이 달라(<code>--pause</code>) 정지 표시가 붙지 않았다. 둘 다 이때 하나로 모았다.</p>
+        </details>
         <template class="sg-src">
           <div style="display:flex;flex-direction:column;gap:12px">
             <div class="lheader">
@@ -116,7 +123,7 @@
                 <span class="crumb crumb--strong crumb--clip">개념 다지기</span>
               </div>
               <div class="lheader__actions">
-                <span class="lheader__timer"><span>08:32</span></span>
+                <span class="lheader__timer"><span class="lheader__time">08:32</span><span class="lheader__limit">/ 60:00</span></span>
                 <span class="theme-toggle"><span class="theme-toggle__knob"></span></span>
                 <button class="nav-ico">!</button><button class="nav-ico">☰</button>
               </div>
@@ -128,8 +135,19 @@
                 <span class="crumb crumb--strong crumb--clip">아주 긴 소단원 이름이 들어오면 여기서 잘립니다 실제로도 이렇게 깁니다</span>
               </div>
               <div class="lheader__actions">
-                <span class="lheader__timer is-paused"><span>00:00</span></span>
+                <span class="lheader__timer is-over"><span class="lheader__time">62:10</span><span class="lheader__limit">/ 60:00</span></span>
                 <span class="theme-toggle"><span class="theme-toggle__knob"></span></span>
+                <button class="nav-ico">☰</button>
+              </div>
+            </div>
+            <div class="lheader">
+              <div class="breadcrumb">
+                <span class="crumb">과학 중등 1-1</span><span class="sep">›</span>
+                <span class="crumb crumb--strong">해설 · 결과 화면 — 정지</span>
+              </div>
+              <div class="lheader__actions">
+                <span class="lheader__timer is-paused"><span class="lheader__time">41:20</span><span class="lheader__limit">/ 60:00</span></span>
+                <span class="lheader__timer is-paused is-over"><span class="lheader__time">62:10</span><span class="lheader__limit">/ 60:00</span></span>
                 <button class="nav-ico">☰</button>
               </div>
             </div>
@@ -244,7 +262,7 @@
           물리 키보드도 됩니다. <code>keypad-input.js</code>가 누른 키에 해당하는 화면 버튼을 대신 클릭하므로, 입력 로직은 한 벌입니다.</p>
         <template class="sg-src">
           <div class="keypad" id="kp"></div>
-          <script src="scripts/keypad.js?v=20261015-6"></script>
+          <script src="scripts/keypad.js?v=20261015-7"></script>
           <script>
             /* 키 구성의 정본은 keypad.js 의 KEYS 배열 하나뿐이다.
                문서가 그걸 옮겨 적으면 키가 바뀔 때 문서만 옛것이 된다. */
@@ -260,7 +278,7 @@
         <p class="sg-note">마크업과 CSS가 위와 같고, 견본의 <code>data-section</code>만 <code>type</code>입니다. 트레이 틴트와 LCD 글자색이 틸로 바뀝니다.</p>
         <template class="sg-src">
           <div class="keypad" id="kp2"></div>
-          <script src="scripts/keypad.js?v=20261015-6"></script>
+          <script src="scripts/keypad.js?v=20261015-7"></script>
           <script>document.getElementById('kp2').innerHTML = RMKeypad.html();</script>
         </template>
       </div>
@@ -293,7 +311,7 @@
 
   </main>
 </div>
-<script src="styleguide/shells.js?v=20261015-6"></script>
-<script src="styleguide/sg.js?v=20261015-6"></script>
+<script src="styleguide/shells.js?v=20261015-7"></script>
+<script src="styleguide/sg.js?v=20261015-7"></script>
 </body>
 </html>

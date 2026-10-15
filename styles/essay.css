@@ -9,11 +9,6 @@
 /* 헤더 = 라이트·다크 공통 정적 프레임 색 var(--th-static) (서술형 static = violet-800, 테마 오버라이드 없음). */
 .lheader { background: var(--th-static); }
 
-/* 헤더 타이머 칩 (drill · report 공용) */
-.htimer { display: inline-flex; align-items: center; gap: var(--sp-4); padding: var(--sp-6) var(--sp-8); border-radius: var(--r-8); background: var(--black-a30); flex: none; }
-.htimer img { width: 15px; height: 15px; }
-.htimer span { font-family: var(--font-mono); font-weight: var(--fw-bold); font-size: var(--fs-14); color: var(--text-on-accent); }
-
 /* ============ 빈칸 상태 토큰 (테마별) ============
    .content 에 실린다. 화면 고유 토큰(--guide 등)은 styles/screens/essay-*.css 에서 선언.  */
 .content {

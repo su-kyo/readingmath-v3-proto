@@ -223,8 +223,9 @@
   background: color-mix(in srgb, var(--th-static) 45%, var(--n-900)); color: var(--n-050); font-size: var(--fs-13); font-weight: var(--fw-semibold); }
 .chip b { font-weight: var(--fw-bold); }
 .chip--round { font-weight: var(--fw-heavy); letter-spacing: .02em; }
-.chip--warn { color: var(--amber-200); }
-.chip--warn::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--warn-solid); }
+/* 시간 초과 감점 — 머리줄 타이머의 초과 표시(learn-shell.css .is-over)와 같은 빨강 (2026-10-15 · 전: 앰버) */
+.chip--over { color: var(--no-on-dark); }
+.chip--over::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--no-solid); }
 .hwf__screen::-webkit-scrollbar { width: 10px; }
 .score { flex: none; display: flex; flex-direction: column; align-items: center; gap: var(--sp-8); min-width: 170px; }
 .score img { width: clamp(84px,9vw,110px); height: auto; filter: drop-shadow(0 8px 18px var(--black-a40)); }
