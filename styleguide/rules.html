@@ -6,10 +6,10 @@
   <title>규칙 색인 — 리딩수학과학 디자인 시스템</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
   <base href="../" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261015-31" />
-  <link rel="stylesheet" href="styles/base.css?v=20261015-31" />
-  <link rel="stylesheet" href="styles/components.css?v=20261015-31" />
-  <link rel="stylesheet" href="styleguide/sg.css?v=20261015-31" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261015-32" />
+  <link rel="stylesheet" href="styles/base.css?v=20261015-32" />
+  <link rel="stylesheet" href="styles/components.css?v=20261015-32" />
+  <link rel="stylesheet" href="styleguide/sg.css?v=20261015-32" />
 </head>
 <body>
 <div class="sg">
@@ -749,7 +749,7 @@
       </article>
       <article class="sg-rulecard" id="RM-PART-08" data-check="eye" data-since="2026-10-15">
         <h3>문장 속 빈칸은 칸형 한 벌 — 면은 하나, 상태는 테두리 · 글자 · 배지로</h3>
-        <p class="sg-rulecard__do">개념 학습 · 요약 창 · 개념 다지기 · 서술형의 문장 속 빈칸은 같은 칸이다. 모양 · 상태는 <code>styles/components.css</code>의 공용 빈칸과 <code>--blank-*</code> 토큰이 정하고, 화면 CSS는 크기 · 글꼴 · 배지 · 누를 수 있는지만 정한다. 상태는 여섯이다. 빈칸(1.5px 계열 500 테두리 · 계열색 자리표시) · 지금(창이 열렸거나 계산기로 입력 중 · 2px 계열 600 테두리) · 채움(1.5px 회색 테두리 · 계열 600 답) · 주어진 칸(채움과 같은 선 · 옅은 면 · 못 누름) · 정답 · 오답(2px 500 테두리 · 600 글자 · ✓·✕ 배지). 「지금」에 바깥 링이나 깜빡이는 커서를 두지 않는다. 고르는 빈칸(선지 창)과 입력하는 빈칸(계산기)은 모양을 나누지 않는다.</p>
+        <p class="sg-rulecard__do">개념 학습 · 요약 창 · 개념 다지기 · 서술형의 문장 속 빈칸은 같은 칸이다. 모양 · 상태는 <code>styles/components.css</code>의 공용 빈칸과 <code>--blank-*</code> 토큰이 정하고, 화면 CSS는 크기 · 글꼴 · 배지 · 누를 수 있는지만 정한다. 상태는 여섯이다. 빈칸(1.5px 계열 500 테두리 · 계열 600 자리표시) · 지금(창이 열렸거나 계산기로 입력 중 · 2px 계열 600 테두리) · 채움(1.5px 회색 테두리 · 계열 600 답) · 주어진 칸(채움과 같은 선 · 옅은 면 · 못 누름) · 정답 · 오답(2px 500 테두리 · 600 글자 · ✓·✕ 배지). 「지금」에 바깥 링이나 깜빡이는 커서를 두지 않는다. 고르는 빈칸(선지 창)과 입력하는 빈칸(계산기)은 모양을 나누지 않는다.</p>
         <dl>
           <dt>검사</dt><dd>눈 · <a href="styleguide/components.html#input">부품 › 빈칸</a></dd>
           <dt>예외</dt><dd>개념 학습의 방금 맞힌 빈칸은 0.5초 동안 정답 모양 + ✓를 보인 뒤 채움으로 바뀐다. 따로 선 답안 칸(<code>.sinput</code>)과 순서 맞추기 슬롯(<code>.slot</code>)은 문장 속 빈칸이 아니라 이 규칙 밖이다.</dd>
@@ -857,6 +857,6 @@
 
   </main>
 </div>
-<script src="styleguide/sg.js?v=20261015-31"></script>
+<script src="styleguide/sg.js?v=20261015-32"></script>
 </body>
 </html>
