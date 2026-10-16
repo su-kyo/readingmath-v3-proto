@@ -2,22 +2,17 @@
    사용: 페이지에 <script src="scripts/gnb-drawer.js?v=1"></script> 추가.
    #menuBtn(또는 [data-drawer-open]) 클릭 시 자동으로 열림. window.RMDrawer.open()/close() 도 제공. */
 (function () {
+  /* 학기 목록과 이름은 scripts/subject.js 한 벌 — 이 파일보다 먼저 불러야 한다 */
+  var S = window.RMSubject;
   var SEM = {
-    elem: [['elem-3-1','초등 3-1'],['elem-3-2','초등 3-2'],['elem-4-1','초등 4-1'],['elem-4-2','초등 4-2'],
-           ['elem-5-1','초등 5-1'],['elem-5-2','초등 5-2'],['elem-6-1','초등 6-1'],['elem-6-2','초등 6-2']],
-    mid:  [['mid-1-1','중등 1-1'],['mid-1-2','중등 1-2'],['mid-2-1','중등 2-1'],['mid-2-2','중등 2-2'],
-           ['mid-3-1','중등 3-1'],['mid-3-2','중등 3-2'],['high-1-1','고등 1-1'],['high-1-2','고등 1-2']]
+    elem: S.sems.slice(0, 8).map(function (k) { return [k, S.semLabel(k, true)]; }),
+    mid:  S.sems.slice(8).map(function (k) { return [k, S.semLabel(k, true)]; })
   };
-  /* 학교급 이름은 홈(nav/home.html)과 같은 규칙을 쓴다 — 둘이 어긋나면 학기 표기가 화면마다 달라진다.
-     고등 과목명(공통수학·통합과학 등)은 아직 확정 전이라 학년·학기로만 부른다. */
-  var LVL = { elem:'초등', mid:'중등', high:'고등' };
-  function fullLabel(key){
-    var p = key.split('-');            // elem-3-1
-    return LVL[p[0]] + ' ' + p[1] + '학년 ' + p[2] + '학기';
-  }
+  function fullLabel(key){ return S.semLabel(key); }
 
-  function subject(){ return localStorage.getItem('rm-subject') || 'math'; }
-  function semKey(){ return localStorage.getItem('rm-sem') || 'elem-3-1'; }
+  /* 과목은 부를 때마다 새로 읽는다 — 홈은 열린 뒤에 주소의 과목을 저장한다 */
+  function subject(){ try { return localStorage.getItem('rm-subject') === 'science' ? 'science' : 'math'; } catch (e) { return 'math'; } }
+  function semKey(){ return S.sem(); }
 
   /* 서랍 스타일은 styles/gnb.css 끝에 있다 (2026-10-14 · RM-JS-01) */
 

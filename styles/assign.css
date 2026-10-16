@@ -7,6 +7,7 @@
 .hd { flex: none; display: flex; align-items: center; justify-content: space-between; gap: var(--sp-16); background: var(--hd); border-radius: var(--r-30); padding: var(--sp-8) var(--sp-12) var(--sp-8) 28px; color: var(--text-on-accent); }
 
 .breadcrumb__strong { font-weight: var(--fw-heavy); letter-spacing: -.02em; white-space: nowrap; }
+.breadcrumb__light { font-weight: var(--fw-semibold); }   /* 단원 이름 — 굵기 눈금 600 (옛 인라인 500) */
 
 .breadcrumb__title { opacity: .92; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 

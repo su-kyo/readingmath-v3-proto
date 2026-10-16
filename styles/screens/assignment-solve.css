@@ -10,7 +10,7 @@
    · 객관식/주관식(키패드) 혼합, 라이트·다크 토글
    ========================================================================= */
 :root {
-  --hd: var(--th-static); --blue: var(--th-ink-accent); --blue-d: var(--info-solid); --yellow: var(--current);
+  --hd: var(--th-static); --accent: var(--th-ink-accent); --focus: var(--current);
   /* 표면 · 글자 · 선은 tokens.css 의 시스템 토큰 — 라이트·다크 전환도 거기서 한다 */
   --content: var(--assign-content); --qpanel: var(--surface-1); --panel: var(--surface-inset); --ink: var(--text); --sub: var(--text-muted);
   --line: var(--divider-strong); --opt: var(--assign-opt); --opt-hover: var(--assign-opt-hover); --track: var(--assign-track); --dash: var(--assign-dash);
@@ -44,9 +44,9 @@ body { font-family: var(--font-sans); background: var(--asset-console-task-body)
 .opts--col { grid-template-columns: 1fr; }
 .opt { display: flex; align-items: center; gap: var(--sp-12); padding: var(--sp-12) var(--sp-16); border: var(--bw-1_5) solid var(--line); border-radius: var(--r-12); background: var(--opt); cursor: pointer; text-align: left; font-family: inherit; transition: border-color .13s, background .13s; }
 .opt:hover { border-color: var(--th-accent-hi); background: var(--opt-hover); }
-.opt.is-selected { border-color: var(--blue); background: color-mix(in srgb, var(--th-accent) 15%, transparent); box-shadow: inset 0 0 0 var(--bw-1) var(--blue); }
+.opt.is-selected { border-color: var(--accent); background: color-mix(in srgb, var(--th-accent) 15%, transparent); box-shadow: inset 0 0 0 var(--bw-1) var(--accent); }
 
-.opt.is-selected .opt__num { border-color: var(--blue); background: var(--blue); color: var(--text-on-accent); }
+.opt.is-selected .opt__num { border-color: var(--accent); background: var(--accent); color: var(--text-on-accent); }
 
 /* 주관식 (입력 + 키패드) */
 .short { display: flex; flex-direction: column; gap: var(--sp-16); align-items: center; }
@@ -64,13 +64,13 @@ body { font-family: var(--font-sans); background: var(--asset-console-task-body)
 
 .omr__ptop span { font-family: var(--font-mono); font-size: var(--fs-16); font-weight: var(--fw-bold); color: var(--ink); font-variant-numeric: tabular-nums; }
 
-.omr__track > i { display: block; height: 100%; border-radius: var(--r-full); background: var(--blue); transition: width .25s ease; }
+.omr__track > i { display: block; height: 100%; border-radius: var(--r-full); background: var(--accent); transition: width .25s ease; }
 
 .cell { aspect-ratio: 1; border: var(--bw-2) dashed var(--dash); border-radius: var(--r-8); background: transparent; color: var(--dash); font-family: var(--font-mono); font-size: var(--fs-19); font-weight: var(--fw-bold); cursor: pointer; font-variant-numeric: tabular-nums; transition: .12s; display: grid; place-items: center; }
-.cell:hover { border-color: var(--blue); color: var(--blue); }
-.cell.is-done { border: var(--bw-2) solid var(--blue); background: var(--blue); color: var(--text-on-accent); }
+.cell:hover { border-color: var(--accent); color: var(--accent); }
+.cell.is-done { border: var(--bw-2) solid var(--accent); background: var(--accent); color: var(--text-on-accent); }
 .cell.is-cur { border: var(--bw-3) solid var(--current); }
-.cell.is-cur.is-done { background: var(--blue); color: var(--text-on-accent); }
+.cell.is-cur.is-done { background: var(--accent); color: var(--text-on-accent); }
 .cell.is-cur:not(.is-done) { color: var(--ink); border-style: solid; }
 
 /* ===== 답안표 입력 — 프레임은 공용 monitor(우측 도킹 변형), 안(OMR)은 그대로 ===== */
@@ -88,17 +88,17 @@ body { font-family: var(--font-sans); background: var(--asset-console-task-body)
 .qrow.is-done .qrow__n { color: var(--ink); }
 .qrow__opts { flex: 1; display: flex; justify-content: center; align-items: center; gap: var(--sp-16); }
 .bub { width: 32px; height: 32px; border-radius: 50%; border: var(--bw-1_5) solid var(--dash); background: transparent; color: var(--sub); font-family: var(--font-mono); font-size: var(--fs-15); font-weight: var(--fw-bold); cursor: pointer; display: grid; place-items: center; transition: .12s; }
-.bub:hover { border-color: var(--blue); color: var(--blue); }
-.bub.is-on { background: var(--blue); border-color: var(--blue); color: var(--text-on-accent); }
+.bub:hover { border-color: var(--accent); color: var(--accent); }
+.bub.is-on { background: var(--accent); border-color: var(--accent); color: var(--text-on-accent); }
 .bub.is-on svg { width: 15px; height: 15px; }
 /* 주관식 = 누르면 아래로 키패드 펼침 (버튼) */
 .qrow__short { flex: 1; display: flex; align-items: center; gap: var(--sp-8); padding: var(--sp-8) var(--sp-12); border-radius: var(--r-8); border: var(--bw-1) dashed var(--dash); background: transparent; cursor: pointer; font-family: inherit; transition: border-color .13s, background .13s; }
 .qrow__short__v { flex: 1; text-align: center; font-family: var(--font-mono); font-size: var(--fs-15); font-weight: var(--fw-bold); color: var(--ink); }
 .qrow__short.empty .qrow__short__v { color: var(--sub); font-family: var(--font-sans); font-weight: var(--fw-semibold); }
-.qrow__short:hover { background: var(--opt-hover); border-color: var(--blue); }
-.qrow__short.is-open { border-style: solid; border-color: var(--yellow); background: var(--opt-hover); }
+.qrow__short:hover { background: var(--opt-hover); border-color: var(--accent); }
+.qrow__short.is-open { border-style: solid; border-color: var(--focus); background: var(--opt-hover); }
 .qrow__chev { width: 16px; height: 16px; flex: none; color: var(--sub); transition: transform .2s; }
-.qrow__short.is-open .qrow__chev { transform: rotate(180deg); color: var(--yellow); }
+.qrow__short.is-open .qrow__chev { transform: rotate(180deg); color: var(--focus); }
 /* 주관식 인라인 키패드 패널 */
 .qrow__pad { display: flex; flex-direction: column; align-items: center; gap: var(--sp-12); margin: -2px var(--sp-4) var(--sp-8); animation: padDrop .2s ease; }   /* 트레이(키패드)가 이미 면이라 박스를 덧대지 않는다 */
 @keyframes padDrop { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
@@ -112,7 +112,7 @@ body { font-family: var(--font-sans); background: var(--asset-console-task-body)
 
 /* 스크롤바 */
 :root[data-theme="dark"] .qpanel::-webkit-scrollbar-thumb { background: var(--scroll-thumb-dark-strong); background-clip: padding-box; }
-:focus-visible { outline: var(--bw-3) solid var(--yellow); outline-offset: 2px; }
+:focus-visible { outline: var(--bw-3) solid var(--focus); outline-offset: 2px; }
 
 @media (max-width: 900px) {
   .content { flex-direction: column; }

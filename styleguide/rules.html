@@ -6,10 +6,10 @@
   <title>규칙 색인 — 리딩수학과학 디자인 시스템</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
   <base href="../" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261016-2" />
-  <link rel="stylesheet" href="styles/base.css?v=20261016-2" />
-  <link rel="stylesheet" href="styles/components.css?v=20261016-2" />
-  <link rel="stylesheet" href="styleguide/sg.css?v=20261016-2" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261016-3" />
+  <link rel="stylesheet" href="styles/base.css?v=20261016-3" />
+  <link rel="stylesheet" href="styles/components.css?v=20261016-3" />
+  <link rel="stylesheet" href="styleguide/sg.css?v=20261016-3" />
 </head>
 <body>
 <div class="sg">
@@ -386,7 +386,7 @@
 
       <article class="sg-rulecard" id="RM-UTIL-05" data-check="eye" data-since="2026-08-24">
         <h3>다크가 기본, 라이트도 산다 — 테마 토글 버튼은 없다</h3>
-        <p class="sg-rulecard__do">각 화면 <code>&lt;head&gt;</code>의 테마 초기화 한 줄이 <code>localStorage['rm-theme']</code>를 읽고, 값이 <code>'light'</code>일 때만 <code>data-theme</code>를 붙인다.</p>
+        <p class="sg-rulecard__do">각 화면 <code>&lt;head&gt;</code>의 테마 초기화 한 줄이 <code>localStorage['rm-theme-choice']</code>를 읽고, 값이 <code>'light'</code>일 때만 <code>data-theme</code>를 붙인다. 이 값은 테마 버튼을 눌렀을 때만 저장한다. 화면을 여는 것만으로 저장하지 않는다.</p>
         <dl>
           <dt>검사</dt><dd><code>style-audit.py</code>가 이 한 줄만 「HTML 안 &lt;script&gt;」에서 뺀다 · 눈</dd>
           <dt>예외</dt><dd>없음</dd>
@@ -858,6 +858,6 @@
 
   </main>
 </div>
-<script src="styleguide/sg.js?v=20261016-2"></script>
+<script src="styleguide/sg.js?v=20261016-3"></script>
 </body>
 </html>

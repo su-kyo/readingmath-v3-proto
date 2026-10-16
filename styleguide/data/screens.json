@@ -21,6 +21,7 @@
    ],
    "js": [
     "scripts/scratchpad.js",
+    "scripts/assignment-data.js",
     "scripts/assignment-explain.js",
     "scripts/learn-exit.js"
    ],
@@ -44,6 +45,11 @@
      "name": "토스트",
      "group": "부품 › 토스트",
      "doc": "styleguide/components.html#toast"
+    },
+    {
+     "name": "수식 표기",
+     "group": "부품 › 그 밖에",
+     "doc": "styleguide/components.html#misc"
     },
     {
      "name": "배경 사진과 다크 막",
@@ -146,9 +152,11 @@
    "css": [
     "styles/gnb.css",
     "styles/tokens.css",
+    "styles/base.css",
     "styles/screens/assignment-home.css"
    ],
    "js": [
+    "scripts/subject.js",
     "scripts/gnb-drawer.js",
     "scripts/assignment-home.js"
    ],
@@ -238,6 +246,7 @@
     "styles/screens/assignment-result.css"
    ],
    "js": [
+    "scripts/assignment-data.js",
     "scripts/assignment-result.js",
     "scripts/learn-exit.js"
    ],
@@ -251,6 +260,11 @@
      "name": "토스트",
      "group": "부품 › 토스트",
      "doc": "styleguide/components.html#toast"
+    },
+    {
+     "name": "수식 표기",
+     "group": "부품 › 그 밖에",
+     "doc": "styleguide/components.html#misc"
     },
     {
      "name": "배경 사진과 다크 막",
@@ -295,7 +309,7 @@
      "count": 3
     },
     {
-     "name": "--blue",
+     "name": "--accent",
      "count": 3
     },
     {
@@ -361,6 +375,7 @@
     "scripts/debug-panel.js",
     "scripts/keypad.js",
     "scripts/keypad-input.js",
+    "scripts/assignment-data.js",
     "scripts/assignment-solve.js",
     "scripts/learn-exit.js"
    ],
@@ -379,6 +394,11 @@
      "name": "토스트",
      "group": "부품 › 토스트",
      "doc": "styleguide/components.html#toast"
+    },
+    {
+     "name": "수식 표기",
+     "group": "부품 › 그 밖에",
+     "doc": "styleguide/components.html#misc"
     },
     {
      "name": "배경 사진과 다크 막",
@@ -426,7 +446,7 @@
    ],
    "tokens": [
     {
-     "name": "--blue",
+     "name": "--accent",
      "count": 15
     },
     {
@@ -450,10 +470,6 @@
      "count": 3
     },
     {
-     "name": "--info-solid",
-     "count": 3
-    },
-    {
      "name": "--current",
      "count": 3
     },
@@ -470,8 +486,12 @@
      "count": 3
     },
     {
-     "name": "--yellow",
+     "name": "--focus",
      "count": 3
+    },
+    {
+     "name": "--text",
+     "count": 2
     }
    ],
    "rules": [
@@ -1172,8 +1192,8 @@
    "theme": "light+dark",
    "css": [
     "styles/tokens.css",
-    "styles/learn-shell.css",
     "styles/base.css",
+    "styles/learn-shell.css",
     "styles/components.css",
     "styles/monitor.css",
     "styles/screens/concept-learn.css",
@@ -1327,8 +1347,8 @@
    "theme": "light+dark",
    "css": [
     "styles/tokens.css",
-    "styles/learn-shell.css",
     "styles/base.css",
+    "styles/learn-shell.css",
     "styles/components.css",
     "styles/monitor.css",
     "styles/screens/concept-learn.css",
@@ -1483,8 +1503,8 @@
    "theme": "light+dark",
    "css": [
     "styles/tokens.css",
-    "styles/learn-shell.css",
     "styles/base.css",
+    "styles/learn-shell.css",
     "styles/components.css",
     "styles/screens/concept-organize.css",
     "styles/scratchpad.css"
@@ -1605,8 +1625,8 @@
    "theme": "light+dark",
    "css": [
     "styles/tokens.css",
-    "styles/learn-shell.css",
     "styles/base.css",
+    "styles/learn-shell.css",
     "styles/components.css",
     "styles/screens/concept-organize.css",
     "styles/scratchpad.css"
@@ -3481,6 +3501,7 @@
    ],
    "js": [
     "scripts/subject.js",
+    "scripts/grade.js",
     "scripts/essay-step-result.js",
     "scripts/step-progress.js",
     "scripts/learn-timer.js",
@@ -3607,6 +3628,7 @@
    ],
    "js": [
     "scripts/subject.js",
+    "scripts/grade.js",
     "scripts/debug-panel.js",
     "scripts/essay-training-result.js",
     "scripts/learn-exit.js"
@@ -3707,6 +3729,7 @@
     "styles/screens/exam-home.css"
    ],
    "js": [
+    "scripts/subject.js",
     "scripts/gnb-drawer.js",
     "scripts/exam-theme.js",
     "scripts/exam-tile.js",
@@ -4052,6 +4075,7 @@
    ],
    "js": [
     "scripts/space-bg.js",
+    "scripts/subject.js",
     "scripts/nav-curriculum.js",
     "scripts/gnb-drawer.js"
    ],
@@ -4082,7 +4106,7 @@
    ],
    "tokens": [
     {
-     "name": "--mint",
+     "name": "--accent",
      "count": 8
     },
     {
@@ -4098,11 +4122,15 @@
      "count": 5
     },
     {
+     "name": "--ok",
+     "count": 5
+    },
+    {
      "name": "--th-accent",
      "count": 4
     },
     {
-     "name": "--green",
+     "name": "--exam",
      "count": 4
     },
     {
@@ -4111,10 +4139,6 @@
     },
     {
      "name": "--card",
-     "count": 3
-    },
-    {
-     "name": "--purple",
      "count": 3
     },
     {
@@ -4153,6 +4177,7 @@
    ],
    "js": [
     "scripts/space-bg.js",
+    "scripts/subject.js",
     "scripts/nav-freemode.js",
     "scripts/gnb-drawer.js"
    ],
@@ -4256,6 +4281,7 @@
    ],
    "js": [
     "scripts/debug-panel.js",
+    "scripts/subject.js",
     "scripts/nav-home.js",
     "scripts/gnb-drawer.js"
    ],
@@ -4353,6 +4379,7 @@
    ],
    "js": [
     "scripts/subject.js",
+    "scripts/grade.js",
     "scripts/step-result.js",
     "scripts/step-progress.js",
     "scripts/learn-exit.js"
@@ -4477,6 +4504,7 @@
    ],
    "js": [
     "scripts/subject.js",
+    "scripts/grade.js",
     "scripts/debug-panel.js",
     "scripts/concept-training-result.js",
     "scripts/learn-exit.js"
@@ -4750,6 +4778,7 @@
    ],
    "js": [
     "scripts/subject.js",
+    "scripts/grade.js",
     "scripts/type-quiz-data-math.js",
     "scripts/type-quiz-data-sci.js",
     "scripts/type-result.js",
@@ -5034,6 +5063,7 @@
    ],
    "js": [
     "scripts/subject.js",
+    "scripts/grade.js",
     "scripts/debug-panel.js",
     "scripts/type-quiz-data-math.js",
     "scripts/type-quiz-data-sci.js",
@@ -5152,6 +5182,8 @@
     "styles/history.css"
    ],
    "js": [
+    "scripts/subject.js",
+    "scripts/grade.js",
     "scripts/util-history.js",
     "scripts/gnb-drawer.js"
    ],
@@ -5260,6 +5292,7 @@
    ],
    "js": [
     "scripts/util-notice-detail.js",
+    "scripts/subject.js",
     "scripts/gnb-drawer.js"
    ],
    "parts": [
@@ -5352,6 +5385,7 @@
    ],
    "js": [
     "scripts/util-notice.js",
+    "scripts/subject.js",
     "scripts/gnb-drawer.js"
    ],
    "parts": [
@@ -5465,6 +5499,7 @@
    ],
    "js": [
     "scripts/util-payment.js",
+    "scripts/subject.js",
     "scripts/gnb-drawer.js"
    ],
    "parts": [
@@ -5562,6 +5597,7 @@
    ],
    "js": [
     "scripts/util-report.js",
+    "scripts/subject.js",
     "scripts/gnb-drawer.js"
    ],
    "parts": [

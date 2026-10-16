@@ -49,7 +49,8 @@
 
 **②-4 유틸 4화면은 색 체계가 따로다** (`styles/util.css` · `RM-UTIL-01`~`06` · 근거 `docs/decisions/home-reward-util-0824.md`).
 면은 뉴트럴-쿨 램프(n-000/050/100) 하나로 쌓고 파랑은 점·선·글자로만. 초록·앰버를 쓰지 않는다. 선택 = 반전 칠 한 규칙.
-목록은 테두리 시트, 선택지는 타일(떠 있는 블록 · 갭 없음). 다크가 기본이고, `<head>` 부트스트랩이 `localStorage['rm-theme']==='light'`일 때만 `data-theme`를 붙인다. 테마 토글 버튼은 없다.
+목록은 테두리 시트, 선택지는 타일(떠 있는 블록 · 갭 없음). 다크가 기본이고, `<head>` 부트스트랩이 `localStorage['rm-theme-choice']==='light'`일 때만 `data-theme`를 붙인다. 테마 토글 버튼은 없다.
+**테마 저장**: `rm-theme-choice`는 시작 페이지 · 과제 · 시험의 테마 버튼을 눌렀을 때만 쓴다. 화면을 여는 것만으로 저장하지 않는다. 학습 화면(개념 · 유형 · 서술형)은 테마를 기억하지 않고 늘 라이트로 시작한다(2026-10-16 결정).
 
 **③ 이미지는 쓰임으로 분류한다** (`RM-ASSET-01`~`05`).
 그림(webp) → `assets/img/` (bg · home · planets · strands · grade · misc · concept). `concept/<단원>/`은 실서비스 콘텐츠 그림이고 이름은
@@ -96,8 +97,9 @@
 - **빈칸에서 여는 창의 자리** `scripts/pop-place.js` — 선지 창 · 떠 있는 키패드 · `.qpop` 모두 `RMPopPlace.place(창, 빈칸, {reveal, side})`. 빈칸 아래 12px 기본 → 위 → 스크롤 → 키패드만 옆, 분수 칸(`.fraction` · `.mfrac`)은 처음부터 옆. 빈칸이 영역 밖으로 나가면 닫는다. 화면 JS에 자리 계산을 만들지 않는다.
 - **빈칸** `components.css` + `--blank-*` (`RM-PART-08`) — 칸형 한 벌(`.chunk--blank` · `.sblank` · `.dblank` · 서술형 `.blank`). 면은 하나, 상태는 테두리 · 글자 · 배지. 「지금」은 2px 계열 600, 바깥 링 · 커서 없음. 화면 CSS는 크기 · 글꼴 · 배지 · 누를 수 있는지만 정한다. 답안 칸 `.sinput` · 순서 맞추기 `.slot`은 밖이다.
 - **콘솔바 안내** `scripts/learn-guide.js` + `.guide` (`RM-PART-07`) — CTA 바로 왼쪽 한 줄, `RMGuide.set(문장, 'ok'|'no')`. 글자는 `--guide-ink` 하나, 상태는 램프로만. 「채점하기 · 다음 문제」는 콘솔바 CTA, 오답은 눌러야 정답이 열린다. 근거 `docs/decisions/guide-1015.md`.
-- **학습 타이머** `scripts/learn-timer.js` + `.lheader__timer` — 유형 · 서술형 12장. 「진행 / 제한」(제한 글자 `.lheader__limit`가 정본), 넘으면 `.is-over`, 해설 · 결과는 `.is-paused`. 제한 시간은 콘텐츠마다 다르다. 근거 `docs/decisions/timer-1015.md`.
-- **연습장** `scripts/scratchpad.js` + `styles/scratchpad.css`(화면 CSS 바로 뒤) — 학습 화면 16장에 알아서 붙는다. 투명 캔버스에 바로 필기, 딤은 필기 뒤 · 문제 영역(`.content`/`.rframe`)과 콘솔바는 딤에서 빠진다. 도구 바는 그 화면의 `.bar`를 복제한 것이고 다시 칠하지 않는다 — 콘솔바 구조를 바꾸면 여기도 본다.
+- **학습 타이머** `scripts/learn-timer.js` + `.lheader__timer` — 유형 · 서술형 학습 화면. 「진행 / 제한」(제한 글자 `.lheader__limit`가 정본), 넘으면 `.is-over`, 해설 · 결과는 `.is-paused`. 제한 시간은 콘텐츠마다 다르다. 근거 `docs/decisions/timer-1015.md`.
+- **연습장** `scripts/scratchpad.js` + `styles/scratchpad.css`(화면 CSS 바로 뒤) — 학습 화면에 알아서 붙는다(결과 화면에는 없다). 투명 캔버스에 바로 필기, 딤은 필기 뒤 · 문제 영역(`.content`/`.rframe`)과 콘솔바는 딤에서 빠진다. 도구 바는 그 화면의 `.bar`를 복제한 것이고 다시 칠하지 않는다 — 콘솔바 구조를 바꾸면 여기도 본다.
+- **등급** `scripts/grade.js` — `RMGrade.of(점수)` 하나. 95 이상 S · 85 이상 A · 70 이상 B · 그 아래 C(현안 83점 = B). 결과 화면 6장 · 학습 기록이 부른다. 화면 JS에 기준을 새로 쓰지 않는다.
 - **수식** `scripts/vendor/katex/`(동봉, CDN 안 씀 · `RM-PART-04`) — 분수는 `\dfrac`, 슬래시로 적지 않는다. `\htmlClass{dblank}{?}`로 수식 안 빈칸을 만들 수 있다(`trust` 콜백 필요 · `learn-drill.js`, 지금 쓰는 문항은 없다).
 
 ## 조심할 것
@@ -105,8 +107,9 @@
 - **조립식 경로** — 이미지 · 화면 경로를 `'star-'+g`처럼 코드에서 조립하는 곳이 많다. 경로를 옮기면 서버를 띄워 전 화면 404 검사로 확인한다(`RM-JS-03`).
 - **과목 두 벌** — 개념 · 서술형은 과목마다 파일이 따로다(`-math` 수학 중3-2 삼각비 · `-sci` 과학 중2-1 밀도와 용해도, 한 과목에만 있는 basic-ops · check · advanced · report는 이름 그대로).
   유형 4장 · 결과 화면은 한 벌이고 데이터 · 머리줄만 바뀐다. 과목 판정은 `scripts/subject.js` 하나(`RMSubject.pick`, 과목별 화면 `<html data-subject>`, 공용 화면 `data-crumb`) — 화면 JS에 새로 만들지 않는다.
-  콘텐츠는 엔진 한 벌 + `<계열>-<화면>-data-<math|sci>.js`. 옛 주소(learn · drill · organize · basics-v2 · drill-v2 · drill-review)는 `vercel.json`이 넘긴다.
-- **공용 JS 안의 화면 이동 경로** — `gnb-drawer.js`(9개 화면) · `step-progress.js` · `learn-exit.js`(학습 23화면의 「나가기」).
+  학기 16개 목록과 이름(`RMSubject.sems` · `semLabel()` · `sem()`)도 여기 한 벌 — 서랍 · 홈 · 학습 기록이 부르므로 `subject.js`를 그 스크립트보다 먼저 불러온다.
+  콘텐츠는 엔진 한 벌 + `<계열>-<화면>-data-<math|sci>.js`. 과제 센터 15문항은 `assignment-data.js` 한 벌(풀이 · 해설 · 결과). 옛 주소(learn · drill · organize · basics-v2 · drill-v2 · drill-review)는 `vercel.json`이 넘긴다.
+- **공용 JS 안의 화면 이동 경로** — `gnb-drawer.js`(서랍) · `step-progress.js` · `learn-exit.js`(학습 화면 「나가기」) · `RMSubject.home()`(결과 「홈으로」 → 행성 홈). 몇 화면이 부르는지는 숫자로 적지 않는다 — `grep -rl scripts/<파일>.js`로 센다.
 - **킵 화면** — `essay/basics.html` · `drill.html`(가로 안)은 킵이다. 확정은 세로(`-math` · `-sci`, 파일 이름 `essay-*-v2`). 어느 쪽도 지우지 않는다.
 - **결과 화면** — `shared/` 2장은 개념 · 유형 · 서술형이 같이 부른다. `step-result.html?step=ops`는 기초 연산 결과. 결과 6장에는 연습장 · 「n/전체」 진행 점이 없다.
 - **개념 훈련은 스텝 둘**(개념 학습 · 기초 연산). 흐름은 학습 → 요약 → 다지기 → 정리(「다 읽었어요」) → 스텝 결과. 개념 결과에는 타이머 · 소요 · 감점이 없다.

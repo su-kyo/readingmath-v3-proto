@@ -95,7 +95,7 @@
 
   /* ---------- 홈으로 ---------- */
   var homeBtn = document.querySelector('[data-home]');
-  if (homeBtn) homeBtn.addEventListener('click', function () { window.location.href = 'index.html'; });
+  if (homeBtn) homeBtn.addEventListener('click', function () { window.location.href = window.RMSubject ? RMSubject.home() : 'nav/home.html'; });
 
   /* ---------- 훈련 결과 보기 (모든 스텝 완료 시에만) ---------- */
   var trBtn = document.getElementById('trainResultBtn');

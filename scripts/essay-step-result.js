@@ -34,7 +34,7 @@
   var stageCrumb = document.getElementById('stageCrumb');
   if (stageCrumb) stageCrumb.textContent = STEPS[0].name;
 
-  function gradeOf(r) { return r >= 95 ? 's' : r >= 80 ? 'a' : r >= 70 ? 'b' : 'c'; }
+  function gradeOf(r) { return RMGrade.of(r); }  /* 기준은 scripts/grade.js 하나 */
 
   /* ---------- 집계 ---------- */
   var correct = 0, total = 0;

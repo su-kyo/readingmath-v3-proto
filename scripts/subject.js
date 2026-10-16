@@ -22,11 +22,31 @@
   if (id !== 'science') id = 'math';
   if (fixed) { try { localStorage.setItem('rm-subject', id); } catch (e) {} }
 
+  /* 학기 16개 — 홈 · 서랍의 학기 변경 · 결과 「홈으로」가 같이 쓴다 (2026-10-16 한 벌로) */
+  var SEMS = ['elem-3-1','elem-3-2','elem-4-1','elem-4-2','elem-5-1','elem-5-2','elem-6-1','elem-6-2',
+              'mid-1-1','mid-1-2','mid-2-1','mid-2-2','mid-3-1','mid-3-2','high-1-1','high-1-2'];
+  /* 고등 과목명(공통수학 · 통합과학 등)은 확정 전이라 학년 · 학기로만 부른다 */
+  var LVL = { elem: '초등', mid: '중등', high: '고등' };
+
   window.RMSubject = {
     id: id,
     unit: UNITS[id],
     /* 과목에 따라 둘 중 하나 — RMSubject.pick(수학 값, 과학 값) */
-    pick: function (math, science) { return id === 'science' ? science : math; }
+    pick: function (math, science) { return id === 'science' ? science : math; },
+    sems: SEMS,
+    /* 'mid-3-2' → 「중등 3학년 2학기」 · short 이면 「중등 3-2」 */
+    semLabel: function (key, short) {
+      var p = key.split('-');
+      return short ? LVL[p[0]] + ' ' + p[1] + '-' + p[2] : LVL[p[0]] + ' ' + p[1] + '학년 ' + p[2] + '학기';
+    },
+    /* 마지막에 본 학기 — 부를 때마다 새로 읽는다(없으면 초등 3-1) */
+    sem: function () {
+      var sem = null;
+      try { sem = localStorage.getItem('rm-sem'); } catch (e) {}
+      return SEMS.indexOf(sem) < 0 ? 'elem-3-1' : sem;
+    },
+    /* 결과 화면 「홈으로」 — 행성 홈 */
+    home: function () { return 'nav/home.html?subject=' + id + '&sem=' + this.sem(); }
   };
 
   function fill() {

@@ -7,7 +7,7 @@
   'use strict';
 
   /* 결과 화면은 항상 다크 계기판 — 테마 토글·저장 테마 적용 없음 (Phase 7 사용자 결정).
-     학습 화면으로 돌아가면 rm-theme에 저장된 유저 테마가 그대로 적용된다. */
+     학습 화면은 테마를 기억하지 않고 늘 라이트로 시작한다(2026-10-16 사용자 결정). */
 
   /* ---------- 데이터 (유형 훈련 4단계 · 문항 결과까지 한 벌) ----------
      스텝의 정답·등급은 results 배열에서 집계한다. 칸 수 = 과목의 유형 문항 수(수학 10 · 과학 5).
@@ -22,7 +22,7 @@
     { no: 3, name: '2차 유형 문제', results: window.RMSubject.pick([T,T,T,T,T,T,T,T,T,T], [T,T,T,T,T]) },
     { no: 4, name: '2차 유사 문제', results: window.RMSubject.pick([T,T,F,T,T,F,T,T,T,T], [T,F,T,T,T]) }
   ];
-  function gradeOf(r) { return r >= 95 ? 's' : r >= 80 ? 'a' : r >= 70 ? 'b' : 'c'; }
+  function gradeOf(r) { return RMGrade.of(r); }  /* 기준은 scripts/grade.js 하나 */
   function stepBadge(g) { return 'assets/img/grade/grade-step-' + g.toLowerCase() + '.webp'; }
   function bigBadge(g)  { return 'assets/img/grade/grade-' + g.toLowerCase() + '.webp'; }
   STAGES.forEach(function (s) {
@@ -156,7 +156,7 @@
   var noteBtn = document.getElementById('noteBtn');
   if (noteBtn) noteBtn.addEventListener('click', function () { showToast('오답노트 화면은 준비 중이에요'); });
   var homeBtn = document.getElementById('homeBtn');
-  if (homeBtn) homeBtn.addEventListener('click', function () { window.location.href = 'index.html'; });
+  if (homeBtn) homeBtn.addEventListener('click', function () { window.location.href = window.RMSubject ? RMSubject.home() : 'nav/home.html'; });
 
   /* ---------- 시간 초과 상태 토글 (검수용) ---------- */
   var overPill = document.getElementById('overPill');

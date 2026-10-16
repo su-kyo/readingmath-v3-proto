@@ -4,7 +4,7 @@
    ========================================================================= */
 
 :root{
-  --ink:var(--text); --muted:var(--text-muted); --blue:var(--info-ink); --green:var(--ok-on-dark); --green2:var(--ok-solid);
+  --ink:var(--text); --muted:var(--text-muted); --info:var(--info-ink); --ok:var(--ok-on-dark); --ok-fill:var(--ok-solid);
   --panel:var(--surface-1); --card:var(--hw-card); --rail:var(--surface-3);
 }
 *{ box-sizing:border-box; margin:0; padding:0; }
@@ -17,12 +17,12 @@ body{ font-family:var(--font-sans); background:var(--bg); color:var(--ink); over
 .segmented{ display:flex; padding:var(--sp-4); background:var(--paper-bg); border-radius:var(--r-22); }
 .segmented button{ padding:var(--sp-8) var(--sp-16); border:0; border-radius:var(--r-16); background:transparent; color:var(--paper-ink-muted);
   font-family:inherit; font-size:var(--fs-15); font-weight:var(--fw-heavy); cursor:pointer; letter-spacing:-.03em; transition:.15s; }
-.segmented button.is-on{ background:var(--blue); color:var(--text-on-accent); }
+.segmented button.is-on{ background:var(--info); color:var(--text-on-accent); }
 .switch{ display:flex; align-items:center; gap:var(--sp-8); }
 .switch__l{ font-size:var(--fs-15); font-weight:var(--fw-heavy); }
 .switch__t{ width:56px; height:30px; border-radius:27px; background:var(--white-a40); padding:var(--sp-4);
   cursor:pointer; transition:.2s; display:flex; }
-.switch__t.is-on{ background:var(--green2); justify-content:flex-end; }
+.switch__t.is-on{ background:var(--ok-fill); justify-content:flex-end; }
 .switch__k{ width:22px; height:22px; border-radius:50%; background:var(--hw-light); transition:.2s; }
 
 /* ---- 우주 전환 ---- */
@@ -60,10 +60,10 @@ body{ font-family:var(--font-sans); background:var(--bg); color:var(--ink); over
 .planet.is-center .planet__prog{ opacity:1; height:auto; }
 .planet__pct{ font-size:var(--fs-14); font-weight:var(--fw-bold); color:var(--text-on-accent); margin-bottom:var(--sp-8); }
 .bar{ width:200px; height:14px; border-radius:36px; background:var(--border); overflow:hidden; margin:0 auto; }
-.bar__f{ height:100%; border-radius:27px; background:var(--green2); transition:width .5s; }
+.bar__f{ height:100%; border-radius:27px; background:var(--ok-fill); transition:width .5s; }
 /* 중앙 행성 '목록 보기' 힌트 (한 번 더 누르면 상세) */
 .planet__hint{ position:absolute; top:150px; left:50%; z-index:3; display:none; align-items:center; gap:var(--sp-6);
-  height:34px; padding:0 var(--sp-12) 0 var(--sp-12); border-radius:var(--r-16); border:0; background:var(--blue); color:var(--text-on-accent);
+  height:34px; padding:0 var(--sp-12) 0 var(--sp-12); border-radius:var(--r-16); border:0; background:var(--info); color:var(--text-on-accent);
   font-family:inherit; font-size:var(--fs-13); font-weight:var(--fw-heavy); cursor:pointer; white-space:nowrap;
   box-shadow:0 10px 22px -6px color-mix(in srgb, var(--brand) 75%, transparent); animation:hintPulse 1.7s ease-in-out infinite; }
 .planet.is-center .planet__hint{ display:inline-flex; }
@@ -98,7 +98,7 @@ body{ font-family:var(--font-sans); background:var(--bg); color:var(--ink); over
 .ubtn:hover{ background:var(--surface-hover); transform:translateY(-1px); }
 .ubtn__no{ color:var(--th-accent-hi); font-weight:var(--fw-heavy); flex:none; font-size:var(--fs-12); }
 .ubtn__t{ flex:1; min-width:0; }
-.ubtn__done{ font-size:var(--fs-11); font-weight:var(--fw-heavy); color:var(--green); flex:none; }
+.ubtn__done{ font-size:var(--fs-11); font-weight:var(--fw-heavy); color:var(--ok); flex:none; }
 
 /* ---- 대단원 모달 ---- */
 .umodal{ position:fixed; inset:0; z-index:var(--z-overlay); display:none; place-items:center; background:var(--scrim); }

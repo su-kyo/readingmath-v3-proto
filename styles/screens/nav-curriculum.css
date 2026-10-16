@@ -7,7 +7,7 @@
   --panel:var(--surface-1); --card:var(--hw-card); --card2:var(--surface-2); --rail:var(--surface-3);
   --line:var(--surface-3); --line2:var(--hw-frame);
   --ink:var(--text); --body:var(--text); --muted:var(--text-muted); --item:var(--th-accent-hi);
-  --mint:var(--th-accent); --green:var(--ok-on-dark); --blue:var(--info-ink); --purple:var(--exam-accent); --red:var(--no-on-dark);
+  --accent:var(--th-accent); --ok:var(--ok-on-dark); --info:var(--info-ink); --exam:var(--exam-accent);
   --cta:var(--primary);
 }
 *{ box-sizing:border-box; margin:0; padding:0; }
@@ -46,7 +46,7 @@ body{ font-family:var(--font-sans); background:var(--bg); color:var(--ink); over
 /* 접힘 요약: 작고 심플한 아이콘 별 (색=등급) */
 
 .sub__done2{ display:inline-flex; align-items:center; gap:var(--sp-4); padding:var(--sp-4) var(--sp-8); border-radius:var(--r-12);
-  background:color-mix(in srgb, var(--green) 20%, transparent); color:var(--green); font-size:var(--fs-11); font-weight:var(--fw-heavy); flex:none; }
+  background:color-mix(in srgb, var(--ok) 20%, transparent); color:var(--ok); font-size:var(--fs-11); font-weight:var(--fw-heavy); flex:none; }
 /* 펼침: C 하이브리드 (등급 별 + 3라운드 미니바) */
 .hyc{ flex:1; display:flex; flex-direction:column; align-items:center; gap:var(--sp-6); padding:var(--sp-12) var(--sp-4); border-radius:var(--r-12);
   background:var(--card2); cursor:pointer; transition:background .14s; }
@@ -55,15 +55,15 @@ body{ font-family:var(--font-sans); background:var(--bg); color:var(--ink); over
 
 .hyc__star img.x{ filter:grayscale(1) brightness(1.4) opacity(.4); }
 
-.rbar i.done{ background:var(--green); }
-.rbar i.cur{ background:var(--mint); }
+.rbar i.done{ background:var(--ok); }
+.rbar i.cur{ background:var(--accent); }
 /* 시험대비 칩 (소단원명 옆) */
 .train__titlewrap{ display:flex; align-items:center; gap:var(--sp-12); flex-wrap:wrap; margin:var(--sp-8) 0 var(--sp-16); }
 .examchip{ display:inline-flex; align-items:center; gap:var(--sp-4); padding:var(--sp-4) var(--sp-12); border-radius:var(--r-16); border:0; cursor:pointer;
-  background:color-mix(in srgb, var(--purple) 22%, transparent); color:color-mix(in srgb, var(--purple) 45%, var(--hw-light));
+  background:color-mix(in srgb, var(--exam) 22%, transparent); color:color-mix(in srgb, var(--exam) 45%, var(--hw-light));
   font-family:inherit; font-size:var(--fs-12); font-weight:var(--fw-heavy); letter-spacing:-.02em; transition:background .14s; }
 .examchip .cr{ color:var(--warn-solid); }
-.examchip:hover{ background:color-mix(in srgb, var(--purple) 32%, transparent); }
+.examchip:hover{ background:color-mix(in srgb, var(--exam) 32%, transparent); }
 /* 열린/잠긴 라운드 대비 */
 .rcard--lock{ opacity:.5; border-style:dashed; background:transparent; }
 .rcard--cur{ border-color:var(--th-accent); box-shadow:0 0 0 var(--bw-1) var(--th-accent); }
@@ -78,13 +78,13 @@ body{ font-family:var(--font-sans); background:var(--bg); color:var(--ink); over
 .train{ flex:1; min-width:0; display:flex; flex-direction:column; position:relative; }
 .train__head{ flex:none; padding:var(--sp-24) 36px 0; }
 .train__unit{ display:flex; align-items:center; gap:var(--sp-8); font-size:var(--fs-16); font-weight:var(--fw-bold); color:var(--body); }
-.train__unit::before{ content:""; width:5px; height:17px; border-radius:var(--r-4); background:var(--mint); }
+.train__unit::before{ content:""; width:5px; height:17px; border-radius:var(--r-4); background:var(--accent); }
 .train__title{ font-size:var(--fs-32); font-weight:var(--fw-heavy); letter-spacing:-.04em; margin:0; }
 .train__tabs{ display:flex; align-items:center; gap:var(--sp-6); border-bottom:var(--bw-1) solid var(--line); }
 .ttab{ padding:var(--sp-8) var(--sp-12); font-size:var(--fs-16); font-weight:var(--fw-heavy); color:var(--muted); cursor:pointer;
   border:0; background:transparent; font-family:inherit; border-bottom:2.5px solid transparent; margin-bottom:-1px;
   letter-spacing:-.03em; }
-.ttab.is-active{ color:var(--mint); border-bottom-color:var(--mint); }
+.ttab.is-active{ color:var(--accent); border-bottom-color:var(--accent); }
 .ttab--info{ margin-left:auto; display:inline-flex; align-items:center; gap:var(--sp-4); color:var(--item);
   font-size:var(--fs-14); font-weight:var(--fw-bold); }
 .ttab--info svg{ width:16px; height:16px; }
@@ -92,13 +92,13 @@ body{ font-family:var(--font-sans); background:var(--bg); color:var(--ink); over
 .train__body{ flex:1; overflow-y:auto; padding:var(--sp-24) 36px 36px; display:flex; flex-direction:column; gap:var(--sp-16); }
 .rcard{ background:var(--panel); border:var(--bw-1) solid var(--line2); border-radius:var(--r-22); padding:var(--sp-20) var(--sp-24); }
 .rcard__top{ display:flex; align-items:center; gap:var(--sp-12); margin-bottom:var(--sp-16); }
-.rcard__bar{ width:6px; height:20px; border-radius:var(--r-22); background:var(--mint); }
+.rcard__bar{ width:6px; height:20px; border-radius:var(--r-22); background:var(--accent); }
 .rcard--lock .rcard__bar{ background:var(--hw-key); }
 .rcard__name{ font-size:var(--fs-22); font-weight:var(--fw-heavy); letter-spacing:-.03em; }
 .rcard__grade{ margin-left:auto; }
 .rcard__lockmsg{ margin-left:auto; font-size:var(--fs-12); font-weight:var(--fw-bold); color:var(--muted); display:inline-flex; align-items:center; gap:var(--sp-4); }
 .rcard__lockmsg svg{ width:14px; height:14px; }
-.rcard__lockmsg--cur{ color:var(--mint); }
+.rcard__lockmsg--cur{ color:var(--accent); }
 .steps{ display:flex; gap:var(--sp-12); flex-wrap:wrap; }
 .rcard__steps{ margin-top:var(--sp-16); }
 .step{ flex:1; min-width:180px; display:flex; align-items:center; gap:var(--sp-12); background:var(--card);
@@ -109,11 +109,11 @@ body{ font-family:var(--font-sans); background:var(--bg); color:var(--ink); over
 .step__k{ font-size:var(--fs-12); font-weight:var(--fw-heavy); color:var(--item); letter-spacing:.02em; }
 .step__n{ font-size:var(--fs-16); font-weight:var(--fw-heavy); letter-spacing:-.03em; margin-top:2px; }
 .step__s{ font-size:var(--fs-11); font-weight:var(--fw-bold); margin-top:3px; }
-.step__s.is-cur{ color:var(--mint); }
-.step__s.is-done{ color:var(--green); }
+.step__s.is-cur{ color:var(--accent); }
+.step__s.is-done{ color:var(--ok); }
 .step__s.is-todo{ color:var(--muted); }
 .step__go{ width:34px; height:34px; flex:none; border-radius:var(--r-8); display:grid; place-items:center;
-  background:var(--mint); color:var(--text-on-bright); }
+  background:var(--accent); color:var(--text-on-bright); }
 .step__go svg{ width:17px; height:17px; }
 .step.is-lock .step__go{ background:var(--rail); color:var(--muted); }
 
@@ -130,6 +130,7 @@ body{ font-family:var(--font-sans); background:var(--bg); color:var(--ink); over
 .msec{ padding:var(--sp-16) var(--sp-24); border-top:var(--bw-2) solid var(--card); }
 .msec:first-child{ border-top:0; }
 .msec__h{ font-size:var(--fs-19); font-weight:var(--fw-heavy); margin-bottom:var(--sp-6); }
+.msec__h--concept{ color:var(--info); } .msec__h--type{ color:var(--ok); } .msec__h--essay{ color:var(--exam); }
 .msec__b{ font-size:var(--fs-14); line-height:1.6; color:var(--body); font-weight:var(--fw-semibold); }
 
 .toast.is-on{ opacity:1; transform:translateX(-50%) translateY(0); }

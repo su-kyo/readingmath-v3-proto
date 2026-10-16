@@ -9,7 +9,7 @@
    · 우측 "정답 N/15" + OMR 초록·빨강 그리드(현재=노랑테) · 하단 결과 보기
    ========================================================================= */
 :root {
-  --hd: var(--th-static); --blue: var(--th-ink-accent); --yellow: var(--current);
+  --hd: var(--th-static); --accent: var(--th-ink-accent); --focus: var(--current);
   /* 정오답 — 선·아이콘(--good/--bad) · 글자(--good-text) · 칠면은 규칙에서 --ok-solid/--no-solid.
      (예전엔 다크용 300 스텝을 라이트에도 써서 오답 칸이 분홍, 정답 숫자가 연두로 날아갔다) */
   --good: var(--ok-solid); --good-text: var(--ok-ink); --bad: var(--no-solid);
@@ -68,7 +68,7 @@ body { font-family: var(--font-sans); background: var(--asset-console-task-body)
 /* 해설 박스 = 면 없이 왼쪽 계열색 띠 하나 (2026-10-14 · 유형·과제·시험 공통). 띠는 라이트 500 · 다크 300 */
 .expl { background: none; box-shadow: inset var(--bw-4) 0 0 var(--th-accent); border-radius: var(--r-4); padding: var(--sp-16) var(--sp-16); display: flex; flex-direction: column; gap: var(--sp-6); }
 :root[data-theme="dark"] .expl { box-shadow: inset var(--bw-4) 0 0 var(--th-accent-hi); }
-.expl__t { font-size: var(--fs-15); font-weight: var(--fw-heavy); color: var(--blue); }
+.expl__t { font-size: var(--fs-15); font-weight: var(--fw-heavy); color: var(--accent); }
 :root[data-theme="dark"] .expl__t { color: var(--th-accent-hi); }
 .expl__b { font-size: var(--fs-15); line-height: 1.7; color: var(--ink); }
 
@@ -91,7 +91,7 @@ body { font-family: var(--font-sans); background: var(--asset-console-task-body)
 /* 하단 콘솔 바 */
 
 :root[data-theme="dark"] .qpanel::-webkit-scrollbar-thumb { background: var(--scroll-thumb-dark-strong); background-clip: padding-box; }
-:focus-visible { outline: var(--bw-3) solid var(--yellow); outline-offset: 2px; }
+:focus-visible { outline: var(--bw-3) solid var(--focus); outline-offset: 2px; }
 
 @media (max-width: 900px) {
   .content { flex-direction: column; }

@@ -6,10 +6,10 @@
   <title>패턴 — 리딩수학과학 디자인 시스템</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
   <base href="../" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261016-2" />
-  <link rel="stylesheet" href="styles/base.css?v=20261016-2" />
-  <link rel="stylesheet" href="styles/components.css?v=20261016-2" />
-  <link rel="stylesheet" href="styleguide/sg.css?v=20261016-2" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261016-3" />
+  <link rel="stylesheet" href="styles/base.css?v=20261016-3" />
+  <link rel="stylesheet" href="styles/components.css?v=20261016-3" />
+  <link rel="stylesheet" href="styleguide/sg.css?v=20261016-3" />
 </head>
 <body data-sg-css="tokens,base,components,util" data-sg-section="util">
 <div class="sg">
@@ -147,8 +147,9 @@
       </div>
 
       <div class="sg-rule sg-rule--dont">유틸 화면의 색 체계를 학습 화면과 통합하지 않는다. 의도한 분리다.</div>
-      <p class="sg-lead">테마 초기화 한 줄이 각 화면 <code>&lt;head&gt;</code>에 들어 있습니다. <code>localStorage['rm-theme']</code>를 읽어 <code>'light'</code>일 때만 <code>data-theme</code>를 붙입니다.
-        외부 파일로 빼면 화면이 한 번 깜빡이므로(다크로 그렸다가 라이트로 바뀜), 15화면에 같은 줄을 일부러 두었습니다(<code>RM-UTIL-05</code>).</p>
+      <p class="sg-lead">테마 초기화 한 줄이 각 화면 <code>&lt;head&gt;</code>에 들어 있습니다. <code>localStorage['rm-theme-choice']</code>를 읽어 <code>'light'</code>일 때만 <code>data-theme</code>를 붙입니다.
+        이 값은 시작 페이지 · 과제 · 시험의 테마 버튼을 눌렀을 때만 저장됩니다. 화면을 여는 것만으로는 저장하지 않습니다. 학습 화면(개념 · 유형 · 서술형)은 테마를 기억하지 않고 늘 라이트로 시작합니다.
+        외부 파일로 빼면 화면이 한 번 깜빡이므로(다크로 그렸다가 라이트로 바뀜), 유틸 5화면에 같은 줄을 일부러 두었습니다(<code>RM-UTIL-05</code>). 과제 3장 · 시험 2장의 머리줄은 반대로 <code>'dark'</code>일 때만 다크를 붙입니다.</p>
     </section>
 
     <!-- ===================================================== JS 변수 -->
@@ -241,6 +242,6 @@
 
   </main>
 </div>
-<script src="styleguide/sg.js?v=20261016-2"></script>
+<script src="styleguide/sg.js?v=20261016-3"></script>
 </body>
 </html>

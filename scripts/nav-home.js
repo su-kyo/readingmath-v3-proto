@@ -1,8 +1,7 @@
 /* nav/home.html 전용 스크립트 — HTML 안에 있던 것을 옮겼다 (마감 회차 2026-10-12). */
 (function(){
   /* 학기 16종 × 과목 2종 = 홈 32화면. 학기 선택은 공용 드로어(gnb-drawer.js)에 있다. */
-  var SEMS = ['elem-3-1','elem-3-2','elem-4-1','elem-4-2','elem-5-1','elem-5-2','elem-6-1','elem-6-2',
-              'mid-1-1','mid-1-2','mid-2-1','mid-2-2','mid-3-1','mid-3-2','high-1-1','high-1-2'];
+  var SEMS = RMSubject.sems;   /* 학기 목록은 scripts/subject.js 한 벌 */
 
   var qs = new URLSearchParams(location.search);
   var subject = qs.get('subject') === 'science' ? 'science' : 'math';
@@ -65,15 +64,9 @@
      학기당 한 명이고 수학·과학이 같은 그림이라 키가 항상 두 개씩 늘어난다.
      비어 있는 학기가 생기면 여기서 키를 빼면 말풍선만 서는 화면으로 돌아간다. */
   var HAS_CHAR = {};
-  ['elem-3-1','elem-3-2','elem-4-1','elem-4-2','elem-5-1','elem-5-2','elem-6-1','elem-6-2',
-   'mid-1-1','mid-1-2','mid-2-1','mid-2-2','mid-3-1','mid-3-2','high-1-1','high-1-2']
-    .forEach(function(s){ HAS_CHAR['math-' + s] = HAS_CHAR['sci-' + s] = 1; });
+  SEMS.forEach(function(s){ HAS_CHAR['math-' + s] = HAS_CHAR['sci-' + s] = 1; });
 
-  var LVL = { elem:'초등', mid:'중등', high:'고등' };
-  function semLabel(s){
-    var p = s.split('-');
-    return LVL[p[0]] + ' ' + p[1] + '학년 ' + p[2] + '학기';
-  }
+  function semLabel(s){ return RMSubject.semLabel(s); }
 
   var cfg = LAYOUT[sc];
 

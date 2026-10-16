@@ -566,7 +566,7 @@
    "id": "RM-UTIL-05",
    "area": "UTIL",
    "title": "다크가 기본, 라이트도 산다 — 테마 토글 버튼은 없다",
-   "rule": "각 화면 `<head>`의 테마 초기화 한 줄이 `localStorage['rm-theme']`를 읽고, 값이 `'light'`일 때만 `data-theme`를 붙인다.",
+   "rule": "각 화면 `<head>`의 테마 초기화 한 줄이 `localStorage['rm-theme-choice']`를 읽고, 값이 `'light'`일 때만 `data-theme`를 붙인다. 이 값은 테마 버튼을 눌렀을 때만 저장한다. 화면을 여는 것만으로 저장하지 않는다.",
    "why": "이 줄을 외부 파일로 빼면 첫 화면이 다크로 그려졌다가 라이트로 바뀌며 깜빡인다.",
    "check": {
     "by": [

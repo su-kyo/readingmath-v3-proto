@@ -4,13 +4,13 @@
    - HTML 어디든 [data-mode-toggle] 안에 옵션 두 개를 두면 자동 연결됩니다.
    ========================================================================= */
 (function () {
-  var KEY = "rm-theme";
+  var KEY = "rm-theme-choice";
   var saved = null;
   try { saved = localStorage.getItem(KEY); } catch (e) {}
 
-  function apply(theme) {
+  function apply(theme, save) {
     document.documentElement.setAttribute("data-theme", theme);
-    try { localStorage.setItem(KEY, theme); } catch (e) {}
+    if (save) { try { localStorage.setItem(KEY, theme); } catch (e) {} }
     // 토글 UI 활성 상태 갱신
     document.querySelectorAll("[data-set-theme]").forEach(function (el) {
       el.classList.toggle("is-active", el.getAttribute("data-set-theme") === theme);
@@ -23,6 +23,6 @@
   // 클릭 위임
   document.addEventListener("click", function (e) {
     var opt = e.target.closest("[data-set-theme]");
-    if (opt) apply(opt.getAttribute("data-set-theme"));
+    if (opt) apply(opt.getAttribute("data-set-theme"), true);
   });
 })();

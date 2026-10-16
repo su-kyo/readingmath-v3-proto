@@ -14,7 +14,7 @@
   --line: var(--exam-line); --line-2: var(--exam-line-2); --line-strong: var(--exam-line-strong);
   --accent: var(--th-accent); --accent-ink: var(--th-ink-accent); --accent-tint: var(--th-tint); --accent-tint-br: var(--exam-accent-line);
   --good: var(--ok-ink); --bad: var(--no-solid);
-  --amber: var(--warn-solid); --blue: var(--info-solid); --blue-tint: var(--info-tint);
+  --warn: var(--warn-solid); --info: var(--info-solid); --info-bg: var(--info-tint);
   --r-lg: 16px; --r-md: 12px; --r-sm: 9px;
   --sh: 0 1px 2px color-mix(in srgb, var(--shade) 4%, transparent), 0 20px 40px -28px color-mix(in srgb, var(--shade) 20%, transparent);
 }
@@ -24,7 +24,7 @@
   --accent: var(--th-accent-hi); --accent-ink: var(--th-accent-hi);
   /* 계열색 틴트는 화면이 정한다. 상태색 틴트(--*-tint)는 tokens.css가 테마별로 바꾼다 */
   --accent-tint: color-mix(in srgb, var(--th-accent) 18%, transparent);
-  --good: var(--ok-solid); --bad: var(--no-on-dark); --amber: var(--warn-solid); --blue: var(--info-on-dark);
+  --good: var(--ok-solid); --bad: var(--no-on-dark); --warn: var(--warn-solid); --info: var(--info-on-dark);
   --sh: 0 1px 2px var(--black-a40), 0 20px 40px -28px var(--black-a60);
 }
 /* 다크 — 시맨틱 직접 참조(라이트 고정색) 오버라이드 */
@@ -99,6 +99,7 @@
 .filter.is-collapsed .filter__body { display: none; }
 .filter__body { padding: var(--sp-16) var(--sp-16) var(--sp-16); display: flex; flex-direction: column; gap: var(--sp-16); border-top: var(--bw-1) solid var(--line-2); }
 .fgroup { display: flex; flex-direction: column; gap: var(--sp-8); }
+.fgroup--grow { flex: 1; min-width: 0; }
 .flabel { font-size: var(--fs-11); font-weight: var(--fw-heavy); letter-spacing: .08em; text-transform: uppercase; color: var(--faint); }
 .frow { display: flex; align-items: flex-start; gap: var(--sp-24); flex-wrap: wrap; }
 .fdrop { display: inline-flex; align-items: center; justify-content: space-between; gap: var(--sp-8); min-width: 138px;
@@ -115,7 +116,7 @@
 .chip .cico { display: inline-flex; align-items: center; justify-content: center; width: 15px; height: 15px; flex: none; }
 .chip .cico svg { width: 100%; height: 100%; display: block; }
 .chip[data-f="r"] .cico { color: var(--bad); }
-.chip[data-f="b"] .cico { color: var(--amber); }
+.chip[data-f="b"] .cico { color: var(--warn); }
 .chip[data-f="e"] .cico, .chip[data-f="m"] .cico { color: var(--good); }
 .chip.is-active .cico { color: var(--th-on-accent); }
 .cdot { width: 14px; height: 14px; border-radius: var(--r-4); flex: none; }
@@ -155,7 +156,7 @@
 .band { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--sp-12); padding: var(--sp-12); background: var(--rail); border: var(--bw-1) solid var(--line-2); border-radius: var(--r-12); }
 .band__badge { align-self: flex-start; padding: var(--sp-4) var(--sp-12); border-radius: var(--r-full); font-size: var(--fs-12); font-weight: var(--fw-heavy); }
 .band--basic .band__badge { background: var(--line-2); color: var(--muted); }
-.band--skill .band__badge { background: color-mix(in srgb, var(--info-solid) 18%, transparent); box-shadow: inset 0 0 0 var(--bw-1) color-mix(in srgb, var(--info-solid) 42%, transparent); color: var(--blue); }
+.band--skill .band__badge { background: color-mix(in srgb, var(--info-solid) 18%, transparent); box-shadow: inset 0 0 0 var(--bw-1) color-mix(in srgb, var(--info-solid) 42%, transparent); color: var(--info); }
 .band--adv .band__badge { background: color-mix(in srgb, var(--th-accent) 18%, transparent); box-shadow: inset 0 0 0 var(--bw-1) color-mix(in srgb, var(--th-accent) 42%, transparent); color: var(--accent-ink); }
 .grid { display: flex; flex-wrap: wrap; gap: var(--sp-8); }
 
@@ -233,7 +234,7 @@
 .dbadge--b { background: color-mix(in srgb, var(--warn-solid) 18%, transparent); box-shadow: inset 0 0 0 var(--bw-1) color-mix(in srgb, var(--warn-solid) 42%, transparent); color: var(--warn-ink); }
 .dbadge--e, .dbadge--m { background: color-mix(in srgb, var(--ok-solid) 18%, transparent); box-shadow: inset 0 0 0 var(--bw-1) color-mix(in srgb, var(--ok-solid) 42%, transparent); color: var(--good); }
 .dbadge--u, .dbadge--j { background: var(--line-2); color: var(--muted); }
-.dbadge--tier { background: var(--blue-tint); color: var(--blue); }
+.dbadge--tier { background: var(--info-bg); color: var(--info); }
 .detail__type { font-size: var(--fs-19); font-weight: var(--fw-heavy); letter-spacing: -.02em; line-height: 1.36; }
 .detail__foot { flex: none; padding: 15px var(--sp-20) calc(16px + env(safe-area-inset-bottom)); border-top: var(--bw-1) solid var(--line);
   background: var(--surface); display: flex; flex-direction: column; gap: var(--sp-12); }

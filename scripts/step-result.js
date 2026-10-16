@@ -36,7 +36,7 @@
   else ACTIVITIES.forEach(function (a) { total += a.total; correct += a.correct; });
   var rate = Math.round((correct / total) * 100);
 
-  function gradeOf(r) { return r >= 95 ? 's' : r >= 80 ? 'a' : r >= 70 ? 'b' : 'c'; }
+  function gradeOf(r) { return RMGrade.of(r); }  /* 기준은 scripts/grade.js 하나 */
   var badgeSrc = 'assets/img/grade/grade-' + gradeOf(rate) + '.webp';
 
   document.getElementById('rate').textContent = rate;

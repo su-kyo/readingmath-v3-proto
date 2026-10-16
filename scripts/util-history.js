@@ -106,16 +106,15 @@ function wkOf(rec){ return iso(monday(d(rec.at))); }
 function sum(rec){ var c=0,t=0; rec.acts.forEach(function(a){ c+=a.c; t+=a.t; }); return {c:c,t:t}; }
 function pct(c,t){ return t ? Math.round(c/t*100) : 0; }
 /* 등급 컷 — 현안에서 확인된 사실은 「83 = B」 하나뿐이라 그 위아래로 잡았다 */
-function grade(p){ return p>=95?{g:'S',w:'Excellent!'} : p>=85?{g:'A',w:'Great!'}
-                      : p>=70?{g:'B',w:'Good!'} : {g:'C',w:'Nice Try!'}; }
+function grade(p){ var g=RMGrade.of(p); /* 기준은 scripts/grade.js 하나 */
+  return {g:g.toUpperCase(), w:{s:'Excellent!',a:'Great!',b:'Good!',c:'Nice Try!'}[g]}; }
 
 /* ═══════════════════════════════════════════════════════════════════════
    ③ 상태 — ?state=empty|first|max (brief §7 · 정적 데모라 학습 엔진이 없다)
    ═══════════════════════════════════════════════════════════════════════ */
 var FORCE = new URLSearchParams(location.search).get('state') || '';
 /* 기록 범위 = 현재 과목만(GNB 과목 모드를 따라감). 학기는 전체 — brief §4 */
-var SUBJ = 'math';
-try{ SUBJ = localStorage.getItem('rm-subject')==='science' ? 'science' : 'math'; }catch(e){}
+var SUBJ = RMSubject.id;   /* 과목 판정은 scripts/subject.js 하나 */
 if(SUBJ==='science'){ ENTRY['개념']='concept/learn-sci.html'; ENTRY['서술형']='essay/basics-sci.html'; }   /* 개념 · 서술형은 과목마다 한 벌 — 수학 삼각비 · 과학 밀도와 용해도 */
 var SUBJ_KO = SUBJ==='science' ? '과학' : '수학';
 function ofSubj(a){ return a.filter(function(r){ return r.subj===SUBJ; }); }

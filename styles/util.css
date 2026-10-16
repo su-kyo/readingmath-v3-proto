@@ -14,7 +14,7 @@
    그림자 없음 — 깊이는 선과 여백이 만든다.
    색값은 전부 tokens.css 변수 참조. raw hex 없음.
 
-   ※ 다크가 기본이다(서비스 전체와 같다). 학습 화면이 쓰는 localStorage 'rm-theme'가
+   ※ 다크가 기본이다(서비스 전체와 같다). 테마 버튼으로 고른 localStorage 'rm-theme-choice'가
      'light'일 때만 <html data-theme="light">가 붙어 라이트로 뒤집힌다.
      화면마다 <head>의 부트스트랩 한 줄이 그 일을 한다.
    ========================================================================= */
@@ -144,6 +144,7 @@ html,body{ height:100%; }
 
 @keyframes u-sk{ 0%,100%{ opacity:.45 } 50%{ opacity:1 } }
 .u-sk{ background:var(--sk); border-radius:var(--r-4); animation:u-sk 1.25s ease-in-out infinite; }
+.u-sk--title{ height:16px; } .u-sk--meta{ height:11px; }
 .u-sk + .u-sk{ margin-top:11px; }  /* 제목 줄과 날짜 줄 사이 — 스켈레톤 행 높이를 정상 행과 맞춘 값 */
 .u-skrow{ padding:var(--sp-20) var(--sp-24); }
 .u-skrow + .u-skrow{ border-top:var(--bw-1) solid var(--rule); }

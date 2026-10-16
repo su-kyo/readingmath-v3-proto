@@ -7,7 +7,7 @@
   'use strict';
 
   /* 결과 화면은 항상 다크 계기판 — 테마 토글·저장 테마 적용 없음 (Phase 7 사용자 결정).
-     학습 화면으로 돌아가면 rm-theme에 저장된 유저 테마가 그대로 적용된다. */
+     학습 화면은 테마를 기억하지 않고 늘 라이트로 시작한다(2026-10-16 사용자 결정). */
 
   /* ---------- 데이터 (개념 훈련 2단계 · 활동까지 한 벌) ----------
      실서비스 구성에 맞춤(2026-10-15): 개념 학습 · STEP 2(수학 「기초 연산」 · 과학 「개념 확인하기」). 과목 = scripts/subject.js
@@ -21,7 +21,7 @@
       : [ { name: '개념 요약하기', correct: 4, total: 5 },  { name: '개념 다지기', correct: 2, total: 3 } ] },
     { no: 2, name: STEP2, acts: [ SCI ? { name: STEP2, correct: 8, total: 10 } : { name: STEP2, correct: 11, total: 14 } ] }
   ];
-  function gradeOf(r) { return r >= 95 ? 's' : r >= 80 ? 'a' : r >= 70 ? 'b' : 'c'; }
+  function gradeOf(r) { return RMGrade.of(r); }  /* 기준은 scripts/grade.js 하나 */
   function stepBadge(g) { return 'assets/img/grade/grade-step-' + g.toLowerCase() + '.webp'; }
   function bigBadge(g)  { return 'assets/img/grade/grade-' + g.toLowerCase() + '.webp'; }
   STAGES.forEach(function (s) {
@@ -160,6 +160,6 @@
   var noteBtn = document.getElementById('noteBtn');
   if (noteBtn) noteBtn.addEventListener('click', function () { showToast('오답노트 화면은 준비 중이에요'); });
   var homeBtn = document.getElementById('homeBtn');
-  if (homeBtn) homeBtn.addEventListener('click', function () { window.location.href = 'index.html'; });
+  if (homeBtn) homeBtn.addEventListener('click', function () { window.location.href = window.RMSubject ? RMSubject.home() : 'nav/home.html'; });
 
 })();

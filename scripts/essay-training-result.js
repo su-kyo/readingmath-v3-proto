@@ -7,7 +7,7 @@
   'use strict';
 
   /* 결과 화면은 항상 다크 계기판 — 테마 토글·저장 테마 적용 없음 (Phase 7 사용자 결정).
-     학습 화면으로 돌아가면 rm-theme에 저장된 유저 테마가 그대로 적용된다. */
+     학습 화면은 테마를 기억하지 않고 늘 라이트로 시작한다(2026-10-16 사용자 결정). */
 
   /* ---------- 데이터 (서술형 훈련 3단계 · 문제까지 한 벌 · 과목 분기 = scripts/subject.js) ----------
      서술형은 문제마다 빈칸이 여러 개다. total = 그 문제의 빈칸 수(실서비스 「풀이답안 문제수」). 스텝의 정답·등급은 probs에서 집계한다.
@@ -32,7 +32,7 @@
                                                       { no: 2, correct: 6, total: 6 } ] },
     { no: 3, name: '탐구활동 보고서 만들기', probs: [ { no: 1, correct: 6, total: 7 } ] }
   ]);
-  function gradeOf(r) { return r >= 95 ? 's' : r >= 80 ? 'a' : r >= 70 ? 'b' : 'c'; }
+  function gradeOf(r) { return RMGrade.of(r); }  /* 기준은 scripts/grade.js 하나 */
   function stepBadge(g) { return 'assets/img/grade/grade-step-' + g.toLowerCase() + '.webp'; }
   function bigBadge(g)  { return 'assets/img/grade/grade-' + g.toLowerCase() + '.webp'; }
   STAGES.forEach(function (s) {
@@ -173,7 +173,7 @@
   var noteBtn = document.getElementById('noteBtn');
   if (noteBtn) noteBtn.addEventListener('click', function () { showToast('오답노트 화면은 준비 중이에요'); });
   var homeBtn = document.getElementById('homeBtn');
-  if (homeBtn) homeBtn.addEventListener('click', function () { window.location.href = 'index.html'; });
+  if (homeBtn) homeBtn.addEventListener('click', function () { window.location.href = window.RMSubject ? RMSubject.home() : 'nav/home.html'; });
 
   /* ---------- 시간 초과 상태 토글 (검수용) ---------- */
   var overPill = document.getElementById('overPill');

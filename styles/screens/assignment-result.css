@@ -8,7 +8,7 @@
    · 헤더 블록(과제 결과 + 제출완료) · 요약(점수/정답·오답·미입력) · 문항별 채점표
    ========================================================================= */
 :root {
-  --hd: var(--th-static); --blue: var(--th-accent-hi); --ink: var(--text); --sub: var(--text-meta); --faint: var(--text-muted);
+  --hd: var(--th-static); --accent: var(--th-accent-hi); --ink: var(--text); --sub: var(--text-meta); --faint: var(--text-muted);
   /* 표면 · 선은 tokens.css 의 시스템 토큰 — 라이트·다크 전환도 거기서 한다 */
   --panel: var(--surface-1); --content: var(--bg); --line: var(--divider-strong); --line-2: var(--border);
   --good: var(--ok-on-dark); --bad: var(--no-on-dark); --bad-ic: var(--no-solid); --correct: var(--ok-on-dark);
@@ -29,8 +29,8 @@ body { font-family: var(--font-sans); background: var(--asset-console-task-body)
 
 /* 결과 헤더 블록 */
 .rhead { display: flex; align-items: center; gap: var(--sp-12); flex-wrap: wrap; }
-.rhead__t { font-size: var(--fs-22); font-weight: var(--fw-bold); color: var(--blue); letter-spacing: -.03em; }
-.rhead__sub { font-size: var(--fs-22); font-weight: var(--fw-regular); color: var(--blue); letter-spacing: -.02em; min-width: 0; }
+.rhead__t { font-size: var(--fs-22); font-weight: var(--fw-bold); color: var(--accent); letter-spacing: -.03em; }
+.rhead__sub { font-size: var(--fs-22); font-weight: var(--fw-regular); color: var(--accent); letter-spacing: -.02em; min-width: 0; }
 .rdate { margin-left: auto; display: inline-flex; align-items: center; gap: var(--sp-8); padding: var(--sp-4) var(--sp-12); border: var(--bw-1) solid var(--good); border-radius: var(--r-12); font-size: var(--fs-15); white-space: nowrap; }
 .rdate__tag { display: inline-flex; align-items: center; gap: var(--sp-4); color: var(--good); font-weight: var(--fw-semibold); }
 .rdate__tag svg { width: 16px; height: 16px; }
@@ -39,7 +39,7 @@ body { font-family: var(--font-sans); background: var(--asset-console-task-body)
 /* 요약 */
 .summary { display: flex; gap: var(--sp-20); }
 .score { flex: 0 0 auto; min-width: 288px; display: flex; align-items: center; justify-content: center; gap: var(--sp-12); padding: var(--sp-16) 28px; background: var(--score-bg); border-radius: var(--r-22); }
-.score__n { font-size: 62px; font-weight: var(--fw-heavy); color: var(--blue); letter-spacing: -.04em; line-height: 1; font-variant-numeric: tabular-nums; }
+.score__n { font-size: 62px; font-weight: var(--fw-heavy); color: var(--accent); letter-spacing: -.04em; line-height: 1; font-variant-numeric: tabular-nums; }
 .score__d { font-size: var(--fs-26); font-weight: var(--fw-semibold); color: var(--sub); }
 .stats { flex: 1; display: flex; align-items: center; justify-content: center; gap: 44px; padding: var(--sp-16) var(--sp-40); border: var(--bw-1) solid var(--line); border-radius: var(--r-22); }
 .stat { display: flex; flex-direction: column; gap: var(--sp-4); }

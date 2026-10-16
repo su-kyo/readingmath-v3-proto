@@ -6,6 +6,6 @@
     var dark = document.documentElement.getAttribute('data-theme') === 'dark';
     var next = dark ? 'light' : 'dark';
     document.documentElement.setAttribute('data-theme', next);
-    try{ localStorage.setItem('rm-theme', next); }catch(e){}
+    try{ localStorage.setItem('rm-theme-choice', next); }catch(e){}
   });
 })();

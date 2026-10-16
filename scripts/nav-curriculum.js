@@ -13,11 +13,6 @@
     '자료와 가능성':'var(--subj-data)','확률과 통계':'var(--subj-data)','규칙성':'var(--subj-rel)','함수':'var(--subj-rel)',
     '물리':'var(--subj-phys)','화학':'var(--subj-chem)','지구과학':'var(--subj-data)','생명과학':'var(--subj-bio)','탐구':'var(--subj-explore)','통합과학':'var(--subj-rel)'
   };
-  var CHIP = {
-    '미진행':{bg:'transparent',fg:'var(--text-muted)',dash:true}, '미판정':{bg:'var(--surface-2)',fg:'var(--text-muted)',dash:true},
-    '재학습':{bg:'var(--no-solid)',fg:'var(--text-on-accent)'}, '보충':{bg:'var(--warn-solid)',fg:'var(--text-on-bright)'},
-    '이해':{bg:'var(--ok-solid)',fg:'var(--text-on-accent)'}, '정복':{bg:'var(--ok-ink)',fg:'var(--ok-on-ink)'}
-  };
   var STEPS = {
     concept:[['STEP 1','개념 학습', subject==='science' ? 'concept/learn-sci.html' : 'concept/learn-math.html'],   /* 실서비스 STEP 2 = 수학 기초 연산 · 과학 개념 확인하기 */
             subject==='science' ? ['STEP 2','개념 확인하기','concept/check.html'] : ['STEP 2','기초 연산','concept/basic-ops.html']],

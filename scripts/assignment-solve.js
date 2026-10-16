@@ -9,46 +9,9 @@
   };
 
   // 산점도 SVG (문항 4용)
-  function scatter() {
-    var pts = [[1,2],[2,1],[2,3],[3,3],[3,4],[4,5],[4,3],[5,5],[3,2],[5,4]];
-    var ax = 40, ay = 20, w = 250, h = 160, step = 46, dots = '';
-    pts.forEach(function (p) {
-      var cx = ax + p[0] * step * 0.86, cy = ay + h - p[1] * step * 0.62;
-      dots += '<circle cx="' + cx.toFixed(0) + '" cy="' + cy.toFixed(0) + '" r="4" class="chart__dot"/>';
-    });
-    var grid = '';
-    for (var i = 1; i <= 5; i++) {
-      var gx = ax + i * step * 0.86;
-      grid += '<line x1="' + gx + '" y1="' + ay + '" x2="' + gx + '" y2="' + (ay + h) + '" class="chart__grid"/>';
-      var gy = ay + h - i * step * 0.62;
-      grid += '<line x1="' + ax + '" y1="' + gy + '" x2="' + (ax + w) + '" y2="' + gy + '" class="chart__grid"/>';
-    }
-    return '<svg viewBox="0 0 320 214" xmlns="http://www.w3.org/2000/svg">' + grid +
-      '<line x1="' + ax + '" y1="' + ay + '" x2="' + ax + '" y2="' + (ay + h) + '" stroke-width="2" class="chart__axis"/>' +
-      '<line x1="' + ax + '" y1="' + (ay + h) + '" x2="' + (ax + w) + '" y2="' + (ay + h) + '" stroke-width="2" class="chart__axis"/>' +
-      dots +
-      '<text x="' + (ax + w) + '" y="' + (ay + h + 16) + '" font-size="11" text-anchor="end" class="chart__label">음악(점)</text>' +
-      '<text x="' + (ax - 6) + '" y="' + (ay - 6) + '" font-size="11" class="chart__label">미술(점)</text></svg>';
-  }
 
-  // ── 15문항 ──
-  var Q = [
-    { type: 'mc', lvl: '기본', name: '일차부등식의 해 구하기', text: '부등식 3x − 2 > 7 을 만족하는 자연수 x 중에서 가장 작은 수를 구하시오.', opts: ['2', '3', '4', '5', '6'], answer: 2 },
-    { type: 'short', lvl: '기본', name: '부등식의 활용 — 개수', text: '한 자루에 800원인 연필을 x자루 사려고 합니다. 5000원으로 살 수 있는 연필은 최대 몇 자루입니까?', unit: '자루', answer: '6' },
-    { type: 'mc', lvl: '실력', name: '일차부등식의 해', text: '일차부등식 2(x − 1) ≤ 3x + 4 의 해로 옳은 것을 고르시오.', opts: ['x ≥ −6', 'x ≤ −6', 'x > −6', 'x < 6', 'x ≥ 6'], answer: 0 },
-    { type: 'mc', lvl: '실력', name: '산점도 해석', text: '다음 산점도는 학생 10명의 음악·미술 점수입니다. 미술 점수가 음악 점수보다 높은 학생은 몇 명입니까?', image: scatter, opts: ['2명', '3명', '4명', '5명', '6명'], answer: 2 },
-    { type: 'short', lvl: '실력', name: '연립방정식의 해', text: '연립방정식 { x + y = 10, x − y = 2 } 의 해에서 x의 값을 구하시오.', unit: '', answer: '6' },
-    { type: 'mc', lvl: '기본', name: '방정식의 해와 미지수', text: 'x = 2, y = 1 이 방정식 ax + y = 7 의 해일 때, 상수 a의 값을 고르시오.', opts: ['1', '2', '3', '4', '5'], answer: 2 },
-    { type: 'short', lvl: '심화', name: '부등식의 활용 — 최솟값', text: '연속하는 세 자연수의 합이 60보다 큽니다. 가장 작은 자연수가 될 수 있는 최솟값을 구하시오.', unit: '', answer: '20' },
-    { type: 'mc', lvl: '실력', name: '일차부등식의 해', text: '일차부등식 −2x + 5 < 1 의 해로 옳은 것을 고르시오.', opts: ['x > 2', 'x < 2', 'x ≥ 2', 'x ≤ 2', 'x > −2'], answer: 0 },
-    { type: 'short', lvl: '기본', name: '부등식을 만족하는 개수', text: '부등식 x/2 + 1 ≤ 4 를 만족하는 자연수 x는 모두 몇 개입니까?', unit: '개', answer: '6' },
-    { type: 'mc', lvl: '심화', name: '연립방정식의 활용', text: '두 자연수의 합이 12이고 차가 4일 때, 두 수 중 큰 수를 고르시오.', opts: ['6', '7', '8', '9', '10'], answer: 2 },
-    { type: 'mc', lvl: '실력', name: '일차부등식의 해', text: '일차부등식 4 − 3x ≥ −5 의 해로 옳은 것을 고르시오.', opts: ['x ≤ 3', 'x ≥ 3', 'x < 3', 'x > 3', 'x ≤ −3'], answer: 0 },
-    { type: 'short', lvl: '실력', name: '부등식의 활용 — 최솟값', text: '사과 x개를 3명이 똑같이 나누면 한 명당 5개보다 많습니다. x의 최솟값을 구하시오.', unit: '', answer: '16' },
-    { type: 'mc', lvl: '기본', name: '연립방정식의 해', text: '연립방정식 { 2x + y = 8, y = 2 } 에서 x의 값을 고르시오.', opts: ['1', '2', '3', '4', '5'], answer: 2 },
-    { type: 'short', lvl: '실력', name: '일차부등식의 해', text: '일차부등식 5x − 3 ≤ 2x + 9 의 해가 x ≤ a 일 때, 상수 a의 값을 구하시오.', unit: '', answer: '4' },
-    { type: 'mc', lvl: '실력', name: '일차부등식의 해', text: '일차부등식 0.3x − 0.5 > 0.1 의 해로 옳은 것을 고르시오.', opts: ['x > 2', 'x < 2', 'x > 3', 'x ≥ 2', 'x > −2'], answer: 0 }
-  ];
+
+  var Q = RMAssign.Q;   /* 문항은 scripts/assignment-data.js 한 벌 — 학생 답(user)은 해설 · 결과용 데모라 여기서는 안 쓴다 */
 
   var N = Q.length;
   var answers = new Array(N).fill(null); // 객관식=인덱스, 주관식=문자열
@@ -258,16 +221,16 @@
     setTimeout(function () { window.location.href = 'assignment/result.html'; }, 600);
   });
 
-  // ── 라이트/다크 토글 (localStorage 'rm-theme'로 화면 간 유지) ──
-  function applyTheme(t) {
+  // ── 라이트/다크 토글 (localStorage 'rm-theme-choice'로 화면 간 유지) ──
+  function applyTheme(t, save) {
     document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
-    try { localStorage.setItem('rm-theme', t); } catch (e) {}
+    if (save) { try { localStorage.setItem('rm-theme-choice', t); } catch (e) {} }
   }
   var savedTheme = 'light';
-  try { savedTheme = localStorage.getItem('rm-theme') === 'dark' ? 'dark' : 'light'; } catch (e) {}
+  try { savedTheme = localStorage.getItem('rm-theme-choice') === 'dark' ? 'dark' : 'light'; } catch (e) {}
   applyTheme(savedTheme);
   document.getElementById('themeToggle').addEventListener('click', function () {
-    applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark', true);
   });
 
   /* ---- 검수용 디버그 훅 (?debug=1일 때만 패널에 뜸) ---- */

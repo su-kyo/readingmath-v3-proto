@@ -29,8 +29,8 @@
   function skeleton(n){
     var h=''; for(var i=0;i<n;i++){
       h+='<div class="u-skrow">'
-        +'<div class="u-sk" style="height:16px;width:'+(46+(i*11)%34)+'%"></div>'
-        +'<div class="u-sk" style="height:11px;width:'+(20+(i*7)%14)+'%"></div></div>';
+        +'<div class="u-sk u-sk--title" style="width:'+(46+(i*11)%34)+'%"></div>'
+        +'<div class="u-sk u-sk--meta" style="width:'+(20+(i*7)%14)+'%"></div></div>';
     }
     return '<div class="u-sheet u-rise">'+h+'</div>';
   }
