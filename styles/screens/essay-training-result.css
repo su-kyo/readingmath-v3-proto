@@ -8,15 +8,11 @@
    같은 골격, 서술형(바이올렛) 리테마). 총점 = 별 + 점수(상위 종합),
    단계별 행 = 육각 뱃지 + 빈칸 LED. 「보기」 = 스텝 결과 스크린창(보조 모니터).
    =================================================================== */
-/* 겹 구조 덜어내기 — 학습 셸의 프레임 층(테두리+여백)을 없애고 베젤이 곧 프레임 */
-.content { flex-direction: column; overflow: hidden;
-  padding: 0; border: none; background: transparent; box-shadow: none;
-  --rate: var(--th-rate); }
+/* 패널(.content) · 「보기」 버튼 · 스크린창 폭 · 좁은 폭 표 → 공용 styles/result.css 끝 */
 
 /* 베젤 (하드웨어 — 학습 화면·스텝 결과와 같은 테마 림) → 공용 styles/result.css */
 
 /* 칩 = 림과 같은 계열의 한두 단계 어두운 톤온톤 */
-.chip[hidden] { display: none; }
 
 /* ===== LCD 판독 화면 (스캔라인은 스크롤을 따라간다) ===== */
 
@@ -25,21 +21,12 @@
 
 /* ===== 총점(별+점수 — 스텝 게이지와 다른 위계) + 단계별 표 ===== */
 
-
-
-
-
-.tpc { font-family: var(--font-mono); font-size: var(--fs-16); color: var(--rate); }
 /* 빈칸이 24개라 칸이 촘촘하다 — gap을 좁힌다 (전체 행 72칸은 뭉개져서 비워 둔다) */
-.tview { padding: var(--sp-6) 0; width: 100%; max-width: 70px; border-radius: var(--r-8); border: none; background: transparent;
-  box-shadow: inset 0 0 0 var(--bw-1) var(--rate); color: var(--rate);
-  font-family: var(--font-sans); font-weight: var(--fw-bold); font-size: var(--fs-14); cursor: pointer; transition: background var(--t-fast); }
-.tview:hover { background: color-mix(in srgb, var(--rate) 14%, transparent); }
 
 /* 코멘트 (LCD 하단 판독 텍스트) → 공용 styles/result.css */
 
 /* ===== 「보기」 스크린창 — 스텝 결과 판독 (보조 모니터 + LCD) ===== */
-#stepMon { --mon-w: 720px; }
+
 .monitor__screen--lcd { position: relative; overflow: hidden;
   background-color: var(--hw-bg);
   background-image: repeating-linear-gradient(0deg, var(--white-a04) 0 1px, transparent 1px 5px);
@@ -52,10 +39,5 @@
 .mact .led { flex: 1; gap: var(--sp-4); }
 .mact .led i { height: 13px; border-radius: var(--r-4); }
 
-
-@media (max-width: 900px) {
-  .tsum { flex-direction: column; }
-  .trow { grid-template-columns: minmax(110px,1fr) 44px minmax(90px,1.2fr) 72px 54px 64px; }
-}
 /* 훈련 결과는 띠가 행 전체를 채우고 조금 얇다 */
 .led { width: 100%; flex: none; }  .led i { height: 12px; }

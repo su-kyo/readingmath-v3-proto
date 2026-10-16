@@ -6,15 +6,11 @@
 /* ===== 유형 = 틸 테마 ===== */
 :root[data-theme="dark"] .content { background: var(--type-panel-dark); border-color: var(--th-static); }  /* 공통 뉴트럴 다크 · 틸 프레임 유지 */
 :root[data-theme="light"] .content { background: var(--th-panel); border-color: var(--th-static); --fade: var(--surface-1); }  /* 공통 뉴트럴 라이트 · 틸 프레임 유지 */
-.content { position: relative; flex-direction: column; padding: 0 0 96px; overflow: hidden; }
 :root[data-theme="dark"] .content { --fade: var(--type-panel-dark); }
 
-.ops-wrap { flex: 1; min-height: 0; position: relative; margin-top: var(--sp-40); }
-.ops-wrap::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 48px; pointer-events: none; z-index: 1; background: linear-gradient(to top, var(--fade), transparent); opacity: 0; transition: opacity .2s ease; }
-.ops-wrap::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 44px; pointer-events: none; z-index: 1; background: linear-gradient(to bottom, var(--fade), transparent); opacity: 0; transition: opacity .2s ease; }
-.ops-wrap.has-more::after { opacity: 1; } .ops-wrap.has-more-top::before { opacity: 1; }
+/* 패널 · 스크롤 페이드 · 문제 · 타일형 선택지 · 주관식 뼈대는 공용 styles/quiz.css */
+/* 좌우 화살표 자리만큼 옆 여백이 넓다 */
 .ops {
-  position: absolute; inset: 0; overflow-y: auto; display: flex; flex-direction: column; align-items: center;
   padding: var(--sp-6) clamp(56px, 8vw, 96px) 26px;
   --qtext: var(--text); --opt-bg: var(--surface-1); 
   --input-bg: var(--surface-1); --input-br: var(--surface-hover);
@@ -40,16 +36,13 @@
 .nav-arrow:disabled { opacity: .34; cursor: not-allowed; }
 .nav-arrow--prev { left: 10px; } .nav-arrow--next { right: 10px; }
 
-.q { width: min(1040px, 100%); margin: auto 0; display: flex; flex-direction: column; align-items: center; }
-.q__text { align-self: stretch; font-size: clamp(16px, 1.5vw, 20px); font-weight: var(--fw-bold); color: var(--qtext); line-height: 1.6; margin-bottom: var(--sp-20); }
-/* 보기 박스 = 면 없이 테두리만 (2026-10-14) — 선지 테두리와 같은 굵기 · 공용 --border-strong */
-.ex__list { display: flex; flex-direction: column; gap: var(--sp-8); font-size: clamp(15px,1.4vw,18px); color: var(--qtext); line-height: 1.5; }
-.ex__skel { min-height: 120px; display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-weight: var(--fw-bold); }
+.ex__skel { min-height: 120px; }
 
-.qopt { display: flex; align-items: center; gap: var(--sp-12); padding: var(--sp-16) var(--sp-20); min-height: 60px; border-radius: var(--r-12); background: var(--opt-bg); box-shadow: inset 0 0 0 var(--bw-1_5) var(--border-strong); color: var(--qtext); font-size: clamp(15px,1.35vw,17px); font-weight: var(--fw-semibold); text-align: left; pointer-events: none; }
+/* 읽기 전용 선지 — 누르지 않고, 전환도 없다 */
+.qopt { pointer-events: none; transition: initial; }   /* 전환은 처음값(없음)으로 되돌린다 */
+.qopt:hover { background: var(--opt-bg); }   /* 호버 면 없음 (공용 .qopt:hover 를 덮는다) */
 :root[data-theme="light"] .qopt__num { background: var(--surface-3); color: var(--th-ink-accent); }
-.qopt--num .qopt__num { width: 34px; height: 34px; }
-.qopt--img { flex-direction: column; align-items: stretch; position: relative; }
+.qopt--img { position: relative; }
 .qopt--img .qopt__num { position: absolute; top: 12px; left: 12px; z-index: 1; box-shadow: 0 1px 4px var(--black-a30); }
 /* 이미지 배지는 항상 밝은 이미지 위 → 테마 무관 진한 배지+흰 숫자 (정답/오답 색은 뒤 규칙이 우선) */
 .qopt.qopt--img .qopt__num { background: var(--th-static); color: var(--text-on-accent); }
@@ -60,11 +53,10 @@
 .qopt.is-wrong .qopt__num { background: var(--no-solid); color: var(--text-on-accent); font-size: 0; }  /* 숫자 숨기고 ✕만 */
 .qopt.is-wrong .qopt__num::after { content: "✕"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: var(--fs-15); }
 
-.answer-row { display: flex; align-items: center; justify-content: center; gap: var(--sp-12); flex-wrap: wrap; }
-.sfield { display: flex; align-items: center; gap: var(--sp-8); } .sinput { height: 54px; min-width: 200px; padding: 0 var(--sp-16); text-align: center; background: var(--input-bg); border: var(--bw-1_5) solid var(--input-br); border-radius: var(--r-12); color: var(--qtext); font-size: var(--fs-19); font-weight: var(--fw-bold); font-family: var(--font-sans); }
+.sinput { cursor: text; }   /* 읽기 전용 답 칸 — 누르는 칸이 아니라 입력칸 기본 커서 그대로 */
 .sinput.is-correct { border-color: var(--ok-solid); color: var(--ok-ink); }   /* 글자는 600 — 빈칸 · 단답 공통 (2026-10-15) */
 .sinput.is-wrong { border-color: var(--no-solid); color: var(--no-ink); }
-.fraction .sinput { min-width: 96px; width: 96px; height: 50px; padding: 0 var(--sp-8); } .ans-correct { display: none; margin-top: 18px; padding: var(--sp-8) var(--sp-20); border-radius: var(--r-12); background: none; box-shadow: inset 0 0 0 var(--bw-1_5) var(--ok-solid); color: var(--text-muted); font-weight: var(--fw-bold); font-size: var(--fs-16); align-items: center; gap: var(--sp-8); }
+.ans-correct { display: none; margin-top: 18px; padding: var(--sp-8) var(--sp-20); border-radius: var(--r-12); background: none; box-shadow: inset 0 0 0 var(--bw-1_5) var(--ok-solid); color: var(--text-muted); font-weight: var(--fw-bold); font-size: var(--fs-16); align-items: center; gap: var(--sp-8); }
 .ans-correct.show { display: inline-flex; } .ans-correct b { color: var(--ok-solid); font-size: var(--fs-19); }
 
 
@@ -87,7 +79,7 @@
 /* 하단바 = 유형 footer */
 
 /* 좁은 폭에서도 화살표 유지(사라지지 않음) — 크기만 축소 */
-@media (max-width: 900px) { .qopts-row .qopt { min-width: 44%; } .nav-arrow { width: 40px; height: 40px; font-size: var(--fs-19); } .nav-arrow--prev { left: 4px; } .nav-arrow--next { right: 4px; } .ops { padding-left: clamp(48px, 7vw, 96px); padding-right: clamp(48px, 7vw, 96px); } }
+@media (max-width: 900px) { .nav-arrow { width: 40px; height: 40px; font-size: var(--fs-19); } .nav-arrow--prev { left: 4px; } .nav-arrow--next { right: 4px; } .ops { padding-left: clamp(48px, 7vw, 96px); padding-right: clamp(48px, 7vw, 96px); } }
 
 /* 해설 — 한 줄이 한 덩이(서버 줄바꿈 그대로) · 해설 그림은 문항 그림과 같은 종이 면 */
 .explain__line { margin: 0; }

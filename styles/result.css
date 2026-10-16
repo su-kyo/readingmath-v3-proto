@@ -260,3 +260,53 @@
 
 /* 훈련 결과 단계 줄 목록 (옛 인라인 style) */
 .trows { display: flex; flex-direction: column; gap: var(--sp-8); }
+
+/* =====================================================================
+   결과 화면 6장이 복사해 쓰던 규칙 (2026-10-16 · RM-FILE-03)
+   화면 CSS 맨 위에 있던 것을 그 순서 그대로 이 파일 끝에 붙였다 — 화면 CSS가 여전히 이 뒤에 온다.
+   ===================================================================== */
+
+/* ----- 스텝 결과 3장 (shared · essay · type) — 베젤 + 좌 LCD + 우 조작 패널 ----- */
+.rframe {
+  flex: 1; min-height: 0; display: flex; gap: var(--sp-12);
+  background: var(--th-static); border-radius: var(--r-frame) var(--r-frame) 0 0; padding: var(--sp-8) var(--sp-8) 0;
+  --lmain: var(--hw-bg); --ltext: var(--hw-text); --lmuted: var(--hw-text-muted);
+  --lcd: var(--white-a04);
+  --accent: var(--th-accent-hi); --title1: var(--th-accent-hi); --rate: var(--th-rate);
+  --row-bg: var(--white-a04);
+}
+.rside__list::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--hw-text) 18%, transparent); border-radius: var(--r-full); border: var(--bw-3) solid transparent; background-clip: padding-box; }
+/* 스텝 모듈 상태 — 공용 learn-shell.css 의 구형 카드 표현(점선 테두리·틴트·호버 리프트)을 결과 화면에서만 무력화 */
+.step-card.is-done { background: var(--white-a06); }
+.step-card.is-done:hover, .step-card.is-open:hover { transform: none; filter: brightness(1.07);
+  box-shadow: 0 var(--depth-4) 0 var(--black-a30); }
+.step-card.is-done:active, .step-card.is-open:active { transform: translateY(2px);
+  box-shadow: 0 var(--depth-2) 0 var(--black-a30); }
+.step-card.is-current, .step-card.is-current:hover { box-shadow: 0 var(--depth-4) 0 var(--black-a30), inset 0 0 0 2.5px var(--accent); }
+.step-card.is-open .step-card__name { color: var(--lmuted); }
+
+@media (max-width: 940px) {
+  .rframe { flex-direction: column; }
+  .rmain, .rside { border-radius: var(--r-22); }
+  .rside { width: auto; }
+}
+
+/* ----- 훈련 결과 3장 (shared · essay · type) — 스텝 결과에는 .content 가 없다(.rframe 이 대신) ----- */
+/* 겹 구조 덜어내기 — 학습 셸의 프레임 층(테두리+여백)을 없애고 베젤이 곧 프레임 */
+.content {
+  flex-direction: column; overflow: hidden;
+  padding: 0; border: none; background: transparent; box-shadow: none;
+  --rate: var(--th-rate); }
+.chip[hidden] { display: none; }
+.tpc { font-family: var(--font-mono); font-size: var(--fs-16); color: var(--rate); }
+.tview { padding: var(--sp-6) 0; width: 100%; max-width: 70px; border-radius: var(--r-8); border: none; background: transparent;
+  box-shadow: inset 0 0 0 var(--bw-1) var(--rate); color: var(--rate);
+  font-family: var(--font-sans); font-weight: var(--fw-bold); font-size: var(--fs-14); cursor: pointer; transition: background var(--t-fast); }
+.tview:hover { background: color-mix(in srgb, var(--rate) 14%, transparent); }
+/* 「보기」 스크린창(보조 모니터) 폭 */
+#stepMon { --mon-w: 720px; }
+
+@media (max-width: 900px) {
+  .tsum { flex-direction: column; }
+  .trow { grid-template-columns: minmax(110px,1fr) 44px minmax(90px,1.2fr) 72px 54px 64px; }
+}

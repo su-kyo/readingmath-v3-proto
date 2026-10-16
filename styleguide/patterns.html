@@ -6,10 +6,10 @@
   <title>패턴 — 리딩수학과학 디자인 시스템</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
   <base href="../" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261016-3" />
-  <link rel="stylesheet" href="styles/base.css?v=20261016-3" />
-  <link rel="stylesheet" href="styles/components.css?v=20261016-3" />
-  <link rel="stylesheet" href="styleguide/sg.css?v=20261016-3" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261016-4" />
+  <link rel="stylesheet" href="styles/base.css?v=20261016-4" />
+  <link rel="stylesheet" href="styles/components.css?v=20261016-4" />
+  <link rel="stylesheet" href="styleguide/sg.css?v=20261016-4" />
 </head>
 <body data-sg-css="tokens,base,components,util" data-sg-section="util">
 <div class="sg">
@@ -201,7 +201,7 @@
       <ol class="sg-list">
         <li>하위 폴더 화면은 <code>&lt;head&gt;</code> 바로 아래에 <code>&lt;base href="../"&gt;</code>를 넣는다. 루트 <code>index.html</code>은 빼고. <code>RM-FILE-05</code></li>
         <li>화면 CSS는 <code>styles/screens/&lt;계열&gt;-&lt;화면&gt;.css</code>, 화면 JS는 <code>scripts/&lt;계열&gt;-&lt;화면&gt;.js</code>. HTML 안에 <code>&lt;style&gt;</code>·<code>&lt;script&gt;</code>를 쓰지 않는다. <code>RM-FILE-01</code> <code>RM-FILE-02</code></li>
-        <li>계열이 같이 쓰는 규칙은 계열 파일로 올린다. 결과 <code>result.css</code> · 서술형 <code>essay.css</code> · 유형 <code>type.css</code> · 과제 <code>assign.css</code> · 시험 <code>exam.css</code> · 행성 탐색 <code>nav.css</code> · 유틸 <code>util.css</code>. 여러 계열이면 <code>components.css</code>. <code>RM-FILE-03</code></li>
+        <li>계열이 같이 쓰는 규칙은 계열 파일로 올린다. 결과 <code>result.css</code> · 서술형 <code>essay.css</code> · 유형 <code>type.css</code> · 과제 <code>assign.css</code> · 시험 <code>exam.css</code> · 행성 탐색 <code>nav.css</code> · 유틸 <code>util.css</code>. 여러 계열이면 <code>components.css</code>. 몇 화면만 같이 쓰는 묶음은 그 화면들만 부르는 공용 파일(문항 화면 <code>quiz.css</code> · 서술형 스테퍼 <code>stepbar.css</code>)을 화면 CSS 바로 앞에 둔다. <code>RM-FILE-03</code></li>
         <li>보조 모니터 · 키패드 · 연습장 · KaTeX처럼 이미 있는 부품을 먼저 찾는다. <code>RM-PART-01</code></li>
         <li>학습 화면이면 검수 스위치를 붙인다. <code>RM-PART-05</code></li>
         <li>목록 화면이면 네 상태를 같이 만든다. <code>RM-UTIL-06</code></li>
@@ -242,6 +242,6 @@
 
   </main>
 </div>
-<script src="styleguide/sg.js?v=20261016-3"></script>
+<script src="styleguide/sg.js?v=20261016-4"></script>
 </body>
 </html>

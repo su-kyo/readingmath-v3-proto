@@ -9,10 +9,7 @@
 /* ===== 개념 학습 화면 · 풀블리드 반응형 무대 ===== */
 body.learn-body { background: var(--bg); overflow: hidden; }
 
-/* 라이트/다크 토글 — 해/달 illust 자체가 노브. 라이트=해(좌), 다크=달(우) */
-.theme-toggle { width: 64px; height: 34px; border-radius: var(--r-full); background: var(--th-static-deep); position: relative; flex: none; }
-.theme-toggle__knob { position: absolute; top: 2px; left: 2px; width: 30px; height: 30px; background: center / contain no-repeat url("../../assets/icons/ico-sun.svg"); transition: left .2s ease; }
-:root[data-theme="dark"] .theme-toggle__knob { left: 32px; background-image: url("../../assets/icons/ico-moon.svg"); }
+/* 라이트/다크 토글 · 좁은 폭 툴버튼 = 공용 learn-shell.css */
 
 /* ===== 콘텐츠 패널 ===== */
 .content__inner { flex: 1; display: flex; justify-content: center; gap: clamp(24px, 4vw, 48px); padding: 0 clamp(24px, 5vw, 64px); min-height: 0; }
@@ -125,7 +122,6 @@ body.learn-body { background: var(--bg); overflow: hidden; }
   .viewer__frame { max-width: 360px; margin: 0 auto; }
 }
 @media (max-width: 680px) { .breadcrumb .crumb--hide { display: none; } }
-@media (max-width: 520px) { .toolbtn span { display: none; } .toolbtn { padding: var(--sp-8) var(--sp-12); } }
 
 /* =========================================================================
    다크 모드 — 메인 콘텐츠 패널 안만 어둡게. 배경(우주선)·하단 콘솔바는 라이트와 동일.

@@ -8,9 +8,7 @@
 /* ===== 무대 (learn-concept 재사용) ===== */
 body.learn-body { background: var(--bg); overflow: hidden; }
 
-.theme-toggle { width: 64px; height: 34px; border-radius: var(--r-full); background: var(--th-static-deep); position: relative; flex: none; }
-.theme-toggle__knob { position: absolute; top: 2px; left: 2px; width: 30px; height: 30px; background: center / contain no-repeat url("../../assets/icons/ico-sun.svg"); transition: left .2s ease; }
-:root[data-theme="dark"] .theme-toggle__knob { left: 32px; background-image: url("../../assets/icons/ico-moon.svg"); }
+/* 라이트/다크 토글 · 좁은 폭 툴버튼 = 공용 learn-shell.css */
 
 /* 콘텐츠 패널 (다크 시 이 패널 안만 어두워짐) */
 /* 이 화면만 패널 안쪽 여백이 좁고 세로로 쌓는다 */
@@ -101,4 +99,3 @@ body.learn-body { background: var(--bg); overflow: hidden; }
   .note { width: auto; align-self: auto; }
 }
 @media (max-width: 680px) { .breadcrumb .crumb--hide { display: none; } }
-@media (max-width: 520px) { .toolbtn span { display: none; } .toolbtn { padding: var(--sp-8) var(--sp-12); } }

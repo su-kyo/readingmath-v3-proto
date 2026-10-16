@@ -1,0 +1,20 @@
+/* =====================================================================
+   stepbar.css — 서술형 단계 스테퍼(빈칸 → 순서, 점 + 선) 공용
+   서술형 다지기(essay-drill-v2) · 다지기 해설(essay-drill-review)이 글자 하나 안 틀리고 같이 쓰던 규칙 (2026-10-16 · RM-FILE-03).
+   ⚠️ 링크 순서: … → essay → (keypad · monitor) → stepbar → screens/<화면>.css
+   점 모양(.stepbar__dot) · 문제 카드 헤더 안의 밝은 톤(.problem__head …)은 화면마다 달라 화면 CSS에 있다.
+   선(.stepbar__track)은 essay.css. 킵 화면 essay/drill.html 은 옛 스테퍼(› 구분 + ✓ 글자)라 이 파일을 부르지 않는다.
+   ===================================================================== */
+.stepbar { display: inline-flex; align-items: center; gap: 0; }
+.stepbar__i { display: inline-flex; align-items: center; gap: var(--sp-6); padding: var(--sp-4) var(--sp-4);
+  font-family: var(--font-sans); font-size: var(--fs-13); font-weight: var(--fw-bold); color: var(--step-fg); transition: color .2s; }
+
+/* 진행중 — 채워진 점 하나로 '진행중'이 읽힌다 (바깥에 연한 링을 더 두르지 않는다) */
+.stepbar__i.is-on { color: var(--th-ink-accent); }
+:root[data-theme="dark"] .stepbar__i.is-on { color: var(--th-accent-hi); }
+.stepbar__i.is-on .stepbar__dot { opacity: 1; background: currentColor; }
+/* 완료 — 채운 점 + 흰 체크 */
+.stepbar__i.is-done { color: var(--th-ink-accent); }
+:root[data-theme="dark"] .stepbar__i.is-done { color: var(--th-accent-hi); }
+.stepbar__i.is-done .stepbar__dot::after { content: ''; position: absolute; left: 4.5px; top: 1.5px;
+  width: 4px; height: 8px; border: solid var(--text-on-accent); border-width: 0 var(--bw-2) var(--bw-2) 0; transform: rotate(45deg); }

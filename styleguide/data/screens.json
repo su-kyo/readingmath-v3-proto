@@ -486,11 +486,11 @@
      "count": 3
     },
     {
-     "name": "--focus",
-     "count": 3
+     "name": "--text",
+     "count": 2
     },
     {
-     "name": "--text",
+     "name": "--info-solid",
      "count": 2
     }
    ],
@@ -520,6 +520,7 @@
     "styles/components.css",
     "styles/learn-shell.css",
     "styles/keypad.css",
+    "styles/quiz.css",
     "styles/screens/concept-basic-ops.css",
     "styles/scratchpad.css"
    ],
@@ -609,24 +610,16 @@
    ],
    "tokens": [
     {
-     "name": "--text-on-accent",
-     "count": 10
-    },
-    {
      "name": "--ok-solid",
-     "count": 10
-    },
-    {
-     "name": "--qtext",
-     "count": 9
+     "count": 8
     },
     {
      "name": "--no-solid",
-     "count": 7
+     "count": 5
     },
     {
-     "name": "--opt-bg",
-     "count": 6
+     "name": "--text-on-accent",
+     "count": 4
     },
     {
      "name": "--surface-1",
@@ -637,23 +630,31 @@
      "count": 3
     },
     {
-     "name": "--border-strong",
+     "name": "--qtext",
      "count": 3
     },
     {
-     "name": "--th-accent",
+     "name": "--opt-bg",
      "count": 3
-    },
-    {
-     "name": "--fade",
-     "count": 2
     },
     {
      "name": "--surface-2",
      "count": 2
     },
     {
+     "name": "--border-strong",
+     "count": 2
+    },
+    {
      "name": "--white-a30",
+     "count": 2
+    },
+    {
+     "name": "--th-accent",
+     "count": 2
+    },
+    {
+     "name": "--ok-ink",
      "count": 2
     }
    ],
@@ -684,6 +685,7 @@
     "styles/components.css",
     "styles/learn-shell.css",
     "styles/keypad.css",
+    "styles/quiz.css",
     "styles/screens/concept-basic-ops.css",
     "styles/scratchpad.css"
    ],
@@ -772,24 +774,16 @@
    ],
    "tokens": [
     {
-     "name": "--text-on-accent",
-     "count": 10
-    },
-    {
      "name": "--ok-solid",
-     "count": 10
-    },
-    {
-     "name": "--qtext",
-     "count": 9
+     "count": 8
     },
     {
      "name": "--no-solid",
-     "count": 7
+     "count": 5
     },
     {
-     "name": "--opt-bg",
-     "count": 6
+     "name": "--text-on-accent",
+     "count": 4
     },
     {
      "name": "--surface-1",
@@ -800,23 +794,31 @@
      "count": 3
     },
     {
-     "name": "--border-strong",
+     "name": "--qtext",
      "count": 3
     },
     {
-     "name": "--th-accent",
+     "name": "--opt-bg",
      "count": 3
-    },
-    {
-     "name": "--fade",
-     "count": 2
     },
     {
      "name": "--surface-2",
      "count": 2
     },
     {
+     "name": "--border-strong",
+     "count": 2
+    },
+    {
      "name": "--white-a30",
+     "count": 2
+    },
+    {
+     "name": "--th-accent",
+     "count": 2
+    },
+    {
+     "name": "--ok-ink",
      "count": 2
     }
    ],
@@ -846,6 +848,7 @@
     "styles/components.css",
     "styles/learn-shell.css",
     "styles/keypad.css",
+    "styles/quiz.css",
     "styles/screens/concept-drill.css",
     "styles/scratchpad.css"
    ],
@@ -947,19 +950,7 @@
    "tokens": [
     {
      "name": "--text-on-accent",
-     "count": 12
-    },
-    {
-     "name": "--qtext",
-     "count": 7
-    },
-    {
-     "name": "--ok-solid",
-     "count": 5
-    },
-    {
-     "name": "--no-solid",
-     "count": 4
+     "count": 6
     },
     {
      "name": "--surface-1",
@@ -970,19 +961,11 @@
      "count": 3
     },
     {
-     "name": "--border-strong",
-     "count": 3
-    },
-    {
      "name": "--text-on-frame",
      "count": 3
     },
     {
-     "name": "--text-muted",
-     "count": 3
-    },
-    {
-     "name": "--opt-bg",
+     "name": "--ok-solid",
      "count": 3
     },
     {
@@ -990,8 +973,28 @@
      "count": 3
     },
     {
-     "name": "--fade",
+     "name": "--surface-2",
      "count": 2
+    },
+    {
+     "name": "--border-strong",
+     "count": 2
+    },
+    {
+     "name": "--black-a30",
+     "count": 2
+    },
+    {
+     "name": "--white-a60",
+     "count": 2
+    },
+    {
+     "name": "--no-solid",
+     "count": 2
+    },
+    {
+     "name": "--th-panel",
+     "count": 1
     }
    ],
    "rules": [
@@ -1021,6 +1024,7 @@
     "styles/components.css",
     "styles/learn-shell.css",
     "styles/keypad.css",
+    "styles/quiz.css",
     "styles/screens/concept-drill.css",
     "styles/scratchpad.css"
    ],
@@ -1122,19 +1126,7 @@
    "tokens": [
     {
      "name": "--text-on-accent",
-     "count": 12
-    },
-    {
-     "name": "--qtext",
-     "count": 7
-    },
-    {
-     "name": "--ok-solid",
-     "count": 5
-    },
-    {
-     "name": "--no-solid",
-     "count": 4
+     "count": 6
     },
     {
      "name": "--surface-1",
@@ -1145,19 +1137,11 @@
      "count": 3
     },
     {
-     "name": "--border-strong",
-     "count": 3
-    },
-    {
      "name": "--text-on-frame",
      "count": 3
     },
     {
-     "name": "--text-muted",
-     "count": 3
-    },
-    {
-     "name": "--opt-bg",
+     "name": "--ok-solid",
      "count": 3
     },
     {
@@ -1165,8 +1149,28 @@
      "count": 3
     },
     {
-     "name": "--fade",
+     "name": "--surface-2",
      "count": 2
+    },
+    {
+     "name": "--border-strong",
+     "count": 2
+    },
+    {
+     "name": "--black-a30",
+     "count": 2
+    },
+    {
+     "name": "--white-a60",
+     "count": 2
+    },
+    {
+     "name": "--no-solid",
+     "count": 2
+    },
+    {
+     "name": "--th-panel",
+     "count": 1
     }
    ],
    "rules": [
@@ -2401,6 +2405,7 @@
     "styles/essay.css",
     "styles/keypad.css",
     "styles/monitor.css",
+    "styles/stepbar.css",
     "styles/screens/essay-drill-v2.css",
     "styles/scratchpad.css"
    ],
@@ -2502,19 +2507,15 @@
    ],
    "tokens": [
     {
-     "name": "--text-on-accent",
-     "count": 5
-    },
-    {
-     "name": "--th-accent-hi",
-     "count": 5
-    },
-    {
      "name": "--surface-1",
      "count": 4
     },
     {
      "name": "--essay-lock",
+     "count": 4
+    },
+    {
+     "name": "--text-on-accent",
      "count": 4
     },
     {
@@ -2530,7 +2531,7 @@
      "count": 3
     },
     {
-     "name": "--th-ink-accent",
+     "name": "--th-accent-hi",
      "count": 3
     },
     {
@@ -2547,6 +2548,10 @@
     },
     {
      "name": "--white-a10",
+     "count": 2
+    },
+    {
+     "name": "--text-muted",
      "count": 2
     }
    ],
@@ -2575,6 +2580,7 @@
     "styles/components.css",
     "styles/learn-shell.css",
     "styles/essay.css",
+    "styles/stepbar.css",
     "styles/screens/essay-drill-review.css",
     "styles/scratchpad.css"
    ],
@@ -2642,15 +2648,11 @@
    ],
    "tokens": [
     {
-     "name": "--text-on-accent",
-     "count": 5
-    },
-    {
      "name": "--th-static",
      "count": 4
     },
     {
-     "name": "--th-accent-hi",
+     "name": "--text-on-accent",
      "count": 4
     },
     {
@@ -2678,15 +2680,19 @@
      "count": 2
     },
     {
-     "name": "--step-fg",
-     "count": 2
-    },
-    {
-     "name": "--th-ink-accent",
-     "count": 2
-    },
-    {
      "name": "--th-accent",
+     "count": 2
+    },
+    {
+     "name": "--th-solid",
+     "count": 2
+    },
+    {
+     "name": "--black-a30",
+     "count": 2
+    },
+    {
+     "name": "--th-accent-hi",
      "count": 2
     }
    ],
@@ -2713,6 +2719,7 @@
     "styles/components.css",
     "styles/learn-shell.css",
     "styles/essay.css",
+    "styles/stepbar.css",
     "styles/screens/essay-drill-review.css",
     "styles/scratchpad.css"
    ],
@@ -2780,15 +2787,11 @@
    ],
    "tokens": [
     {
-     "name": "--text-on-accent",
-     "count": 5
-    },
-    {
      "name": "--th-static",
      "count": 4
     },
     {
-     "name": "--th-accent-hi",
+     "name": "--text-on-accent",
      "count": 4
     },
     {
@@ -2816,15 +2819,19 @@
      "count": 2
     },
     {
-     "name": "--step-fg",
-     "count": 2
-    },
-    {
-     "name": "--th-ink-accent",
-     "count": 2
-    },
-    {
      "name": "--th-accent",
+     "count": 2
+    },
+    {
+     "name": "--th-solid",
+     "count": 2
+    },
+    {
+     "name": "--black-a30",
+     "count": 2
+    },
+    {
+     "name": "--th-accent-hi",
      "count": 2
     }
    ],
@@ -2853,6 +2860,7 @@
     "styles/essay.css",
     "styles/keypad.css",
     "styles/monitor.css",
+    "styles/stepbar.css",
     "styles/screens/essay-drill-v2.css",
     "styles/scratchpad.css"
    ],
@@ -2954,19 +2962,15 @@
    ],
    "tokens": [
     {
-     "name": "--text-on-accent",
-     "count": 5
-    },
-    {
-     "name": "--th-accent-hi",
-     "count": 5
-    },
-    {
      "name": "--surface-1",
      "count": 4
     },
     {
      "name": "--essay-lock",
+     "count": 4
+    },
+    {
+     "name": "--text-on-accent",
      "count": 4
     },
     {
@@ -2982,7 +2986,7 @@
      "count": 3
     },
     {
-     "name": "--th-ink-accent",
+     "name": "--th-accent-hi",
      "count": 3
     },
     {
@@ -2999,6 +3003,10 @@
     },
     {
      "name": "--white-a10",
+     "count": 2
+    },
+    {
+     "name": "--text-muted",
      "count": 2
     }
    ],
@@ -3554,52 +3562,12 @@
    ],
    "tokens": [
     {
-     "name": "--black-a30",
-     "count": 3
-    },
-    {
-     "name": "--hw-text",
-     "count": 2
-    },
-    {
-     "name": "--white-a04",
-     "count": 2
-    },
-    {
-     "name": "--th-accent-hi",
-     "count": 2
-    },
-    {
      "name": "--rate",
      "count": 2
     },
     {
      "name": "--ltext",
      "count": 2
-    },
-    {
-     "name": "--th-static",
-     "count": 1
-    },
-    {
-     "name": "--hw-bg",
-     "count": 1
-    },
-    {
-     "name": "--hw-text-muted",
-     "count": 1
-    },
-    {
-     "name": "--th-rate",
-     "count": 1
-    },
-    {
-     "name": "--white-a06",
-     "count": 1
-    },
-    {
-     "name": "--accent",
-     "count": 1
     }
    ],
    "rules": [
@@ -3686,10 +3654,6 @@
    "tokens": [
     {
      "name": "--rate",
-     "count": 6
-    },
-    {
-     "name": "--th-rate",
      "count": 2
     },
     {
@@ -3698,6 +3662,10 @@
     },
     {
      "name": "--white-a04",
+     "count": 1
+    },
+    {
+     "name": "--th-rate",
      "count": 1
     },
     {
@@ -4435,48 +4403,8 @@
      "count": 3
     },
     {
-     "name": "--black-a30",
-     "count": 3
-    },
-    {
-     "name": "--hw-text",
-     "count": 2
-    },
-    {
-     "name": "--white-a04",
-     "count": 2
-    },
-    {
-     "name": "--th-accent-hi",
-     "count": 2
-    },
-    {
      "name": "--ltext",
      "count": 2
-    },
-    {
-     "name": "--th-static",
-     "count": 1
-    },
-    {
-     "name": "--hw-bg",
-     "count": 1
-    },
-    {
-     "name": "--hw-text-muted",
-     "count": 1
-    },
-    {
-     "name": "--th-rate",
-     "count": 1
-    },
-    {
-     "name": "--white-a06",
-     "count": 1
-    },
-    {
-     "name": "--accent",
-     "count": 1
     }
    ],
    "rules": [
@@ -4561,16 +4489,8 @@
    ],
    "tokens": [
     {
-     "name": "--rate",
-     "count": 4
-    },
-    {
      "name": "--accent-cyan-soft",
      "count": 2
-    },
-    {
-     "name": "--th-rate",
-     "count": 1
     },
     {
      "name": "--hw-bg",
@@ -4612,6 +4532,7 @@
     "styles/learn-shell.css",
     "styles/type.css",
     "styles/keypad.css",
+    "styles/quiz.css",
     "styles/screens/type-quiz.css",
     "styles/scratchpad.css"
    ],
@@ -4702,15 +4623,7 @@
      "count": 6
     },
     {
-     "name": "--qtext",
-     "count": 6
-    },
-    {
      "name": "--surface-1",
-     "count": 4
-    },
-    {
-     "name": "--text-on-accent",
      "count": 4
     },
     {
@@ -4722,27 +4635,35 @@
      "count": 3
     },
     {
-     "name": "--fade",
-     "count": 2
+     "name": "--text-on-accent",
+     "count": 3
     },
     {
      "name": "--text",
      "count": 2
     },
     {
-     "name": "--border-strong",
-     "count": 2
-    },
-    {
-     "name": "--text-muted",
-     "count": 2
-    },
-    {
-     "name": "--opt-bg",
+     "name": "--qtext",
      "count": 2
     },
     {
      "name": "--th-panel",
+     "count": 1
+    },
+    {
+     "name": "--th-accent",
+     "count": 1
+    },
+    {
+     "name": "--surface-3",
+     "count": 1
+    },
+    {
+     "name": "--surface-hover",
+     "count": 1
+    },
+    {
+     "name": "--surface-2",
      "count": 1
     }
    ],
@@ -4833,48 +4754,8 @@
    ],
    "tokens": [
     {
-     "name": "--black-a30",
-     "count": 3
-    },
-    {
-     "name": "--hw-text",
-     "count": 2
-    },
-    {
-     "name": "--white-a04",
-     "count": 2
-    },
-    {
-     "name": "--th-accent-hi",
-     "count": 2
-    },
-    {
      "name": "--rate",
      "count": 2
-    },
-    {
-     "name": "--th-static",
-     "count": 1
-    },
-    {
-     "name": "--hw-bg",
-     "count": 1
-    },
-    {
-     "name": "--hw-text-muted",
-     "count": 1
-    },
-    {
-     "name": "--th-rate",
-     "count": 1
-    },
-    {
-     "name": "--white-a06",
-     "count": 1
-    },
-    {
-     "name": "--accent",
-     "count": 1
     },
     {
      "name": "--ltext",
@@ -4901,6 +4782,7 @@
     "styles/components.css",
     "styles/learn-shell.css",
     "styles/type.css",
+    "styles/quiz.css",
     "styles/screens/type-review.css",
     "styles/scratchpad.css"
    ],
@@ -4994,10 +4876,6 @@
      "count": 5
     },
     {
-     "name": "--qtext",
-     "count": 5
-    },
-    {
      "name": "--th-static",
      "count": 4
     },
@@ -5018,15 +4896,19 @@
      "count": 2
     },
     {
-     "name": "--fade",
-     "count": 2
-    },
-    {
      "name": "--surface-hover",
      "count": 2
     },
     {
-     "name": "--border-strong",
+     "name": "--surface-3",
+     "count": 2
+    },
+    {
+     "name": "--th-accent-hi",
+     "count": 2
+    },
+    {
+     "name": "--th-ink-accent",
      "count": 2
     }
    ],
@@ -5123,10 +5005,6 @@
    "tokens": [
     {
      "name": "--rate",
-     "count": 8
-    },
-    {
-     "name": "--th-rate",
      "count": 2
     },
     {
@@ -5138,19 +5016,11 @@
      "count": 1
     },
     {
+     "name": "--th-rate",
+     "count": 1
+    },
+    {
      "name": "--hw-text-muted",
-     "count": 1
-    },
-    {
-     "name": "--text-on-bright",
-     "count": 1
-    },
-    {
-     "name": "--hw-no",
-     "count": 1
-    },
-    {
-     "name": "--no-vivid",
      "count": 1
     },
     {

@@ -6,10 +6,10 @@
   <title>규칙 색인 — 리딩수학과학 디자인 시스템</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
   <base href="../" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261016-3" />
-  <link rel="stylesheet" href="styles/base.css?v=20261016-3" />
-  <link rel="stylesheet" href="styles/components.css?v=20261016-3" />
-  <link rel="stylesheet" href="styleguide/sg.css?v=20261016-3" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261016-4" />
+  <link rel="stylesheet" href="styles/base.css?v=20261016-4" />
+  <link rel="stylesheet" href="styles/components.css?v=20261016-4" />
+  <link rel="stylesheet" href="styleguide/sg.css?v=20261016-4" />
 </head>
 <body>
 <div class="sg">
@@ -495,14 +495,15 @@
 
       <article class="sg-rulecard" id="RM-FILE-03" data-check="style-audit,screen-diff" data-since="2026-10-12">
         <h3>계열이 같이 쓰는 규칙은 계열 파일로, 여러 계열이면 <code>components.css</code></h3>
-        <p class="sg-rulecard__do">계열 파일은 result · essay · type · assign · exam · nav · util(+history)이다. 화면 파일에는 그 화면에만 있는 것을 남긴다. 옮길 때는 같은 요소에 붙는 클래스(기본형·변형)의 순서를 지키고, 그림 주소(<code>url()</code>)를 옮긴 파일 기준으로 다시 쓴다.</p>
+        <p class="sg-rulecard__do">계열 파일은 result · essay · type · assign · exam · nav · util(+history)이다. 몇 화면만 같이 쓰는 묶음은 그 화면들만 부르는 공용 파일을 화면 CSS 바로 앞에 둔다(문항 화면 <code>quiz.css</code> · 서술형 스테퍼 <code>stepbar.css</code>). 화면마다 다른 값은 화면 CSS가 같은 선택자로 덮는다. 화면 파일에는 그 화면에만 있는 것을 남긴다. 옮길 때는 같은 요소에 붙는 클래스(기본형·변형)의 순서를 지키고, 그림 주소(<code>url()</code>)를 옮긴 파일 기준으로 다시 쓴다.</p>
         <dl>
-          <dt>검사</dt><dd><code>style-audit.py</code> 지켜볼 것 「화면 간 똑같은 규칙」 · <code>screen-diff.py</code> 0.00%</dd>
+          <dt>검사</dt><dd><code>style-audit.py</code> 지켜볼 것 「화면 간 똑같은 규칙」 · 옛 판과 요소마다 계산 스타일 대조(라이트 · 다크 · 검수 스위치 상태) · <code>screen-diff.py</code> 0.00%</dd>
           <dt>예외</dt><dd>킵 화면 쌍(서술형 가로안 <code>basics</code>·<code>drill</code>과 v2). 일부러 둔 대안이다.</dd>
         </dl>
         <details class="sg-why"><summary>근거</summary>
           <p>같은 규칙이 여러 화면에 복사돼 있으면 한 곳만 고쳐져 어긋난다. 반대로 순서를 지키지 않고 옮기면 화면이 바뀐다.</p>
           <p>2026-10-12에 변형만 먼저 옮겨 훈련 결과표의 이름 칸이 가운데로 몰린 적이 있다. 2026-10-14에 안전한 160곳을 올렸고(406 → 246), 남은 것은 대부분 이름만 같고 화면마다 다르게 쓰는 규칙이다.</p>
+          <p>2026-10-16에 문항 화면 넷 · 결과 화면 여섯 · 서술형 스테퍼 · 과제 포커스 링 · 개념 테마 토글의 복사본을 공용 파일로 올렸다(218 → 105). 과제 · 시험 풀이의 <code>.opt.is-selected</code>는 남겼다 — 앞 파일로 올리면 화면 CSS의 <code>.opt:hover</code>가 뒤에 와서, 고른 선지에 손을 올렸을 때 호버 면이 이긴다.</p>
         </details>
       </article>
 
@@ -858,6 +859,6 @@
 
   </main>
 </div>
-<script src="styleguide/sg.js?v=20261016-3"></script>
+<script src="styleguide/sg.js?v=20261016-4"></script>
 </body>
 </html>

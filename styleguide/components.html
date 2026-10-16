@@ -6,10 +6,10 @@
   <title>부품 — 리딩수학과학 디자인 시스템</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
   <base href="../" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261016-3" />
-  <link rel="stylesheet" href="styles/base.css?v=20261016-3" />
-  <link rel="stylesheet" href="styles/components.css?v=20261016-3" />
-  <link rel="stylesheet" href="styleguide/sg.css?v=20261016-3" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261016-4" />
+  <link rel="stylesheet" href="styles/base.css?v=20261016-4" />
+  <link rel="stylesheet" href="styles/components.css?v=20261016-4" />
+  <link rel="stylesheet" href="styleguide/sg.css?v=20261016-4" />
 </head>
 <body data-sg-css="tokens,base,components,learn-shell">
 <div class="sg">
@@ -105,7 +105,7 @@
             <span class="sg-cap">많은 개수 — 한 단원 18칸, 줄바꿈으로 흐른다</span>
             <div class="grid" style="max-width:420px" data-tiles="m e e* r b e m j u r* e b m e u u j e"></div>
           </div>
-          <script src="scripts/exam-tile.js?v=20261016-3"></script>
+          <script src="scripts/exam-tile.js?v=20261016-4"></script>
           <script>
             document.querySelectorAll('[data-tiles]').forEach(function (box) {
               box.innerHTML = box.dataset.tiles.split(' ').map(function (t) {
@@ -129,7 +129,7 @@
         정오답 표시 규칙(<code>RM-SURF-02</code>·<code>RM-FILL-05</code>)은 그대로 지킵니다.</div>
 
       <div class="sg-item" data-uses="blank, chunk--blank, sblank, dblank" data-pad="20px" data-section="concept"
-           data-css="tokens,base,components,screens/concept-drill">
+           data-css="tokens,base,components,quiz,screens/concept-drill">
         <div class="sg-item__hd"><h3>빈칸 — 칸형</h3>
           <span class="sg-item__cls">.dblank · .chunk--blank · .sblank · .blank — .is-active-input · .is-filled · .is-correct · .is-wrong · .show-ans</span>
           <span class="sg-item__file">components.css · --blank-*</span></div>
@@ -260,10 +260,10 @@
       </div>
 
       <div class="sg-item" data-uses="qopt" data-pad="0" data-section="concept"
-           data-css="tokens,base,components,learn-shell,screens/concept-basic-ops">
+           data-css="tokens,base,components,learn-shell,quiz,screens/concept-basic-ops">
         <div class="sg-item__hd"><h3>타일형 선택지</h3>
           <span class="sg-item__cls">.qopt · --num · --text · --img · __num · __img · .is-selected · .is-correct · .is-wrong</span>
-          <span class="sg-item__file">screens/concept-basic-ops.css 외 3</span></div>
+          <span class="sg-item__file">quiz.css · 색은 화면 CSS의 --opt-*</span></div>
         <p class="sg-note">개념 기초 연산·다지기와 유형 문제·해설이 씁니다. 높이 60px 타일이 가로로 놓이고, 고르면 면 전체가 칠해집니다(목록형은 테두리만).
           채점 뒤에는 면을 칠하지 않고 선 · 번호 배지 · 글자로만 정오답을 보여 줍니다(<code>RM-SURF-02</code>).
           그림 보기(<code>--img</code>)는 그림 색을 덮지 않도록 3px 테두리로만 표시합니다. 색은 <code>.ops</code>에 실린 <code>--opt-*</code> 토큰이 정합니다.</p>
@@ -307,10 +307,10 @@
       <p class="sg-lead">시험 풀이의 정오답 칸은 아직 옛 방식입니다(아래 세 번째 견본). 적용 여부를 보류 중입니다.</p>
 
       <div class="sg-item" data-uses="ex, explain" data-pad="0" data-section="type"
-           data-stack="1" data-css="tokens,base,components,learn-shell,type,screens/type-review">
+           data-stack="1" data-css="tokens,base,components,learn-shell,type,quiz,screens/type-review">
         <div class="sg-item__hd"><h3>유형 해설 — 보기 · 타일형 선지 · 해설 띠</h3>
           <span class="sg-item__cls">.ex · .qopt.is-correct / .is-wrong · .explain</span>
-          <span class="sg-item__file">screens/type-review.css</span></div>
+          <span class="sg-item__file">quiz.css · screens/type-review.css</span></div>
         <p class="sg-note">2번이 정답, 4번이 고른 오답입니다. 선지 면은 기본 면 그대로이고 2px 선 · 번호 배지 · 번호 글자만 바뀝니다.</p>
         <template class="sg-src">
           <div class="ops" style="position:static;padding:20px 24px"><div class="q">
@@ -560,6 +560,6 @@
 
   </main>
 </div>
-<script src="styleguide/sg.js?v=20261016-3"></script>
+<script src="styleguide/sg.js?v=20261016-4"></script>
 </body>
 </html>

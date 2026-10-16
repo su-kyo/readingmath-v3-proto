@@ -3,27 +3,19 @@
    여러 화면이 같이 쓰는 부품은 styles/ 의 공용 파일에 있다 (스토리북 참고).
    ========================================================================= */
 
+/* 베젤(.rframe) · 스텝 모듈 상태 · 좁은 폭 배치 → 공용 styles/result.css 끝 「결과 화면 6장이 복사해 쓰던 규칙」 */
 /* ===================================================================
    유형 스텝 결과 — Phase 7 ① 계기판 어휘 (개념 shared/step-result와 같은 골격,
    유형(틸) 리테마). 유형 고유: 문항마다 정답/오답이 있어 번호가 붙은 문항 판독.
    =================================================================== */
 
-.rframe {
-  flex: 1; min-height: 0; display: flex; gap: var(--sp-12);
-  background: var(--th-static); border-radius: var(--r-frame) var(--r-frame) 0 0; padding: var(--sp-8) var(--sp-8) 0;
-  --lmain: var(--hw-bg); --ltext: var(--hw-text); --lmuted: var(--hw-text-muted);
-  --lcd: var(--white-a04);
-  --accent: var(--th-accent-hi); --title1: var(--th-accent-hi); --rate: var(--th-rate);
-  --row-bg: var(--white-a04);
-}
 /* 우측 조작 패널 — 면 색은 림(--th-static)과 같은 계열에서 파생(톤온톤) → 공용 styles/result.css */
 
 /* 좌측: 결과 (LCD 라인 패턴) */
 
 .rmain::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--rate) 26%, transparent); border-radius: var(--r-full); border: var(--bw-3) solid transparent; background-clip: padding-box; }
-.rside__list::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--hw-text) 18%, transparent); border-radius: var(--r-full); border: var(--bw-3) solid transparent; background-clip: padding-box; }
-.rmain, .rside__list { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--rate) 28%, transparent) transparent; }
 
+.rmain, .rside__list { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--rate) 28%, transparent) transparent; }
 
 /* ===== 계기판 히어로 — 다이얼 게이지 + 판독창 → 공용 styles/result.css ===== */
 
@@ -31,24 +23,11 @@
 
 /* ===== 우측: 학습 진행 현황 — 조작 패널 (Phase 7 ①-b C안) ===== */
 
-
-/* 공용 learn-shell.css 의 구형 카드 표현(점선 테두리·틴트·호버 리프트)을 이 화면에서만 무력화 */
-.step-card.is-done { background: var(--white-a06); }
-.step-card.is-done:hover, .step-card.is-open:hover { transform: none; filter: brightness(1.07); box-shadow: 0 var(--depth-4) 0 var(--black-a30); }
-.step-card.is-done:active, .step-card.is-open:active { transform: translateY(2px); box-shadow: 0 var(--depth-2) 0 var(--black-a30); }
-.step-card.is-current, .step-card.is-current:hover { box-shadow: 0 var(--depth-4) 0 var(--black-a30), inset 0 0 0 2.5px var(--accent); }
-
+/* 스텝 모듈 상태(완료 · 열림 · 지금) → 공용 styles/result.css 끝 */
 
 .step-card__name { font-size: var(--fs-16); font-weight: var(--fw-heavy); color: var(--ltext); white-space: nowrap; }
-.step-card.is-open .step-card__name { color: var(--lmuted); }
 
 /* 훈련 결과 버튼 — 모든 스텝 완료 시 리스트 끝에 등장 */
 
-
 /* 하단바 = 유형 footer (크림 트레이) */
 
-@media (max-width: 940px) {
-  .rframe { flex-direction: column; }
-  .rmain, .rside { border-radius: var(--r-22); }
-  .rside { width: auto; }
-}

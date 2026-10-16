@@ -91,7 +91,6 @@ body { font-family: var(--font-sans); background: var(--asset-console-task-body)
 /* 하단 콘솔 바 */
 
 :root[data-theme="dark"] .qpanel::-webkit-scrollbar-thumb { background: var(--scroll-thumb-dark-strong); background-clip: padding-box; }
-:focus-visible { outline: var(--bw-3) solid var(--focus); outline-offset: 2px; }
 
 @media (max-width: 900px) {
   .content { flex-direction: column; }

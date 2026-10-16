@@ -63,6 +63,7 @@
 **⑤ 화면 파일 규칙** (`RM-FILE-*` · `RM-NAME-*` · `RM-JS-*` · `RM-SIZE-*`).
 - HTML 안에 `<style>`·`<script>` 없음. 예외는 `<head>`의 테마 초기화 한 줄(빼면 첫 화면이 깜빡인다)과 스토리북 `<template>` 안.
 - 화면 CSS `styles/screens/<계열>-<화면>.css`, 화면 JS `scripts/<계열>-<화면>.js`. 계열이 같이 쓰면 계열 파일(result · essay · type · assign · exam · nav · util+history), 여러 계열이면 `components.css`.
+  몇 화면만 같이 쓰는 한 묶음은 그 화면들만 부르는 공용 파일을 화면 CSS 바로 앞에 둔다 — 문항 화면 `quiz.css`(개념 기초 연산 · 확인하기 · 다지기 · 유형 문제 · 해설) · 서술형 스테퍼 `stepbar.css`(다지기 · 다지기 해설).
 - 규칙을 옮길 때 같은 요소에 붙는 클래스(BEM 변형 · 다중 클래스)의 순서를 지킨다. 변형만 먼저 옮겨 훈련 결과표가 깨진 적이 있다.
 - `components.css`에는 화면이 실제로 쓰는 것만 둔다. 「언젠가 쓸」 부품은 만들지 않는다.
 - 이름은 뜻 하나에 하나: 토스트 `.toast` + `.is-on`(서랍만 `.rmd-toast`) · 선택지 목록형 `.opt`(과제 · 시험, `__num`·`__txt`, `.is-selected`·`.is-correct`·`.is-wrong`) / 타일형 `.qopt`(개념 · 유형) ·
