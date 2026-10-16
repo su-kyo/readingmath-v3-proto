@@ -4,7 +4,7 @@
 폴더 구조와 화면 목록은 `README.md`, 디자인 시스템(원칙·부품·예외)은 **스토리북 `styleguide/`** 를 본다.
 **규칙에는 번호가 있다(`RM-영역-번호`, 2026-10-14).** 정본은 `styleguide/rules.html`이고 이 파일 끝의 「규칙 색인」은
 `tools/rules-build.py`가 만든다 — 규칙을 바꾸면 정본 카드를 고치고 그 도구를 돌린다(손으로 색인을 고치지 않는다).
-(`docs/design-system.md`는 2026-10-12부터 안내 한 장이다 — 옛 v1.0 본문은 낡았다.)
+(`docs/README.md`는 2026-10-12부터 안내 한 장이다 — 옛 v1.0 본문은 낡았다.)
 상위 공통 규칙(`../../CLAUDE.md` — 이미지 경량본·_source 원본 보관)이 함께 적용된다.
 
 ## 반드시 지킬 것
@@ -93,7 +93,7 @@ index의 그룹 분류는 같은 단위다 — 둘이 어긋나게 두지 않는
 검수 도구 `planet-ref.py`·`char-on-bg.py`의 `HERO_W`도 같은 값이니 함께 고친다.
 `HAS_CHAR`에서 키를 빼면 그 학기는 말풍선만 세운다(`.hero.is-nochar`).
 **캐릭터 그림을 교체하면 `CHAR_V` 숫자를 올린다** — 파일명이 `character.webp`로
-고정이라 안 올리면 브라우저가 옛 그림을 계속 쓴다. 제작 규칙은 `docs/character-brief.md`.
+고정이라 안 올리면 브라우저가 옛 그림을 계속 쓴다. 제작 규칙은 `docs/briefs/character-brief.md`.
 32화면을 한눈에 보려면 `tools/home-contact.html` (배포 제외).
 
 **⑥ 화면 파일 규칙 (마감 회차 2026-10-12 · RMDS v2.0 · `RM-FILE-*` · `RM-NAME-*` · `RM-JS-*`).**
@@ -182,7 +182,7 @@ Phase 6에서 키패드가 한 벌(`.keypad__key`)로 합쳐져 이 파일도 �
 **빈칸 선지 창 — `scripts/blank-pop.js` + `components.css`의 `.bpop` (2026-10-15 · `RM-PART-06`).** 빈칸을 눌러 선지를 고르는 창은
 개념 학습 · 서술형 6장이 이 한 벌을 쓴다. 화면은 `RMBlankPop.open(빈칸, {choices, answer, onPick, onDone, onClose})`만 부른다.
 테마를 따라 뒤집히는 카드이고 계열색은 왼쪽 원에만. 오답 → 빨간 ✕ 0.5초 → 회색 ✕ 비활성, 정답 → 초록 ✓ 0.5초 뒤 닫힘. `answer`가 없으면 채점 없이 바로 넣는다.
-서술형 주관식 키패드 창(`.qpop`)은 정적 하드웨어라 따로다. 판단은 `docs/blank-pop-1015.md`.
+서술형 주관식 키패드 창(`.qpop`)은 정적 하드웨어라 따로다. 판단은 `docs/decisions/blank-pop-1015.md`.
 
 **빈칸에서 여는 창의 자리 — `scripts/pop-place.js` (2026-10-15 · 요청서 요청 10).** 빈칸 선지 창 · 떠 있는 키패드(개념 다지기 · 기초 연산 · 유형 풀이) · 서술형 키패드 창(`.qpop`)이
 모두 `RMPopPlace.place(창, 빈칸, {reveal, side})`로 연다. 머리줄 아래 ~ 콘솔바 위(서술형은 위에 붙은 문제 카드 아래) 영역의 가장자리 8px 안 ·
@@ -196,12 +196,12 @@ Phase 6에서 키패드가 한 벌(`.keypad__key`)로 합쳐져 이 파일도 �
 **콘솔바 안내 — `scripts/learn-guide.js` + `learn-shell.css`의 `.guide` (2026-10-15 · `RM-PART-07`).** 학습 화면 콘솔바 오른쪽 CTA 바로 왼쪽의 한 줄 안내.
 화면은 `RMGuide.set(문장, 'ok' | 'no')`만 부른다(빈 문장 = 숨김). 글자는 `--guide-ink` 하나, 상태는 램프(진한 테두리 700 + 밝은 불 300)로만 — 상태색 글자는 개념 파란 트레이에서 안 읽힌다.
 테스트 서버에 개발자가 넣은 안내(cockpit-guide)를 받아 옮긴 것이고, 함께 받아들인 것: 「채점하기 · 다음 문제」를 콘솔바 CTA로(개념 다지기 · 기초 연산 · 유형 풀이 · 유형 해설),
-오답은 눌러야 정답이 열림(개념 다지기 · 기초 연산 · 유형 해설). 서술형 기본 다지기의 단계 버튼은 본문 아래 그대로. 판단은 `docs/guide-1015.md`.
+오답은 눌러야 정답이 열림(개념 다지기 · 기초 연산 · 유형 해설). 서술형 기본 다지기의 단계 버튼은 본문 아래 그대로. 판단은 `docs/decisions/guide-1015.md`.
 
 **학습 타이머 — `scripts/learn-timer.js` + `learn-shell.css`의 `.lheader__timer` (2026-10-15).** 유형 · 서술형 12장 머리줄.
 「진행 시간 / 제한 시간」, 제한 글자(`.lheader__limit`)가 정본이고 넘으면 `.is-over`(숫자 빨강 300 + 테두리 500). 해설 · 결과는 `.is-paused`.
 풀이 중에는 마우스를 올리거나 포커스하면 말풍선 「N분 안에 문제를 모두 풀어보세요!」(N = 제한 분, 테스트 서버에서 받아옴). 제한 시간은 콘텐츠마다 다르다(과학 유형 30분).
-화면 JS에 타이머를 새로 만들지 않는다. 판단은 `docs/timer-1015.md`.
+화면 JS에 타이머를 새로 만들지 않는다. 판단은 `docs/decisions/timer-1015.md`.
 
 **연습장 — `scripts/scratchpad.js` + `styles/scratchpad.css`.** 둘을 부르면(CSS는 화면 CSS 바로 뒤) 그 화면의 「연습장」 버튼에 알아서
 붙는다(학습 화면 16장 · 결과 화면에는 없다). 화면 위를 덮는 투명 캔버스에 바로 필기하고, 딤은 필기 뒤에 깔리되
@@ -304,7 +304,7 @@ tools/screen-diff.py /tmp/rm-before /tmp/rm-after
 `proposal-curr-layout.html` + `curr-layout.html`(커리큘럼 라운드 배치 A·B·C, 2026-10-14 · 보류 2026-10-15 —
 비교 페이지가 앞 파일, 액자 하나하나가 뒤 파일이라 둘은 한 벌이다. 시안은 라운드당 스텝 셋, 지금 화면은 둘)
 ※ `util-brand-proposals-2.html`·`util-white.html`은 ④ 유틸이 확정·적용되어 지웠다
-  (2026-08-24). 판단은 `docs/phase7-brief.md`의 「④ 확정 사양」에 있다.
+  (2026-08-24). 판단은 `docs/decisions/home-reward-util-0824.md`의 「④ 확정 사양」에 있다.
 
 지운 시안은 깃 기록에 남아 있다. 되살리려면 지운 커밋을 찾아 그 파일만 꺼내면 된다.
 
