@@ -1,246 +1,109 @@
 # 리딩수학과학 · 리디자인 프로토타입
 
-수학·과학 태블릿 학습 서비스의 리디자인을 **HTML · CSS · JavaScript**로 만든 프로토타입입니다.
-(React 등 프레임워크 없음 — 그냥 파일을 열면 동작합니다.)
+수학·과학 태블릿 학습 서비스 「리딩수학과학」의 리디자인을 **HTML · CSS · JavaScript**로 만든 프로토타입입니다.
+프레임워크가 없어서 파일을 열면 바로 동작합니다. 개발자는 이 프로토타입을 기준으로 실서버에 새 디자인을 옮기고 있습니다.
 
-## 열어보는 법 (개발 몰라도 됨)
+- 배포본: **readingmath-v3-proto.vercel.app** (main에 올리면 자동 배포)
+- 기준 화면: **1280 × 720** (태블릿 가로)
+- 화면 42장 + 디자인 시스템 문서(스토리북) 6장
 
-가장 쉬운 방법: **`index.html`을 더블클릭**해서 브라우저로 열면 됩니다.
+## 열어보는 법
 
-- `index.html` — 시작 페이지 (화면 전체 목록)
-- `styleguide/` — 세미 스토리북 6장(기초 · 부품 · 셸 · 패턴 · 규칙 색인 · 화면 지도). 부품마다 라이트/다크를
-  나란히 세우고 「쓰는 화면 수」를 자동으로 센다. 규칙마다 번호(`RM-영역-번호`)가 있다. 배포에 포함된다
-- `styleguide/data/` — 개발자용 `tokens.json` · `rules.json` · `screens.json`. 스크립트가 만든다(손으로 쓰지 않는다)
+`index.html`을 브라우저로 열면 화면 전체 목록이 나옵니다. 거기서 각 화면과 스토리북으로 갈 수 있습니다.
 
-> 학습 화면은 라이트로 시작하고 오른쪽 위 ☀ / ☾ 버튼으로 다크로 바꿉니다(고른 테마는 기억됩니다).
-> 행성 홈 · 결과 화면은 항상 다크(우주선), 유틸 화면은 다크가 기본입니다.
+- 테마 — 학습 화면은 라이트로 시작하고 오른쪽 위 ☀ / ☾로 바꿉니다(고른 테마는 기억됩니다). 행성 홈과 결과 화면은 항상 다크, 유틸 화면은 다크가 기본입니다.
+- 과목 — 개념 · 서술형은 과목마다 화면이 따로 있습니다(`-math` 수학 중3-2 삼각비 · `-sci` 과학 중2-1 밀도와 용해도). 유형 · 결과 화면은 한 벌이라 주소 끝에 `?subject=science`(또는 `math`)를 붙여 과목을 바꿉니다.
+- 행성 홈 — `nav/home.html?subject=science&sem=mid-3-1`처럼 과목과 학기를 붙입니다. 학기는 `elem-3-1` ~ `high-1-2` 16개, 과목 둘이라 32조합입니다.
 
-**홈 화면만은 주소로 과목·학기를 바꿉니다.**
-`nav/home.html?subject=science&sem=mid-3-1` 처럼 붙이면 됩니다.
-`subject`는 `math` / `science`, `sem`은 `elem-3-1` ~ `high-1-2` 16학기라 모두 32조합입니다.
+## 폴더 지도
 
-## 폴더 구조
-
-화면은 **계열별 폴더**로 나뉘어 있습니다. `index.html`이 묶어 보여주는 그룹과 같은 단위입니다.
+화면은 **계열별 폴더**에 있고, `index.html`의 그룹과 같은 단위입니다.
 
 ```
 RM/
-├─ index.html            진입 · 화면 목록
-├─ styleguide/          세미 스토리북 (기초·부품·셸·패턴·규칙 색인·화면 지도 + sg.css·sg.js·usage.json)
-│  └─ data/               개발자용 tokens.json · rules.json · screens.json (tools/*-build.py 가 만든다)
+├─ index.html          시작 페이지 · 화면 목록
 │
-├─ nav/                  메인 · 홈 / 네비게이션
-│  ├─ home.html            기본 모드 홈 (행성 메인)
-│  ├─ freemode.html        자유 모드 (학기별 · 계통별)
-│  ├─ curriculum.html      커리큘럼 레이어
-│  └─ bridge.html          과목 선택 브릿지
-├─ concept/              개념 훈련 — 과목마다 한 벌 (-math 수학 삼각비 · -sci 과학 밀도와 용해도)
-│  ├─ learn-math · learn-sci        개념 학습 (끊어읽기 · 요약 창)
-│  ├─ drill-math · drill-sci        개념 다지기
-│  ├─ organize-math · organize-sci  개념 정리하기
-│  ├─ basic-ops.html       STEP 2 기초 연산 (수학)
-│  └─ check.html           STEP 2 개념 확인하기 (과학)
-├─ type/                 유형 훈련 (quiz · review · result · training-result) — 한 벌, 과목에 따라 문항 데이터만 바뀐다
-├─ essay/                서술형 훈련 — 과목마다 한 벌
-│                          수학 basics-math · drill-math(+drill-review-math) · advanced
-│                          과학 basics-sci · drill-sci(+drill-review-sci) · report(+report-review)
-│                          결과(step-result · training-result)는 한 벌
-├─ assignment/           과제 센터 (home · solve · explain · result)
-├─ exam/                 시험 대비 (home · solve)
-├─ util/                 공지 · 월간보고서 · 결제
-├─ shared/               여러 계열이 함께 쓰는 결과 화면
-│  ├─ step-result.html     스텝 결과
-│  └─ training-result.html 학습 결과
+├─ nav/          4장   행성 홈 · 자유 모드 · 커리큘럼 · 과목 선택
+├─ concept/      8장   개념 훈련 — 학습 · 다지기 · 정리(과목마다 한 벌) + 기초 연산(수학) · 개념 확인(과학)
+├─ type/         4장   유형 훈련 — 풀이 · 해설 · 결과 · 훈련 결과 (과목 공용)
+├─ essay/       13장   서술형 훈련 — 기초 · 다지기 · 해설(과목마다) + 심화(수학) · 보고서(과학) + 결과 2장 + 가로 킵 2장
+├─ assignment/   4장   과제 센터
+├─ exam/         2장   시험 대비
+├─ util/         5장   공지 · 공지 상세 · 월간보고서 · 결제 · 학습 기록
+├─ shared/       2장   여러 계열이 같이 쓰는 결과 화면(스텝 결과 · 학습 결과)
 │
-├─ styles/               CSS — HTML 안에는 CSS 를 쓰지 않는다
-│  ├─ tokens.css          디자인 토큰 (색 램프 · 알파 램프 · 역할 · 계열 슬롯 · 눈금)
-│  ├─ base.css · components.css       전역 바탕 · 여러 계열이 쓰는 부품
-│  ├─ learn-shell · monitor · keypad · gnb · space-bg   공용 셸
-│  ├─ result · essay · type · assign · exam · nav · util · history   계열 공용
-│  └─ screens/            화면 하나에만 있는 스타일 (<계열>-<화면>.css)
-├─ scripts/              화면별 동작 JS(<계열>-<화면>.js) + 공용 스크립트
-│  ├─ theme.js            라이트/다크
-│  ├─ space-bg.js         우주 배경
-│  ├─ debug-panel.js      검수 패널 (?debug=1 일 때만 — 아래 「검수 도구」 참고)
-│  └─ keypad-input.js     키패드에 컴퓨터 키보드 입력
-├─ assets/               화면이 부르는 재료 — 전부 "쓰임" 기준으로 분류
-│  ├─ img/               그림(webp) — 코드가 그대로 띄우는 것
-│  │  ├─ bg/               화면 배경 (우주선·우주) 5장
-│  │  ├─ home/             행성 홈 32세트 (수·과 × 16학기 — 배경+오브젝트 6종+대표 캐릭터)
-│  │  ├─ planets/          자유모드 행성 16장
-│  │  ├─ strands/          계통 일러스트 17장
-│  │  ├─ grade/            등급 배지 8장
-│  │  └─ misc/             낱장 (실험 과정 그림)
-│  ├─ icons/             아이콘(svg) — 코드가 색을 바꿔 쓰는 재료
-│  │  ├─ gnb/ exam/ hw/    영역별 아이콘
-│  │  ├─ console/ star/    콘솔 장식 · 등급 별
-│  │  └─ ico-*.svg         공용 낱개
-│  └─ fonts/             Kode Mono (직접 넣어둠, 인터넷 없이도 뜸)
+├─ styleguide/         스토리북 6장 — 기초 · 부품 · 셸 · 패턴 · 규칙 색인 · 화면 지도 (배포 포함)
+│  └─ data/              개발자용 tokens.json · rules.json · screens.json (스크립트가 만든다)
+├─ styles/             CSS — tokens.css(디자인 토큰) · 공용 · 계열 공용 · screens/(화면 하나에만 있는 것)
+├─ scripts/            JS — 화면 동작(<계열>-<화면>.js) · 콘텐츠 데이터(-data-math/-sci.js) · 공용 부품
+├─ assets/             화면이 부르는 재료 — img/(그림 webp) · icons/(아이콘 svg) · fonts/
 │
-├─ docs/                 깊은 문서 (아래 「문서 세 개」 참고)
-│  ├─ design-system.md     안내 한 장 — 정본은 styleguide/ (옛 v1.0 본문은 깃 기록에)
-│  ├─ phase7~10-brief.md   회차별 지시서와 진행 기록
-│  └─ plan-2026-07.md      7월 작업 계획 (보관용)
+├─ docs/               판단과 요청의 기록 — requests · decisions · research · briefs (입구 docs/README.md)
+├─ tools/              검수 도구 (배포 제외)
+├─ figma-palette/      옛 팔레트를 유지한 비교용 스냅샷 (배포 제외)
+├─ video/              소개 영상 작업 폴더 (깃 · 배포 모두 제외)
 │
-├─ figma-palette/        기존 팔레트 유지 스냅샷 (내부 비교용, 배포 제외 · 빌려 쓰던 공용 JS도 js/에 얼려 둠)
-├─ tools/                로컬 전용 검수 도구 (배포 제외)
-│  ├─ palette-preview.html 팔레트 미리보기
-│  ├─ cta-check.html       CTA가 홈 32배경에서 버티는지 자동 판정
-│  ├─ home-contact.html    행성 홈 32화면 한눈에 보기 (비율 4:3·16:9·21:9 전환)
-│  ├─ style-audit.py       스타일 규칙 검사 — 먼저 이것 (아래 「색을 바꾸고 싶다면」)
-│  └─ screen-shot.sh · screen-diff.py   고치기 전후 전 화면 화소 대조
-├─ video/                소개 영상 제작 폴더 (깃·배포 모두 제외, 아래 참고)
-│
-├─ vercel.json           옛 주소 /styleguide.html → 새 스토리북으로 넘겨주기
-├─ CLAUDE.md             에이전트용 작업 규칙
-└─ README.md             이 문서
+├─ vercel.json         옛 주소를 새 화면으로 넘겨주기 (요청서에 적힌 링크가 살아 있게)
+├─ CLAUDE.md           AI 작업 규칙
+└─ README.md           이 문서
 ```
 
-**이미지는 출처가 아니라 쓰임으로 분류합니다.** 예전에는 `assets/figma/`라는
-출처 기준 이름이었는데, 실제로는 대부분 생성 이미지라 이름이 거짓말을 하고 있었습니다.
-출처 구분은 원본 보관소(`~/Documents/_source/RM/`)의 몫입니다.
+하위 폴더의 화면은 `<head>` 첫 줄에 `<base href="../">`가 있어서, 경로를 모두 최상위 기준으로 씁니다(`styles/tokens.css`, `type/quiz.html`).
+루트의 `index.html`에는 넣지 않습니다.
 
-**그림(img)과 아이콘(icons)을 나눈 이유** — 성격이 다릅니다. 그림은 코드가 그대로
-띄우고, svg 아이콘은 코드가 색을 갈아입히는 재료입니다.
+## 검수하는 법 — 문제를 직접 풀지 않아도 됩니다
 
-**파일 이름에서 계열 앞머리를 뺐습니다.** 폴더가 이미 계열을 말해주기 때문입니다.
-`essay-drill.html` → `essay/drill.html`, `type-quiz.html` → `type/quiz.html` 식입니다.
-
-`shared/`에 있는 두 장은 **개념·유형·서술형이 모두 부르는 화면**이라 어느 계열에도
-넣지 않았습니다. 계열 폴더 안에 두면 이름과 실제가 어긋납니다.
-
-**과목 두 벌 (2026-10-15).** 개념 · 서술형 화면은 과목마다 파일이 따로 있고(`-math` · `-sci`),
-유형 4장과 결과 화면은 한 벌을 두 과목이 같이 씁니다. 과목은 `scripts/subject.js`가 정합니다 —
-과목별 화면이 열리면 과목을 기억하고, 공용 화면은 그 기억을 읽습니다. 공용 화면을 바로 열 때는
-주소 끝에 `?subject=science`(또는 `math`)를 붙입니다. 옛 주소(`concept/learn.html` 등)는
-`vercel.json`이 새 화면으로 넘겨 줍니다.
-
-### 화면을 새로 만들 때 — 첫 줄에 이것 하나
-
-하위 폴더에 있는 화면은 `<head>` 바로 아래에 이 한 줄이 있어야 합니다.
-
-```html
-<base href="../">
-```
-
-이게 있으면 `styles/`·`scripts/`·`assets/`를 **최상위 기준**으로 부를 수 있습니다.
-즉 폴더가 달라도 경로를 그대로 쓰면 됩니다(`href="styles/tokens.css"`).
-화면끼리 오가는 링크도 같은 기준이라 `href="type/quiz.html"`처럼 씁니다.
-
-최상위에 있는 `index.html`에는 **넣지 않습니다.**
-
-## 화면을 검수할 때 — 문제를 직접 풀지 않아도 됩니다
-
-주소 끝에 **`?debug=1`** 을 붙이면 화면 왼쪽 아래에 작은 패널이 뜹니다.
-정답·오답·전부 풀기·시간 초과 같은 상태를 버튼으로 오갈 수 있습니다.
-
-```
-concept/drill-math.html?debug=1
-```
-
-**주소만으로 특정 상태를 바로 열 수도 있습니다.** 스크린샷을 찍거나
-"이 상태 좀 봐 주세요"라고 공유할 때 씁니다.
+주소 끝에 **`?debug=1`**을 붙이면 왼쪽 아래에 작은 패널이 뜹니다. 정답 · 오답 · 전부 풀기 · 시간 초과 같은 상태를 버튼으로 오갑니다.
+`&do=버튼 이름`을 더하면 그 상태로 바로 열려서, 스크린샷을 찍거나 「이 상태 봐 주세요」라고 공유할 때 씁니다.
 
 ```
 concept/drill-math.html?debug=1&theme=dark&do=오답 처리
 ```
 
-- `theme` — `light` / `dark`
-- `do` — 패널 버튼에 적힌 라벨 그대로. 여러 개는 `|` 로 이어 붙입니다
+- `theme` — `light` / `dark` · `do` — 패널 버튼에 적힌 라벨 그대로, 여러 개는 `|`로 잇습니다
+- 공지 목록 · 월간보고서는 `?state=loading|empty|error`로 로딩 · 빈 목록 · 실패 화면을 봅니다
+- 키패드가 있는 화면은 컴퓨터 키보드도 됩니다(숫자 · `Backspace` · `Enter`)
 
-`?debug=1`이 없으면 아무것도 안 보입니다. 배포본에서 학생이 볼 일은 없습니다.
+배포본에서는 이 스위치가 안 보입니다.
 
-**키패드가 있는 화면에서는 컴퓨터 키보드도 됩니다** — 숫자, `Backspace`(지우기),
-`Enter`(확인). 태블릿 없이 검수할 때 편합니다.
+## 디자인 시스템은 어디에
 
-## 색을 바꾸고 싶다면
-
-`styles/tokens.css`의 값만 고치면 모든 화면에 반영됩니다. 화면 CSS·JS에는 색값을 직접 쓰지 않습니다
-(지금 0곳). 원칙과 예외는 스토리북 `styleguide/`에 있고, 지켜졌는지는 기계가 잽니다.
+- **설명과 규칙은 스토리북 `styleguide/`** 한 곳입니다. 부품마다 라이트 · 다크를 나란히 세우고 「쓰는 화면 수」를 자동으로 셉니다. 규칙에는 번호(`RM-영역-번호`, 58개)가 있어 QA에서 번호로 가리킵니다.
+- **값은 `styles/tokens.css`** 한 곳입니다. 여기만 고치면 전 화면에 반영되고, 화면 CSS · JS에는 색값을 직접 쓰지 않습니다. 스토리북 견본도 이 파일의 값을 읽어 그립니다.
+- **지켜졌는지는 기계가 잽니다.**
 
 ```bash
 python3 tools/style-audit.py
 ```
 
-## 기준
+## 이미지 원본
 
-- 기준 화면 크기: **1280 × 720 (태블릿 가로, 16:9)**
-- 테마: 학습 화면은 라이트 시작(다크 선택), 행성 홈·결과는 항상 다크, 유틸은 다크 기본
-- 스타일 원칙: 학습 셸과 결과는 **우주선의 사물**(콘솔 · 계기판 · 보조 모니터), 내용 면은 표면 톤 · 여백 · 타이포로 구조를 만든다
-
----
-
-## 알아둘 것 — 이 프로토타입의 현재 상태
-
-### 이미지는 전부 webp입니다 (원본은 프로젝트 밖에)
-
-화면이 쓰는 사진·일러스트는 **webp**, 아이콘·로고는 **svg**입니다.
-PNG는 프로젝트 안에 두지 않습니다 — `.gitignore`가 막습니다.
-
-**원본 PNG 96장은 여기 있습니다:**
+화면이 쓰는 그림은 **webp**, 아이콘은 **svg**입니다. PNG는 프로젝트에 두지 않습니다(`.gitignore`가 막습니다).
+원본은 깃이 없는 창고 `~/Documents/_source/RM/`에 있고, **전부 생성한 그림이라 다시 뽑아도 같은 그림이 나오지 않습니다. 지우면 안 됩니다.**
 
 ```
-~/Documents/_source/RM/generated/
+_source/RM/
+├─ generated/img/      화면 그림 원본 — assets/img/ 와 폴더 · 이름이 1:1 짝 (홈 · 배경 · 행성 · 계통 · 등급 · 캐릭터)
+├─ character-trials/   캐릭터 시안과 검사 이미지 91장 (채택 안 된 것)
+├─ concept-learn/ · subject-split-1015/   학습 콘텐츠 그림 원본 (실서비스에서 받은 것)
+└─ live-capture/       실서버 탐방 캡처
 ```
 
-전부 생성한 이미지라 **다시 뽑아도 같은 그림이 안 나옵니다.** 지우면 안 됩니다.
-(Figma에서 받은 것은 아이콘 svg뿐이고, 그건 `assets/icons/`에 그대로 있습니다.)
-
-**webp를 다시 만들려면** 원본을 같은 자리 같은 이름으로 바꿔 넣으면 됩니다:
+webp를 다시 만들 때는 원본을 같은 자리 같은 이름으로 바꿔 넣습니다. `cwebp`가 없으면 `brew install webp`.
 
 ```bash
 cwebp -q 92 원본.png -o 결과.webp
 ```
 
-**96장을 한 번에 다시 만들려면** 아래를 그대로 복사해 실행합니다.
-`_source`의 원본을 읽어 `assets/` 안에 webp로 넣습니다 (폴더 구조는 자동으로 맞춰집니다).
+## 아직 정하지 않은 것
 
-```bash
-cd ~/Documents/_source/RM/generated && find . -name "*.png" | while read f; do mkdir -p "$HOME/Documents/Portfolio/projects/RM/assets/$(dirname "$f")"; cwebp -q 92 -quiet "$f" -o "$HOME/Documents/Portfolio/projects/RM/assets/${f%.png}.webp"; done && echo "완료"
-```
+- **서술형 가로 안 2장**(`essay/basics.html` · `essay/drill.html`) — 확정안은 세로(`-math` · `-sci`)이고, 가로 안은 옛 콘텐츠 그대로 참고용으로 킵합니다. index에서도 킵 그룹으로 따로 있습니다.
+- **과학 계통 일러스트 6장**(`assets/img/strands/` 물리 · 화학 · 지구 · 생명 · 탐구 · 통합) — 아직 어느 화면도 부르지 않습니다. 자유 모드에 과학 계통이 붙으면 씁니다.
+- **보류 시안 둘** — 과제센터 미션 보드(`tools/mission-board-mockup.html`) · 커리큘럼 라운드 배치(`tools/proposal-curr-layout.html`).
+- 그 밖의 열린 일은 옵시디언 작업 기록의 「다음에 할 것」에 있습니다.
 
-`cwebp`가 없다고 나오면 먼저 설치합니다:
+## 깃 밖 폴더와 배포
 
-```bash
-brew install webp
-```
-
-### 어느 쪽을 쓸지 아직 안 정한 화면이 있습니다
-
-두 쌍이 남아 있습니다. **둘 다 살아 있고, 어느 쪽을 쓸지는 미정입니다.**
-
-- `essay/basics.html` / `essay/basics-math.html`(옛 basics-v2)
-- `essay/drill.html` / `essay/drill-math.html`(옛 drill-v2)
-
-확정안은 세로(v2)이고, 2026-10-15에 과목 두 벌로 나누면서 세로 안만 과학판을 만들었습니다.
-가로 안 두 장은 옛 콘텐츠 그대로 킵입니다.
-
-### 화면이 아직 안 부르는 이미지 6장
-
-`assets/img/strands/`의 과학 계통 일러스트 6장(물리·화학·지구·생명·탐구·통합)은
-아직 어느 화면도 부르지 않습니다. **자유 모드에 과학 계통이 붙으면 쓸 것**이라
-webp로 바꿔 그대로 남겨뒀습니다.
-
-### 기준은 하나입니다
-
-예전에는 `tokens.css` · `design-system.md` · `design-tokens.json` 셋이 서로 조금씩 달랐습니다.
-마감 회차(2026-10-12)에 **값은 `styles/tokens.css`, 설명은 스토리북 `styleguide/`** 하나씩으로 모았습니다.
-스토리북은 토큰의 계산값을 읽어 그리므로 둘이 어긋날 수 없고, 낡은 스냅샷(json)은 지웠습니다.
-2026-10-14부터 개발자에게 넘기는 json(`styleguide/data/`)이 다시 생겼지만, 이번엔 **스크립트가 원본에서 매번 새로 만드는 것**이라
-손으로 고친 스냅샷이 아닙니다 — `tools/tokens-build.py` · `rules-build.py` · `screens-build.py`.
-
-### video 폴더는 깃에 없습니다
-
-소개 영상 제작 폴더입니다. 깃과 배포 양쪽에서 빠져 있어서
-**이 폴더의 mp4와 소재는 이 컴퓨터에만 있습니다.** 필요하면 따로 백업하세요.
-
-내려받은 꾸러미(`node_modules`)는 지웠습니다. 다시 쓰려면 `video/` 안에서:
-
-```bash
-npm install
-```
-
-### 배포
-
-Vercel에 올라가 있습니다. 푸시하면 자동 배포됩니다. `figma-palette` · `tools` · `video`는 배포에서 빠집니다
-(`.vercelignore`). 옛 스타일가이드 주소(`/styleguide.html`)는 `vercel.json`이 새 스토리북으로 넘겨줍니다.
+- `video/`는 깃과 배포 양쪽에서 빠져 있어서 **mp4와 소재가 이 컴퓨터에만 있습니다.** 다시 쓰려면 `video/` 안에서 `npm install`.
+- `_source/`도 깃이 없습니다. 둘 다 따로 백업해 두세요.
+- 배포는 Vercel입니다. `figma-palette` · `tools` · `video` · `docs` · `CLAUDE.md`는 배포에서 빠집니다(`.vercelignore`).
