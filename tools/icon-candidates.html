@@ -69,15 +69,22 @@
   }
 
   var rows = document.getElementById('rows');
-  SETS.forEach(function (set) {
+  // 한 줄씩 차례로 연다 — 한꺼번에 열면 로컬 서버(python http.server)가 파일 몇 개를 떨어뜨려 연습장이 안 붙는다
+  var frames = SETS.map(function (set) {
     var row = document.createElement('div');
     row.className = 'row';
     row.innerHTML = '<div><div class="name">' + set.name + '<small>' + set.sub + '</small></div>' +
       '<div class="meta">' + set.meta + '</div></div>' +
-      '<div class="clip"><div><iframe src="type/quiz.html?scratch=1" loading="eager"></iframe></div></div>';
+      '<div class="clip"><div><iframe></iframe></div></div>';
     rows.appendChild(row);
-    swap(row.querySelector('iframe'), set);
+    return row.querySelector('iframe');
   });
+  (function next(i) {
+    if (i >= frames.length) return;
+    frames[i].addEventListener('load', function () { next(i + 1); }, { once: true });
+    frames[i].src = 'type/quiz.html?scratch=1';
+    swap(frames[i], SETS[i]);
+  })(0);
 </script>
 </body>
 </html>
