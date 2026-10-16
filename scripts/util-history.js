@@ -147,7 +147,7 @@ function weeksBetween(a,b){ return Math.round((a-b)/604800000); }
 /* ═══════════════════════════════════════════════════════════════════════
    ④ 조각 그리기
    ═══════════════════════════════════════════════════════════════════════ */
-var CHEV='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>';
+var CHEV='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>';
 
 /* 증감 한 조각. 색이 아니라 기호·굵기로 구분한다(history.css 머리 주석) */
 function deltaHtml(diff, unit){
@@ -475,9 +475,9 @@ function renderCal(){
   var prevOk=true, nextOk = new Date(calMonth.getFullYear(), calMonth.getMonth()+1, 1) <= THIS_MON;
   host.innerHTML =
     '<div class="h-cal__hd">'
-    + '<button class="h-cal__nav" data-m="-1"'+(prevOk?'':' disabled')+'><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>'
+    + '<button class="h-cal__nav" data-m="-1"'+(prevOk?'':' disabled')+'><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6" /></svg></button>'
     + '<span class="h-cal__mo">'+calMonth.getFullYear()+'년 '+(calMonth.getMonth()+1)+'월</span>'
-    + '<button class="h-cal__nav" data-m="1"'+(nextOk?'':' disabled')+'><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>'
+    + '<button class="h-cal__nav" data-m="1"'+(nextOk?'':' disabled')+'><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg></button>'
     + '</div>'
     + '<div class="h-cal__dow"><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span><span>일</span></div>'
     + rows

@@ -71,7 +71,7 @@
     return '<div class="unit' + (i === 0 ? ' is-active' : '') + '" data-unit="' + i + '">' +
       '<span class="unit__no">' + u.no + '</span><span class="unit__title">' + u.title + '</span></div>';
   }).join('');
-  var chev = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
+  var chev = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>';
 
   // 우측 패널 = 전 단원
   panel.innerHTML = UNITS.map(function (u, i) {
@@ -129,7 +129,7 @@
   var detail = document.getElementById('detail'), backdrop = document.getElementById('detailBackdrop');
   var STLABEL = { u: '미진행', j: '미판정', r: '재학습', b: '보충', e: '이해', m: '정복' };
   var TIER = { basic: '기본', skill: '실력', adv: '심화' };
-  var xIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg>';
+  var xIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>';
   var stIcon = { r: xIcon, b: G.exclam, e: G.check, m: G.crown };
   // 시작 버튼 문구: 이해(e)→왕관 도전, 정복(m)→다시 도전, 그 외→번개 도전
   var START_LABEL = { e: '왕관 도전', m: '다시 도전' };
@@ -222,7 +222,7 @@
     if (!tileEl) return;
 
     // 지속 표시: 코너 링크 배지 (브리딩이 끝나도 어떤 유형이었는지 남김)
-    var linkIco = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 15l6-6M10.5 6.5l1-1a4 4 0 0 1 5.7 5.7l-1 1M13.5 17.5l-1 1a4 4 0 0 1-5.7-5.7l1-1"/></svg>';
+    var linkIco = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" /><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" /></svg>';
     tileEl.classList.add('is-linked');
     var flag = document.createElement('span');
     flag.className = 'tile__linkflag';

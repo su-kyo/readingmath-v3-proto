@@ -7,18 +7,18 @@
   <title>시험 대비 · 문제 풀이 — 리딩수학과학</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
   <script>try{if(localStorage.getItem('rm-theme-choice')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
-  <link rel="stylesheet" href="styles/tokens.css?v=20261016-5" />
-  <link rel="stylesheet" href="styles/base.css?v=20261016-5" />
-  <link rel="stylesheet" href="styles/keypad.css?v=20261016-5" />
-  <link rel="stylesheet" href="styles/exam.css?v=20261016-5" />
-  <link rel="stylesheet" href="styles/screens/exam-solve.css?v=20261016-5" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261016-6" />
+  <link rel="stylesheet" href="styles/base.css?v=20261016-6" />
+  <link rel="stylesheet" href="styles/keypad.css?v=20261016-6" />
+  <link rel="stylesheet" href="styles/exam.css?v=20261016-6" />
+  <link rel="stylesheet" href="styles/screens/exam-solve.css?v=20261016-6" />
 </head>
 <body class="exam-body">
   <div class="solve">
     <!-- 헤더 -->
     <header class="shead">
       <div class="shead__l">
-        <a class="sback" href="exam/home.html" title="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></a>
+        <a class="sback" href="exam/home.html" title="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6" /></svg></a>
         <nav class="scrumb">
           <span class="home">시험 대비</span>
           <span class="dot"></span>
@@ -31,11 +31,11 @@
       </div>
       <div class="shead__r">
         <button class="sicon" id="themeToggle" title="다크/라이트 전환" aria-label="다크/라이트 전환">
-          <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
-          <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.4M12 19.6V22M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M2 12h2.4M19.6 12H22M4.9 19.1l1.7-1.7M17.4 6.6l1.7-1.7"/></svg>
+          <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" /></svg>
+          <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4" /><path d="M12 2v2" /><path d="M12 20v2" /><path d="m4.93 4.93 1.41 1.41" /><path d="m17.66 17.66 1.41 1.41" /><path d="M2 12h2" /><path d="M20 12h2" /><path d="m6.34 17.66-1.41 1.41" /><path d="m19.07 4.93-1.41 1.41" /></svg>
         </button>
-        <span class="slink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.3 4.3L2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 4.3a2 2 0 0 0-3.4 0z"/></svg>오류 신고</span>
-        <a class="slink" href="exam/home.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>나가기</a>
+        <span class="slink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18v-6a5 5 0 1 1 10 0v6" /><path d="M5 21a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-1a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2z" /><path d="M21 12h1" /><path d="M18.5 4.5 18 5" /><path d="M2 12h1" /><path d="M12 2v1" /><path d="m4.929 4.929.707.707" /><path d="M12 12v6" /></svg>오류 신고</span>
+        <a class="slink" href="exam/home.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" x2="9" y1="12" y2="12" /></svg>나가기</a>
       </div>
     </header>
 
@@ -53,7 +53,7 @@
         </div>
         <div class="sblock">
           <span class="dblock__cap">대표 유형 동영상</span>
-          <div class="svideo"><span class="svideo__play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span></div>
+          <div class="svideo"><span class="svideo__play"><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 20 12 6 21 6 3" /></svg></span></div>
         </div>
         <div class="sblock">
           <span class="dblock__cap">대표 유형 문제</span>
@@ -62,9 +62,9 @@
         <div class="sblock">
           <span class="dblock__cap">최근 풀이 이력</span>
           <div class="history">
-            <div class="history__item"><span class="history__icon history__icon--ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span><div class="history__main"><span class="history__top">시험 대비 · <span class="history__tag history__tag--ok">정답</span></span><span class="history__time">2026.06.03. 09:00:00</span></div></div>
-            <div class="history__item"><span class="history__icon history__icon--no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg></span><div class="history__main"><span class="history__top">시험 대비 · <span class="history__tag history__tag--no">오답</span></span><span class="history__time">2026.06.02. 14:30:00</span></div></div>
-            <div class="history__item"><span class="history__icon history__icon--ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span><div class="history__main"><span class="history__top">시험 대비 · <span class="history__tag history__tag--ok">정답</span></span><span class="history__time">2026.05.30. 16:12:40</span></div></div>
+            <div class="history__item"><span class="history__icon history__icon--ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg></span><div class="history__main"><span class="history__top">시험 대비 · <span class="history__tag history__tag--ok">정답</span></span><span class="history__time">2026.06.03. 09:00:00</span></div></div>
+            <div class="history__item"><span class="history__icon history__icon--no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg></span><div class="history__main"><span class="history__top">시험 대비 · <span class="history__tag history__tag--no">오답</span></span><span class="history__time">2026.06.02. 14:30:00</span></div></div>
+            <div class="history__item"><span class="history__icon history__icon--ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg></span><div class="history__main"><span class="history__top">시험 대비 · <span class="history__tag history__tag--ok">정답</span></span><span class="history__time">2026.05.30. 16:12:40</span></div></div>
           </div>
         </div>
       </aside>
@@ -74,18 +74,18 @@
     <footer class="sfoot">
       <span class="sfoot__hint" id="footHint">보기를 선택하고 제출하세요.</span>
       <div class="sfoot__btns">
-        <a class="btn btn--sec" href="exam/home.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg>홈으로</a>
+        <a class="btn btn--sec" href="exam/home.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" /><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /></svg>홈으로</a>
         <button class="btn btn--pri" id="primaryBtn" disabled>제출하기</button>
       </div>
     </footer>
   </div>
 
-  <script src="scripts/exam-theme.js?v=20261016-5"></script>
+  <script src="scripts/exam-theme.js?v=20261016-6"></script>
   <!-- 검수용 디버그 패널 (?debug=1 일 때만 보임) -->
-  <script src="scripts/debug-panel.js?v=20261016-5"></script>
+  <script src="scripts/debug-panel.js?v=20261016-6"></script>
   <!-- 키패드 물리 키보드 입력 (공용) -->
-  <script src="scripts/keypad.js?v=20261016-5"></script>
-  <script src="scripts/keypad-input.js?v=20261016-5"></script>
-  <script src="scripts/exam-solve.js?v=20261016-5"></script>
+  <script src="scripts/keypad.js?v=20261016-6"></script>
+  <script src="scripts/keypad-input.js?v=20261016-6"></script>
+  <script src="scripts/exam-solve.js?v=20261016-6"></script>
 </body>
 </html>

@@ -126,7 +126,7 @@
         head.innerHTML='<span class="sub__no">('+s.no+')</span><span class="sub__title">'+s.title+'</span>'
           + (maxed?'<span class="sub__done2">✓ 완료</span>':'')
           + '<span class="sub__mini">'+miniStar(cb.best)+miniStar(tb.best)+miniStar(eb.best)+'</span>'
-          + '<button class="sub__chev" aria-label="상세 펼치기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>';
+          + '<button class="sub__chev" aria-label="상세 펼치기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg></button>';
         head.addEventListener('click', function(e){ if(e.target.closest('.sub__chev')) return; selectSub(ui,si); });
         head.querySelector('.sub__chev').addEventListener('click', function(e){ e.stopPropagation(); toggleOpen(ui,si); });
         sub.appendChild(head);
@@ -166,7 +166,7 @@
       top.innerHTML='<span class="rcard__bar"></span><span class="rcard__name">Round '+o.r+'</span>';
       // 라운드 = 별 점수
       if(o.g){ var gi=document.createElement('div'); gi.className='rcard__grade'; gi.innerHTML='<img src="assets/icons/star/star-'+o.g+'.svg" width="38" height="38" alt="'+o.g.toUpperCase()+'등급">'; top.appendChild(gi); }
-      else if(o.lock){ var lm=document.createElement('span'); lm.className='rcard__lockmsg'; lm.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> 이전 라운드 완료 후 열려요'; top.appendChild(lm); }
+      else if(o.lock){ var lm=document.createElement('span'); lm.className='rcard__lockmsg'; lm.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg> 이전 라운드 완료 후 열려요'; top.appendChild(lm); }
       else if(o.cur){ var cm=document.createElement('span'); cm.className='rcard__lockmsg rcard__lockmsg--cur'; cm.textContent='진행중'; top.appendChild(cm); }
       card.appendChild(top);
       // 잠긴 라운드 = 스텝 접기 (표시 안 함)
@@ -179,7 +179,7 @@
           // 스텝 = 알파벳 점수(완료 시) / 아니면 이동 화살표
           var rightEl = (o.g && sg)
             ? '<div class="step__grade step__grade--'+sg+'">'+sg.toUpperCase()+'</div>'
-            : '<div class="step__go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>';
+            : '<div class="step__go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg></div>';
           step.innerHTML='<div class="step__i"><div class="step__k">'+st[0]+'</div><div class="step__n">'+st[1]+'</div><div class="step__s '+stat[0]+'">'+stat[1]+'</div></div>'+rightEl;
           step.addEventListener('click', function(){ location.href=st[2]; });
           steps.appendChild(step);

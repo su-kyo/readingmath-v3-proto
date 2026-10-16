@@ -6,13 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>학기 커리큘럼 — 리딩수학과학</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261016-5" />
-  <link rel="stylesheet" href="styles/base.css?v=20261016-5" />
-  <link rel="stylesheet" href="styles/space-bg.css?v=20261016-5" />
-  <link rel="stylesheet" href="styles/gnb.css?v=20261016-5" />
-  <link rel="stylesheet" href="styles/monitor.css?v=20261016-5" />
-  <link rel="stylesheet" href="styles/nav.css?v=20261016-5" />
-  <link rel="stylesheet" href="styles/screens/nav-curriculum.css?v=20261016-5" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261016-6" />
+  <link rel="stylesheet" href="styles/base.css?v=20261016-6" />
+  <link rel="stylesheet" href="styles/space-bg.css?v=20261016-6" />
+  <link rel="stylesheet" href="styles/gnb.css?v=20261016-6" />
+  <link rel="stylesheet" href="styles/monitor.css?v=20261016-6" />
+  <link rel="stylesheet" href="styles/nav.css?v=20261016-6" />
+  <link rel="stylesheet" href="styles/screens/nav-curriculum.css?v=20261016-6" />
 </head>
 <body>
   <div class="spacebg" data-stars="150"></div>
@@ -26,10 +26,10 @@
         <button class="gnb__mode m-assign" data-go="assignment/home.html">과제 센터<span class="gnb__mode__dot"></span></button>
       </nav>
       <div class="gnb__icons">
-        <button class="gnb__ico" title="도움말"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.8.4-1 .9-1 1.7" stroke-linecap="round"/><circle cx="12" cy="16.5" r="1" fill="currentColor" stroke="none"/></svg></button>
-        <button class="gnb__ico" title="오류 신고"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17h.01"/></svg></button>
-        <button class="gnb__ico" title="공지사항"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 9v6h3l7 4V5L7 9H4zM18 8a5 5 0 0 1 0 8"/></svg><span class="gnb__dot"></span></button>
-        <button class="gnb__ico" id="menuBtn" title="메뉴"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+        <button class="gnb__ico" title="도움말"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" /><path d="M12 17h.01" /></svg></button>
+        <button class="gnb__ico" title="오류 신고"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18v-6a5 5 0 1 1 10 0v6" /><path d="M5 21a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-1a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2z" /><path d="M21 12h1" /><path d="M18.5 4.5 18 5" /><path d="M2 12h1" /><path d="M12 2v1" /><path d="m4.929 4.929.707.707" /><path d="M12 12v6" /></svg></button>
+        <button class="gnb__ico" title="공지사항"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z" /><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" /></svg><span class="gnb__dot"></span></button>
+        <button class="gnb__ico" id="menuBtn" title="메뉴"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12" /><line x1="4" x2="20" y1="6" y2="6" /><line x1="4" x2="20" y1="18" y2="18" /></svg></button>
       </div>
     </header>
 
@@ -49,11 +49,11 @@
             <button class="ttab is-active" data-t="concept">개념 훈련</button>
             <button class="ttab" data-t="type">유형 훈련</button>
             <button class="ttab" data-t="essay">서술형 훈련</button>
-            <button class="ttab--info" id="infoBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01" stroke-linecap="round"/></svg>훈련 안내</button>
+            <button class="ttab--info" id="infoBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" /></svg>훈련 안내</button>
           </div>
         </div>
         <div class="train__body" id="trBody"></div>
-        <button class="homebtn" id="homeBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>행성 메인으로</button>
+        <button class="homebtn" id="homeBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" /><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /></svg>행성 메인으로</button>
       </main>
     </div>
   </div>
@@ -67,7 +67,7 @@
         <div class="monitor__hd">
           <span class="monitor__lamps"><i class="is-live"></i><i></i><i></i></span>
           <span class="monitor__ttl">훈련 안내</span>
-          <button class="monitor__x" id="infoClose" aria-label="닫기"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>
+          <button class="monitor__x" id="infoClose" aria-label="닫기"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg></button>
         </div>
         <div class="monitor__screen">
       <div class="msec"><div class="msec__h msec__h--concept">개념 훈련</div><div class="msec__b">개념 훈련은 중단원 유형의 개념을 이해하기 위한 첫 번째 훈련입니다. 지문을 읽고 핵심 개념을 정리한 뒤, 개념 요약하기 &amp; 개념 체크 문제로 이해도를 확인합니다. 마지막으로 개념 확인 문제(10문항 고정)를 풀이하면 종료됩니다.</div></div>
@@ -81,9 +81,9 @@
 
   <div class="toast" id="toast"></div>
 
-  <script src="scripts/space-bg.js?v=20261016-5"></script>
-  <script src="scripts/subject.js?v=20261016-5"></script>
-  <script src="scripts/nav-curriculum.js?v=20261016-5"></script>
-  <script src="scripts/gnb-drawer.js?v=20261016-5"></script>
+  <script src="scripts/space-bg.js?v=20261016-6"></script>
+  <script src="scripts/subject.js?v=20261016-6"></script>
+  <script src="scripts/nav-curriculum.js?v=20261016-6"></script>
+  <script src="scripts/gnb-drawer.js?v=20261016-6"></script>
 </body>
 </html>

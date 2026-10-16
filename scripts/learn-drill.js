@@ -49,7 +49,8 @@
   var nextStepBtn = document.getElementById('nextStepBtn');
   var guide = window.RMGuide || { set: function () {} };
   var revealPending = false;   // 채점 뒤 오답을 눌러 정답을 열기 전
-  function setCta(t) { gradeBtn.querySelector('span').textContent = t; }
+  var CTA_ICO = { '채점하기': 'grade', '다음 문제': 'next', '다음으로': 'next', '결과보기': 'result' };   // 문구가 바뀌면 아이콘도
+  function setCta(t) { gradeBtn.querySelector('span').textContent = t; gradeBtn.querySelector('img').src = 'assets/icons/ico-' + CTA_ICO[t] + '.svg'; }
   /* 콘솔바 안내(RM-PART-07) — 입력 전: 객관식은 「골라」, 칸이 여럿이면 「모든」. 다 채우면 숨긴다. */
   function guideInput() {
     var p = PROBLEMS[idx];
@@ -137,9 +138,9 @@
   document.addEventListener('scroll', function () { if (activeInput) positionPad(activeInput); }, true);   // 문제 영역을 스크롤하면 따라가고, 입력칸이 영역 밖으로 나가면 닫는다
 
   /* ---- 문제 번호탭 (헤더) — 현재/정답/오답 상태. 정오답은 아이콘(색맹 접근성) ---- */
-  var ICO_OK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>';
-  var ICO_NO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
-  var ICO_PART = '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3l5.5 9.5h-11z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>';   // 일부만 맞음 (개발 서버에서 받아옴, 2026-10-15)
+  var ICO_OK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>';
+  var ICO_NO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>';
+  var ICO_PART = '<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 4a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" /></svg>';   // 일부만 맞음 (개발 서버에서 받아옴, 2026-10-15)
   function renderTabs() {
     qtabs.innerHTML = '';
     for (var i = 0; i < TOTAL; i++) {

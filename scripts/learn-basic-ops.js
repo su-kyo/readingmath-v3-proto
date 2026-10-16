@@ -38,7 +38,8 @@
   var nextStepBtn = document.getElementById('nextStepBtn');
   var guide = window.RMGuide || { set: function () {} };
   var revealPending = false;   // 채점 뒤 오답을 눌러 정답을 열기 전
-  function setCta(t) { gradeBtn.querySelector('span').textContent = t; }
+  var CTA_ICO = { '채점하기': 'grade', '다음 문제': 'next', '다음으로': 'next', '결과보기': 'result' };   // 문구가 바뀌면 아이콘도
+  function setCta(t) { gradeBtn.querySelector('span').textContent = t; gradeBtn.querySelector('img').src = 'assets/icons/ico-' + CTA_ICO[t] + '.svg'; }
   /* 콘솔바 안내(RM-PART-07) — 입력 전: 객관식은 「골라」, 칸이 여럿이면 「모든」. 다 채우면 숨긴다. */
   function guideInput() {
     var p = PROBLEMS[idx];

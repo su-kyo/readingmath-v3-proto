@@ -5,7 +5,7 @@
    ========================================================================= */
 (function () {
   var IC = {
-    back: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5M4 9h11a5 5 0 0 1 0 10h-3"/></svg>'
+    back: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5" /><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11" /></svg>'
   };
 
   // 산점도 SVG (문항 4용)
@@ -108,12 +108,12 @@
   var sheet = document.getElementById('sheet');
   var sheetBackdrop = document.getElementById('sheetBackdrop');
   var sheetList = document.getElementById('sheetList');
-  var checkIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg>';
+  var checkIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>';
 
   function setSeg(which) {
     Array.prototype.forEach.call(seg.children, function (b) { b.classList.toggle('is-active', b.dataset.seg === which); });
   }
-  var chevIcon = '<svg class="qrow__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
+  var chevIcon = '<svg class="qrow__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>';
 
   function renderSheet(preserveScroll) {
     var st = preserveScroll ? sheetList.scrollTop : 0;

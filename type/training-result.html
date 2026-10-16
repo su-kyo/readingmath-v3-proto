@@ -7,14 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>유형 훈련 · 학습 결과 — 리딩수학과학</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261016-5" />
-  <link rel="stylesheet" href="styles/base.css?v=20261016-5" />
-  <link rel="stylesheet" href="styles/components.css?v=20261016-5" />
-  <link rel="stylesheet" href="styles/learn-shell.css?v=20261016-5" />
-  <link rel="stylesheet" href="styles/result.css?v=20261016-5" />
-  <link rel="stylesheet" href="styles/type.css?v=20261016-5" />
-  <link rel="stylesheet" href="styles/monitor.css?v=20261016-5" />
-  <link rel="stylesheet" href="styles/screens/type-training-result.css?v=20261016-5" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261016-6" />
+  <link rel="stylesheet" href="styles/base.css?v=20261016-6" />
+  <link rel="stylesheet" href="styles/components.css?v=20261016-6" />
+  <link rel="stylesheet" href="styles/learn-shell.css?v=20261016-6" />
+  <link rel="stylesheet" href="styles/result.css?v=20261016-6" />
+  <link rel="stylesheet" href="styles/type.css?v=20261016-6" />
+  <link rel="stylesheet" href="styles/monitor.css?v=20261016-6" />
+  <link rel="stylesheet" href="styles/screens/type-training-result.css?v=20261016-6" />
 </head>
 <body class="learn-body">
   <div class="screen">
@@ -24,11 +24,11 @@
       <header class="lheader">
         <nav class="breadcrumb">
           <span class="crumb crumb--strong" data-crumb="sem">수학 중등 3-2</span>
-          <svg class="sep" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <svg class="sep" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
           <span class="crumb crumb--strong crumb--clip crumb--hide" data-crumb="unit">1단원 삼각비</span>
-          <svg class="sep crumb--hide" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <svg class="sep crumb--hide" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
           <span class="crumb crumb--hide" data-crumb="sub">(1) 삼각비</span>
-          <svg class="sep crumb--hide" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <svg class="sep crumb--hide" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
           <span class="crumb crumb--strong">유형 훈련 결과</span>
         </nav>
         <div class="lheader__actions">
@@ -83,10 +83,10 @@
       <div class="bar__mid">
         <div class="bar__tray">
           <div class="bar__group">
-            <button class="toolbtn" id="noteBtn"><img src="assets/icons/ico-note.svg" alt="" /><span>오답노트 확인하기</span></button>
+            <button class="toolbtn" id="noteBtn"><img src="assets/icons/ico-wrongnote.svg" alt="" /><span>오답노트 확인하기</span></button>
           </div>
           <div class="bar__group">
-            <button class="toolbtn toolbtn--primary" id="homeBtn"><img src="assets/icons/ico-summary.svg" alt="" /><span>홈으로</span></button>
+            <button class="toolbtn toolbtn--primary" id="homeBtn"><img src="assets/icons/ico-home.svg" alt="" /><span>홈으로</span></button>
           </div>
         </div>
       </div>
@@ -103,7 +103,7 @@
         <div class="monitor__hd">
           <span class="monitor__lamps"><i class="is-live"></i><i></i><i></i></span>
           <span class="monitor__ttl" id="stepMonTtl">스텝 결과</span>
-          <button class="monitor__x" data-mclose aria-label="닫기"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+          <button class="monitor__x" data-mclose aria-label="닫기"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg></button>
         </div>
         <div class="monitor__screen monitor__screen--lcd">
           <div class="mstep">
@@ -128,14 +128,14 @@
 
   <div class="toast" id="toast"></div>
 
-  <script src="scripts/subject.js?v=20261016-5"></script>
-  <script src="scripts/grade.js?v=20261016-5"></script>
+  <script src="scripts/subject.js?v=20261016-6"></script>
+  <script src="scripts/grade.js?v=20261016-6"></script>
   <!-- 검수용 디버그 패널 (?debug=1) -->
-  <script src="scripts/debug-panel.js?v=20261016-5"></script>
+  <script src="scripts/debug-panel.js?v=20261016-6"></script>
   <!-- 데모 정오답 · 제한 시간 = 과목별 유형 데이터(풀이 · 해설과 같은 파일) -->
-  <script src="scripts/type-quiz-data-math.js?v=20261016-5"></script>
-  <script src="scripts/type-quiz-data-sci.js?v=20261016-5"></script>
-  <script src="scripts/type-training-result.js?v=20261016-5"></script>
-  <script src="scripts/learn-exit.js?v=20261016-5"></script>
+  <script src="scripts/type-quiz-data-math.js?v=20261016-6"></script>
+  <script src="scripts/type-quiz-data-sci.js?v=20261016-6"></script>
+  <script src="scripts/type-training-result.js?v=20261016-6"></script>
+  <script src="scripts/learn-exit.js?v=20261016-6"></script>
 </body>
 </html>

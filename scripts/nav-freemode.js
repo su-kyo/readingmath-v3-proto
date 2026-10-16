@@ -163,7 +163,7 @@
       el.className = 'planet' + (idx===state.i?' is-center':'');
       el.innerHTML =
         '<img class="planet__img" src="'+dir+p.key+'.webp" alt="'+p.label+'">' +
-        '<button class="planet__hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>목록 보기</button>' +
+        '<button class="planet__hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h.01" /><path d="M3 18h.01" /><path d="M3 6h.01" /><path d="M8 12h13" /><path d="M8 18h13" /><path d="M8 6h13" /></svg>목록 보기</button>' +
         '<div class="planet__label">'+p.label+'</div>' +
         '<div class="planet__prog"><div class="planet__pct">'+p.prog+'% 진행했어요!</div><div class="bar"><div class="bar__f" style="width:'+p.prog+'%"></div></div></div>';
       el.addEventListener('click', function(){ if(dragMoved) return;
@@ -191,8 +191,8 @@
   }
 
   /* ============ unit 렌더 ============ */
-  var CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
-  var GOARW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
+  var CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>';
+  var GOARW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>';
   // ---- 등급 별 (색=등급): A금 B은 C동 · S프리즘(무지개)
   var GCOL = { s:'var(--art-grade-s)', a:'var(--art-grade-a)', b:'var(--art-grade-b)', c:'var(--art-grade-c)' };
   (function(){ if(document.getElementById('rmStarDefs')) return;

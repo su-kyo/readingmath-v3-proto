@@ -99,7 +99,7 @@
   var stepMon = document.getElementById('stepMon');
   var stepDial = document.getElementById('stepDial');
   var stepActs = document.getElementById('stepActs');
-  var DOC = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>';
+  var DOC = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" /><path d="M14 2v4a2 2 0 0 0 2 2h4" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg>';
   function openStepMonitor(stage) {
     var rate = stage.rate;
     document.getElementById('stepMonTtl').textContent = '스텝 결과 — ' + stage.name;

@@ -6,14 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>개념 확인하기 · 개념 훈련 — 리딩수학과학</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/gnb/logo.svg" />
-  <link rel="stylesheet" href="styles/tokens.css?v=20261016-5" />
-  <link rel="stylesheet" href="styles/base.css?v=20261016-5" />
-  <link rel="stylesheet" href="styles/components.css?v=20261016-5" />
-  <link rel="stylesheet" href="styles/learn-shell.css?v=20261016-5" />
-  <link rel="stylesheet" href="styles/keypad.css?v=20261016-5" />
-  <link rel="stylesheet" href="styles/quiz.css?v=20261016-5" />
-  <link rel="stylesheet" href="styles/screens/concept-basic-ops.css?v=20261016-5" />
-  <link rel="stylesheet" href="styles/scratchpad.css?v=20261016-5" />
+  <link rel="stylesheet" href="styles/tokens.css?v=20261016-6" />
+  <link rel="stylesheet" href="styles/base.css?v=20261016-6" />
+  <link rel="stylesheet" href="styles/components.css?v=20261016-6" />
+  <link rel="stylesheet" href="styles/learn-shell.css?v=20261016-6" />
+  <link rel="stylesheet" href="styles/keypad.css?v=20261016-6" />
+  <link rel="stylesheet" href="styles/quiz.css?v=20261016-6" />
+  <link rel="stylesheet" href="styles/screens/concept-basic-ops.css?v=20261016-6" />
+  <link rel="stylesheet" href="styles/scratchpad.css?v=20261016-6" />
 </head>
 <body class="learn-body">
   <div class="screen">
@@ -23,13 +23,13 @@
       <header class="lheader">
         <nav class="breadcrumb">
           <span class="crumb crumb--strong">과학 중등 2-1</span>
-          <svg class="sep" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <svg class="sep" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
           <span class="crumb crumb--strong crumb--clip crumb--hide">1단원 물질의 특성</span>
-          <svg class="sep crumb--hide" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <svg class="sep crumb--hide" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
           <span class="crumb crumb--hide">(2) 밀도와 용해도</span>
-          <svg class="sep crumb--hide" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <svg class="sep crumb--hide" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
           <span class="crumb">개념 훈련</span>
-          <svg class="sep" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <svg class="sep" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
           <span class="crumb crumb--strong">개념 확인하기</span>
         </nav>
         <div class="lheader__actions">
@@ -62,8 +62,8 @@
           </div>
           <div class="bar__group">
             <p class="guide" role="status" aria-live="polite" hidden><i class="guide__lamp"></i><span class="guide__text"></span></p>
-            <button class="toolbtn toolbtn--primary" id="gradeBtn" disabled><img src="assets/icons/ico-summary.svg" alt="" /><span>채점하기</span></button>
-            <button class="toolbtn toolbtn--primary" id="nextStepBtn" hidden><img src="assets/icons/ico-summary.svg" alt="" /><span>결과보기</span></button>
+            <button class="toolbtn toolbtn--primary" id="gradeBtn" disabled><img src="assets/icons/ico-grade.svg" alt="" /><span>채점하기</span></button>
+            <button class="toolbtn toolbtn--primary" id="nextStepBtn" hidden><img src="assets/icons/ico-result.svg" alt="" /><span>결과보기</span></button>
           </div>
         </div>
       </div>
@@ -73,16 +73,16 @@
 
   <!-- 검수용 디버그 패널 (?debug=1 일 때만 보임) -->
   <!-- 연습장 캔버스 (공용) -->
-  <script src="scripts/subject.js?v=20261016-5"></script>
-  <script src="scripts/scratchpad.js?v=20261016-5"></script>
-  <script src="scripts/debug-panel.js?v=20261016-5"></script>
+  <script src="scripts/subject.js?v=20261016-6"></script>
+  <script src="scripts/scratchpad.js?v=20261016-6"></script>
+  <script src="scripts/debug-panel.js?v=20261016-6"></script>
   <!-- 키패드 물리 키보드 입력 (공용) -->
-  <script src="scripts/pop-place.js?v=20261016-5"></script>
-  <script src="scripts/keypad.js?v=20261016-5"></script>
-  <script src="scripts/keypad-input.js?v=20261016-5"></script>
-  <script src="scripts/learn-guide.js?v=20261016-5"></script>
-  <script src="scripts/concept-check-data.js?v=20261016-5"></script>
-  <script src="scripts/learn-basic-ops.js?v=20261016-5"></script>
-  <script src="scripts/learn-exit.js?v=20261016-5"></script>
+  <script src="scripts/pop-place.js?v=20261016-6"></script>
+  <script src="scripts/keypad.js?v=20261016-6"></script>
+  <script src="scripts/keypad-input.js?v=20261016-6"></script>
+  <script src="scripts/learn-guide.js?v=20261016-6"></script>
+  <script src="scripts/concept-check-data.js?v=20261016-6"></script>
+  <script src="scripts/learn-basic-ops.js?v=20261016-6"></script>
+  <script src="scripts/learn-exit.js?v=20261016-6"></script>
 </body>
 </html>
