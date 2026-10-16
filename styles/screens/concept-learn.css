@@ -21,8 +21,9 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 /* 왼쪽 112px = 그림 번호 알약 자리(.img-tag). 좁은 화면에서도 늘 비워 둔다.
    지문은 아무 데나 눌러 넘기는 곳이라 글자 선택(연달아 누를 때 생기는 파란 블록)을 막는다. */
 .article {
-  /* 큰 화면에서 한 줄이 너무 길어지지 않게 읽기 폭 제한 (가독성) */
-  flex: 1; max-width: 760px; color: var(--text); min-width: 0; overflow: auto; padding-bottom: 140px;
+  /* 브라우저가 넓어지면 지문 폭만 따라 넓어지고 880px(알약 자리 포함 · 한 줄 약 40자)에서 멈춘다.
+     글자 크기 · 그림 칸은 그대로 (2026-10-16 사용자 결정 · 실서비스는 760) */
+  flex: 1; max-width: 880px; color: var(--text); min-width: 0; overflow: auto; padding-bottom: 140px;
   position: relative; padding-left: 112px; cursor: pointer;
   -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent;
   font-family: "Noto Serif KR", serif;
@@ -51,6 +52,13 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 /* 그림이 켜진 구간 = 굵게 + 계열색. 수식은 색만 (굵게 하면 수식 글꼴이 두꺼워진다) */
 .chunk--img.is-active { color: var(--th-ink-accent); font-weight: var(--fw-bold); }
 .chunk--img.is-active .katex { font-weight: var(--fw-regular); }
+/* 지문 카운터 「지문 ▬ ▭」 — 지문 첫머리, 지문 글과 같은 왼쪽 선(알약 자리 오른쪽). 글과 같이 스크롤된다.
+   지문이 하나면 두지 않는다(과학판). 프로토타입은 보여 주기만 — 막대 수 · 켜진 칸은 마크업에 적는다 */
+.passage-count { display: flex; align-items: center; gap: var(--sp-8); margin-bottom: var(--sp-12);
+  font: var(--fw-bold) var(--fs-12)/1.5 var(--font-sans); letter-spacing: 0; color: var(--text-muted); }
+.passage-count__bars { display: flex; gap: var(--sp-4); }
+.passage-count__bar { width: 22px; height: 4px; border-radius: var(--r-full); background: var(--divider-strong); }
+.passage-count__bar.is-on { background: var(--th-accent); }
 /* 그림 번호 알약 — 그림 구간이 시작하는 줄 왼쪽. 번호 하나 = 그림 하나, 같은 줄이면 한 알약에 번호만 는다.
    세로 위치(top)만 JS가 계산한다. 번호가 넷 이상이면 알약 안에서 줄을 바꾼다. */
 .img-tag { position: absolute; left: 0; width: 100px; display: flex; justify-content: flex-end; }

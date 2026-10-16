@@ -2176,7 +2176,7 @@
    "concept/check.html": "js",
    "concept/drill-math.html": "js",
    "concept/drill-sci.html": "js",
-   "concept/learn-math.html": "js",
+   "concept/learn-math.html": "markup",
    "concept/learn-sci.html": "js",
    "concept/organize-math.html": "js",
    "concept/organize-sci.html": "js",
@@ -3186,6 +3186,18 @@
   "passage": {
    "concept/organize-math.html": "js",
    "concept/organize-sci.html": "js"
+  },
+  "passage-count": {
+   "concept/learn-math.html": "markup"
+  },
+  "passage-count__bar": {
+   "concept/learn-math.html": "markup"
+  },
+  "passage-count__bars": {
+   "concept/learn-math.html": "markup"
+  },
+  "passage-count__label": {
+   "concept/learn-math.html": "markup"
   },
   "pcap__count": {
    "concept/basic-ops.html": "js",

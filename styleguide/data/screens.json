@@ -1258,11 +1258,11 @@
    ],
    "tokens": [
     {
-     "name": "--text-on-accent",
-     "count": 7
+     "name": "--text-muted",
+     "count": 8
     },
     {
-     "name": "--text-muted",
+     "name": "--text-on-accent",
      "count": 7
     },
     {
@@ -1414,11 +1414,11 @@
    ],
    "tokens": [
     {
-     "name": "--text-on-accent",
-     "count": 7
+     "name": "--text-muted",
+     "count": 8
     },
     {
-     "name": "--text-muted",
+     "name": "--text-on-accent",
      "count": 7
     },
     {
