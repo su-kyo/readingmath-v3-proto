@@ -1847,10 +1847,6 @@
      "count": 2
     },
     {
-     "name": "--th-ink-accent",
-     "count": 2
-    },
-    {
      "name": "--pc-text",
      "count": 2
     },
@@ -1868,6 +1864,10 @@
     },
     {
      "name": "--text-muted",
+     "count": 1
+    },
+    {
+     "name": "--bg",
      "count": 1
     }
    ],
@@ -2012,10 +2012,6 @@
      "count": 2
     },
     {
-     "name": "--th-ink-accent",
-     "count": 2
-    },
-    {
      "name": "--pc-text",
      "count": 2
     },
@@ -2033,6 +2029,10 @@
     },
     {
      "name": "--text-muted",
+     "count": 1
+    },
+    {
+     "name": "--bg",
      "count": 1
     }
    ],
@@ -2177,10 +2177,6 @@
      "count": 2
     },
     {
-     "name": "--th-ink-accent",
-     "count": 2
-    },
-    {
      "name": "--pc-text",
      "count": 2
     },
@@ -2198,6 +2194,10 @@
     },
     {
      "name": "--text-muted",
+     "count": 1
+    },
+    {
+     "name": "--bg",
      "count": 1
     }
    ],

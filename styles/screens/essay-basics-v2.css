@@ -50,9 +50,10 @@
 .problem__body { padding: var(--sp-6) var(--sp-16) var(--sp-16); overflow-y: auto; max-height: 34vh; color: var(--pc-text);
   display: flex; gap: var(--sp-20); align-items: flex-start; transition: max-height .32s ease, opacity .25s ease, padding .32s ease; }
 .problem.is-collapsed .problem__body { max-height: 0; opacity: 0; overflow: hidden; padding-top: 0; padding-bottom: 0; }
+/* 스크롤바 = 홈 없이 흰 반투명 손잡이만. 카드는 테마를 따라 안 뒤집히는 칠면이라 라이트 · 다크 같은 모습(RM-FILL-06) */
 .problem__body::-webkit-scrollbar { width: 8px; }
+.problem__body::-webkit-scrollbar-track { background: transparent; }
 .problem__body::-webkit-scrollbar-thumb { background: var(--white-a20); border-radius: var(--r-full); border: var(--bw-2) solid transparent; background-clip: padding-box; }
-:root[data-theme="light"] .problem__body::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--th-ink-accent) 28%, transparent); background-clip: padding-box; }
 
 /* 문제 본문 (텍스트 좌 + 참고자료 우) */
 .qtext { flex: 1 1 auto; min-width: 0; color: var(--pc-text); font-size: clamp(15px, 1.35vw, 17.5px); line-height: 1.75; }
