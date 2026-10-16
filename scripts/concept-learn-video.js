@@ -1,19 +1,12 @@
 /* concept/learn-sci.html(과학판) 전용 스크립트 — HTML 안에 있던 것을 옮겼다 (마감 회차 2026-10-12). 수학판(learn-math.html)은 개념 영상이 없어 이 파일을 부르지 않는다. */
 /* 개념 영상 레이어 — 진입 시 자동 표시(dim), '개념 영상 보기'로 재호출.
-   닫을 때 iframe 제거 → 재생/소리 정지. */
+   안은 회색 영상 자리뿐이다 — 실제 영상(회사 콘텐츠)은 넣지 않는다 (2026-10-16 사용자 결정). */
 (function () {
   var box = document.getElementById('videobox');
-  var frame = document.getElementById('videoFrame');
-  var fallback = document.getElementById('videoFallback');
   var openBtn = document.getElementById('videoBtn');
   var closeBtn = document.getElementById('videoClose');
-  var SRC = 'https://www.youtube.com/embed/FVUE-FaBAJU?rel=0&modestbranding=1';
-  function open() {
-    frame.innerHTML = '<iframe src="' + SRC + '" title="개념 영상" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-    frame.appendChild(fallback);
-    box.classList.add('is-open');
-  }
-  function close() { box.classList.remove('is-open'); frame.innerHTML = ''; frame.appendChild(fallback); }
+  function open() { box.classList.add('is-open'); }
+  function close() { box.classList.remove('is-open'); }
   if (openBtn) openBtn.addEventListener('click', open);
   if (closeBtn) closeBtn.addEventListener('click', close);
   box.addEventListener('click', function (e) { if (e.target === box || e.target.classList.contains('monitor__dim')) close(); });

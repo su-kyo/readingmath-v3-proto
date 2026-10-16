@@ -6386,9 +6386,6 @@
   "videobox": {
    "concept/learn-sci.html": "markup"
   },
-  "videobox__fallback": {
-   "concept/learn-sci.html": "markup"
-  },
   "videobox__frame": {
    "concept/learn-sci.html": "markup"
   },

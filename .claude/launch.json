@@ -6,6 +6,12 @@
       "runtimeExecutable": "python3",
       "runtimeArgs": ["-m", "http.server", "8020"],
       "port": 8020
+    },
+    {
+      "name": "rm-static-wt",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8021"],
+      "port": 8021
     }
   ]
 }

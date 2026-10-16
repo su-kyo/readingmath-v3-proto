@@ -139,13 +139,11 @@ body.learn-body { background: var(--bg); overflow: hidden; }
 :root[data-theme="dark"] .viewer__zoom { background: var(--surface-1); color: var(--text-muted); box-shadow: none; }
 /* 다크: 팝오버가 패널(surface-1)과 같은 색이라 안 떠 보임 → 더 밝은 surface-3 + 테두리로 floating 강조 */
 
-/* ===== 개념 영상 레이어 — 프레임은 공용 monitor, 안은 16:9 영상뿐 ===== */
+/* ===== 개념 영상 레이어 — 프레임은 공용 monitor, 안은 16:9 영상 자리뿐 =====
+   실제 영상(회사 콘텐츠)은 넣지 않는다 — 포트폴리오용 회색 견본 (2026-10-16 사용자 결정) */
 #videobox { --mon-w: 900px; }
-#videobox .monitor__screen { background: var(--hw-screen); }
-.videobox__frame { position: relative; width: 100%; aspect-ratio: 16 / 9; background: var(--hw-screen); }
-.videobox__frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-.videobox__fallback { position: absolute; inset: 0; display: none; flex-direction: column; align-items: center; justify-content: center; gap: var(--sp-12); color: var(--th-accent-hi); text-align: center; padding: var(--sp-24); font-family: var(--font-sans); }
-.videobox__fallback a { color: var(--th-accent-hi); font-weight: var(--fw-bold); }
+#videobox .monitor__screen { background: var(--hw-screen); overflow: hidden; }   /* 16:9가 화면 높이보다 10px 커서 생기던 스크롤바를 막는다 */
+.videobox__frame { width: 100%; aspect-ratio: 16 / 9; background: var(--hw-dummy); }
 
 /* ===== 개념 요약하기 — 프레임은 공용 monitor, 안(끊어읽기·선지)은 그대로 ===== */
 .summary {
