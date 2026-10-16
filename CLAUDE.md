@@ -55,7 +55,7 @@
 **③ 이미지는 쓰임으로 분류한다** (`RM-ASSET-01`~`05`).
 그림(webp) → `assets/img/` (bg · home · planets · strands · grade · misc · concept). `concept/<단원>/`은 실서비스 콘텐츠 그림이고 이름은
 개념 학습 `fig-*` · 다지기 `drill-*` · 기초 연산 `ops-*` · 유형 `type-*` · 서술형 `essay1~3-*`(뒤 숫자는 문항 id).
-아이콘(svg) → `assets/icons/`, 색은 파일 복제가 아니라 코드로. PNG 원본은 `~/Documents/_source/RM/`(깃 없음 — 삭제·덮어쓰기 전 확인. 콘텐츠 그림 원본은 `concept-learn/` · `subject-split-1015/`).
+아이콘(svg) → `assets/icons/`, 색은 파일 복제가 아니라 코드로. 세트는 **Lucide**(`lucide-static@0.460.0`, ISC) 한 벌 — 새 아이콘도 여기서, 버튼 문구 → 아이콘은 `docs/decisions/icons-lucide-1016.md`. PNG 원본은 `~/Documents/_source/RM/`(깃 없음 — 삭제·덮어쓰기 전 확인. 콘텐츠 그림 원본은 `concept-learn/` · `subject-split-1015/`).
 그림이 들어올 빈자리는 `.dummy-img`(빗금 + 「이미지 예시」, `.qopt__img` · `.ex__skel` · `.sopt__img` · `.sblank__thumb`도 같은 규칙). 그 자리에 `background`를 다시 주면 빗금이 지워진다.
 
 **④ 새 화면은 `index.html` 목록에도 넣는다** (`RM-FILE-07`). 계열 폴더(nav · concept · type · essay · assignment · exam · util · shared)와 index 그룹은 같은 단위다.

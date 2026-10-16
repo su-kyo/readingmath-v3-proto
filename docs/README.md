@@ -24,6 +24,7 @@ docs/
 | decisions | `blank-pop-1015.md` | 빈칸 선지 창 (`RM-PART-06`) |
 | decisions | `guide-1015.md` | 콘솔바 안내 (`RM-PART-07`) |
 | decisions | `timer-1015.md` | 학습 타이머 진행 / 제한 시간 |
+| decisions | `icons-lucide-1016.md` | 화면 아이콘 Lucide 한 벌 · 버튼 문구 → 아이콘 |
 | research | `color-ref-survey.md` | 1차 범위 화면의 색 참조 구조 조사 (2026-10-15) |
 | research | `live-qa-compare-1015.md` | 테스트 서버 ↔ 프로토타입 비교표 (요청서의 재료) |
 | research | `codex-review-8f58cd3.md` | 외부 검수(Codex) 원문 (2026-10-14) |
